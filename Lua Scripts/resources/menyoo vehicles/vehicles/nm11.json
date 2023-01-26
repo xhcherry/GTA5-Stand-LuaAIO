@@ -1,0 +1,125 @@
+{
+    "Vehicle": {
+        "ModelHash": 1119641113,
+        "VehicleProperties": {
+            "BulletProofTires": false,
+            "Colors": {
+                "CPrimary": {
+                    "b": 5,
+                    "g": 5,
+                    "r": 5
+                },
+                "CSecondary": {
+                    "b": 18,
+                    "g": 18,
+                    "r": 18
+                },
+                "IsPrimaryCustom": false,
+                "IsSecondaryCustom": false,
+                "Livery": -1,
+                "Neon": {
+                    "Back": true,
+                    "Color": {
+                        "b": 255,
+                        "g": 21,
+                        "r": 2
+                    },
+                    "Front": true,
+                    "Left": true,
+                    "Right": true
+                },
+                "PaintFade": 0.0,
+                "Pearl": 20,
+                "Primary": 12,
+                "Rim": 156,
+                "Secondary": 13,
+                "TyreSmoke": {
+                    "b": 255,
+                    "g": 255,
+                    "r": 255
+                }
+            },
+            "DirtLevel": 1.00000083446503,
+            "EngineHealth": 940.599853515625,
+            "EngineRunning": true,
+            "Mods": {
+                "Mod_0": -1,
+                "Mod_1": 0,
+                "Mod_10": -1,
+                "Mod_11": -1,
+                "Mod_12": -1,
+                "Mod_13": -1,
+                "Mod_14": -1,
+                "Mod_15": -1,
+                "Mod_16": -1,
+                "Mod_17": -1,
+                "Mod_18": -1,
+                "Mod_19": -1,
+                "Mod_2": -1,
+                "Mod_20": -1,
+                "Mod_21": -1,
+                "Mod_22": -1,
+                "Mod_23": 29,
+                "Mod_24": -1,
+                "Mod_25": -1,
+                "Mod_26": -1,
+                "Mod_27": 2,
+                "Mod_28": 0,
+                "Mod_29": 1,
+                "Mod_3": -1,
+                "Mod_30": 13,
+                "Mod_31": -1,
+                "Mod_32": 3,
+                "Mod_33": 0,
+                "Mod_34": 0,
+                "Mod_35": 1,
+                "Mod_36": -1,
+                "Mod_37": -1,
+                "Mod_38": 3,
+                "Mod_39": 3,
+                "Mod_4": 4,
+                "Mod_40": 4,
+                "Mod_41": -1,
+                "Mod_42": -1,
+                "Mod_43": -1,
+                "Mod_44": -1,
+                "Mod_45": 0,
+                "Mod_46": -1,
+                "Mod_47": -1,
+                "Mod_48": 8,
+                "Mod_5": -1,
+                "Mod_6": 4,
+                "Mod_7": 3,
+                "Mod_8": -1,
+                "Mod_9": -1
+            },
+            "NumberPlate": {
+                "Index": 0,
+                "Text": "85VVX241"
+            },
+            "TogMods": {
+                "TogMod_0": false,
+                "TogMod_1": false,
+                "TogMod_10": false,
+                "TogMod_11": false,
+                "TogMod_12": false,
+                "TogMod_13": false,
+                "TogMod_14": false,
+                "TogMod_15": false,
+                "TogMod_16": false,
+                "TogMod_17": false,
+                "TogMod_18": false,
+                "TogMod_2": false,
+                "TogMod_3": false,
+                "TogMod_4": false,
+                "TogMod_5": false,
+                "TogMod_6": false,
+                "TogMod_7": false,
+                "TogMod_8": false,
+                "TogMod_9": false
+            },
+            "WheelsType": 1,
+            "WindowTint": 0
+        }
+    }
+}

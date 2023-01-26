@@ -1,0 +1,66 @@
+--local Utils<const> = require "lib.undefined.utils"
+--local startScript<const> = require "lib.undefined.menus.main"
+
+--local gitlabHost<const> = "https://gitlab.com"
+--==============狗白又看你爹脚本是吧
+-----@param path string
+-----@param files table
+--local function setupUpdater(path, files)
+  --  local updateInProgress = false
+  --  local updated = false
+    --local updateActionRef = menu.action(menu.my_root(), "Update script", {}, "", function()
+       -- if updateInProgress then
+            --if updated then
+             --   Utils.showToast("Update is completed, please restart the script to apply the changes!")
+             --   return
+          --  end
+         --   Utils.showToast("Update is already in progress, please wait and don't stop the script!")
+         --   return
+       -- end
+
+      --  updateInProgress = true
+--Utils.showToast("Updating, be patient...")
+--
+        --local SCRIPTS_DIR<const> = filesystem.scripts_dir()
+
+       -- local error = false
+       -- for idx, file in files do
+         --   if error then
+         --       return
+       --     end
+       --     async_http.init(gitlabHost, path .. file, function(res)
+        --        local err = select(2, load(res))
+         --      if err then
+           --         Utils.showToast(file .. " failed to download. If this happens again, please update the script manually by downloading it from Gitlab.")
+            --        error = true
+             --       updateInProgress = false
+             --       return
+            --    end
+            --    local f = io.open(SCRIPTS_DIR .. file, "wb")
+           --     if not f then
+             --       if not error then
+            --            Utils.showToast("Update canceled. Failed to write to file: " .. file ..
+               --                             ". If this happens again, please update the script manually by downloading it from Gitlab.")
+               --         error = true
+                 --       updateInProgress = false
+                --    end
+               --     return
+              --  end
+              --  f:write(res)
+              --  f:close()
+
+              --  if idx == #files and not error then
+                 --   Utils.showToast("Succesfully updated! Please restart the script manually to use the latest version.")
+               --     updated = true
+              --  end
+         --   end)
+           -- async_http.dispatch()
+         --   util.yield(1000)
+   --   --  end
+   -- end)
+
+   -- menu.set_visible(updateActionRef, false)
+   -- return updateActionRef
+--end
+
+--return setupUpdater

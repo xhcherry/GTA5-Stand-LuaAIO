@@ -1,0 +1,131 @@
+{
+    "Vehicle": {
+        "ModelHash": 3932816511,
+        "VehicleProperties": {
+            "BulletProofTires": true,
+            "Colors": {
+                "CPrimary": {
+                    "b": 4,
+                    "g": 4,
+                    "r": 140
+                },
+                "CSecondary": {
+                    "b": 8,
+                    "g": 8,
+                    "r": 8
+                },
+                "IsPrimaryCustom": true,
+                "IsSecondaryCustom": false,
+                "Livery": -1,
+                "Neon": {
+                    "Back": false,
+                    "Color": {
+                        "b": 0,
+                        "g": 0,
+                        "r": 255
+                    },
+                    "Front": false,
+                    "Left": false,
+                    "Right": false
+                },
+                "PaintFade": 0.886274576187134,
+                "Pearl": 15,
+                "Primary": 15,
+                "Rim": 44,
+                "Secondary": 15,
+                "TyreSmoke": {
+                    "b": 240,
+                    "g": 64,
+                    "r": 91
+                }
+            },
+            "DirtLevel": 1.09349536895752,
+            "EngineHealth": 997.0,
+            "EngineRunning": true,
+            "Mods": {
+                "Mod_0": 2,
+                "Mod_1": 11,
+                "Mod_10": 0,
+                "Mod_11": 3,
+                "Mod_12": 2,
+                "Mod_13": 2,
+                "Mod_14": -1,
+                "Mod_15": -1,
+                "Mod_16": 4,
+                "Mod_17": -1,
+                "Mod_18": -1,
+                "Mod_19": -1,
+                "Mod_2": 8,
+                "Mod_20": -1,
+                "Mod_21": -1,
+                "Mod_22": -1,
+                "Mod_23": 7,
+                "Mod_24": -1,
+                "Mod_25": -1,
+                "Mod_26": -1,
+                "Mod_27": -1,
+                "Mod_28": -1,
+                "Mod_29": -1,
+                "Mod_3": 8,
+                "Mod_30": -1,
+                "Mod_31": -1,
+                "Mod_32": -1,
+                "Mod_33": -1,
+                "Mod_34": -1,
+                "Mod_35": -1,
+                "Mod_36": -1,
+                "Mod_37": -1,
+                "Mod_38": -1,
+                "Mod_39": -1,
+                "Mod_4": 0,
+                "Mod_40": -1,
+                "Mod_41": -1,
+                "Mod_42": -1,
+                "Mod_43": -1,
+                "Mod_44": -1,
+                "Mod_45": -1,
+                "Mod_46": -1,
+                "Mod_47": -1,
+                "Mod_48": 5,
+                "Mod_5": 2,
+                "Mod_6": 7,
+                "Mod_7": -1,
+                "Mod_8": 8,
+                "Mod_9": -1
+            },
+            "NeonLightColor": 9,
+            "NumberPlate": {
+                "Index": 3,
+                "Text": "A1800HP "
+            },
+            "TogMods": {
+                "TogMod_0": false,
+                "TogMod_1": false,
+                "TogMod_10": false,
+                "TogMod_11": false,
+                "TogMod_12": false,
+                "TogMod_13": false,
+                "TogMod_14": false,
+                "TogMod_15": false,
+                "TogMod_16": false,
+                "TogMod_17": true,
+                "TogMod_18": true,
+                "TogMod_19": true,
+                "TogMod_2": false,
+                "TogMod_20": false,
+                "TogMod_21": true,
+                "TogMod_22": false,
+                "TogMod_23": false,
+                "TogMod_3": false,
+                "TogMod_4": false,
+                "TogMod_5": false,
+                "TogMod_6": false,
+                "TogMod_7": false,
+                "TogMod_8": false,
+                "TogMod_9": false
+            },
+            "WheelsType": 10,
+            "WindowTint": 0
+        }
+    }
+}

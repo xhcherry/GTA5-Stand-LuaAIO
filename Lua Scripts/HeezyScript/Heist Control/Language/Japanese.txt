@@ -1,0 +1,678 @@
+# <  README  >
+# Thanks to translate HC!
+# You should translate right-side texts. Otherwise, it'll cause errors.
+# You can use all characters except "=" character.
+# Using "#" character means the line will be ignored like the comment in coding.
+# If you wanna release your own translation, contact to Dev of HC in DC Server.
+# Learn More: https://icedoomfist.com/Stand_Heist_Control/How_To_Translate/
+
+
+--- [ # General ] ---
+
+Heist Control = Heist Control
+Announcement = お知らせ
+You are using latest version of HC! = あなたは最新バージョンを使用しています!
+You are using outdated version of HC! = あなたは古いバージョンを使用しています
+Current Version: = 現在のバージョン:
+Latest Version: = 最新のバージョン:
+Stand can't get latest version info of HC. = StandがHCの最新バージョンを取得できません.
+HC website currently has connection issue. = HCのウェブサイトは現在接続に問題があります.
+Coded GTAO Version: = Coded GTAO Version:
+Current GTAO Version: = Current GTAO Version:
+Hard = ハード
+Normal = ノーマル
+Notification = 通知
+[Risky] = [リスキー]
+[Locally] = [Locally]
+Custom Payout = カスタム ペイアウト
+You didn't input the value. Please input it! = 値を入力してません,入力してください!
+Enable = 有効
+Sucessfully set! = 正常にセットされました!
+Would you like to restart HC now? = 今すぐHCを再起動しますか？
+Others = その他
+Good bye, thank you for using HC! :D = Good bye, HCをご利用いただきありがとうございます! :D
+
+
+--- [ # Main Tabs ] ---
+
+Cayo Perico Heist = カヨペリコ強盗
+Diamond Casino Heist = ダイアモンドカジノ強盗
+Doomsday Heist = ドゥームズデイ強盗
+Classic Heist = クラシック強盗 
+LS Tuners Robbery = LSチューナーズ強盗
+The Contract: Agency = 契約:代理店
+Master Unlocker = マスターアンロッカー
+Tools = ツール
+Settings & About HC = 設定 & HCについて
+
+
+--- [ # Cayo Perico Heist ] ---
+
+Automated Presets = 自動プリセット
+1 Player = 1 プレイヤー
+2 Players = 2 プレイヤー
+3 Players = 3 プレイヤー
+4 Players = 4 プレイヤー
+Sapphire Panther = パンサー像
+Ruby Necklace = ルビーネックレス
+
+Quick Preset [1 ~ 4P] = 素早いプリセット [1 ~ 4P]
+There are no secondary targets, only one primary target exists. Your goal is get it. = サブターゲットがありません.メインターゲットのみあります.
+
+Standard Preset = 標準プリセット
+Semi-Original Preset = 半オリジナルプリセット
+- Remember to choose your preset outside the Submarine or in the Main Deck = - 潜水艦の外、またはメインデッキでプリセットを選択することを忘れないでください。
+- Remember to deactivate the preset at the end. = - 最後にプリセットを解除するのを忘れないようにしましょう。
+
+Custom Teleport = カスタムテレポート
+Compound = ルビオの屋敷
+El Rubio's Office = ルビオのオフィス
+Front Gate Exit = 正面ゲート出口
+Storage = 保管庫
+North = North(北)
+West = West(西)
+South = South(南)
+Vault = 金庫
+Island = 島
+Airstrip = 飛行場
+Crop Fields = 麻薬製造工場
+Main Dock = メインドッグ
+North Dock = ノースドック
+Loot = ルート
+Radio Tower = 通信塔
+Drainage = 下水トンネル
+Drainage: 2nd Checkpoint = 下水トンネル: 2nd チェックポイント
+Ocean Safe Place = 海の安全な場所
+Kosatka: Heist Board [Call Kosatka first] = コサトカ: 強盗ボード [まずはコサトカを呼んでください]
+You have not bought Kosatka yet. Buy it first to teleport! = あなたはコサトカを持っていません。テレポートするには買わないといけません!
+
+Advanced Features = 高度な機能
+Players Cut = プレイヤーカット
+Your Cut = あなたのカット
+Player 2 = プレイヤー 2
+Player 3 = プレイヤー 3
+Player 4 = プレイヤー 4
+Set 100% to everyone = 全員を100％に設定
+
+Bag Capacity Modifier = バッグ容量カスタム
+Normal Bag Limit = ノーマルバッグの制限
+Simulate Bag to 2 players = 2人のプレイヤーにバッグをシミュレートする
+Simulate Bag to 3 players = 3人のプレイヤーにバッグをシミュレートする
+Simulate Bag to 4 players = 4人のプレイヤーにバッグをシミュレートする
+Infinite Bag = インフィニットバッグ
+Skip Hacking = ハッキングをスキップする
+Skip Sewer Cutter = スキップカッタートーチ
+Open Plasma Glass Immediately = プラズマガラスをすぐに開ける
+Bypass Plasma Glass Cutter Heat = プラズマカッターの熱をバイパス
+Infinite Voltage Timer = ボルテージハック　インフィニットタイマー
+Remove Fencing Fee & Pavel Cut = 盗品売買手数料 & パベルへの報酬を消す
+Leave activated until the end of the heist = 強盗の終わりまでアクティブのままにしままにしてください.
+Auto-finish Primary Target = メインターゲットを自動で終わらす
+Remove Drainage Pipe = 排水管を外す
+
+Heist Vehicles = 強盗車両
+Submarine KOSATKA = 潜水艦　コサトカ
+Plane ALKONOST = 飛行機　RO-86アルコノスト
+Plane VELUM = 飛行機  ベラム
+Helicopter STEALTH ANNIHILATOR = ヘリコプター アナイアレイター ステルス
+Boat PATROL BOAT = ボート パトロールボート
+Boat LONGFIN = ボート ロングフィン
+Unlock All Vehicles = 全ての車両アンロック
+
+Primary Target = メインターゲット
+
+Secondary Target = サブターゲット
+When using this method, the percentage and final payment is random! = この方法を使用する場合,パーセンテージと最終支払額はランダムです.!
+Remove All = 全て削除
+
+Compound Loot = ルビオの屋敷のルート
+
+Weapon Loadouts = 武器のロードアウト
+Aggressor = アグレッサー
+- Assault SG + Machine Pistol = - アサルト ショットガン + マシンピストル
+- Machete + Grenade = - 山刀 + グレネード
+Conspirator = ゴンスピュレーター
+- Military Rifle + AP = - ミリタリーライフル  + AP
+- Knuckles + Stickies = - ナックル + 粘着爆弾
+Crackshot = ラックショット
+- Sniper + AP = - スナイパー + AP
+- Knife + Molotov = - ナイフ + 火炎瓶
+Saboteur = サボタージュ
+- SMG Mk2 + SNS Pistol = - SMG Mk2 + チープ` ピストル
+Marksman = マークスマン
+- AK-47 + Pistol .50 = - AK-47 + 50口径ピストル
+- Machete + Pipe Bomb = - 山刀 + パイプ爆弾
+
+Equipments Spawn Location = アイテムスポーンの位置
+- Guard Clothing = - 警備服
+- Bolt Cutters = - ボルトカッター
+
+Supply Truck Location = 物資輸送トラック
+Heist Difficulty = 強盗の難易度
+
+Unlock Heist Awards = アンロック強盗アワード
+Complete all Missions only = 全ミッションをクリアする
+Force the longest final Cutscene = ラストシーンを強制終了させる
+Keep in mind that you must use this option before starting the Heist = このオプションは,強盗を始める前に使用する必要があります.
+Set Heist to Default [Reset] = 強盗デフォルトにする [リセット]
+
+
+--- [ # Casino Heist ] ---
+
+Silent & Sneaky Approach = 隠密行動アプローチ
+BigCon Approach = 大ペテン師アプローチ
+Aggressive Approach = 攻撃的アプローチ
+$3.5 Millions & For All Players = 350万ドル＆全プレイヤー対象
+ALWAYS choose Low Level Buyer! = 常に低いレベルの買い手を選択してください!
+
+Advanced Features = 高度な機能
+Your Cut (Non-Host) = あなたのカット (Non-Host)
+Works on both of sorts: Fingerprint and Keypad = 指紋とキーパッド両方で動作します
+Instant Vault Door Laser = インスタント金庫室用レーザー
+
+Inside = 内部
+Planning Boards = プランニングボード
+Garage Exit = ガレージ出口
+Waste Disposal = 廃棄物処理
+2-Keypad Door = 2キーパッドドア
+Inside Vault = 金庫の中
+Pre-Inside Vault = 金庫の外
+Daily Bonus = デイリーボーナス
+Daily Bonus Room = デイリーボーナスルーム
+Outside = 外部
+Main Gate = メインゲート
+Staff Lobby = スタッフロビー
+
+Heist Planning [Board 1] = 強盗企画 [ボード 1]
+
+Change Approach and Difficulty = アプローチの変更と難易度
+Change Target = ターゲットを変更
+Diamond = ダイアモンド
+Gold = 金塊
+Artwork = 芸術作品
+Cash = 現金
+P.O.I & Access Points = P.O.I & アクセスポイント
+Change your session to apply! = セッションを変えたら適用されます!
+
+Heist Planning [Board 2] = 強盗企画 [ボード 2]
+
+Change Gunman = ガンマンの変更
+Chester McCoy = チェスター　マッコイ
+Gustavo Mota = ガスターヴォ　モタ 
+Patrick McReary = パトリック　マクレリー
+Charlie Reed = チャーリー リード
+Karl Abolaji = カール アボラジ
+Random = ランダム
+Remove = 削除する
+
+Weapon Variation = 武器のバリエーション
+
+Change Vehicle = 車両の変更
+Chester McCoy =  チェスター マッコイ
+Eddie Toh = エディートー
+Taliana Martinez = タリアナマルティネス
+Zach Nelson = ザック ネルソン
+Karim Denz = カリム　デンツ
+
+Vehicle Variation = 車両バリエーション
+Best = Best
+Good = Good
+Fine = Fine
+Worst = Worst
+
+Change Hacker = ハッカーを変更
+Avi Schwartzman = アヴィ　シュワルツマン
+Paige Harris = ペイジ ハリス
+Christian Feltz = クリスチャン　フェルツ
+Yohan Blair = ヨハン ブレア
+Rickie Luken = ッキー・ルーケンズ
+
+Choose Mask = マスクを選択
+Remove Mask = マスク削除
+Geometric = Geometric
+Hunter = Hunter
+Oni Half Mask = Oni Half Mask
+Emoji = Emoji
+Ornate Skull = Ornate Skull
+Lucky Fruit = Lucky Fruit
+Guerilla = Guerilla
+Clown = Clown
+Animal = Animal
+Riot = Riot
+Oni = Oni
+Hockey = Hockey
+
+Unlock Scan Card Level = セキュリティカードをアンロック
+Duggan Guards = ダガン警備員
+0 - Strongest Guards = 0 - 強い警備員
+3 - Weakest Guards = 3 - 弱い警備員
+
+Heist Planning [Board 3] = 強盗企画 [ボード 3]
+Remove Drills = ドリルを削除
+Silent & Sneaky and Aggressive Approach = 隠密行動アプローチ & 攻撃的アプローチ
+
+Board Loader & Unloader = ボードローダー & アンローダー
+Load all Boards = 全てボードをロード
+Unload all Boards = 全てのボードをアンロード
+
+Casino Story Missions = カジノストーリーミッション
+Loose Cheng = チェン救出
+House Keeping = 清掃業務
+Strong Arm Tactics = 剛腕戦術
+Play to Win = 勝利あるのみ
+Bad Beat = 逆風
+Cashing Out = 清算
+
+Remove Heist Prepare Cooldown = 強盗のクールダウンを削除
+Skip Agatha Baker missions to the last one = アガサ ベイカーのミッションを最後までスキップする
+
+
+--- [ # Doomsday Heist ] ---
+
+[Final Heist] = [フィナーレ]
+The Data Breaches ACT I = 第一幕:データ漏洩
+The Bogdan Problem ACT II = 第二幕:ボグダン プロブレム
+The Doomsday Scenario ACT III = 第三幕:ドゥームズ デイ シナリオ
+
+Heist board = 強盗ボード
+Prisoner cell = 監獄
+
+Modify ACT I Payment [$2.5 Millions] = 第一幕の支払いを変更する[$2.5 Millions]
+Modify ACT II Payment [$2.5 Millions] = 第二幕の支払いを変更する [$2.5 Millions]
+Modify ACT III Payment [$2.5 Millions] = 第三幕の支払いを変更する [$2.5 Millions]
+Set difficulty as hard. In-Game percentage may seem weird. Applied to everyone. = 難易度をハードに設定してください.ゲーム内の割合が変に感じるかもしれません.全員に適用されます.
+
+Setup: Server Farm (Lester) = セットアップ: サーバー室 (レスター)
+Unlock All Doomsday Heist = 全てのドゥームズデイ強盗をアンロック
+Complete all preparations (Not Setup) = すべての準備を完了する (Not Setup)
+
+
+--- [ # Classic Heist ] ---
+
+Fleeca Heist = フリーサ強盗 
+Your Payout (Millions) = あなたの支払額 (Millions)
+Will be applied only to you & have to host = ホストとして参加する場合のみ適用されます.
+- Only do this only one time or twice in less than 24 hours. = - 24時間以内に1回または2回のみ行うこと.
+- Otherwise, you can be banned! = - じゃなきゃ,禁止されることがあります!
+Modify Payout Amount = 支払い金額の変更
+Complete all Setup = すべてのセットアップを完了する
+You may need to choose a Heist and then complete the first setup, activated until then = 強盗を選択してから最初のセットアップを完了し、それまでにアクティブにする必要がある場合があります
+
+
+--- [ # LS Robbery ] ---
+
+Modify Contracts payout - $1 MILLIONs = 契約の支払い額を変更する - $1 MILLIONs
+Always keep this option actived before starting a contract = 契約を開始する前に,常にこのオプションをアクティブにしておいてください
+Changes will only happen if you are outside your Auto-Shop! = 変更はオートショップの外にいる場合にのみ変更できます!
+Union Depository = ユニオン デポジトリー
+The Superdollar Deal = スーパーノート取引
+The Bank Contract = 銀行ミッション
+The ECU Job = 電子制御ユニットジョブ
+The Prison Contract = 刑務所ミッション
+The Agency Deal = IAA取引 
+The Lost Contract = ロストミッション 
+The Data Contract = データミッション
+Complete missions (only) = ミッションをクリアする (only)
+
+Reset Missions (only) = リセット ミッション  (only)
+Reset Contracts = 契約リセット
+Reset Total Gains & Completed Missions = リセット トータル利益 & 完了したミッション
+
+
+--- [ # The Contract : Agency ] ---
+
+VIP Contract: Dr.Dre = VIP 契約:ドクター ドレー
+The feature to be worked properly, you may need to log out of F.Clinton & Partner = この機能を使用するためには,F.クリントンとパートナーからログアウトする必要がある場合があります.
+
+NightLife Leak = リーク: ナイトライフ
+The Nightclub (Prep) = ナイトクラブ (調査)
+The Marina (Prep) = マリーナ (調査)
+NightLife Leak (Mission) = リーク: ナイトライフ (ミッション)
+
+High Society Leak = リーク:上流階級
+The Country Club (Prep) = カントリークラブ (調査)
+Guest List (Prep) = ゲストリスト (調査)
+High Society (Mission) = リーク:上流階級 (ミッション)
+
+South Central Leak = リーク:サウス・セントラル
+Davis (Prep) = デイビス (調査)
+The Ballas (Prep) = バラス (調査)
+Agency Studio (Mission) = スタジオでのひと時 (ミッション)
+Final Contract: Don't Fuck with Dre = 最終契約:ドレーをナメるな
+
+Modify Final Contract Payout (2 Millions) = 最終契約金の変更 (2 Millions)
+Skip Cooldown of Payphone hits & contracts = 公衆電話のクールダウンをスキップする & 契約
+Make sure enabled before starting any contract or hit. = 契約を開始する前に有効になってることを確認してください.
+Remove Security Missions Cooldown = セキュリティミッションのクールダウンを削除
+Complete all Missions = 全ミッションをクリア
+
+
+--- [ # Master Unlocker ] ---
+
+DLCs = DLCs
+Arena Wars DLC = アリーナウォーズ DLC
+Unlock all Arena Wars Trophy and Toys = アリーナウォーズトロフィーとアイテムをすべてアンロックする 
+Arena Wars Clothing = アリーナウォーズの服装
+Summer 2020 DLC = 2020年サマーDLC
+Summer 2020 Awards = サマー2020年アワード
+Unlock Summer DLC Clothing = サマーDLCの服をアンロック
+LS Tuners DLC = LSチューナーズ DLC
+Unlock Drip Fed Outfits = アンロック ドリップフィード服装
+Unlock Awards = アンロック アワード
+The Contract DLC = 契約DLC 
+Unlock Animal Masks = アンロック　動物マスク
+Unlock DJ Pooh Shirts = DJプーのシャツをアンロック
+
+Buildings = Buildings
+Arcade Unlockers = アーケードアンロッカー
+Unlock Arcade Trophys and Toys = アンロック　アーケードトロフィー&アイテム
+Unlock Arcade Clothing = アーケード服装をアンロック
+Unlock NightClub Awards = アンロック ナイトクラブアワード
+Casino Store Ace Masks = カジノストア ACEマスク
+Add cosmetics items to the Office/MC = コスメティックアイテムを追加する Office/MC
+
+Missions = ミッション
+Cayo Perico unlockables = カヨぺリコをアンロック
+Unlock Yacht Missions = アンロッククルーザーミッション
+Unlock all Contacts = すべての連絡先を解除する
+Skip Lamar Missions to the last one = ラマーミッションを最後までスキップ
+
+Special Anniversaries = スペシャルイベント
+Christmas = クリスマス
+Bypass Christmas Clothing = クリスマスの服をバイパスする
+You must always keep this feature activated to wear! = 着用するには.この機能を常にアクティブにしておく必要があります.
+Unlock Christmas Liveries = クリスマスのペイントをアンロック
+Unlock Christmas Content = クリスマスコンテンツのアンロック
+Valentine = バレンタイン
+Independence Day = インデペンデンス
+
+Clothes = 服装
+Unlock Hats and many Shirts = 帽子やシャツのロックを解除する
+Unlock Don't Cross the Line Tee = アンロック,一線を超えないで
+
+Vehicles = 車両
+Unlock some vehicles trade price = 一部の車の値下げをアンロック
+Unlock Shotaro = アンロック ショータロー
+
+Weapons = 武器
+Stone Hatchet Challenge = 石斧チャレンジ
+Double Action Revolver = ダブルアクションリボルバー 
+Navy Revolver = ネイビーリボルバー
+Up-N-Atomizer = アトマイザー
+
+Vanilla Unicorn Award = ストリップクラブ アワード
+Alien Tatto (Illuminati) = UFOタトゥー (Illuminati)
+Returning Bonus = ボーナスの還元
+
+
+--- [ # Tools ] ---
+
+Tunables = チューナブル
+Remove Cooldowns = クールダウン削除
+Resupply Delay = 補給遅延
+MC Business = バイカービジネス
+Bunker = 地下基地
+Buy & Sell = 購入 & 販売
+Special Cargo = 極秘貨物
+Vehicle Cargo = 車両
+Air Freight Cargo = 空輸貨物
+Client Job = クライアントのジョブ
+Launch Kosatka Missiles = コサトカミサイルを発射
+
+Multipliers = マルチプレイヤー
+LS Car Meet = LSカーミーティング
+Street Race = ストリートレース
+Pursuit Race = パシュートレース 
+Scramble = スクランブル
+Head 2 Head = ヘッドハンター
+LS Car Meet Track = LS カーミーティング トラック
+
+Trigger Special Crate Missions = 希少品を発動させる
+Note that buying special crates can only in the Terrobyte. = 希少品を購入できるのは,テラバイトだけです.
+Ornamental Egg = タマゴ型の宝石
+Gold Minigun = 金色のミニガン
+Large Diamond = 大型ダイヤモンド
+Rage Hide = ビッグフットのきぐるみ
+Film Reel = フィルムリール
+Rare Pocket Watch = アンティーク懐中時計
+
+Bunker Mission Selector = 地下基地ミッションを選ぶ
+[SPECIAL] Trigger Alien Egg Mission = [スペシャル] エイリアンミッション
+
+Steal Supplies = 在庫売却
+Altruist Camp = カルト教団 
+The Dune Buggy = デューンバギー
+Police Riot = ポリス　ライオット
+Mine = 坑道 
+The Technical Aqua = テクニカル アクア
+Rival Operation = 敵対機関を排除しろ
+Zancudo River = ザンクード川
+LSIA = ロスサントス国際空港
+Merryweather HQ = メリーウェザー基地
+Training Ground (Tank) = 軍基地 (戦車)
+Del Perro Beach = デルぺロビーチ
+Cholla Springs Avenue = チョラスプリングスアベニュー
+Chupacabra Street = チュパカブラ ストリート
+
+Sell Weapons = 武器売却
+HVY Insurgent Pick Up = インサージェント トラック
+HVY Insurgent (Normal) = インサージェント (ノーマル)
+Marshall = マーシャル
+HVY Insurgent Pick Up (Custom) = インサージェント トラック (カスタム)
+Phantom Wedge = ファントムウェッジ
+Dune FAV = デューン FAV
+
+Remove Other Cost = コストをカット
+Repair Vehicle Cargo = 車両貨物の修理費
+When you sell vehicle, block paying related repair. = 車両を売却する時,修理費を無くす.
+Ron's Cut of Air Freight Cargo = ロンの航空貨物
+Tony's Cut of Nightclub = トニーのナイトクラブ
+Resupply MC Business = バイカービジネスの再補充 
+Resupply Bunker = 地下基地の再補充 
+
+Single MC Vehicle Sell = シングルMC車両販売
+Makes always number of MC business selling's vehicle is one. = 常にMC販売車両の数を1台にします.
+Bypass Transaction Error Messages = 翻訳エラーのメッセージをバイパス
+Prevents appearing transaction error messages, can be used for a lot of stuffs like when you get CEO Money. = 翻訳エラーのエラーメッセージを表示しないようにしたり,CEO Moneyを取得したときなど,さまざまなことに使用できます.
+Make One Snack Full Health = 一食のスナックでフル回復
+Whatever you use a snack, will make you full health. = 何を食べてもフル回復します.
+Infinite Stone Hatchet Power = インフィニット ランページスキル
+Complete Headhunter = ヘッドハンター完了
+Complete Sightseer = 探検家　完了
+Complete working in progress the mission. = 進行中のミッションを完了させる.
+7 Years GTAO Playtime = 7年のGTAOプレイ時間
+Make your account like played GTAO 7 years. = GTAOを7年間プレイしたようなアカウントにする.
+
+Custom Money Remover =　カスタムマネー削除
+Easy way to remove GTAO bank account money = GTAOの銀行口座のお金を簡単に削除する方法
+Firstly, buy ballistic equipment. To remove money, call it in the interaction menu = まず,重装備を購入します.そしてアクションメニューで重装備サービスを頼みます.
+
+AFK Money = AFK Money
+Methods are safe to use, but if you earn too much money, can be banned. Always use at own your risk. = この方法は安全に使用できますが,お金を稼ぎすぎると禁止される可能性があります. 自己責任で使用してください.
+Cooldown Time [Sec] = クールダウンタイム [秒]
+Auto Time Trial = オート タイムトライアル
+Auto Rig Slot Machine = オート リグスロットマシン
+Ratio of Jackpot and Loss = ジャックポット損失率
+Playing Time Trial one time is done! Waiting for cooldown time... = タイムトライアル1回分プレイ終了 クールダウンタイムを待ってください...
+Auto Black Jack = オート　ブラックジャック
+
+Heist Cooldown Timer = 強盗　クールダウンタイマー
+When set time passed, HC will let you know heist cooldown has been passed. = 設定した時間が経過すると.HCが強盗のクールダウンが経過したことをお知らせします.
+Text Position = テキストポジション
+Cooldown time passed, you can play the heist again! = クールダウンタイムを過ぎると、再び強盗ができるようになります
+Custom Heist = Custom Heist
+Use Stand's Overlay = standのオバーレイを使う
+"Enabled: Use Stand's Overlay & Settings: Game > Info Overlay" = "Enabled: Use Stand's Overlay & Settings: Game > Info Overlay"
+Disabled: Use Heist Control's Overlay & Settings = Disabled: Use Heist Control's Overlay & Settings
+Set Custom Time = カスタムタイム設定
+
+Manage Near Peds & Cams = 近くのPeds&Camsの管理 
+Work only to hostile peds = 敵対的なペッドにのみ有効
+Enabled: Ped options work only to hostile peds = Enabled: 敵対しているPedのみに反応します
+Disabled: Ped options work to all peds = Disabled: 敵対していないpedも反応します
+Peds = Peds
+Remove Weapons = 武器削除
+Delete = 削除
+Kill = キル
+Cams = Cams
+
+Bypass Locked Doors = ロックされたドアのバイパス
+Speed of Improved No Clip = No Clipスピード
+Distance of Teleport To Forward = 進めるテレポートの距離
+Instant Doors Crack = クラック インスタントドア
+Improved No Clip = No Clipを有効にする
+Teleport To Forward = 前方へテレポート
+
+Request Services = サービスを要求
+MOC = 機動作戦センター
+Avenger = アベンジャー
+Terrobyte = テラーバイト
+Kosatka = コサトカ
+Dingy = ディンギー
+Ballistic Armor = 重装備
+
+Info Spoofing = 情報 spoof
+Value = Value
+Total Money = 合計金額
+Kills = キル
+Deaths = デス
+
+Business Upgrade States = ビジネスの状態
+Document = 偽造文書オフィス
+Weed = ハッパ栽培所	
+Counterfit = 偽造貨幣工場
+Meth = 結晶ラボ	
+Cocaine = 白粉精製所
+Bunker = Bunker
+Arcade = アーケード
+Nightclub = ナイトクラブ
+Equipment Upgrade = 設備アップグレード
+Staff Upgrade = スタッフアップグレード 
+Secuirity Upgrade = セキュリティーアップグレード
+Decor Upgrade = 装飾のアップグレード
+Firing Range Upgrade = 射撃練習場のアップグレード
+Gunlocker Upgrade = 武器庫のアップグレード
+Personal Quarters Upgrade = 個人スペースのアップグレード
+Transportation Upgrade = 移動手段のアップグレード
+Drone Station = ドローンステーション
+Business Hub = マスターコントロール端末
+Floor = 床
+Style = スタイル
+Wall = 壁画
+Garage =　ガレージ
+Neon Lights = ネオンアート
+High Score Screen = ハイスコア画面
+Lighting = 照明
+Dancers = ダンサー
+Paid DJs = レジデントDJ
+
+Stat Editor & Reader = Statエディター
+Presets Stat Editor = プリセットStatエディター
+Modify Stat = カスタム Stat
+Set Stat = Set Stat
+
+Crew Rank = クルーランク
+
+Playtime = プレイ時間
+Method = Method
+Use Adding Playtime = プレイ時間の追加を使用
+Enabled: Use adding playtime method = Enabled: プレイ時間の方法を追加し使用する(追加)
+- Add from your current playtime = - 現在のプレイ時間から追加
+Disabled: Use setting playtime method = Disabled: プレイ時間の設定方法を追加し使用する(セット)
+- Set equal you will set time = - 等しく設定すると,時間が設定されます
+Note that set method supports up to only 24.8 days, but add method supports up to 50K days = そのセット方法は,最高わずか24.8日,ですが,追加方法は最大50K日分までサポートします.
+Day = 日
+Hour = 時間
+Min = 分
+Total Playtime = 総プレイ時間
+GTA:O Playtime = GTA:O プレイ時間
+Deathmatches = デスマッチ
+Races = レース
+Creator = クリエーター
+
+Cash Earned & Spent = キャッシュの獲得と使用
+Cash Amount = 現金額
+Total Earned = 合計収入
+Total Spent = 合計支出
+Related Earned Cash = 稼いだ現金
+Jobs = ジョブ
+Betting = 賭け
+Shared = 他人からもらった現金
+Car Sales = 車両売却
+Picked Up = 拾った現金
+
+Stat Name = Stat Name
+Stat Value = Stat Value
+Example Stat = Example Stat
+
+Custom Stat Editor = カスタムス Stat エディター
+Setting some certain stats may cause a ban. Use at your own risk! = 特定のステータスを設定すると,BANされる場合があります.自己責任でご利用ください.
+Note: MP0_ or MP1_ will be selected by HC automatically, therefore don't write it. = Note: MP0_とMP1_はHCで自動的に選択されますので,書き込まないでください.
+
+Custom Stat Reader = Custom Stat Reader
+Copy Stat Value = Copy Stat Value
+Read Stat = Read Stat
+Sucessfully read! = 正常に読み込まれました!
+
+Language Setting = 言語設定
+How To Translate = 翻訳の仕方 - How To Translate
+Always looking for new translators not existing language. If you interested in translating HC, click! = 既存の言語以外の翻訳者を常に募集しています.HCの翻訳に興味がある方は,クリックしてください.
+Language = 言語
+
+
+--- [ # Settings ] ---
+
+Settings = 設定
+In-Game Customize = ゲーム内カスタマイズ
+
+Sort = 種類
+In-Game = ゲーム内
+No Notification = 通知をオフ
+
+Icon = アイコン
+HC Logo = HC Logo
+Lester = Lester
+Legend Of Heist = Legend Of Heist
+Skull Head = Skull Head
+Warstock = Warstock
+Black R* = Black R*
+R* Social Club = R* Social Club
+
+Background Color = 背景色
+Black = ブラック
+White = ホワイト
+Red = レッド
+Orange = オレンジ
+Yellow = イエロー
+Mint = ミント
+Green = グリーン
+Light Blue = ライトブルー
+
+Text Color = テキストの色
+
+
+--- [ # About HC ] ---
+
+About HC = HCについて
+Join Discord Server! = Discord サーバーに参加する!
+Get support, Download beta version, Enjoy other stuffs! = サポート,ベータ版HC,その他,楽しんでください!
+Youtube = Youtube
+Videos that related HC tutorial are uploaded, subscribe the channel for me, :D = HCのチュートリアル関連の動画をアップロードしていますので,チャンネル登録お願いします.:D
+Tutorial = チュートリアル
+If you don't know how to use HC, click! = HCの使い方がわからない方はクリック!
+Changelog = チェンジログ
+If you want to know what latest version was changed, click! = 最新バージョン情報を知りたい方はこちら!
+
+
+--- [ # Credits ] ---
+
+Credits = Credits
+If you click features, will show the user's profile image & copy name or be redirected to mentioned website. = 機能をクリックすると,ユーザーのIDがコピーされユーザーのアイコンが表示されるか,言及されたWebサイトにリダイレクトされます.
+2Take1 Heist Control Dev, He allowed me to use his code. Without him, HC doesn't exist. Really thanks to him! = 2Take1 Heist Control Dev, 彼は私に彼のコードを使うことを許可してくれました.彼なしでは,HCは存在しません。本当にありがとうございます!
+Creator of Wiriscript & Lancescript that help me coding HC = HCのコーディングを手伝ってくれるWiriscript&Lancescriptの作成者
+Helped a lot of stuffs for HC's website maintenance. = HCのホームページのメンテナンスでいろいろとお世話になりました.
+Helped me coding website's design. = ウェブサイトデザインのコーディングに協力.
+Made logo, banner and etc for HC. = HCのロゴ、バナーなどを制作.
+Let me know about stats info. = stats情報など.
+Translators = 翻訳者
+Maintains HC's translation = HCの翻訳を維持してる.

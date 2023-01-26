@@ -1,0 +1,134 @@
+{
+    "Vehicle": {
+        "ModelHash": 3918533058,
+        "VehicleProperties": {
+            "BulletProofTires": true,
+            "Colors": {
+                "CPrimary": {
+                    "b": 85,
+                    "g": 82,
+                    "r": 0
+                },
+                "CSecondary": {
+                    "b": 255,
+                    "g": 0,
+                    "r": 250
+                },
+                "IsPrimaryCustom": true,
+                "IsSecondaryCustom": true,
+                "Livery": -1,
+                "Neon": {
+                    "Back": true,
+                    "Color": {
+                        "b": 0,
+                        "g": 0,
+                        "r": 255
+                    },
+                    "Front": true,
+                    "Left": true,
+                    "Right": true
+                },
+                "PaintFade": 0.701960802078247,
+                "Pearl": 92,
+                "Primary": 16,
+                "Rim": 50,
+                "Secondary": 16,
+                "TyreSmoke": {
+                    "b": 255,
+                    "g": 229,
+                    "r": 0
+                }
+            },
+            "DirtLevel": 0.655962646007538,
+            "EngineHealth": 1000.0,
+            "EngineRunning": true,
+            "Extras": {
+                "Extra_1": true
+            },
+            "Mods": {
+                "Mod_0": 2,
+                "Mod_1": -1,
+                "Mod_10": -1,
+                "Mod_11": 3,
+                "Mod_12": 2,
+                "Mod_13": 2,
+                "Mod_14": 38,
+                "Mod_15": 2,
+                "Mod_16": 4,
+                "Mod_17": -1,
+                "Mod_18": -1,
+                "Mod_19": -1,
+                "Mod_2": -1,
+                "Mod_20": -1,
+                "Mod_21": -1,
+                "Mod_22": -1,
+                "Mod_23": 30,
+                "Mod_24": -1,
+                "Mod_25": -1,
+                "Mod_26": -1,
+                "Mod_27": -1,
+                "Mod_28": -1,
+                "Mod_29": -1,
+                "Mod_3": 0,
+                "Mod_30": -1,
+                "Mod_31": -1,
+                "Mod_32": -1,
+                "Mod_33": -1,
+                "Mod_34": -1,
+                "Mod_35": -1,
+                "Mod_36": -1,
+                "Mod_37": -1,
+                "Mod_38": -1,
+                "Mod_39": -1,
+                "Mod_4": 1,
+                "Mod_40": -1,
+                "Mod_41": -1,
+                "Mod_42": -1,
+                "Mod_43": -1,
+                "Mod_44": -1,
+                "Mod_45": -1,
+                "Mod_46": -1,
+                "Mod_47": -1,
+                "Mod_48": -1,
+                "Mod_5": -1,
+                "Mod_6": -1,
+                "Mod_7": 0,
+                "Mod_8": -1,
+                "Mod_9": -1
+            },
+            "NeonLightColor": 255,
+            "NumberPlate": {
+                "Index": 5,
+                "Text": "  MDMA  "
+            },
+            "TogMods": {
+                "TogMod_0": false,
+                "TogMod_1": false,
+                "TogMod_10": false,
+                "TogMod_11": false,
+                "TogMod_12": false,
+                "TogMod_13": false,
+                "TogMod_14": false,
+                "TogMod_15": false,
+                "TogMod_16": false,
+                "TogMod_17": true,
+                "TogMod_18": true,
+                "TogMod_19": true,
+                "TogMod_2": false,
+                "TogMod_20": true,
+                "TogMod_21": true,
+                "TogMod_22": true,
+                "TogMod_23": false,
+                "TogMod_3": false,
+                "TogMod_4": false,
+                "TogMod_5": false,
+                "TogMod_6": false,
+                "TogMod_7": false,
+                "TogMod_8": false,
+                "TogMod_9": false
+            },
+            "WheelsType": 10,
+            "WindowTint": 1
+        }
+    }
+}

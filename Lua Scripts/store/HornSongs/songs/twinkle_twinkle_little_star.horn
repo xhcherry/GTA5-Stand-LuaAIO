@@ -1,0 +1,14 @@
+{
+  "name": "Twinkle Twinkle Little Star",
+  "description": "English Lullaby\nEncoded by Hexarobi\nFrom https://www.easymusicnotes.com/pdf-piano-1/twinkle-twinkle-little-star-classical-mozart-piano-level-1.pdf",
+  "target_version": 1.2,
+  "bpm": 90,
+  "notes": [
+    "C", "C", "G", "G", "A", "A", {"pitch": "G", "length": 0.5}, "rest",
+    "F", "F", "E", "E", "D", "D", {"pitch": "C", "length": 0.5}, "rest",
+    "G", "G", "F", "F", "E", "E", {"pitch": "D", "length": 0.5}, "rest",
+    "G", "G", "F", "F", "E", "E", {"pitch": "D", "length": 0.5}, "rest",
+    "C", "C", "G", "G", "A", "A", {"pitch": "G", "length": 0.5}, "rest",
+    "F", "F", "E", "E", "D", "D", {"pitch": "C", "length": 0.5}, "rest"
+  ]
+}
