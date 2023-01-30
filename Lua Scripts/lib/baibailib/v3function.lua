@@ -67,7 +67,15 @@ function Ini.load(fileName)
 	return data
 end
 
-resource_dir = filesystem.resources_dir()
+resource_dir = filesystem.scripts_dir() .. "/baibaiScript/"
+
+if not filesystem.exists(resource_dir) then
+	notification("resource directory not found. notification system will be less of a bruh",colors.red)
+else
+	util.register_file(resource_dir .. "baibailogo.ytd")
+end
+
+local JS_logo = directx.create_texture(filesystem.scripts_dir() .. "/baibaiScript/" ..'JS.png')
 
 if SCRIPT_MANUAL_START then
     AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
@@ -87,28 +95,28 @@ if SCRIPT_MANUAL_START then
     end)
  end
 
- if not SCRIPT_SILENT_START then
+if not SCRIPT_SILENT_START then
     util.create_thread(function()
         local js_size = 0.017
 
         local l = 1
         while l < 50 do
+            directx.draw_texture(JS_logo, js_size, js_size, 0.5, 0.5, 0.5, (1 - l / 250) + 0.03, 0, {r = 1, g = 1, b = 1, a = l / 50})
             util.yield()
             l += 5 - math.abs(math.floor(l / 10))
         end
 
         l = 1
         while l < 50 do
-            --directx.draw_rect_with_rounded_corner(0.5 - l / 500, 0.8, l / 250, 0.06, darkBlue)
-            --directx.draw_texture(JS_logo, js_size, js_size, 0.5, 0.5, 0.5 - l / 500, 0.83, 0, white)
+            directx.draw_texture(JS_logo, js_size, js_size, 0.5, 0.5, 0.5 - l / 500, 0.83, 0, white)
             util.yield()
             l += 5 - math.abs(math.floor(l / 10))
         end
 
-        AUDIO.PLAY_SOUND(-1, "signal_on", "DLC_GR_Ambushed_Sounds", 0, 0, 1)
+        AUDIO.PLAY_SOUND(-1, "signal_on", "DLC_GR_Ambushed_Sounds", 0, 0, white)
 
         for i = 1, 360 do
-           -- directx.draw_rect_with_rounded_corner(0.4, 0.8, 0.2, 0.06, darkBlue)
+            directx.draw_texture(JS_logo, js_size, js_size, 0.5, 0.5, 0.4, 0.83, i / 360, white)
             if i < 150 then
                 directx.draw_text(0.5, 0.81 + (i / 25000), '成就已解锁', ALIGN_TOP_CENTRE, 0.6, white, false)
             elseif i > 170 then
@@ -119,13 +127,14 @@ if SCRIPT_MANUAL_START then
 
         l = 50
         while l >= 0 do
-           -- directx.draw_rect_with_rounded_corner(0.5 - l / 500, 0.8, l / 250, 0.06, darkBlue)
+            directx.draw_texture(JS_logo, js_size, js_size, 0.5, 0.5, 0.5 - l / 500, 0.83, 0, white)
             util.yield()
             l -= 6 - math.abs(math.floor(l / 10))
         end
 
         l = 50
         while l >= 0 do
+            directx.draw_texture(JS_logo, js_size, js_size, 0.5, 0.5, 0.5, (1 - l / 250) + 0.03, 0, {r = 1, g = 1, b = 1, a = l / 50})
             util.yield()
             l -= 6 - math.abs(math.floor(l / 10))
         end
@@ -144,20 +153,23 @@ colors = {
     white = 1,
     gray = 3,
     pink = 201,
-    purple = 49, 
+    purple = 49,
     blue = 9
-    }
+  }
 
-
-    function notification_v3(message, color)
+    function notification(message, color)
         HUD.THEFEED_SET_BACKGROUND_COLOR_FOR_NEXT_POST(color)
-        local picture = "helicopterhud"
-        GRAPHICS.REQUEST_STREAMED_TEXTURE_DICT(picture, 0)
+        local picture
+        if not filesystem.exists(resource_dir) then
+            picture = "CHAR_SOCIAL_CLUB"
+        else
+            picture = "baibailogo"
+        end
+        GRAPHICS.REQUEST_STREAMED_TEXTURE_DICT(picture, 1)
         while not GRAPHICS.HAS_STREAMED_TEXTURE_DICT_LOADED(picture) do
             util.yield()
         end
         util.BEGIN_TEXT_COMMAND_THEFEED_POST(message)
-        title = "baibai"
         if color == colors.blue or color == colors.red then
             subtitle = "~b~通知"
         elseif color == colors.black then
@@ -165,7 +177,7 @@ colors = {
         else
             subtitle = "~b~通知"
         end
-        HUD.END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT(picture, picture, true, 4, title, subtitle)
+        HUD.END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT(picture, "bart", true, 4, "baibai", subtitle)
     
         HUD.END_TEXT_COMMAND_THEFEED_POST_TICKER(true, false)
         util.log(message)
@@ -1091,7 +1103,7 @@ state = 0
 local notif_format = "按 左键 和 右键 来使用原力"
 function jedmode()
     if state == 0 then
-		notification_v3(notif_format, HudColour.blue, "INPUT_ATTACK", "INPUT_AIM")
+		notification(notif_format, HudColour.blue, "INPUT_ATTACK", "INPUT_AIM")
 		local effect = Effect.new("scr_ie_tw", "scr_impexp_tw_take_zone")
 		local colour = {r = 0.5, g = 0.0, b = 0.5, a = 1.0}
 		request_fx_asset(effect.asset)
@@ -1696,12 +1708,12 @@ function summ_car(index, value)
     PED.SET_PED_INTO_VEHICLE(taxi_ped, taxi_veh, -1)
     ENTITY.SET_ENTITY_INVINCIBLE(taxi_ped, true)
     PED.SET_PED_INTO_VEHICLE(players.user_ped(), taxi_veh, 0)
-    notification_v3("您的司机已创建！", colors.blue)
+    notification("您的司机已创建！", colors.blue)
 end
 
 function summ_car_topoint()
     if taxi_ped == 0 then
-        notification_v3("你没有生成司机.")
+        notification("你没有生成司机.")
     else
         local goto_coords = get_waypoint_coords()
         if goto_coords ~= nil then
@@ -1712,7 +1724,7 @@ end
 
 function summ_car_tp()
     if taxi_ped == 0 then
-        notification_v3("你没有生成司机.", colors.blue)
+        notification("你没有生成司机.", colors.blue)
     else
         PED.SET_PED_INTO_VEHICLE(players.user_ped(), taxi_veh, 0)
     end
@@ -1720,7 +1732,7 @@ end
 
 function summ_car_bmob()
     if taxi_ped == 0 then
-        notification_v3("你没有生成司机.", colors.blue)
+        notification("你没有生成司机.", colors.blue)
     else
         local ped_copy = taxi_ped
         local veh_copy = taxi_veh
@@ -1733,7 +1745,7 @@ function summ_car_bmob()
         ENTITY.SET_ENTITY_INVINCIBLE(ped_copy, false)
         ENTITY.SET_ENTITY_HEALTH(ped_copy, 0)
         if math.random(5) == 3 then
-            notification_v3("他有老婆孩子...", colors.blue)
+            notification("他有老婆孩子...", colors.blue)
         end
         util.yield(3000)
         entities.delete_by_handle(ped_copy)
@@ -1901,7 +1913,7 @@ function inshellcrash(PlayerID)
     util.yield(1000)
     TASK.TASK_THROW_PROJECTILE(PED1,TargetPPos.x,TargetPPos.y,TargetPPos.z,0,0)
     TASK.TASK_THROW_PROJECTILE(PED2,TargetPPos.x,TargetPPos.y,TargetPPos.z,0,0)
-    notification_v3("Finished.",colors.red)
+    notification("Finished.",colors.red)
 end
 
 --for 大自然崩溃v1 v2 泡泡糖崩溃 绿玩保护崩溃
@@ -2202,7 +2214,7 @@ function toiletcrash(PlayerID)
         util.yield(10)
         end
         if SE_Notifications then
-            notification_v3("Finished.",colors.red)
+            notification("Finished.",colors.red)
         end
     end
 
@@ -2389,14 +2401,14 @@ function daodanchev1(PlayerID)
         function RqModel (hash)
             STREAMING.REQUEST_MODEL(hash)
             local count = 0
-            notification_v3("正在请求模型...")
+            notification("正在请求模型...")
             while not STREAMING.HAS_MODEL_LOADED(hash) and count < 100 do
                 STREAMING.REQUEST_MODEL(hash)
                 count = count + 1
                 util.yield(10)
             end
             if not STREAMING.HAS_MODEL_LOADED(hash) then
-                notification_v3("已尝试1秒,无法加载此指定模型!")
+                notification("已尝试1秒,无法加载此指定模型!")
             end
         end
 
@@ -2507,7 +2519,7 @@ function OXcrashgg(PlayerID)
     
         
     if players.exists(PlayerID) then
-        notification_v3("未能移除玩家,正在使用cs_fabien模型",colors.red)
+        notification("未能移除玩家,正在使用cs_fabien模型",colors.red)
         local PED2 = CreatePed(26,util.joaat("cs_fabien"),TargetPlayerPos, 0)
         ENTITY.SET_ENTITY_VISIBLE(PED2, false, 0)
         util.yield(100)
@@ -2520,7 +2532,7 @@ function OXcrashgg(PlayerID)
         entities.delete_by_handle(PED2)
         end
     if players.exists(PlayerID) then
-        notification_v3("未能移除玩家,正在使用cs_manuel模型",colors.red)
+        notification("未能移除玩家,正在使用cs_manuel模型",colors.red)
         local PED3 = CreatePed(26,util.joaat("cs_manuel"),TargetPlayerPos, 0)
         ENTITY.SET_ENTITY_VISIBLE(PED3, false, 0)
         util.yield(100)
@@ -2533,7 +2545,7 @@ function OXcrashgg(PlayerID)
         entities.delete_by_handle(PED3)
         end
     if players.exists(PlayerID) then
-        notification_v3("未能移除玩家,正在使用cs_taostranslator模型",colors.red)
+        notification("未能移除玩家,正在使用cs_taostranslator模型",colors.red)
         local PED4 = CreatePed(26,util.joaat("cs_taostranslator"),TargetPlayerPos, 0)
         ENTITY.SET_ENTITY_VISIBLE(PED4, false, 0)
         util.yield(100)
@@ -2546,7 +2558,7 @@ function OXcrashgg(PlayerID)
         entities.delete_by_handle(PED4)
         end
     if players.exists(PlayerID) then
-        notification_v3("未能移除玩家,正在使用cs_taostranslator2模型",colors.red)
+        notification("未能移除玩家,正在使用cs_taostranslator2模型",colors.red)
         local PED5 = CreatePed(26,util.joaat("cs_taostranslator2"),TargetPlayerPos, 0)
         ENTITY.SET_ENTITY_VISIBLE(PED5, false, 0)
         util.yield(100)
@@ -2559,7 +2571,7 @@ function OXcrashgg(PlayerID)
         entities.delete_by_handle(PED5)
         end
     if players.exists(PlayerID) then
-        notification_v3("未能移除玩家,正在使用cs_tenniscoach模型",colors.red)
+        notification("未能移除玩家,正在使用cs_tenniscoach模型",colors.red)
         local PED6 = CreatePed(26,util.joaat("cs_tenniscoach"),TargetPlayerPos, 0)
         ENTITY.SET_ENTITY_VISIBLE(PED6, false, 0)
         util.yield(100)
@@ -2572,7 +2584,7 @@ function OXcrashgg(PlayerID)
             entities.delete_by_handle(PED6)
         end
     if players.exists(PlayerID) then
-        notification_v3("未能移除玩家,正在使用cs_wade模型",colors.red)
+        notification("未能移除玩家,正在使用cs_wade模型",colors.red)
         local PED7 = CreatePed(26,util.joaat("cs_wade"),TargetPlayerPos, 0)
         ENTITY.SET_ENTITY_VISIBLE(PED7, false, 0)
         util.yield(100)
@@ -2585,7 +2597,7 @@ function OXcrashgg(PlayerID)
         entities.delete_by_handle(PED7)
         end
     if not players.exists(PlayerID) then
-        notification_v3("成功移除玩家",colors.red)
+        notification("成功移除玩家",colors.red)
     end
 end
 
@@ -2677,7 +2689,7 @@ function OXcrashggv2(PlayerID)
         entities.delete_by_handle(PED7)
         end
     if not players.exists(PlayerID) then
-        notification_v3("成功移除玩家",colors.blue)
+        notification("成功移除玩家",colors.blue)
     end
 end
 
@@ -2713,7 +2725,7 @@ menu.trigger_commands("levitateassistdown 0.6")
 menu.trigger_commands("levitate off")
 menu.trigger_commands("noguns")
 menu.trigger_commands("invisibility off")
-notification_v3("搞定",colors.red)
+notification("搞定",colors.red)
 while fishmm do
     util.yield()
     PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 25, 1)
@@ -3805,7 +3817,7 @@ function ptlz(pid)
         menu.trigger_commands("freeze"..PLAYER.GET_PLAYER_NAME(pid).." on")
         util.yield(300)
         if PED.IS_PED_IN_ANY_VEHICLE(player_ped, false) then
-            notification_v3("Failed to kick player out of the vehicle", colors.red)
+            notification("Failed to kick player out of the vehicle", colors.red)
             menu.trigger_commands("freeze"..PLAYER.GET_PLAYER_NAME(pid).." off")
             return
         end
@@ -4971,7 +4983,7 @@ function CARGO()
     entities.delete_by_handle(veh)
     PHYSICS.DELETE_CHILD_ROPE(newRope)
     menu.trigger_commands("anticrashcam off")
-    notification_v3("Go Fuck Your Self",colors.red)
+    notification("Go Fuck Your Self",colors.red)
     util.toast("Go Fuck Your Self")
 end
 
@@ -6399,7 +6411,7 @@ function pool_limit()
                 util.yield()
                 entities.delete_by_handle(ped)
             end
-            notification_v3("人物池达到上限,正在清理...", colors.blue)
+            notification("人物池达到上限,正在清理...", colors.blue)
         end
     end
     local veh__count = 0
@@ -6410,7 +6422,7 @@ function pool_limit()
             for _, veh in ipairs(entities.get_all_vehicles_as_handles()) do
                 entities.delete_by_handle(veh)
             end
-            notification_v3("载具池达到上限,正在清理...", colors.blue)
+            notification("载具池达到上限,正在清理...", colors.blue)
         end
     end
     local obj_count = 0
@@ -6422,7 +6434,7 @@ function pool_limit()
                 util.yield()
                 entities.delete_by_handle(obj)
             end
-            notification_v3("物体池达到上限,正在清理...", colors.blue)
+            notification("物体池达到上限,正在清理...", colors.blue)
         end
     end
 end
@@ -6487,7 +6499,7 @@ function anticage()
 		local msg = string.format(format, get_condensed_player_name(ownerId))
 		if ownerId ~= players.user() and is_player_active(ownerId, false, false) and
 		(lastMsg ~= msg or lastNotification.elapsed() >= 15000) then
-			notification_v3(msg, HudColour.blueLight)
+			notification(msg, HudColour.blueLight)
 			lastMsg = msg
 			lastNotification.reset()
 		end
@@ -6501,10 +6513,10 @@ function blocknetwork(on_toggle)
     local UnblockNetEvents = menu.ref_by_path("Online>Protections>Events>Raw Network Events>Any Event>Block>Disabled")
     if on_toggle then
         menu.trigger_command(BlockNetEvents)
-        notification_v3("已阻止所有网络传输", colors.blue)
+        notification("已阻止所有网络传输", colors.blue)
     else
         menu.trigger_command(UnblockNetEvents)
-        notification_v3("关闭阻止网络传输", colors.red)
+        notification("关闭阻止网络传输", colors.red)
     end
 end
 
@@ -6513,19 +6525,19 @@ function blockincoming(on_toggle)
     local UnblockIncSyncs = menu.ref_by_path("Online>Protections>Syncs>Incoming>Any Incoming Sync>Block>Disabled")
     if on_toggle then
         menu.trigger_command(BlockIncSyncs)
-        notification_v3("开启阻止网络事件传入", colors.blue)
+        notification("开启阻止网络事件传入", colors.blue)
     else
         menu.trigger_command(UnblockIncSyncs)
-        notification_v3("关闭阻止网络事件传入", colors.red)
+        notification("关闭阻止网络事件传入", colors.red)
     end
 end
 
 function blockout(on_toggle)
     if on_toggle then
-        notification_v3("开启阻止网络事件传出", colors.blue)
+        notification("开启阻止网络事件传出", colors.blue)
         menu.trigger_commands("desyncall on")
     else
-        notification_v3("关闭阻止网络事件传出", colors.red)
+        notification("关闭阻止网络事件传出", colors.red)
         menu.trigger_commands("desyncall off")
     end
 end
@@ -6536,13 +6548,13 @@ function chickenmode(on_toggle)
     local BlockIncSyncs = menu.ref_by_path("Online>Protections>Syncs>Incoming>Any Incoming Sync>Block>Enabled")
     local UnblockIncSyncs = menu.ref_by_path("Online>Protections>Syncs>Incoming>Any Incoming Sync>Block>Disabled")
     if on_toggle then
-        notification_v3("开启自闭模式", colors.green)
+        notification("开启自闭模式", colors.green)
         menu.trigger_commands("desyncall on")
         menu.trigger_command(BlockIncSyncs)
         menu.trigger_command(BlockNetEvents)
         menu.trigger_commands("anticrashcamera on")
     else
-        notification_v3("关闭自闭模式", colors.red)
+        notification("关闭自闭模式", colors.red)
         menu.trigger_commands("desyncall off")
         menu.trigger_command(UnblockIncSyncs)
         menu.trigger_command(UnblockNetEvents)
@@ -12649,13 +12661,13 @@ end
 
 function fireworkshow()
     if #placed_firework_boxes == 0 then 
-        notification_v3("先放烟花！", colors.blue)
+        notification("先放烟花！", colors.blue)
         return 
     end
     local ptfx_asset = "scr_indep_fireworks"
     local effect_name = "scr_indep_firework_trailburst"
     request_ptfx_asset_firework(ptfx_asset)
-    notification_v3("烟花!!!", colors.blue)
+    notification("烟花!!!", colors.blue)
     for i=1, 50 do
         for k,box in pairs(placed_firework_boxes) do 
             GRAPHICS.USE_PARTICLE_FX_ASSET(ptfx_asset)
@@ -14457,493 +14469,100 @@ function show_custom_alert_until_enter(l1)
     end
 end
 
+local resx, resy = directx.get_client_size()
+aspectratio = resx/resy
+
+guix = 0
+guiy = 0
+
+colour_map =
+{
+    titlebar = {r = 1, g = 0, b = 1, a = 1},
+    background = {r = 0, g = 0, b = 0, a = 77/255},
+    healthbar = {r = 114/255, g = 204/255, b = 114/255, a = 150/255},
+    armourbar = {r = 70/255, g = 136/255, b = 171/255, a = 150/255},
+    blip = {r = 1, g = 1, b = 1, a = 1},
+    name = {r = 1, g = 1, b = 1, a = 1},
+    label = {r = 1, g = 1, b = 1, a = 1},
+    info = {r = 1, g = 1, b = 1, a = 1},
+    border = {r = 1, g = 0, b = 1, a = 1}
+}
+
+nameh = 0.022
+padding = 0.008
+spacing = 0.003
+textw = 0.16
+
+--settings text sizing & spacing
+namesize = 0.52
+textsize = 0.41
+linespacing = 0.0032
+
+--settings border
+borderwidth = 0
+
+--settings blur
+blurstrength = 4
+blur = {}
+for i = 1, 8 do blur[i] = directx.blurrect_new() end
+
+--map textures
+textures =
+{
+    map = directx.create_texture(filesystem.scripts_dir() .. "/baibaiScript/" .. "/GTAmap/" .. 'GTA Map.png'),
+    blip = directx.create_texture(filesystem.scripts_dir() .. "/baibaiScript/" .. "/GTAmap/" .. 'defaultblip.png')
+}
 
 
-txtr = 0
-txtg = 0
-txtb = 0
-backgroundr = 255
-backgroundg = 255
-backgroundb = 255
-borderr = 0
-borderg = 0
-borderb = 0
+--draw functions
+function draw_rect(rect_x, rect_y, rect_w, rect_h, colour)
+    directx.draw_rect(rect_x, rect_y, rect_w, rect_h, 
+    {r = colour.r * colour.a, g = colour.g * colour.a, b = colour.b * colour.a, a = colour.a})
+end
 
-local function draw_text(text_x, text_y, content, color)
-    directx.draw_text(
-    text_x,
-    text_y,
-    content,
-    ALIGN_TOP_LEFT,
-    0.4,
-    color,
-    false
-    )
+function draw_border(x, y, w, h)
+    local borderx = borderwidth/aspectratio
+    draw_rect(x - borderx, y, w + borderx * 2, -borderwidth, colour_map.border) --top
+    draw_rect(x, y, -borderx, h, colour_map.border) --left
+    draw_rect(x + w, y, borderx, h, colour_map.border) --right
+    draw_rect(x - borderx, y + h, w + borderx * 2, borderwidth, colour_map.border) --bottom
 end
-local function draw_rect(rect_x, rect_y, rect_w, rect_h, color)
-    directx.draw_rect(
-        rect_x,
-        rect_y,
-        rect_w,
-        rect_h,
-        color
-        )
-end
-local function draw_line(line_x_1, line_y_1, line_x_2, line_y_2, color)
-    directx.draw_line(
-        line_x_1, 
-        line_y_1, 
-        line_x_2, 
-        line_y_2, 
-        color
-        )
-end
-local function round(num, numDecimalPlaces)
+
+--rounding function
+function round(num, numDecimalPlaces)
     local mult = 10^(numDecimalPlaces or 0)
     return math.floor(num * mult + 0.5) / mult
 end
-local function text_width_func(text)
-    local text_og_width = directx.get_text_size(text, 0.4)
-    local text_width = round(text_og_width, 3)
-    return text_width
-end
---from lance, ty
+
+--weapon function (from lance)
 all_weapons = {}
-temp_weapons = util.get_weapons()
+local temp_weapons = util.get_weapons()
 for a,b in pairs(temp_weapons) do
     all_weapons[#all_weapons + 1] = {hash = b['hash'], label_key = b['label_key']}
 end
-function get_weapon_name_from_hash(hash) 
-    for k,v in pairs(all_weapons) do 
+function weapon_from_hash(hash) 
+    for k, v in pairs(all_weapons) do 
         if v.hash == hash then 
             return util.get_label_text(v.label_key)
         end
     end
     return 'Unarmed'
 end
-local function dec_to_ipv4(ip)
-	return string.format(
-		"%i.%i.%i.%i", 
-		ip >> 24 & 0xFF, 
-		ip >> 16 & 0xFF, 
-		ip >> 8  & 0xFF, 
-		ip 		 & 0xFF
-	)
-end
-local function bool_to_yes_no(bool)
-    if bool then 
-        return "是"
-    else
-        return "不是"
-    end
-end
-local function format_int(number)
-    local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
-    int = int:reverse():gsub("(%d%d%d)", "%1,")
-    return minus .. int:reverse():gsub("^,", "") .. fraction
+
+--boolean function
+function boolean(bool)
+    if bool then return 'Yes' else return 'No' end
 end
 
-local function isFriend(PlayerId)
-    return table.contains(players.list(false,true,false), PlayerId)
+--check function
+function check(info)
+    if info == '' or info == 0 or info == nil or info == 'NULL' then return 'None' else return info end 
 end
 
-read_global = {
-	byte = function(global)
-		local address = memory.script_global(global)
-		return address ~= NULL and memory.read_byte(address) or nil
-	end,
-	int = function(global)
-		local address = memory.script_global(global)
-		return address ~= NULL and memory.read_int(address) or nil
-	end,
-	float = function(global)
-		local address = memory.script_global(global)
-		return address ~= NULL and memory.read_float(address) or nil
-	end,
-	string = function(global)
-		local address = memory.script_global(global)
-		return address ~= NULL and memory.read_string(address) or nil
-	end
-}
-local function BitTest_playerinfo(bits, place)
-	return (bits & (1 << place)) ~= 0
+--format money
+function format_money(money_value)
+    local order = math.ceil(string.len(tostring(money_value))/3 - 1)
+    if order == 0 then return money_value end
+    return round(money_value/(1000^order), 1)..({'K', 'M', 'B'})[order]
 end
 
-local function IsPlayerUsingOrbitalCannon_playerinfo(player)
-    if player ~= -1 then
-        local bits = read_global.int(2689235 + (player * 453 + 1) + 416)
-        return BitTest_playerinfo(bits, 0)
-    end
-    return false
-end
-
-local function IsPlayerFlyingAnyDrone_playerinfo(player)
-	local address = memory.script_global(1853348 + (player * 834 + 1) + 267 + 348)
-	return BitTest_playerinfo(memory.read_int(address), 26)
-end
-
-local function IsPlayerInRcBandito_playerinfo(player)
-    if player ~= -1 then
-        local address = memory.script_global(1853348 + (player * 834 + 1) + 267 + 348)
-        return BitTest_playerinfo(memory.read_int(address), 29)
-    end
-    return false
-end
-
-local function IsPlayerInRcTank_playerinfo(player)
-    if player ~= -1 then
-        local address = memory.script_global(1853348 + (player * 834 + 1) + 267 + 408 + 2)
-        return BitTest_playerinfo(memory.read_int(address), 16)
-    end
-    return false
-end
-
-local function IsPlayerInRcPersonalVehicle_playerinfo(player)
-    if player ~= -1 then
-        local address = memory.script_global(1853348 + (player * 834 + 1) + 267 + 408 + 3)
-        return BitTest_playerinfo(memory.read_int(address), 6)
-    end
-    return false
-end
-
-local languages = {
-    [0] = "英语",
-    [1] = "法语",
-    [2] = "德语",
-    [3] = "意大利语",
-    [4] = "西班牙语",
-    [5] = "巴西语",
-    [6] = "波兰语",
-    [7] = "俄语",
-    [8] = "韩语",
-    [9] = "中文(繁)",
-    [10] = "日语",
-    [11] = "墨西哥语",
-    [12] = "中文(简)"
-}
-
-playerinfox_x = 0.01
-playerinfox_y = 0.01
-
-local function draw_window(customisation)
-    if not util.is_session_transition_active() and NETWORK.NETWORK_IS_SESSION_STARTED() then
-        if customisation == 0 then
-            focused_tbl = players.get_focused()
-            focused = focused_tbl[1]
-        elseif customisation == 1 then
-            focused = players.user()
-        end
-        if focused ~= nil and menu.is_open() then 
-            --settings colours
-            local txtcolor = {r = txtr, g = txtg, b = txtb, a = 1.0}
-            local backgroundcolor = {r = backgroundr, g = backgroundg, b = backgroundb, a = 1.0}
-            local bordercolor = {r = borderr, g = borderg, b = borderb, a = 1.0}
-
-            --grabbing information on player
-            local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(focused)
-            local mypos = players.get_position(players.user())
-            local mypid = players.user()
-            local playerpos = players.get_position(focused)
-            local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(ped, false)
-            local script_host = players.get_script_host()
-            local host = players.get_host()
-            local text_width = 0
-            local name = players.get_name(focused)
-            local pid = focused
-            local h = bool_to_yes_no(focused == host)
-            local sh = bool_to_yes_no(focused == script_host)
-            local rank = players.get_rank(focused)
-            local rid1 = players.get_rockstar_id(focused)
-            local rid2 = players.get_rockstar_id_2(focused)
-            local rid = if rid1 == rid2 then rid1 else rid1.."/"..rid2
-            local modder = bool_to_yes_no(players.is_marked_as_modder(focused))
-            local godmode = bool_to_yes_no(players.is_godmode(focused))
-            local friend = bool_to_yes_no(isFriend(focused))
-            local language = languages[players.get_language(focused)]
-            local health = tostring(ENTITY.GET_ENTITY_HEALTH(ped)).."/"..tostring(ENTITY.GET_ENTITY_MAX_HEALTH(ped))
-            local armor = tostring(PED.GET_PED_ARMOUR(ped)).."/"..tostring(PLAYER.GET_PLAYER_MAX_ARMOUR(focused))
-            local wanted = PLAYER.GET_PLAYER_WANTED_LEVEL(focused)
-            local vehicle = players.get_vehicle_model(focused)
-            if vehicle == 0 then 
-                vehicle_name = "N/A"
-                in_vehicle = "不是"
-            else
-                vehicle_name = util.get_label_text(VEHICLE.GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(vehicle))
-                in_vehicle = "是"
-            end
-            local vehicle = vehicle_name
-            local interior = bool_to_yes_no(players.is_in_interior(focused))
-            local distance = math.ceil(MISC.GET_DISTANCE_BETWEEN_COORDS(playerpos.x, playerpos.y, playerpos.z, mypos.x, mypos.y, mypos.z))
-            local position = "X: "..math.floor(playerpos.x).." |  Y: "..math.floor(playerpos.y).." |  Z: "..math.floor(playerpos.z)
-            local token = players.get_host_token(focused)
-            local ip = dec_to_ipv4(players.get_connect_ip(focused))
-            local wallet = "$"..format_int(players.get_wallet(focused))
-            local bank = "$"..format_int(players.get_bank(focused))
-            local total = "$"..format_int(players.get_money(focused))
-            local weapon_hash = WEAPON.GET_SELECTED_PED_WEAPON(ped)
-            local weapon = get_weapon_name_from_hash(weapon_hash)
-            local tags = players.get_tags_string(focused)
-            if tags == "" then
-                tags = "N/A"
-            end
-            if focused == host and focused == mypid then
-                ping = "自己/主机"
-            elseif focused == host then
-                ping = "主机"
-            elseif focused == mypid then
-                ping = "自己"
-            else
-                latency = NETWORK.NETWORK_GET_AVERAGE_LATENCY(focused)
-                ping = math.floor(latency+0.5).."ms"
-            end
-            if NETWORK.NETWORK_IS_PLAYER_ACTIVE(pid) then
-                state = "已连接战局"
-            else
-                state = "正在连接战局"
-            end
-            local aiming = bool_to_yes_no(PLAYER.IS_PLAYER_FREE_AIMING(focused))
-            local orbital = bool_to_yes_no(IsPlayerUsingOrbitalCannon_playerinfo(focused))
-            local rc_drone = bool_to_yes_no(IsPlayerFlyingAnyDrone_playerinfo(focused))
-            local rc_bandito = bool_to_yes_no(IsPlayerInRcBandito_playerinfo(focused))
-            local rc_tank = bool_to_yes_no(IsPlayerInRcTank_playerinfo(focused))
-            local rc_personal = bool_to_yes_no(IsPlayerInRcPersonalVehicle_playerinfo(focused))
-            local attacker = bool_to_yes_no(players.is_marked_as_attacker(focused))
-            local kd = round(players.get_kd(focused), 2)
-
-            --setting dimensions of the main gui
-            local guix = playerinfox_x
-            local guiy = playerinfox_y
-            local guiw = 0.15
-            local guih = -0.02
-            for i = 1, 22 do
-                guih = guih + 0.02
-            end
-
-            --setting coords of overlay
-            local playerlistx, playerlisty = guix + 0.002, guiy + 0.002 --setting info list coords
-
-            --drawing gui
-            border = draw_rect(guix - 0.0012, guiy - 0.022, guiw + 0.0024, guih + 0.024, bordercolor)
-            titles = draw_rect(guix, guiy - 0.02, guiw, 0.02, backgroundcolor)
-            background = draw_rect(guix, guiy, guiw, guih, backgroundcolor)
-            divider1 = draw_line(playerlistx + guiw/2 - 0.002, playerlisty, playerlistx + guiw/2 - 0.002, playerlisty + 0.02*7, bordercolor)
-            divider2 = draw_line(playerlistx + guiw/2 - 0.002, playerlisty + guih - 0.02*7, playerlistx + guiw/2 - 0.002, playerlisty + guih, bordercolor)
-
-            --name
-            local yoffset = 0.02
-            local text_width = text_width_func(name)
-            draw_text(playerlistx + guiw/2 - text_width/2, playerlisty - yoffset, name, txtcolor)
-
-            --pid
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(pid)
-            draw_text(playerlistx, playerlisty - yoffset, "PID: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, pid, txtcolor)
-
-            --rid
-            local text_width = text_width_func(rid)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "RID: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, rid, txtcolor)
-
-            --rank
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(rank)
-            draw_text(playerlistx, playerlisty - yoffset, "等级: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, rank, txtcolor)
-
-            --wanted level
-            local text_width = text_width_func(wanted)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "通缉等级: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, wanted, txtcolor)
-
-            --ip
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(ip)
-            draw_text(playerlistx, playerlisty - yoffset, "IP: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, ip, txtcolor)
-
-            --ping
-            local text_width = text_width_func(ping)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "延迟: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, ping, txtcolor)
-
-            --language
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(language)
-            draw_text(playerlistx, playerlisty - yoffset, "语言: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, language, txtcolor)
-
-            --distance
-            local text_width = text_width_func(distance)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "距离: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, distance, txtcolor)
-
-            --health
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(health)
-            draw_text(playerlistx, playerlisty - yoffset, "血量: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, health, txtcolor)
-
-            --armor
-            local text_width = text_width_func(armor)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "护甲: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, armor, txtcolor)
-
-            --wallet
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(wallet)
-            draw_text(playerlistx, playerlisty - yoffset, "现金: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, wallet, txtcolor)
-
-            --bank
-            local text_width = text_width_func(bank)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "银行: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, bank, txtcolor)
-
-            --kd
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(kd)
-            draw_text(playerlistx, playerlisty - yoffset, "KD: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, kd, txtcolor)
-
-            --total money
-            local text_width = text_width_func(total)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "总额: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, total, txtcolor)
-
-            --vehicle
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(vehicle)
-            draw_text(playerlistx, playerlisty - yoffset, "载具: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, vehicle, txtcolor)
-
-            -- --player tags
-            -- local yoffset = yoffset + -0.02
-            -- local text_width = text_width_func(tags)
-            -- draw_text(playerlistx, playerlisty - yoffset, "Tags: ", txtcolor)
-            -- draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, tags, txtcolor)
-            
-            --connection state
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(state)
-            draw_text(playerlistx, playerlisty - yoffset, "连接状态: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, state, txtcolor)
-
-            --host token
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(token)
-            draw_text(playerlistx, playerlisty - yoffset, "主机令牌: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, token, txtcolor)
-
-            --position
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(position)
-            draw_text(playerlistx, playerlisty - yoffset, "位置: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, position, txtcolor)
-
-            --current weapon
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(weapon)
-            draw_text(playerlistx, playerlisty - yoffset, "当前武器: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, weapon, txtcolor)
-            
-            --checks
-            local yoffset = yoffset + -0.04
-            local text_width = text_width_func("检查")
-            draw_text(playerlistx + guiw/2 - text_width/2, playerlisty - yoffset, "检查", txtcolor)
-
-            --host
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(h)
-            draw_text(playerlistx, playerlisty - yoffset, "是主机: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, h, txtcolor)
-
-            --interior
-            local text_width = text_width_func(interior)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "在室内: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, interior, txtcolor)
-
-            --script host
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(sh)
-            draw_text(playerlistx, playerlisty - yoffset, "是脚本主机: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, sh, txtcolor)
-
-            --in orbital
-            local text_width = text_width_func(orbital)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "在轨道炮房: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, orbital, txtcolor)
-
-            --attacker
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(attacker)
-            draw_text(playerlistx, playerlisty - yoffset, "是攻击者: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, attacker, txtcolor)
-
-            --in vehicle
-            local text_width = text_width_func(in_vehicle)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "在车内: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, in_vehicle, txtcolor)
-
-            --friend
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(friend)
-            draw_text(playerlistx, playerlisty - yoffset, "是朋友: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, friend, txtcolor)
-
-            --rc drone
-            local text_width = text_width_func(rc_drone)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "在RC无人机: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, rc_drone, txtcolor)
-
-            --godmode
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(godmode)
-            draw_text(playerlistx, playerlisty - yoffset, "是无敌: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, godmode, txtcolor)
-
-            --rc bandito
-            local text_width = text_width_func(rc_bandito)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "在RC匪徒: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, rc_bandito, txtcolor)
-
-            --modder
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(modder)
-            draw_text(playerlistx, playerlisty - yoffset, "是作弊者: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, modder, txtcolor)
-
-            --rc tank
-            local text_width = text_width_func(rc_tank)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "是RC坦克: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, rc_tank, txtcolor)
-
-            --aiming
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(aiming)
-            draw_text(playerlistx, playerlisty - yoffset, "在瞄准: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, aiming, txtcolor)
-
-            --rc personal
-            local text_width = text_width_func(rc_personal)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "在RC个人载具: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, rc_personal, txtcolor)
-
-            util.remove_handler(player_vehicle) --stop possible crash from too many handles
-        end
-    end
-end
-
-util.create_tick_handler(function()
-    while UItoggle do
-        draw_window(0)
-        util.yield()
-    end
-end)
-
-util.create_tick_handler(function()
-    while customisation_open do
-        draw_window(1)
-        util.yield()
-    end
-end)

@@ -1,0 +1,188 @@
+Finished Tutorial: Yes
+Understands Command Chaining: Yes
+Tree Compatibility Version: 42
+Self
+	Movement
+		Reduced Collision: On
+	Appearance
+		Outfit
+			Lock Outfit: 
+	Weapons
+		Infinite Ammo: On
+	Immortality: On
+	Lock Wanted Level: On
+Vehicle
+	Spawner
+		Make Spawned Vehicles Indestructible: On
+		Tune Spawned Vehicles: Fully
+	Indestructible: On
+Online
+	Session
+		Player Leave Reasons
+			Notification: On
+		Become A Script Host Kleptomaniac: On
+	Enhancements
+		Disable Idle/AFK Kick: On
+	Protections: Warning Acknowledged
+		Events
+			Crash Event
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+				Timeout: Disabled
+			Kick Event
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Modded Event
+				Write To Log File: Enabled
+			CEO/MC Ban (Not My CEO)
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			CEO/MC Kick (Not My Boss)
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Start Freemode Mission (Not My Boss)
+				Write To Log File: Enabled
+			Give Collectible (Not My Boss)
+				Write To Log File: Enabled
+			Infinite Loading Screen
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Infinite Phone Ringing
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Teleport To Cayo Perico
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Cayo Perico Invite
+				Block: Enabled
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Apartment Invite
+				Block: Enabled
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Send To Cutscene
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Send To Job
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Transaction Error Event
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Vehicle Takeover
+				Block: Enabled
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Disable Driving Vehicles
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Kick From Vehicle
+				Block: Enabled
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Freeze
+				Block: Enabled
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Force Camera Forward
+				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Love Letter Kick Blocking Event
+				Block: Enabled
+				Write To Log File: Enabled
+			Raw Network Events: Warning Acknowledged
+		Detections
+			Stand User Identification: Off
+			Any Detection
+				Notification: Enabled
+		Syncs
+			Invalid Model Sync
+				Kick: Enabled
+				Love Letter Kick: Enabled
+		Session Script Start
+			Any Script
+				Notification: Enabled
+			Uncategorised
+				Notification: Enabled
+		Host Kicks
+			Host Kick Karma: On
+		Love Letter & Desync Kicks
+			Notification When Love Letter Kicked: On
+			Desync Kick Karma: On
+		Pickups
+			Cash Pickup Collected
+				Block: On
+		Lessen Breakup Kicks As Host: On
+		Block Join Karma: On
+	Spoofing
+		Name Spoofing
+			Name Spoofing: On
+			Spoofed Name: XiPro-NB
+		RID Spoofing
+			RID Spoofing: On
+			Spoofed RID: 98598332
+	Reactions
+		RID Join Reactions
+			Notification: On
+			Block: On
+		Host Change Reactions
+			Notification: Enabled
+		Script Host Change Reactions
+			Notification: Enabled
+		Vote Kick Reactions
+			Voting To Kick Anyone
+				Notification: Enabled
+			Voting To Kick Me
+				Kick: Enabled
+				Love Letter Kick: Enabled
+		Love Letter Kick Reactions
+			Notification: Enabled
+Players
+	Settings
+		Tags
+			Self: 
+			Friend: 
+			Crew Member: 
+			In Timeout: 
+			Modder: 
+			Modder or Admin: 
+			Admin: 
+			Likely Modder: 
+			Attacked You: 
+			Host: 
+			Next Host: 
+			Script Host: 
+			Invulnerable: 
+			Indestructible Vehicle: 
+			RC Vehicle: 
+			Off The Radar: 
+			In An Interior: 
+			Spectating: 
+			Typing: 
+			Dead: 
+			VPN: 
+World
+	Places
+		Teleport To...
+			Auto Teleport To Waypoints: On
+Game
+	Disables
+		Prevent Numpad 7 Opening Social Club: On

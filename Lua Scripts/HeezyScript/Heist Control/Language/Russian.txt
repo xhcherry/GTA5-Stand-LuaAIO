@@ -1,40 +1,25 @@
-# <  README  >
-# Thanks to translate HC!
-# You should translate right-side texts. Otherwise, it'll cause errors.
-# You can use all characters except "=" character.
-# Using "#" character means the line will be ignored like the comment in coding.
-# If you wanna release your own translation, contact to Dev of HC in DC Server.
-# Learn More: https://icedoomfist.com/Stand_Heist_Control/How_To_Translate/
+# DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
+# Generated Date: 2023/01/06 12:39:45 AM
+# Heist Control Version: V 3.1.0
 
---- [ # General ] ---
+# Thank you for translating Heist Control!
+# You should translate right-side of '=' character.
+# You can use all characters except '=' character.
+# Using '#' character means the line will be ignored.
+# If you want to release your own translation officially, please contact to the developer of Heist Control in its Discord server.
+# Learn more: https://icedoomfist.com/Stand_Heist_Control/How_To_Translate/
+
 
 Heist Control = Heist Control
 Announcement = Объявление
-You are using latest version of HC! = Вы используете последнюю версию HC!
-You are using outdated version of HC! = Вы используете устаревшую версию HC!
-Current Version: = Текущая версия:
-Latest Version: = Последняя версия:
-Stand can't get latest version info of HC. = Я не могу получить информацию о последней версии HC.
-HC website currently has connection issue. = На веб-сайте HC в настоящее время есть проблема с подключением.
-Coded GTAO Version: = Кодированная версия GTAO:
-Current GTAO Version: = Текущая версия GTAO:
 Hard = Трудный
 Normal = Нормально
 Notification = Уведомление
-[Risky] = [Рискованный]
-[Locally] = [Локальный маштаб]
-Custom Payout = Пользовательская выплата
-You didn't input the value. Please input it! = Вы не ввели значение. Пожалуйста, введите его!
 Enable = Включить
-Sucessfully set! = Успешно установлен!
 Would you like to restart HC now? = Хотели бы вы перезапустить HC прямо сейчас?
 Others = Другие
 Good bye, thank you for using HC! :D = До свидания, HC! :D
-
-
---- [ # Main Tabs ] ---
-
 Cayo Perico Heist = Кайо Перико
 Diamond Casino Heist = Казино Диамонд
 Doomsday Heist = Ограбление Судного дня
@@ -43,11 +28,6 @@ LS Tuners Robbery = Ограбления LS Tuners
 The Contract: Agency = Миссии агентства
 Master Unlocker = Разблокировки
 Tools = Полезное
-Settings & About HC = Настройки
-
-
---- [ # Cayo Perico Heist ] ---
-
 Automated Presets = Автоматически заданные
 1 Player = 1 Игрок
 2 Players = 2 Игрока
@@ -55,15 +35,9 @@ Automated Presets = Автоматически заданные
 4 Players = 4 Игрока
 Sapphire Panther = Сапфировая Пантера
 Ruby Necklace = Рубиновое ожерелье
-
-Quick Preset [1 ~ 4P] = Быстрая установка [1 ~ 4игрока]
-There are no secondary targets, only one primary target exists. Your goal is get it. = Вторичных целей нет, существует только одна первичная цель. Ваша цель - получить это.
-
 Standard Preset = Стандартная предустановка
 Semi-Original Preset = Полуоригинальная предустановка
-- Remember to choose your preset outside the Submarine or in the Main Deck = - Не забудьте выбрать предустановку за пределами подводной лодки или на Главной палубе
 - Remember to deactivate the preset at the end. = - Не забудьте отключить предустановку в конце.
-
 Custom Teleport = Телепорты
 Compound = Соединение
 El Rubio's Office = Офис Эль Рубио
@@ -80,122 +54,47 @@ Main Dock = Главная Док-станция
 North Dock = Северный док
 Loot = Добыча
 Radio Tower = Радиовышка
-Drainage = Канализация
 Drainage: 2nd Checkpoint = Канализация: 2-й пункт
-Ocean Safe Place = Безопасное место в Океане
-Kosatka: Heist Board [Call Kosatka first] = Косатка: Доска ограблений
-You have not bought Kosatka yet. Buy it first to teleport! = Вы еще не купили Костку!
-
 Advanced Features = Расширенные функции
-Players Cut = Доля игроков
 Your Cut = Твоя Доля
 Player 2 = Игрок 2
 Player 3 = Игрок 3
 Player 4 = Игрок 4
-Set 100% to everyone = Установите 100% для всех
-
 Bag Capacity Modifier = Модификатор емкости сумки
-Normal Bag Limit = Нормальный
-Simulate Bag to 2 players = Для 2 игроков
-Simulate Bag to 3 players = Для 3 игроков
-Simulate Bag to 4 players = Для 4 игроков
-Infinite Bag = Бесконечная сумка
-Skip Hacking = Пропустить Взлом
-Skip Sewer Cutter = Пропустить Канал-резак
-Open Plasma Glass Immediately = Пропуск Плазменное Стекло
-Bypass Plasma Glass Cutter Heat = Обход Тепла Стеклореза
 Infinite Voltage Timer = Бесконечное напряжение
-Remove Fencing Fee & Pavel Cut = Снимите Плату За Ограждение
 Leave activated until the end of the heist = Оставьте активированным до конца ограбления
-Auto-finish Primary Target = Авто-завершение Основ-цели
-Remove Drainage Pipe = Убрать канализационную Трубу
-
 Heist Vehicles = Транспорт доставки
-Submarine KOSATKA = KOSATKA
-Plane ALKONOST = Самолет ALKONOST
-Plane VELUM = Самолет VELUM
-Helicopter STEALTH ANNIHILATOR = Вертолет ANNIHILATOR
-Boat PATROL BOAT = Лодка PATROL BOAT
-Boat LONGFIN = Лодка LONGFIN
-Unlock All Vehicles = Разблокируйте Все Транспорт
-
 Primary Target = Основная цель
-
 Secondary Target = Вторичная цель
-When using this method, the percentage and final payment is random! = При использовании этого метода процент и окончательный платеж являются случайными!
-Remove All = Удалите Все
-
 Compound Loot = Составная добыча
-
 Weapon Loadouts = Загрузка оружия
 Aggressor = Зачинщик
-- Assault SG + Machine Pistol = - Штурмовой дробовик + ПП
 - Machete + Grenade = - Мачете + Граната
 Conspirator = Конспиратор
-- Military Rifle + AP = - Военная винтовка + Липучка
-- Knuckles + Stickies = - Костет + Пистолет
 Crackshot = Снайпер
-- Sniper + AP = - Снайпер + Авто-пистолет
 - Knife + Molotov = - Нож + Молотов
 Saboteur = Диверсант
-- SMG Mk2 + SNS Pistol = - ПП Mk2 + Карманный пистол
 Marksman = Максман
-- AK-47 + Pistol .50 = - AK-47 + Пистолет Мк2
 - Machete + Pipe Bomb = - Мачета + Само-бомба
-
-Equipments Spawn Location = Место появления Оборудования
 - Guard Clothing = - Защитная одежда
 - Bolt Cutters = - Болторезы
-
 Supply Truck Location = Место грузовика снабжения
 Heist Difficulty = Сложность ограбления
-
 Unlock Heist Awards = Разблокируйте награды за ограбление
-Complete all Missions only = Выполняйте только все миссии
-Force the longest final Cutscene = Форсируйте самый длинный финальный ролик
 Keep in mind that you must use this option before starting the Heist = Имейте в виду, что вы должны использовать эту опцию перед началом ограбления
-Set Heist to Default [Reset] = Установите ограбление по умолчанию [Сброс]
-
-
---- [ # Casino Heist ] ---
-
-Silent & Sneaky Approach = Бесшумный и Скрытный Подход
-BigCon Approach = Подход к Большому мошенничеству
+Silent & Sneaky Approach = Скрытный Подход
+BigCon Approach = ?Подход Обманом
 Aggressive Approach = Агрессивный Подход
-$3.5 Millions & For All Players = $3.5М и Для Всех Игроков
 ALWAYS choose Low Level Buyer! = ВСЕГДА выбирайте Покупателя Низкого Уровня!
-
 Advanced Features = Расширенные функции
 Your Cut (Non-Host) = Ваша доля
-Works on both of sorts: Fingerprint and Keypad = Работает с обоими видами: отпечатками пальцев и клавиатурой
-Instant Vault Door Laser = Мгновенный Лазер на двери Хранилища
-
 Inside = Внутри
-Planning Boards = Советы по планированию
-Garage Exit = Выход из гаража
-Waste Disposal = Утилизация отходов
-2-Keypad Door = 2-дверь с сенсорной панелью
-Inside Vault = Внутреннее хранилище
-Pre-Inside Vault = Предварительное внутреннее хранилище
-Daily Bonus = Ежедневный Бонус
-Daily Bonus Room = Ежедневный Бонусный Номер
 Outside = Внешний
-Main Gate = Главные ворота
-Staff Lobby = Staff лобби
-
-Heist Planning [Board 1] = Планирование [Доска 1]
-
-Change Approach and Difficulty = Изменение подхода и трудности
 Change Target = Изменить цель
-Diamond = Бриллианты
-Gold = Золоты
+Gold = Золото
 Artwork = Картины
 Cash = Наличка
-P.O.I & Access Points = P.O.I & Точки доступа
 Change your session to apply! = Измените свой сеанс, чтобы подать заявку!
-
-Heist Planning [Board 2] = Планирование [Доска 2]
-
 Change Gunman = Смени Стрелка
 Chester McCoy = Честер Маккой
 Gustavo Mota = Густаво Мота
@@ -204,57 +103,27 @@ Charlie Reed = Чарли Рид
 Karl Abolaji = Карл Аболаджи
 Random = Случайный
 Remove = Удалить
-
 Weapon Variation = Вариации оружия
-
 Change Vehicle = Сменить ТС
 Chester McCoy = Честер Маккой
 Eddie Toh = Эдди Тох
 Taliana Martinez = Талиана Мартинес
 Zach Nelson = Зак Нельсон
 Karim Denz = Карим Денц
-
 Vehicle Variation = Варианты автомобиля
 Best = Лучший
 Good = Хорошо
 Fine = Изящный
 Worst = Плохой
-
 Change Hacker = Хакер изменений
 Avi Schwartzman = Ави Шварцман
 Paige Harris = Пейдж Харрис
 Christian Feltz = Кристиан Фельц
 Yohan Blair = Йохан Блэр
 Rickie Luken = Рики Лукенс
-
-Choose Mask = Выберите Маску
-Remove Mask = Удалить Маску
-Geometric = Геометрические
-Hunter = Охотник
-Oni Half Mask = Они Полумаска
-Emoji = Эмодзи
-Ornate Skull = Богато украшенный Череп
-Lucky Fruit = Счастливый Фрукт
-Guerilla = Партизан
-Clown = Клоун
-Animal = Животное
-Riot = Бунт
-Oni = Они
-Hockey = Хоккей
-
-Unlock Scan Card Level = Разблок Уровня Карты Сканирования
-Duggan Guards = Охранники Даггана
 0 - Strongest Guards = 0 - Самые сильные охранники
 3 - Weakest Guards = 3 - Самые слабые охранники
-
-Heist Planning [Board 3] = Планирование [Доска 3]
 Remove Drills = Извлеките сверла
-Silent & Sneaky and Aggressive Approach = Бесшумный, Подлый и Агрессивный Подход
-
-Board Loader & Unloader = Загрузчик и разгрузчик досок
-Load all Boards = Загрузите все платы
-Unload all Boards = Выгрузите все доски
-
 Casino Story Missions = Сюжетные миссии казино
 Loose Cheng = Спасти чена
 House Keeping = Домоводство
@@ -262,47 +131,11 @@ Strong Arm Tactics = Тактика Сильной Руки
 Play to Win = Играйте, чтобы выиграть
 Bad Beat = Плохой Ритм
 Cashing Out = Обналичивание
-
-Remove Heist Prepare Cooldown = Удалить Ограбление Подготовить перезарядку
-Skip Agatha Baker missions to the last one = Пропустите миссии Агаты Бейкер
-
-
---- [ # Doomsday Heist ] ---
-
-[Final Heist] = [Последнее ограбление]
-The Data Breaches ACT I = Утечке данных I
-The Bogdan Problem ACT II = Богдану АКТ II
+The Data Breaches ACT I = Утечка данных I
+The Bogdan Problem ACT II = Богдан АКТ II
 The Doomsday Scenario ACT III = Сценарий судного дня АКТ III
-
-Heist board = Доска ограблений
-Prisoner cell = Камера для заключенных
-
-Modify ACT I Payment [$2.5 Millions] = Изменить платеж по АКТУ I [2,5М]
-Modify ACT II Payment [$2.5 Millions] = Изменить выплату по Богдану II [2,5М]
-Modify ACT III Payment [$2.5 Millions] = Изменить платеж по акту III [2,5М]
 Set difficulty as hard. In-Game percentage may seem weird. Applied to everyone. = Установите сложность как жесткую. Внутриигровой процент может показаться странным. Применимо ко всем.
-
-Setup: Server Farm (Lester) = Настройка: Серверная ферма (Лестер)
-Unlock All Doomsday Heist = Разблок Все Ограбления Судного Дня
-Complete all preparations (Not Setup) = Завершите все приготовления (не настройку)
-
---- [ # Classic Heist ] ---
-
 Fleeca Heist = Ограбление Флека
-Your Payout (Millions) = Ваша выплата (В миллионах)
-Will be applied only to you & have to host = Будет применяться только к вам и должен быть размещен
-- Only do this only one time or twice in less than 24 hours. = - Делайте это только один или два раза менее чем за 24 часа.
-- Otherwise, you can be banned! = - В противном случае вы можете быть забанены!
-Modify Payout Amount = Изменить Сумму Выплаты
-Complete all Setup = Завершите все настройки
-You may need to choose a Heist and then complete the first setup, activated until then = Возможно, вам потребуется выбрать ограбление, а затем завершить первую настройку, активированную до тех пор
-
-
---- [ # LS Robbery ] ---
-
-Modify Contracts payout - $1 MILLIONs = Выплата по модифицированным контрактам - 1м
-Always keep this option actived before starting a contract = Всегда оставляйте эту опцию активной перед началом контракта
-Changes will only happen if you are outside your Auto-Shop! = Изменения произойдут только в том случае, если вы находитесь за пределами своего автомастерского!
 Union Depository = Депозитарий Союза
 The Superdollar Deal = Сверхдолларовая сделка
 The Bank Contract = Банковский Договор
@@ -311,121 +144,60 @@ The Prison Contract = Тюремный контракт
 The Agency Deal = Агентская сделка
 The Lost Contract = Потерянный контракт
 The Data Contract = Контракт на передачу данных
-Complete missions (only) = Выполняйте миссии (Сброс)
-
-Reset Missions (only) = Сброс миссий (Сброс)
-Reset Contracts = Сброс Контрактов
-Reset Total Gains & Completed Missions = Сбросить Общий Выигрыш и Завершенные Миссии
-
-
---- [ # The Contract : Agency ] ---
-
 VIP Contract: Dr.Dre = VIP-контракт: Доктор Дре
 The feature to be worked properly, you may need to log out of F.Clinton & Partner = Чтобы функция работала должным образом, вам, возможно, потребуется выйти из F.Clinton & Partner
-
 NightLife Leak = Утечка ночной жизни
 The Nightclub (Prep) = Ночной жизни (Подготовка)
 The Marina (Prep) = Пристань для яхт (Подготовка)
 NightLife Leak (Mission) = Утечка ночной жизни (Миссия)
-
 High Society Leak = Утечка информации из Высшего общества
 The Country Club (Prep) = Загородный клуб (Подготовка)
 Guest List (Prep) = Список гостей (Предварительная подготовка)
 High Society (Mission) = Высшее общество (Миссия)
-
 South Central Leak = Южная Центральная утечка
 Davis (Prep) = Дэвис (подготовка)
 The Ballas (Prep) = Балас (подготовка)
 Agency Studio (Mission) = Студия агентства (Миссия)
-Final Contract: Don't Fuck with Dre = Окончательный контракт: Не связывайся с Дре
-
-Modify Final Contract Payout (2 Millions) = Изменить Окончательную Выплату По Контракту (2 Миллиона)
-Skip Cooldown of Payphone hits & contracts = Пропустить перезарядку таксофонных звонков и контрактов
-Make sure enabled before starting any contract or hit. = Убедитесь, что он включен перед запуском любого контракта или хита.
-Remove Security Missions Cooldown = Удалить Перезарядку Миссий Безопасности
-Complete all Missions = Завершите все миссии
-
-
---- [ # Master Unlocker ] ---
-
 DLCs = DLC
 Arena Wars DLC = ДОПОЛНЕНИЕ Arena Wars DLC
-Unlock all Arena Wars Trophy and Toys = Разблокируйте все трофеи и игрушки Arena Wars
-Arena Wars Clothing = Arena Wars Одежда
 Summer 2020 DLC = Летнее дополнение 2020 года
 Summer 2020 Awards = Награды лета 2020 года
-Unlock Summer DLC Clothing = Разблокируйте Летнюю одежду DLC
 LS Tuners DLC = LS Тюнер DLC
-Unlock Drip Fed Outfits = Разблокируйте Одежду С Капельным Питанием
 Unlock Awards = Разблокируйте Награды
-The Contract DLC = Дополнение к контракту
 Unlock Animal Masks = Разблокируйте Маски животных
 Unlock DJ Pooh Shirts = Разблокируйте футболки DJ Pooh
-
 Buildings = Здания
 Arcade Unlockers = Аркадные разблокеры
-Unlock Arcade Trophys and Toys = Разблокируйте Аркадные Трофеи и игрушки
-Unlock Arcade Clothing = Разблокируйте Аркадную одежду
-Unlock NightClub Awards = Разблокируйте награды ночного клуба
 Casino Store Ace Masks = Магазин казино Ace Masks
-Add cosmetics items to the Office/MC = Добавьте предметы косметики в офис/MC
-
 Missions = Mиссии
-Cayo Perico unlockables = Кайо Перико разблокируется
 Unlock Yacht Missions = Разблокируйте Миссии на Яхте
-Unlock all Contacts = Разблокируйте все контакты
-Skip Lamar Missions to the last one = Пропустите миссии Ламара до последней
-
 Special Anniversaries = Особые Юбилеи
 Christmas = Рождество
 Bypass Christmas Clothing = Обходите стороной Рождественскую Одежду
-You must always keep this feature activated to wear! = Вы всегда должны держать эту функцию включенной, чтобы носить!
 Unlock Christmas Liveries = Разблокируйте Рождественские Ливреи
 Unlock Christmas Content = Разблокируйте Рождественский контент
-Valentine = Валентин день
 Independence Day = День независимости
-
 Clothes = Одежда
-Unlock Hats and many Shirts = Разблокируйте шляпы и множество рубашек
-Unlock Don't Cross the Line Tee = Разблокировка Не пересекайте линию Тройник
-
 Vehicles = Машины
-Unlock some vehicles trade price = Разблокируйте ТС по оптовой
-Unlock Shotaro = Разблокируйте Шотаро
-
 Weapons = Оружие
 Stone Hatchet Challenge = Вызов Каменному топору
 Double Action Revolver = Револьвер двойного действия
 Navy Revolver = Револьвер военно-морского флота
 Up-N-Atomizer = Up-N-Atomizer
-
 Vanilla Unicorn Award = Премия Ванильного единорога
 Alien Tatto (Illuminati) = Татуировка инопланетянина (Иллюминаты)
-Returning Bonus = Возвращаемый Бонус
-
-
---- [ # Tools ] ---
-
 Tunables = Настраиваемые
 Remove Cooldowns = Удаление Перезарядки
-Resupply Delay = Задержка пополнения запасов
 MC Business = MC Бизнес
 Bunker = Бункер
-Buy & Sell = Покупка и продажа
 Special Cargo = Специальный груз
 Vehicle Cargo = ТС Груз
-Air Freight Cargo = Авиаперевозки Грузов
-Client Job = Работа с клиентом
-Launch Kosatka Missiles = Запуск ракет "Костка"
-
 Multipliers = Распространители
 LS Car Meet = LS Автомобиль встреча
 Street Race = Уличные гонки
 Pursuit Race = Гонка преследования
 Scramble = Карабкаться
 Head 2 Head = Глава 2 главная
-LS Car Meet Track = трасса Встречи автомобилей LS
-
 Trigger Special Crate Missions = Запускайте Специальные Миссии С Ящиками
 Note that buying special crates can only in the Terrobyte. = Обратите внимание, что покупать специальные ящики можно только в Terrabyte.
 Ornamental Egg = Декоративное Яйцо
@@ -434,94 +206,38 @@ Large Diamond = Крупный Бриллиант
 Rage Hide = Ярость Скрывается
 Film Reel = Ролик с фильмом
 Rare Pocket Watch = Редкие Карманные Часы
-
 Bunker Mission Selector = Выбор миссии бункера
-[SPECIAL] Trigger Alien Egg Mission = Миссия по запуску Инопланетного яйца
-
 Steal Supplies = Красть Припасы
 Altruist Camp = Лагерь альтруистов
-The Dune Buggy = Дюнный багги
-Police Riot = Полицейский бунт
-Mine = Мой
-The Technical Aqua = Техническая Аква
 Rival Operation = Конкурирующая операция
 Zancudo River = Река Занкудо
-LSIA = LSIA
-Merryweather HQ = ШТАБ-КВАРТИРА Мерривезера
 Training Ground (Tank) = Тренировочный полигон (Танк)
-Del Perro Beach = Del Пляж Перро
-Cholla Springs Avenue = Чолла-Спрингс-авеню
-Chupacabra Street = Улица Чупакабры
-
 Sell Weapons = Продавать Оружие
-HVY Insurgent Pick Up = HVY Повстанческий Пикап
-HVY Insurgent (Normal) = Повстанец HVY (обычный)
 Marshall = Маршалл
-HVY Insurgent Pick Up (Custom) = HVY Повстанческий Пикап (На заказ)
 Phantom Wedge = Призрачный клин
 Dune FAV = Dune FAV
-
 Remove Other Cost = Убрать Другие Затраты
-Repair Vehicle Cargo = Грузовой Ремонтный автомобиль
-When you sell vehicle, block paying related repair. = Когда вы продаете автомобиль, блокируйте оплату связанного с ним ремонта.
-Ron's Cut of Air Freight Cargo = Доля Рона в авиаперевозках грузов
-Tony's Cut of Nightclub = Доля Тони в ночном клубе
-Resupply MC Business = Пополнение запасов для бизнеса
-Resupply Bunker = Бункер для пополнения запасов
-
 Single MC Vehicle Sell = Продажа одного транспортного средства MC
-Makes always number of MC business selling's vehicle is one. = Делает всегда количество автомобилей, продающих бизнес MC, равным единице.
-Bypass Transaction Error Messages = Обход Сообщений Об ошибках Транзакций
-Prevents appearing transaction error messages, can be used for a lot of stuffs like when you get CEO Money. = Предотвращает появление сообщений об ошибках транзакций, может использоваться для многих целей, например, когда вы получаете деньги генерального директора.
 Make One Snack Full Health = Сделайте Один Перекус Полноценным Для Здоровья
 Whatever you use a snack, will make you full health. = Что бы вы ни употребили в качестве закуски, это принесет вам полное здоровье.
-Infinite Stone Hatchet Power = Бесконечная Сила Каменного Топора
-Complete Headhunter = Полный Охотник за головами
-Complete Sightseer = Полный Экскурсант
-Complete working in progress the mission. = Завершите незавершенную миссию.
-7 Years GTAO Playtime = 7 Лет Игрового времени
-Make your account like played GTAO 7 years. = Сделайте свой аккаунт 7 летним
-
 Custom Money Remover = Пользовательское Средство для Снятия денег
-Easy way to remove GTAO bank account money = Простой способ снять деньги с банковского счета GTAO
-Firstly, buy ballistic equipment. To remove money, call it in the interaction menu = Во-первых, купите баллистическое оборудование. Чтобы снять деньги, вызовите его в меню взаимодействия
-
 AFK Money = АФК Деньги
-Methods are safe to use, but if you earn too much money, can be banned. Always use at own your risk. = Методы безопасны в использовании, но если вы заработаете слишком много денег, могут быть запрещены. Всегда используйте на свой страх и риск.
-Cooldown Time [Sec] = Время перезарядки [Сек]
 Auto Time Trial = Авто Пробная версия по времени
 Auto Rig Slot Machine = Игровой автомат Auto Rig
 Ratio of Jackpot and Loss = Соотношение Джекпота и проигрыша
-Playing Time Trial one time is done! Waiting for cooldown time... = Пробная игра на время один раз закончена! Ожидание времени перезарядки...
-Auto Black Jack = Авто блек-Джек
-
 Heist Cooldown Timer = Таймер перезарядки Ограбления
-When set time passed, HC will let you know heist cooldown has been passed. = По истечении заданного времени HC сообщит вам, что время перезарядки при ограблении прошло.
-Text Position = Положение текста
-Cooldown time passed, you can play the heist again! = Время перезарядки прошло, вы можете снова сыграть в ограбление!
-Custom Heist = Заказное ограбление
 Use Stand's Overlay = Используйте маску Stand
-"Enabled: Use Stand's Overlay & Settings: Game > Info Overlay" = "Включено: Используйте Наложение и настройки стенда: Игра > Наложение информации"
 Disabled: Use Heist Control's Overlay & Settings = Отключено: Используйте Наложение и настройки элемента управления ограблением
-Set Custom Time = Установите Пользовательское Время
-
-Manage Near Peds & Cams = Управление Рядом с педами и Камерами
 Work only to hostile peds = Работать только с враждебными Педами
-Enabled: Ped options work only to hostile peds = Включено: параметры Ped работают только с враждебными ped
-Disabled: Ped options work to all peds = Отключено: параметры Ped работают для всех ped
 Peds = Педы
 Remove Weapons = Убрать Оружие
 Delete = Удалить
 Kill = Убивать
-Cams = Палец
-
 Bypass Locked Doors = Обходите Запертые Двери
 Speed of Improved No Clip = Скорость улучшенной No Clip
 Distance of Teleport To Forward = Расстояние телепорта Для Переадресации
-Instant Doors Crack = Мгновенный взлом Дверей
 Improved No Clip = Улучшенный No Clip
 Teleport To Forward = Телепортироваться Вперед
-
 Request Services = Запрашивать услуги
 MOC = MOC
 Avenger = Avenger
@@ -529,66 +245,20 @@ Terrobyte = Terrobyte
 Kosatka = Kosatka
 Dingy = Грязный
 Ballistic Armor = Баллистическая броня
-
-Info Spoofing = Подмена информации
 Value = Ценность
 Total Money = Общая сумма Денег
 Kills = Убийств
 Deaths = Смертей
-
-Business Upgrade States = Состояния Обновления бизнеса
-Document = Документы
-Weed = Сорняк
-Counterfit = Фальсификация
-Meth = Мед
-Cocaine = Кокаин
+Weed = Марихуана
 Bunker = Бункер
-Arcade = Аркада
-Nightclub = Ночной клуб
-Equipment Upgrade = Модернизация оборудования
-Staff Upgrade = Повышение квалификации персонала
-Secuirity Upgrade = Обновление безопасности
-Decor Upgrade = Обновление декора
-Firing Range Upgrade = Повышение дальности стрельбы
-Gunlocker Upgrade = Разблокированное обновление
-Personal Quarters Upgrade = Обновление личных Покоев
-Transportation Upgrade = Модернизация транспорта
-Drone Station = Беспилотная станция
-Business Hub = Деловой центр
-Floor = Этаж
-Style = Стиль
-Wall = Стена
-Garage = Гараж
-Neon Lights = Неоновые огни
-High Score Screen = Экран с высоким баллом
-Lighting = Освещение
-Dancers = Танцоры
-Paid DJs = Платные ди-джеи
-
-Stat Editor & Reader = Редактор и читатель статистики
-Presets Stat Editor = Редактор статистики пресетов
 Modify Stat = Изменить Статистику
 Set Stat = Установить Статистику
-
-Crew Rank = Ранг экипажа
-
 Playtime = Время игры
 Method = Метод
-Use Adding Playtime = Используйте Добавление Времени воспроизведения
-Enabled: Use adding playtime method = Включено: Используйте метод добавления времени воспроизведения
-- Add from your current playtime = - Добавить из вашего текущего игрового времени
-Disabled: Use setting playtime method = Отключено: Используйте метод настройки времени воспроизведения
-- Set equal you will set time = - Установите равное вы установите время
-Note that set method supports up to only 24.8 days, but add method supports up to 50K days = Обратите внимание, что метод set поддерживает до 24,8 дней, но метод add поддерживает до 50 тыс. дней
-Day = День
-Hour = Час
-Min = Минута
 Total Playtime = Общее время игры
-GTA:O Playtime = GTA:O Время игры
 Deathmatches = Смертельные поединки
 Races = Гонки
 Creator = Разработчик
-
 Cash Earned & Spent = Заработанные и потраченные деньги
 Cash Amount = Сумма денежных средств
 Total Earned = Общая сумма Заработка
@@ -598,35 +268,20 @@ Betting = Ставка
 Shared = Общий
 Car Sales = Продажа автомобилей
 Picked Up = подобранный
-
 Stat Name = Имя статистики
 Stat Value = Значение статистики
 Example Stat = Пример Статистики
-
 Custom Stat Editor = Пользовательский редактор статистики
-Setting some certain stats may cause a ban. Use at your own risk! = Установка некоторых определенных характеристик может привести к запрету. Используйте на свой страх и риск!
 Note: MP0_ or MP1_ will be selected by HC automatically, therefore don't write it. = Примечание: MP0_ или MP1_ будут выбраны HC автоматически, поэтому не записывайте их.
-
 Custom Stat Reader = Пользовательский Считыватель статистики
 Copy Stat Value = Копировать Значение статистики
 Read Stat = Состояние чтения
-Sucessfully read! = Успешно прочитано!
-
 Language Setting = Настройка языка
 How To Translate = Как Перевести
-Always looking for new translators not existing language. If you interested in translating HC, click! = Всегда ищу новых переводчиков на несуществующий язык. Если вы заинтересованы в переводе HC, нажмите!
 Language = Язык
-
-
---- [ # Settings ] ---
-
 Settings = Настройки
-In-Game Customize = Внутриигровая настройка
-
-Sort = сортировать
 In-Game = внутри-игровой
 No Notification = Нет Уведомления
-
 Icon = Икона
 HC Logo = Логотип HC
 Lester = Лестер
@@ -635,7 +290,6 @@ Skull Head = Череп головы
 Warstock = Warstock
 Black R* = Черный R*
 R* Social Club = R* Social Club
-
 Background Color = Цвет фона
 Black = Черный
 White = Белый
@@ -645,32 +299,347 @@ Yellow = Желтый
 Mint = Мята
 Green = Зеленый
 Light Blue = светло-синий
-
 Text Color = Цвет текста
-
-
---- [ # About HC ] ---
-
 About HC = О компании HC
 Join Discord Server! = Присоединяйтесь к серверу Discord!
-Get support, Download beta version, Enjoy other stuffs! = Получите поддержку, скачайте бета-версию, наслаждайтесь другими материалами!
 Youtube = Ютуб
-Videos that related HC tutorial are uploaded, subscribe the channel for me, :D = Загружены видео, связанные с учебным пособием по HC, подпишитесь на мой канал, :D
 Tutorial = Руководство
-If you don't know how to use HC, click! = Если вы не знаете, как использовать HC, нажмите!
 Changelog = Журнал изменений
-If you want to know what latest version was changed, click! = Если вы хотите узнать, какая последняя версия была изменена, нажмите!
-
-
---- [ # Credits ] ---
-
 Credits = Титры
-If you click features, will show the user's profile image & copy name or be redirected to mentioned website. = Если вы нажмете "Функции", появится изображение профиля пользователя и имя копии или будет перенаправлено на указанный веб-сайт.
-2Take1 Heist Control Dev, He allowed me to use his code. Without him, HC doesn't exist. Действительно благодаря ему! = 2 Take 1 Heist Control Dev, он позволил мне использовать его код. Без него HC не существует. Действительно благодаря ему!
-Creator of Wiriscript & Lancescript that help me coding HC = Создатель Wiki-скрипта и Lance-скрипта, которые помогают мне кодировать HC
-Helped a lot of stuffs for HC's website maintenance. = Помог мне во многих вещах для обслуживания веб-сайта HC.
-Helped me coding website's design. = Помог мне разработать дизайн веб-сайта.
-Made logo, banner and etc for HC. = Сделал логотип, баннер и т.д. для HC.
 Let me know about stats info. = Дайте мне знать о статистике.
 Translators = Переводчики
 Maintains HC's translation = Поддерживает перевод HC
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+Native file for HC doesn't exist. = Native file for HC doesn't exist.
+Please re-enable 'Stand > Lua Scripts > Repository > natives-1672190175' feature or download the native file manually from somewhere! = Please re-enable 'Stand > Lua Scripts > Repository > natives-1672190175' feature or download the native file manually from somewhere!
+language file for HC doesn't exist. = language file for HC doesn't exist.
+Please install HC properly again! = Please install HC properly again!
+[NOT WORKING] = [NOT WORKING]
+- This feature isn't working due to the latest GTA Online patch: = - This feature isn't working due to the latest GTA Online patch:
+Please download the lastest version of Heist Control or wait for Heist Control's developer patching. = Please download the lastest version of Heist Control or wait for Heist Control's developer patching.
+HC Logo for In-Game notification doesn't exist. = HC Logo for In-Game notification doesn't exist.
+Please re-enable 'Stand > Lua Scripts > Repository > Heist Control' to fix! = Please re-enable 'Stand > Lua Scripts > Repository > Heist Control' to fix!
+Except [NOT WORKING] features should work! = Except [NOT WORKING] features should work!
+But, all features of HC should work! = But, all features of HC should work!
+Coded GTA Online Version: = Закодированная версия GTA Online:
+Current GTA Online Version: = Текущая версия GTA Online:
+ULP Missions = Миссии ULP
+Settings And About HC = Настройки и Информация
+- Remember to choose your preset before entering the Submarine = - Не забудьте выбрать свою предустановку перед входом в подводную лодку
+Quick Preset (1 - 4P) = Быстрая предустановка (1-4)
+There are no secondary targets, there's only the primary target. Your goal is get it. = Здесь нет второстепенных целей, есть только основная цель. Ваша цель - получить это.
+Drainage Pipe = Дренажная пик
+Ocean (Safe Zone) = Океан (Безопасная зона)
+Kosatka: Heist Board (Call Kosatka first) = Косатка: Доска для ограблений (сначала закажите Косатке)
+You didn't buy the Kosatka yet. Buy it first to teleport! = Ты еще не купил Косатку. Купите его сначала, чтобы телепортироваться!
+Player's Cut = Доля игрока
+Custom Percentage = Стандартный процент
+Set 100% for everyone = Установите 100% для всех
+(Local) = (Local)
+Normal Bag Capacity = Нормальная вместимость сумки
+Simulate Bag Capacity of 2 players = Вместимость сумки для 2 игроков
+Simulate Bag Capacity of 3 players = Вместимость сумки для 3 игроков
+Simulate Bag Capacity of 4 players = Вместимость сумки для 4 игроков
+Infinite Bag Capacity = Бесконечная вместимость сумки
+Skip The Hacking Process = Пропустить Процесс Взлома
+Skip Cutting The Sewer Grill = Пропуск резки Канал Решетки
+Skip Cutting The Glass = Пропуск Резки Стекла
+Infinite Plasma Cutter Heat = Нет нагрева резака
+Remove The Fencing Fee And Pavel's Cut = Уберать долю Павла
+Obtain The Primary Target = Получите Основную Цель
+Remove The Drainage Pipe = Удалить Дренажную Решотку
+Kosatka (Submarine) = Kosatka (Подлодка)
+Alkonost (Plane) = Alkonost (Самолет)
+Velum (Plane) = Velum (Самолет)
+Annihilator Stealth (Helicopter) = Annihilator Stealth (Вертолет)
+Kurtz 31 Patrol Boat (Boat) = Kurtz 31 Patrol Boat (Лодка)
+Longfin (Boat) = Longfin (Лодка)
+Unlock All Of The Vehicles = Разблокируйте Все ТС
+Madrazo Files = Файлы Мадрасо
+Pink Diamond = Розовый бриллиант
+Bearer Bonds = Облигации
+Tequila = Текила
+Mixed Loot = Смешанная добыча
+Coke = Кокаин
+Remove All Secondary Targets = Удалить всю Вторичную цель
+Paint = Картина
+Remove Paint (Only) = Удалить Картины (только)
+- Assault Shotgun + Machine Pistol = - Штурмовой дробовик + Пистолет-пулемет
+- Military Rifle + Pistol .50 = - Военная винтовка + пистолет .50
+- Knuckle Duster + Sticky Bombs = - Кастет + Липкие бомбы
+- Sniper Rifle + AP Pistol = - Снайперская винтовка + Бронибойный пистолет
+- SMG Mk2 + SNS Pistol Mk2 = - Карманный пистолет Mk2 + ПП Mk2 + Самодельная бомба + Нож
+- Assault Rifle Mk2 + Pistol .50 = - Штурмовая винтовка Mk2 + пистолет .50
+Equipment's Spawn Location = Место появления оборудования
+Airport = Аэропорт
+Docks = Доки
+Main Dock (East) = Главный причал (Восточный)
+Main Dock (West) = Вторичный причал (Западный)
+Unlock The Heist Awards = Разблокируйте Награды за Ограбление
+Complete All Prep Missions = Завершить все Подготовительные миссии
+Force The Final Cutscene = Ускорение Финального ролика
+Set Heist To Default (Reset) = Ограбление по умолчанию (Сброс)
+Diamonds = Бриллианты
+$3.5 Million For All Players = $3.5 Миллион Для Всех Игроков
+ALWAYS Choose The Low Level Buyer! = ВСЕГДА выбирайте Покупателя Низкого Уровня!
+Skip Drilling The Vault Door = Пропуск Сверление Хранилища
+Planning Boards (Arcade) = Доски для планирования (Игровой)
+Garage Exit (Arcade) = Гараж Вход (Игровой)
+Waste Disposal (Casino) = Утилизация отходов (Казино)
+Staff Lobby (Casino) = Лобби для персонала (Казино)
+Mantrap Door (Casino) = 2-х карточная дверь вход (Казино)
+Inside The Vault (Casino) = Внутри хранилища (Казино)
+Outside The Vault (Casino) = 2-х карточная дверь выход (Казино)
+Daily Cash Storage (Casino) = Дневное хранение (Казино)
+Main Gate (Casino) = Главные Вход казино (казино)
+Heist Scope Out (Board 1) = Вариант ограбления (Доска 1)
+Change Approach And Difficulty = Измените Подход И Сложность
+P.O.I And Access Points = Точки входа и обьекты
+Scope(d) = Открыть все точки
+Unscope(d) = Удалить все точки
+Heist Perp Work (Board 2) = Подготовительные (Доска 2)
+Remove Masks = Удалите маски
+Geometric Set = Геометрические
+Hunter Set = Охотники
+Oni Half Mask Set = Полумаси Они
+Emoji Set = Смайлики
+Ornate Skull Set = Украшенные черепа
+Lucky Fruit Set = Счастливые фрукты
+Guerilla Set = Партизанский
+Clown Set = Клоуны
+Animal Set = Животные
+Riot Set = Бунт
+Oni Set = Они
+Hockey Set = Хоккейные
+Security Pass Level = Уровень пропуска безопасности
+Guards Strength Level = Уровень силы охранников
+Heist Planning (Board 3) = ?Планирование ограбления (Доска 3)
+Silent, Sneaky and Aggressive Approach = ?Бесшумный, подлый и агрессивный подход
+Board Loader And Unloader = Загрузчик и Выгрузчик досок
+Load All Of The Boards = Загрузите Все Доски
+Unload All Of The Boards = Выгрузите Все Доски
+Remove Heist Cooldown = Удалить перезарядку при ограблении
+Note that this doesn't bypass server-side cooldown time, just bypassing payment. = Обратите внимание, что это не отменяет время перезарядки на стороне сервера, а просто обходит оплату.
+Skip Ms. Baker missions to the Cashing Out (Last One) = Пропустите миссии мисс Бейкер для обналичивания (последняя)
+Set Heist to Default (Reset) = Установить ограбление по умолчанию (сброс разведки)
+Heist Screen on Facility = Экран ограбления на Базе
+Make sure you are in the your facility. = Убедитесь, что вы находитесь на своей базе.
+Heist Board = ?Доска для ограблений
+Prisoner Cell = ?Камера для заключенных
+Modify ACT I Payment ($2.5 Millions) = Изменить платеж по Акт I ($2.5M)
+Modify ACT II Payment ($2.5 Millions) = Изменить платеж по Aкт II ($2.5M)
+Modify ACT III Payment ($2.5 Millions) = Изменить платеж по Aкт III ($2.5M)
+Remove EMP Mines = Убрать электромагнитные мины
+(ACT III, Setup - Air Defense) = (АКТ III, Установка - Противовоздушная оборона)
+Unlock All Doomsday Heists = Разблокируйте все ограбления Судного дня
+Complete All Preps (Not Setups) = Завершить все подготовки (В Сессии)
+Your Payout (Million) = Ваша выплата (миллион)
+Modify The Payout = Изменить Размер Выплаты
+Complete All Setup = Завершите все настройки
+You may need to choose a new Heist and then complete the first setup for it to activate = Возможно, вам потребуется выбрать новое ограбление, а затем выполнить первую настройку, чтобы оно активировалось
+Skip Drilling = Пропустить сверление
+Modify Contracts payout - $1 Million = Выплата по модифицированным контрактам - 1 миллион долларов
+Complete The Preps = Завершите Подготовку
+Reset The Preps = Сбросить Предварительные настройки
+Reset The Contracts = Сбросьте Контракты
+Reset Total Gains And Completed Contracts = Сброс Общей Прибыли И Завершенных Контрактов
+Intelligence = Интеллект
+Counterintelligence = Контрразведка
+Extraction = Добыча
+Asset Seizure = Арест активов
+Operation Paper Trail = Операция Бумажный след
+Cleanup = Уборка
+Teleport To IAA Headquarters = ТП в Штаб-Квартиру IAA
+Finale: Don't Fuck with Dre = Финал: Не связывайся с Дре
+Modify Finale's Payout (2 Million) = Изменить выплату финала (2м)
+Skip The Cooldown Of Contracts and Payphone Hits = Пропустите время контрактов и звонков по таксофонам
+Make sure it's enabled before starting any contracts or hits. = Убедитесь, что он включен, прежде чем запускать какие-либо контракты или обращения.
+Remove Security Mission's Cooldown = Удалить время восстановления миссии безопасности
+Complete All Missions = Завершите все миссии
+Unlock all Arena Wars Trophies and Toys = Разблокируйте все трофеи и игрушки Arena Wars
+Clothing = Одежда
+The Criminal Enterprises DLC = DLC Криминальные предприятия
+Jackets / Sweaters / Hoodies / Shirts = Куртки / Свитера / Толстовки / Рубашки
+Pants / Caps / Hats = Брюки / Кепки / Головные уборы
+Earphones / Masks / Tech Demon = Наушники / Маски / Технический демон
+Shoes (Sliders) / Tiger = Обувь (ползунки) / Тигр
+Drug War DLC = DLC Война с наркотиками
+Unlock Arcade Trophies and Toys = Разблокируйте аркадные трофеи и игрушки
+50 Car Garage = Гараж на 50 машин
+Acid Lab Equipment Upgrade = Модернизация оборудования кислотной лаборатории
+Unlock Nightclub Awards = Разблокируйте награды ночного клуба
+Make sure click before buying. When you change your session, will be changed to non-unlocked status. = Обязательно нажмите перед покупкой. Когда вы измените свой сеанс, он будет изменен на статус не разблокирован.
+Add Cosmetic Decorations To The Office/MC = Добавьте косметических Украшений в Офис /MC
+To apply, sell special crate or vehicle cargo and change your session! = Чтобы подать заявку, продайте специальный ящик или грузовой автомобиль и измените свою сессию!
+Cayo Perico Unlockables = Кайо Перико разблокируемые
+Unlock Taxi Missions = Разблокируйте миссии такси
+Unlock All Contacts = Разблокируйте все контакты
+Skip Lamar Missions To The Last One = Пропустите миссии Ламара До Последней
+You must keep this feature enabled in order to wear it! = Вы должны сохранить эту функцию включенной, чтобы носить его!
+Valentine's Day = день святого Валентина
+Unlock Hats And Many Shirts = Разблокируйте Шляпы И Множество Рубашек
+Unlock Sasquatch Outfit = Разблокируйте снаряжение Снежного человека
+Unlock 'Don't Cross the Line Tee' = Разблокируйте "Не пересекайте линию тройника"
+Tattos = Татуировки
+Unlock Some Tattos = Открой несколько татуировок
+Unlock Some Trade Prices = Разблокируйте некоторые торговые цены
+Taxi Livery = Разблокировать награду Таксист
+a.k.a: 'Downtown Cab Co.' livery = a.k.a: 'Downtown Cab Co.' livery
+Unlock The Shotaro = Разблокируйте Шотаро
+Service Carbine = Служебный карабин
+Returning Player Bonus = Возвращающий Бонус игрока
+Supplies' Delay = Задержка припасов
+Buying And Selling = Покупка и Продажа
+Air-Freight Cargo = Авиаперевозка грузов
+Client Jobs = Клиентские задания
+Spin Lucky Wheel = Вращайте Счастливое колесо
+Kosatka Missiles = Ракеты "Косатка"
+Dax Job = Работа дакса
+Note that Dax Job means from cellphone = Обратите внимание, что задание Дакс означает с мобильного телефона
+CEO Vehicles = CEO Транспорт
+LS Car Meet's Track = Трек LS Car Meet's Track
+(SPECIAL) Trigger Alien Egg Mission = Миссия запуска инопланетного яйца
+Dune Buggy (Arm Runners) = Дюнный багги (ручные бегуны)
+Riot Van (Police) = Фургон для спецназа (полиция)
+Old Mine = Старая шахта
+Technical Aqua (4 Helicopters) = Техническая поддержка (4 вертолета)
+Ballistic Equipment = Баллистическое оборудование
+Merryweather HQ (Railgun) = Штаб-квартира Мерривезера (рельсотрон)
+Heist Crew (Technical Pickup) = Команда грабителей (Технический пикап)
+Rusty Van (Rumpo Classic) = Ржавый фургон (Rumpo Classic)
+Stealth Zone (Yacht/Docks) = Скрытая зона (Яхта/доки)
+Insurgent Pick-Up Custom (Merryweather) = Повстанческий обычай пикапа (Мерривезер)
+Insurgent (Stealth) = Insurgent (скрытность)
+Insurgent Pick-Up Custom (A to B) = Insurgent Заказ на самовывоз (от А до В)
+Repair Vehicle Cargo (Stealing) = Ремонт грузового транспортного средства (угон)
+When you sell a vehicle, it blocks having to pay for the repair. = Когда вы продаете автомобиль, это блокирует необходимость платить за ремонт.
+Ron's Cut from an Air-Freight Cargo sale = Рон убрать долю авиагрузов
+Tony's Cut from a Nightclub sale = Убрать долю Тони
+Buying MC Business Supplies = Покупка расходных материалов для бизнеса MC
+Make sure use this before accessing the laptop! = Обязательно используйте это перед доступом к ноутбуку!
+Buying Bunker Supplies = Покупка бункерных припасов
+Changing Appearance = Меняющийся внешний вид
+Renaming CEO/MC = Переименовать CEO/MC
+CEO Abilities = CEO Способности
+Casino Services: Chips = Услуги казино: Фишки
+(Risky) = (Рискованно)
+Make sure don't buy chip more than 1.5M per a day (real-time). Otherwise, you can be banned! = Убедитесь, что вы не покупаете чипов более 1,5 млн в день (в режиме реального времени). В противном случае вы можете быть забанены!
+VIP = VIP
+N/A = N/A
+Chips Amount = Количество фишек
+Trade in Chips = Торговля фишками
+Max Chips = Максимальное количество фишек
+Remove Cooldown Buy Chips = Уберите перезарядку, Купите фишки
+If you enable this, able to buy over 20K or 50K chips by removing cooldown time. = Если вы включите это, сможете купить более 20 тысяч или 50 тысяч фишек, убрав время перезарядки.
+Change Membership of Casino = Изменить членство в казино
+Your Membership of Casino: = Ваше членство в казино:
+Get Visitor Bonus Again = Получите Бонус посетителя Снова
+Disable Transaction Errors = Отключить ошибки транзакций
+This can be used to remove transaction errors while you are doing special cargo money loop in Musiness Banager Lua. = Это может быть использовано для устранения ошибок транзакций во время выполнения специального цикла cargo money в Business Manager Lua.
+Forces the amount of MC Business' sale vehicles to one. (Only works when you're the leader, and breaks sale missions if you aren't) = Увеличивает количество транспортных средств для продажи MC Business до единицы. (Работает только тогда, когда вы лидер, и прерывает торговые миссии, если вы им не являетесь)
+Infinite Stone Hatchet's Power = Бесконечная сила каменных топоров
+7 Years GTA Online Playtime = 7 лет игры в GTA Online
+Make your account look like you've played GTA Online for 7 years. = Сделайте так, чтобы ваш аккаунт выглядел так, как будто вы играли в GTA Online 7 лет.
+An Easy Way To Remove GTA Online's banked money = Простой способ снять деньги с банковского счета GTA Online
+Do you sure remove your money? = Вы уверены, что снимаете свои деньги?
+Because this feature works via requesting the Ballistic Armor, it'll be dropped nearby soon. = Поскольку эта функция работает через запрос баллистической брони, она скоро будет сброшена поблизости.
+Cooldown Time (Seconds) = Время перезарядки (секунды)
+Auto Cayo Bot = Авто Кайо Бот
+Change Lucky Wheel Reward = Измените награду Счастливого колеса
+'15K RP' can be used to increase your crew level. = 15K RP" можно использовать для повышения уровня вашей команды.
+25K Chips = 25 Тысяч фишек
+15K RP = 15K RP
+Vehicle Discount = Скидка на ТС
+How many time to play Auto Cayo Bot = Сколько времени играть в Auto Cayo Bot
+Teleport to the Lucky Wheel = ТП к Колесу удачи
+If this doesn't work properly, please press again. = Если это не сработает должным образом, пожалуйста, нажмите еще раз.
+Make sure your spawning position is 'Last Location' = Убедитесь, что ваша позиция для нереста - "Последнее местоположение"
+You can set it on Interaction Menu. = Вы можете установить его в меню взаимодействия.
+Kosatka has been requested. Wait for a few secs. = Косатка была запрошена. Подождите несколько секунд.
+Playing one time has been done! Waiting for the cooldown time... = Игра один раз была сделана! Ожидание времени перезарядки...
+How many times you've played after enabled: = Сколько раз вы играли после включения:
+Auto Lucky Wheel = Автоматическое колесо удачи
+Let you get the selected lucky wheel reward per 3 seconds automatically. = Позволяет вам автоматически получать выбранную награду lucky wheel за 3 секунды.
+Please use with 'Teleport to the Lucky Wheel' feature! = Пожалуйста, используйте функцию "Телепортация на колесо удачи"!
+Auto Win Black Jack = Автоматический выигрыш Блэкджека
+Finished The Time Trial! Waiting for the cooldown timer... = Закончил Испытание на Время! Ожидание таймера перезарядки...
+Auto Headhunter = Автоматический охотник за головами
+Also works playing with your associates. Just hire the user to do it. = Также работает, играя с вашими партнерами. Просто наймите пользователя, чтобы он это сделал.
+If you expect Transaction Error, stop using this feature and have to restart your game to fix it. = Если вы ожидаете ошибки транзакции, прекратите использовать эту функцию и перезапустите игру, чтобы исправить ее.
+Starting CEO... Please wait for a few secs. = Начинающий генеральный директор... Пожалуйста, подождите несколько секунд.
+Auto Sightseer = Авто Экскурсант
+Instant Finish Heists & Others = Ограбления с мгновенным завершением и другие
+Heists = Ограбления
+Cayo / Tuners / ULP / Agency = Кайо / Тюнеры / ULP / Агентство
+Casino Aggressive / Classic = Казино Агрессивное / Классическое
+Doomsday = Конец света
+Air Cargo = Воздушный груз
+(Selling Only) = (Продажа только)
+Headhunter = Охотник за головами
+Sightseer = Экскурсант
+Heist Cooldown Timers = Таймеры перезарядки ограбления
+HC can show you when the heist's cooldown has passed. = HC может показать вам, когда пройдет время восстановления после ограбления.
+Text's Position = Положение текста
+Enabled: Use Stand's Overlay & Settings: Game > Info Overlay = Включено: Используйте наложение и настройки стенда: Игра > Наложение информации
+Set Custom Time (Seconds) = Установите пользовательское время (секунды)
+Custom Timer = Пользовательский таймер
+Manage Nearby Peds And Cams = Управляйте НПС Отделениями и Камерами
+Enabled: Ped options will only affect hostile peds = Включено: параметры Ped будут влиять только на враждебные ped
+Disabled: Ped options will affect all peds = Disabled: Параметры Ped повлияют на все ped
+Shoot = Стрелять
+Cameras = Камеры
+Stat Spoofing = Подмена статистики
+Stat Editor And Reader = Редактор Статистики И Читатель
+Preset Stat Editor = Редактор предустановленных характеристик
+Add Additional Playtime = Добавьте дополнительное время воспроизведения
+Enabled: Add Method = Включено: Добавить метод
+- Adds Up To Your Current Playtime = - Добавляет К Вашему Текущему Игровому Времени
+Disabled: Overwrite Method = Отключено: Метод перезаписи
+- Overwrites Your Current Playtime = - Overwrites Your Current Playtime
+Note: The overwrite method supports up to 24.8 days, but add method supports up to 50,000 days = Примечание: Метод перезаписи поддерживает до 24,8 дней, но метод добавления поддерживает до 50к дней
+Days = Дни
+Hours = Часов
+Minutes = Минут
+Successfully set! = Успешно установлен!
+GTA Online Playtime = Время игры в GTA Online
+Jobs = Работы
+You didn't specify the value. Please specify it! = Вы не указали значение. Пожалуйста, укажите это!
+Successfully read! = Успешно прочитано!
+Auto Collect Targets = Автоматический сбор целей
+Collects targets via clicking left mouse button. Note that there are some delays before disabling completely. = Собирает цели щелчком левой кнопки мыши. Обратите внимание, что перед полным отключением возникают некоторые задержки.
+Motion Skip = Пропуск движения
+a.k.a Pause Menu Glitch = Сбой в меню паузы
+Skips Conversation With NPCs = Пропускает разговор с NPC
+Generate Translation Template = Создать шаблон перевода
+Generate New Translation File = Создать новый файл перевода
+Name of The File = Имя файла
+HC will overwrite if name of the file already exists. = HC перезапишет, если имя файла уже существует.
+Please input name of the file! = Пожалуйста, введите имя файла!
+Waiting for updating English.txt... = Ожидание обновления English.txt ...
+Sucessfully Generated! = Успешно сгенерированный!
+Directory of the file: = Каталог файла:
+Update Translation File = Обновить файл перевода
+Refresh = Освежить
+Refresh the list via restarting Heist Control. = Обновите список, перезапустив систему управления ограблением.
+This action will take a few seconds. Please wait for it patiently, don't press multiple times. = Это действие займет несколько секунд. Пожалуйста, подождите этого терпеливо, не нажимайте несколько раз.
+Sucessfully Updated! = Успешно обновлено!
+- Total number of translations: = - Общее количество переводов:
+- Number of not modified translations: = - Количество не измененных переводов:
+- Number of modified (updated) translations: = - Количество измененных (обновленных) переводов:
+Always looking for translators for non-existing languages. If you're interested in translating HC, click! = Всегда ищу переводчиков для несуществующих языков. Если вы заинтересованы в переводе HC, нажмите!
+Notification's Style = Стиль уведомления
+Type = Тип
+Heist Control for 2Take1 Developer. He allowed me to use his code. HC wouldn't exist without his help. Serious thanks to him! = Контроль ограбления для разработчика 2Take1. Он позволил мне использовать его код. HC не существовал бы без его помощи. Серьезное спасибо ему!
+Creator of WiriScript which helped me code HC! = Создатель вики-скрипта, который помог мне написать код HC!
+Helped me with a lot of things for HC website's maintenance. = Помог мне со многими вещами для обслуживания сайта HC.
+Helped me code the website's design. = Помог мне разработать дизайн веб-сайта.
+Made the logo, banner and other images for HC. = Сделал логотип, баннер и другие изображения для HC.
+Get Support, Report Bugs and Enjoy Other Stuffs! = Получайте поддержку, сообщайте об ошибках и наслаждайтесь другими материалами!
+Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D = Видео, связанные с учебным пособием HC, загружены здесь, подпишитесь на канал, чтобы показать свою поддержку : D
+If you don't know how to use HC, click me! = Если вы не знаете, как использовать HC, нажмите на меня!
+If you want to know what was changed in the latest version, click me! = Если вы хотите узнать, что было изменено в последней версии, нажмите на меня!

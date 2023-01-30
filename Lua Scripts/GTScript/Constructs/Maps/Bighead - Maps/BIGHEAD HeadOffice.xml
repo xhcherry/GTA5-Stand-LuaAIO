@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SpoonerPlacements>
+	<Note />
+	<AudioFile volume="400" />
+	<ClearDatabase>false</ClearDatabase>
+	<ClearWorld>0</ClearWorld>
+	<ClearMarkers>false</ClearMarkers>
+	<IPLsToLoad load_mp_maps="false" load_sp_maps="false" />
+	<IPLsToRemove />
+	<InteriorsToEnable />
+	<InteriorsToCap />
+	<WeatherToSet></WeatherToSet>
+	<TimecycleModifier strength="1"></TimecycleModifier>
+	<StartTaskSequencesOnLoad>true</StartTaskSequencesOnLoad>
+	<ReferenceCoords>
+		<X>-138.938629</X>
+		<Y>-629.269775</Y>
+		<Z>168.820496</Z>
+	</ReferenceCoords>
+	<Placement>
+		<ModelHash>0x9cf26183</ModelHash>
+		<Type>1</Type>
+		<Dynamic>false</Dynamic>
+		<FrozenPos>true</FrozenPos>
+		<HashName>Topless</HashName>
+		<InitialHandle>581167</InitialHandle>
+		<PedProperties>
+			<IsStill>true</IsStill>
+			<CanRagdoll>false</CanRagdoll>
+			<HasShortHeight>false</HasShortHeight>
+			<Armour>0</Armour>
+			<CurrentWeapon>0xa2719263</CurrentWeapon>
+			<PedProps>
+				<_0>-1,-1</_0>
+				<_1>-1,-1</_1>
+				<_2>-1,-1</_2>
+				<_3>-1,-1</_3>
+				<_4>-1,-1</_4>
+				<_5>-1,-1</_5>
+				<_6>-1,-1</_6>
+				<_7>-1,-1</_7>
+				<_8>-1,-1</_8>
+				<_9>-1,-1</_9>
+			</PedProps>
+			<PedComps>
+				<_0>1,0</_0>
+				<_1>0,0</_1>
+				<_2>1,2</_2>
+				<_3>0,0</_3>
+				<_4>0,0</_4>
+				<_5>0,0</_5>
+				<_6>0,0</_6>
+				<_7>0,0</_7>
+				<_8>1,0</_8>
+				<_9>0,0</_9>
+				<_10>0,0</_10>
+				<_11>0,0</_11>
+			</PedComps>
+			<RelationshipGroupAltered>false</RelationshipGroupAltered>
+			<RelationshipGroup>0xfade4843</RelationshipGroup>
+			<ScenarioActive>false</ScenarioActive>
+			<AnimActive>true</AnimActive>
+			<AnimDict>mini@prostitutes@sexnorm_veh</AnimDict>
+			<AnimName>sex_loop_prostitute</AnimName>
+		</PedProperties>
+		<OpacityLevel>255</OpacityLevel>
+		<LodDistance>16960</LodDistance>
+		<IsVisible>true</IsVisible>
+		<MaxHealth>200</MaxHealth>
+		<Health>200</Health>
+		<HasGravity>true</HasGravity>
+		<IsOnFire>false</IsOnFire>
+		<IsInvincible>true</IsInvincible>
+		<IsBulletProof>false</IsBulletProof>
+		<IsCollisionProof>false</IsCollisionProof>
+		<IsExplosionProof>true</IsExplosionProof>
+		<IsFireProof>false</IsFireProof>
+		<IsMeleeProof>true</IsMeleeProof>
+		<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+		<PositionRotation>
+			<X>-138.733536</X>
+			<Y>-633.094727</Y>
+			<Z>167.876663</Z>
+			<Pitch>0</Pitch>
+			<Roll>0</Roll>
+			<Yaw>33.9162483</Yaw>
+		</PositionRotation>
+		<Attachment isAttached="false" />
+	</Placement>
+</SpoonerPlacements>

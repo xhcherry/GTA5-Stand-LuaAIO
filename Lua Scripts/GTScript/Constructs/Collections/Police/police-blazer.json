@@ -1,0 +1,420 @@
+{
+	"vehicle_attributes": {
+		"headlights": {
+			"headlights_type": true,
+			"headlights_color": 255
+		},
+		"extras": [],
+		"paint": {
+			"extra_colors": {
+				"wheel": 156,
+				"pearlescent": 18
+			},
+			"vehicle_custom_color": {
+				"g": 44,
+				"r": 41,
+				"b": 46
+			},
+			"fade": 0.78431379795074,
+			"livery": -1,
+			"interior_color": 0,
+			"color_combo": 0,
+			"secondary": {
+				"color": -1,
+				"vehicle_standard_color": 0,
+				"paint_type": 7,
+				"is_custom": false
+			},
+			"dirt_level": 5.0003991127014,
+			"primary": {
+				"vehicle_standard_color": 3,
+				"pearlescent_color": -1,
+				"paint_type": 7,
+				"color": -1,
+				"is_custom": false
+			},
+			"dashboard_color": 0
+		},
+		"mods": {
+			"_35": -1,
+			"_12": 2,
+			"_15": 3,
+			"_32": -1,
+			"_9": -1,
+			"_7": -1,
+			"_36": -1,
+			"_31": -1,
+			"_10": -1,
+			"_27": -1,
+			"_14": 57,
+			"_4": -1,
+			"_2": -1,
+			"_0": -1,
+			"_30": -1,
+			"_49": -1,
+			"_13": 2,
+			"_48": -1,
+			"_41": -1,
+			"_47": -1,
+			"_19": false,
+			"_18": true,
+			"_44": -1,
+			"_45": -1,
+			"_22": true,
+			"_25": -1,
+			"_40": -1,
+			"_42": -1,
+			"_39": -1,
+			"_11": 3,
+			"_46": -1,
+			"_29": -1,
+			"_26": -1,
+			"_6": -1,
+			"_34": -1,
+			"_33": -1,
+			"_43": -1,
+			"_28": -1,
+			"_24": -1,
+			"_21": false,
+			"_37": -1,
+			"_16": 4,
+			"_17": false,
+			"_3": -1,
+			"_20": false,
+			"_1": -1,
+			"_5": -1,
+			"_23": 34,
+			"_8": -1,
+			"_38": -1
+		},
+		"neon": {
+			"lights": {
+				"right": false,
+				"back": false,
+				"front": false,
+				"left": false
+			}
+		},
+		"wheels": {
+			"tire_smoke_color": {
+				"g": 255,
+				"r": 255,
+				"b": 255
+			},
+			"wheel_type": 4
+		},
+		"options": {
+			"emergency_lights": false,
+			"engine_running": true,
+			"headlights_color": 255,
+			"radio_loud": false,
+			"license_plate_text": "51NSW315",
+			"bulletproof_tires": false,
+			"search_light": false,
+			"siren": false,
+			"license_plate_type": 0,
+			"window_tint": -1
+		}
+	},
+	"name": "police-blazer",
+	"target_version": "3.15b2",
+	"world_rotation": {
+		"x": 0,
+		"z": 0,
+		"y": 0
+	},
+	"version": "Constructor 0.15b2 / Lib 3.15b2",
+	"hash": -1590337689,
+	"num_bones": 100,
+	"position": {
+		"x": 0,
+		"z": 0,
+		"y": 0
+	},
+	"author": "hexarobo",
+	"options": {
+		"bone_index": 0,
+		"is_mission_entity": false,
+		"is_melee_proof": true,
+		"is_light_on": true,
+		"is_fire_proof": true,
+		"is_explosion_proof": true,
+		"is_bullet_proof": true,
+		"use_soft_pinning": true,
+		"is_networked": true,
+		"is_invincible": true,
+		"has_collision": true,
+		"has_gravity": true,
+		"is_visible": true
+	},
+	"created": "2022-09-25T14:41:48Z",
+	"type": "VEHICLE",
+	"children": [{
+		"name": "Police Cruiser",
+		"type": "VEHICLE",
+		"vehicle_attributes": {
+			"headlights": {
+				"headlights_type": false,
+				"headlights_color": 255
+			},
+			"extras": {
+				"_2": false,
+				"_1": true
+			},
+			"paint": {
+				"extra_colors": {
+					"wheel": 156,
+					"pearlescent": 0
+				},
+				"vehicle_custom_color": {
+					"g": 255,
+					"r": 255,
+					"b": 255
+				},
+				"fade": 0.81960791349411,
+				"livery": -1,
+				"interior_color": 0,
+				"color_combo": 0,
+				"secondary": {
+					"color": -1,
+					"vehicle_standard_color": 134,
+					"paint_type": 7,
+					"is_custom": false
+				},
+				"dirt_level": 2,
+				"primary": {
+					"vehicle_standard_color": 134,
+					"pearlescent_color": -1,
+					"paint_type": 7,
+					"color": -1,
+					"is_custom": false
+				},
+				"dashboard_color": 0
+			},
+			"mods": {
+				"_35": -1,
+				"_12": -1,
+				"_15": -1,
+				"_32": -1,
+				"_9": -1,
+				"_7": -1,
+				"_36": -1,
+				"_31": -1,
+				"_10": -1,
+				"_27": -1,
+				"_14": -1,
+				"_4": -1,
+				"_2": -1,
+				"_0": -1,
+				"_30": -1,
+				"_49": -1,
+				"_13": -1,
+				"_48": -1,
+				"_41": -1,
+				"_47": -1,
+				"_19": false,
+				"_18": false,
+				"_44": -1,
+				"_45": -1,
+				"_22": false,
+				"_25": -1,
+				"_40": -1,
+				"_42": -1,
+				"_39": -1,
+				"_11": -1,
+				"_46": -1,
+				"_29": -1,
+				"_26": -1,
+				"_6": -1,
+				"_34": -1,
+				"_33": -1,
+				"_43": -1,
+				"_28": -1,
+				"_24": -1,
+				"_21": false,
+				"_37": -1,
+				"_16": -1,
+				"_17": false,
+				"_3": -1,
+				"_20": false,
+				"_1": -1,
+				"_5": -1,
+				"_23": -1,
+				"_8": -1,
+				"_38": -1
+			},
+			"neon": {
+				"lights": {
+					"right": false,
+					"back": false,
+					"front": false,
+					"left": false
+				}
+			},
+			"wheels": {
+				"tire_smoke_color": {
+					"g": 255,
+					"r": 255,
+					"b": 255
+				},
+				"wheel_type": 1
+			},
+			"options": {
+				"emergency_lights": false,
+				"engine_running": false,
+				"headlights_color": 255,
+				"radio_loud": false,
+				"license_plate_text": "37KII832",
+				"bulletproof_tires": true,
+				"search_light": false,
+				"siren": false,
+				"license_plate_type": 4,
+				"window_tint": -1
+			}
+		},
+		"hash": 2046537925,
+		"options": {
+			"bone_index": 0,
+			"is_mission_entity": false,
+			"is_melee_proof": true,
+			"use_soft_pinning": true,
+			"is_light_on": true,
+			"is_fire_proof": true,
+			"is_explosion_proof": true,
+			"is_bullet_proof": true,
+			"has_siren": true,
+			"is_networked": true,
+			"is_invincible": true,
+			"has_collision": false,
+			"has_gravity": true,
+			"is_visible": false
+		},
+		"position": {
+			"x": 0,
+			"z": 0,
+			"y": 0
+		},
+		"world_rotation": {
+			"x": 0,
+			"z": 0,
+			"y": 0
+		},
+		"num_bones": 100,
+		"update_position": true,
+		"target_version": "3.15b2",
+		"children": [],
+		"model": "police",
+		"offset": {
+			"x": 0,
+			"z": 0.4,
+			"y": 0
+		},
+		"rotation": {
+			"x": 0,
+			"z": 0,
+			"y": 0
+		}
+	}, {
+		"name": "Red Spinning Light",
+		"type": "OBJECT",
+		"hash": 1228163930,
+		"options": {
+			"bone_index": 0,
+			"is_mission_entity": false,
+			"is_melee_proof": true,
+			"use_soft_pinning": true,
+			"is_light_on": true,
+			"is_fire_proof": true,
+			"is_explosion_proof": true,
+			"is_bullet_proof": true,
+			"options": {
+				"is_light_disabled": true
+			},
+			"has_collision": false,
+			"is_invincible": true,
+			"is_networked": true,
+			"has_gravity": true,
+			"is_visible": true
+		},
+		"position": {
+			"x": 0,
+			"z": 0,
+			"y": 0
+		},
+		"num_bones": 100,
+		"world_rotation": {
+			"x": 0,
+			"z": 0,
+			"y": 0
+		},
+		"update_position": true,
+		"target_version": "3.15b2",
+		"children": [{
+			"name": "prop_wall_light_10a",
+			"type": "OBJECT",
+			"hash": -1433191435,
+			"target_version": "3.15b2",
+			"options": {
+				"bone_index": 1,
+				"is_mission_entity": false,
+				"is_melee_proof": true,
+				"use_soft_pinning": true,
+				"is_light_on": true,
+				"is_fire_proof": true,
+				"is_explosion_proof": true,
+				"is_bullet_proof": true,
+				"is_visible": true,
+				"has_gravity": true,
+				"is_invincible": true,
+				"is_networked": true,
+				"has_collision": false,
+				"is_light_disabled": false
+			},
+			"num_bones": 100,
+			"world_rotation": {
+				"x": 0,
+				"z": 0,
+				"y": 0
+			},
+			"position": {
+				"x": 0,
+				"z": 0,
+				"y": 0
+			},
+			"children": [],
+			"model": "prop_wall_light_10a",
+			"offset": {
+				"x": 0,
+				"z": 0,
+				"y": 0.01
+			},
+			"rotation": {
+				"x": 0,
+				"z": 0,
+				"y": 0
+			}
+		}],
+		"model": "hei_prop_wall_light_10a_cr",
+		"offset": {
+			"x": 0,
+			"z": 0.5,
+			"y": -0.8
+		},
+		"rotation": {
+			"x": 180,
+			"z": 0,
+			"y": 0
+		}
+	}],
+	"model": "BLAZER5",
+	"offset": {
+		"x": 0,
+		"z": 0,
+		"y": 0
+	},
+	"rotation": {
+		"x": 0,
+		"z": 0,
+		"y": 0
+	}
+}

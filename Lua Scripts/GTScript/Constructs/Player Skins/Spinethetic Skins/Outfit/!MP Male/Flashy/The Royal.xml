@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<OutfitPedData>
+	<ClearDecalOverlays>true</ClearDecalOverlays>
+	<ModelHash>0x705e61f2</ModelHash>
+	<Type>1</Type>
+	<Dynamic>true</Dynamic>
+	<FrozenPos>false</FrozenPos>
+	<HashName>0x705e61f2</HashName>
+	<InitialHandle>106506</InitialHandle>
+	<PedProperties>
+		<IsStill>false</IsStill>
+		<CanRagdoll>true</CanRagdoll>
+		<HasShortHeight>false</HasShortHeight>
+		<CurrentWeapon>0xa2719263</CurrentWeapon>
+		<PedProps>
+			<_0>-1,-1</_0>
+			<_1>-1,-1</_1>
+			<_2>-1,-1</_2>
+			<_3>-1,-1</_3>
+			<_4>-1,-1</_4>
+			<_5>-1,-1</_5>
+			<_6>-1,-1</_6>
+			<_7>-1,-1</_7>
+			<_8>-1,-1</_8>
+			<_9>-1,-1</_9>
+		</PedProps>
+		<PedComps>
+			<_0>0,0</_0>
+			<_1>0,0</_1>
+			<_2>-1,-1</_2>
+			<_3>6,0</_3>
+			<_4>26,0</_4>
+			<_5>0,0</_5>
+			<_6>20,3</_6>
+			<_7>0,0</_7>
+			<_8>5,2</_8>
+			<_9>0,0</_9>
+			<_10>0,0</_10>
+			<_11>4,14</_11>
+		</PedComps>
+		<HeadFeatures WasInArray="true">
+			<ShapeAndSkinTone>
+				<ShapeFatherId>40</ShapeFatherId>
+				<ShapeMotherId>10</ShapeMotherId>
+				<ShapeOverrideId>0</ShapeOverrideId>
+				<ToneFatherId>40</ToneFatherId>
+				<ToneMotherId>10</ToneMotherId>
+				<ToneOverrideId>0</ToneOverrideId>
+				<ShapeVal>0.800499976</ShapeVal>
+				<ToneVal>0.969999969</ToneVal>
+				<OverrideVal>0</OverrideVal>
+				<IsP>1</IsP>
+			</ShapeAndSkinTone>
+			<HairColour>8</HairColour>
+			<HairColourStreaks>9</HairColourStreaks>
+			<EyeColour>3</EyeColour>
+			<FacialFeatures>
+				<_0>0.000000</_0>
+				<_1>0.000000</_1>
+				<_2>0.000000</_2>
+				<_3>0.000000</_3>
+				<_4>0.000000</_4>
+				<_5>0.000000</_5>
+				<_6>0.000000</_6>
+				<_7>0.000000</_7>
+				<_8>0.000000</_8>
+				<_9>0.000000</_9>
+				<_10>0.000000</_10>
+				<_11>0.000000</_11>
+				<_12>0.000000</_12>
+				<_13>0.000000</_13>
+				<_14>0.000000</_14>
+				<_15>0.000000</_15>
+				<_16>0.000000</_16>
+				<_17>0.000000</_17>
+				<_18>0.000000</_18>
+				<_19>0.000000</_19>
+			</FacialFeatures>
+			<Overlays>
+				<_0 index="255" colour="0" colourSecondary="0" opacity="1" />
+				<_1 index="0" colour="3" colourSecondary="0" opacity="0.830000162" />
+				<_2 index="32" colour="2" colourSecondary="0" opacity="1" />
+				<_3 index="255" colour="0" colourSecondary="0" opacity="1" />
+				<_4 index="255" colour="0" colourSecondary="0" opacity="1" />
+				<_5 index="255" colour="0" colourSecondary="0" opacity="1" />
+				<_6 index="2" colour="0" colourSecondary="0" opacity="0.540000439" />
+				<_7 index="0" colour="0" colourSecondary="0" opacity="0.450000525" />
+				<_8 index="255" colour="0" colourSecondary="0" opacity="1" />
+				<_9 index="255" colour="0" colourSecondary="0" opacity="1" />
+				<_10 index="255" colour="0" colourSecondary="0" opacity="1" />
+				<_11 index="255" colour="0" colourSecondary="0" opacity="1" />
+				<_12 index="255" colour="0" colourSecondary="0" opacity="1" />
+			</Overlays>
+		</HeadFeatures>
+		<TattooLogoDecals />
+		<RelationshipGroupAltered>false</RelationshipGroupAltered>
+		<RelationshipGroup>0xf6323d36</RelationshipGroup>
+		<ScenarioActive>false</ScenarioActive>
+		<AnimActive>false</AnimActive>
+	</PedProperties>
+	<OpacityLevel>255</OpacityLevel>
+	<LodDistance>240</LodDistance>
+	<IsVisible>true</IsVisible>
+	<MaxHealth>238</MaxHealth>
+	<Health>238</Health>
+	<HasGravity>true</HasGravity>
+	<IsOnFire>false</IsOnFire>
+	<IsInvincible>false</IsInvincible>
+	<IsBulletProof>false</IsBulletProof>
+	<IsCollisionProof>false</IsCollisionProof>
+	<IsExplosionProof>false</IsExplosionProof>
+	<IsFireProof>false</IsFireProof>
+	<IsMeleeProof>false</IsMeleeProof>
+	<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+	<PositionRotation>
+		<X>75.1991806</X>
+		<Y>-1398.43152</Y>
+		<Z>29.3761501</Z>
+		<Pitch>0</Pitch>
+		<Roll>-0</Roll>
+		<Yaw>-97.4272919</Yaw>
+	</PositionRotation>
+	<Attachment isAttached="false" />
+	<SpoonerAttachments SetAttachmentsPersistentAndAddToSpoonerDatabase="false" StartTaskSequencesOnLoad="true" />
+</OutfitPedData>
