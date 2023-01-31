@@ -1,7 +1,7 @@
 # GTA5-Stand-LuaAIO
 GTA5 Mod Stand Lua All in One；含综合、任务、crash、模组等多种lua存储库
 
-使用教程：点击右边栏中releases的第一个包，在assets中点击source code(zip)后会自动开始下载
+使用教程：点击code，点击download zip，将下载的压缩包完全解压出来后，所有文件拖到stand根目录即可
 
 将压缩包完全解压后，把其中的所有文件直接拖到stand根目录即可
 
