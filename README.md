@@ -12,3 +12,5 @@ Lua Scripts：脚本目录
 profiles：stand配置文件
 
 Theme：中文标签文件
+
+本仓库遵守apache-2.0 license
