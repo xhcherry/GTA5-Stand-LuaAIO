@@ -9,7 +9,7 @@ require "lib.daidailib.safe.am_players"
 require "lib.daidailib.safe.main"
 require "lib.daidailib.safe.main1"
 require "lib.daidailib.safe.main2"
-require "lib/daidailib/ridicule"
+require "lib.daidailib.ridicule"
 require "lib.daidailib.natives1622613546"
 require "lib.daidaimain.natives.othernatives"
 require "lib.daidailib.adwords"
@@ -18,9 +18,9 @@ require "lib.daidailib.object"
 require "lib.daidailib.action"
 require "lib.daidailib.flamewings"
 require "lib.daidailib.daidailib1"
-require "lib/daidailib/cussing"
-require "lib/daidailib/DamageNumbers"
-require "lib/daidailib/physically_controlled"
+require "lib.daidailib.cussing"
+require "lib.daidailib.DamageNumbers"
+require "lib.daidailib.physically_controlled"
 
 local UFO = require "lib.daidailib.ufo"
 local GuidedMissile = require "lib.daidailib.guided_missile"
@@ -37,11 +37,13 @@ local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001
 local SND_FILENAME<const> = 0x00020000
 
-local script_version = "6.5"
+local script_version = "6.6"
+util.log("加入daidai lua群聊343798401")
 ----util.toast("[呆呆 提示] ")
 ----util.yield(1000)
 ----menu.divider()
 ----menu.trigger_commands("")
+----menu.set_value(Spawn, true)menu自启
 
 
 
@@ -52,7 +54,7 @@ vehicle = menu.list(menu.my_root(), "载具选项", {})
 weapons = menu.list(menu.my_root(), "武器选项", {})
 funfeatures = menu.list(menu.my_root(), "娱乐选项", {})
 module_list = menu.list(menu.my_root(), "模组选项", {""}, "")
-Task_robbery = menu.list(menu.my_root(), "任务选项", {},"任务警告提示音可在command文件中关闭",function() TT() end)
+Task_robbery = menu.list(menu.my_root(), "任务选项", {},"",function() TT() end)
 worldlist = menu.list(menu.my_root(), "世界选项", {})
 protection = menu.list(menu.my_root(), "保护选项", {})
 cheater_detection = menu.list(menu.my_root(), "作弊者检测", {})
@@ -125,10 +127,14 @@ action_list = menu.list(self, "人物行为", {}, "")
             PED.FORCE_PED_AI_AND_ANIMATION_UPDATE(players.user_ped())
         end
     end)
-    menu.toggle_loop(action_list, '超级跳', {}, '一直按着空格，可以跳的更高', function ()
-        if PAD.IS_CONTROL_PRESSED(0, 22) then
+    local jump = 0.6
+    menu.toggle_loop(self, '超级跳', {}, '按下跳跃的时间越长，继续走得更高（也可用于飞行）', function ()
+        if PAD.IS_CONTROL_PRESSED(0, 22) or PAD.IS_CONTROL_JUST_PRESSED(0, 21) then
             PED.SET_PED_CAN_RAGDOLL(players.user_ped(), false)
-            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.5, 0.5, 0.5, 0, 0, 0, 0, true, true, true, true)
+            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.0, 0.6, jump, 0, 0, 0, 0, true, true, true, true)
+            if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) then
+                ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.0, 0.6, jump, 0, 0, 0, 0, true, true, true, true)
+            end
         end
     end)
     menu.toggle(action_list, "空中游泳", {}, "", function(on)
@@ -160,6 +166,34 @@ action_list = menu.list(self, "人物行为", {}, "")
                 menu.delete(action_lua_load)
             end)
             
+
+misclightmenu = menu.list(self, "发光")
+    menu.toggle_loop(misclightmenu, "开启", {}, "", function()
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+        GRAPHICS.DRAW_LIGHT_WITH_RANGE(pos.x, pos.y, pos.z, rlight, glight, blight, Radiuslight, intenslight)
+    end)
+    Radiuslight = 1
+    menu.slider(misclightmenu, "设置半径" ,{}, "", 1, 5, 1, 1, function(s)
+        Radiuslight = s
+    end)
+    intenslight = 1
+    menu.slider(misclightmenu, "设置强度", {}, "", 1, 5, 1, 1, function(s)
+        intenslight = s
+    end)
+    menu.divider(misclightmenu,"颜色")
+    rlight = 255
+    menu.slider(misclightmenu, "R", {"lightred"}, "", 0, 255, 255, 1, function(s)
+        rlight = s 
+    end)
+    glight = 255
+    menu.slider(misclightmenu, "G", {"lightgreen"}, "", 0, 255, 255, 1, function(s)
+        glight = s
+    end)
+    blight = 255
+    menu.slider(misclightmenu, "B", {"lightblue"}, "", 0, 255, 255, 1, function(s)
+        blight = s
+    end)
+
 
 ----火人
 local burning_man_ptfx_asset = "core"
@@ -252,6 +286,39 @@ menu.toggle(self, "666",{}, "灵感来自heezy",function(on)
         delete_object(obj)
     end
 end)
+guitar_obj = menu.list(self, "吉他")
+    menu.toggle(guitar_obj, "吉他1",{}, "",function(on)
+        local obj = "prop_acc_guitar_01"
+        if on then     
+            attach_to_player(obj, 0, 0, -0.15, 0.25, 0, -50,0)
+        else
+            delete_object(obj)
+        end
+    end)
+    menu.toggle(guitar_obj, "吉他2",{}, "",function(on)
+        local obj = "prop_el_guitar_03"
+        if on then     
+            attach_to_player(obj, 0, 0, -0.15, 0.25, 0, -50,0)
+        else
+            delete_object(obj)
+        end
+    end)
+    menu.toggle(guitar_obj, "吉他3",{}, "",function(on)
+        local obj = "prop_el_guitar_01"
+        if on then     
+            attach_to_player(obj, 0, 0, -0.15, 0.25, 0, -50,0)
+        else
+            delete_object(obj)
+        end
+    end)
+    menu.toggle(guitar_obj, "吉他4",{}, "",function(on)
+        local obj = "prop_el_guitar_02"
+        if on then     
+            attach_to_player(obj, 0, 0, -0.15, 0.25, 0, -50,0)
+        else
+            delete_object(obj)
+        end
+    end)
 menu.toggle(self, "小狗戴恩", {}, "", function(on)
     if on then
         menu.trigger_commands("IGFurry")
@@ -615,10 +682,6 @@ player_option_list = menu.list(online, "玩家选项", {}, "")
 
 
         
-
-
-
-
 musiclist = menu.list(online, "音乐", {"fl"}, "")
     menu.toggle(musiclist, "播放", {"Playmusic"}, "", function(on)
         music(on)
@@ -735,12 +798,15 @@ online_other = menu.list(online, "其他选项", {""}, "")
     menu.toggle(online_other, '同步时间', {'xssj'}, '与现实时间同步', function(toggle)
         Real_world_time(toggle)
     end)
-    menu.toggle(online_other, "显示时间", {"daidaitimeos"}, "", function(state)
+    display_time = menu.toggle(online_other, "显示时间", {}, "", function(state)
         daidaishijian(state)
     end)
-    menu.toggle_loop(online_other, "主机序列", {"daidaihostsequence"}, "", function()
+    menu.set_value(display_time, true)
+
+    host_sequence = menu.toggle_loop(online_other, "主机序列", {"daidaihostsequence"}, "", function()
         zhujixvlie1()
     end)
+    menu.set_value(host_sequence, true)
     menu.toggle_loop(online_other, "实体池信息", {}, "", function()
         entityinfo()
     end)
@@ -750,9 +816,10 @@ online_other = menu.list(online, "其他选项", {""}, "")
     mcr=255
     mcg=0
     mcb=0
-    menu.toggle(online_other, "显示脚本名称", {"daidaiscriptname"}, "", function(state)
+    script_name = menu.toggle(online_other, "显示脚本名称", {}, "", function(state)
         daidaijiaoben(state)
     end)
+    menu.set_value(script_name, true)
 
 
 
@@ -1112,6 +1179,43 @@ chatspamtrash = menu.list(chat_m, "刷屏")
     end)
 
 -----------------------------------------------------载具选项
+
+menu.toggle(vehicle, "烧焦外形", {}, "", function(on)
+    if on then
+        menu.trigger_commands("scorched on")
+    else
+        menu.trigger_commands("scorched off")
+    end
+end)
+
+pwinmenu = menu.list(vehicle, '车窗', {}, '')
+    menu.action(pwinmenu, '关闭所有车窗', {}, '', function ()
+        local pedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
+        local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
+        local spec = menu.get_value(menu.ref_by_rel_path(menu.player_root(players.user()), "Spectate>Ninja Method"))
+        GetControl(pedm, spec, players.user())
+        for i = 0, 7 do
+            VEHICLE.ROLL_UP_WINDOW(vmod, i)
+        end
+    end)
+    menu.action(pwinmenu, '打开所有车窗', {}, '', function ()
+        local pedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
+        local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
+        local spec = menu.get_value(menu.ref_by_rel_path(menu.player_root(players.user()), "Spectate>Ninja Method"))
+        GetControl(pedm, spec, players.user())
+        VEHICLE.ROLL_DOWN_WINDOWS(vmod)
+    end)
+
+menu.toggle_loop(vehicle, '贴墙行驶', {}, '车辆粘在墙上行驶', function ()
+    local curcar = entities.get_user_vehicle_as_handle()
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) then
+        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(curcar, 1, 0, 0, - 0.5, 0, true, true, true, true)
+        VEHICLE.MODIFY_VEHICLE_TOP_SPEED(curcar, 40)
+    else
+        util.yield()
+    end
+end)
+
 local veh_jump = menu.list(vehicle, "载具跳跃")
 local force = 25.00
 menu.slider_float(veh_jump, "跳跃倍率", {"jumpiness"}, "", 0, 10000, 2500, 100, function(value)
@@ -1215,13 +1319,14 @@ ff9car = menu.list(vehicle, "道奇战马", {}, "")
         daoqizhanma()
     end)
 
+
 -----------UFO载具
 UFO_vehicles = menu.list(vehicle, "UFO载具", {}, "")
     local objModels <const> = {
         "imp_prop_ship_01a",
         "sum_prop_dufocore_01a"
     }
-    menu.action_slider(UFO_vehicles, "UFO", {"ufo"}, "驾驶UFO,使用牵引光束和大炮", {"外星UFO", "军用UFO"}, function (index)
+    menu.action_slider(UFO_vehicles, "UFO", {}, "驾驶UFO,使用牵引光束和大炮", {"外星UFO", "军用UFO"}, function (index)
         local obj = objModels[index]
         UFO.setObjModel(obj)
         if not (GuidedMissile.exists() or UFO.exists()) then UFO.create() end
@@ -1269,6 +1374,15 @@ menu.toggle_loop(vehicle, "粘在地上", {""}, "", function()
                     util.yield()
                 end
             end
+        end
+    end
+end)
+menu.toggle_loop(vehicle, '部分载具无限海底挤压深度', {}, '潜水艇，虎鲸...', function ()
+    local subs = {'submersible','submersible2','avisa','kosatka', 'toreador'}
+    local cursub = ENTITY.GET_ENTITY_MODEL(entities.get_user_vehicle_as_handle())
+    for _, s in ipairs(subs) do
+        if cursub == util.joaat(s) then
+            VEHICLE.SET_SUBMARINE_CRUSH_DEPTHS(entities.get_user_vehicle_as_handle(), false, 2000, 2000, 2000)
         end
     end
 end)
@@ -1649,7 +1763,9 @@ Constructor_Lua = menu.list(module_list, "新版模组", {}, "")
 XML_module = menu.list(module_list, "XML模组", {}, "")
 
 
-----任务选项
+
+
+--------------------任务选项
 ---functions
         function MP_INDEX()
             return "MP" .. util.get_char_slot() .. "_"
@@ -1892,7 +2008,7 @@ XML_module = menu.list(module_list, "XML模组", {}, "")
 -----------------------------------------------------------目标点--------------------
 
 ------------------------佩里科岛
-perrico_island = menu.list(Task_robbery, "佩里科岛", {""}, "使用前请阅读[警告]")
+perrico_island = menu.list(Task_robbery, "佩里科岛", {""}, "")
     menu.action(perrico_island, "呼叫虎鲸", {}, "", function()
         SET_INT_GLOBAL(2793044 + 954, 1)
     end)	
@@ -2033,7 +2149,7 @@ advanced_options_island = menu.list(perrico_island, "高级选项", {""}, "")
         
 
 ------------------赌场选项
-casino = menu.list(Task_robbery, "名钻赌场", {""}, "使用前请阅读[警告]")
+casino = menu.list(Task_robbery, "名钻赌场", {""}, "")
     casino_Task_setting = menu.list(casino, "任务设定", {""}, "")
         menu.action(casino_Task_setting, "完成所有准备任务", {}, "目标：钻石\n方式：气势汹汹", function()
             STAT_SET_INT("CAS_HEIST_FLOW", -1)
@@ -2155,7 +2271,7 @@ casino = menu.list(Task_robbery, "名钻赌场", {""}, "使用前请阅读[警�
             SET_INT_LOCAL("fm_mission_controller", 31585 + 97, 79)
         end)
 
-doomsday = menu.list(Task_robbery, "末日豪杰", {""}, "使用前请阅读[警告]")
+doomsday = menu.list(Task_robbery, "末日豪杰", {""}, "")
     doomsday_Task_setting = menu.list(doomsday, "任务设定", {""}, "")
         menu.action(doomsday_Task_setting, "数据泄露 I", {}, "", function()
             STAT_SET_INT("GANGOPS_FLOW_MISSION_PROG", 503)
@@ -2221,7 +2337,7 @@ doomsday = menu.list(Task_robbery, "末日豪杰", {""}, "使用前请阅读[警
 
         
 --------------------------------赌场刷钱
-casino_brush_money = menu.list(Task_robbery, "赌场刷钱", {""}, "使用前请阅读[警告]")
+casino_brush_money = menu.list(Task_robbery, "赌场刷钱", {""}, "")
     casino_destination = menu.list(casino_brush_money, "目标传送", {""}, "")
         menu.action(casino_destination, "传送到赌场门口", {}, "", function()
             TELEPORT(924.5333, 46.603252, 81.10639)
@@ -2257,16 +2373,6 @@ casino_brush_money = menu.list(Task_robbery, "赌场刷钱", {""}, "使用前请
 
 
 
-------------警告
-    menu.divider(Task_robbery, "警告")
-        menu.action(Task_robbery, "存在风险，谨慎使用", {"highrisk"}, "", function()
-            riskwarning()
-            util.toast("[呆呆 提示] \n此选项中的功能为高风险，请谨慎使用")
-        end)    
---------------------------	
-
-
-
 
 
 
@@ -2284,7 +2390,7 @@ protex = menu.list(protection, "防护", {}, "")------第一list
     end)
 
     bug_me_not = false
-    menu.toggle(protection, "自动踢出事件检测玩家", {}, "自动踢出聊天频道里面发送事件检测的玩家", function(on)
+    menu.toggle(protection, "自动踢出广告机", {}, "自动踢出广告机/事件检测玩家", function(on)
         bug_me_not = on
     end)
 
@@ -2305,8 +2411,15 @@ protex = menu.list(protection, "防护", {}, "")------第一list
             end
     end)
 
+
+load_kick_XP = menu.action(protection, "开启自动踢出XP魔怔人", {}, "", function()
+    util.toast("[呆呆 提示] \n自动踢出XP魔怔人已准备就绪")
+    require "lib.daidailib.autokickXP"
+    menu.delete(load_kick_XP)
+end)
+
 ------------------------------------------------攻击嘲讽-------------------------
-    menu.toggle(protex, "攻击嘲讽", {"daidaichaofeng"}, "", function(state)
+    menu.toggle(protex, "攻击嘲讽", {}, "", function(state)
         cf = state
         _U_hack_list={}
         while cf do
@@ -2606,7 +2719,7 @@ menu.divider(protex, "网络事件")
 	end)
 
 -------------------------------二级防护
-menu.toggle_loop(protection, "禁用阻止实体轰炸", {"disableBlockentitybombing"}, "将在任务中自动禁用阻止实体轰炸,防止任务卡关.", function()
+renwu_disable = menu.toggle_loop(protection, "禁用阻止实体轰炸", {"disableBlockentitybombing"}, "将在任务中自动禁用阻止实体轰炸,防止任务卡关.", function()
     local EntitySpam = menu.ref_by_path("Online>Protections>Block Entity Spam>Block Entity Spam")
     if NETWORK.NETWORK_IS_ACTIVITY_SESSION() == true then
         if not menu.get_value(EntitySpam) then return end
@@ -2616,6 +2729,8 @@ menu.toggle_loop(protection, "禁用阻止实体轰炸", {"disableBlockentitybom
         menu.trigger_command(EntitySpam, "on")
     end
 end)
+menu.set_value(renwu_disable,true)
+
 
 r_admin = menu.list(protection, "R*管理人员加入选项", {}, "")
     menu.toggle(r_admin, "R*管理人员加入提示", {}, "", function(on)
@@ -2674,7 +2789,7 @@ local admin_bail = false
     end)
 
 anti_mugger = menu.list(protection, "拦截劫匪")
-    menu.toggle_loop(anti_mugger, "自我", {"robberyprotection"}, "防止你被抢劫.", function()
+    menu.toggle_loop(anti_mugger, "自我", {}, "防止你被抢劫.", function()
         if NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_gang_call", 0, true, 0) then
             local ped_netId = memory.script_local("am_gang_call", 63 + 10 + (0 * 7 + 1))
             local sender = memory.script_local("am_gang_call", 287)
@@ -2826,6 +2941,12 @@ menu.action(all_happy, '烟花大战', {}, '新年快乐', function ()
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(plyr, fireworks, 20, true)
         WEAPON.SET_PED_AMMO(plyr, fireworks, 20)
         players.send_sms(plist[i], players.user(), '去你妈的美国!你获得了烟花')
+        util.yield()
+    end
+end)
+menu.action(all_happy, "给予所有玩家MK-2", {}, "", function ()
+    for k,v in pairs(players.list(true, true, true)) do
+        give_oppressor(v)
         util.yield()
     end
 end)
@@ -3050,6 +3171,7 @@ function oppKarma()
 end
 
 ------------------------------------------------------------武器选项
+
 menu.toggle_loop(weapons, "自动扳机", {}, "", function()
     local wpn = WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped())
     local dmg = SYSTEM.ROUND(WEAPON.GET_WEAPON_DAMAGE(wpn, 0))
@@ -3299,11 +3421,9 @@ menu.toggle(objgun, '附加爆炸', {}, '击中某物时使射击的物体爆炸
     obj.expl =  on
 end)
 --------------
-
-menu.toggle(weapons, "女武神", {}, "", function(toggle)
+menu.toggle(weapons, "女武神导弹",  {}, "", function(toggle)
     nvwushen(toggle)
 end)
-
 ---------无声自瞄
 local function pid_to_handle(pid)
     NETWORK.NETWORK_HANDLE_FROM_PLAYER(pid, handle_ptr, 13)
@@ -3711,6 +3831,34 @@ menu.toggle_loop(weapons, '翻滚换弹', {}, '', function()
 end)
 
 ---------------------------------------------------------娱乐选项
+menu.toggle(funfeatures, "GPS导航", {}, "", function(value)
+    GPS_navigation(value)
+end)
+
+headlamp = menu.list(funfeatures, "头灯", {}, "仅本地可见")
+    menu.toggle_loop(headlamp, "开启", {"headlamp"}, "", function()
+        local head_pos = PED.GET_PED_BONE_COORDS(players.user_ped(), 31086, 0.0, 0.0, 0.0)
+        local cam_rot = players.get_cam_rot(players.user())
+        GRAPHICSdaidai.DRAW_SPOT_LIGHT(head_pos, cam_rot:toDir(), math.floor(color.r * 255), math.floor(color.g * 255), math.floor(color.b * 255), distance * 1.5, brightness, 0.0, radius, distance)
+    end)
+    distance = 25.0
+    menu.slider_float(headlamp, "距离", {"distance"}, "光照距离.", 100, 10000, 1500, 100, function(value)
+        distance = value / 100
+    end)
+    brightness = 10.0
+    menu.slider_float(headlamp, "亮度", {"brightness"}, "光亮强度.", 100, 10000, 1000, 100, function(value)
+        brightness = value / 100
+    end)
+    radius = 15.0
+    menu.slider_float(headlamp, "半径", {"radius"}, "光束半径.", 100, 5000, 2000, 100, function(value)
+        radius = value / 100
+    end)
+    color = {r = 1, g = 235/255, b = 190/255, a = 0}
+    menu.colour(headlamp, "颜色", {"colour"}, "", color, true, function(value)
+        color = value 
+    end)
+
+
 local pop_multiplier_id
 local disable_traffic = true
 local disable_peds = true
@@ -4774,8 +4922,17 @@ players.on_join(function(pid)
     menu.toggle(Player_list, "观看玩家", {}, "", function(toggle)
         menu.trigger_commands("spectate".. players.get_name(pid), toggle)
     end)
-    menu.action(Player_list, "宣布玩家", {}, "公屏宣布他的rid", function(pid)
+    menu.action(Player_list, "宣布玩家", {}, "公屏宣布他的rid", function()
         chat.send_message(PLAYER.GET_PLAYER_NAME(pid).."的rid为: "..players.get_rockstar_id(pid),false,true,true)
+    end)
+    menu.toggle_loop(Player_list, "自动传送到玩家", {}, "当与玩家的距离大于3时自动传送到玩家", function()
+        local playerpos = players.get_position(pid)
+        local mypos = players.get_position(players.user())
+        local distance = math.ceil(MISC.GET_DISTANCE_BETWEEN_COORDS(playerpos.x, playerpos.y, playerpos.z, mypos.x, mypos.y, mypos.z))
+        util.toast(distance)
+        if distance > 3 then
+            TELEPORT(playerpos.x, playerpos.y, playerpos.z)
+        end
     end)
 
     local friendly = menu.list(Player_list, "友好选项", {}, "")
@@ -6129,6 +6286,9 @@ local sounds = menu.list(trolling, "声音恶搞", {}, "")
     end
 
 -----崩溃选项
+menu.action(crashplayer, "XP终结者", {}, "", function()
+    xp_over(pid)--------来自南瓜
+end)
 menu.action(crashplayer, "改进AIO崩", {}, "远离!!!远离!!!远离!!!远离!!!", function()
     aaaio(pid)
 end)
@@ -6263,6 +6423,20 @@ end)
 
 
 ----------------------世界选项
+ped_cash = menu.list(worldlist, "NPC金钱掉落", {})
+    PED.SET_AMBIENT_PEDS_DROP_MONEY(true)
+        local pedmoney = 520
+        menu.slider(ped_cash, '修改金额', {'pcfixed'}, 'NPC现金掉落数量', 1, 2000, 520, 1, function(val)
+            pedmoney = val
+        end)
+        menu.toggle_loop(ped_cash, '启用', {}, '修改击杀NPC后可拾取的金钱数量', function() 
+            local peds = entities.get_all_peds_as_handles()
+                    for _index, ped in pairs(peds) do
+                                PED.SET_PED_MONEY(ped, pedmoney)
+                    end
+        end)
+
+
 New_Year_fireworks = menu.list(worldlist, "新年烟花", {})
         menu.toggle_loop(New_Year_fireworks, "大烟花", {""}, "固定位置\n不随人物正面变化而变化", function ()
             local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), false)
@@ -6682,100 +6856,130 @@ end
 
 tp_world = menu.list(worldlist, "传送选项", {})
 
-pump_list = menu.list(tp_world, "场景", {}, "故事模式场景区域")
-    for index, data in pairs(interiors) do
-        local location_name = data[1]
-        local location_coords = data[2]
-        menu.action(pump_list, location_name, {}, "", function()
-            menu.trigger_commands("doors on")
-            menu.trigger_commands("nodeathbarriers on")
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), location_coords.x, location_coords.y, location_coords.z, false, false, false)
-        end)
-    end
-pump_list = menu.list(tp_world, "南瓜", {}, "万圣节南瓜头")
-    for idx, coords in pumps_from_gtaweb_eu do
-        pump_list:action("南瓜头 " .. idx, {}, "传送到南瓜", function()
+    pump_list = menu.list(tp_world, "场景", {}, "故事模式场景区域")
+        for index, data in pairs(interiors) do
+            local location_name = data[1]
+            local location_coords = data[2]
+            menu.action(pump_list, location_name, {}, "", function()
+                menu.trigger_commands("doors on")
+                menu.trigger_commands("nodeathbarriers on")
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), location_coords.x, location_coords.y, location_coords.z, false, false, false)
+            end)
+        end
+    pump_list = menu.list(tp_world, "南瓜", {}, "万圣节南瓜头")
+        for idx, coords in pumps_from_gtaweb_eu do
+            pump_list:action("南瓜头 " .. idx, {}, "传送到南瓜", function()
+                util.teleport_2d(coords[1], coords[2])
+            end)
+        end
+    snow_loca = menu.list(tp_world, "雪人", {}, "")
+        for idx, coords in snowmens do
+            snow_loca:action("雪人 " .. idx, {}, "传送到圣诞节", function()
+                util.teleport_2d(coords[1], coords[2])
+            end)
+        end
+    snow_loca = menu.list(tp_world, "武器厢型车购买", {}, "")
+        for idx, coords in weaponvan do
+            snow_loca:action("厢型车 " .. idx, {}, "传送到厢型车", function()
+                util.teleport_2d(coords[1], coords[2])
+            end)
+        end
+    figures_loca = menu.list(tp_world, "手办", {}, "")
+        for idx, coords in figures do
+            figures_loca:action("手办 " .. idx, {}, "传送到手办", function()
+                util.teleport_2d(coords[1], coords[2])
+            end)
+        end
+    jammers_loca = menu.list(tp_world, "信号干扰器", {}, "")
+        for idx, coords in jammers do
+            jammers_loca:action("信号干扰器 " .. idx, {}, "传送到信号干扰器", function()
+                util.teleport_2d(coords[1], coords[2])
+            end)
+        end
+    movie_props = menu.list(tp_world, "电影道具", {}, "")
+    for idx, coords in movie_prop1 do
+        movie_props:action("电影道具 " .. idx, {}, "传送到电影道具", function()
             util.teleport_2d(coords[1], coords[2])
         end)
     end
-snow_loca = menu.list(tp_world, "雪人", {}, "")
-    for idx, coords in snowmens do
-        snow_loca:action("雪人 " .. idx, {}, "传送到圣诞节", function()
+    workshop_products = menu.list(tp_world, "拉玛有机作坊产品", {}, "")
+    for idx, coords in ld_product do
+        workshop_products:action("产品 " .. idx, {}, "传送到产品", function()
             util.teleport_2d(coords[1], coords[2])
         end)
     end
-snow_loca = menu.list(tp_world, "武器厢型车购买", {}, "")
-    for idx, coords in weaponvan do
-        snow_loca:action("厢型车 " .. idx, {}, "传送到厢型车", function()
+    tp_card = menu.list(tp_world, "纸牌", {}, "")
+    for idx, coords in cards1 do
+        tp_card:action("纸牌 " .. idx, {}, "传送到纸牌", function()
             util.teleport_2d(coords[1], coords[2])
         end)
     end
-figures_loca = menu.list(tp_world, "手办", {}, "")
-    for idx, coords in figures do
-        figures_loca:action("手办 " .. idx, {}, "传送到手办", function()
-            util.teleport_2d(coords[1], coords[2])
-        end)
-    end
-jammers_loca = menu.list(tp_world, "信号干扰器", {}, "")
-    for idx, coords in jammers do
-        jammers_loca:action("信号干扰器 " .. idx, {}, "传送到信号干扰器", function()
-            util.teleport_2d(coords[1], coords[2])
-        end)
-    end
-movie_props = menu.list(tp_world, "电影道具", {}, "")
-for idx, coords in movie_prop1 do
-    movie_props:action("电影道具 " .. idx, {}, "传送到电影道具", function()
-        util.teleport_2d(coords[1], coords[2])
-    end)
-end
-workshop_products = menu.list(tp_world, "拉玛有机作坊产品", {}, "")
-for idx, coords in ld_product do
-    workshop_products:action("产品 " .. idx, {}, "传送到产品", function()
-        util.teleport_2d(coords[1], coords[2])
-    end)
-end
-tp_card = menu.list(tp_world, "纸牌", {}, "")
-for idx, coords in cards1 do
-    tp_card:action("纸牌 " .. idx, {}, "传送到纸牌", function()
-        util.teleport_2d(coords[1], coords[2])
-    end)
-end
 
 ----------作弊者检测
-menu.toggle_loop(cheater_detection, "玩家无敌检测", {"pin1"}, "检测是否在使用无敌.", function()
+menu.toggle(cheater_detection, "一键开启", {}, "", function(on)
+    if on then
+        menu.set_value(pin1,true)
+        menu.set_value(pin2,true)
+        menu.set_value(pin3,true)
+        menu.set_value(pin4,true)
+        menu.set_value(pin5,true)
+        menu.set_value(pin6,true)
+        menu.set_value(pin7,true)
+        menu.set_value(pin8,true)
+        menu.set_value(pin9,true)
+        menu.set_value(pin10,true)
+        menu.set_value(pin11,true)
+        menu.set_value(pin12,true)
+    else
+        menu.set_value(pin1,false)
+        menu.set_value(pin2,false)
+        menu.set_value(pin3,false)
+        menu.set_value(pin4,false)
+        menu.set_value(pin5,false)
+        menu.set_value(pin6,false)
+        menu.set_value(pin7,false)
+        menu.set_value(pin8,false)
+        menu.set_value(pin9,false)
+        menu.set_value(pin10,false)
+        menu.set_value(pin11,false)
+        menu.set_value(pin12,false)
+    end
+end)
+menu.divider(cheater_detection,"检测列表")
+pin1 = menu.toggle_loop(cheater_detection, "玩家无敌检测", {"pin1"}, "检测是否在使用无敌.", function()
     god_detection()
 end)
-menu.toggle_loop(cheater_detection, "载具无敌检测", {"pin2"}, "检测载具是否在使用无敌.", function()
+pin2 = menu.toggle_loop(cheater_detection, "载具无敌检测", {"pin2"}, "检测载具是否在使用无敌.", function()
     car_god_detection()
 end)
-menu.toggle_loop(cheater_detection, "未发布载具检测", {"pin3"}, "检测是否有人在驾使尚未发布的车辆.", function()
+pin3 = menu.toggle_loop(cheater_detection, "未发布载具检测", {"pin3"}, "检测是否有人在驾使尚未发布的车辆.", function()
     unreleased_car_detection()
 end)
-menu.toggle_loop(cheater_detection, "无法获得武器检测", {"pin4"}, "检测是否有人使用无法在线获得的武器.", function()
+pin4 = menu.toggle_loop(cheater_detection, "无法获得武器检测", {"pin4"}, "检测是否有人使用无法在线获得的武器.", function()
     cantgetweapon_detection()
 end)
-menu.toggle_loop(cheater_detection, "无法获得载具检测", {"pin5"}, "检测是否有人正在使用无法在线获得的车辆.", function()
+pin5 = menu.toggle_loop(cheater_detection, "无法获得载具检测", {"pin5"}, "检测是否有人正在使用无法在线获得的车辆.", function()
     cantgetvar_detection()
 end)
-menu.toggle_loop(cheater_detection, "室内使用武器检测", {"pin6"}, "检测玩家是否在室内使用武器.", function()
+pin6 = menu.toggle_loop(cheater_detection, "室内使用武器检测", {"pin6"}, "检测玩家是否在室内使用武器.", function()
     usingweapon_detection()
 end)
-menu.toggle_loop(cheater_detection, "超级驾驶检测", {"pin7"}, "检测是否有在修改载具车速.", function()
+pin7 = menu.toggle_loop(cheater_detection, "超级驾驶检测", {"pin7"}, "检测是否有在修改载具车速.", function()
     supercar_detection()
 end)
-menu.toggle_loop(cheater_detection, "超级跑检测", {"pin8"}, "检测玩家是否在使用超级跑（奔跑速度不合常理）", function()
+pin8 = menu.toggle_loop(cheater_detection, "超级跑检测", {"pin8"}, "检测玩家是否在使用超级跑（奔跑速度不合常理）", function()
     superrun_detection()
 end)
-menu.toggle_loop(cheater_detection, "观看检测", {"pin9"}, "检测是否有人在观看你.", function()
+pin9 = menu.toggle_loop(cheater_detection, "观看检测", {"pin9"}, "检测是否有人在观看你.", function()
     lookingyou_detection()
 end)
-menu.toggle_loop(cheater_detection, "传送检测", {"pin10"}, "检测玩家是否使用了传送", function()
+pin10 = menu.toggle_loop(cheater_detection, "传送检测", {"pin10"}, "检测玩家是否使用了传送", function()
     tp_detection()
 end)
-menu.toggle_loop(cheater_detection, "改装武器检测", {"pin11"}, "检测玩家是否使用了改装武器", function()
+pin11 = menu.toggle_loop(cheater_detection, "改装武器检测", {"pin11"}, "检测玩家是否使用了改装武器", function()
     modified_weapon_detection()
 end)
-menu.toggle_loop(cheater_detection, "改装载具检测", {"pin12"}, "检测玩家是否使用了改装载具", function()
+pin12 = menu.toggle_loop(cheater_detection, "改装载具检测", {"pin12"}, "检测玩家是否使用了改装载具", function()
     modified_vehicles_detection()
 end)
 
@@ -6884,6 +7088,7 @@ menu.action(otherlist, "快速关闭GTAV", {""}, "正如你所见,秒关GTA5", f
 end)
 
 menu.hyperlink(otherlist, "daidai lua群", "https://qm.qq.com/cgi-bin/qm/qr?k=RGZGWK_kEeWk3-pgyRcd6CbDQsnlbjyt", "欢迎加入我们的大家庭")
+menu.hyperlink(otherlist, "daidai 官网", "https://duckerhome.netlify.app/", "")
 
 rgb_gui = menu.list(otherlist, "rgb", {}, "",function()util.toast("[呆呆 提示] \n使用后需重启游戏才能恢复哦")end)
     local rgbguir = 254
@@ -7850,7 +8055,6 @@ setup_menyoo_maps_list()
 
 ----自启列表
 menu.trigger_commands("openconstructor")----加载constructor模组
-menu.trigger_commands("disableBlockentitybombing on")----加载禁用阻止任务实体轰炸
 
 require "lib.daidailib.command"
 players.dispatch_on_join()
