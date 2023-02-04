@@ -1,160 +1,125 @@
 Finished Tutorial: Yes
+Understands Commands: Yes
+Understands Sliders: Yes
+Understands Profiles: Yes
+Prompted For Controller Disables: Yes
 Understands Command Chaining: Yes
-Tree Compatibility Version: 42
+Tree Compatibility Version: 43
 Self
-	Movement
-		Reduced Collision: On
-	Appearance
-		Outfit
-			Lock Outfit: 
-	Weapons
-		Infinite Ammo: On
 	Immortality: On
 	Lock Wanted Level: On
 Vehicle
 	Spawner
 		Make Spawned Vehicles Indestructible: On
 		Tune Spawned Vehicles: Fully
-	Indestructible: On
 Online
-	Session
-		Player Leave Reasons
-			Notification: On
-		Become A Script Host Kleptomaniac: On
 	Enhancements
 		Disable Idle/AFK Kick: On
-	Protections: Warning Acknowledged
+	Protections
 		Events
 			Crash Event
-				Write To Log File: Enabled
 				Kick: Enabled
 				Love Letter Kick: Enabled
-				Timeout: Disabled
+				Blacklist Kick: Enabled
+				Crash: Enabled
 			Kick Event
-				Write To Log File: Enabled
 				Kick: Enabled
 				Love Letter Kick: Enabled
+				Blacklist Kick: Enabled
+				Crash: Enabled
+				Timeout: Enabled
 			Modded Event
-				Write To Log File: Enabled
-			CEO/MC Ban (Not My CEO)
-				Write To Log File: Enabled
 				Kick: Enabled
 				Love Letter Kick: Enabled
-			CEO/MC Kick (Not My Boss)
-				Write To Log File: Enabled
-				Kick: Enabled
-				Love Letter Kick: Enabled
+				Blacklist Kick: Enabled
+				Crash: Enabled
+				Timeout: Enabled
 			Start Freemode Mission (Not My Boss)
-				Write To Log File: Enabled
+				Kick: Enabled
+			Teleport To Interior
+				Block: Enabled
+				Kick: Enabled
+			Teleport To Interior (Not My Boss)
+				Kick: Enabled
 			Give Collectible (Not My Boss)
-				Write To Log File: Enabled
+				Kick: Enabled
+			CEO/MC Kick
+				Kick: Enabled
 			Infinite Loading Screen
-				Write To Log File: Enabled
 				Kick: Enabled
-				Love Letter Kick: Enabled
 			Infinite Phone Ringing
-				Write To Log File: Enabled
 				Kick: Enabled
-				Love Letter Kick: Enabled
 			Teleport To Cayo Perico
-				Write To Log File: Enabled
 				Kick: Enabled
-				Love Letter Kick: Enabled
 			Cayo Perico Invite
 				Block: Enabled
-				Write To Log File: Enabled
 				Kick: Enabled
-				Love Letter Kick: Enabled
 			Apartment Invite
 				Block: Enabled
-				Write To Log File: Enabled
 				Kick: Enabled
-				Love Letter Kick: Enabled
 			Send To Cutscene
-				Write To Log File: Enabled
 				Kick: Enabled
-				Love Letter Kick: Enabled
 			Send To Job
-				Write To Log File: Enabled
 				Kick: Enabled
-				Love Letter Kick: Enabled
 			Transaction Error Event
-				Write To Log File: Enabled
 				Kick: Enabled
-				Love Letter Kick: Enabled
 			Vehicle Takeover
-				Block: Enabled
-				Write To Log File: Enabled
 				Kick: Enabled
-				Love Letter Kick: Enabled
 			Disable Driving Vehicles
-				Write To Log File: Enabled
 				Kick: Enabled
-				Love Letter Kick: Enabled
 			Kick From Vehicle
 				Block: Enabled
-				Write To Log File: Enabled
 				Kick: Enabled
-				Love Letter Kick: Enabled
+			Kick From Interior
+				Kick: Enabled
 			Freeze
-				Block: Enabled
-				Write To Log File: Enabled
 				Kick: Enabled
-				Love Letter Kick: Enabled
 			Force Camera Forward
-				Write To Log File: Enabled
 				Kick: Enabled
 				Love Letter Kick: Enabled
-			Love Letter Kick Blocking Event
+			Camera Shaking Event
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Explosion Spam
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Ragdoll Event
 				Block: Enabled
-				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
 			Raw Network Events: Warning Acknowledged
 		Detections
 			Stand User Identification: Off
-			Any Detection
-				Notification: Enabled
 		Syncs
+			World Object Sync
+				Block: Enabled
 			Invalid Model Sync
 				Kick: Enabled
 				Love Letter Kick: Enabled
-		Session Script Start
-			Any Script
-				Notification: Enabled
-			Uncategorised
-				Notification: Enabled
+				Blacklist Kick: Enabled
+				Crash: Enabled
+			Incoming: Warning Acknowledged
+			Outgoing: Warning Acknowledged
 		Host Kicks
 			Host Kick Karma: On
+		Breakup Kick Reactions
+			Karma: On
 		Love Letter & Desync Kicks
 			Notification When Love Letter Kicked: On
 			Desync Kick Karma: On
+		Presence Events
+			Block Friend Stat Notifications: On
+			Block Job Invites: On
 		Pickups
-			Cash Pickup Collected
+			Any Pickup Collected
+				Notification: On
 				Block: On
-		Lessen Breakup Kicks As Host: On
-		Block Join Karma: On
-	Spoofing
-		Name Spoofing
-			Name Spoofing: On
-			Spoofed Name: XiPro-NB
-		RID Spoofing
-			RID Spoofing: On
-			Spoofed RID: 98598332
-	Reactions
-		RID Join Reactions
-			Notification: On
-			Block: On
-		Host Change Reactions
-			Notification: Enabled
-		Script Host Change Reactions
-			Notification: Enabled
-		Vote Kick Reactions
-			Voting To Kick Anyone
-				Notification: Enabled
-			Voting To Kick Me
-				Kick: Enabled
-				Love Letter Kick: Enabled
-		Love Letter Kick Reactions
-			Notification: Enabled
+			Cash Pickup Collected
+				Notification: On
+				Block: On
+			RP Pickup Collected
+				Notification: On
+				Block: On
 Players
 	Settings
 		Tags
@@ -174,15 +139,12 @@ Players
 			Indestructible Vehicle: 
 			RC Vehicle: 
 			Off The Radar: 
-			In An Interior: 
-			Spectating: 
-			Typing: 
-			Dead: 
+			In An Interior: 
+			Spectating: 
+			Typing: 
+			Dead: 
 			VPN: 
 World
 	Places
 		Teleport To...
 			Auto Teleport To Waypoints: On
-Game
-	Disables
-		Prevent Numpad 7 Opening Social Club: On

@@ -1,0 +1,678 @@
+# <  README  >
+# Thanks to translate HC!
+# You should translate right-side texts. Otherwise, it'll cause errors.
+# You can use all characters except "=" character.
+# Using "#" character means the line will be ignored like the comment in coding.
+# If you wanna release your own translation, contact to Dev of HC in DC Server.
+# Learn More: https://icedoomfist.com/Stand_Heist_Control/How_To_Translate/
+
+
+--- [ # General ] ---
+
+Heist Control = 헤이스트 컨트롤
+Announcement = 공지 사항
+You are using latest version of HC! = 헤이스트 컨트롤의 최신 버전을 사용 중입니다!
+You are using outdated version of HC! = 헤이스트 컨트롤의 구 버전을 사용 중입니다!
+Current Version: = 현재 버전:
+Latest Version: = 최신 버전:
+Stand can't get latest version info of HC. = Stand가 헤이스트 컨트롤의 최신 버전 정보를 얻을 수 없습니다.
+HC website currently has connection issue. = 헤이스트 컨트롤 웹사이트에 연결 문제가 있습니다.
+Coded GTAO Version: = 코드된 GTA 온라인 버전:
+Current GTAO Version: = 현재 GTA 온라인 버전:
+Hard = 어려움
+Normal = 보통
+Notification = 알림
+[Risky] = [위험]
+[Locally] = [자신만 적용]
+Custom Payout = 커스텀 %
+You didn't input the value. Please input it! = 값을 입력하지 않았습니다. 입력해주세요!
+Enable = 활성화
+Sucessfully set! = 성공적으로 설정되었습니다!
+Would you like to restart HC now? = 헤이스트 컨트롤을 지금 시작하실건가요?
+Others = 기타
+Good bye, thank you for using HC! :D = 헤이스트 컨트롤을 써주셔서 감사합니다! :D
+
+
+--- [ # Main Tabs ] ---
+
+Cayo Perico Heist = 카요 페리코 습격
+Diamond Casino Heist = 다이아몬드 카지노 습격
+Doomsday Heist = 심판의 날 습격
+Classic Heist = 아파트 습격
+LS Tuners Robbery = LS 튜너
+The Contract: Agency = 에이전시 계약
+Master Unlocker = 마스터 잠금 해제기
+Tools = 도구
+Settings & About HC = 설정 & 헤이스트 컨트롤에 대해
+
+
+--- [ # Cayo Perico Heist ] ---
+
+Automated Presets = 자동화된 설정된 습격
+1 Player = 1인
+2 Players = 2인
+3 Players = 3인
+4 Players = 4인
+Sapphire Panther = 사파이어 팬서
+Ruby Necklace = 루비 목걸이
+
+Quick Preset [1 ~ 4P] = 빠른 설정된 습격 [1인 ~ 4인]
+There are no secondary targets, only one primary target exists. Your goal is get it. = 보조 목표물이 없으며, 하나의 주요 목표물만 존재합니다. 목표는 그것을 얻는 것입니다.
+
+Standard Preset = 스탠다드 설정된 습격
+Semi-Original Preset = 반 오리지널 설정된 습격
+- Remember to choose your preset outside the Submarine or in the Main Deck = - 설정된 습격을 잠수함이나 주요 항구 밖에서 선택 해야 한다는 것을 기억하세요.
+- Remember to deactivate the preset at the end. = - 습격이 끝난 후 비활성화 해야 한다는 것을 기억하세요.
+
+Custom Teleport = 커스텀 순간 이동
+Compound = 창고
+El Rubio's Office = 엘 루비오의 오피스
+Front Gate Exit = 정문
+Storage = 저장소
+North = 북
+West = 서
+South = 남
+Vault = 금고
+Island = 카요 페리코
+Airstrip = 비행장
+Crop Fields = 들판
+Main Dock = 주요 항구
+North Dock = 북쪽 항구
+Loot = 목표물
+Radio Tower = 라디오 타워
+Drainage = 배수구
+Drainage: 2nd Checkpoint = 배수구: 2번째 체크포인트
+Ocean Safe Place = 바다
+Kosatka: Heist Board [Call Kosatka first] = 코사트카: 습격 보드 [먼저 코사트카 요청]
+You have not bought Kosatka yet. Buy it first to teleport! = 아직 코사트카를 구매하지 않았습니다. 순간 이동하기 위해 먼저 구매하세요!
+
+Advanced Features = 고급 사용자용 기능
+Players Cut = 플레이어 %
+Your Cut = 자신의 %
+Player 2 = 플레이어 2
+Player 3 = 플레이어 3
+Player 4 = 플레이어 4
+Set 100% to everyone = 모두 100% 설정
+
+Bag Capacity Modifier = 가방 크기 수정기
+Normal Bag Limit = 보통
+Simulate Bag to 2 players = 2인용
+Simulate Bag to 3 players = 3인용
+Simulate Bag to 4 players = 4인용
+Infinite Bag = 무제한
+Skip Hacking = 해킹 건너뛰기
+Skip Sewer Cutter = 배수구 드릴 건너뛰기
+Open Plasma Glass Immediately = 주요 목표물 유리 즉시 열기
+Bypass Plasma Glass Cutter Heat = 주요 목표물 드릴 열 우회
+Infinite Voltage Timer = 무제한 Voltage 타이머
+Remove Fencing Fee & Pavel Cut = 장물 및 파벨 비용 제거
+Leave activated until the end of the heist = 습격이 끝날 때까지 활성화하세요.
+Auto-finish Primary Target = 주요 목표물 획득
+Remove Drainage Pipe = 배수구 파이프 제거
+
+Heist Vehicles = 습격 차량
+Submarine KOSATKA = 잠수함 - 코사트카
+Plane ALKONOST = 비행기 - 알코노스트
+Plane VELUM = 비행기 - 벨럼
+Helicopter STEALTH ANNIHILATOR = 헬리콥터 - 스텔스 어나이얼레이터
+Boat PATROL BOAT = 보트 - 순찰 보트
+Boat LONGFIN = 보트 - 롱핀
+Unlock All Vehicles = 모든 차량 잠금 해제
+
+Primary Target = 주요 목표물
+
+Secondary Target = 보조 목표물
+When using this method, the percentage and final payment is random! = 이 방법을 사용해 습격을 플레이하면 %와 피날레 돈이 랜덤입니다!
+Remove All = 모두 제거
+
+Compound Loot = 창고 목표물
+
+Weapon Loadouts = 무기 로드아웃
+Aggressor = 어그레서
+- Assault SG + Machine Pistol = - 어썰트 SG + 머신 피스톨
+- Machete + Grenade = - 마체테 + 그레네이드
+Conspirator = 컨스피리터
+- Military Rifle + AP = - 군용 라이플 + AP 피스톨
+- Knuckles + Stickies = - 너클 더스터 + 점착 폭탄
+Crackshot = 크랙샷
+- Sniper + AP = - 스나이퍼 + AP 피스톨
+- Knife + Molotov = - 나이프 + 파이프 폭탄
+Saboteur = 사보추어
+- SMG Mk2 + SNS Pistol = - SMG Mk2 + SNS 피스톨
+Marksman = 마크스맨
+- AK-47 + Pistol .50 = - AK-47 + 피스톨 .50
+- Machete + Pipe Bomb = - 마체테 + 파이프 폭탄
+
+Equipments Spawn Location = 장비 소환 위치
+- Guard Clothing = - 경비 옷
+- Bolt Cutters = - 볼트 커터
+
+Supply Truck Location = 보급 트럭 위치
+Heist Difficulty = 습격 난이도
+
+Unlock Heist Awards = 습격 보상 잠금 해제
+Complete all Missions only = 모든 미션만 끝내기
+Force the longest final Cutscene = 피날레 컷씬 강제로 끝내기
+Keep in mind that you must use this option before starting the Heist = 습격 시작 전 사용 해야 한다는 것을 잊지 마세요.
+Set Heist to Default [Reset] = 습격을 기본값으로 설정 [초기화]
+
+
+--- [ # Casino Heist ] ---
+
+Silent & Sneaky Approach = 비밀 작전
+BigCon Approach = 대 사기극
+Aggressive Approach = 공격 전술
+$3.5 Millions & For All Players = $350만 & 모든 플레이어 적용
+ALWAYS choose Low Level Buyer! = "항상" 가장 낮은 비용의 바이어를 선택하세요!
+
+Advanced Features = 고급 사용자용 기능
+Your Cut (Non-Host) = 자신의 돈 (호스트가 아닐 때)
+Works on both of sorts: Fingerprint and Keypad = 두 해킹 종류에서 모두 작동: 지문 해킹 및 키패드
+Instant Vault Door Laser = 즉시 금고 문 레이저 완료
+
+Inside = 내부
+Planning Boards = 계획 보드
+Garage Exit = 쓰레기장 출구
+Waste Disposal = 쓰레기장 
+2-Keypad Door = 2개의 키패드 문
+Inside Vault = 내부 금고
+Pre-Inside Vault = 들어가기 전의 내부 금고
+Daily Bonus = 오늘의 보너스
+Daily Bonus Room = 오늘의 보너스 방
+Outside = 외부
+Main Gate = 주요 입출입문
+Staff Lobby = 직원 로비
+
+Heist Planning [Board 1] = 계획 보드 (1)
+
+Change Approach and Difficulty = 접근 방식 및 난이도 변경
+Change Target = 목표물 변경
+Diamond = 다이아몬드
+Gold = 골드
+Artwork = 예술품
+Cash = 현금
+P.O.I & Access Points = 액세스 지점
+Change your session to apply! = 적용하기 위해서는 세션을 변경하세요!
+
+Heist Planning [Board 2] = 계획 보드 (2)
+
+Change Gunman = 총잡이 변경
+Chester McCoy = 체스터 맥코이
+Gustavo Mota = 구스타보 모타
+Patrick McReary = 패트릭 맥리어리
+Charlie Reed = 찰리 리드
+Karl Abolaji = 칼 아볼라지
+Random = 랜덤
+Remove = 제거
+
+Weapon Variation = 무기 변경
+
+Change Vehicle = 운전사 변경
+Chester McCoy = 체스터 맥코이
+Eddie Toh = 에디 토
+Taliana Martinez = 탈리아나 마르티네즈
+Zach Nelson = 자크 넬슨
+Karim Denz = 카림 덴즈
+
+Vehicle Variation = 차량 변경
+Best = 최고
+Good = 좋음
+Fine = 나쁘지 않음
+Worst = 나쁨
+
+Change Hacker = 해커 변경
+Avi Schwartzman = 에비 슈왈츠먼
+Paige Harris = 페이지 해리스
+Christian Feltz = 크리스티안 펠츠
+Yohan Blair = 요한 블레어
+Rickie Luken = 리키 루켄스
+
+Choose Mask = 마스크 선택
+Remove Mask = 마스크 제거
+Geometric = 지오메트릭
+Hunter = 헌터
+Oni Half Mask = 오니 하프
+Emoji = 이모지
+Ornate Skull = 오르네이트 스컬
+Lucky Fruit = 럭키 프루트
+Guerilla = 게릴라
+Clown = 광대
+Animal = 동물
+Riot = 라이엇
+Oni = 오니
+Hockey = 하키
+
+Unlock Scan Card Level = 보안증 잠금 해제
+Duggan Guards = 듀건의 화물
+0 - Strongest Guards = 0 - 가장 강한 경비
+3 - Weakest Guards = 3 - 가장 약한 경비
+
+Heist Planning [Board 3] = 계획 보드 (3)
+Remove Drills = 드릴 제거
+Silent & Sneaky and Aggressive Approach = 비밀 작전 및 공격 전술용 
+
+Board Loader & Unloader = 보드 불러오기 & 언로드
+Load all Boards = 모든 보드 불러오기
+Unload all Boards = 모든 보드 언로드
+
+Casino Story Missions = 카지노 스토리 미션
+Loose Cheng = 사라진 쳉
+House Keeping = 하우스키핑
+Strong Arm Tactics = 강압적 전략
+Play to Win = 분노의 필승
+Bad Beat = 재수 없는 상황
+Cashing Out = 유종의 미
+
+Remove Heist Prepare Cooldown = 카지노 준비 작업 쿨타임 제거
+Skip Agatha Baker missions to the last one = 마지막 미즈 베이커 미션 건너뛰기
+
+
+--- [ # Doomsday Heist ] ---
+
+[Final Heist] = [피날레]
+The Data Breaches ACT I = 정보 약탈
+The Bogdan Problem ACT II = 보그단 문제
+The Doomsday Scenario ACT III = 심판의 날
+
+Heist board = 습격 보드
+Prisoner cell = 유치장
+
+Modify ACT I Payment [$2.5 Millions] = 정보 약탈 돈 수정 [$250만]
+Modify ACT II Payment [$2.5 Millions] = 보그단 문제 돈 수정 [$250만]
+Modify ACT III Payment [$2.5 Millions] = 심판의 날 돈 수정 [$250만]
+Set difficulty as hard. In-Game percentage may seem weird. Applied to everyone. = 난이도가 어려움으로 설정됩니다. 게임에서의 %가 이상하게 보일 수도 있습니다. 모두에게 적용됩니다.
+
+Setup: Server Farm (Lester) = 준비 작업: 서버 팜 (레스터)
+Unlock All Doomsday Heist = 모든 심판의 날 습격 잠금 해제
+Complete all preparations (Not Setup) = 모든 준비 끝내기 (준비 작업이 아님)
+
+
+--- [ # Classic Heist ] ---
+
+Fleeca Heist = 플리카 습격
+Your Payout (Millions) = 자신의 돈 (단위: 100만)
+Will be applied only to you & have to host = 자신에게만 적용될 것이며 자신이 꼭 호스트여야만 합니다!
+- Only do this only one time or twice in less than 24 hours. = - 현실 시간 24시간 이내에 한 번 또는 두 번만 하세요.
+- Otherwise, you can be banned! = - 지키지 않으면, 밴될 수도 있습니다!
+Modify Payout Amount = 돈 양 수정
+Complete all Setup = 모든 준비 작업 끝내기
+You may need to choose a Heist and then complete the first setup, activated until then = 습격을 선택하고 첫 번째 준비 작업을 끝내야합니다. 그 때까지 활성화하세요.
+
+
+--- [ # LS Robbery ] ---
+
+Modify Contracts payout - $1 MILLIONs = 계약 돈 수정 - $100만
+Always keep this option actived before starting a contract = 계약을 시작하기 전에 이 옵션을 활성화하고 습격 동안 계속 활성화하세요.
+Changes will only happen if you are outside your Auto-Shop! = 자동차 작업실 밖에 있어야 변경 사항이 적용될 것입니다!
+Union Depository = 노동 조합 은행 작업 계약
+The Superdollar Deal = 위조지폐 거래
+The Bank Contract = 은행 작업 계약
+The ECU Job = ECU 작업
+The Prison Contract = 교도소 작업 계약
+The Agency Deal = 정보국 거래
+The Lost Contract = 로스트 작업 계약
+The Data Contract = 데이터 작업 계약
+Complete missions (only) = 미션만 끝내기
+
+Reset Missions (only) = 미션만 초기화
+Reset Contracts = 계약 초기화
+Reset Total Gains & Completed Missions = 총 수입 및 끝낸 미션 초기화
+
+
+--- [ # The Contract : Agency ] ---
+
+VIP Contract: Dr.Dre = VIP 계약 : 닥터 드레
+The feature to be worked properly, you may need to log out of F.Clinton & Partner = 이 기능이 잘 작동하기 위해서는, F.Clinton & Partner에서 로그아웃 해야합니다.
+
+NightLife Leak = 나이트 라이프 유출
+The Nightclub (Prep) = 나이트 클럽 (준비 작업)
+The Marina (Prep) = 선착장 (준비 작업)
+NightLife Leak (Mission) = 나이트 라이프 유출 (미션)
+
+High Society Leak = 상류사회 유출
+The Country Club (Prep) = 컨트리 클럽 (준비 작업)
+Guest List (Prep) = 손님 명단 (준비 작업)
+High Society (Mission) = 상류사회 (미션)
+
+South Central Leak = 사우스 센트럴 유출
+Davis (Prep) = 데이비스 (준비 작업)
+The Ballas (Prep) = 발라스 (준비 작업)
+Agency Studio (Mission) = 스튜디오 타임 (미션)
+Final Contract: Don't Fuck with Dre = 피날레: 드레한테 깝치지 마
+
+Modify Final Contract Payout (2 Millions) = 피날레 계약 돈 수정 ($200만)
+Skip Cooldown of Payphone hits & contracts = 전화 & 계약 쿨타임 건너뛰기
+Make sure enabled before starting any contract or hit. = 계약 시작 전에 활성화 해야 작동합니다.
+Remove Security Missions Cooldown = 보안 미션 쿨타임 제거
+Complete all Missions = 모든 미션 완료
+
+
+--- [ # Master Unlocker ] ---
+
+DLCs = DLC
+Arena Wars DLC = 아레나 워 DLC
+Unlock all Arena Wars Trophy and Toys = 아레나워 트로피 및 장난감
+Arena Wars Clothing = 아레나 워 의상
+Summer 2020 DLC = 2020 여름 DLC
+Summer 2020 Awards = 2020 여름 보상
+Unlock Summer DLC Clothing = 여름 DLC 의상
+LS Tuners DLC = LS 튜너 DLC
+Unlock Drip Fed Outfits = 의상 미리 체험 잠금 해제
+Unlock Awards = 보상 잠금 해제
+The Contract DLC = 청부 계약 DLC 
+Unlock Animal Masks = 동물 마스크
+Unlock DJ Pooh Shirts = DJ 푸 티셔츠
+
+Buildings = 건물
+Arcade Unlockers = 아케이드
+Unlock Arcade Trophys and Toys = 아케이드 트로피 및 장난감
+Unlock Arcade Clothing = 아케이드 의상
+Unlock NightClub Awards = 나이트 클럽 보상
+Casino Store Ace Masks = 카지노 상점의 에이스 마스크
+Add cosmetics items to the Office/MC = 오피스/MC에 돈 다발 추가
+
+Missions = 미션
+Cayo Perico unlockables = 카요 페리코 관련
+Unlock Yacht Missions = 요트 미션
+Unlock all Contacts = 모든 계약
+Skip Lamar Missions to the last one = 마지막 라마 미션 건너뛰기
+
+Special Anniversaries = 특별 기념일
+Christmas = 크리스마스
+Bypass Christmas Clothing = 크리스마스 의상 우회
+You must always keep this feature activated to wear! = 크리스마스 의상을 입기 위해서는 이 기능을 계속 활성화하고 있어야합니다!
+Unlock Christmas Liveries = 크리스마스 상징
+Unlock Christmas Content = 크리스마스 컨텐츠
+Valentine = 발렌타인
+Independence Day = 독립기념일
+
+Clothes = 의상
+Unlock Hats and many Shirts = 모자 및 수 많은 셔츠
+Unlock Don't Cross the Line Tee = 선 넘지마 티
+
+Vehicles = 차량
+Unlock some vehicles trade price = 몇몇 차량 특별 거래가 잠금 해제
+Unlock Shotaro = 쇼타로 잠금 해제
+
+Weapons = 무기
+Stone Hatchet Challenge = 돌도끼
+Double Action Revolver = 더블 액션 리볼버
+Navy Revolver = 네이비 리볼버
+Up-N-Atomizer = 업 앤 아토마이저
+
+Vanilla Unicorn Award = 바닐라 윤콘 보상
+Alien Tatto (Illuminati) = 외계인 타투 (일루미나티)
+Returning Bonus = 복귀 보너스
+
+
+--- [ # Tools ] ---
+
+Tunables = 튜너블
+Remove Cooldowns = 쿨타임 제거
+Resupply Delay = 재 보급 지연 
+MC Business = MC 비즈니스
+Bunker = 벙커
+Buy & Sell = 구매 및 판매
+Special Cargo = 스패셜 패키지
+Vehicle Cargo = 반입 반출
+Air Freight Cargo = 항공 수송 화물
+Client Job = 클라이언트 작업
+Launch Kosatka Missiles = 코사트카 미사일 발사
+
+Multipliers = 경험치 증가
+LS Car Meet = LS 차량 미팅
+Street Race = 길거리 레이스
+Pursuit Race = Pursuit 레이스
+Scramble = 스크램블
+Head 2 Head = 헤드 투 헤드
+LS Car Meet Track = LS 차량 미팅 트랙
+
+Trigger Special Crate Missions = 스페셜 패키지 특수 화물
+Note that buying special crates can only in the Terrobyte. = 참고로 스페셜 패키지 특수 화물을 구매하는 것은 테러바이트에서만 가능합니다.
+Ornamental Egg = 알 세공품
+Gold Minigun = 황금 미니건
+Large Diamond = 대형 다이아몬드
+Rage Hide = 희귀한 가죽
+Film Reel = 영화 필름
+Rare Pocket Watch = 희귀한 회중시계
+
+Bunker Mission Selector = 벙커 미션 선택기
+[SPECIAL] Trigger Alien Egg Mission = [특별] UFO 미션
+
+Steal Supplies = 보급품 강탈
+Altruist Camp = 알트루이스트 캠프
+The Dune Buggy = 듄 버기
+Police Riot = 경찰 시선 끌기
+Mine = 폐광산 
+The Technical Aqua = 테크니컬 아쿠아
+Rival Operation = 라이벌 기업 파괴
+Zancudo River = 잔쿠도 강
+LSIA = 로스 산토스 국제 공항
+Merryweather HQ = 메리웨더 HQ
+Training Ground (Tank) = 탱크 훔치기
+Del Perro Beach = 델 페로 해변
+Cholla Springs Avenue = Cholla Springs 가
+Chupacabra Street = Chupacabra 길
+
+Sell Weapons = 무기 판매
+HVY Insurgent Pick Up = HVY 인서전트 픽업
+HVY Insurgent (Normal) = 일반 HVY 인서전트 
+Marshall = 마샬
+HVY Insurgent Pick Up (Custom) = HVY 인서전트 픽업 커스텀
+Phantom Wedge = 펜텀 웨지
+Dune FAV = 듄 FAV
+
+Remove Other Cost = 기타 비용 제거
+Repair Vehicle Cargo = 반입 반출 수리
+When you sell vehicle, block paying related repair. = 차량을 판매할 때, 수리와 관련된 것 비용이 지불되는 것을 차단합니다.
+Ron's Cut of Air Freight Cargo = 항공 수송 화물 론의 돈
+Tony's Cut of Nightclub = 나이트클럽 토니의 돈
+Resupply MC Business = MC 비즈니스 재 보급
+Resupply Bunker = 벙커 재 보급
+
+Single MC Vehicle Sell = 한 차량 MC 비즈니스 판매 
+Makes always number of MC business selling's vehicle is one. = 항상 MC 비즈니스의 판매 차량이 한 대가 되도록 만듭니다.
+Bypass Transaction Error Messages = 거래 오류 메시지 우회
+Prevents appearing transaction error messages, can be used for a lot of stuffs like when you get CEO Money. = 거래 오류 메시지가 보이는 것을 막으며, CEO 돈을 획득할 때와 같이 많은 곳에서 쓰일 수 있습니다.
+Make One Snack Full Health = 한 스낵 최대 체력
+Whatever you use a snack, will make you full health. = 어떠한 한 스낵을 사용하면, 최대 체력으로 만들어줍니다.
+Infinite Stone Hatchet Power = 돌 도끼 파워 무제한
+Complete Headhunter = 헤드헌터 완료
+Complete Sightseer = 물건 찾기 완료
+Complete working in progress the mission. = 진행 중인 미션을 끝냅니다.
+7 Years GTAO Playtime = GTA 온라인 플레이 시간 7년
+Make your account like played GTAO 7 years. = GTA 온라인 플레이를 7년 동안 한 것처럼 수정합니다.
+
+Custom Money Remover = 커스텀 돈 제거기
+Easy way to remove GTAO bank account money = GTA 온라인 계좌의 돈을 제거하는 쉽고 빠른 방법
+Firstly, buy ballistic equipment. To remove money, call it in the interaction menu = 일단, 중무장 장비를 구매합니다. 돈을 제거하기 위해서는 상호 작용 메뉴에서 호출하세요.
+
+AFK Money = 잠수 머니
+Methods are safe to use, but if you earn too much money, can be banned. Always use at own your risk. = 사용되는 방법들은 안전합니다. 하지만, 많은 돈을 벌면 밴될 수도 있습니다. 항상 명심하세요.
+Cooldown Time [Sec] = 쿨타임 [초]
+Auto Time Trial = 자동 타임 트라이얼
+Auto Rig Slot Machine = 자동 리그 슬롯 머신
+Ratio of Jackpot and Loss = 잭팟 및 패배 비
+Playing Time Trial one time is done! Waiting for cooldown time... = 한 번 타임 트라이얼을 플레이하는 것이 끝났습니다! 쿨타임을 위해 기다리는 중입니다...
+Auto Black Jack = 자동 블랙잭
+
+Heist Cooldown Timer = 습격 쿨타임 시간
+When set time passed, HC will let you know heist cooldown has been passed. = 설정된 시간이 지나면, 헤이스트 컨트롤이 시간이 지났다고 알려줄 것입니다.
+Text Position = 글자 위치
+Cooldown time passed, you can play the heist again! = 쿨타임이 지났기에, 해당 습격을 다시 플레이할 수 있습니다!
+Custom Heist = 커스텀 습격
+Use Stand's Overlay = Stand의 오버레이 사용
+Enabled: Use Stand's Overlay & Settings: Game > Info Overlay = 활성화: Stand 오버레이 및 설정 값 사용: 게임 > 정보 오버레이
+Disabled: Use Heist Control's Overlay & Settings = 비활성화: 헤이스트 컨트롤의 오버레이 및 설정 값 사용
+Set Custom Time = Set Custom Time
+
+Manage Near Peds & Cams = 근처 NPC 및 카메라 관리
+Work only to hostile peds = 적대적인 NPC에게만 작동
+Enabled: Ped options work only to hostile peds = 활성화: NPC 옵션이 적대적인 NPC에게만 작동
+Disabled: Ped options work to all peds = 비활성화: NPC 옵션이 모든 NPC에게 작동
+Peds = NPC
+Remove Weapons = 무기 제거
+Delete = 삭제
+Kill = 킬
+Cams = 카메라
+
+Bypass Locked Doors = 잠긴 문 우회
+Speed of Improved No Clip = 향상된 노 클립의 속도
+Distance of Teleport To Forward = 앞으로 순간 이동의 거리
+Instant Doors Crack = 즉시 문 깨기
+Improved No Clip = 향상된 노 클립
+Teleport To Forward = 앞으로 순간 이동
+
+Request Services = 서비스 요청
+MOC = 이동식 작전 본부
+Avenger = 어벤저
+Terrobyte = 테러바이트
+Kosatka = 코사트카
+Dingy = 딩이
+Ballistic Armor = 중무장 장비
+
+Info Spoofing = 정보 스푸핑
+Value = 값
+Total Money = 돈 합계
+Kills = 킬
+Deaths = 데스
+
+Business Upgrade States = 비즈니스 업그레이드 상태
+Document = 위조 서류
+Weed = 마리화나
+Counterfit = 위조 지폐
+Meth = 필로폰
+Cocaine = 코카인
+Bunker = 벙커
+Arcade = 아케이드
+Nightclub = 나이트클럽
+Equipment Upgrade = 장비 업그레이드
+Staff Upgrade = 직원 업그레이드
+Secuirity Upgrade = 보안 업그레이드
+Decor Upgrade = 장식 업글레이드
+Firing Range Upgrade = 사격장 업그레이드
+Gunlocker Upgrade = 총 보관소 업그레이드
+Personal Quarters Upgrade = 개인 숙소 업그레이드
+Transportation Upgrade = 차량 업그레이드
+Drone Station = 드론 스테이션
+Business Hub = 비즈니스 허브
+Floor = 층
+Style = 스타일
+Wall = 벽
+Garage = 차고
+Neon Lights = 네온 라이트
+High Score Screen = 점수 화면
+Lighting = 불빛
+Dancers = 댄서
+Paid DJs = 고용된 DJ
+
+Stat Editor & Reader = Stat 수정기 & 읽기
+Presets Stat Editor = 설정된 Stat 수정기
+Modify Stat = Stat 수정
+Set Stat = Stat 설정
+
+Crew Rank = 조직 랭크
+
+Playtime = 플레이 시간
+Method = 방법
+Use Adding Playtime = 플레이 시간을 더하는 방법 사용
+Enabled: Use adding playtime method = 활성화: 플레이 시간을 더하는 방법 사용
+- Add from your current playtime = - 자신의 현재 플레이 시간에서 시간을 더합니다.
+Disabled: Use setting playtime method = 비활성화: 플레이 시간을 설정하는 방법 사용
+- Set equal you will set time = - 설정한 시간과 같게 설정될 것입니다.
+Note that set method supports up to only 24.8 days, but add method supports up to 50K days = 참고로 설정하는 방법은 오직 24.8일까지만 지원하지만, 더하는 방법은 최대 5천 일까지 지원합니다.
+Day = 일
+Hour = 시
+Min = 분
+Total Playtime = 플레이 시간 합계
+GTA:O Playtime = GTA 온라인 합계
+Deathmatches = 데스메치
+Races = 레이스
+Creator = 생성기
+
+Cash Earned & Spent = 번 돈 & 사용한 돈
+Cash Amount = 돈 양
+Total Earned = 총 번 돈
+Total Spent = 총 사용한 돈
+Related Earned Cash = 번 돈 관련
+Jobs = 작업
+Betting = 베팅
+Shared = 공유
+Car Sales = 차량 판매
+Picked Up = 주움
+
+Stat Name = Stat 이름
+Stat Value = Stat 값
+Example Stat = 예시 Stat
+
+Custom Stat Editor = 커스텀 Stat 에디터
+Setting some certain stats may cause a ban. Use at your own risk! = 몇몇 Stat을 설정하는 것은 밴을 유발할 수 있습니다. 명심하세요!
+Note: MP0_ or MP1_ will be selected by HC automatically, therefore don't write it. = 참고로 MP0_ 이나 MP1_ 은 헤이스트 컨트롤에 의해 자동으로 선택되니, 그러므로 적지 마세요.
+
+Custom Stat Reader = 커스텀 Stat 읽기
+Copy Stat Value = Stat 값 복사
+Read Stat = Stat 읽기
+Sucessfully read! = 성공적으로 읽었습니다!
+
+Language Setting = 언어 설정
+How To Translate = 번역 방법
+Always looking for new translators not existing language. If you interested in translating HC, click! = 헤이스트 컨트롤에 없는 언어에 한해 항상 번역가를 모집하는 중입니다. 만약 헤이스트 컨트롤을 번역하는 것에 관심이 있다면, 클릭하세요!
+Language = 언어
+
+
+--- [ # Settings ] ---
+
+Settings = 설정
+In-Game Customize = 인 게임 커스터마이즈
+
+Sort = 종류
+In-Game = 인 게임
+No Notification = 알림 없음
+
+Icon = 아이콘
+HC Logo = 헤이스트 컨트롤 로고
+Lester = 레스터
+Legend Of Heist = 습격의 레전드
+Skull Head = 해골 머리
+Warstock = 워스톡
+Black R* = 블랙 락스타
+R* Social Club = 락스타 소셜 클럽
+
+Background Color = 배경 색
+Black = 블랙
+White = 화이트
+Red = 레드
+Orange = 오렌지
+Yellow = 옐로우
+Mint = 민트
+Green = 그린
+Light Blue = 라이트 블루
+
+Text Color = 글씨 색
+
+
+--- [ # About HC ] ---
+
+About HC = 헤이스트 컨트롤에 대해
+Join Discord Server! = 디스코드 서버 가입!
+Get support, Download beta version, Enjoy other stuffs! = 가입하여 도움을 받고, 베타 버전을 다운로드하고, 기타 등등을 즐기세요!
+Youtube = 유튜브
+Videos that related HC tutorial are uploaded, subscribe the channel for me, :D = 헤이스트 컨트롤 튜토리얼과 관련된 것들이 업로드됩니다. 해당 채널을 구독하여 저를 도와주세요. :D
+Tutorial = 튜토리얼
+If you don't know how to use HC, click! = 헤이스트 컨트롤을 어떻게 사용하는지 모르겠다면, 클릭하세요!
+Changelog = 업데이트 로그
+If you want to know what latest version was changed, click! = 최신 버전이 뭐가 바뀌었는지 궁금하다면 클릭하세요!
+
+
+--- [ # Credits ] ---
+
+Credits = 크레딧
+If you click features, will show the user's profile image & copy name or be redirected to mentioned website. = 기능들을 클릭하면 해당 유저의 프로필을 보여주고 이름을 복사하거나 언급된 웹사이트로 재 연결될 것입니다.
+2Take1 Heist Control Dev, He allowed me to use his code. Without him, HC doesn't exist. Really thanks to him! = 투텍 헤이스트 컨트롤 개발자이며 코드 사용을 허락했습니다. 허락 없이는 Stand용 헤이스트 컨트롤은 존재하지 않았을 것입니다. 감사합니다.
+Creator of Wiriscript & Lancescript that help me coding HC = 위리 스크립트 및 랜스 스크립트의 창작자, 헤이스트 컨트롤을 코드하는 데 도움을 주었습니다.
+Helped a lot of stuffs for HC's website maintenance. = 헤이스트 컨트롤의 웹사이트 유지에 많은 도움을 주었습니다.
+Helped me coding website's design. = 웹사이트의 디자인을 코드하는 데에 도움을 주었습니다.
+Made logo, banner and etc for HC. = 헤이스트 컨트롤을 위한 로고, 배너 등등을 만들었습니다.
+Let me know about stats info. = Stat 정보에 대해 알려주었습니다.
+Translators = 번역가
+Maintains HC's translation = 헤이스트 컨트롤 번역 유지
