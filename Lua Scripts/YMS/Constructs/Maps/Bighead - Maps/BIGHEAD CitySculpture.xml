@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SpoonerPlacements>
+	<Note />
+	<AudioFile volume="400" />
+	<ClearDatabase>false</ClearDatabase>
+	<ClearWorld>0</ClearWorld>
+	<ClearMarkers>false</ClearMarkers>
+	<IPLsToLoad load_mp_maps="false" load_sp_maps="false" />
+	<IPLsToRemove />
+	<InteriorsToEnable />
+	<InteriorsToCap />
+	<WeatherToSet></WeatherToSet>
+	<TimecycleModifier strength="1"></TimecycleModifier>
+	<StartTaskSequencesOnLoad>true</StartTaskSequencesOnLoad>
+	<ReferenceCoords>
+		<X>-309.52478</X>
+		<Y>-307.636597</Y>
+		<Z>30.6856537</Z>
+	</ReferenceCoords>
+	<Placement>
+		<ModelHash>0x8352986c</ModelHash>
+		<Type>3</Type>
+		<Dynamic>false</Dynamic>
+		<FrozenPos>true</FrozenPos>
+		<HashName>xs_propint4_waste_08_statue</HashName>
+		<InitialHandle>112906</InitialHandle>
+		<ObjectProperties>
+			<TextureVariation>0</TextureVariation>
+		</ObjectProperties>
+		<OpacityLevel>255</OpacityLevel>
+		<LodDistance>16960</LodDistance>
+		<IsVisible>true</IsVisible>
+		<MaxHealth>1000</MaxHealth>
+		<Health>1000</Health>
+		<HasGravity>true</HasGravity>
+		<IsOnFire>false</IsOnFire>
+		<IsInvincible>true</IsInvincible>
+		<IsBulletProof>false</IsBulletProof>
+		<IsCollisionProof>false</IsCollisionProof>
+		<IsExplosionProof>true</IsExplosionProof>
+		<IsFireProof>false</IsFireProof>
+		<IsMeleeProof>true</IsMeleeProof>
+		<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+		<PositionRotation>
+			<X>-308.865265</X>
+			<Y>-150.909241</Y>
+			<Z>41.5245361</Z>
+			<Pitch>0</Pitch>
+			<Roll>-0</Roll>
+			<Yaw>156.679825</Yaw>
+		</PositionRotation>
+		<Attachment isAttached="false" />
+	</Placement>
+	<Placement>
+		<ModelHash>0x8352986c</ModelHash>
+		<Type>3</Type>
+		<Dynamic>false</Dynamic>
+		<FrozenPos>true</FrozenPos>
+		<HashName>xs_propint4_waste_08_statue</HashName>
+		<InitialHandle>161591</InitialHandle>
+		<ObjectProperties>
+			<TextureVariation>0</TextureVariation>
+		</ObjectProperties>
+		<OpacityLevel>255</OpacityLevel>
+		<LodDistance>16960</LodDistance>
+		<IsVisible>true</IsVisible>
+		<MaxHealth>1000</MaxHealth>
+		<Health>1000</Health>
+		<HasGravity>true</HasGravity>
+		<IsOnFire>false</IsOnFire>
+		<IsInvincible>true</IsInvincible>
+		<IsBulletProof>false</IsBulletProof>
+		<IsCollisionProof>false</IsCollisionProof>
+		<IsExplosionProof>true</IsExplosionProof>
+		<IsFireProof>false</IsFireProof>
+		<IsMeleeProof>true</IsMeleeProof>
+		<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+		<PositionRotation>
+			<X>-349.865265</X>
+			<Y>-252.909241</Y>
+			<Z>153.524536</Z>
+			<Pitch>-1.2806604e-06</Pitch>
+			<Roll>110.999619</Roll>
+			<Yaw>156.679825</Yaw>
+		</PositionRotation>
+		<Attachment isAttached="false" />
+	</Placement>
+	<Placement>
+		<ModelHash>0x971772a1</ModelHash>
+		<Type>3</Type>
+		<Dynamic>false</Dynamic>
+		<FrozenPos>true</FrozenPos>
+		<HashName>xs_prop_chips_tube_wl</HashName>
+		<InitialHandle>763410</InitialHandle>
+		<ObjectProperties>
+			<TextureVariation>0</TextureVariation>
+		</ObjectProperties>
+		<OpacityLevel>255</OpacityLevel>
+		<LodDistance>16960</LodDistance>
+		<IsVisible>true</IsVisible>
+		<MaxHealth>1000</MaxHealth>
+		<Health>1000</Health>
+		<HasGravity>true</HasGravity>
+		<IsOnFire>false</IsOnFire>
+		<IsInvincible>true</IsInvincible>
+		<IsBulletProof>false</IsBulletProof>
+		<IsCollisionProof>false</IsCollisionProof>
+		<IsExplosionProof>true</IsExplosionProof>
+		<IsFireProof>false</IsFireProof>
+		<IsMeleeProof>true</IsMeleeProof>
+		<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+		<PositionRotation>
+			<X>-334.31781</X>
+			<Y>-294.273712</Y>
+			<Z>39.5181808</Z>
+			<Pitch>30.999979</Pitch>
+			<Roll>1.99208102e-06</Roll>
+			<Yaw>58.0417099</Yaw>
+		</PositionRotation>
+		<Attachment isAttached="false" />
+	</Placement>
+</SpoonerPlacements>

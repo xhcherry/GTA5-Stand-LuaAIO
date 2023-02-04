@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SpoonerPlacements>
+	<Note />
+	<AudioFile volume="400" />
+	<ClearDatabase>false</ClearDatabase>
+	<ClearWorld>0</ClearWorld>
+	<ClearMarkers>false</ClearMarkers>
+	<IPLsToLoad load_mp_maps="false" load_sp_maps="false" />
+	<IPLsToRemove />
+	<InteriorsToEnable />
+	<InteriorsToCap />
+	<WeatherToSet></WeatherToSet>
+	<TimecycleModifier strength="1"></TimecycleModifier>
+	<StartTaskSequencesOnLoad>true</StartTaskSequencesOnLoad>
+	<ReferenceCoords>
+		<X>-1411.82983</X>
+		<Y>-510.076721</Y>
+		<Z>32.4120674</Z>
+	</ReferenceCoords>
+	<Placement>
+		<ModelHash>0xc6969c9a</ModelHash>
+		<Type>3</Type>
+		<Dynamic>false</Dynamic>
+		<FrozenPos>true</FrozenPos>
+		<HashName>xs_prop_lplate_bend_01a_wl</HashName>
+		<InitialHandle>725598</InitialHandle>
+		<ObjectProperties>
+			<TextureVariation>0</TextureVariation>
+		</ObjectProperties>
+		<OpacityLevel>255</OpacityLevel>
+		<LodDistance>16960</LodDistance>
+		<IsVisible>true</IsVisible>
+		<MaxHealth>1000</MaxHealth>
+		<Health>1000</Health>
+		<HasGravity>true</HasGravity>
+		<IsOnFire>false</IsOnFire>
+		<IsInvincible>true</IsInvincible>
+		<IsBulletProof>false</IsBulletProof>
+		<IsCollisionProof>false</IsCollisionProof>
+		<IsExplosionProof>true</IsExplosionProof>
+		<IsFireProof>false</IsFireProof>
+		<IsMeleeProof>true</IsMeleeProof>
+		<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+		<PositionRotation>
+			<X>-1436.95068</X>
+			<Y>-511.756927</Y>
+			<Z>38.6071014</Z>
+			<Pitch>0</Pitch>
+			<Roll>-0</Roll>
+			<Yaw>124.990257</Yaw>
+		</PositionRotation>
+		<Attachment isAttached="false" />
+	</Placement>
+	<Placement>
+		<ModelHash>0xc6969c9a</ModelHash>
+		<Type>3</Type>
+		<Dynamic>false</Dynamic>
+		<FrozenPos>true</FrozenPos>
+		<HashName>xs_prop_lplate_bend_01a_wl</HashName>
+		<InitialHandle>122206</InitialHandle>
+		<ObjectProperties>
+			<TextureVariation>0</TextureVariation>
+		</ObjectProperties>
+		<OpacityLevel>255</OpacityLevel>
+		<LodDistance>16960</LodDistance>
+		<IsVisible>true</IsVisible>
+		<MaxHealth>1000</MaxHealth>
+		<Health>1000</Health>
+		<HasGravity>true</HasGravity>
+		<IsOnFire>false</IsOnFire>
+		<IsInvincible>true</IsInvincible>
+		<IsBulletProof>false</IsBulletProof>
+		<IsCollisionProof>false</IsCollisionProof>
+		<IsExplosionProof>true</IsExplosionProof>
+		<IsFireProof>false</IsFireProof>
+		<IsMeleeProof>true</IsMeleeProof>
+		<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+		<PositionRotation>
+			<X>-1406.97144</X>
+			<Y>-489.806183</Y>
+			<Z>38.6702995</Z>
+			<Pitch>0</Pitch>
+			<Roll>0</Roll>
+			<Yaw>-52.0670738</Yaw>
+		</PositionRotation>
+		<Attachment isAttached="false" />
+	</Placement>
+</SpoonerPlacements>
