@@ -1,3 +1,33 @@
+-------愤怒的飞机
+planes = {
+	"besra",
+	"dodo",
+	"avenger",
+	"microlight",
+	"molotok",
+	"bombushka",
+	"howard",
+	"duster",
+	"luxor2",
+	"lazer",
+	"nimbus",
+	"shamal",
+	"stunt",
+	"titan",
+	"velum2",
+	"miljet",
+	"mammatus",
+	"besra",
+	"cuban800",
+	"seabreeze",
+	"alphaz1",
+	"mogul",
+	"nokota",
+	"strikeforce",
+	"vestra",
+	"tula",
+	"rogue",
+}
 
 ----伪装
 disguise_object = 0

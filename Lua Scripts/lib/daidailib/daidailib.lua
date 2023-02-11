@@ -871,103 +871,110 @@ function incr(ptr, fvalue, delta)
     
     memory.write_float(ptr, cvalue)
 end
+
+----------女武神
 function nvwushen(toggle)
-local alloc = memory.alloc
-    local getTime = util.current_time_millis
-	valkyire_rocket = toggle
+gUsingValkRocket = toggle
+    if gUsingValkRocket then
+        local rocket = 0
+        local cam = 0
+        local blip = 0
+        local init = false
+        local timer <const> = newTimer()
+        local draw_rect = function(x, y, z, w)
+            GRAPHICS.DRAW_RECT(x, y, z, w, 255, 255, 255, 255, false)
+        end
 
-	if valkyire_rocket then
-		local rocket, cam
-		local g = alloc()
-		local bar = alloc(); 
-		local init
-		local sTime
-		local draw_rect = function(x, y, z, w)
-			GRAPHICS.DRAW_RECT(x, y, z, w, 255, 255, 255, 255)
-		end
-	
-		while valkyire_rocket do
-			wait()
+        while gUsingValkRocket do
+            util.yield_once()
+            if PED.IS_PED_SHOOTING(players.user_ped()) and not init then
+                init = true
+                timer.reset()
+            elseif init then
+                if not ENTITY.DOES_ENTITY_EXIST(rocket) then
+                    local offset = get_offset_from_cam(10)
+                    rocket = entities.create_object(util.joaat("w_lr_rpg_rocket"), offset)
+                    ENTITY.SET_ENTITY_INVINCIBLE(rocket, true)
+                    ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(rocket, true, 1)
+                    NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.OBJ_TO_NET(rocket), true)
+                    NETWORK.SET_NETWORK_ID_CAN_MIGRATE(NETWORK.OBJ_TO_NET(rocket), false)
+                    ENTITY.SET_ENTITY_RECORDS_COLLISIONS(rocket, true)
+                    ENTITY.SET_ENTITY_HAS_GRAVITY(rocket, false)
 
-			if PED.IS_PED_SHOOTING(PLAYER.PLAYER_PED_ID()) then
-				if not init then init = true end
-				sTime = getTime()
-			end
+                    CAM.DESTROY_ALL_CAMS(true)
+                    cam = CAM.CREATE_CAM("DEFAULT_SCRIPTED_CAMERA", true)
+                    CAM.SET_CAM_NEAR_CLIP(cam, 0.01)
+                    CAM.SET_CAM_NEAR_DOF(cam, 0.01)
+                    GRAPHICS.CLEAR_TIMECYCLE_MODIFIER()
+                    GRAPHICS.SET_TIMECYCLE_MODIFIER("CAMERA_secuirity")
+                    CAMdaidai.HARD_ATTACH_CAM_TO_ENTITY(cam, rocket, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true)
+                    CAM.SET_CAM_ACTIVE(cam, true)
+                    CAM.RENDER_SCRIPT_CAMS(true, false, 0, true, true, 0)
 
-			if init then
-				if not ENTITY.DOES_ENTITY_EXIST(rocket) then
-					local weapon = WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(PLAYER.PLAYER_PED_ID())
-					local c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(weapon, 0.0, 1.0, 0.0)
-					rocket =  entities.create_object(joaat('w_lr_rpg_rocket'), c)
-					CAM.DESTROY_ALL_CAMS(true)
-					cam = CAM.CREATE_CAM('DEFAULT_SCRIPTED_CAMERA', true)
-					CAM.ATTACH_CAM_TO_ENTITY(cam, rocket, 0.0, 0.0, 0.0, true)
-					CAM.RENDER_SCRIPT_CAMS(true, true, 700, true, true)
-					CAM.SET_CAM_ACTIVE(cam, true)
-					ENTITY.SET_ENTITY_VISIBLE(rocket, 0)
-					memory.write_float(bar, 0.5); memory.write_float(g, 255)
-				else
-					local rot = CAM.GET_GAMEPLAY_CAM_ROT(0)
-					CAM.SET_CAM_ROT(cam, rot.x, rot.y, rot.z, 0)
-					ENTITY.SET_ENTITY_ROTATION(rocket, rot.x, rot.y, rot.z, 0, 1)
+                    PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), true)
+                    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
+                else
+                    local rot = CAM.GET_GAMEPLAY_CAM_ROT(0)
+                    local coords = ENTITY.GET_ENTITY_COORDS(rocket, false)
+                    local force = rot:toDir()
+                    force:mul(40.0)
 
-					local c = vect.add(ENTITY.GET_ENTITY_COORDS(rocket), vect.mult(ROTATION_TO_DIRECTION(CAM.GET_GAMEPLAY_CAM_ROT(0)), 0.8))
-					ENTITY.SET_ENTITY_COORDS(rocket, c.x, c.y, c.z, false, false, false, false)
-					STREAMING.SET_FOCUS_POS_AND_VEL(c.x, c.y, c.z, 5.0, 0.0, 0.0)
+                    ENTITY.SET_ENTITY_ROTATION(rocket, rot.x, rot.y, rot.z, 0, true)
+                    STREAMING.SET_FOCUS_POS_AND_VEL(coords.x, coords.y, coords.z, rot.x, rot.y, rot.z)
+                    ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(rocket, 1, force.x, force.y, force.z, false, false, false, false)
 
-					HUD.HIDE_HUD_AND_RADAR_THIS_FRAME()
-					PLAYER.DISABLE_PLAYER_FIRING(PLAYER.PLAYER_PED_ID(), true)
-					ENTITY.FREEZE_ENTITY_POSITION(PLAYER.PLAYER_PED_ID(), true)
-					HUD._HUD_WEAPON_WHEEL_IGNORE_SELECTION()
-					
-					draw_rect(0.5, 0.5 - 0.025, 0.050, 0.002)
-					draw_rect(0.5, 0.5 + 0.025, 0.050, 0.002)
-					draw_rect(0.5 - 0.025, 0.5, 0.002, 0.052)
-					draw_rect(0.5 + 0.025, 0.5, 0.002, 0.052)
-					draw_rect(0.5 + 0.05, 0.5, 0.050, 0.002)
-					draw_rect(0.5 - 0.05, 0.5, 0.050, 0.002)
-					draw_rect(0.5, 0.5 + 0.05, 0.002, 0.050)
-					draw_rect(0.5, 0.5 - 0.05, 0.002, 0.050)
-					GRAPHICS.SET_TIMECYCLE_MODIFIER('CAMERA_secuirity')
+                    HUD.HIDE_HUD_AND_RADAR_THIS_FRAME()
+                    PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), true)
+                    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
+                    HUDdaidai.HUD_SUPPRESS_WEAPON_WHEEL_RESULTS_THIS_FRAME()
 
-					GRAPHICS.DRAW_RECT(0.25, 0.5, 0.03, 0.5, 255, 255, 255, 255)
+                    draw_rect(0.5, 0.5 - 0.025, 0.050, 0.002)
+                    draw_rect(0.5, 0.5 + 0.025, 0.050, 0.002)
+                    draw_rect(0.5 - 0.025, 0.5, 0.002, 0.052)
+                    draw_rect(0.5 + 0.025, 0.5, 0.002, 0.052)
+                    draw_rect(0.5 + 0.050, 0.5, 0.050, 0.002)
+                    draw_rect(0.5 - 0.050, 0.5, 0.050, 0.002)
+                    draw_rect(0.5, 0.500 + 0.05, 0.002, 0.05)
+                    draw_rect(0.5, 0.500 - 0.05, 0.002, 0.05)
 
-					if getTime() - sTime >= 100 then
-						incr(bar, 0, -0.01); incr(g, 0, -4)
-						sTime = getTime()
-					end
+                    local maxTime = 7000 -- `ms`
+                    local length = 0.5 - 0.5 * (timer.elapsed() / maxTime) -- timer length
+                    local perc = length / 0.5
+                    local color = get_blended_colour(perc) -- timer color
+                    GRAPHICS.DRAW_RECT(0.25, 0.5, 0.03, 0.5, 255, 255, 255, 120, false)
+                    GRAPHICS.DRAW_RECT(0.25, 0.75 - length / 2, 0.03, length, color.r, color.g, color.b, color.a, false)
 
-					GRAPHICS.DRAW_RECT(0.25, 0.75 - (memory.read_float(bar) / 2), 0.03, memory.read_float(bar), 255, round(memory.read_float(g)), 0, 255)
-
-					local groundZ = alloc()
-					MISC.GET_GROUND_Z_FOR_3D_COORD(ENTITY.GET_ENTITY_COORDS(rocket).x, ENTITY.GET_ENTITY_COORDS(rocket).y, ENTITY.GET_ENTITY_COORDS(rocket).z, groundZ, 0)
-					groundZ = memory.read_float(groundZ)
-					
-					if ENTITY.HAS_ENTITY_COLLIDED_WITH_ANYTHING(rocket) or math.abs(ENTITY.GET_ENTITY_COORDS(rocket).z - groundZ) < 0.5 or memory.read_float(bar) <= 0.01 then
-						local impact_coord = ENTITY.GET_ENTITY_COORDS(rocket); ENTITY.FREEZE_ENTITY_POSITION(PLAYER.PLAYER_PED_ID(), false)
-						FIRE.ADD_EXPLOSION(impact_coord.x, impact_coord.y, impact_coord.z, 32, 1.0, true, false, 0.4)
-						entities.delete(rocket)
-						rocket = 0
-						PLAYER.DISABLE_PLAYER_FIRING(PLAYER.PLAYER_PED_ID(), false)
-						STREAMING.CLEAR_FOCUS()
-						CAM.RENDER_SCRIPT_CAMS(false, false, 3000, true, false, 0)
-						CAM.DESTROY_CAM(cam, 1)
-						GRAPHICS.SET_TIMECYCLE_MODIFIER('DEFAULT')
-						init = false
-					end
-				end
-			end
-		end
-		GRAPHICS.SET_TIMECYCLE_MODIFIER('DEFAULT')
-		STREAMING.CLEAR_FOCUS()
-		CAM.RENDER_SCRIPT_CAMS(false, false, 3000, true, false, 0)
-		CAM.DESTROY_CAM(cam, 1)
-		PLAYER.DISABLE_PLAYER_FIRING(PLAYER.PLAYER_PED_ID(), false)
-		rocket = 0
-		bar = 0.5
-		y = 255
-		ENTITY.FREEZE_ENTITY_POSITION(PLAYER.PLAYER_PED_ID(), false)
-	end
+                    if ENTITY.HAS_ENTITY_COLLIDED_WITH_ANYTHING(rocket) or length <= 0 then
+                        local impactCoord = ENTITY.GET_ENTITY_COORDS(rocket, false)
+                        FIRE.ADD_EXPLOSION(impactCoord.x, impactCoord.y, impactCoord.z, 32, 1.0, true, false, 0.4, false)
+                        entities.delete_by_handle(rocket)
+                        CAM.RENDER_SCRIPT_CAMS(false, false, 0, true, false, 0)
+                        GRAPHICS.SET_TIMECYCLE_MODIFIER("DEFAULT")
+                        STREAMING.CLEAR_FOCUS()
+                        CAM.DESTROY_CAM(cam, true)
+                        PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), false)
+                        ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
+                        rocket = 0
+                        init = false
+                    end
+                end
+            end
+        end
+        if rocket and ENTITY.DOES_ENTITY_EXIST(rocket) then
+            local impactCoord = ENTITY.GET_ENTITY_COORDS(rocket, false)
+            FIRE.ADD_EXPLOSION(impactCoord.x, impactCoord.y, impactCoord.z, 32, 1.0, true, false, 0.4, false)
+            entities.delete_by_handle(rocket)
+            STREAMING.CLEAR_FOCUS()
+            CAM.RENDER_SCRIPT_CAMS(false, false, 0, true, false, 0)
+            CAM.DESTROY_CAM(cam, true)
+            GRAPHICS.SET_TIMECYCLE_MODIFIER("DEFAULT")
+            ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
+            PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), false)
+            if HUD.DOES_BLIP_EXIST(blip) then util.remove_blip(blip) end
+            HUD.UNLOCK_MINIMAP_ANGLE()
+            HUD.UNLOCK_MINIMAP_POSITION()
+        end
+    end
 end
 
 -------载具变色
@@ -1243,7 +1250,6 @@ end)
 
 -----悲伤的耶稣
 function dispatch_griefer_jesus(target)
-    log("Dispatched griefer jesus.")
     griefer_jesus = util.create_thread(function(thr)
         util.toast("[呆呆提醒] \n悲伤耶稣派来了!")
         request_model_load(-835930287)
@@ -1610,28 +1616,29 @@ function blockfireeffect()
     FIRE.STOP_ENTITY_FIRE(players.user_ped())
 end
 
------劫匪检测
-local notified_mugger = false
+-----劫匪检测util.toast("[呆呆 提示] \n"..sendplayer.."给你发送了一个劫匪")
+local notified = false
 function show_mugger()
-    if NETWORK.NETWORK_IS_SESSION_ACTIVE() and NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_gang_call", 0, true, 0) then
-        util.spoof_script("am_gang_call", function()
-            local netId	= memory.read_int(memory.script_local("am_gang_call", 63 + 10 + (0 * 7 + 1)))
-            if NETWORK.NETWORK_DOES_NETWORK_ID_EXIST(netId) and
-            not ENTITY.IS_ENTITY_DEAD(NETWORK.NET_TO_PED(netId), false) then
-                local mugger = NETWORK.NET_TO_PED(netId)
-                draw_bounding_box(mugger, true, {r = 255, g = 0, b = 0, a = 80})
-            end
-      local p_sender = memory.script_local("am_gang_call", 287)
-            if not notified_mugger and p_sender ~= 0 and memory.read_int(p_sender) ~= players.user() and
-            is_player_active(memory.read_int(p_sender), false, false) then
-                local sender = memory.read_int(p_sender)
-                notification123:normal("%s 给你发送了一个劫匪", HudColour.blue, get_condensed_player_name(sender))
-                notified_mugger = true
-            end
-        end)
-    elseif notified_mugger then
-        notified_mugger = false
-    end
+	if NETWORK.NETWORK_IS_SESSION_ACTIVE() and NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_gang_call", 0, true, 0) then
+		util.spoof_script("am_gang_call", function()
+			local netId	= memory.read_int(memory.script_local("am_gang_call", 63 + 10 + (0 * 7 + 1)))
+			if NETWORK.NETWORK_DOES_NETWORK_ID_EXIST(netId) and
+			not ENTITY.IS_ENTITY_DEAD(NETWORK.NET_TO_PED(netId), false) then
+				local mugger = NETWORK.NET_TO_PED(netId)
+				draw_bounding_box(mugger, true, {r = 255, g = 0, b = 0, a = 80})
+			end
+
+			local p_sender = memory.script_local("am_gang_call", 287)
+			if not notified and p_sender ~= 0 and memory.read_int(p_sender) ~= players.user() and
+			is_player_active(memory.read_int(p_sender), false, false) then
+				local sender = memory.read_int(p_sender)
+				util.toast("[呆呆 提示] \n给你发送了一个劫匪")
+				notified = true
+			end
+		end)
+	elseif notified then
+		notified = false
+	end
 end
 
 
@@ -2221,11 +2228,8 @@ function custom_alert(l1) -- totally not skidded from lancescript
 
 -----------线上请求服务-------------
 --即时纳米无人机
-function is_player_active()
+function CanSpawnNanoDrone()
 	return BitTest(read_global.int(1962996), 23)
-end
-local function CanSpawnNanoDrone()
-	return BitTest(read_global.int(1958711), 23)
 end
 function CanUseDrone()
 	if not is_player_active(players.user(), true, true) then
@@ -2260,13 +2264,10 @@ function CanUseDrone()
 end
 function nanodrone()
     local p_bits = memory.script_global(1962996)
-	local bits = memory.read_int(p_bits)
-	if CanUseDrone() and not BitTest(bits, 24) then
-		TASK.CLEAR_PED_TASKS(players.user_ped())
-		memory.write_int(p_bits, SetBit(bits, 24))
-		if not CanSpawnNanoDrone() then memory.write_int(p_bits, SetBit(bits, 23)) 
-		end
-	end
+    local bits = memory.read_int(p_bits)
+    TASK.CLEAR_PED_TASKS(players.user_ped())
+    memory.write_int(p_bits, SetBit(bits, 24))
+    if not CanSpawnNanoDrone() then memory.write_int(p_bits, SetBit(bits, 23)) end
 end
 --即时RC匪徒
 function DoesPlayerOwnBandito(player)
@@ -2974,22 +2975,15 @@ function shechuNPC()
     end
 end
 -----------------------------------传送载具
---[[ function log(content)
-    if verbose then
-        util.log("[daidaiScript] " .. content)
-    end
-end ]]
 
 local function get_ground_z(coords)
     local start_time = os.time()
     while true do
         if os.time() - start_time >= 5 then
-            log("未能在5秒内到达地面Z轴高度")
             return nil
         end
         local success, est = util.get_ground_z(coords['x'], coords['y'], coords['z']+2000)
         if success then
-            log("成功获得地面 ： " .. est)
             return est
         end
         util.yield()
@@ -3020,13 +3014,11 @@ end
 
 function request_control_of_entity(ent)
     if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) and util.is_session_started() then
-        log("Requesting entity control of " .. ent)
         local netid = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(ent)
         NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netid, true)
         local st_time = os.time()
         while not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) do
             if os.time() - st_time >= 5 then
-                log("未能在5秒内请求实体控制(实体 " .. ent .. ")")
                 break
             end
             NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ent)
@@ -5337,7 +5329,6 @@ end
                                 aad = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(player_cur_car, size['x'], size['y']+0.1, size['z']/2)
                             end
                             if ENTITY.GET_ENTITY_SPEED(player_cur_car) > 10 then
-                                log("aa thread allocation")
                                 local ptr1, ptr2, ptr3, ptr4 = memory.alloc(), memory.alloc(), memory.alloc(), memory.alloc()
                                 SHAPETEST.GET_SHAPE_TEST_RESULT(
                                     SHAPETEST.START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(
@@ -5355,7 +5346,6 @@ end
                                 local p2 = memory.read_vector3(ptr2)
                                 local p3 = memory.read_vector3(ptr3)
                                 local p4 = memory.read_int(ptr4)
-                                log("aa thread free mem")
                                 memory.free(ptr1)
                                 memory.free(ptr2)
                                 memory.free(ptr3)

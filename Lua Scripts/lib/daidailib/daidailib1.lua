@@ -1,5 +1,509 @@
 
+--烟雾掉帧
+function fumes(pid)
+local freeze_toggle = menu.ref_by_rel_path(menu.player_root(pid), "Trolling>Freeze")
+local player_pos = players.get_position(pid)
+menu.set_value(freeze_toggle, true)
+request_ptfx_asset("core")
+GRAPHICS.USE_PARTICLE_FX_ASSET("core")
+GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
+    "exp_extinguisher", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
+menu.set_value(freeze_toggle, false)
+end
 
+----按键显示
+function newColor(R, G, B, A)
+    return {r = R, g = G, b = B, a = A}
+end
+size = 0.03
+boxMargin = size / 7
+overlay_x = 0.0400
+overlay_y = 0.1850
+local x, y = directx.get_client_size()
+local ratio = x/y
+local spaceBarLength = 3
+local spaceBarSlim = 1
+local altSpaceBar = 0
+local key_text_color = newColor(1, 1, 1, 1)
+local background_colour = newColor(0, 0, 0, 0.2)
+local pressed_background_colour = newColor(2.55/255, 2.55/255, 2.55/255, 0.5490196078431373)
+local wasd = {
+    [1]  = { keys = {44, 52, 85, 138, 141, 152, 205, 264},                                               pressed = false, key = 'Q',     show = true },
+    [2]  = { keys = {32, 71, 77, 87, 129, 136, 150, 232},                                                pressed = false, key = 'W',     show = true },
+    [3]  = { keys = {38, 46, 51, 54, 86, 103, 119, 153, 184, 206, 350, 351, 355, 356},                   pressed = false, key = 'E',     show = true },
+    [4]  = { keys = {45, 80, 140, 250, 263, 310},                                                        pressed = false, key = 'R',     show = true },
+    [5]  = { keys = {34 ,63, 89, 133, 147, 234, 338},                                                    pressed = false, key = 'A',     show = true },
+    [6]  = { keys = {8, 31, 33, 72, 78, 88, 130, 139, 149, 151, 196, 219, 233, 268, 269, 302},           pressed = false, key = 'S',     show = true },
+    [7]  = { keys = {9, 30, 35, 59, 64, 90, 134, 146, 148, 195, 218, 235, 266, 267, 278, 279, 339, 342}, pressed = false, key = 'D',     show = true },
+    [8]  = { keys = {23, 49, 75, 145, 185, 251},                                                         pressed = false, key = 'F',     show = true },
+    [9]  = { keys = {21, 61, 131, 155, 209, 254, 340, 352},                                              pressed = false, key = 'Shift', show = true },
+    [10] = { keys = {36, 60, 62, 132, 224, 280, 281, 326, 341, 343},                                     pressed = false, key = 'Ctrl',  show = true },
+    [11] = { keys = {18, 22, 55, 76, 102, 143, 179, 203, 216, 255, 298, 321, 328, 353},                  pressed = false, key = 'Space', show = true },
+}
+function key_display()
+    for i = 1, #wasd do
+        wasd[i].pressed = false
+        for j = 1, #wasd[i].keys do
+            if PAD.IS_CONTROL_PRESSED(2, wasd[i].keys[j]) then
+                wasd[i].pressed = true
+            end
+        end
+    end
+    for i = 1, #wasd - 3 do
+        if wasd[i].show then
+            directx.draw_rect(overlay_x + (boxMargin + size) * (i > 4 and i - 5 or i - 1), overlay_y + (i > 4 and (boxMargin + size * ratio) or 0)* 1.05, size, size * ratio, wasd[i].pressed and pressed_background_colour or background_colour)
+            if not hideKey then
+                directx.draw_text(overlay_x + (boxMargin + size) * (i > 4 and i - 5 or i - 1)+ size * 0.45,(i > 4 and  overlay_y + (boxMargin + size * ratio)* 1.2 or  overlay_y*1.07) , wasd[i].key, 1, size *20, key_text_color, false)
+            end
+        end
+    end
+    if altShiftCtrl then
+        if wasd[#wasd - 2].show then
+            directx.draw_rect(overlay_x, overlay_y + (boxMargin + size)* ratio * 2,(boxMargin + size) - boxMargin, size * ratio / 2, wasd[#wasd - 2].pressed and pressed_background_colour or background_colour)
+        end
+        if wasd[#wasd - 1].show then
+            directx.draw_rect(overlay_x, overlay_y + (boxMargin + size)* ratio * 2.5,(boxMargin + size) - boxMargin, size * ratio / 2, wasd[#wasd - 1].pressed and pressed_background_colour or background_colour)
+        end
+    else
+        for i = 9, 10 do
+            if wasd[i].show then
+            directx.draw_rect(overlay_x - (boxMargin + size), overlay_y + (boxMargin + size * ratio) * (i - 8) * 1.05, size, size * ratio, wasd[i].pressed and pressed_background_colour or background_colour)
+            if not hideKey then
+                directx.draw_text(overlay_x - (boxMargin + size)+ size * 0.45,(i > 4 and  overlay_y + (boxMargin + size * ratio) * (i - 8)* 1.2 or  overlay_y*1.07) , wasd[i].key, 1, size *20, key_text_color, false)
+
+            end
+            end
+        end
+    end
+    if wasd[#wasd].show then
+        directx.draw_rect(overlay_x + (boxMargin + size) * altSpaceBar, overlay_y + (boxMargin + size)* ratio * 2,(boxMargin + size) * spaceBarLength - boxMargin, size * ratio / spaceBarSlim, wasd[#wasd].pressed and pressed_background_colour or background_colour)
+    end
+end
+
+
+-----绘制血量条
+function draw_rect(x, y, width, height, colour)
+	GRAPHICS.DRAW_RECT(x, y, width, height, colour.r, colour.g, colour.b, colour.a, false)
+end
+function draw_health_bar(ped, maxDistance)
+	local myPos = players.get_position(players.user())
+	local pedPos = ENTITY.GET_ENTITY_COORDS(ped, true)
+	local distance = myPos:distance(pedPos)
+	if distance >= maxDistance then return end
+	local distPerc = 1.0 - distance / maxDistance
+
+	local healthPerc = 0.0
+	local armourPerc = 0.0
+	if not PED.IS_PED_FATALLY_INJURED(ped) then
+		local armour = PED.GET_PED_ARMOUR(ped)
+		armourPerc = armour / 100.0
+		if armourPerc > 1.0 then armourPerc = 1.0 end
+		local health = ENTITY.GET_ENTITY_HEALTH(ped) - 100.0
+		local maxHealth = PED.GET_PED_MAX_HEALTH(ped) - 100.0
+		healthPerc = health / maxHealth
+		if healthPerc > 1.0 then healthPerc = 1.0 end
+	end
+
+	local maxLength = 0.05 * distPerc ^3
+	local height = 0.008 * distPerc ^1.5
+	local pos = PED.GET_PED_BONE_COORDS(ped, 0x322C --[[head]], 0.35, 0.0, 0.0)
+	local pScreenX, pScreenY = memory.alloc(4), memory.alloc(4)
+	if not GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(pos.x, pos.y, pos.z, pScreenX, pScreenY) then
+		return
+	end
+	local screenX = memory.read_float(pScreenX)
+	local screenY = memory.read_float(pScreenY)
+
+	local barLength = interpolate(0.0, maxLength, healthPerc)
+	local colour = get_blended_colour(healthPerc)
+	draw_rect(screenX, screenY, maxLength + 0.002, height + 0.002, {r = 0, g = 0, b = 0, a = 120})
+	draw_rect(screenX - maxLength/2 + barLength/2, screenY, barLength, height, colour)
+
+	local barLength = interpolate(0.0, maxLength, armourPerc)
+	local colour = get_hud_colour(HudColour.radarArmour)
+	draw_rect(screenX, screenY + 1.5 * height, maxLength + 0.002, height + 0.002, {r = 0, g = 0, b = 0, a = 120})
+	draw_rect(screenX - maxLength/2 + barLength/2, screenY + 1.5 * height, barLength, height, colour)
+end
+
+
+----------GPS导航/////lib
+b_common_funcs = {}
+b_common_funcs.new = function ()
+    local self = {}
+    self.address_from_pointer_chain = function (basePtr, offsets)
+        local addr = memory.read_long(basePtr)
+        for k = 1, (#offsets - 1) do
+            addr = memory.read_long(addr + offsets[k])
+            if addr == 0 then
+                return 0
+            end
+        end
+        addr = addr + offsets[#offsets]
+        return addr
+    end
+    self.get_player_vehicle_class = function ()
+        local veh = entities.get_user_vehicle_as_handle()
+        return VEHICLE.GET_VEHICLE_CLASS(veh)
+    end
+    self.get_ascpect_ratio = function()
+        local screen_x, screen_y = directx.get_client_size()
+    
+        return screen_x / screen_y
+    end
+    self.to_bits = function(num)
+        local t={}
+        while num>0 do
+            rest=math.fmod(num,2)
+            t[#t+1]=rest
+            num=(num-rest)/2
+        end
+        return t
+    end
+    self.split = function (input, sep)
+        local t={}
+        for str in string.gmatch(input, "([^"..sep.."]+)") do
+                table.insert(t, str)
+        end
+        return t
+    end
+    local minimum = memory.alloc()
+    local maximum = memory.alloc()
+    self.get_pos_above_entity = function (entity)
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(entity), minimum, maximum)
+        local maximum_vec = memory.read_vector3(maximum)
+        return ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, 0, 0, maximum_vec.z)
+    end
+    self.copy_File = function(old_path, new_path)
+        local old_file = io.open(old_path, "rb")
+        local new_file = io.open(new_path, "wb")
+        local old_file_sz, new_file_sz = 0, 0
+        if not old_file or not new_file then
+          return false
+        end
+        while true do
+          local block = old_file:read(2^13)
+          if not block then 
+            old_file_sz = old_file:seek( "end" )
+            break
+          end
+          new_file:write(block)
+        end
+        old_file:close()
+        new_file_sz = new_file:seek( "end" )
+        new_file:close()
+        return new_file_sz == old_file_sz
+      end
+    return self
+end
+b_math_funcs = {}
+b_math_funcs.new = function ()
+    local self = {}
+    self.lerp = function(a, b, t)
+        return a + (b - a) * t
+    end
+    local EPSILON = 0.0000001
+    self.RayIntersectsTriangle = function(rayOrigin, rayDirection, vertex1, vertex2, vertex3)
+        local edge1, edge2, h, s, q, a, f, u, v
+        edge1 = {x = vertex2.x - vertex1.x, y = vertex2.y - vertex1.y, z = vertex2.z - vertex1.z}
+        edge2 = {x = vertex3.x - vertex1.x, y = vertex3.y - vertex1.y, z = vertex3.z - vertex1.z}
+        h = {
+            x =    edge2.y * rayDirection.z - edge2.z * rayDirection.y,
+            y =    edge2.z * rayDirection.x - edge2.x * rayDirection.z,
+            z =    edge2.x * rayDirection.y - edge2.y * rayDirection.x
+        }
+        a = h.x * edge1.x + h.y * edge1.y + h.z * edge1.z
+
+        if a > -EPSILON and a < EPSILON then return false end
+
+        f = 1.0/a
+        s = {x = rayOrigin.x - vertex1.x, y = rayOrigin.y - vertex1.y, z = rayOrigin.z - vertex1.z}
+        u = f * (h.x * s.x + h.y * s.y + h.z * s.z)
+        if u < 0.0 or u > 1.0 then return false end
+        q = {
+            x =    edge1.y * s.z - edge1.z * s.y,
+            y =    edge1.z * s.x - edge1.x * s.z,
+            z =    edge1.x * s.y - edge1.y * s.x
+        }
+        v = f * (rayDirection.x * q.x + rayDirection.y * q.y + rayDirection.z * q.z)
+        if v < 0.0 or u + v > 1.0 then return false end
+        t = f *  (edge2.x * q.x + edge2.y * q.y + edge2.z * q.z)
+        if t > EPSILON then
+            return true, {
+                x = rayOrigin.x + rayDirection.x * t,
+                y = rayOrigin.y + rayDirection.y * t,
+                z = rayOrigin.z + rayDirection.z * t
+            }
+        else
+            return false
+        end
+    end
+    return self
+end
+b_vectors = {}
+b_vectors.new = function ()
+    local self = {}
+
+    self.vector2 = {}
+    self.vector2.new = function (x, y)
+        return {x = x, y = y}
+    end
+    self.vector2.dot = function(vector_a, vector_b)
+        return (vector_a.x * vector_b.x) + (vector_a.y * vector_b.y)
+    end
+    self.vector2.magnitude = function(vector)
+        return math.sqrt((vector.x * vector.x) + (vector.y * vector.y))
+    end
+    self.vector2.get_angle = function(vector_a, vector_b)
+        return math.acos(self.vector2.dot(vector_a, vector_b) / self.vector2.magnitude(vector_a) / self.vector2.magnitude(vector_b))
+    end
+    self.vector3 = {}
+    self.vector3.new = function (x, y, z)
+        return {x = x, y = y, z = z}
+    end
+    self.vector3.add = function(a, b)
+        return self.vector3.new(a.x + b.x, a.y + b.y, a.z + b.z)
+    end
+    self.vector3.sub = function(a, b)
+        return self.vector3.new(a.x - b.x, a.y - b.y, a.z - b.z)
+    end
+    self.vector3.multiply = function (vec, num)
+        return {x = vec.x * num, y = vec.y * num, z = vec.z * num}
+    end
+    return self
+end
+function get_waypoint_coords()
+    return HUD.GET_BLIP_INFO_ID_COORD(HUD.GET_FIRST_BLIP_INFO_ID(HUD.GET_WAYPOINT_BLIP_ENUM_ID()))
+end
+
+--------------GPS导航//////////mainlua
+local player_ped_id
+local delta_time
+local player_pos
+util.create_tick_handler(function ()
+    player_ped_id = PLAYER.PLAYER_PED_ID()
+    delta_time = MISC.GET_FRAME_TIME()
+    player_pos = ENTITY.GET_ENTITY_COORDS(player_ped_id)
+    return true
+end)
+
+local math_funcs = b_math_funcs.new()
+local shitty_gps_colour_a = {r = 255,g = 0,b = 255,a = 255}
+local shitty_gps_colour_b = {r = 255,g = 255,b = 255,a = 255}
+local shitty_gps_run = false
+
+local aalib = require("aalib")
+local PlaySound = aalib.play_sound
+local SND_ASYNC<const> = 0x0001
+local SND_FILENAME<const> = 0x00020000
+function GPS_navigation(value)
+    ----音频
+    if value then
+        util.toast("[可莉 温馨提示] \n驾驶不规范, 亲人两行泪")
+
+        store_dir = filesystem.store_dir() .. '\\daidai-audio\\GPS\\'
+        sound_selection_dir = store_dir .. '\\welcomekeli.txt'
+
+        fp = io.open(sound_selection_dir, 'r')
+        local file_selection = fp:read('*a')
+        fp:close()
+
+        local sound_location = store_dir .. '\\' .. file_selection
+        PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
+    end
+
+    local p_direction = memory.alloc(1) --bool
+    local p_5 = memory.alloc(4) --float
+    local p_distToNxJunction = memory.alloc(4) --float
+    local p_screenX = memory.alloc(4) --float
+    local p_screenY = memory.alloc(4) --float
+
+    local turn_dir = 0
+    shitty_gps_run = value
+
+    if value then
+    util.create_tick_handler(function ()
+    local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
+
+    local waypoint_pos = get_waypoint_coords()
+    local total = waypoint_pos.x + waypoint_pos.y + waypoint_pos.z
+
+    if total ~= 0 and ENTITY.IS_ENTITY_A_VEHICLE(vehicle) then
+        local height = ENTITY.GET_ENTITY_HEIGHT(vehicle, player_pos.x, player_pos.y, player_pos.z, true, false)
+
+        PATHFIND.GENERATE_DIRECTIONS_TO_COORD(
+            waypoint_pos.x,
+            waypoint_pos.y,
+            waypoint_pos.z,
+            0,
+            p_direction,
+            p_5,
+            p_distToNxJunction
+        )
+
+        local direction = memory.read_byte(p_direction)
+        local distToNxJunction = memory.read_float(p_distToNxJunction)
+
+
+
+        GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(
+            player_pos.x,
+            player_pos.y,
+            player_pos.z + 1.5 + height,
+            p_screenX,
+            p_screenY
+        )
+        local screen_x = memory.read_float(p_screenX)
+        local screen_y = memory.read_float(p_screenY)
+
+       if direction == 1 then
+            turn_dir = math_funcs.lerp(turn_dir, 180, 5 * delta_time)
+            directx.draw_text(screen_x, screen_y, "请在前方路口调头", ALIGN_CENTRE, 1, shitty_gps_colour_a)
+        elseif direction == 3 then      
+            turn_dir =  math_funcs.lerp(turn_dir, -90, 5 * delta_time)
+            directx.draw_text(screen_x,screen_y,"前方路口左转 " .. math.floor(distToNxJunction) .. " 米",ALIGN_CENTRE,1,shitty_gps_colour_a)
+        elseif direction == 6 then
+            turn_dir =  math_funcs.lerp(turn_dir, -145, 5 * delta_time)
+            directx.draw_text(screen_x,screen_y,"向左急转弯 " .. math.floor(distToNxJunction) .. " 米",ALIGN_CENTRE,1,shitty_gps_colour_a)
+        elseif direction == 4 then          
+            turn_dir =  math_funcs.lerp(turn_dir, 90, 5 * delta_time)
+            directx.draw_text(screen_x,screen_y,"前方路口右转 " .. math.floor(distToNxJunction) .. " 米",ALIGN_CENTRE,1,shitty_gps_colour_a)
+        elseif direction == 7 then
+            turn_dir =  math_funcs.lerp(turn_dir, 145, 5 * delta_time)
+            directx.draw_text(screen_x,screen_y,"向右急转弯 " .. math.floor(distToNxJunction) .. " 米",ALIGN_CENTRE,1,shitty_gps_colour_a)
+        elseif direction == 8 then
+            turn_dir =  math_funcs.lerp(turn_dir, 0, 5 * delta_time)
+            directx.draw_text(screen_x, screen_y, "正在计算新路线    ", ALIGN_CENTRE, 1, shitty_gps_colour_a)
+        else
+            turn_dir =  math_funcs.lerp(turn_dir, 0, 5 * delta_time)
+        end
+        local direction = ENTITY.GET_ENTITY_FORWARD_VECTOR(player_ped_id)
+        local angle = b_vectors.new().vector2.get_angle(direction, {x = 0, y = 1})
+        if b_vectors.new().vector2.dot({x = direction.x, y = direction.y}, {x = 1, y = 0}) > 0 then
+            angle = -angle
+        end
+        local draw_pos = b_common_funcs.new().get_pos_above_entity(vehicle)
+        draw_pos.z = draw_pos.z + 0.4
+        drawing_funcs.draw_arrow(draw_pos, angle - math.rad(turn_dir), 1, shitty_gps_colour_a, shitty_gps_colour_b)
+    end
+
+    return shitty_gps_run
+    end)
+    else
+        memory.free(p_distToNxJunction)
+        memory.free(p_direction)
+        memory.free(p_5)
+        memory.free(p_screenX)
+        memory.free(p_screenY)
+    end
+end
+
+
+
+------给予所有玩家MK-2
+function upgrade_vehicle(vehicle)
+    for i = 0, 49 do
+        local num = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle, i)
+        VEHICLE.SET_VEHICLE_MOD(vehicle, i, num - 1, true)
+    end
+end
+function give_oppressor(pid)
+    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.0, 5.0, 0.0)
+    local hash = util.joaat("oppressor2")
+    if not STREAMING.HAS_MODEL_LOADED(hash) then
+        load_model(hash)
+    end
+    local oppressor = entities.create_vehicle(hash, c, ENTITY.GET_ENTITY_HEADING(ped))
+    ENTITY.SET_ENTITY_INVINCIBLE(oppressor)
+    upgrade_vehicle(oppressor)
+end
+
+-----车窗
+function GetControl(vic, spec, pid)
+    if not players.exists(pid) then
+        util.stop_thread()
+    end
+    if pid == players.user() then
+        return
+    end    
+    local tick = 0
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vic)
+    while not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(vic) do
+        local nid = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(vic)
+        NETWORK.SET_NETWORK_ID_CAN_MIGRATE(nid, true)
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vic)
+        util.yield()
+        tick =  tick + 1
+        if tick > 20 then
+            if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(vic) then
+                if set.alert then
+                    AClang.toast('Could not gain control')
+                end
+                if not spec then
+                    Specoff(pid)
+                end
+                util.stop_thread()
+            end
+        
+        end
+    end
+    return NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vic)
+end
+
+
+---------任务警告提示音
+function TT()----------------------------------------------------------
+    riskwarning()
+            util.toast("[呆呆 提示] \n此选项中的功能为高风险，请谨慎使用")
+end
+
+--------崩溃XP
+function CreateVehicle(Hash, Pos, Heading, Invincible)
+    STREAMING.REQUEST_MODEL(Hash)
+    while not STREAMING.HAS_MODEL_LOADED(Hash) do util.yield() end
+    local SpawnedVehicle = entities.create_vehicle(Hash, Pos, Heading)
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(Hash)
+    if Invincible then
+        ENTITY.SET_ENTITY_INVINCIBLE(SpawnedVehicle, true)
+    end
+    return SpawnedVehicle
+end
+function CreateObject(Hash, Pos, static)
+    STREAMING.REQUEST_MODEL(Hash)
+    while not STREAMING.HAS_MODEL_LOADED(Hash) do util.yield() end
+    local SpawnedVehicle = entities.create_object(Hash, Pos)
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(Hash)
+    if static then
+        ENTITY.FREEZE_ENTITY_POSITION(SpawnedVehicle, true)
+    end
+    return SpawnedVehicle
+end
+function CreatePed(index, Hash, Pos, Heading)
+    STREAMING.REQUEST_MODEL(Hash)
+    while not STREAMING.HAS_MODEL_LOADED(Hash) do util.yield() end
+    local SpawnedVehicle = entities.create_ped(index, Hash, Pos, Heading)
+	STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(Hash)
+    return SpawnedVehicle
+end
+function xp_over(pid)
+local model_array = {util.joaat("boattrailer"),util.joaat("trailersmall"),util.joaat("raketrailer"),}
+        local BAD_attach = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+        local fuck_ped = CreatePed(26 , util.joaat("ig_kaylee"), BAD_attach, 0)
+        ENTITY.SET_ENTITY_VISIBLE(fuck_ped, false)
+        for i = 1, 3, 1 do
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(fuck_ped, BAD_attach.x, BAD_attach.y, BAD_attach.z)
+            for spawn, value in pairs(model_array) do
+                local vels = {}
+                vels[spawn] = CreateVehicle(value, BAD_attach, 0)
+                for attach, value in pairs(vels) do
+                    ENTITY1.ATTACH_ENTITY_BONE_TO_ENTITY_BONE_Y_FORWARD(value, fuck_ped, 0, 0, true, true)
+                end
+            end
+            util.yield(500)
+            menu.trigger_commands("explode" ..  players.get_name(pid))
+        end
+end
+-------------------------
 
 ------飞机模型崩溃
 local planes = {'microlight', 'cuban800', 'tula', 'alphaz1', 'velum2', 'nimbus', 'seabreeze'} -- 'buzzard', 'savage', 'seasparrow', 'frogger2', 'bulldozer', 'flatbed', 'proptrailer', 'tr4'
@@ -238,7 +742,7 @@ function daoqizhanma()
                     util.toast('道奇战马已生成')
                  end
         end
-if PED.IS_PED_GETTING_INTO_A_VEHICLE(players.user_ped()) ==false and PED.IS_PED_IN_VEHICLE(players.user_ped(), FFchar , false) ==false
+    if PED.IS_PED_GETTING_INTO_A_VEHICLE(players.user_ped()) ==false and PED.IS_PED_IN_VEHICLE(players.user_ped(), FFchar , false) ==false
             then
                 if set.alert then
                     util.toast('已离开道奇战马,道奇战马已被删除')
@@ -253,7 +757,7 @@ if PED.IS_PED_GETTING_INTO_A_VEHICLE(players.user_ped()) ==false and PED.IS_PED_
             STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(charger.emp)
               util.stop_thread()
             end
-        end
+end
 --------------------------------------
 
 ----飞天扫把
@@ -392,16 +896,13 @@ end
 
 ----拦截劫匪
 function sendmugger_npc(pid)
-    if NETWORK.NETWORK_IS_SESSION_STARTED() and is_player_active(pid, true, true) and
-    not is_player_in_interior(pid) then
-
-        if not NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_gang_call", 0, true, 0) then
-            local bits_addr = memory.script_global(1853910 + (players.user() * 862 + 1) + 140)
+    if NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_gang_call", 0, true, 0) then
+        util.toast("当前劫匪活动还未结束哦")
+    else
+        local bits_addr = memory.script_global(1853910 + (players.user() * 862 + 1) + 140)
             memory.write_int(bits_addr, SetBit(memory.read_int(bits_addr), 0))
             write_global.int(1853910 + (players.user() * 862 + 1) + 141, pid)
-        else
-            util.toast("劫匪已经开始活动")
-        end
+        util.toast("劫匪已出动")
     end
 end
 
@@ -487,7 +988,7 @@ function vehicle_speedometer(state)
             local speedcalc = speed * 3.6
             myspeed1 = math.ceil(speedcalc)
         util.yield()
-        draw_string(string.format("~bold~~italic~~b~"..myspeed1 .. "  ~r~KM/H"), 0.76,0.8, 1,6)
+        draw_string(string.format("~bold~~italic~~o~"..myspeed1 .. "  ~w~KM/H"), 0.76,0.8, 1,6)
     end
 end
 

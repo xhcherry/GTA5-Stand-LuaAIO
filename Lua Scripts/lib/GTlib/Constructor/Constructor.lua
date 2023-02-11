@@ -1,5 +1,5 @@
 
-local SCRIPT_VERSION = "0.32"
+local SCRIPT_VERSION = "0.33"
 
 local inspect = require "lib.GTlib.constructor.lib.inspect"
 

@@ -1,3 +1,4 @@
+---------------------------------------------------------------GT制作---------------------------------------------------------------------------
 require "lib.GTlib.playerlib"
 require "lib.GTlib.functions" 
 
@@ -236,10 +237,8 @@ end
 
 local mayonotification = b_notifications.new()
 function notification(input)
-    mayonotification.notify("Grand Touring",input)
 end
 
-util.show_corner_help("~h~~r~Grand Touring:\n~h~~p~欢迎使用Grand Touring!!!\n~h~~f~你已成为GTVIP用户\n~q~尽情的玩起来吧!!!")
 
 resource_dir = filesystem.resources_dir()
 
@@ -254,16 +253,6 @@ if SCRIPT_MANUAL_START then
 	scaleform_thread = util.create_thread(function (thr)
 
 	scaleForm = GRAPHICS.REQUEST_SCALEFORM_MOVIE("MP_BIG_MESSAGE_FREEMODE")
-
-	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleForm, "SHOW_SHARD_WASTED_MP_MESSAGE")
-
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_PLAYER_NAME_STRING("~bold~~f~&#8721;~w~GrandTouring~f~&#8721;")
-
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_PLAYER_NAME_STRING("~bold~~b~Welcome ~r~[GrandTouring]~y~VIP")
-
-	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-
-	AUDIO.PLAY_SOUND_FRONTEND(55, "FocusIn", "HintCamSounds", true)
 
 	starttime = os.time()
 
@@ -293,7 +282,7 @@ end
 
 if not SCRIPT_SILENT_START then
     util.create_thread(function()
-        local js_size = 0.017
+        local js_size = 0.013
 
         local l = 1
         while l < 50 do
@@ -314,9 +303,9 @@ if not SCRIPT_SILENT_START then
         for i = 1, 360 do
             directx.draw_texture(JS_logo, js_size, js_size, 0.5, 0.5, 0.4, 0.83, i / 360, white)
             if i < 150 then
-                directx.draw_text(0.5, 0.81 + (i / 25000), '正在加载脚本', ALIGN_TOP_CENTRE, 0.6, white, false)
+                directx.draw_text(0.45, 0.83 + (i / 2500), '正在加载GT脚本', ALIGN_TOP_CENTRE, 0.6, white, false)
             elseif i > 170 then
-                directx.draw_text(0.5, 0.81 + ((i - 150) / 25000), '已加载GT脚本', ALIGN_TOP_CENTRE, 0.6, white, false)
+                directx.draw_text(0.45, 0.83 + ((i - 150) / 2500), '已成功加载GT脚本', ALIGN_TOP_CENTRE, 0.6, white, false)
             end
             util.yield()
         end
@@ -1671,6 +1660,693 @@ function xcpm(on)
         menu.trigger_commands("shader off")
     end
 end
+--加入战局时向玩家敬酒
+local join_ing = false
+function CheckLobbyForPlayers()
+    local buffer = join_ing
+    join_ing = NETWORK.NETWORK_IS_SESSION_STARTED()
+    wait(2000)
+    local playersTable = players.list()
+    if buffer ~= join_ing then
+        for i = 1, 100 do
+            util.toast("战局中的玩家: " .. #playersTable)
+            util.yield(10)
+        end
+    end
+end
+--将所有人传送到花园银行楼顶
+function TeleportEveryonesVehicleToMazeBank()
+    local oldcoords = getEntityCoords(GetLocalPed())
+    for i = 0, 31 do
+        if NETWORK.NETWORK_IS_PLAYER_CONNECTED(i) then
+            local pped = getPlayerPed(i)
+            local pedCoords = getEntityCoords(pped)
+            for c = 0, VehTeleportLoadIterations do --teleports us to them so we load their veh
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(GetLocalPed(), pedCoords.x, pedCoords.y, pedCoords.z + 10, false, false, false)
+                wait(100)
+            end
+            if PED.IS_PED_IN_ANY_VEHICLE(pped, false) then
+                local veh = PED.GET_VEHICLE_PED_IS_IN(pped, false)
+                for a = 0, 10 do
+                    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, -76, -819, 327, false, false, false)
+                    wait(100)
+                end
+                for b = 0, 10 do
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, -76, -819, 327, false, false, false)
+                end
+            end
+        end
+    end
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(GetLocalPed(), oldcoords.x, oldcoords.y, oldcoords.z, false, false, false)
+end
+--将所有人传送到海洋
+VehTeleportLoadIterations = 20
+function TeleportEveryonesVehicleToOcean()
+    local oldcoords = getEntityCoords(GetLocalPed())
+    for i = 0, 31 do
+        if NETWORK.NETWORK_IS_PLAYER_CONNECTED(i) then
+            local ped = getPlayerPed(i)
+            local pedCoords = getEntityCoords(ped)
+            for c = 0, VehTeleportLoadIterations do --teleports us to them so we load their veh
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(GetLocalPed(), pedCoords.x, pedCoords.y, pedCoords.z + 10, false, false, false)
+                wait(100)
+            end
+            if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
+                local veh = PED.GET_VEHICLE_PED_IS_IN(ped, false)
+                for a = 0, 10 do
+                    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, 4500, -4400, 4, false, false, false)
+                    wait(100)
+                end
+                for b = 0, 10 do
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, 4500, -4400, 4, false, false, false)
+                end
+            end
+        end
+    end
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(GetLocalPed(), oldcoords.x, oldcoords.y, oldcoords.z, false, false, false)
+end
+--移除所有人的载具无敌
+function RemoveVehicleGodmodeForAll()
+    for i = 0, 31 do
+        if NETWORK.NETWORK_IS_PLAYER_CONNECTED(i) then
+            local ped = getPlayerPed(i)
+            if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
+                local veh = PED.GET_VEHICLE_PED_IS_IN(ped, false)
+                ENTITY.SET_ENTITY_CAN_BE_DAMAGED(veh, true)
+                ENTITY.SET_ENTITY_INVINCIBLE(veh, false)
+            end
+        end
+    end
+end
+--自由模式死亡
+function FreemodeDeathAll()
+    for p = 0, 31 do
+        if p ~= players.user() and NETWORK.NETWORK_IS_PLAYER_CONNECTED(p) then
+            for i = -1, 1 do
+                for n = -1, 1 do
+                    util.trigger_script_event(1 << p, {-65587051, 28, i, n})
+                end
+            end
+            for i = -1, 1 do
+                for n = -1, 1 do
+                    util.trigger_script_event(1 << p, {1445703181, 28, i, n})
+                end
+            end
+            wait(100)
+            util.trigger_script_event(1 << p, {-290218924, -32190, -71399, 19031, 85474, 4468, -2112})
+            util.trigger_script_event(1 << p, {-227800145, -1000000, -10000000, -100000000, -100000000, -100000000})
+            util.trigger_script_event(1 << p, {2002459655, -1000000, -10000, -100000000})
+            util.trigger_script_event(1 << p, {911179316, -38, -30, -75, -59, 85, 82})
+        end
+        for i = -1, 1 do
+            for a = -1, 1 do
+                util.trigger_script_event(1 << p, {916721383, i, a, 0, 26})
+            end
+        end
+    end
+end
+--AIO全局踢
+TXC_SLOW = false
+function AIOKickAll()
+    menu.trigger_commands("scripthost")
+    NETWORK.NETWORK_REQUEST_TO_BE_HOST_OF_THIS_SCRIPT()
+    for i = 0, 31 do
+        if i ~= players.user() and NETWORK.NETWORK_IS_PLAYER_CONNECTED(i) then
+            util.toast("玩家已连接 " .. tostring(PLAYER.GET_PLAYER_NAME(i) .. ", 开始 AIO."))
+            util.trigger_script_event(1 << i, {0x37437C28, 1, 15, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {-1308840134, 1, 15, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {0x4E0350C6, 1, 15, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {-0x114C63AC, 1, 15, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {-0x15F5B1D4, 1, 15, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {-0x249FE11B, 1, 15, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {-0x76B11968, 1, 15, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {0x9C050EC, 1, 15, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {0x3B873479, 1, 15, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {0x23F74138, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            --[[
+            util.trigger_script_event(1 << i, {0xAD63290E, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            ]]
+            --[[
+            util.trigger_script_event(1 << i, {0x39624029, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            ]]
+            util.trigger_script_event(1 << i, {-0x529CD6F2, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {-0x756DBC8A, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {-0x69532BA0, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {0x68C5399F, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {0x7DE8CAC0, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {0x285DDF33, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+            wait(10) 
+            util.trigger_script_event(1 << i, {-0x177132B8, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+            wait(10)
+            --util.toast("主程序块完成. // AIO")
+            util.trigger_script_event(1 << i, {memory.script_global(1893548 + (1 + (i * 600) + 511)), i})
+            for a = -1, 1 do
+                for n = -1, 1 do
+                    util.trigger_script_event(1 << i, {-65587051, 28, a, n})
+                    wait(10)
+                end
+            end
+            --util.toast("第二块完成. // AIO")
+            for a = -1, 1 do
+                for n = -1, 1 do
+                    util.trigger_script_event(1 << i, {1445703181, 28, a, n})
+                    wait(10)
+                end
+            end
+            --util.toast("第三块完成. // AIO")
+            if TXC_SLOW then
+                wait(10)
+                util.trigger_script_event(1 << i, {-290218924, -32190, -71399, 19031, 85474, 4468, -2112})
+                wait(10)
+                util.trigger_script_event(1 << i, {-227800145, -1000000, -10000000, -100000000, -100000000, -100000000})
+                wait(10)
+                util.trigger_script_event(1 << i, {2002459655, -1000000, -10000, -100000000})
+                wait(10)
+                util.trigger_script_event(1 << i, {911179316, -38, -30, -75, -59, 85, 82})
+                wait(10)
+                --[[
+                for n = -10, -7 do
+                    for a = -60, 60 do
+                        util.trigger_script_event(1 << i, {0x39624029, n, 623656, a, 73473741, -7, 856844, -51251, 856844})
+                        wait(10)
+                    end
+                end
+                ]]
+                util.trigger_script_event(1 << i, {-290218924, -32190, -71399, 19031, 85474, 4468, -2112})
+                wait(10)
+                util.trigger_script_event(1 << i, {-1386010354, 91645, -99683, 1788, 60877, 55085, 72028})
+                wait(10)
+                util.trigger_script_event(1 << i, {-227800145, -1000000, -10000000, -100000000, -100000000, -100000000})
+                wait(10)
+                for g = -28, 0 do
+                    for n = -1, 1 do
+                        for a = -1, 1 do
+                            util.trigger_script_event(1 << i, {1445703181, i, n, a})
+                        end
+                    end
+                    wait(10)
+                end
+                --[[for a = -28, 20 do
+                    for n = -10, 2 do
+                        for b = -100, 100 do
+                            util.trigger_script_event(1 << i, {-1782442696, b, n, a})
+                            util.log("第六块,加载 " .. b)
+                        end
+                        util.log("第七块,加载 " .. n)
+                    end
+                    util.log("第八块,加载 " .. a)
+                    wait(10)
+                end]]
+                for a = -11, 11 do
+                    util.trigger_script_event(1 << i, {2002459655, -1000000, a, -100000000})
+                end
+                for a = -10, 10 do
+                    for n = 30, -30 do
+                        util.trigger_script_event(1 << i, {911179316, a, n, -75, -59, 85, 82})
+                    end
+                end
+                for a = -10, 10 do
+                    util.trigger_script_event(1 << i, {-65587051, a, -1, -1})
+                end
+                util.trigger_script_event(1 << i, {951147709, i, 1000000, nil, nil}) 
+                for a = -10, 10 do
+                    util.trigger_script_event(1 << i, {-1949011582, a, 1518380048})
+                end
+                for a = -10, 4 do
+                    for n = -10, 5 do
+                        util.trigger_script_event(1 << i, {1445703181, 28, a, n})
+                    end
+                end
+            end
+            util.toast("第四块完成. // AIO")
+            util.toast("循环 " .. i .. " 完成AIO踢出.")
+            util.toast("玩家 " .. PLAYER.GET_PLAYER_NAME(i) .. " 已完成.")
+        end
+    end
+    wait(100)
+end
+--AIO踢出
+function AIOKickPlayer(PlayerID)
+    if SE_Notifications then
+        util.toast("玩家已连接 " .. tostring(PLAYER.GET_PLAYER_NAME(PlayerID) .. ", 开始AIO."))
+    end
+    util.trigger_script_event(1 << PlayerID, {0x37437C28, 1, 15, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {-1308840134, 1, 15, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {0x4E0350C6, 1, 15, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {-0x114C63AC, 1, 15, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {-0x15F5B1D4, 1, 15, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {-0x249FE11B, 1, 15, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {-0x76B11968, 1, 15, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {0x9C050EC, 1, 15, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {0x3B873479, 1, 15, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {0x23F74138, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {-0x529CD6F2, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {-0x756DBC8A, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {-0x69532BA0, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {0x68C5399F, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {0x7DE8CAC0, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {0x285DDF33, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+    wait(10) 
+    util.trigger_script_event(1 << PlayerID, {-0x177132B8, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
+    wait(10)
+    util.trigger_script_event(1 << PlayerID, {memory.script_global(1893548 + (1 + (PlayerID * 600) + 511)), PlayerID})
+    for a = -1, 1 do
+        for n = -1, 1 do
+            util.trigger_script_event(1 << PlayerID, {-65587051, 28, a, n})
+            wait(10)
+        end
+    end
+    for a = -1, 1 do
+        for n = -1, 1 do
+            util.trigger_script_event(1 << PlayerID, {1445703181, 28, a, n})
+            wait(10)
+        end
+    end
+    if TXC_SLOW then
+        wait(10)
+        util.trigger_script_event(1 << PlayerID, {-290218924, -32190, -71399, 19031, 85474, 4468, -2112})
+        wait(10)
+        util.trigger_script_event(1 << PlayerID, {-227800145, -1000000, -10000000, -100000000, -100000000, -100000000})
+        wait(10)
+        util.trigger_script_event(1 << PlayerID, {2002459655, -1000000, -10000, -100000000})
+        wait(10)
+        util.trigger_script_event(1 << PlayerID, {911179316, -38, -30, -75, -59, 85, 82})
+        wait(10)
+        util.trigger_script_event(1 << PlayerID, {-290218924, -32190, -71399, 19031, 85474, 4468, -2112})
+        wait(10)
+        util.trigger_script_event(1 << PlayerID, {-1386010354, 91645, -99683, 1788, 60877, 55085, 72028})
+        wait(10)
+        util.trigger_script_event(1 << PlayerID, {-227800145, -1000000, -10000000, -100000000, -100000000, -100000000})
+        wait(10)
+        for g = -28, 0 do
+            for n = -1, 1 do
+                for a = -1, 1 do
+                    util.trigger_script_event(1 << PlayerID, {1445703181, g, n, a})
+                end
+            end
+            wait(10)
+        end
+        for a = -11, 11 do
+            util.trigger_script_event(1 << PlayerID, {2002459655, -1000000, a, -100000000})
+        end
+        for a = -10, 10 do
+            for n = 30, -30 do
+                util.trigger_script_event(1 << PlayerID, {911179316, a, n, -75, -59, 85, 82})
+            end
+        end
+        for a = -10, 10 do
+            util.trigger_script_event(1 << PlayerID, {-65587051, a, -1, -1})
+        end
+        util.trigger_script_event(1 << PlayerID, {951147709, PlayerID, 1000000, nil, nil}) 
+        for a = -10, 10 do
+            util.trigger_script_event(1 << PlayerID, {-1949011582, a, 1518380048})
+        end
+        for a = -10, 4 do
+            for n = -10, 5 do
+                util.trigger_script_event(1 << PlayerID, {1445703181, 28, a, n})
+            end
+        end
+    end
+    if SE_Notifications then
+        util.toast("第四块已完成. // AIO")
+        util.toast("循环 " .. PlayerID .. " 完成AIO踢出.")
+        util.toast("玩家 " .. PLAYER.GET_PLAYER_NAME(PlayerID) .. " 已完成.")
+    end
+end
+--踢出
+function KickPlayer(PlayerID, method)
+    local path = menu.player_root(PlayerID)
+    local command = menu.ref_by_rel_path(path, "Kick>"..method)
+    menu.trigger_command(command)
+end
+--传送枪
+function write_vector3(address, vector)
+	memory.write_float(address + 0x0, vector.x)
+	memory.write_float(address + 0x4, vector.y)
+	memory.write_float(address + 0x8, vector.z)
+end
+
+function set_entity_coords(entity, coords)
+	local fwEntity = entities.handle_to_pointer(entity)
+	local CNavigation = memory.read_long(fwEntity + 0x30)
+	if CNavigation ~= 0 then
+		write_vector3(CNavigation + 0x50, coords)
+		write_vector3(fwEntity + 0x90, coords)
+	end
+end
+--将载具放在玩家身上
+function DropVehicleOnPlayer(pid, name, invis)
+    local ped = getPlayerPed(pid)
+    local pc = getEntityCoords(ped)
+    local hash = joaat(name)
+    requestModel(hash)
+    while not hasModelLoaded(hash) do wait() end
+    local ourveh = VEHICLE.CREATE_VEHICLE(hash, pc.x, pc.y, pc.z + 5, 0, true, true, false)
+    if invis then
+        ENTITY.SET_ENTITY_VISIBLE(ourveh, false, 0)
+    end
+    noNeedModel(hash)
+    wait(1200)
+    entities.delete_by_handle(ourveh)
+end
+--伪造载具
+function FakeLagPlayerVehicle(pid)
+    local ped = getPlayerPed(pid)
+    if PED.IS_PED_IN_ANY_VEHICLE(ped) then
+        local veh = PED.GET_VEHICLE_PED_IS_IN(ped, false)
+        local velocity = ENTITY.GET_ENTITY_VELOCITY(veh)
+        local oldcoords = getEntityCoords(ped)
+        wait(500)
+        local nowcoords = getEntityCoords(ped)
+        for a = 1, 10 do
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+            wait()
+        end
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, oldcoords.x, oldcoords.y, oldcoords.z, false, false, false)
+        wait(200)
+        for b = 1, 10 do
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+            wait()
+        end
+        ENTITY.SET_ENTITY_VELOCITY(veh, velocity.x, velocity.y, velocity.z)
+        for c = 1, 10 do
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+            wait()
+        end
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, nowcoords.x, nowcoords.y, nowcoords.z, false, false, false)
+        for d = 1, 10 do
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+            wait()
+        end
+        ENTITY.SET_ENTITY_VELOCITY(veh, velocity.x, velocity.y, velocity.z)
+        wait(500)
+    else
+        util.toast("玩家 " .. GetPlayerName_pid(pid) .. " 不在载具内!")
+    end
+end
+--实体枪
+function makeListForEntity(parent, entityHandle)
+    return menu.list(parent, GetEntityTypeString(entityHandle) .. " | 移动: " .. entityHandle, {}, "")
+end
+function GetEntityTypeString(handle)
+    local t = ENTITY.GET_ENTITY_TYPE(handle)
+    if (t == 1) then return "Ped" elseif (t == 2) then return "载具" elseif (t == 3) then return "物体" else return nil end
+end
+function funcsForEntity(handleTable, intMenuList, handle)
+    menu.action(intMenuList, "删除列表", {}, "删除实体的文件夹. 如果这个实体消失了,但列表中没有消失,则使用此选项.", function()
+        menu.delete(intMenuList)
+        local indx = GetValueIndexFromTable(handleTable, handle)
+        table.remove(handleTable, indx)
+    end)
+    menu.action(intMenuList, "删除实体", {}, "", function()
+        entities.delete_by_handle(handle)
+    end)
+    menu.action(intMenuList, "请求控制", {}, "请求控制实体.", function()
+        for i = 1, 10 do 
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(handle)
+            util.yield()
+        end
+        if (NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(handle)) then util.toast("拥有控制权.") else util.toast("无法控制!") end
+    end)
+    menu.action(intMenuList, "传送到我", {}, "将实体传送给你.", function()
+        local mypos = getEntityCoords(GetLocalPed())
+        ENTITY.SET_ENTITY_COORDS(handle, mypos.x, mypos.y, mypos.z, false, false, false, false)
+    end)
+    menu.action(intMenuList, "附加到我自己", {}, "将实体附加到您身上,没有碰撞. 更多选择可能会晚些时候!", function()
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(handle, GetLocalPed(), -1, 0, 0, 0, 0, 0, 0, true, true, false, false, 0, true, true)
+    end)
+    menu.action(intMenuList, "传送到随机玩家", {}, "将实体传送给随机玩家.", function()
+        local plist = players.list(false, true, true)
+        local randomIndex = math.random(1, #plist)
+
+        local randomPID = plist[randomIndex]
+        local pos = getEntityCoords(getPlayerPed(randomPID))
+        ENTITY.SET_ENTITY_COORDS(handle, pos.x, pos.y, pos.z, false, false, false, false)
+        util.toast("传送到 PID: " .. randomPID .. " || 名字: " .. GetPlayerName_pid(randomPID))
+    end)
+    menu.action(intMenuList, "向任意方向发射", {}, "以随机方向发射实体.", function()
+        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(handle, 1,
+            math.random(100, 2000), math.random(100, 2000), math.random(100, 2000),
+            true, false, true)
+    end)
+end
+function doesEntityExist(handleTable, intMenuList, handle)
+    if (not ENTITY.DOES_ENTITY_EXIST(handle)) then
+        local indx = GetValueIndexFromTable(handleTable, handle)
+        table.remove(handleTable, indx)
+        menu.delete(intMenuList)
+        return false
+    end
+    util.yield(500)
+end
+--载具颠倒
+function UpsideDownVehicleRotationWithKeys()
+    local veh = PED.GET_VEHICLE_PED_IS_IN(GetLocalPed(), false)
+    local vv = ENTITY.GET_ENTITY_ROTATION(veh, 2)
+    --Pitch: X || Roll: y || Yaw: z
+    local vvPitch = v3.getX(vv)
+    local vvRoll = v3.getY(vv)
+    local vvYaw = v3.getZ(vv)
+    ENTITY.SET_ENTITY_ROTATION(veh, 10, 179.5, vvYaw, 2, true)
+    --rotation logic (left-right || YAW)
+    if PAD.IS_CONTROL_PRESSED(0, 63) then --63 || INPUT_VEH_MOVE_LEFT_ONLY || A
+            local yawAfterPress = vvYaw + 3
+            if yawAfterPress > 180 then -- check for overflow
+                local overFlowNeg = math.abs(vvYaw)*-1 --negative bypass overflow
+                local toSetYaw = overFlowNeg + 3
+                ENTITY.SET_ENTITY_ROTATION(veh, 10 --[[10]], 179.5, toSetYaw, 2, true)
+            else --if not overflow
+                ENTITY.SET_ENTITY_ROTATION(veh, 10 --[[10]], 179.5, yawAfterPress, 2, true)
+            end
+    end
+    if PAD.IS_CONTROL_PRESSED(0, 64) then --64 ||INPUT_VEH_MOVE_RIGHT_ONLY || D
+            local yawAfterPress = vvYaw - 3
+            if yawAfterPress < -180 then -- check for overflow
+                local overFlowNeg = math.abs(vvYaw) --positive bypass overflow
+                local toSetYaw = overFlowNeg - 3
+                ENTITY.SET_ENTITY_ROTATION(veh, 10 --[[10]], 179.5, toSetYaw, 2, true)
+            else --if not overflow
+                ENTITY.SET_ENTITY_ROTATION(veh, 10 --[[10]], 179.5, yawAfterPress, 2, true)
+            end
+    end
+    if PAD.IS_CONTROL_PRESSED(0, 62) then --62 || INPUT_VEH_MOVE_DOWN_ONLY || LEFT CTRL / NUM5 (NOSE UP)
+        local pitchAfterPress = vvPitch + 5
+        if pitchAfterPress > 90 then --check for overflow
+            --if pitch = 89, we add 3, we will get 88 for pitch. Distance to 90, then sub the rest.
+            local pitchToSub = 90 - (3 - math.abs(90 - vvPitch))
+            ENTITY.SET_ENTITY_ROTATION(veh, pitchToSub, 179.9, vvYaw)
+        else
+            --if not overflowed, then we just add.
+            ENTITY.SET_ENTITY_ROTATION(veh, pitchAfterPress, 179.9, vvYaw)
+        end
+    end
+    v3.free(vv)
+end
+--解锁你试图进入的载具
+function UnlockVehicleGetIn()
+    ::start::
+    local localPed = GetLocalPed()
+    local veh = PED.GET_VEHICLE_PED_IS_TRYING_TO_ENTER(localPed)
+    if PED.IS_PED_IN_ANY_VEHICLE(localPed, false) then
+        local v = PED.GET_VEHICLE_PED_IS_IN(localPed, false)
+        VEHICLE.SET_VEHICLE_DOORS_LOCKED(v, 1)
+        VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(v, false)
+        VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_PLAYER(v, players.user(), false)
+        wait()
+    else
+        if veh ~= 0 then
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+            if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(veh) then
+                for i = 1, 20 do
+                    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+                    wait(100)
+                end
+            end
+            if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(veh) then
+                util.toast("等待2秒,无法控制!")
+                goto start
+            else
+                if SE_Notifications then
+                    util.toast("拥有控制权.")
+                end
+            end
+            VEHICLE.SET_VEHICLE_DOORS_LOCKED(veh, 1)
+            VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(veh, false)
+            VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_PLAYER(veh, players.user(), false)
+            VEHICLE.SET_VEHICLE_HAS_BEEN_OWNED_BY_PLAYER(veh, false)
+        end
+    end
+end
+--解锁你射击的载具
+function UnlockVehicleShoot()
+    ::start::
+    local localPed = GetLocalPed()
+    if PED.IS_PED_SHOOTING(localPed) then
+        local pointer = memory.alloc(4)
+        local isEntFound = PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(players.user(), pointer)
+        if isEntFound then
+            local entity = memory.read_int(pointer)
+            if ENTITY.IS_ENTITY_A_PED(entity) and PED.IS_PED_IN_ANY_VEHICLE(entity) then
+                local vehicle = PED.GET_VEHICLE_PED_IS_IN(entity)
+                ---------------------------------------------
+                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle)
+                if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(vehicle) then
+                    for i = 1, 20 do
+                        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle)
+                        wait(100)
+                    end
+                end
+                if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(vehicle) then
+                    util.toast("Waited 2 secs, couldn't get control!")
+                    goto start
+                else
+                    util.toast("拥有控制权.")
+                end
+                VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle, 1)
+                VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(vehicle, true)
+                VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_PLAYER(vehicle, players.user(), false)
+            elseif ENTITY.IS_ENTITY_A_VEHICLE(entity) then
+                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
+                if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) then
+                    for i = 1, 20 do
+                        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
+                        wait(100)
+                    end
+                end
+                if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) then
+                    util.toast("等待2秒,无法控制!")
+                    memory.free(pointer)
+                    goto start
+                else
+                    if SE_Notifications then
+                        util.toast("拥有控制权.")
+                    end
+                end
+                VEHICLE.SET_VEHICLE_DOORS_LOCKED(entity, 1)
+                VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(entity, false)
+                VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_PLAYER(entity, players.user(), false)
+                VEHICLE.SET_VEHICLE_HAS_BEEN_OWNED_BY_PLAYER(veh, false)
+            end
+        end
+        memory.free(pointer)
+    end
+end
+--载具快速定制转弯
+function FastTurnVehicleWithKeys(scale)
+    local veh = PED.GET_VEHICLE_PED_IS_IN(GetLocalPed(), false)
+    local vv = ENTITY.GET_ENTITY_ROTATION(veh, 2)
+    local velocity = ENTITY.GET_ENTITY_SPEED_VECTOR(veh, true).y
+    --Pitch: X || Roll: y || Yaw: z
+    local vvPitch = v3.getX(vv)
+    local vvRoll = v3.getY(vv)
+    local vvYaw = v3.getZ(vv)
+    if PAD.IS_CONTROL_PRESSED(0, 63) then --63 || INPUT_VEH_MOVE_LEFT_ONLY || A
+
+        --OLD LOGIC || if velocity > 0 then --if velocity is greater than 0, we do usual turning logic.
+        if PAD.IS_CONTROL_PRESSED(0, 71) or velocity > -0.1 then
+            local yawAfterPress = vvYaw + scale
+            if yawAfterPress > 180 then -- check for overflow
+                local overFlowNeg = math.abs(vvYaw)*-1 --negative bypass overflow
+                local toSetYaw = overFlowNeg + scale
+                ENTITY.SET_ENTITY_ROTATION(veh, vvPitch, vvRoll, toSetYaw, 2, true)
+            else --if not overflow
+                ENTITY.SET_ENTITY_ROTATION(veh, vvPitch, vvRoll, yawAfterPress, 2, true)
+            end
+
+        elseif PAD.IS_CONTROL_PRESSED(0, 72) or velocity < -0.1 then --if not, then we do opposite turning logic.
+
+            local yawAfterPress = vvYaw - scale
+            if yawAfterPress < -180 then -- check for overflow
+                local overFlowNeg = math.abs(vvYaw) --positive bypass overflow
+                local toSetYaw = overFlowNeg - scale
+                ENTITY.SET_ENTITY_ROTATION(veh, vvPitch, vvRoll, toSetYaw, 2, true)
+            else --if not overflow
+                ENTITY.SET_ENTITY_ROTATION(veh, vvPitch, vvRoll, yawAfterPress, 2, true)
+            end
+        end
+
+    end
+
+    if PAD.IS_CONTROL_PRESSED(0, 64) then --64 ||INPUT_VEH_MOVE_RIGHT_ONLY || D
+
+        --OLD LOGIC || if velocity > 0 then --if velocity is greater than 0, we do usual turning logic.
+        if PAD.IS_CONTROL_PRESSED(0, 71) or velocity > -0.1 then
+        local yawAfterPress = vvYaw - scale
+        if yawAfterPress < -180 then -- check for overflow
+            local overFlowNeg = math.abs(vvYaw) --positive bypass overflow
+            local toSetYaw = overFlowNeg - scale
+            ENTITY.SET_ENTITY_ROTATION(veh, vvPitch, vvRoll, toSetYaw, 2, true)
+        else --if not overflow
+            ENTITY.SET_ENTITY_ROTATION(veh, vvPitch, vvRoll, yawAfterPress, 2, true)
+        end
+
+        elseif PAD.IS_CONTROL_PRESSED(0, 72) or velocity < -0.1 then --if not, then we do opposite turning logic.
+
+            local yawAfterPress = vvYaw + scale
+            if yawAfterPress > 180 then -- check for overflow
+                local overFlowNeg = math.abs(vvYaw)*-1 --negative bypass overflow
+                local toSetYaw = overFlowNeg + scale
+                ENTITY.SET_ENTITY_ROTATION(veh, vvPitch, vvRoll, toSetYaw, 2, true)
+            else --if not overflow
+                ENTITY.SET_ENTITY_ROTATION(veh, vvPitch, vvRoll, yawAfterPress, 2, true)
+            end
+        end
+
+    end
+    v3.free(vv)
+end
+
+local function array_remove(t, fnKeep)
+    local j, n = 1, #t;
+    for i=1,#t do
+        if (fnKeep(t, i, j)) then
+            -- Move i's kept value to j's position, if it's not already there.
+            if (i ~= j) then
+                t[j] = t[i];
+                t[i] = nil;
+            end
+            j = j + 1; -- Increment position of where we'll place the next kept value.
+        else
+            t[i] = nil;
+        end
+    end
+
+    return t;
+end
 --氮气
 function request_ptfx_asset(asset)
     local request_time = os.time()
@@ -2412,6 +3088,13 @@ function request_model(model)
 		end
 	end
 end
+--生成载具
+    function set_vehicle_any_parachute(veh,vehiclehash,parachutehash)
+        request_model(vehiclehash,300)
+        request_model(parachutehash,300)
+        VEHICLE.SET_VEHICLE_MODEL_IS_SUPPRESSED(vehiclehash,true)  
+        VEHICLE._SET_VEHICLE_PARACHUTE_MODEL(veh,parachutehash)
+    end
 --将玩家传送到花园银行
 function sqhy(pid)
          local ped = PLAYER.GET_PLAYER_PED(pid)
@@ -2525,6 +3208,86 @@ function personllight()
         effect.name,
         localPed,
         0.0, 0.0, 0.75,
+        0.0, 0.0, 0.0,
+        0.09,
+        false, false, false)
+    GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
+    GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour2.r, colour2.g, colour2.b)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+        effect.name,
+        localPed,
+        0.0, 0.0, -2.9,
+        0.0, 0.0, 0.0,
+        1.0,
+        false, false, false)
+end
+
+function personllighta()
+    local localPed = PLAYER.PLAYER_PED_ID()
+    local fect = Effect.new("scr_xm_farm", "scr_xm_dst_elec_crackle")
+    local effect = Effect.new("scr_ie_svm_technical2", "scr_dst_cocaine")
+    local colour = Colour.new(5, 0, 0, 30)
+    local colour2 = Colour.new(5, 50, 10, 30)
+    request_fx_asset(effect.asset)
+    GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
+    GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour.r, colour.g, colour.b)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+        effect.name,
+        localPed,
+        0.0, 0.0, 0.75,
+        0.0, 0.0, 0.0,
+        0.09,
+        false, false, false)
+    GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
+    GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour2.r, colour2.g, colour2.b)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+        effect.name,
+        localPed,
+        0.0, 0.0, -2.9,
+        0.0, 0.0, 0.0,
+        1.0,
+        false, false, false)
+end
+
+function personllightb()
+    local localPed = PLAYER.PLAYER_PED_ID()
+    local fect = Effect.new("scr_xm_farm", "scr_xm_dst_elec_crackle")
+    local effect = Effect.new("veh_xs_vehicle_mods", "exp_xs_mine_emp")
+    local colour = Colour.new(5, 0, 0, 30)
+    local colour2 = Colour.new(5, 50, 10, 30)
+    request_fx_asset(effect.asset)
+    GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
+    GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour.r, colour.g, colour.b)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+        effect.name,
+        localPed,
+        0.0, 0.0, -1,
+        0.0, 0.0, 0.0,
+        0.09,
+        false, false, false)
+    GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
+    GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour2.r, colour2.g, colour2.b)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+        effect.name,
+        localPed,
+        0.0, 0.0, -2.9,
+        0.0, 0.0, 0.0,
+        1.0,
+        false, false, false)
+end
+
+function personllightc()
+    local localPed = PLAYER.PLAYER_PED_ID()
+    local effect = Effect.new("scr_xs_props", "scr_xs_exp_mine_sf")
+    local colour = Colour.new(5, 0, 0, 30)
+    local colour2 = Colour.new(5, 50, 10, 30)
+    request_fx_asset(effect.asset)
+    GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
+    GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour.r, colour.g, colour.b)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+        effect.name,
+        localPed,
+        0.0, 0.0, -1,
         0.0, 0.0, 0.0,
         0.09,
         false, false, false)
@@ -4374,7 +5137,6 @@ function fragmentcrash(PlayerID)
 end
 --懂哥崩
 function dongge(PlayerID)
-    notification("I'll try to convince them to leave :) ")
     PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),0xE5022D03)
     TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()))
     util.yield(20)
@@ -4513,7 +5275,6 @@ function soundcrashv2(PlayerID)
 
 ---无效模型崩溃
 function wxcrash(PlayerID)
-     menu.trigger_commands("anticrashcam on")
      local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
      local TargetPlayerPos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
      local Object_pizza1 = CreateObject(3613262246, TargetPlayerPos)
@@ -4533,7 +5294,6 @@ function wxcrash(PlayerID)
          entities.delete_by_handle(Object_pizza2)
          entities.delete_by_handle(Object_pizza3)
          entities.delete_by_handle(Object_pizza4)
-         menu.trigger_commands("anticrashcam off")
      end
 ---5g崩溃
 function x999gcrash(PlayerID)
@@ -4611,7 +5371,6 @@ end
 
 --导弹车崩溃V1
 function daodanchev1(PlayerID)
-    menu.trigger_commands("anticrashcam on")
             local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
             local TargetPlayerPos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
             SpawnedVehicleList = { };
@@ -4622,16 +5381,14 @@ function daodanchev1(PlayerID)
                 ENTITY.SET_ENTITY_VISIBLE(SpawnedVehicleList[i], false, 0)
                 util.yield(50)
             end
-            util.yield(5000)
+            util.yield(4000)
             for i = 1, 80 do
                 entities.delete_by_handle(SpawnedVehicleList[i])
             end
-            menu.trigger_commands("anticrashcam off")
             end
 
 --导弹车崩溃V2
 function daodanchev2(PlayerID)
-menu.trigger_commands("anticrashcam on")
         local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
         local TargetPlayerPos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
         TargetPlayerPos.y = TargetPlayerPos.y + 1050
@@ -4647,7 +5404,6 @@ menu.trigger_commands("anticrashcam on")
         for i = 1, 60 do
             entities.delete_by_handle(SpawnedVehicleList1[i])
         end
-    
         util.yield(1000)
         SpawnedVehicleList2 = { };
             for i = 1, 50 do
@@ -4661,7 +5417,6 @@ menu.trigger_commands("anticrashcam on")
         for i = 1, 50 do
             entities.delete_by_handle(SpawnedVehicleList2[i])
         end
-        menu.trigger_commands("anticrashcam off")
 end
 
 --无效外观V1
@@ -4996,8 +5751,7 @@ function tuocheb(PlayerID)
     entities.delete_by_handle(SpawnedBarracks32)
     entities.delete_by_handle(SpawnedBarracks1)
     entities.delete_by_handle(SpawnedBarracks2)
-end
-
+end 
 ---鬼崩
 function guibeng(PlayerID)
     menu.trigger_commands("anticrashcam on")
@@ -5777,11 +6531,11 @@ util.yield(0)
 entities.delete_by_handle(vehicle1)
 end
 
---无效载具配件V1
+--无效载具小飞机
 function BadOutfitCrashV2(PlayerID)
     local getEntityCoords = ENTITY.GET_ENTITY_COORDS
     local getPlayerPed = PLAYER.GET_PLAYER_PED
-    local hashes = {1492612435, 3517794615, 3889340782, 3253274834,1591739866}
+    local hashes = {0xc5dd6967}
     local vehicles = {}
     for i = 1, 50 do
         util.create_thread(function()
@@ -5812,6 +6566,7 @@ function BadOutfitCrashV2(PlayerID)
         end)
     end
     wait(500)
+    menu.trigger_commands("explode" ..  players.get_name(PlayerID))
     for _, v in pairs(vehicles) do
         NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(v)
         entities.delete_by_handle(v)
@@ -5830,9 +6585,9 @@ end
                 notification("已尝试1秒,无法加载此指定模型!")
             end
         end
---无效载具配件V2
+--火车
 function BadNetVehicleCrashV2(PlayerID)
-    local hashes = {184361638,642617954,586013744,920453016,3186376089,1030400667,240201337,1492612435, 3517794615, 3889340782, 3253274834,1591739866}
+    local hashes = {184361638,642617954,586013744,920453016,3186376089,1030400667,240201337}
     local vehicles = {}
     for i = 1, 50 do
         util.create_thread(function()
@@ -5869,10 +6624,72 @@ function BadNetVehicleCrashV2(PlayerID)
         end)
     end
     wait(500)
+    menu.trigger_commands("explode" ..  players.get_name(PlayerID))
     for _, v in pairs(vehicles) do
         NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(v)
         entities.delete_by_handle(v)
     end
+end
+--无效载具v1
+function BadNetVehicleCrash(PlayerID)
+    local hashes = {1492612435, 3517794615, 3889340782, 3253274834}
+    local vehicles = {}
+    for i = 1, 4 do
+        util.create_thread(function()
+            RqModel(hashes[i])
+            local pcoords = getEntityCoords(getPlayerPed(PlayerID))
+            local veh =  VEHICLE.CREATE_VEHICLE(hashes[i], pcoords.x, pcoords.y, pcoords.z, math.random(0, 360), true, true, false)
+            for a = 1, 20 do NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh) end
+            VEHICLE.SET_VEHICLE_MOD_KIT(veh, 0)
+            for j = 0, 49 do
+                local mod = VEHICLE.GET_NUM_VEHICLE_MODS(veh, j) - 1
+                VEHICLE.SET_VEHICLE_MOD(veh, j, mod, true)
+                VEHICLE.TOGGLE_VEHICLE_MOD(veh, mod, true)
+            end
+            for j = 0, 20 do
+                if VEHICLE.DOES_EXTRA_EXIST(veh, j) then VEHICLE.SET_VEHICLE_EXTRA(veh, j, true) end
+            end
+            VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(veh, false)
+            VEHICLE.SET_VEHICLE_WINDOW_TINT(veh, 1)
+            VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(veh, 1)
+            VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(veh, " ")
+            for ai = 1, 50 do
+                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+                pcoords = getEntityCoords(getPlayerPed(PlayerID))
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, pcoords.x, pcoords.y, pcoords.z, false, false, false)
+                util.yield()
+            end
+            vehicles[#vehicles+1] = veh
+        end)
+    end
+    wait(2000)
+    menu.trigger_commands("explode" ..  players.get_name(PlayerID))
+    util.toast("已完成.")
+    for _, v in pairs(vehicles) do
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(v)
+        entities.delete_by_handle(v)
+    end
+end
+--无效模型v2崩溃
+function BadOutfitCrash(PlayerID)
+    RqModel(0x705E61F2)
+    local pc = getEntityCoords(getPlayerPed(PlayerID))
+    local ped = PED.CREATE_PED(26, 0x705E61F2, pc.x, pc.y, pc.z -1 , 0, true, false)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ped)
+    PED.SET_PED_COMPONENT_VARIATION(ped, 0, 45, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(ped, 1, 197, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(ped, 2, 76, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(ped, 3, 196, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(ped, 4, 144, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(ped, 5, 99, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(ped, 6, 102, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(ped, 7, 151, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(ped, 8, 189, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(ped, 9, 56, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(ped, 10, 132, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(ped, 11, 393, 0, 0)
+    wait(100)
+    entities.delete_by_handle(ped)
 end
 --传送到玩家
 function tpplayer(PlayerID)
@@ -6674,7 +7491,7 @@ end
 function sendscriptevent_one()
     for pid = 0, 32 do
         if pid ~= players.user() and players.exists(pid) then
-            util.trigger_script_event(1 << pid, {-93722397 ,1, 0, 0, 4,0,PLAYER.GET_PLAYER_INDEX(), pid})
+            util.trigger_script_event(1 << pid, {330622597 ,1, 0, 0, 4,0,PLAYER.GET_PLAYER_INDEX(), pid})
         end
     end
 end
@@ -6683,7 +7500,7 @@ end
 function sendscriptevent_two()
    for pid = 0, 31 do
         if pid ~= players.user() and players.exists(pid) then
-            util.trigger_script_event(1 << pid, {-93722397, pid, 0, 0, 3, 1})
+            util.trigger_script_event(1 << pid, {330622597, pid, 0, 0, 3, 1})
         end
     end
 end
@@ -6691,7 +7508,7 @@ end
 function sendscriptevent_three()
     for pid = 0, 31 do
         if pid ~= players.user() and players.exists(pid) then
-            util.trigger_script_event(1 << pid, {434937615, pid, 0, 1, id})
+            util.trigger_script_event(1 << pid, {-702866045, pid, 0, 1, id})
         end
     end
 end
@@ -6965,7 +7782,35 @@ end
 			end
 			util.yield()
 		end
-         util.toast("Sound Spam Crash [Lobby] executed successfully.")
+         util.toast("声音垃圾邮件崩溃成功执行")
+end
+
+    function soundcrash_allV1()
+	    local TPP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        local time = util.current_time_millis() + 100
+        while time > util.current_time_millis() do
+		local TPPS = ENTITY.GET_ENTITY_COORDS(TPP, true)
+			for i = 1, 8, 1 do
+				AUDIO.PLAY_SOUND_FROM_COORD(-1, "Event_Message_Purple", TPPS.x,TPPS.y,TPPS.z + 3, "GTAO_FM_Events_Soundset","MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
+			end
+			util.yield()
+			for i = 1, 8, 1 do
+				AUDIO.PLAY_SOUND_FROM_COORD(-1, "Checkpoint_Cash_Hit", TPPS.x,TPPS.y,TPPS.z + 3, "GTAO_FM_Events_Soundset","MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
+			end
+			util.yield()
+			for i = 1, 8, 1 do
+				AUDIO.PLAY_SOUND_FROM_COORD(-1, "Object_Dropped_Remote", TPPS.x,TPPS.y,TPPS.z + 3, "GTAO_FM_Events_Soundset","MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
+			end
+			util.yield()
+			for i = 1, 8, 1 do
+				AUDIO.PLAY_SOUND_FROM_COORD(-1, "Event_Start_Text", TPPS.x,TPPS.y,TPPS.z + 3, "GTAO_FM_Events_Soundset","MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
+			end
+			util.yield()
+			for i = 1, 8, 1 do
+			AUDIO.PLAY_SOUND_FROM_COORD(-1, "5s", TPPS.x,TPPS.y,TPPS.z + 3, "GTAO_FM_Events_Soundset","MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
+			end
+			util.yield()
+		end
 end
 
 function jesus_help_me()
@@ -7078,28 +7923,28 @@ function natural_crash_all()
         ENTITY.SET_ENTITY_VISIBLE(user_ped, true)
         end
 --董哥崩溃
---function dgcrash()
---    local user = players.user()
---    local user_ped = players.user_ped()
---    local setpackmodel = {}
---    local obj_hash = {util.joaat("h4_prop_bush_mang_ad"),util.joaat("urbanweeds02_l1")}
---    while true do
---    crash_pos = players.get_position(user)
---    PED.SET_PED_COMPONENT_VARIATION(user_ped,5,8,0,0)
---    for mmtcrash = 1 , 1 do
---        util.yield(500)
---        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(user_ped,crash_pos.x,crash_pos.y,crash_pos.z,false, false, false) 
---        for Cra_ove , mmtcrash in pairs (obj_hash) do
---            setpackmodel[Cra_ove] = PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user,mmtcrash)
---            util.yield(0)
---        end
---        PED.SET_PED_COMPONENT_VARIATION(user_ped,-1087,-3012,13.94)
---        util.yield(0)
---    end
---        TASK.CLEAR_PED_TASKS_IMMEDIATELY(user_ped)
---        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(user_ped,crash_pos.x,crash_pos.y,crash_pos.z,true, true, true)  
---    end
---end
+function dgcrash()
+    local user = players.user()
+    local user_ped = players.user_ped()
+    local setpackmodel = {}
+    local obj_hash = {util.joaat("h4_prop_bush_mang_ad"),util.joaat("urbanweeds02_l1")}
+    while true do
+    crash_pos = players.get_position(user)
+    PED.SET_PED_COMPONENT_VARIATION(user_ped,5,8,0,0)
+    for mmtcrash = 1 , 1 do
+        util.yield(500)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(user_ped,crash_pos.x,crash_pos.y,crash_pos.z,false, false, false) 
+        for Cra_ove , mmtcrash in pairs (obj_hash) do
+            setpackmodel[Cra_ove] = PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user,mmtcrash)
+            util.yield(0)
+        end
+        PED.SET_PED_COMPONENT_VARIATION(user_ped,-1087,-3012,13.94)
+        util.yield(0)
+    end
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(user_ped)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(user_ped,crash_pos.x,crash_pos.y,crash_pos.z,true, true, true)  
+    end
+end
 
 function nothingcrash()
     local spped = PLAYER.PLAYER_PED_ID()
@@ -7689,10 +8534,6 @@ end
 
 chat_presets = {
     ["掉钱袋是没用的"] = "我可以给你钱,但你花在上面的时间得到的钱是没有用的。你最好买一份自己的菜单,然后使用其中的恢复选项。",
-    ["GT天下第一!"] = "GrandTouring天下第一!",
-    ["GT最帅!"] = "GrandTouring最帅!",
-    ["L + Ratio..."] = "L + ratio + u fell off + ur british + who asked + no u + deez nutz + radio + don't care + caught in 4k + cope + seethe + gg + grow the fuck up + silver elite + ligma + taco bell dorito crunch + think outside the bun bitch",
-    ["您购买了2take1 "] = "前途无限"
 }
 
 function showrealip()
@@ -13992,7 +14833,6 @@ function xianshijiaoben(state)
                 mcb=mcb-1
             end
         end
-    draw_string(string.format("~italic~               ¦-\n~bold~GrandTouringVIP: "..PLAYER.GET_PLAYER_NAME(players.user()).."&#8721;"), 0.40,0, 0.5,5)
     util.yield()
     end
 end
@@ -14061,65 +14901,6 @@ local function fake_chat_with_percentage_and_target(action)
     util.yield(math.random(500, 3000))
     chat.send_message(action .. " ${name}. [||||||||||||||| ] (89%)", false, true, true)
     util.yield(math.random(3000, 5000))
-end
-
-function xianshishijian(state)
-    timeos = state
-        if timeos then
-            while timeos do
-                util.yield(0)
-                draw_string(string.format(os.date('~bold~~italic~~b~%Y-%m-%d ~b~%H:%M:%S', os.time())), 0.83,0.1, 0.5,5)
-                end
-            end 
-    end
-
-function scripthost()
-    inviciamountint = 0
-    for pid = 0, 31 do
-        if players.exists(pid) and pid ~= players.user() then
-            local pped = players.user_ped(pid)
-            if pped ~= 0 then
-                if players.is_marked_as_modder(pid) then
-                    inviciamountint = inviciamountint + 1
-                end
-            end
-        end
-local ente
-
-                local ent1e = players.user_ped()
-                local ent2e = PED.GET_VEHICLE_PED_IS_USING(players.user_ped())
-                if PED.IS_PED_IN_ANY_VEHICLE(ent1e,true) then
-                    ente = ent2e
-                else
-                    ente = ent1e
-                end
-                local speede = ENTITY.GET_ENTITY_SPEED(ente)
-                local speedcalce = speede * 3.6
-                myspeed1e = math.ceil(speedcalce)
-            end
-        inviciamountintt = inviciamountint
-            draw_string(string.format("~h~~f~FPS: ~w~"..fps), 0.17,0.785, 0.3,1)
-            draw_string(string.format("~h~~y~"..myspeed1e.." ~q~K~g~M~f~/H"), 0.17,0.809, 0.3,1)
-            draw_string(string.format("~h~~w~时间:~h~~w~"..os.date("%X")), 0.17,0.836, 0.3,1)    
-            draw_string(string.format("~h~~y~战局玩家: ~h~~g~"..#players.list()), 0.17,0.863, 0.3,1) 
-            draw_string(string.format("~h~~p~作弊玩家: ~h~~r~"..inviciamountintt), 0.17,0.890, 0.3,1) 
-			if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-			draw_string(string.format("~h~~f~战局主机: ~h~~w~没有人"), 0.17,0.917, 0.3,1)
-			else
-            draw_string(string.format("~h~~f~战局主机: ~h~~w~"..players.get_name(players.get_host())), 0.17,0.917, 0.3,1)
-			end
-			if PLAYER.GET_PLAYER_NAME(players.get_script_host()) == "**Invalid**" then
-			draw_string(string.format("~h~~q~脚本主机: ~h~~w~没有人"), 0.17,0.943, 0.3,1)
-			else
-            draw_string(string.format("~h~~q~脚本主机: ~h~~w~"..players.get_name(players.get_script_host())), 0.17,0.943, 0.3,1)
-			end
-						local hostxvlie = players.get_host_queue_position(players.user())
-			if hostxvlie == 0 then
-			draw_string(string.format("~h~~w~你现在是~f~战局主机"), 0.17,0.970, 0.3,1) 
-			else
-			draw_string(string.format("~h~~w~你的主机~f~优先度:~h~~w~ "..hostxvlie), 0.17,0.970, 0.3,1) 
-			end
-			
 end
 -------------------------------------``
 -- FILE LIST
@@ -15643,8 +16424,8 @@ function notifyarmor()
     util.toast("当前护甲：" .. player_currentarmour .. "\n最大护甲：" .. player_maxarmour)
 end
 
-obj_pp = {"prop_cs_dildo_01", "prop_ld_bomb_01", "prop_sam_01"}
-opt_pp = {"小鸡巴", "大鸡巴", "超级鸡巴", "删除"}
+obj_pp = {"prop_cs_dildo_01", "prop_ld_bomb_01", "prop_sam_01", "prop_mk_plane"}
+opt_pp = {"小鸡巴", "大鸡巴", "超级鸡巴","小鸡巴V2", "删除"}
 
 function getbigjb(index, value, click_type)
     pluto_switch index do
@@ -15658,6 +16439,9 @@ function getbigjb(index, value, click_type)
             attach_to_player("prop_sam_01", 57597, -0.1, 1.7, 0, 0, 180, 180)
             break
         case 4:
+            attach_to_player("prop_mk_plane", 57597, -0.1, 0.55, -0.1, 0, 0, 180)
+            break
+        case 5:
             for k, model in pairs(obj_pp) do 
                 delete_object(model)
             end
@@ -16937,507 +17721,3 @@ LegitRapidFire = false
 LegitRapidMS = 100
 -----------------
 
-txtr = 0
-txtg = 0
-txtb = 0
-backgroundr = 255
-backgroundg = 255
-backgroundb = 255
-borderr = 0
-borderg = 0
-borderb = 0
-
-local function draw_text(text_x, text_y, content, color)
-    directx.draw_text(
-    text_x,
-    text_y,
-    content,
-    ALIGN_TOP_LEFT,
-    0.4,
-    color,
-    false
-    )
-end
-local function draw_rect(rect_x, rect_y, rect_w, rect_h, color)
-    directx.draw_rect(
-        rect_x,
-        rect_y,
-        rect_w,
-        rect_h,
-        color
-        )
-end
-local function draw_line(line_x_1, line_y_1, line_x_2, line_y_2, color)
-    directx.draw_line(
-        line_x_1, 
-        line_y_1, 
-        line_x_2, 
-        line_y_2, 
-        color
-        )
-end
-local function round(num, numDecimalPlaces)
-    local mult = 10^(numDecimalPlaces or 0)
-    return math.floor(num * mult + 0.5) / mult
-end
-local function text_width_func(text)
-    local text_og_width = directx.get_text_size(text, 0.4)
-    local text_width = round(text_og_width, 3)
-    return text_width
-end
---from lance, ty
-all_weapons = {}
-temp_weapons = util.get_weapons()
-for a,b in pairs(temp_weapons) do
-    all_weapons[#all_weapons + 1] = {hash = b['hash'], label_key = b['label_key']}
-end
-function get_weapon_name_from_hash(hash) 
-    for k,v in pairs(all_weapons) do 
-        if v.hash == hash then 
-            return util.get_label_text(v.label_key)
-        end
-    end
-    return 'Unarmed'
-end
-local function dec_to_ipv4(ip)
-	return string.format(
-		"%i.%i.%i.%i", 
-		ip >> 24 & 0xFF, 
-		ip >> 16 & 0xFF, 
-		ip >> 8  & 0xFF, 
-		ip 		 & 0xFF
-	)
-end
-local function bool_to_yes_no(bool)
-    if bool then 
-        return "是"
-    else
-        return "不是"
-    end
-end
-local function format_int(number)
-    local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
-    int = int:reverse():gsub("(%d%d%d)", "%1,")
-    return minus .. int:reverse():gsub("^,", "") .. fraction
-end
-
-local function isFriend(PlayerId)
-    return table.contains(players.list(false,true,false), PlayerId)
-end
-
-read_global = {
-	byte = function(global)
-		local address = memory.script_global(global)
-		return address ~= NULL and memory.read_byte(address) or nil
-	end,
-	int = function(global)
-		local address = memory.script_global(global)
-		return address ~= NULL and memory.read_int(address) or nil
-	end,
-	float = function(global)
-		local address = memory.script_global(global)
-		return address ~= NULL and memory.read_float(address) or nil
-	end,
-	string = function(global)
-		local address = memory.script_global(global)
-		return address ~= NULL and memory.read_string(address) or nil
-	end
-}
-local function BitTest_playerinfo(bits, place)
-	return (bits & (1 << place)) ~= 0
-end
-
-local function IsPlayerUsingOrbitalCannon_playerinfo(player)
-    if player ~= -1 then
-        local bits = read_global.int(2689235 + (player * 453 + 1) + 416)
-        return BitTest_playerinfo(bits, 0)
-    end
-    return false
-end
-
-function IsPlayerUsingGuidedMissile(player)
-    return (memory.read_int(memory.script_global(2657589 + 1 + (player * 466) + 321 + 10)) ~= -1 and IsPlayerFlyingAnyDrone(player)) -- Global_2657589[PLAYER::PLAYER_ID() /*466*/].f_321.f_10 
-end
-
-function IsPlayerInRcBandito(player)
-    return BitTest(memory.read_int(memory.script_global(1853348 + (player * 834 + 1) + 267 + 348)), 29)  -- Global_1853348[PLAYER::PLAYER_ID() /*834*/].f_267.f_348, 29
-end
-
-function IsPlayerInRcTank(player)
-    return BitTest(memory.read_int(memory.script_global(1853348 + (player * 834 + 1) + 267 + 428 + 2)), 16) -- Global_1853910[PLAYER::PLAYER_ID() /*862*/].f_267.f_428.f_2
-end
-
-function IsPlayerFlyingAnyDrone(player)
-   return BitTest(memory.read_int(memory.script_global(1853910 + (player * 862 + 1) + 267 + 365)), 26) -- Global_1853910[PLAYER::PLAYER_ID() /*862*/].f_267.f_365, 26
-end
-
-local function IsPlayerFlyingAnyDrone_playerinfo(player)
-	local address = memory.script_global(1853348 + (player * 834 + 1) + 267 + 348)
-	return BitTest_playerinfo(memory.read_int(address), 26)
-end
-
-local function IsPlayerInRcBandito_playerinfo(player)
-    if player ~= -1 then
-        local address = memory.script_global(1853348 + (player * 834 + 1) + 267 + 348)
-        return BitTest_playerinfo(memory.read_int(address), 29)
-    end
-    return false
-end
-
-local function IsPlayerInRcTank_playerinfo(player)
-    if player ~= -1 then
-        local address = memory.script_global(1853348 + (player * 834 + 1) + 267 + 408 + 2)
-        return BitTest_playerinfo(memory.read_int(address), 16)
-    end
-    return false
-end
-
-local function IsPlayerInRcPersonalVehicle_playerinfo(player)
-    if player ~= -1 then
-        local address = memory.script_global(1853348 + (player * 834 + 1) + 267 + 408 + 3)
-        return BitTest_playerinfo(memory.read_int(address), 6)
-    end
-    return false
-end
-
-local languages = {
-    [0] = "英语",
-    [1] = "法语",
-    [2] = "德语",
-    [3] = "意大利语",
-    [4] = "西班牙语",
-    [5] = "巴西语",
-    [6] = "波兰语",
-    [7] = "俄语",
-    [8] = "韩语",
-    [9] = "中文(繁)",
-    [10] = "日语",
-    [11] = "墨西哥语",
-    [12] = "中文(简)"
-}
-
-playerinfox_x = 0.01
-playerinfox_y = 0.01
-
-local function draw_window(customisation)
-    if not util.is_session_transition_active() and NETWORK.NETWORK_IS_SESSION_STARTED() then
-        if customisation == 0 then
-            focused_tbl = players.get_focused()
-            focused = focused_tbl[1]
-        elseif customisation == 1 then
-            focused = players.user()
-        end
-        if focused ~= nil and menu.is_open() then 
-            --settings colours
-            local txtcolor = {r = txtr, g = txtg, b = txtb, a = 1.0}
-            local backgroundcolor = {r = backgroundr, g = backgroundg, b = backgroundb, a = 1.0}
-            local bordercolor = {r = borderr, g = borderg, b = borderb, a = 1.0}
-
-            --grabbing information on player
-            local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(focused)
-            local mypos = players.get_position(players.user())
-            local mypid = players.user()
-            local playerpos = players.get_position(focused)
-            local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(ped, false)
-            local script_host = players.get_script_host()
-            local host = players.get_host()
-            local text_width = 0
-            local name = players.get_name(focused)
-            local pid = focused
-            local h = bool_to_yes_no(focused == host)
-            local sh = bool_to_yes_no(focused == script_host)
-            local rank = players.get_rank(focused)
-            local rid1 = players.get_rockstar_id(focused)
-            local rid2 = players.get_rockstar_id_2(focused)
-            local rid = if rid1 == rid2 then rid1 else rid1.."/"..rid2
-            local modder = bool_to_yes_no(players.is_marked_as_modder(focused))
-            local godmode = bool_to_yes_no(players.is_godmode(focused))
-            local friend = bool_to_yes_no(isFriend(focused))
-            local language = languages[players.get_language(focused)]
-            local health = tostring(ENTITY.GET_ENTITY_HEALTH(ped)).."/"..tostring(ENTITY.GET_ENTITY_MAX_HEALTH(ped))
-            local armor = tostring(PED.GET_PED_ARMOUR(ped)).."/"..tostring(PLAYER.GET_PLAYER_MAX_ARMOUR(focused))
-            local wanted = PLAYER.GET_PLAYER_WANTED_LEVEL(focused)
-            local vehicle = players.get_vehicle_model(focused)
-            if vehicle == 0 then 
-                vehicle_name = "N/A"
-                in_vehicle = "不是"
-            else
-                vehicle_name = util.get_label_text(VEHICLE.GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(vehicle))
-                in_vehicle = "是"
-            end
-            local vehicle = vehicle_name
-            local interior = bool_to_yes_no(players.is_in_interior(focused))
-            local distance = math.ceil(MISC.GET_DISTANCE_BETWEEN_COORDS(playerpos.x, playerpos.y, playerpos.z, mypos.x, mypos.y, mypos.z))
-            local position = "X: "..math.floor(playerpos.x).." |  Y: "..math.floor(playerpos.y).." |  Z: "..math.floor(playerpos.z)
-            local token = players.get_host_token(focused)
-            local ip = dec_to_ipv4(players.get_connect_ip(focused))
-            local wallet = "$"..format_int(players.get_wallet(focused))
-            local bank = "$"..format_int(players.get_bank(focused))
-            local total = "$"..format_int(players.get_money(focused))
-            local weapon_hash = WEAPON.GET_SELECTED_PED_WEAPON(ped)
-            local weapon = get_weapon_name_from_hash(weapon_hash)
-            local tags = players.get_tags_string(focused)
-            if tags == "" then
-                tags = "N/A"
-            end
-            if focused == host and focused == mypid then
-                ping = "自己/主机"
-            elseif focused == host then
-                ping = "主机"
-            elseif focused == mypid then
-                ping = "自己"
-            else
-                latency = NETWORK.NETWORK_GET_AVERAGE_LATENCY(focused)
-                ping = math.floor(latency+0.5).."ms"
-            end
-            if NETWORK.NETWORK_IS_PLAYER_ACTIVE(pid) then
-                state = "已连接战局"
-            else
-                state = "正在连接战局"
-            end
-            local aiming = bool_to_yes_no(PLAYER.IS_PLAYER_FREE_AIMING(focused))
-            local orbital = bool_to_yes_no(IsPlayerUsingOrbitalCannon_playerinfo(focused))
-            local rc_drone = bool_to_yes_no(IsPlayerFlyingAnyDrone_playerinfo(focused))
-            local rc_bandito = bool_to_yes_no(IsPlayerInRcBandito_playerinfo(focused))
-            local rc_tank = bool_to_yes_no(IsPlayerInRcTank_playerinfo(focused))
-            local rc_personal = bool_to_yes_no(IsPlayerInRcPersonalVehicle_playerinfo(focused))
-            local attacker = bool_to_yes_no(players.is_marked_as_attacker(focused))
-            local kd = round(players.get_kd(focused), 2)
-
-            --setting dimensions of the main gui
-            local guix = playerinfox_x
-            local guiy = playerinfox_y
-            local guiw = 0.15
-            local guih = -0.02
-            for i = 1, 22 do
-                guih = guih + 0.02
-            end
-
-            --setting coords of overlay
-            local playerlistx, playerlisty = guix + 0.002, guiy + 0.002 --setting info list coords
-
-            --drawing gui
-            border = draw_rect(guix - 0.0012, guiy - 0.022, guiw + 0.0024, guih + 0.024, bordercolor)
-            titles = draw_rect(guix, guiy - 0.02, guiw, 0.02, backgroundcolor)
-            background = draw_rect(guix, guiy, guiw, guih, backgroundcolor)
-            divider1 = draw_line(playerlistx + guiw/2 - 0.002, playerlisty, playerlistx + guiw/2 - 0.002, playerlisty + 0.02*7, bordercolor)
-            divider2 = draw_line(playerlistx + guiw/2 - 0.002, playerlisty + guih - 0.02*7, playerlistx + guiw/2 - 0.002, playerlisty + guih, bordercolor)
-
-            --name
-            local yoffset = 0.02
-            local text_width = text_width_func(name)
-            draw_text(playerlistx + guiw/2 - text_width/2, playerlisty - yoffset, name, txtcolor)
-
-            --pid
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(pid)
-            draw_text(playerlistx, playerlisty - yoffset, "PID: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, pid, txtcolor)
-
-            --rid
-            local text_width = text_width_func(rid)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "RID: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, rid, txtcolor)
-
-            --rank
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(rank)
-            draw_text(playerlistx, playerlisty - yoffset, "等级: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, rank, txtcolor)
-
-            --wanted level
-            local text_width = text_width_func(wanted)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "通缉等级: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, wanted, txtcolor)
-
-            --ip
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(ip)
-            draw_text(playerlistx, playerlisty - yoffset, "IP: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, ip, txtcolor)
-
-            --ping
-            local text_width = text_width_func(ping)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "延迟: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, ping, txtcolor)
-
-            --language
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(language)
-            draw_text(playerlistx, playerlisty - yoffset, "语言: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, language, txtcolor)
-
-            --distance
-            local text_width = text_width_func(distance)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "距离: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, distance, txtcolor)
-
-            --health
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(health)
-            draw_text(playerlistx, playerlisty - yoffset, "血量: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, health, txtcolor)
-
-            --armor
-            local text_width = text_width_func(armor)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "护甲: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, armor, txtcolor)
-
-            --wallet
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(wallet)
-            draw_text(playerlistx, playerlisty - yoffset, "现金: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, wallet, txtcolor)
-
-            --bank
-            local text_width = text_width_func(bank)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "银行: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, bank, txtcolor)
-
-            --kd
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(kd)
-            draw_text(playerlistx, playerlisty - yoffset, "KD: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, kd, txtcolor)
-
-            --total money
-            local text_width = text_width_func(total)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "总额: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, total, txtcolor)
-
-            --vehicle
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(vehicle)
-            draw_text(playerlistx, playerlisty - yoffset, "载具: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, vehicle, txtcolor)
-
-            -- --player tags
-            -- local yoffset = yoffset + -0.02
-            -- local text_width = text_width_func(tags)
-            -- draw_text(playerlistx, playerlisty - yoffset, "Tags: ", txtcolor)
-            -- draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, tags, txtcolor)
-            
-            --connection state
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(state)
-            draw_text(playerlistx, playerlisty - yoffset, "连接状态: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, state, txtcolor)
-
-            --host token
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(token)
-            draw_text(playerlistx, playerlisty - yoffset, "主机令牌: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, token, txtcolor)
-
-            --position
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(position)
-            draw_text(playerlistx, playerlisty - yoffset, "位置: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, position, txtcolor)
-
-            --current weapon
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(weapon)
-            draw_text(playerlistx, playerlisty - yoffset, "当前武器: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, weapon, txtcolor)
-            
-            --checks
-            local yoffset = yoffset + -0.04
-            local text_width = text_width_func("检查")
-            draw_text(playerlistx + guiw/2 - text_width/2, playerlisty - yoffset, "检查", txtcolor)
-
-            --host
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(h)
-            draw_text(playerlistx, playerlisty - yoffset, "是主机: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, h, txtcolor)
-
-            --interior
-            local text_width = text_width_func(interior)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "在室内: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, interior, txtcolor)
-
-            --script host
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(sh)
-            draw_text(playerlistx, playerlisty - yoffset, "是脚本主机: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, sh, txtcolor)
-
-            --in orbital
-            local text_width = text_width_func(orbital)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "在轨道炮房: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, orbital, txtcolor)
-
-            --attacker
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(attacker)
-            draw_text(playerlistx, playerlisty - yoffset, "是攻击者: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, attacker, txtcolor)
-
-            --in vehicle
-            local text_width = text_width_func(in_vehicle)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "在车内: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, in_vehicle, txtcolor)
-
-            --friend
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(friend)
-            draw_text(playerlistx, playerlisty - yoffset, "是朋友: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, friend, txtcolor)
-
-            --rc drone
-            local text_width = text_width_func(rc_drone)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "在RC无人机: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, rc_drone, txtcolor)
-
-            --godmode
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(godmode)
-            draw_text(playerlistx, playerlisty - yoffset, "是无敌: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, godmode, txtcolor)
-
-            --rc bandito
-            local text_width = text_width_func(rc_bandito)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "在RC匪徒: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, rc_bandito, txtcolor)
-
-            --modder
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(modder)
-            draw_text(playerlistx, playerlisty - yoffset, "是作弊者: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, modder, txtcolor)
-
-            --rc tank
-            local text_width = text_width_func(rc_tank)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "是RC坦克: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, rc_tank, txtcolor)
-
-            --aiming
-            local yoffset = yoffset + -0.02
-            local text_width = text_width_func(aiming)
-            draw_text(playerlistx, playerlisty - yoffset, "在瞄准: ", txtcolor)
-            draw_text(playerlistx + guiw/2 - text_width - 0.005, playerlisty - yoffset, aiming, txtcolor)
-
-            --rc personal
-            local text_width = text_width_func(rc_personal)
-            draw_text(playerlistx + guiw/2, playerlisty - yoffset, "在RC个人载具: ", txtcolor)
-            draw_text(playerlistx + guiw - text_width - 0.005, playerlisty - yoffset, rc_personal, txtcolor)
-
-            util.remove_handler(player_vehicle) --stop possible crash from too many handles
-        end
-    end
-end
-
-util.create_tick_handler(function()
-    while UItoggle do
-        draw_window(0)
-        util.yield()
-    end
-end)
-
-util.create_tick_handler(function()
-    while customisation_open do
-        draw_window(1)
-        util.yield()
-    end
-end)

@@ -349,8 +349,8 @@ ProfileManager.__index = ProfileManager
 
 function ProfileManager.new(parent)
 	local self = setmetatable({}, ProfileManager)
-	local trans_SpoofingProfiles = "[虚假配置]"
-	self.reference = menu.list(parent, trans_SpoofingProfiles, {}, "")
+	local trans_SpoofingProfiles = "虚假配置"
+	self.reference = menu.list(players_root, trans_SpoofingProfiles, {}, "")
 	self.menuLists = {}
 	self.deletedProfiles = {}
 	self.profiles = {}
@@ -362,7 +362,7 @@ function ProfileManager.new(parent)
 		else
 			local name <const> = self.activeProfile.name
 			self:disableSpoofing()
-			notification123:normal("%s: %s", HudColour.black, trans.ProfileDisabled, name)
+			notification("虚假配置文件禁用", colors.blue)
 		end
 	end)
 
@@ -399,7 +399,7 @@ function ProfileManager.new(parent)
 			return notification123:help(trans.AlreadyExists, HudColour.red)
 		end
 		self:save(profile, true)
-		notification123:normal("%s: %s", HudColour.blueDark, trans.ProfileSaved, profile.name)
+		notification("已保存", colors.pink)
 	end)
 
 	self.recycleBin = menu.list(self.reference, "回收站", {}, "")
@@ -424,7 +424,7 @@ function ProfileManager:add(menuName, profile)
 		if self:isAnyProfileEnabled() then self:disableSpoofing() end
 		profile:enable()
 		self.activeProfile = profile
-		notification123:normal("%s: %s", HudColour.blue, trans.Enabled, profile.name)
+		notification("启用虚假配置文件", colors.pink)
 	end)
 
 	menu.action(root, "打开个人资料", {}, "", function()
@@ -605,10 +605,10 @@ local profilesList <const> = ProfileManager.new(menu.my_root())
 function playerspooffile(PlayerID)
     local profile = Profile.get_profile_from_player(PlayerID)
     if profilesList:includes(profile) then
-        return notification("配置文件已存在", HudColour.red)
+        return notification("配置文件已存在", HudColour.pink)
     end
     profilesList:save(profile, true)
-    notification("虚假配置文件已保存", HudColour.blue)
+    notification("配置文件已存在", colors.pink)
 end
 
 -----------------------------------

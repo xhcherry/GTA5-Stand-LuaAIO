@@ -1,0 +1,220 @@
+@Author=HADES#6368
+@Version=1.0.0
+! Thank you for choosing to translate Musiness Banager into your language!
+! Please do not change anything before the "="!,
+! Additions in the labels list will be marked with "+ " before the label, but without the quotes. You can search the file for "+ " every update to find the new labels!
+! Deletions in the labels list will be marked with "- " before the label. PLEASE DELETE THE ENTIRE LINE. The deletions are left in to help you understand if something was replaced!
+! For lines that begin with "+ ", remove the "+ ".
+! Lines with a "!" or "+" or "@" at the beginnning mark the line as a comment and that line will be ignored.
+! The labels that contain "{x}" where x is a number, indicate an additional piece of text. Do not add or remove or change the numbers inside of them.
+! You may however, move them around. For example if a line is "Press {1} to open {2}", you can move them around in any way you want such as "To open {2} press {1}".
+! It has been added to make it easier for languages that read right to left instead of the usual left to right.
+! One more thing: the two characters "\n" represents a new line. In game, there will be a new line where "\n" is.
+
+BUNKER=벙커
+BUSINESS=비즈니스
+MCBUSINESS=MC 비즈니스
+WAREHOUSE=창고
+NIGHTCLUB=나이트클럽
+NIGHTCLUBSAFE=나이트클럽 금고
+SPECIALCARGO=스페셜 카고
+SELLMISSION=판매 미션
+BUYMISSION=구매 미션
+START=시작
+MONEY=돈
+STOCK=재고
+SUPPLIES=보급품
+CRATES=상자
+PRODUCT=제품
+INFOOVERLAY=오버레이 정보
+TERRORBYTE=테러바이트
+! STOCK, SUPPLIES, PRODUCT should all be what the game calls it, or something equivalent
+! You might want to leave TERRORBYTE the same, unless the game calls it something different
+
+HTTPGIVEUP=서버에 연결을 설정하지 못했습니다.
+HTTPINVALID=서버에서 잘못된 응답을 받았습니다! CloudFlare 또는 바이러스 백신으로 인해 연결이 차단되었을 수 있습니다. 새 VPN 연결을 설정하거나 네트워크를 전환하십시오.
+HTTPFAILSAFE=안전 장치로 인해 킬 스위치가 활성화 되었습니다.
+SCRIPTOUTOFDATE=스크립트가 오래되었습니다! 저장소에서 최신 정보를 얻으려면 스크립트를 다시 시작하십시오!
+
+KILLSWITCH_SAFELOOP=킬 스위치로 인해 나이트클럽 금고 AFK 머니 반복이 비활성화 되었습니다.
+KILLSWITCH_SPECIALCARGO=킬 스위치로 인해 스페셜 카고가 비활성화 되었습니다.
+KILLSWITCH_MAXSELLPRICE=킬 스위치로 인해 최대 판매 가격이 비활성화 되었습니다.
+KILLSWITCH_AUTOCOMPLETE=킬 스위치로 인해 자동 미션 완료가 비활성화 되었습니다.
+
+TRANSACTIONSSTUCK_TOAST=거래가 중단된 것 같습니다. 세션을 전환하거나 게임을 다시 시작하세요.
+BEALONE_TOAST=로비에 플레이어가 너무 많습니다! 1인 로비로 전환했습니다.
+
+PREFIX_SAFELOOP=[금고 반복] {1}
+PREFIX_SPECIALCARGO=[스페셜 카고] {1}
+PREFIX_TOTALEARNED=총 수입: {1}
+PREFIX_MOTD=MOTD: {1}
+! {1} is a number, the amount of money earned in total.
+PREFIX={1} {2}
+! This can be '[x1] x2' where x1 is the prefix, and x2 is the message. This might go unused though..
+
+INFO_SCWAREHOUSE=SC 창고 {1}: {2}/{3}
+! {1} is slot {2} is amount {3} is capacity
+INFO_HUBBUSINESS=허브 {1}: {2}/{3}
+! {1} is name {2} is stock {3} is max capacity
+INFO_NCSAFE=나이트클럽 금고 $: {1}
+! {1} is value
+INFO_MCBUSINESS=MC {1}: {2}% | {3}/{4}
+! {1} is name {2} is supplies {3} is product {4} is capacity
+INFO_BUNKER=벙커: {1}% | {2}/{3}
+! {1} is supplies {2} is product {3} is capacity
+
+FINDSAFERWAYS=돈을 버는 더 안전한 방법 찾기
+FINDSAFERWAYS_DESC=아래에 있는 돈 옵션을 진행하기 전에 최소한 이 내용을 읽으십시오.
+
+RETREIVINGINFO=정보를 검색하는 중...
+SALESABUSE_DIVIDER=비즈니스 목록
+
+MAXSELLPRICE=최대 판매 가격
+MAXSELLPRICE_DESC=보유하고 있는 {2}의 양에 상관없이 가능한 최대 가격으로 {1}을(를) 판매하십시오.
+! {1} and {2} are the same, and may be one of the following: [STOCK], [SUPPLIES], or [PRODUCT]
+
+MONITOR=오버레이 정보
+
+MONITOR_EXTRA=모니터 {1}
+MONITOR_DESC={3}을(를) 사용하여 {2}에 있는 {1}의 양을 보여줍니다.
+! {1} could be [STOCK], [SUPPLIES], [PRODUCT], or [MONEY] {2} could be [NIGHTCLUBSAFE], [BUSINESS], or [WAREHOUSE]. {3} is [INFOOVERLAY] for now, but could be changed in the future.
+
+BYPASSCOOLDOWN={1} 쿨다운 우회
+! {1} may be one of the following: [SELLMISSION], [BUYMISSION]
+BYPASSCOOLDOWN_DESC=재사용 대기시간 없이 {1}과 {2}을 할 수 있습니다.
+! {1} is [START] for now, and {2} could be [SELLMISSION] or [BUYMISSION] for now.
+
+SETPRODUCT=제품 설정
+SETPRODUCT_DESC=보유하고 있는 제품의 양을 직접 설정
+SETPRODUCT_TOAST=제품이 설정되었습니다.
+
+MAXPRODUCTALL=제품의 양을 최대로 설정
+MAXPRODUCTALL_DESC=모든 제품의 양을 최대로 설정합니다.
+MAXPRODUCTALL_TOAST=모든 제품이 최대치입니다.
+
+MAXPRODUCTIONSPEED=최대 생산 속도
+MCMAXPRODUCTIONSPEED_DESC=즉시 적용
+NCMAXPRODUCTIONSPEED_DESC=제품 생산이 완료된 후 적용됩니다
+MAXPRODUCTIONSPEED_TOAST=생산 속도가 최대화되었습니다.
+MAXPRODUCTIONSPEEDSLOW_TOAST=생산 속도가 최대화되었습니다. 상품이 생산되면 효력이 발생합니다.
+
+MAXIMUMCAPACITY=최대 용량
+MAXIMUMCAPACITY_DESC=보유할 수 있는 재고의 양을 변경시킵니다.
+MAXIMUMCAPACITY_TOAST=용량이 수정되었습니다.
+
+SUPPLYPRODUCTRATIO=공급->제품 비율
+SUPPLYPRODUCTRATIO_DESC=하나의 제품을 만드는 데 필요한 공급량을 설정합니다. 낮은 값은 더 나은 효율성을 의미합니다
+SUPPLYPRODUCTRATIO_TOAST=비율이 수정되었습니다.
+
+RESUPPLY=재보급
+RESUPPLY_DESC=무료로 즉시 귀하의 비즈니스에 보급품을 배달합니다.
+
+TRIGGERPRODUCTION=생산 시작
+TRIGGERPRODUCTION_DESC=생산을 즉시 시행합니다.
+TRIGGERPRODUCTION_TOAST=생산이 시작되었습니다.
+
+ENFORCEEASIESTMISSION=쉬운 판매 미션
+ENFORCEEASIESTMISSION_DESC=이렇게 하면 항상 가장 빠르고 쉬운 판매 임무를 얻을 수 있습니다. 하지만 너무 빠르면 돈을 받지 못할 수도 있습니다.
+
+SPECIALCARGOLIST_DESC=판매 가치의 상한선은 $600만입니다.
+
+SPECIALCARGOWAREHOUSE_DESC=5개의 창고를 소유할 수 있으므로 모니터링하고 수정할 창고를 선택하십시오.
+SPECIALCARGOMONITOR_DESC=선택한 창고에 있는 스페셜 카고 상자의 수를 표시합니다.
+SPECIALCARGONOWAREHOUSE=창고 없음
+SPECIALCARGONOWAREHOUSE_DESC=이 슬롯에는 창고가 없습니다!
+SPECIALCARGOMAXSELLPRICE_DESC=CEO의 스페셜 카고 상자의 판매 가격을 6백만 달러로 변경합니다. 향후 판매에 대한 적절한 계산을 위해 이 기능을 활성화된 상태로 유지하십시오.
+OPENSCREEN={1} 화면 열기
+OPENSCREEN_DESC={1} 화면을 엽니다.
+! {1} could be [TERRORBYTE] or [WAREHOUSE]
+SELLACRATE=상자를 판매하려면 누르십시오
+SELLACRATE_DESC=스페셜 카고 상자 1개 자동 판매
+
+NOTINSELECTEDWAREHOUSE_TOAST=현재 선택한 창고에 없습니다!
+
+AUTOCOMPLETE={1} 자동 완료
+AUTOCOMPLETE_DESC={1}을(를) 자동으로 완료합니다.
+! {1} could be [SELLMISSION] or [BUYMISSION]
+
+NCLIST_DESC=판매 가치의 상한선은 $400만입니다.\n'모두 판매'하려고 하지 마십시오.
+NCREVENUE=수익
+NCREVENUE_DESC=인기에 관계없이 나이트클럽이 얻는 수익을 수정합니다.
+NCREVENUE_TOAST=수익이 설정되었습니다.
+
+NCMAXPOPULARITY=최대 나이트 클럽 인기도
+NCMAXPOPULARITY_DESC=나이트클럽 인기도를 100%로 설정
+NCMAXPOPULARITY_TOAST=최대 나이트 클럽 인기도로 설정되었습니다.
+
+NCSAFELIST_DESC=
+
+NCSAFELOOP=AFK 머니 반복
+NCSAFELOOP_DESC=이 기능을 활성화하기 전에 나이트클럽 금고를 여세요!\n4-5초마다 $300,000를 수동적으로 얻을 수 있습니다.
+
+NCSAFELOOPDELAY=반복 지연
+NCSAFELOOPDELAY_DESC=주요 단계 사이에 AFK 반복을 대기하는 시간(밀리초)을 설정합니다.
+NCSAFELOOPDELAY_TOAST=지연 수정됨.
+
+NCSAFELOOPTRANSACTIONTIMEOUT=트랜잭션 시간 초과
+NCSAFELOOPTRANSACTIONTIMEOUT_DESC=트랜잭션이 처리될 때까지 기다리는 시간을 설정합니다.
+NCSAFELOOPTIMEOUTMODIFIED_TOAST=트랜잭션 시간 초과가 수정되었습니다.
+
+NCSAFELOOPSTOP=$x 금액 후 반복 중지
+NCSAFELOOPSTOP_DESC=설정된 금액을 획득한 후 AFK 머니 반복을 중지합니다.
+NCSAFELOOPSTOP_TOAST=제한이 설정되었습니다.
+
+NCRESETSAFEVALUE=금고 값 재설정
+! Referenced in [NCSAFELOOPSAFEOVERLIMIT_TOAST]
+NCRESETSAFEVALUE_DESC=나이트클럽 금고가 $300,000 이상 또는 $0 미만인 경우 해결해야 합니다.
+NCRESETSAFEVALUEWAIT_TOAST=나이트클럽 금고가 초기화되는 동안 잠시 기다려 주십시오.
+NCRESETSAFEVALUESUCCESS_TOAST=나이트클럽 금고가 초기화 되었습니다.
+NCRESETSAFEVALUESKIP_TOAST=나이트클럽 금고는 괜찮은 것 같습니다
+
+NCSAFELOOPMAXIMUMVALUEREACHED_TOAST=최대값에 도달했습니다!
+NCSAFELOOPNOTINNIGHTCLUB_TOAST=당신은 당신의 나이트 클럽에 없는 것 같습니다. 이 기능을 사용하기 전에 금고가 열려 있는 나이트클럽에 있는지 확인하십시오!
+NCSAFELOOPTIMEOUT_TOAST=트랜잭션 시간 초과에 도달한 것 같습니다.
+NCSAFELOOPSAFEOVERLIMIT_TOAST=어, 금고가 한계를 넘은 것 같군요. '금고 값 재설정'을 사용한 후 다시 시도하십시오.
+! References [NCRESETSAFEVALUE]
+NCSAFELOOPSOMETHINGWENTWRONG_TOAST=문제가 발생했습니다... 이 문제를 재현할 수 있으면 신고해 주세요.
+
+MCLIST_DESC=판매 가치의 상한선은 $250만입니다.
+
+BUNKERLIST_DESC=판매 가치의 상한선은 $270만입니다.
+
+TELEPORTTO={1}로 텔레포트
+TELEPORTTO_DESC={1}으로 텔레포트합니다.
+! {1} may be one of the following: [PROPERTY], [WAREHOUSE], [NIGHTCLUB], or [NIGHTCLUBSAFE]
+
+NOTINNIGHTCLUB_TOAST=당신은 당신의 나이트 클럽에 없습니다!
+
+JOINDISCORD=디스코드
+SHOWMOTD=MOTD 표시
+SHOWMOTDBLANK_TOAST=MOTD가 비어 있습니다.
+WARNINGRISKY_TOAST=경고: 이 스크립트의 모든 기능은 위험한 것으로 간주됩니다! 알 수 없는 일 수 내에 금지될 가능성이 있습니다(금지는 무작위로 지연됨). 경고를 받았습니다.
+
+! Nightclub
+ALREADYINPROPERTY=귀하는 이미 {1}에 있습니다!
+! {1} may be [NIGHTCLUB], [WAREHOUSE], [BUSINESS]
+
+! Nightclub categories
+HUBCARGO=패키지와 화물
+HUBWEED=유기농 작물
+HUBWEAPONS=사냥 용품
+HUBMETH=연구용 약품
+HUBCOCAINE=남미산 수입품
+HUBCASH=현금 창출
+HUBFORGERY=인쇄 복사
+
+! MC categories
+MCFORGERY=위조서류
+MCWEED=마리화나
+MCCASH=위조지폐
+MCMETH=필로폰
+MCCOCAINE=코카인
+MCBUNKER=벙커
+
+! Special Cargo
+SPECIALCARGONOMORECRATES=창고에 더 이상 상자가 없습니다!
+SPECIALCARGONEEDCEO=당신은 MC입니다! CEO가 되어야 합니다.
+SPECIALCARGOMAXCRATESOURCE=상자 배송량 최대화
+SPECIALCARGOMAXCRATESOURCE_DESC=직원이 배달할 상자의 양을 최대로 설정합니다.
+SPECIALCARGOSETDELIVERTIME=배달 시간 최소화
+SPECIALCARGOSETDELIVERTIME_DESC=직원이 배달할 시간을 0으로 설정합니다.

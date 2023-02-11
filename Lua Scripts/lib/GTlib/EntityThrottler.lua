@@ -1,4 +1,3 @@
-
 local debugmode = false
 local synctimer = {}
 local settings = {
@@ -596,7 +595,7 @@ menu.slider(objectthrottler, "半径", {}, "指定要扫描实体的周围距离
     settings.object.radius = value
 end)
 
-local pedthrottler = menu.list(throttler, "Ped节流", {}, "")
+local pedthrottler = menu.list(throttler, "Ped节流阀", {}, "")
 
 menu.toggle_loop(pedthrottler, "开启", {}, "", function()
     local Pointers = {}

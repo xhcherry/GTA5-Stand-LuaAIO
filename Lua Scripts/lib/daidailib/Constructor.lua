@@ -150,35 +150,6 @@ local menus = {
 local original_player_skin
 local player_construct
 
---local example_construct = {
---    name="Police",
---    model="police",
---    handle=1234,
---    options = {},
---    children = {},
---}
---
---local example_construct = {
---    name="My Construct",        -- Name for this attachment
---    handle=5678,                -- Handle for this attachment (Nonserializable)
---    root={},                  -- Pointer to root construct. Root will point to itself. (Nonserializable)
---    parent={},                -- Pointer to parent construct. Root will point to itself. (Nonserializable)
---    position = { x=0, y=0, z=0 },  -- World position coords
---    offset = { x=0, y=0, z=0 },  -- Offset coords from parent
---    rotation = { x=0, y=0, z=0 },-- Rotation from parent
---    children = {
---        -- Other constructs / attachments
---    },
---    options = {
---        is_visible = true,
---        has_collision = true,
---        has_gravity = true,
---        etc...
---    },
---    is_preview = false,
---    Other meta flags used for processing...
---}
-
 local ENTITY_TYPES = {"PED", "VEHICLE", "OBJECT"}
 
 local SIRENS_OFF = 1

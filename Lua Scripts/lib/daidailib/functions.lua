@@ -174,7 +174,7 @@ function get_hud_colour(hudColour)
 	local g = memory.alloc(1)
 	local b = memory.alloc(1)
 	local a = memory.alloc(1)
-	WIRI_HUD.GET_HUD_COLOUR(hudColour, r, g, b, a)
+	HUD.GET_HUD_COLOUR(hudColour, r, g, b, a)
 	return {r = memory.read_int(r), g = memory.read_int(g), b = memory.read_int(b), a = memory.read_int(a)}
 end
 
@@ -609,8 +609,8 @@ end
 ---@return boolean
 function is_decor_flag_set(entity, flag)
 	if ENTITY.DOES_ENTITY_EXIST(entity) and
-	WIRI_DECORATOR.DECOR_EXIST_ON(entity, "Casino_Game_Info_Decorator") then
-		local value = WIRI_DECORATOR.DECOR_GET_INT(entity, "Casino_Game_Info_Decorator")
+	DECORATOR.DECOR_EXIST_ON(entity, "Casino_Game_Info_Decorator") then
+		local value = DECORATOR.DECOR_GET_INT(entity, "Casino_Game_Info_Decorator")
 		return (value & flag) ~= 0
 	end
 	return false
