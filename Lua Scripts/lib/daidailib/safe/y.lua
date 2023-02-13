@@ -1,0 +1,1 @@
+yyy = "~italic~¦~bold~呆呆 Lua Script v6.8"

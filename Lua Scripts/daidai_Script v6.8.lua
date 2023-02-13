@@ -39,7 +39,7 @@ local SND_ASYNC<const> = 0x0001
 local SND_FILENAME<const> = 0x00020000
 
 
-local script_version = "6.7"
+script_version = "6.8"
 util.log("加入daidai lua群聊343798401")
 ----util.toast("[呆呆 提示] ")
 ----util.yield(1000)
@@ -80,7 +80,7 @@ health = menu.list(self, "恢复", {}, "")
             PED.SET_PED_ARMOUR(players.user_ped(), 100)
         end
     end)
-    local supplemental_snacks = menu.list(health, "零食编辑", {}, "")
+    supplemental_snacks = menu.list(health, "零食编辑", {}, "")
         menu.action(supplemental_snacks, "补满全部零食", {}, "", function()
             STAT_SET_INT("NO_BOUGHT_YUM_SNACKS", 30)
             STAT_SET_INT("NO_BOUGHT_HEALTH_SNACKS", 15)
@@ -133,15 +133,15 @@ health = menu.list(self, "恢复", {}, "")
     end)
 
 menu.toggle_loop(self, "快速重生", {}, "", function()
-    local ped_ptr = entities.handle_to_pointer(players.user_ped())
-    local gwobaw = memory.script_global(2672505 + 1684 + 756)
-    if entities.get_health(ped_ptr) < 100 then
+    local gwobaw = memory.script_global(2672505 + 1685 + 756) -- Global_2672505.f_1685.f_756
+    if PED.IS_PED_DEAD_OR_DYING(players.user_ped()) then
         GRAPHICS.ANIMPOSTFX_STOP_ALL()
         memory.write_int(gwobaw, memory.read_int(gwobaw) | 1 << 1)
     end
-    end,function()
-        local gwobaw = memory.script_global(2672505 + 1684 + 756)
-        memory.write_int(gwobaw, memory.read_int(gwobaw) &~ (1 << 1)) 
+end,
+    function()
+    local gwobaw = memory.script_global(2672505 + 1685 + 756)
+    memory.write_int(gwobaw, memory.read_int(gwobaw) &~ (1 << 1)) 
 end)
 
 action_list = menu.list(self, "人物行为", {}, "")
@@ -181,6 +181,7 @@ action_list = menu.list(self, "人物行为", {}, "")
             ENTITY.SET_ENTITY_VELOCITY(PLAYER.PLAYER_PED_ID(), f['x'], f['y']*3, 0.0)
         end
     end)
+
 
     all_action_list = menu.list(self, "动作", {}, "")
     anims_root = menu.list(all_action_list, "预加载动作", {}, "")
@@ -416,7 +417,7 @@ local bones <const> = {
 }
 local colour = {r = 1.0, g = 0.0, b = 1.0, a = 1.0}
 local timer = newTimer()
-local trailsOpt = menu.list(self,"轨迹", {}, "")
+trailsOpt = menu.list(self,"轨迹", {}, "")
 local effect = Effect.new("scr_rcpaparazzo1", "scr_mich4_firework_sparkle_spawn")
 local effects = {}
 menu.toggle_loop(trailsOpt,"轨迹", {"trails"}, "", function ()
@@ -477,8 +478,7 @@ menu.toggle_loop(trailsOpt,"轨迹", {"trails"}, "", function ()
 end, function ()
 	removeFxs(effects); effects = {}
 end)
-local trailColour = menu.colour(trailsOpt,"颜色", {"trailcolour"}, "",
-	colour, false, function(newColour) colour = newColour end)
+local trailColour = menu.colour(trailsOpt,"颜色", {"trailcolour"}, "",colour, false, function(newColour) colour = newColour end)
 menu.rainbow(trailColour)
 
 
@@ -641,7 +641,7 @@ local ptfxEgg
         end
     end)
 
-local firebreath = menu.list(self, '喷火', {}, '')
+firebreath = menu.list(self, '喷火', {}, '')
     menu.toggle(firebreath, '喷火', {'JSfireBreath'}, '', function(toggle)
         firebreathxxx(toggle)
     end)
@@ -652,7 +652,7 @@ local firebreath = menu.list(self, '喷火', {}, '')
         firebreathcolour(colour)
     end))
 
-local _LR = menu.list(fire_wings, '火翅膀v2', {}, 'stand同款翅膀')
+_LR = menu.list(fire_wings, '火翅膀v2', {}, 'stand同款翅膀')
     menu.toggle(_LR, '翅膀', {'JSfireWings'}, '火焰翅膀.', function (toggle)
         firewing(toggle)
     end)
@@ -703,7 +703,7 @@ menu.action(self, "吊射炮", {""}, "从某个位置发射一枚火炮", functi
     end
 end)
 menu.toggle(self, "禁用脚步声", {}, "", function(state)
-    AUDIO._SET_PED_AUDIO_FOOTSTEP_LOUD(players.user_ped(), not state)
+    AUDIO1.SET_PED_AUDIO_FOOTSTEP_LOUD(players.user_ped(), not state)
 end)
 maxHealth_cantseeyouinmap = 328
 menu.toggle_loop(self, "假死", {}, "地图上不会出现你", function()
@@ -803,10 +803,10 @@ menu.toggle_loop(online, "自动获取脚本主机", {"scriptshost"}, "更快获
     end
 end)
 menu.toggle_loop(online, "自动接受并加入游戏", {}, "将自动接受加入任务", function() -- credits to soulreaper for sending me this :D
-    local message_hash = Jinx.GET_WARNING_SCREEN_MESSAGE_HASH()
-    if message_hash == 15890625 or message_hash == -398982408 or message_hash == -587688989 then
+    local message_hash = HUD.GET_WARNING_SCREEN_MESSAGE_HASH()
+    if message_hash == 15890625 or message_hash == -587688989 then
         PAD.SET_CONTROL_VALUE_NEXT_FRAME(2, 201, 1.0)
-        util.yield(200)
+        util.yield(50)
     end
 end)
 
@@ -1230,6 +1230,23 @@ chatspamtrash = menu.list(chat_m, "刷屏")
     end)
 
 -----------------------------------------------------载具选项
+
+nitrogen_acceleration = menu.list(vehicle, '氮气加速', {}, '')
+    
+    menu.toggle_loop(nitrogen_acceleration, "氮气加速", {}, "按X使用", function()
+        nnitrogen_acceleration()
+    end)
+    menu.slider(nitrogen_acceleration, "氮气时间", {"nitroduration"}, "", 1, 30, 5, 1, function(val)
+        nnitro_duration(val)
+    end)
+    menu.slider(nitrogen_acceleration, "氮气速度", {"nitropower"}, "", 1, 10000, 2000, 50, function(val)
+        nnitro_power(val)
+    end)
+
+menu.toggle_loop(vehicle, "车祸模拟", {}, "Ctrl+W键\n再进行转向操作", function()
+    car_crash()
+end)
+
 dow_block = 0
 waterdrive = menu.toggle_loop(vehicle, "水上驾驶", {}, "", function()
     if menu.get_value(walkwater) == true then
@@ -1271,25 +1288,7 @@ menu.toggle(vehicle, "烧焦外形", {}, "", function(on)
     end
 end)
 
-pwinmenu = menu.list(vehicle, '车窗', {}, '')
-    menu.action(pwinmenu, '关闭所有车窗', {}, '', function ()
-        local pedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
-        local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
-        local spec = menu.get_value(menu.ref_by_rel_path(menu.player_root(players.user()), "Spectate>Ninja Method"))
-        GetControl(pedm, spec, players.user())
-        for i = 0, 7 do
-            VEHICLE.ROLL_UP_WINDOW(vmod, i)
-        end
-    end)
-    menu.action(pwinmenu, '打开所有车窗', {}, '', function ()
-        local pedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
-        local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
-        local spec = menu.get_value(menu.ref_by_rel_path(menu.player_root(players.user()), "Spectate>Ninja Method"))
-        GetControl(pedm, spec, players.user())
-        VEHICLE.ROLL_DOWN_WINDOWS(vmod)
-    end)
-
-menu.toggle_loop(vehicle, '贴墙行驶', {}, '车辆粘在墙上行驶', function ()
+menu.toggle_loop(vehicle, '贴地/贴墙行驶', {}, '车辆粘在地上/墙上行驶', function ()
     local curcar = entities.get_user_vehicle_as_handle()
     if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) then
         ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(curcar, 1, 0, 0, - 0.5, 0, true, true, true, true)
@@ -1429,7 +1428,6 @@ UFO_vehicles = menu.list(vehicle, "UFO载具", {}, "")
 
 menu.toggle(vehicle, "载具时速表", {}, "", function(state)
     vehicle_speedometer(state)
-    
 end)
 menu.slider(vehicle, "换座位", {""}, "", -1, 2, -1, 1, function(value)
     local ourped = PLAYER.PLAYER_PED_ID()
@@ -1566,10 +1564,10 @@ menu.action(vehicle, "强制离开载具", {}, "", function(click_type)
     TASK.TASK_LEAVE_ANY_VEHICLE(players.user_ped(), 0, 16)
 end)
 menu.toggle_loop(vehicle, "喇叭加速", {}, "", function()
-    remote_horn_boost(players.user())
+    remote_horn_boost()
 end)
 menu.toggle_loop(vehicle, "喇叭跳跳车", {}, "", function() 
-    remote_car_jump(players.user()) 
+    remote_car_jump() 
 end)
 
 acceleration_pads = menu.list(vehicle, "加(减)速带", {}, "")
@@ -1605,7 +1603,7 @@ vehicle_effect = menu.list(vehicle, "载具效果", {}, "")
             for _, boneName in pairs({"wheel_lf", "wheel_lr", "wheel_rf", "wheel_rr"}) do
                 local bone = ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(vehicle, boneName)
                 GRAPHICS.USE_PARTICLE_FX_ASSET(effect[1])
-                WIRI_GRAPHICS.START_PARTICLE_FX_NON_LOOPED_ON_ENTITY_BONE(
+                GRAPHICS.START_PARTICLE_FX_NON_LOOPED_ON_ENTITY_BONE(
                     effect[2],
                     vehicle,
                     0.0, 0.0, 0.0,
@@ -2451,8 +2449,20 @@ casino_brush_money = menu.list(Task_robbery, "赌场刷钱", {""}, "")
         end
     end)
 
-
-
+menu.action(Task_robbery, "将拾取物传送到自己", {}, "", function()
+    local counter = 0
+    local pos = players.get_position(players.user())
+    for _, pickup in entities.get_all_pickups_as_handles() do
+        ENTITY1.SET_ENTITY_COORDS(pickup, pos, false, false, false, false)
+        counter += 1
+        util.yield()
+    end
+    if counter == 0 then
+        util.toast("没有发现可捡拾物. :/")
+    else
+        util.toast("已传送 ".. tostring(counter) .." 个拾取物.")
+    end
+end)
 
 
 
@@ -2645,60 +2655,20 @@ clear_list = menu.list(protex, "清除选项", {}, "")
     end)
 
 pool_limiter = menu.list(protex, "实体池限制", {}, "")
-    local ped_limit = 175
-    menu.slider(pool_limiter, "人物池限制", {"pedlimit"}, "", 0, 256, 175, 1, function(amount)
+    ped_limit = 175
+    menu.slider(pool_limiter, "Ped池限制", {"pedslimit"}, "默认为175", 0, 256, 175, 1, function(amount)
         ped_limit = amount
     end)
-    local veh_limit = 150
-    menu.slider(pool_limiter, "载具池限制", {"vehlimit"}, "", 0, 300, 150, 1, function(amount)
+    veh_limit = 150
+    menu.slider(pool_limiter, "载具池限制", {"vehlimit"}, "默认为150", 0, 300, 150, 1, function(amount)
         veh_limit = amount
     end)
-    local obj_limit = 200
-    menu.slider(pool_limiter, "物体池限制", {"objlimit"}, "", 0, 2300, 500, 1, function(amount)
+    obj_limit = 500
+    menu.slider(pool_limiter, "物体池限制", {"objlimit"}, "默认为500", 0, 2300, 500, 1, function(amount)
         obj_limit = amount
     end)
-    local projectile_limit = 25
-    menu.slider(pool_limiter, "投掷物池限制", {"projlimit"}, "", 0, 50, 25, 1, function(amount)
-        projectile_limit = amount
-    end)
-    menu.toggle_loop(pool_limiter, "启用实体池限制", {"entitypoollimits"}, "", function()
-        local ped_count = 0
-        for _, ped in pairs(entities.get_all_peds_as_handles()) do
-            util.yield()
-            if ped ~= players.user_ped() then
-                ped_count += 1
-            end
-            if ped_count >= ped_limit then
-                for _, ped in pairs(entities.get_all_peds_as_handles()) do
-                    util.yield()
-                    entities.delete_by_handle(ped)
-                end
-                util.toast("[呆呆 提示] 人物池达到上限,正在清理...")
-            end
-        end
-        local veh__count = 0
-        for _, veh in ipairs(entities.get_all_vehicles_as_handles()) do
-            util.yield()
-            veh__count += 1
-            if veh__count >= veh_limit then
-                for _, veh in ipairs(entities.get_all_vehicles_as_handles()) do
-                    entities.delete_by_handle(veh)
-                end
-                util.toast("[呆呆 提示] 载具池达到上限,正在清理...")
-            end
-        end
-        local obj_count = 0
-        for _, obj in pairs(entities.get_all_objects_as_handles()) do
-            util.yield()
-            obj_count += 1
-            if obj_count >= obj_limit then
-                for _, obj in pairs(entities.get_all_objects_as_handles()) do
-                    util.yield()
-                    entities.delete_by_handle(obj)
-                end
-                util.toast("[呆呆 提示] 物体池达到上限,正在清理...")
-            end
-        end
+    menu.toggle_loop(pool_limiter, "启用实体池限制", {}, "", function()
+        entity_limit()
     end)
 
 menu.toggle(protex, "防崩视角", {"acc"}, "", function(on_toggle)
@@ -2867,6 +2837,30 @@ local admin_bail = false
             entities.delete_by_handle(obj)
         end
     end)
+local block_spec_syncs
+block_spec_syncs = menu.toggle_loop(protection, "阻止观看同步", {}, "阻止所有观看你的人的同步.", function()
+    for _, pid in players.list(false, true, true) do
+        local ped_dist = v3.distance(players.get_position(players.user()), players.get_position(pid))
+        if v3.distance(players.get_position(players.user()), players.get_cam_pos(pid)) < 25.0 and ped_dist > 30.0 or players.get_spectate_target(pid) == players.user() then
+            local outgoingSyncs = menu.ref_by_rel_path(menu.player_root(pid), "Outgoing Syncs>Block")
+            outgoingSyncs.value = true
+            pos = players.get_position(players.user())
+            if v3.distance(pos, players.get_cam_pos(pid)) < 25.0 then
+                repeat 
+                    util.yield()
+                until v3.distance(pos, players.get_cam_pos(pid)) > 50.0 
+                outgoingSyncs.value = false
+            end
+        end
+    end
+end, function()
+    for _, pid in players.list(false, true, true) do
+        if players.exists(pid) then
+            local outgoingSyncs = menu.ref_by_rel_path(menu.player_root(pid), "Outgoing Syncs>Block")
+            outgoingSyncs.value = false
+        end
+    end
+end)
 
 anti_mugger = menu.list(protection, "拦截劫匪")
     menu.toggle_loop(anti_mugger, "自我", {}, "防止你被抢劫.", function()
@@ -2881,7 +2875,7 @@ anti_mugger = menu.list(protection, "拦截劫匪")
                 and NETWORK.NETWORK_REQUEST_CONTROL_OF_NETWORK_ID(memory.read_int(ped_netId))) then
                     local mugger = NETWORK.NET_TO_PED(memory.read_int(ped_netId))
                     entities.delete_by_handle(mugger)
-                    util.toast("拦截劫匪来自 " .. players.get_name(memory.read_int(sender)))
+                    util.toast("已阻止劫匪，呼叫劫匪的玩家是： " .. players.get_name(memory.read_int(sender)))
                 end
             end)
         end
@@ -2898,7 +2892,7 @@ anti_mugger = menu.list(protection, "拦截劫匪")
                 and NETWORK.NETWORK_REQUEST_CONTROL_OF_NETWORK_ID(memory.read_int(ped_netId)) then
                     local mugger = NETWORK.NET_TO_PED(memory.read_int(ped_netId))
                     entities.delete_by_handle(mugger)
-                    util.toast("拦截劫匪发送来自 " .. players.get_name(memory.read_int(sender)) .. " to " .. players.get_name(memory.read_int(target)))
+                    util.toast("已阻止劫匪，呼叫劫匪的玩家是： " .. players.get_name(memory.read_int(sender)) .. " 被劫目标是 " .. players.get_name(memory.read_int(target)))
                 end
             end)
         end
@@ -2918,7 +2912,7 @@ menu.toggle_loop(protection, "拦截火焰效果", {"interceptfire"}, "", functi
 end)
 menu.toggle_loop(protection, "野兽防护", {}, "防止你被变成野兽，但也会阻止其他人的战局事件.", function()
     if util.spoof_script("am_hunt_the_beast", SCRIPT.TERMINATE_THIS_THREAD) then
-        util.toast("检测到战局《猎杀野兽》事件,正在阻止...")
+        util.toast("检测到《 猎杀野兽 》事件生成。已终止事件...")
     end
 end)
 
@@ -2967,7 +2961,7 @@ aimkarma = menu.list(protection, '瞄准惩罚', {'JSaimKarma'}, '对瞄准您�
         local userPed = players.user_ped()
         if playerIsTargetingEntity(userPed) and karma[userPed] then
             local karmaPid = karma[userPed].pid
-            util.trigger_script_event(1 << karmaPid, {-93722397 ,1, 0, 0, 4,0,karmaPid, karmaPid})
+            util.trigger_script_event(1 << karmaPid, {330622597 ,1, 0, 0, 4,0,karmaPid, karmaPid})
         end
     end)
       menu.toggle_loop(aimkarma, '全局崩溃', {''}, '崩溃整个战局', function()
@@ -3032,7 +3026,20 @@ menu.action(all_happy, "给予所有玩家MK-2", {}, "", function ()
 end)
 
 menu.divider(sn, "全局恶搞")
-
+menu.action(sn, "发送到介绍界面", {}, "将战局中的每个人都送到GTAOnline的介绍动画中去.", function()
+    for _, pid in players.list(false, true, true) do
+        local int = memory.read_int(memory.script_global(1894573 + 1 + (pid * 608) + 510))  -- Global_1894573[PLAYER::PLAYER_ID() /*608*/].f_510
+            util.trigger_script_event(1 << pid, {-95341040, players.user(), 20, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
+            util.trigger_script_event(1 << pid, {1742713914, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+    end
+end)
+menu.action(sn, "发送到高尔夫俱乐部", {}, "让战局中所有人都去打高尔夫.", function()
+    for _, pid in players.list(false, true, true) do
+        local int = memory.read_int(memory.script_global(1894573 + 1 + (pid * 608) + 510))
+            util.trigger_script_event(1 << pid, {-95341040, players.user(), 193, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
+            util.trigger_script_event(1 << pid, {1742713914, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+    end
+end)
 auto_bounty = menu.list(sn, "悬赏", {}, "")
     local InSession = function() return util.is_session_started() and not util.is_session_transition_active() end
     local bounty_include_self = false
@@ -3056,6 +3063,42 @@ auto_bounty = menu.list(sn, "悬赏", {}, "")
                     bounty_include_self = true
                 end
             end,true)
+menu.action(sn, "劫持所有载具", {}, "生成一个劫匪NPC，把他们从车里带出来并开走开.", function()
+    for _, pid in players.list(false, true, true) do
+        local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        local pos = players.get_position(pid)
+        local ped_dist = v3.distance(players.get_position(players.user()), players.get_position(pid))
+        local cam_dist = v3.distance(pos, players.get_cam_pos(players.user()))
+
+        if ped_dist < 1000.0 and cam_dist < 1000.0 and PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
+            menu.trigger_commands("hijack " .. players.get_name(pid))
+        end
+    end
+end)
+menu.toggle_loop(sn,  "赌场陷阱", {}, "", function() 
+    local mdl = util.joaat("hei_prop_ss1_mpint_garage2")
+    request_model(mdl)
+    if trap_obj == nil or trap_obj2 == nil or not ENTITY.DOES_ENTITY_EXIST(trap_obj) or not ENTITY.DOES_ENTITY_EXIST(trap_obj2) then
+        trap_obj = entities.create_object(mdl, v3(1089.62, 206.334, -48.473))
+        trap_obj2 = entities.create_object(mdl, v3(1090.0166, 213.826, -48.473))
+        ENTITY.SET_ENTITY_HEADING(trap_obj2, 31.0)
+        local objs = {trap_obj, trap_obj2}
+        for _, obj in objs do
+            entities.set_can_migrate(entities.handle_to_pointer(obj), false)
+            ENTITY.FREEZE_ENTITY_POSITION(obj, true)
+            ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(players.user_ped(), obj, false)
+        end
+    end
+    util.yield()
+end, function()
+    local objs = {trap_obj, trap_obj2}
+    for _, obj in objs do
+        if obj ~= nil then
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(obj)
+            entities.delete_by_handle(obj)
+        end
+    end
+end)
 penitentiary = menu.list(sn, "监狱")
     menu.action(penitentiary, "监狱", {}, "仿2t监狱", function(on_click)
         local hash = 779277682
@@ -3069,7 +3112,6 @@ penitentiary = menu.list(sn, "监狱")
     menu.action(penitentiary, "传送到监狱外侧", {}, "", function()
         TELEPORT(994,-1013,42)
     end)
-
 
 menu.action(sn, "匿名杀人", {}, "匿名杀死所有人", function()
     nimingsharen()
@@ -3245,6 +3287,62 @@ end
 
 ------------------------------------------------------------武器选项
 
+menu.toggle(weapons, "核弹枪", {}, "使用RPG发射核弹\n第一发可能故障", function(toggle)
+    nuke_running = toggle
+        if nuke_running then
+                nuclear()
+        end
+end)
+
+crosshair = menu.list(weapons, "准星", {}, "")
+    menu.toggle_loop(crosshair, "瞄准准星 (^)", {''}, '', function()
+        HUD.SET_TEXT_SCALE(1.0,0.5)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        HUD.SET_TEXT_COLOUR(255, 255, 255, 180)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("^")
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.4999,0.486,0)
+    end)
+    menu.toggle_loop(crosshair, "瞄准准星 (*)", {''}, '', function()
+        HUD.SET_TEXT_SCALE(1.0,0.5)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        HUD.SET_TEXT_COLOUR(255, 255, 255, 180)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("*")
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.4999,0.485,0)
+    end)
+    menu.toggle_loop(crosshair, "瞄准准星 (+)", {''}, '', function()
+        HUD.SET_TEXT_SCALE(1.0,0.5)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        HUD.SET_TEXT_COLOUR(255, 255, 255, 180)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("+")
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.4999,0.477,0)
+    end)
+    menu.toggle_loop(crosshair, "瞄准准星 (·)", {''}, '', function()
+        HUD.SET_TEXT_SCALE(1.0,0.5)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        HUD.SET_TEXT_COLOUR(255, 255, 255, 180)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("·")
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.49997,0.478,0)
+    end)
+
+entity_gun = menu.list(weapons, "实体枪", {}, "")
+    menu.toggle_loop(entity_gun, "实体枪", {}, "", function()
+        eentity_gun()
+    end)
+    local entity_hashes = {-422877666, -717142483, util.joaat("prop_paints_can07")}
+    local entity_options = {"蔡徐坤", "足球", "水桶"}
+    menu.list_action(entity_gun, "选择实体", {}, "", entity_options, function(index, value, click_type)
+        shootent = entity_hashes[index]
+    end)
+
+
 menu.toggle_loop(weapons, "自动扳机", {}, "", function()
     local wpn = WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped())
     local dmg = SYSTEM.ROUND(WEAPON.GET_WEAPON_DAMAGE(wpn, 0))
@@ -3417,9 +3515,7 @@ sticky_bomb_explosion = menu.list(weapons, '粘弹自动爆炸', {}, '')
     end)
 
 
-CCCC_HUD={
-    ["_HUD_WEAPON_WHEEL_GET_SELECTED_HASH"]=--[[Hash (int)]] function()native_invoker.begin_call();native_invoker.end_call("A48931185F0536FE");return native_invoker.get_return_value_int();end,
-}
+
 
 weaponback = off
 menu.toggle(weapons, "背藏武器", {}, "按Tab键", function(on)
@@ -3428,8 +3524,8 @@ menu.toggle(weapons, "背藏武器", {}, "按Tab键", function(on)
 	if weaponback then
 		spawnweapon = 0
 	end
-	curweap = CCCC_HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())
-	if not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == -1569615261) and weaponback then
+	curweap = HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())
+	if not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == -1569615261) and weaponback then
 		spawnweapon = WEAPON.CREATE_WEAPON_OBJECT(curweap, 1, pos.x, pos.y, pos.z, true, 1, 0)
 		attachweapon(spawnweapon)
 	end
@@ -3441,11 +3537,11 @@ menu.toggle(weapons, "背藏武器", {}, "按Tab键", function(on)
 		else
 			ENTITY.SET_ENTITY_VISIBLE(spawnweapon, false, false)
 		end
-		if not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == curweap) and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == -1569615261) then
+		if not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == curweap) and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == -1569615261) then
 			if not (spawnweapon == 0) then
 				entities.delete_by_handle(spawnweapon)
 			end
-			curweap = HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())
+			curweap = HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())
 			requestweapon(curweap)
 			spawnweapon = WEAPON.CREATE_WEAPON_OBJECT(curweap, 1, pos.x, pos.y, pos.z, true, 1, 0)
 			if (WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(plyped()) == 0) then
@@ -3905,6 +4001,30 @@ end)
 
 ---------------------------------------------------------娱乐选项
 
+menu.toggle(funfeatures, "火拳",{""}, "",function(on)
+    Fire_Fist(on) 
+end)
+menu.toggle(funfeatures, "雷电拳",{""}, "",function(on)
+    Raiden_Fist(on)
+end)
+
+
+spawn_truck = menu.list(funfeatures, "拉车")
+    spawn_truck_car = menu.list(spawn_truck, "生成拉车")
+    menu.action(spawn_truck_car, "废土", {}, "生成一个废土人进行拖曳", function()
+        menu.trigger_commands("wastelander")
+    end)
+    menu.action(spawn_truck_car, "猛击卡车", {}, "生成一辆猛击卡车进行牵引", function()
+        menu.trigger_commands("slamtruck")
+    end)
+    menu.toggle(spawn_truck, "附加", {}, "任何近距离车辆都将连接到您当前的车辆上", function(on)
+        if on then
+            attach_nearest_vehicle()
+        else
+            detach_attached_vehicle() 
+        end
+    end)
+
 
 Hell_Undead = menu.list(funfeatures, "地狱亡灵", {}, "")
     menu.toggle(Hell_Undead, "地狱亡灵", {}, "", function(on)
@@ -4352,7 +4472,7 @@ end, function()
 end)
 
 
-menu.toggle_loop(funfeatures, "定点轰炸", {"pointbombing"}, "标点指定轰炸", function ()--=====heezy
+Targeted_bombing = menu.toggle_loop(funfeatures, "定点轰炸", {"pointbombing"}, "标点指定轰炸", function ()
     local waypointPos = get_waypoint_v3()
     if waypointPos then
         local hash = util.joaat('w_arena_airmissile_01a')
@@ -4419,7 +4539,7 @@ menu.toggle_loop(funfeatures, '钢铁侠', {}, '', function()
         PED.GIVE_PED_HELMET(players.user_ped(), true, 4096, -1)
         gaveHelmet = true
     end
-    local context = CAM._GET_CAM_ACTIVE_VIEW_MODE_CONTEXT()
+    local context = CAMdaidai._GET_CAM_ACTIVE_VIEW_MODE_CONTEXT()
     if startViewMode == nil then
         startViewMode = CAM.GET_CAM_VIEW_MODE_FOR_CONTEXT(context)
     end
@@ -4431,7 +4551,7 @@ menu.toggle_loop(funfeatures, '钢铁侠', {}, '', function()
     GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scope_scaleform, 255, 255, 255, 255, 0)
     GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
     local barrageInput = 'INPUT_PICKUP'
-    if not PAD._IS_USING_KEYBOARD(0) then
+    if not PADdaidai._IS_USING_KEYBOARD(0) then
         barrageInput = 'INPUT_COVER'
     end
     memory.write_int(memory.script_global(1649593 + 1163), 1)
@@ -4487,13 +4607,13 @@ end, function()
         PED.REMOVE_PED_HELMET(players.user_ped(), true)
         gaveHelmet = false
     end
-    HUD._HUD_WEAPON_WHEEL_IGNORE_CONTROL_INPUT(false)
+    HUDdaidai._HUD_WEAPON_WHEEL_IGNORE_CONTROL_INPUT(false)
     local pScaleform = memory.alloc_int()
     memory.write_int(pScaleform, scope_scaleform)
     GRAPHICS.SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED(pScaleform)
     menu.trigger_commands("levitate off")
     util.yield()
-    CAM.SET_CAM_VIEW_MODE_FOR_CONTEXT(CAM._GET_CAM_ACTIVE_VIEW_MODE_CONTEXT(), startViewMode)
+    CAM.SET_CAM_VIEW_MODE_FOR_CONTEXT(CAMdaidai._GET_CAM_ACTIVE_VIEW_MODE_CONTEXT(), startViewMode)
     startViewMode = nil
 end)
 -------------------
@@ -5115,14 +5235,32 @@ dropCard = menu.list(friendly, "天降收集牌", {}, "")
     end)
 
 -----------------------------------------------------------------恶搞选项
-local kill_godmode = menu.list(trolling, "击杀玩家", {}, "")
-local lz = menu.list(trolling, "套笼子", {}, "")
-local npc_trolling = menu.list(trolling, "NPC恶搞", {}, "")
-local weapon_trolling = menu.list(trolling, "武器恶搞", {}, "")
-local vehicle_car = menu.list(trolling, "载具恶搞", {}, "")
-local tp_player_trolling = menu.list(trolling, "发送玩家", {}, "")
-local entspam_root = menu.list(trolling, "生成实体垃圾", {}, "")
+kill_godmode = menu.list(trolling, "击杀玩家", {}, "")
+lz = menu.list(trolling, "套笼子", {}, "")
+npc_trolling = menu.list(trolling, "NPC恶搞", {}, "")
+weapon_trolling = menu.list(trolling, "武器恶搞", {}, "")
+vehicle_car = menu.list(trolling, "载具恶搞", {}, "")
+tp_player_trolling = menu.list(trolling, "发送玩家", {}, "")
+entspam_root = menu.list(trolling, "生成实体垃圾", {}, "")
 
+menu.toggle_loop(trolling, "电击玩家", {}, "", function()
+    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local pos = players.get_position(pid)
+    MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z + 1, pos.x, pos.y, pos.z, 1000, true, util.joaat("weapon_stungun"), false, false, true, 1.0)
+end)
+send_sms = menu.list(trolling, "发送短信", {}, "")
+    local mmessage = "您已被永久禁止进入Grand Theft Auto 在线模式"
+    menu.text_input(send_sms, "自定义短信", {"customizemmessage"}, "", function(value)
+        mmessage = value
+    end,mmessage)
+    local ffont_size = 11
+    menu.slider(send_sms, "字体尺寸", {"fonttextsize"}, "", 1, 20, 11, 1, function (value)
+        ffont_size = value
+    end)
+    menu.action(send_sms,  "发送", {}, "", function()
+        menu.trigger_commands("smstext" .. PLAYER.GET_PLAYER_NAME(pid).. " " .. "<font size='"..ffont_size.. "'>~w~"..mmessage)
+        menu.trigger_commands("smssend" .. PLAYER.GET_PLAYER_NAME(pid))
+    end)
 
 menu.click_slider(trolling, "虚假抢钱", {}, "", 0, 2147483647, 0, 1000, function(amount)
     util.trigger_script_event(1 << pid, {548471420, players.user(), 532932991, amount, 0, 0, 0, 0, 0, 0, pid, players.user(), 0, 0})
@@ -5546,6 +5684,42 @@ player_toggle_loop(trolling,pid, "弹飞玩家", {"Bouncetheplayerfly"}, "也适
 end)
 
 ----------------------击杀玩家
+local function RequestModel(hash, timeout)
+    timeout = timeout or 3
+    STREAMING.REQUEST_MODEL(hash)
+    local end_time = os.time() + timeout
+    repeat
+        util.yield()
+    until STREAMING.HAS_MODEL_LOADED(hash) or os.time() >= end_time
+    return STREAMING.HAS_MODEL_LOADED(hash)
+end
+menu.action(kill_godmode, "死亡屏障击杀", {}, "对大多数菜单有效。(注意：只有在目标没有使用禁用死亡障碍的情况下才会起作用。)", function()
+    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local pos = players.get_position(pid)                            
+    local hash = util.joaat("prop_windmill_01")
+    local mdl = util.joaat("rallytruck")
+    RequestModel(hash)
+    RequestModel(mdl)
+    for i = 0, 5 do
+        if TASK.IS_PED_WALKING(ped) then
+            spawn_pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.0, 0.5, 0.0)
+        elseif TASK.IS_PED_WALKING(ped) then
+            spawn_pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.0, 1.3, 0.0)
+        else
+            spawn_pos = players.get_position(pid)
+        end
+        local obj = entities.create_object(hash, spawn_pos)
+        local veh = entities.create_vehicle(mdl, spawn_pos, 0)
+        ENTITY.SET_ENTITY_VISIBLE(obj, false)
+        ENTITY.SET_ENTITY_VISIBLE(veh, false)
+        ENTITY.SET_ENTITY_INVINCIBLE(obj, true)
+        ENTITY.SET_ENTITY_COLLISION(obj, true, true)
+        ENTITY.APPLY_FORCE_TO_ENTITY(veh, 1, 0.0, 10, 10, 0.0, 0.0, 0.0, 0, 1, 1, 1, 0, 1)
+        util.yield(150)
+        entities.delete_by_handle(obj)
+        entities.delete_by_handle(veh)
+    end
+end)
 player_toggle_loop(kill_godmode, pid, "移除玩家无敌", {}, "被大多数菜单拦截", function()
     util.trigger_script_event(1 << pid, {0xAD36AA57, pid, 0x96EDB12F, math.random(0, 0x270F)})
 end)
@@ -6102,21 +6276,26 @@ local glitchVehCmd
 
 freeze_player = menu.list(trolling, "冻结", {}, "")
     player_toggle_loop(freeze_player, pid, "暴力冻结", {}, "", function()
-        util.trigger_script_event(1 << pid, {-93722397, pid, 0, 0, 0, 0, 0})
+        util.trigger_script_event(1 << pid, {330622597, players.user(), 0, 0, 0, 0, 0})
         util.yield(500)
     end)
     player_toggle_loop(freeze_player, pid, "仓库冻结", {}, "", function()
-        util.trigger_script_event(1 << pid, {434937615, pid, 0, 1, 0, 0})
+        util.trigger_script_event(1 << pid, {-1796714618, players.user(), 0, 1, 0, 0})
         util.yield(500)
     end)
     player_toggle_loop(freeze_player, pid, "模型冻结", {}, "", function()
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
         TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped)
     end)
+    menu.action(freeze_player, "传送冻结", {}, "将冻结玩家大约20秒，然后将他们传送进网球场.", function()
+        local int = memory.read_int(memory.script_global(1894573 + 1 + (pid * 608) + 510)) -- Global_1894573[PLAYER::PLAYER_ID() /*608*/].f_510
+        util.trigger_script_event(1 << pid, {-95341040, players.user(), 195, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
+        util.trigger_script_event(1 << pid, {1742713914, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+    end)
 
 local inf_loading = menu.list(trolling, "无限加载屏幕", {}, "")
     menu.action(inf_loading, "传送邀请", {}, "", function()
-        util.trigger_script_event(1 << pid, {0xDEE5ED91, pid, 0, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+        util.trigger_script_event(1 << pid, {891653640, players.user(), 0, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
     end)
     menu.action(inf_loading, "公寓邀请", {}, "", function()
         util.trigger_script_event(1 << pid, {-702866045, pid, 0, 1, id})
@@ -6150,6 +6329,33 @@ menu.toggle_loop(trolling, "向Ta发送垃圾邮件", {}, "", function()
 end)
 
 -------------------发送玩家
+menu.action(tp_player_trolling, "发送到GTA5介绍界面", {}, "", function()
+    local int = memory.read_int(memory.script_global(1894573 + 1 + (pid * 608) + 510))
+    util.trigger_script_event(1 << pid, {-95341040, players.user(), 20, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
+    util.trigger_script_event(1 << pid, {1742713914, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+end)
+menu.action(tp_player_trolling, "发送到高尔夫俱乐部", {}, "派遣玩家去打高尔夫.", function()
+    local int = memory.read_int(memory.script_global(1894573 + 1 + (pid * 608) + 510))
+    util.trigger_script_event(1 << pid, {-95341040, players.user(), 193, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
+    util.trigger_script_event(1 << pid, {1742713914, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+end)
+menu.action(tp_player_trolling, "发送到自由模式", {}, "", function()
+    local int = memory.read_int(memory.script_global(1894573 + 1 + (pid * 608) + 510))
+    util.trigger_script_event(1 << pid, {-95341040, players.user(), 194, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
+    util.trigger_script_event(1 << pid, {1742713914, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+end)
+menu.action(tp_player_trolling, "强制1V1", {}, "", function()
+    local int = memory.read_int(memory.script_global(1894573 + 1 + (pid * 608) + 510))
+    util.trigger_script_event(1 << pid, {-95341040, players.user(), 197, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
+    util.trigger_script_event(1 << pid, {1742713914, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+end)
+menu.action(tp_player_trolling, "破坏室内状态", {}, "可以通过重新加入战局来取消。玩家必须在一个公寓里", function()
+    if players.is_in_interior(pid) then
+        util.trigger_script_event(1 << pid, {629813291, players.user(), pid, pid, pid, math.random(int_min, int_max), pid})
+    else
+        util.toast(players.get_name(pid) .. " 不在室内. :/")
+    end
+end)
 menu.action(tp_player_trolling, "公寓邀请", {}, "", function()
     util.trigger_script_event(1 << pid, {-702866045, players.user(), pid, -1, 1, 1, 0, 1, 0}) 
 end)
@@ -6351,6 +6557,36 @@ menu.toggle_loop(trolling, "在他头上浇水", {}, "", function()
     coords.z = coords['z'] + 1
     util.yield(65)
     FIRE.ADD_EXPLOSION(coords.x, coords.y, coords.z, 79, 0, false, false, 0, false)
+end)
+menu.action(trolling, "发射玩家", {"launch"}, "适用于大多数菜单.", function()
+    local mdl = util.joaat("boxville3")
+    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local pos = ENTITY.GET_ENTITY_COORDS(ped)
+    request_model(mdl)
+                
+    if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
+        util.toast(players.get_name(pid) .. " 在载具中. :/")
+    return end
+    
+    boxville = entities.create_vehicle(mdl, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.0, 2.0, 0.0), ENTITY.GET_ENTITY_HEADING(ped))
+    ENTITY.SET_ENTITY_VISIBLE(boxville, false)
+    util.yield(250)
+    repeat
+        if v3.distance(players.get_position(pid), ENTITY.GET_ENTITY_COORDS(boxville)) < 10.0 then
+            if boxville ~= 0 and ENTITY.DOES_ENTITY_EXIST(boxville)then
+                ENTITY.APPLY_FORCE_TO_ENTITY(boxville, 1, 0.0, 0.0, 25.0, 0.0, 0.0, 0.0, 0, 1, 1, 1, 0, 1)
+            end
+            util.yield()
+        else
+            entities.delete_by_handle(boxville)
+        end
+        util.yield()
+        pos = ENTITY.GET_ENTITY_COORDS(ped)
+    until pos.z > 10000.0
+    util.yield(100)
+    if boxville ~= 0 and ENTITY.DOES_ENTITY_EXIST(boxville) then 
+        entities.delete_by_handle(boxville)
+    end
 end)
 local sounds = menu.list(trolling, "声音恶搞", {}, "")
     menu.toggle_loop(sounds, "让他听到循环爆炸死亡声音", {}, "吵死了", function()
@@ -6890,7 +7126,7 @@ hudminimapmenu = menu.list(worldlist, "小地图")
         HUD.UNLOCK_MINIMAP_ANGLE()
     end)
     menu.toggle(hudminimapmenu,"显示声呐", {"sonaronmap"}, "", function(on)
-        HUD._SET_MINIMAP_SONAR_ENABLED(on)
+        HUDdaidai._SET_MINIMAP_SONAR_ENABLED(on)
     end)
     
     centermap = off
@@ -7339,10 +7575,10 @@ end)
 acknowledgement_list = menu.list(otherlist, "鸣谢", {}, "")
     acknowledgement()
 menu.action(otherlist, "快速重启GTAV", {""}, "不会退出游戏哦", function(on_click)
-    NETWORK._SHUTDOWN_AND_LOAD_MOST_RECENT_SAVE()
+    NETWORKdaidai._SHUTDOWN_AND_LOAD_MOST_RECENT_SAVE()
 end)
 menu.action(otherlist, "重启GTAV", {""}, "重启游戏", function(on_click)
-    MISC._RESTART_GAME()
+    MISC1._RESTART_GAME()
 end)
 menu.action(otherlist, "快速关闭GTAV", {""}, "正如你所见,秒关GTA5", function()
     os.exit()
@@ -8025,7 +8261,7 @@ function menyoo_preprocess_car(vehicle, data)
     
     for k,v in pairs(neons) do
         local comp = {['Left']=0, ['Right']=1, ['Front']=2, ['Back']=3}
-        VEHICLE._SET_VEHICLE_NEON_LIGHT_ENABLED(vehicle, comp[k], to_boolean(v))
+        VEHICLE1._SET_VEHICLE_NEON_LIGHT_ENABLED(vehicle, comp[k], to_boolean(v))
     end
     VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle, tonumber(data['WheelType']))
     for k,v in pairs(mods) do
@@ -8040,8 +8276,8 @@ function menyoo_preprocess_car(vehicle, data)
     VEHICLE.SET_VEHICLE_COLOURS(vehicle, colors['Primary'], colors['Secondary'])
     VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, colors['Pearl'], colors['Rim'])
     VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, colors['tyreSmoke_R'], colors['tyreSmoke_G'], colors['tyreSmoke_B'])
-    VEHICLE._SET_VEHICLE_INTERIOR_COLOR(vehicle, colors['LrInterior'])
-    VEHICLE._SET_VEHICLE_DASHBOARD_COLOR(vehicle, colors['LrDashboard'])
+    VEHICLE1._SET_VEHICLE_INTERIOR_COLOR(vehicle, colors['LrInterior'])
+    VEHICLE1._SET_VEHICLE_DASHBOARD_COLOR(vehicle, colors['LrDashboard'])
     local livery = tonumber(data['Livery'])
     if livery == -1 then
         livery = 0
