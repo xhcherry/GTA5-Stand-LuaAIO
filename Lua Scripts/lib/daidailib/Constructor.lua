@@ -122,7 +122,7 @@ local function log_missing_translations()
 end
 
 
-local status_natives, natives = pcall(require, "lib.daidailib.natives")
+local status_natives, natives = pcall(require "lib.daidaimain.natives.natives")
 
 
 local PROPS_PATH = filesystem.scripts_dir().."lib.daidailib.constructor.objects_complete.txt"

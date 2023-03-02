@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 2023/01/06 12:39:45 AM
-# Heist Control Version: V 3.1.0
+# Generated Date: 2023/01/08 10:41:08 PM
+# Heist Control Version: V 3.1.2
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -309,16 +309,6 @@ Credits = Титры
 Let me know about stats info. = Дайте мне знать о статистике.
 Translators = Переводчики
 Maintains HC's translation = Поддерживает перевод HC
-
-
-# Start of newly updated translations.
-# Translate them!
-
-
-Native file for HC doesn't exist. = Native file for HC doesn't exist.
-Please re-enable 'Stand > Lua Scripts > Repository > natives-1672190175' feature or download the native file manually from somewhere! = Please re-enable 'Stand > Lua Scripts > Repository > natives-1672190175' feature or download the native file manually from somewhere!
-language file for HC doesn't exist. = language file for HC doesn't exist.
-Please install HC properly again! = Please install HC properly again!
 [NOT WORKING] = [NOT WORKING]
 - This feature isn't working due to the latest GTA Online patch: = - This feature isn't working due to the latest GTA Online patch:
 Please download the lastest version of Heist Control or wait for Heist Control's developer patching. = Please download the lastest version of Heist Control or wait for Heist Control's developer patching.
@@ -386,7 +376,6 @@ Force The Final Cutscene = Ускорение Финального ролика
 Set Heist To Default (Reset) = Ограбление по умолчанию (Сброс)
 Diamonds = Бриллианты
 $3.5 Million For All Players = $3.5 Миллион Для Всех Игроков
-ALWAYS Choose The Low Level Buyer! = ВСЕГДА выбирайте Покупателя Низкого Уровня!
 Skip Drilling The Vault Door = Пропуск Сверление Хранилища
 Planning Boards (Arcade) = Доски для планирования (Игровой)
 Garage Exit (Arcade) = Гараж Вход (Игровой)
@@ -485,8 +474,6 @@ Valentine's Day = день святого Валентина
 Unlock Hats And Many Shirts = Разблокируйте Шляпы И Множество Рубашек
 Unlock Sasquatch Outfit = Разблокируйте снаряжение Снежного человека
 Unlock 'Don't Cross the Line Tee' = Разблокируйте "Не пересекайте линию тройника"
-Tattos = Татуировки
-Unlock Some Tattos = Открой несколько татуировок
 Unlock Some Trade Prices = Разблокируйте некоторые торговые цены
 Taxi Livery = Разблокировать награду Таксист
 a.k.a: 'Downtown Cab Co.' livery = a.k.a: 'Downtown Cab Co.' livery
@@ -528,7 +515,6 @@ Renaming CEO/MC = Переименовать CEO/MC
 CEO Abilities = CEO Способности
 Casino Services: Chips = Услуги казино: Фишки
 (Risky) = (Рискованно)
-Make sure don't buy chip more than 1.5M per a day (real-time). Otherwise, you can be banned! = Убедитесь, что вы не покупаете чипов более 1,5 млн в день (в режиме реального времени). В противном случае вы можете быть забанены!
 VIP = VIP
 N/A = N/A
 Chips Amount = Количество фишек
@@ -643,3 +629,40 @@ Get Support, Report Bugs and Enjoy Other Stuffs! = Получайте подде
 Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D = Видео, связанные с учебным пособием HC, загружены здесь, подпишитесь на канал, чтобы показать свою поддержку : D
 If you don't know how to use HC, click me! = Если вы не знаете, как использовать HC, нажмите на меня!
 If you want to know what was changed in the latest version, click me! = Если вы хотите узнать, что было изменено в последней версии, нажмите на меня!
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+When using this method, the percentage and final payment will be random! = При использовании этого метода процент и окончательный платеж будут случайными!
+Works On Both: Fingerprint and Keypad = Работает как с отпечатками пальцев, так и с клавиатурой
+Choose Masks = Выбирайте маски
+(Final Heist) = (Последнее ограбление)
+Setup: Server Farm (Lester) = Настройка: Серверная ферма (Лестер)
+Will be applied only to you and you have to be the host = Будет применяться только к вам, и вы должны быть хозяином
+- Only do this only 1-2 times in less than 24 hours. = - Только делайте это всего 1-2 раза менее чем за 24 часа.
+- Otherwise, you can be banned! = - В противном случае вы можете быть забанены!
+Always keep this option enabled before starting a contract = Всегда включайте эту опцию перед началом контракта
+Note: You may need to keep activating to use some of Independence Day's contents. = Примечание: Возможно, вам придется продолжить активацию, чтобы использовать некоторые материалы Дня независимости.
+Tattoos = Татуировки
+Unlock Some Tattoos = Разблокируйте несколько татуировок
+WM 29 Pistol = Пистолет WM 29
+a.k.a XM3 Pistol = a.k.a XM3 Пистолет
+Ceramic Pistol = Керамический пистолет
+You try removing banked money amount that more than currently you have. = Вы пытаетесь снять с банковского счета сумму денег, которая больше, чем у вас есть в данный момент.
+All of features use undetected methods but use at own your risk. If you earn too much, you can be banned. = Все функции используют необнаруженные методы, но используйте на свой страх и риск. Если вы зарабатываете слишком много, вас могут забанить.
+Solo Cayo Perico Heist will be done by Heist Control automatically per 20 mins to get $2.09M. Don't press any keys to prevent some game bugs. = Одиночное ограбление Кайо Перико будет совершено системой Heist Control автоматически за 20 минут, чтобы получить $ 2,09млн. Не нажимайте никаких клавиш, чтобы предотвратить некоторые игровые ошибки.
+Don't earn more than $50M per a day (real-time), otherwise it'll lead you get banned! = Не зарабатывайте более 50 миллионов долларов в день (в режиме реального времени), иначе это приведет к тому, что вас забанят!
+Note that not working on ULP Missions - Superyatch = Обратите внимание, что не работает на миссиях ULP - Superyatch
+Cooldown time has passed, you can play the heist again! = Время перезарядки прошло, вы можете снова сыграть в ограбление!
+Wallet Money = Деньги в кошельке
+Mins = Мин
+Use at your own risk! Setting certain stats may cause a ban like casino-related stats. = Используйте на свой страх и риск! Установка определенной статистики может привести к запрету, как и статистика, связанная с казино.
+Years = Годы
+Months = Месяцы
+Year = Год
+Month = Месяц
+Min = Минута
+All = Все
+One Line = Одна строка

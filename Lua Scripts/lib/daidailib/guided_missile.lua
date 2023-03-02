@@ -1,10 +1,3 @@
---[[
---------------------------------
-THIS FILE IS PART OF WIRISCRIPT
-        Nowiry#2663
---------------------------------
-]]
-
 require "lib.daidailib.functions"
 
 local self = {}
@@ -79,7 +72,7 @@ local function drawInstructionalButtons()
     if Instructional:begin() then
         Instructional.add_control_group(20, "DRONE_SPACE")
         Instructional.add_control_group(21, "DRONE_POSITION")
-        if not WIRI.IS_USING_KEYBOARD_AND_MOUSE(0) then
+        if not PAD.IS_USING_KEYBOARD_AND_MOUSE(0) then
             Instructional.add_control(208, "DRONE_SPEEDU")
             Instructional.add_control(207, "DRONE_SLOWD")
         else
@@ -120,7 +113,7 @@ local function setMissileRotation()
 	local entityPitch <const> = ENTITY.GET_ENTITY_PITCH(object)
     local leftX, leftY, rightX, rightY = getScriptAxes()
 
-    if WIRI.IS_USING_KEYBOARD_AND_MOUSE(0) then
+    if PAD.IS_USING_KEYBOARD_AND_MOUSE(0) then
 		mult = 3.0
 		rightX = rightX * mult
 		rightY = rightY * mult
@@ -361,7 +354,7 @@ self.mainLoop = function ()
         CAM.SET_CAM_NEAR_DOF(camera, 0.01)
         GRAPHICS.CLEAR_TIMECYCLE_MODIFIER()
         GRAPHICS.SET_TIMECYCLE_MODIFIER("eyeinthesky")
-        WIRI.HARD_ATTACH_CAM_TO_ENTITY(camera, object, 0.0, 0.0, 180.0, 0.0, -0.9, 0.0, true)
+        CAM.HARD_ATTACH_CAM_TO_ENTITY(camera, object, 0.0, 0.0, 180.0, 0.0, -0.9, 0.0, true)
         CAM.RENDER_SCRIPT_CAMS(true, false, 0, true, true, 0)
 
         if not AUDIO.IS_AUDIO_SCENE_ACTIVE("dlc_aw_arena_piloted_missile_scene") then
@@ -411,7 +404,7 @@ self.mainLoop = function ()
             getBoundsState() == BoundsState.outOfBounds then
                 state = MissileState.exploting
             end
-            if not WIRI.IS_USING_KEYBOARD_AND_MOUSE(0) then
+            if not PAD.IS_USING_KEYBOARD_AND_MOUSE(0) then
                 if PAD.GET_CONTROL_UNBOUND_NORMAL(0, 208) ~= 0 then
                     accelerating = true
                 end
@@ -455,7 +448,7 @@ self.mainLoop = function ()
     elseif state == MissileState.exploting then
         local coord = CAM.GET_CAM_COORD(camera)
         FIRE.ADD_EXPLOSION(coord.x, coord.y, coord.z, 81, 5.0, true, false, 1.0, false)
-        WIRI.SET_CONTROL_SHAKE(0, 300, 200)
+        PAD.SET_CONTROL_SHAKE(0, 300, 200)
         NETWORK.NETWORK_FADE_OUT_ENTITY(object, false, true)
         sounds.startUp:stop()
         sounds.outOfBounds:stop()

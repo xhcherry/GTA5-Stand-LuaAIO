@@ -1,6 +1,6 @@
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-json = require "lib.pretty.json"
+json = require "lib.daidaimain.pretty.json"
 local self = {}
 self.version = 26
 
@@ -269,7 +269,7 @@ end
 ---@param index integer
 ---@param name string
 function Instructional.add_control(index, name)
-	local button = PAD.GET_CONTROL_INSTRUCTIONAL_BUTTON(2, index, true)
+	local button = PADdaidai.GET_CONTROL_INSTRUCTIONAL_BUTTON(2, index, true)
     Instructional:add_data_slot(index, name, button)
 end
 
@@ -277,7 +277,7 @@ end
 ---@param index integer
 ---@param name string
 function Instructional.add_control_group (index, name)
-	local button = PAD.GET_CONTROL_GROUP_INSTRUCTIONAL_BUTTON(2, index, true)
+	local button = PADdaidai.GET_CONTROL_GROUP_INSTRUCTIONAL_BUTTON(2, index, true)
     Instructional:add_data_slot(index, name, button)
 end
 
@@ -448,20 +448,20 @@ end
 ---@param colour integer
 ---@return Blip
 function add_blip_for_entity(entity, blipSprite, colour)
-	local blip = WIRI_HUD.ADD_BLIP_FOR_ENTITY(entity)
-	WIRI_HUD.SET_BLIP_SPRITE(blip, blipSprite)
-	WIRI_HUD.SET_BLIP_COLOUR(blip, colour)
-	WIRI_HUD.SHOW_HEIGHT_ON_BLIP(blip, false)
+	local blip = HUD.ADD_BLIP_FOR_ENTITY(entity)
+	HUD.SET_BLIP_SPRITE(blip, blipSprite)
+	HUD.SET_BLIP_COLOUR(blip, colour)
+	HUD.SHOW_HEIGHT_ON_BLIP(blip, false)
 
 	util.create_tick_handler(function ()
-		if not WIRI_ENTITY.DOES_ENTITY_EXIST(entity)or WIRI_ENTITY.IS_ENTITY_DEAD(entity, false) then
+		if not ENTITY.DOES_ENTITY_EXIST(entity)or ENTITY.IS_ENTITY_DEAD(entity, false) then
 			util.remove_blip(blip)
 			return false
-		elseif not WIRI_HUD.DOES_BLIP_EXIST(blip) then
+		elseif not HUD.DOES_BLIP_EXIST(blip) then
 			return false
 		else
-			local heading = WIRI_ENTITY.GET_ENTITY_HEADING(entity)
-        	WIRI_HUD.SET_BLIP_ROTATION(blip, math.ceil(heading))
+			local heading = ENTITY.GET_ENTITY_HEADING(entity)
+        	HUD.SET_BLIP_ROTATION(blip, math.ceil(heading))
 		end
 	end)
 
@@ -600,7 +600,7 @@ end
 ---@param entity Entity
 ---@param flag integer
 function set_decor_flag(entity, flag)
-	WIRI_DECORATOR.DECOR_SET_INT(entity, "Casino_Game_Info_Decorator", flag)
+	DECORATOR.DECOR_SET_INT(entity, "Casino_Game_Info_Decorator", flag)
 end
 
 
@@ -619,7 +619,7 @@ end
 
 ---@param entity Entity
 function remove_decor(entity)
-	WIRI_DECORATOR.DECOR_REMOVE(entity, "Casino_Game_Info_Decorator")
+	DECORATOR.DECOR_REMOVE(entity, "Casino_Game_Info_Decorator")
 end
 
 function memory_scan(name, pattern, callback)
@@ -679,7 +679,7 @@ function set_entity_as_no_longer_needed(entity)
 	if not ENTITY.DOES_ENTITY_EXIST(entity) then return end
 	local pHandle = memory.alloc_int()
 	memory.write_int(pHandle, entity)
-	WIRI_ENTITY.SET_ENTITY_AS_NO_LONGER_NEEDED(pHandle)
+	ENTITY.SET_ENTITY_AS_NO_LONGER_NEEDED(pHandle)
 end
 
 
@@ -1054,7 +1054,7 @@ function set_scaleform_movie_as_no_longer_needed(handle)
 	util.spoof_script("main_persistent", function ()
 		local ptr = memory.alloc_int()
 		memory.write_int(ptr, handle)
-		WIRI.SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED(ptr)
+		PADdaidai.SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED(ptr)
 	end)
 end
 
@@ -1280,7 +1280,7 @@ end
 ---@return number?
 function get_ground_z(pos)
 	local pGroundZ = memory.alloc(4)
-	WIRI.GET_GROUND_Z_FOR_3D_COORD(pos, pGroundZ, false, true)
+	MISC.GET_GROUND_Z_FOR_3D_COORD(pos, pGroundZ, false, true)
 	local groundz = memory.read_float(pGroundZ)
 	return groundz
 end
@@ -1343,7 +1343,7 @@ end
 function draw_marker(type, pos, scale, colour, textureDict, textureName)
 	textureDict = textureDict or 0
 	textureName = textureName or 0
-	WIRI.DRAW_MARKER(type, pos, v3(), v3(), v3(scale, scale, scale), colour.r, colour.g, colour.b, colour.a, false, false, 0, true, textureDict, textureName, false)
+	GRAPHICSdaidai.DRAW_MARKER(type, pos, v3(), v3(), v3(scale, scale, scale), colour.r, colour.g, colour.b, colour.a, false, false, 0, true, textureDict, textureName, false)
 end
 
 

@@ -1,19 +1,5 @@
---[[
---------------------------------
-THIS FILE IS PART OF WIRISCRIPT
-         Nowiry#2663
---------------------------------
-]]
-
----@diagnostic disable: exp-in-action, unknown-symbol, break-outside, undefined-global
 require "lib.daidailib.functions"
 
---------------------------
--- BITFIELD
---------------------------
-
----@class Bitwise
----@field bits integer
 local Bitfield = {}
 Bitfield.__index = Bitfield
 
@@ -118,13 +104,13 @@ local Bit_IgnoreCrewMembers <const> = 2
 ---@param scale number
 ---@param colour Colour
 local DrawLockonSprite = function (position, scale, colour)
-	if WIRI_GRAPHICS.HAS_STREAMED_TEXTURE_DICT_LOADED("mpsubmarine_periscope") then
+	if GRAPHICS.HAS_STREAMED_TEXTURE_DICT_LOADED("mpsubmarine_periscope") then
 		local txdSizeX = scale * 0.042
-		local txdSizeY = scale * 0.042 * WIRI.GET_ASPECT_RATIO(false)
-		WIRI_GRAPHICS.SET_DRAW_ORIGIN(position.x, position.y, position.z, 0)
-		WIRI_GRAPHICS.DRAW_SPRITE(
+		local txdSizeY = scale * 0.042 * GRAPHICS.GET_ASPECT_RATIO(false)
+		GRAPHICS.SET_DRAW_ORIGIN(position.x, position.y, position.z, 0)
+		GRAPHICS.DRAW_SPRITE(
 			"mpsubmarine_periscope", "target_default", 0.0, 0.0, txdSizeX, txdSizeY, 0.0, colour.r, colour.g, colour.b, colour.a, true, 0)
-		WIRI_GRAPHICS.CLEAR_DRAW_ORIGIN()
+		GRAPHICS.CLEAR_DRAW_ORIGIN()
 	end
 end
 
@@ -132,7 +118,7 @@ end
 ---@param vehicle Vehicle
 ---@return boolean
 local IsAnyPoliceVehicle = function(vehicle)
-	local modelHash = WIRI_ENTITY.GET_ENTITY_MODEL(vehicle)
+	local modelHash = ENTITY.GET_ENTITY_MODEL(vehicle)
 	switch int_to_uint(modelHash)do
 		case 0x79FBB0C5:
 		case 0x9F05F101:
@@ -159,8 +145,8 @@ end
 local IsEntityInSafeScreenPos = function (entity)
 	local pScreenX = memory.alloc(4)
 	local pScreenY = memory.alloc(4)
-	local pos = WIRI_ENTITY.GET_ENTITY_COORDS(entity, true)
-	if not WIRI_GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(pos.x, pos.y, pos.z, pScreenX, pScreenY) then
+	local pos = ENTITY.GET_ENTITY_COORDS(entity, true)
+	if not GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(pos.x, pos.y, pos.z, pScreenX, pScreenY) then
 		return false
 	end
 	local screenX = memory.read_float(pScreenX)
@@ -196,7 +182,7 @@ end
 ---@return integer
 local GetHandleFromPlayer = function (player)
 	local handle = memory.alloc(104)
-	WIRI_NETWORK.NETWORK_HANDLE_FROM_PLAYER(player, handle, 13)
+	NETWORK.NETWORK_HANDLE_FROM_PLAYER(player, handle, 13)
 	return handle
 end
 
@@ -205,16 +191,16 @@ end
 ---@param target Player
 ---@return boolean
 local ArePlayersInTheSameCrew = function (player, target)
-	if WIRI_NETWORK.NETWORK_CLAN_SERVICE_IS_VALID() then
+	if NETWORK.NETWORK_CLAN_SERVICE_IS_VALID() then
 		local targetHandle = GetHandleFromPlayer(target)
 		local handle = GetHandleFromPlayer(player)
 
-		if WIRI_NETWORK.NETWORK_CLAN_PLAYER_IS_ACTIVE(handle) and WIRI_NETWORK.NETWORK_CLAN_PLAYER_IS_ACTIVE(targetHandle) then
+		if NETWORK.NETWORK_CLAN_PLAYER_IS_ACTIVE(handle) and NETWORK.NETWORK_CLAN_PLAYER_IS_ACTIVE(targetHandle) then
 			local targetClanDesc = memory.alloc(280)
 			local clanDesc = memory.alloc(280)
 
-			WIRI_NETWORK.NETWORK_CLAN_PLAYER_GET_DESC(clanDesc, 35, handle)
-			WIRI_NETWORK.NETWORK_CLAN_PLAYER_GET_DESC(targetClanDesc, 35, targetHandle)
+			NETWORK.NETWORK_CLAN_PLAYER_GET_DESC(clanDesc, 35, handle)
+			NETWORK.NETWORK_CLAN_PLAYER_GET_DESC(targetClanDesc, 35, targetHandle)
 			return memory.read_int(clanDesc + 0x0) == memory.read_int(targetClanDesc + 0x0)
 		end
 	end
@@ -224,13 +210,13 @@ end
 
 ---@param ped Ped
 local IsPedAnyTargetablePlayer = function (ped)
-	local player = WIRI_NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(ped)
+	local player = NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(ped)
 	if not is_player_active(player, true, true) then
 		return false
 	end
 
 	if is_player_in_interior(player) or is_player_passive(player) or
-    WIRI.IS_ENTITY_A_GHOST(ped) then
+    NETWORK.IS_ENTITY_A_GHOST(ped) then
 		return false
 	elseif whiteList:IsBitSet(Bit_IgnoreFriends) and is_player_friend(player) then
 		return false
@@ -248,11 +234,11 @@ end
 ---@param vehicle Vehicle
 ---@return boolean
 local DoesVehicleHavePlayerDriver = function(vehicle)
-	if WIRI_VEHICLE.IS_VEHICLE_SEAT_FREE(vehicle, -1, false) then
+	if VEHICLE.IS_VEHICLE_SEAT_FREE(vehicle, -1, false) then
 		return false
 	end
-	local driver = WIRI_VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, -1, false)
-	if not WIRI_ENTITY.DOES_ENTITY_EXIST(driver) or not WIRI_PED.IS_PED_A_PLAYER(driver) or
+	local driver = VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, -1, false)
+	if not ENTITY.DOES_ENTITY_EXIST(driver) or not PED.IS_PED_A_PLAYER(driver) or
 	not IsPedAnyTargetablePlayer(driver) then
 		return false
 	end
@@ -278,18 +264,18 @@ end
 ---@param entity Entity
 ---@return boolean
 local IsEntityTargetable = function(entity)
-	if not WIRI_ENTITY.DOES_ENTITY_EXIST(entity) or WIRI_ENTITY.IS_ENTITY_DEAD(entity, false) then
+	if not ENTITY.DOES_ENTITY_EXIST(entity) or ENTITY.IS_ENTITY_DEAD(entity, false) then
 		return false
 	end
 	local distance = get_distance_between_entities(myVehicle, entity)
 	if distance > 500.0 or distance < 10.0 then
 		return false
 	end
-	if WIRI_ENTITY.IS_ENTITY_A_PED(entity) and WIRI_PED.IS_PED_A_PLAYER(entity) and
-	players.user_ped() ~= entity and not WIRI_PED.IS_PED_IN_ANY_VEHICLE(entity, false) and
+	if ENTITY.IS_ENTITY_A_PED(entity) and PED.IS_PED_A_PLAYER(entity) and
+	players.user_ped() ~= entity and not PED.IS_PED_IN_ANY_VEHICLE(entity, false) and
 	IsPedAnyTargetablePlayer(entity) then
 		return true
-	elseif WIRI_ENTITY.IS_ENTITY_A_VEHICLE(entity) and entity ~= myVehicle then
+	elseif ENTITY.IS_ENTITY_A_VEHICLE(entity) and entity ~= myVehicle then
 		if DoesVehicleHavePlayerDriver(entity) then
 			return true
 		elseif GetPlayerWantedLevel(players.user()) > 0 and IsAnyPoliceVehicle(entity) then
@@ -323,7 +309,7 @@ end
 ---@return boolean
 local TargetEntitiesInsert = function (entity)
 	for i, target in ipairs(targetEnts) do
-        if target == -1 or not WIRI_ENTITY.DOES_ENTITY_EXIST(target) then
+        if target == -1 or not ENTITY.DOES_ENTITY_EXIST(target) then
             targetEnts[i] = entity
             numTargets = numTargets + 1
 			return true
@@ -337,9 +323,9 @@ end
 local GetFartherTargetIndex = function()
 	local lastDistance = 0.0
 	local index = -1
-	local myPos = WIRI_ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
+	local myPos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
 	for i = 1, maxTargets do
-		local pos = WIRI_ENTITY.GET_ENTITY_COORDS(targetEnts[i], true)
+		local pos = ENTITY.GET_ENTITY_COORDS(targetEnts[i], true)
 		local distance = myPos:distance(pos)
 		if distance > lastDistance then
 			index = i
@@ -355,7 +341,7 @@ end
 ---@return boolean
 local IsCameraPointingInFrontOfEntity = function(entity, amplitude)
 	local camDir = CAM.GET_GAMEPLAY_CAM_ROT(0):toDir()
-	local fwdVector = WIRI_ENTITY.GET_ENTITY_FORWARD_VECTOR(entity)
+	local fwdVector = ENTITY.GET_ENTITY_FORWARD_VECTOR(entity)
 	camDir.z, fwdVector.z = 0.0, 0.0
 	local angle = math.acos(fwdVector:dot(camDir) / (#camDir * #fwdVector))
 	return math.deg(angle) < amplitude
@@ -368,8 +354,8 @@ local SetTargetEntities = function()
     end
 	local entity = nearbyEntities[entCount + 1]
 
-	if WIRI_ENTITY.DOES_ENTITY_EXIST(entity) and not WIRI_ENTITY.IS_ENTITY_DEAD(entity, false) and
-	WIRI_ENTITY.HAS_ENTITY_CLEAR_LOS_TO_ENTITY(myVehicle, entity, 287) then
+	if ENTITY.DOES_ENTITY_EXIST(entity) and not ENTITY.IS_ENTITY_DEAD(entity, false) and
+	ENTITY.HAS_ENTITY_CLEAR_LOS_TO_ENTITY(myVehicle, entity, 287) then
 		if numTargets < maxTargets then
 			if TargetEntitiesInsert(entity) then
 				nearbyEntities[entCount + 1] = -1
@@ -380,9 +366,9 @@ local SetTargetEntities = function()
 			local target = targetEnts[targetId]
 
 			if targetId >= 1 and target then
-				local entityPos = WIRI_ENTITY.GET_ENTITY_COORDS(entity, true)
-				local myPos = WIRI_ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
-				local targetPos = WIRI_ENTITY.GET_ENTITY_COORDS(target, true)
+				local entityPos = ENTITY.GET_ENTITY_COORDS(entity, true)
+				local myPos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
+				local targetPos = ENTITY.GET_ENTITY_COORDS(target, true)
 				local targetDist = targetPos:distance(myPos)
 				local entDist = entityPos:distance(myPos)
 				if targetDist > entDist then targetEnts[targetId] = entity end
@@ -420,7 +406,7 @@ local IsWebBrowserOpen = function ()
 end
 
 local IsCameraAppOpen = function ()
-	return WIRI.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(util.joaat("appcamera")) > 0
+	return SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(util.joaat("appcamera")) > 0
 end
 
 
@@ -432,7 +418,7 @@ local LockonEntity = function (entity, count)
 	local lockOnTimer = homingTimers[count]
 	local amberSound = amberHomingSounds[count]
 
-	if not WIRI_ENTITY.DOES_ENTITY_EXIST(entity) or WIRI_ENTITY.IS_ENTITY_DEAD(entity, false) or
+	if not ENTITY.DOES_ENTITY_EXIST(entity) or ENTITY.IS_ENTITY_DEAD(entity, false) or
 	not IsEntityInSafeScreenPos(entity) or (IsWebBrowserOpen() or IsCameraAppOpen()) then
 		amberSound:stop()
 		lockOnBits:ClearBit(bitPlace)
@@ -441,11 +427,11 @@ local LockonEntity = function (entity, count)
 		return
 	end
 
-	if WIRI_ENTITY.IS_ENTITY_A_VEHICLE(entity) and WIRI_VEHICLE.IS_VEHICLE_DRIVEABLE(entity, false) then
-		local driver = WIRI_VEHICLE.GET_PED_IN_VEHICLE_SEAT(entity, -1, false)
-		if WIRI_ENTITY.DOES_ENTITY_EXIST(driver) and WIRI_PED.IS_PED_A_PLAYER(driver) and
-		is_player_active(WIRI_NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(driver), true, true) then
-			WIRI.SET_VEHICLE_HOMING_LOCKEDONTO_STATE(entity, 2)
+	if ENTITY.IS_ENTITY_A_VEHICLE(entity) and VEHICLE.IS_VEHICLE_DRIVEABLE(entity, false) then
+		local driver = VEHICLE.GET_PED_IN_VEHICLE_SEAT(entity, -1, false)
+		if ENTITY.DOES_ENTITY_EXIST(driver) and PED.IS_PED_A_PLAYER(driver) and
+		is_player_active(NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(driver), true, true) then
+			VEHICLE.SET_VEHICLE_HOMING_LOCKEDONTO_STATE(entity, 2)
 		end
 	end
 
@@ -472,20 +458,20 @@ local LockonEntity = function (entity, count)
 	if lockOnBits:IsBitSet(bitPlace + 6) then
 		hudColour = HudColour.red
 	end
-	local pos = WIRI_ENTITY.GET_ENTITY_COORDS(entity, true)
+	local pos = ENTITY.GET_ENTITY_COORDS(entity, true)
 	DrawLockonSprite(pos, 1.0, get_hud_colour(hudColour))
 end
 
 
 local GetCrosshairPosition = function ()
-	local vehPos = WIRI_ENTITY.GET_ENTITY_COORDS(myVehicle, true)
-	local vehDir = WIRI_ENTITY.GET_ENTITY_ROTATION(myVehicle, 2):toDir()
+	local vehPos = ENTITY.GET_ENTITY_COORDS(myVehicle, true)
+	local vehDir = ENTITY.GET_ENTITY_ROTATION(myVehicle, 2):toDir()
 	local frontPos = v3.new(vehDir)
 	frontPos:mul(100)
 	frontPos:add(vehPos)
 
 	local handle =
-	WIRI_SHAPETEST.START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(
+	SHAPETEST.START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(
 		vehPos.x, vehPos.y, vehPos.z,
 		frontPos.x, frontPos.y, frontPos.z, 511,
 		myVehicle, 7
@@ -495,7 +481,7 @@ local GetCrosshairPosition = function ()
 	local endCoords = v3.new()
 	local normal = v3.new()
 	local pHitEntity = memory.alloc_int()
-	WIRI_SHAPETEST.GET_SHAPE_TEST_RESULT(handle, pHit, endCoords, normal, pHitEntity)
+	SHAPETEST.GET_SHAPE_TEST_RESULT(handle, pHit, endCoords, normal, pHitEntity)
 	return memory.read_int(pHit) == 1 and endCoords or frontPos
 end
 
@@ -514,7 +500,7 @@ end
 local UpdateTargetEntities = function ()
 	local count = 0
 	for i = 1, 6 do
-		if WIRI_ENTITY.DOES_ENTITY_EXIST(targetEnts[i]) then
+		if ENTITY.DOES_ENTITY_EXIST(targetEnts[i]) then
 			local timer = lostTargetTimers[i]
 			local entity = targetEnts[i]
 
@@ -529,7 +515,7 @@ local UpdateTargetEntities = function ()
 			  	numTargets = numTargets - 1
 			  	timer.disable()
 
-			elseif not WIRI_ENTITY.HAS_ENTITY_CLEAR_LOS_TO_ENTITY(myVehicle, entity, 287) then
+			elseif not ENTITY.HAS_ENTITY_CLEAR_LOS_TO_ENTITY(myVehicle, entity, 287) then
 				if not timer.isEnabled() then
 					timer.reset()
 				elseif timer.elapsed() > 1000 then
@@ -541,7 +527,7 @@ local UpdateTargetEntities = function ()
 			else timer.disable() end
 		end
 
-		if WIRI_ENTITY.DOES_ENTITY_EXIST(targetEnts[i]) then
+		if ENTITY.DOES_ENTITY_EXIST(targetEnts[i]) then
 			count = count + 1
 		end
 	end
@@ -562,25 +548,25 @@ end
 ---@param target Ped
 ---@param position integer #right: 0, left: 1
 local ShootFromVehicle = function (vehicle, damage, weaponHash, ownerPed, isAudible, isVisible, speed, target, position)
-	local pos = WIRI_ENTITY.GET_ENTITY_COORDS(vehicle, true)
+	local pos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
 	local min, max = v3.new(), v3.new()
-	WIRI_MISC.GET_MODEL_DIMENSIONS(WIRI_ENTITY.GET_ENTITY_MODEL(vehicle), min, max)
-	local direction = WIRI_ENTITY.GET_ENTITY_ROTATION(vehicle, 2):toDir()
+	MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), min, max)
+	local direction = ENTITY.GET_ENTITY_ROTATION(vehicle, 2):toDir()
 	local a
 
 	if position == 0 then
 		local offset = v3.new(min.x + 0.3, max.y - 0.15, 0.3)
-		a = WIRI_ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(vehicle, offset.x, offset.y, offset.z)
+		a = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(vehicle, offset.x, offset.y, offset.z)
 	elseif position == 1 then
 		local offset = v3.new(max.x - 0.3, max.y - 0.15, 0.3)
-		a = WIRI_ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(vehicle, offset.x, offset.y, offset.z)
+		a = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(vehicle, offset.x, offset.y, offset.z)
 	else
 		error("got unexpected position")
 	end
 
 	local b = v3.new(direction)
 	b:mul(5.0); b:add(a)
-	WIRI_MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY_NEW(
+	MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY_NEW(
 		a.x, a.y, a.z,
 		b.x, b.y, b.z,
 		damage,
@@ -599,12 +585,12 @@ end
 
 local ShootMissiles = function()
 	local controlId = 68
-	if WIRI_PED.IS_PED_IN_FLYING_VEHICLE(players.user_ped()) then
+	if PED.IS_PED_IN_FLYING_VEHICLE(players.user_ped()) then
 		controlId = 114
 	end
 	local target = 0
 
-	if (WIRI_PAD.IS_DISABLED_CONTROL_PRESSED(2, controlId) or bits:IsBitSet(Bit_IsTargetShooting)) and
+	if (PAD.IS_DISABLED_CONTROL_PRESSED(2, controlId) or bits:IsBitSet(Bit_IsTargetShooting)) and
 	not bits:IsBitSet(Bit_IsRecharging) and lastShot.elapsed() > 300 then
 		if shotCount < 0 or shotCount > 5 then
 			shotCount = 0
@@ -614,8 +600,8 @@ local ShootMissiles = function()
 		local ownerPed = players.user_ped()
 
 		if numTargets > 0 then
-			if WIRI_ENTITY.DOES_ENTITY_EXIST(targetEnts[numShotTargets + 1]) and
-			not WIRI_ENTITY.IS_ENTITY_DEAD(targetEnts[numShotTargets + 1], false) then
+			if ENTITY.DOES_ENTITY_EXIST(targetEnts[numShotTargets + 1]) and
+			not ENTITY.IS_ENTITY_DEAD(targetEnts[numShotTargets + 1], false) then
 				target = targetEnts[numShotTargets + 1]
 				bits:SetBit(Bit_IsTargetShooting)
 				ShootFromVehicle(myVehicle, 200, weapon, ownerPed, true, true, 1000.0, target, vehicleWeaponSide)
@@ -717,8 +703,8 @@ end
 ---@param y number
 Print.drawstring = function (text, x, y)
     HUD.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(text)
-	WIRI_GRAPHICS.BEGIN_TEXT_COMMAND_SCALEFORM_STRING(text)
-	WIRI_GRAPHICS.END_TEXT_COMMAND_SCALEFORM_STRING()
+	GRAPHICS.BEGIN_TEXT_COMMAND_SCALEFORM_STRING(text)
+	GRAPHICS.END_TEXT_COMMAND_SCALEFORM_STRING()
     HUD.END_TEXT_COMMAND_DISPLAY_TEXT(x, y, 0)
 end
 
@@ -735,7 +721,7 @@ local DrawChargingMeter = function ()
 		local width = interpolate(0.0, maxWidth, chargeLevel / 100)
 		local height <const> = 0.035
 		local rectPosX = 0.85 + width/2
-		WIRI_GRAPHICS.DRAW_RECT(rectPosX, posY, width, height, colour.r, colour.g, colour.b, colour.a, true)
+		GRAPHICS.DRAW_RECT(rectPosX, posY, width, height, colour.r, colour.g, colour.b, colour.a, true)
 
 		local textColour = get_hud_colour(HudColour.white)
 		Print.setupdraw(4, {x = 0.55, y = 0.55}, true, false, false, textColour)
@@ -745,7 +731,7 @@ local DrawChargingMeter = function ()
 
 		--Caption
 		local captionHeight <const> = 0.06
-		WIRI_GRAPHICS.DRAW_RECT(0.85 + maxWidth/2, posY - captionHeight + 0.005, maxWidth, captionHeight, 156, 156, 156, 80, true)
+		GRAPHICS.DRAW_RECT(0.85 + maxWidth/2, posY - captionHeight + 0.005, maxWidth, captionHeight, 156, 156, 156, 80, true)
 		Print.setupdraw(4, {x = 0.65, y = 0.65}, true, false, false, textColour)
 		Print.drawstring("DRONE_MISSILE", textPosX + 0.001, posY - captionHeight - 0.015)
 	end
@@ -753,16 +739,16 @@ end
 
 
 local DisableControlActions = function ()
-	WIRI_PAD.DISABLE_CONTROL_ACTION(2, 25, true)
-	WIRI_PAD.DISABLE_CONTROL_ACTION(2, 91, true)
-	WIRI_PAD.DISABLE_CONTROL_ACTION(2, 99, true)
-	WIRI_PAD.DISABLE_CONTROL_ACTION(2, 115, true)
-	WIRI_PAD.DISABLE_CONTROL_ACTION(2, 262, true)
-	WIRI_PAD.DISABLE_CONTROL_ACTION(2, 68, true)
-	WIRI_PAD.DISABLE_CONTROL_ACTION(2, 69, true)
-	WIRI_PAD.DISABLE_CONTROL_ACTION(2, 70, true)
-	WIRI_PAD.DISABLE_CONTROL_ACTION(2, 114, true)
-	WIRI_PAD.DISABLE_CONTROL_ACTION(2, 331, true)
+	PAD.DISABLE_CONTROL_ACTION(2, 25, true)
+	PAD.DISABLE_CONTROL_ACTION(2, 91, true)
+	PAD.DISABLE_CONTROL_ACTION(2, 99, true)
+	PAD.DISABLE_CONTROL_ACTION(2, 115, true)
+	PAD.DISABLE_CONTROL_ACTION(2, 262, true)
+	PAD.DISABLE_CONTROL_ACTION(2, 68, true)
+	PAD.DISABLE_CONTROL_ACTION(2, 69, true)
+	PAD.DISABLE_CONTROL_ACTION(2, 70, true)
+	PAD.DISABLE_CONTROL_ACTION(2, 114, true)
+	PAD.DISABLE_CONTROL_ACTION(2, 331, true)
 end
 
 
@@ -810,11 +796,11 @@ end
 
 
 self.mainLoop = function ()
-	if is_player_active(players.user(), true, true) and WIRI_PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
-		local vehicle = WIRI_PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-		if WIRI_ENTITY.DOES_ENTITY_EXIST(vehicle) and not WIRI_ENTITY.IS_ENTITY_DEAD(vehicle, false) and
-		WIRI_VEHICLE.IS_VEHICLE_DRIVEABLE(vehicle, false) and
-		WIRI_VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, -1, false) == players.user_ped() then
+	if is_player_active(players.user(), true, true) and PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
+		local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+		if ENTITY.DOES_ENTITY_EXIST(vehicle) and not ENTITY.IS_ENTITY_DEAD(vehicle, false) and
+		VEHICLE.IS_VEHICLE_DRIVEABLE(vehicle, false) and
+		VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, -1, false) == players.user_ped() then
 
 			if not is_player_passive(players.user()) then
 				if state == State.Reseted then
@@ -846,7 +832,7 @@ self.mainLoop = function ()
 				if timerStart ~= NULL and timerState ~= NULL and
 				memory.read_int(timerState) == 0 then
 					notification:normal(trans.DisablingPassive)
-					memory.write_int(timerStart, WIRI_NETWORK.GET_NETWORK_TIME())
+					memory.write_int(timerStart, NETWORK.GET_NETWORK_TIME())
 					memory.write_int(timerState, 1)
 				end
 			end

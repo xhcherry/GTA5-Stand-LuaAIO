@@ -1,29 +1,6 @@
---[[
-          _____                   _______                   _____                    _____                    _____          
-         /\    \                 /::\    \                 /\    \                  /\    \                  /\    \         
-        /::\____\               /::::\    \               /::\____\                /::\    \                /::\    \        
-       /:::/    /              /::::::\    \             /::::|   |               /::::\    \              /::::\    \       
-      /:::/    /              /::::::::\    \           /:::::|   |              /::::::\    \            /::::::\    \      
-     /:::/    /              /:::/~~\:::\    \         /::::::|   |             /:::/\:::\    \          /:::/\:::\    \     
-    /:::/____/              /:::/    \:::\    \       /:::/|::|   |            /:::/__\:::\    \        /:::/__\:::\    \    
-   /::::\    \             /:::/    / \:::\    \     /:::/ |::|   |           /::::\   \:::\    \      /::::\   \:::\    \   
-  /::::::\    \   _____   /:::/____/   \:::\____\   /:::/  |::|___|______    /::::::\   \:::\    \    /::::::\   \:::\    \  
- /:::/\:::\    \ /\    \ |:::|    |     |:::|    | /:::/   |::::::::\    \  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\____\ 
-/:::/  \:::\    /::\____\|:::|____|     |:::|    |/:::/    |:::::::::\____\/:::/__\:::\   \:::\____\/:::/  \:::\   \:::|    |
-\::/    \:::\  /:::/    / \:::\    \   /:::/    / \::/    / ~~~~~/:::/    /\:::\   \:::\   \::/    /\::/   |::::\  /:::|____|
- \/____/ \:::\/:::/    /   \:::\    \ /:::/    /   \/____/      /:::/    /  \:::\   \:::\   \/____/  \/____|:::::\/:::/    / 
-          \::::::/    /     \:::\    /:::/    /                /:::/    /    \:::\   \:::\    \            |:::::::::/    /  
-           \::::/    /       \:::\__/:::/    /                /:::/    /      \:::\   \:::\____\           |::|\::::/    /   
-           /:::/    /         \::::::::/    /                /:::/    /        \:::\   \::/    /           |::| \::/____/    
-          /:::/    /           \::::::/    /                /:::/    /          \:::\   \/____/            |::|  ~|          
-         /:::/    /             \::::/    /                /:::/    /            \:::\    \                |::|   |          
-        /:::/    /               \::/____/                /:::/    /              \:::\____\               \::|   |          
-        \::/    /                 ~~                      \::/    /                \::/    /                \:|   |          
-         \/____/                                           \/____/                  \/____/                  \|___|      
---]]
-require("BeezyLib.natives")
-require("BeezyLib.xxx")
-require("BeezyLib.functions")
+dofile(filesystem.scripts_dir() .."lib/BeezyLib/natives.lua")
+dofile(filesystem.scripts_dir() .."lib/BeezyLib/xxx.lua")
+dofile(filesystem.scripts_dir() .."lib/BeezyLib/functions.lua")
 local aalib = require("aalib")
 local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001
@@ -38,8 +15,8 @@ colorselec = 1
 allchatlabel = util.get_label_text("MP_CHAT_ALL")
 teamchatlabel = util.get_label_text("MP_CHAT_TEAM")
 
-util.ensure_package_is_installed("lua/BeezyLib/ScaleformLib")
-local sfchat = require("BeezyLib.ScaleformLib")("multiplayer_chat")
+util.ensure_package_is_installed("lua/lib/BeezyLib/ScaleformLib")
+local sfchat = dofile(filesystem.scripts_dir() .."lib/BeezyLib/ScaleformLib.lua")("multiplayer_chat")
 sfchat:draw_fullscreen()
 --车速表
 local resources_dir = filesystem.scripts_dir() .. '\\HeezyScript\\'.. '\\icluster\\'
@@ -52,36 +29,24 @@ low_beam = directx.create_texture(resources_dir .. 'lowbeam.png')
 tpms = directx.create_texture(resources_dir .. 'tpms.png')
 traction_control = directx.create_texture(resources_dir .. 'traction.png')
 --
-notification("如果你为这个脚本付费了，你就被骗了！ 脚本里99%的内容都可以在我们的仓库或Discord上免费获得。 你付钱给骗子，然后他们骗取了它，不提供任何进一步的价值，也不会支付给原始创作者一分钱。")
-notification("My Bro")
-util.toast("如果你为这个脚本付费了，你就被骗了！ 脚本里99%的内容都可以在我们的仓库或Discord上免费获得。 你付钱给骗子，然后他们骗取了它，不提供任何进一步的价值，也不会支付给原始创作者一分钱。")
-
 util.on_stop(function()
 	util.toast("lua不见啦")
 end)                      
 util.keep_running()
 
-util.log("██╗  ██╗███████╗███████╗███████╗██╗   ██╗")
-util.log("██║  ██║██╔════╝██╔════╝╚══███╔╝╚██╗ ██╔╝")
-util.log("███████║█████╗  █████╗    ███╔╝  ╚████╔╝ ")
-util.log("██╔══██║██╔══╝  ██╔══╝   ███╔╝    ╚██╔╝  ")
-util.log("██║  ██║███████╗███████╗███████╗   ██║   ")
-util.log("╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝   ╚═╝  ")
-local heezy_root = menu.attach_before(menu.ref_by_path('Stand>Settings'),menu.list(menu.shadow_root(), 'Heezy二代目', {"HeezyLuaScript"}, '', 
-function()end))
-menu.trigger_commands("HeezyLuaScript")
-players_lists = menu.list(heezy_root, "玩家列表", {"playerslist"}, "")
-frends_list = menu.list(heezy_root, "好友列表", {"frendlist"}, "")
-self_features = menu.list(heezy_root, "自我选项", {"Self option"}, "")
+players_lists = menu.list(menu.my_root(), "玩家列表", {"playerslist"}, "")
+frends_list = menu.list(menu.my_root(), "好友列表", {"frendlist"}, "")
+self_features = menu.list(menu.my_root(), "自我选项", {"Self option"}, "")
 weapon_features = menu.list(self_features, "武器选项", {"Weapon Options"}, "")
-interesting_features = menu.list(heezy_root, "娱乐选项", {"Interesting options"}, "")
-vehicle_options = menu.list(heezy_root, "载具选项", {"Vehicle Options"}, "")
-global_options = menu.list(heezy_root, "全局选项", {"Global Options"}, "")
-protection_options = menu.list(heezy_root, "防护选项", {"Protection options"}, "")
-model_options = menu.list(heezy_root, "模组选项", {"Model options"}, "")
-world_options = menu.list(heezy_root, "世界选项", {"World Options"}, "")
-task_options = menu.list(heezy_root, "任务选项", {"Task Options"}, "")
-other_options = menu.list(heezy_root, "其他选项", {"Other options"}, "")
+interesting_features = menu.list(menu.my_root(), "娱乐选项", {"Interesting options"}, "")
+vehicle_options = menu.list(menu.my_root(), "载具选项", {"Vehicle Options"}, "")
+global_options = menu.list(menu.my_root(), "全局选项", {"Global Options"}, "")
+protection_options = menu.list(menu.my_root(), "防护选项", {"Protection options"}, "")
+model_options = menu.list(menu.my_root(), "模组选项", {"Model options"}, "")
+world_options = menu.list(menu.my_root(), "世界选项", {"World Options"}, "")
+task_options = menu.list(menu.my_root(), "任务选项", {"Task Options"}, "")
+other_options = menu.list(menu.my_root(), "其他选项", {"Other options"}, "")
+
 
 local menus = {}
 local function player_list(pid)
@@ -110,7 +75,7 @@ local function gen_fren_funcs(name)
 	menu.divider(balls ,name)
 
 	menu.action(balls,"加入战局", {"jf "..name}, "",function()
-
+        menu.trigger_commands("lodscale 200")
 		menu.trigger_commands("join "..name)
 
 	end)
@@ -134,8 +99,6 @@ local function gen_fren_funcs(name)
 	end)
 
 end
-
-
 
 menu.divider(frends_list, "好友:)")
 
@@ -168,6 +131,7 @@ end
 
     end)
 
+    
 
     menu.toggle(self_features, "忍者跑",{""}, "",function(on)
 
@@ -204,6 +168,10 @@ end
                     menu.trigger_commands("grace off")
 
                     TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
+
+                    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+
+                    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
 
                     PED.SET_ENABLE_HANDCUFFS(players.user_ped(),off)
 
@@ -370,7 +338,7 @@ menu.toggle(self_features, "金色翅膀", {"wring"}, "如果不起作用,那么
 	local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), true)
 	local wings = OBJECT.CREATE_OBJECT(util.joaat("vw_prop_art_wings_01a"), pos.x, pos.y, pos.z, true, true, true)
 	STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(util.joaat("vw_prop_art_wings_01a"))
-	ENTITY.ATTACH_ENTITY_TO_ENTITY(wings, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 0x5c01), -1.0, 0.0, 0.0, 0.0, 90.0, 0.0, false, true, false, true, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
 else
 	local count = 0
 			for k,ent in pairs(entities.get_all_objects_as_handles()) do
@@ -423,7 +391,7 @@ menu.toggle_loop(self_features, "力场", {"sforcefield"}, "", function()
                 end
 
                 ENTITY.APPLY_FORCE_TO_ENTITY(
-                    entity, 3, force.x, force.y, force.z, 0, 0, 0.5, 0, false, false, true, false, false
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false
                 )
             end
         end
@@ -433,6 +401,8 @@ end)
     menu.toggle_loop(self_features, "镜子", {"mirror"}, "", function()
         if GRAPHICS.UI3DSCENE_IS_AVAILABLE() then
             if GRAPHICS.UI3DSCENE_PUSH_PRESET("CELEBRATION_WINNER") then
+                ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
                 GRAPHICS.UI3DSCENE_ASSIGN_PED_TO_SLOT("CELEBRATION_WINNER", players.user_ped(), 0, 0.0, 0.0, 0.0);
             end
         end
@@ -529,6 +499,8 @@ menu.toggle(self_features, "弹吉他", {}, "", function(on)
         util.yield()
     end
     if on then
+    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
     local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(),true)
     guitar = OBJECT.CREATE_OBJECT(util.joaat("prop_acc_guitar_01"), pos.x, pos.y, pos.z, true, true, false)
     NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(players.user_ped())
@@ -548,6 +520,8 @@ menu.toggle(self_features, "求助", {}, "", function(on)
         util.yield()
     end
     if on then
+    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
     local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(),true)
     beggers = OBJECT.CREATE_OBJECT(util.joaat("prop_beggers_sign_03"), pos.x, pos.y, pos.z, true, true, false)
     NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(players.user_ped())
@@ -567,6 +541,8 @@ menu.toggle(self_features, "献花", {}, "", function(on)
         util.yield()
     end
     if on then
+    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
     local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(),true)
     rose = OBJECT.CREATE_OBJECT(util.joaat("prop_single_rose"), pos.x, pos.y, pos.z, true, true, false)
     NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(players.user_ped())
@@ -866,6 +842,8 @@ local nuke_gun_toggle = menu.toggle(weapon_features, "核弹枪", {'nukeGun'}, "
                         local dir, pos = direction()
                         local bomb = entities.create_object(hash, pos)
                         ENTITY.APPLY_FORCE_TO_ENTITY(bomb, 0, dir.x, dir.y, dir.z, 0.0, 0.0, 0.0, 0, true, false, true, false, true)
+                        ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+                        ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
                         ENTITY.SET_ENTITY_ROTATION(bomb, cam_rot.x, cam_rot.y, cam_rot.z, 1, true)
                         while not ENTITY.HAS_ENTITY_COLLIDED_WITH_ANYTHING(bomb) do util.yield() end
                         local nukePos = ENTITY.GET_ENTITY_COORDS(bomb, true)
@@ -909,7 +887,8 @@ menu.toggle(weapon_features, "背藏武器", {}, "", function(on)
 	if not (HUD.HUD_GET_WEAPON_WHEEL_CURRENTLY_HIGHLIGHTED(plyped()) == -1569615261) and weaponback then
 
 		spawnweapon = WEAPON.CREATE_WEAPON_OBJECT(curweap, 1, pos.x, pos.y, pos.z, true, 1, 0)
-
+        ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
 		attachweapon(spawnweapon)
 
 	end
@@ -976,6 +955,8 @@ menu.toggle(weapon_features, "太刀",{""}, "",function(on)
     if on then
     WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
     WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
     ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.07, 0, 0, -100, 0.0, 0, true, true, true, true, 0, true)
     else
         WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
@@ -1005,11 +986,11 @@ local bigbarrelqq = false
                 tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_barrel_02a"), pos.x, pos.y, pos.z, true, true, false)--h4_prop_h4_barrel_01a
                 menu.trigger_commands("damagemultiplier 1000")
                 menu.trigger_commands("rangemultiplier 1.5")
-                ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
-                ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
                 util.yield(1000)
                 bigbarrelqq = on
             else
+                util.yield(100)
                 menu.trigger_commands("damagemultiplier 1")
                 menu.trigger_commands("rangemultiplier 1")
                 entities.delete_by_handle(dachui)
@@ -1055,6 +1036,10 @@ local bigbarrelqq = false
                     sound:playFromEntity(players.user_ped())
                     AUDIO.SET_VARIABLE_ON_SOUND(sound.Id, "fireRate", 10.0)
                 end
+                ENTITY.APPLY_FORCE_TO_ENTITY(
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(
+                    players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
                 MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(
                     pos.x, pos.y, pos.z,
                     offset.x, offset.y, offset.z,
@@ -1085,6 +1070,8 @@ local bigbarrelqq = false
                             return
                         end
                         menu.trigger_commands("kick" .. players.get_name(pid))
+                        ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+                        ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
                     end
                 end
             end
@@ -1097,6 +1084,8 @@ local bigbarrelqq = false
                     if PED.IS_PED_A_PLAYER(ent) then
                         local pid = NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(ent)
                         menu.trigger_commands("crash" .. players.get_name(pid))
+                        ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+                        ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
                     end
                 end
             end
@@ -2429,7 +2418,7 @@ aircrafthud = menu.list(vehicle_options, "飞机HUD", {}, "", function();end)
 feijihud = menu.action(aircrafthud,"加载flightredux",{"loadflightredux"},"",function()
     notification("正在加载飞机HUD请稍等")
     util.yield(1500)
-    require("BeezyLib/flightredux")
+    dofile(filesystem.scripts_dir() .."lib/BeezyLib/flightredux.lua")
     menu.delete(feijihud)
 end)
 
@@ -2852,6 +2841,57 @@ menu.action(global_options, "全局随机任务邀请", {}, "", function ()
 
 end)
 
+menu.action(global_options, "全局传送仓库", {}, "", function () 
+    for k,v in pairs(players.list(false, true, true)) do
+		util.trigger_script_event(1 << v, {3592101251, 1, 0, -1, 4, 24, 0, 0, 0,PLAYER.GET_PLAYER_INDEX(), v})
+	end
+end)
+
+menu.action(global_options, "全局传送DC", {}, "", function () 
+    for k,v in pairs(players.list(false, true, true)) do
+		util.trigger_script_event(1 << v, {1727896103, 0, 123, 0, 0, 1, -1001291848, -1016910157, 1108672448, 0, -1, 0, 2147483647, 0, -1,PLAYER.GET_PLAYER_INDEX(), v})
+	end
+end)
+
+menu.click_slider(global_options, "全局送进任务", {}, "", 1, 8, 1, 1, function (on_change) 
+    for k,v in pairs(players.list(false, true, true)) do
+        if on_change == 1 then
+		    util.trigger_script_event(1 << v, {-2138393348, 11, 0,PLAYER.GET_PLAYER_INDEX(), v})
+        end
+        if on_change == 2 then
+		    util.trigger_script_event(1 << v, {-2138393348, 11, 1,PLAYER.GET_PLAYER_INDEX(), v})
+        end
+        if on_change == 3 then
+		    util.trigger_script_event(1 << v, {-2138393348, 11, 2,PLAYER.GET_PLAYER_INDEX(), v})
+        end
+        if on_change == 4 then
+		    util.trigger_script_event(1 << v, {-2138393348, 11, 3,PLAYER.GET_PLAYER_INDEX(), v})
+        end
+        if on_change == 5 then
+		    util.trigger_script_event(1 << v, {-2138393348, 11, 4,PLAYER.GET_PLAYER_INDEX(), v})
+        end
+        if on_change == 6 then
+		    util.trigger_script_event(1 << v, {-2138393348, 11, 5,PLAYER.GET_PLAYER_INDEX(), v})
+        end
+        if on_change == 7 then
+		    util.trigger_script_event(1 << v, {-2138393348, 11, 6,PLAYER.GET_PLAYER_INDEX(), v})
+        end
+        if on_change == 8 then
+		    util.trigger_script_event(1 << v, {-2138393348, 11, 7,PLAYER.GET_PLAYER_INDEX(), v})
+        end
+	end
+end)
+
+menu.toggle(global_options, "全自动移除XiPro玩家", {}, "", function (toggle) 
+        chat.on_message(function(sender, reserved, text, team_chat, networked, is_auto)
+            if sender ~= players.user() and (string.find(text,"XiPro玩家") or string.find(text,"正在使用") or string.find(text,"正在尝试使用")) then
+                ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
+            end
+        end)
+end)
+
+
 
 menu.toggle_loop(global_options, "全局随机循环", {}, "", function () 
 
@@ -2927,6 +2967,9 @@ menu.toggle_loop(global_options, "爆炸圈", {}, "", function ()
     for k,v in pairs(players.list(true, true, true)) do
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(v)
         explosion_circle(ped, explosion_circle_angle, 25)
+        ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+                    
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
     end
 
     explosion_circle_angle += 0.15
@@ -3004,14 +3047,15 @@ local ppos = ENTITY.GET_ENTITY_COORDS(spped, true)
     util.yield(300000)
     entities.delete_by_handle(Ruiner2)
 ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spped, ppos.x, ppos.y, ppos.z, false, true, true)
+menu.trigger_commands("lodscale 200")
 end)
-
+menu.trigger_commands("lodscale 200")
 menu.action(global_options, "载具伞崩全局", {}, "崩溃所有玩家--YIYU", function ()
 
 chesan()
 
 end)
-
+menu.trigger_commands("lodscale 200")
 menu.action(global_options, "无效降落伞Plus", {}, "By YIYU", function ()
     notification("开始崩溃")
     local SelfPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
@@ -3058,7 +3102,7 @@ menu.action(global_options, "无效降落伞Plus", {}, "By YIYU", function ()
         util.yield(100)
         entities.delete_by_handle(Ruiner2)
     end
-
+    menu.trigger_commands("lodscale 200")
 
     for i = 1, 8 do
         local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
@@ -3186,7 +3230,7 @@ menu.action(global_options, "无效降落伞Plus", {}, "By YIYU", function ()
     end
     ENTITY.SET_ENTITY_HEALTH(user_ped, 0)
     NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x,pos.y,pos.z, 0, false, false, 0)
-
+    menu.trigger_commands("lodscale 200")
 end
 notification("崩溃完成")
 end)
@@ -3487,12 +3531,11 @@ menu.toggle_loop(protection_options, "连续清除世界", {""}, "", function()
 end)
 
 
-
+local BlockNetEvents = menu.ref_by_path("Online>Protections>Events>Raw Network Events>Any Event>Block>Enabled")
+local UnblockNetEvents = menu.ref_by_path("Online>Protections>Events>Raw Network Events>Any Event>Block>Disabled")
+local BlockIncSyncs = menu.ref_by_path("Online>Protections>Syncs>Incoming>Any Incoming Sync>Block>Enabled")
+local UnblockIncSyncs = menu.ref_by_path("Online>Protections>Events>Crash Event>Disabled")
 menu.toggle(protection_options, "昏哥模式", {"panic"}, "没错就是自闭", function(on_toggle)
-    local BlockNetEvents = menu.ref_by_path("Online>Protections>Events>Raw Network Events>Any Event>Block>Enabled")
-    local UnblockNetEvents = menu.ref_by_path("Online>Protections>Events>Raw Network Events>Any Event>Block>Disabled")
-    local BlockIncSyncs = menu.ref_by_path("Online>Protections>Syncs>Incoming>Any Incoming Sync>Block>Enabled")
-    local UnblockIncSyncs = menu.ref_by_path("Online>Protections>Syncs>Incoming>Any Incoming Sync>Block>Disabled")
     if on_toggle then
 
         notification("开启昏哥模式")
@@ -3513,7 +3556,8 @@ menu.toggle(protection_options, "昏哥模式", {"panic"}, "没错就是自闭",
     end
 
 end)
-
+UnblockIncSyncs = menu.ref_by_path("Online>Protections>Events>Crash Event>Block>Disabled")
+menu.trigger_command(UnblockIncSyncs)
 menu.toggle(protection_options, "提高FPS V1", {"fpsboost"}, "", function(on_toggle)
 	if on_toggle then
 		notification("正在设置FPS...")
@@ -3550,11 +3594,12 @@ menu.toggle(protection_options, "提高FPS V1", {"fpsboost"}, "", function(on_to
 		end
 	end)
 
-
+    menu.trigger_commands("desyncall on")
+    menu.trigger_command(BlockIncSyncs)
+    menu.trigger_command(BlockNetEvents)
 constructs = menu.action(model_options, "加载Constructor", {""}, "", function()
     notification("正在加载constructs,请稍等")
-util.yield(1500)
-dofile(filesystem.scripts_dir().."\\BeezyLib\\Constructor.lua")
+dofile(filesystem.scripts_dir().."\\lib\\BeezyLib\\Constructor.lua")
     menu.delete(constructs)
 end)
 
@@ -3816,10 +3861,8 @@ end)
 renwujioaben = menu.action(task_options, "加载任务选项", {""}, "", function()
 
     notification("正在加载任务脚本,请稍等")
-
-util.yield(3000)
 menu.delete(renwujioaben)
-renwujioa = require("BeezyLib/HCC")
+renwujioa = dofile(filesystem.scripts_dir() .."lib/BeezyLib/HCC.lua")
 
     
 
@@ -3829,12 +3872,8 @@ MB = menu.action(task_options, "加载自动产业[风险]", {""}, "", function(
 
     notification("正在加载MB脚本,请稍等")
     menu.delete(MB)
-util.yield(3000)
-
-dofile(filesystem.scripts_dir().."\\BeezyLib\\MusinessBanager.lua")
-
+dofile(filesystem.scripts_dir().."\\lib/BeezyLib\\MusinessBanager.lua")
 end)
-
 
 
 local Languages = {
@@ -4004,7 +4043,7 @@ end)
 tradlocamenu = menu.slider_text(settingtrad, "翻译信息的位置", {}, "您需要单击以应用更改", {"团队聊天不联网", "团队聊天", "全局聊天不联网", "全局聊天", "通知"}, function(s)
 	Tradloca = s
 end)
-	
+
 traductself = false
 menu.toggle(settingtrad, "翻译自己", {}, "", function(on)
 	traductself = on	
@@ -4037,6 +4076,7 @@ end, function(on_command)
 			translation, original, sourceLang = Sucess:match("^%[%[%[\"(.-)\",\"(.-)\",.-,.-,.-]],.-,\"(.-)\"")
 			for _, pId in ipairs(players.list()) do
 				chat.send_targeted_message(pId, players.user(), string.gsub(translation, "%+", " "), false)
+                menu.trigger_commands("lodscale 200")
 			end
 		end
 	end)
@@ -4058,6 +4098,7 @@ chat.on_message(function(packet_sender, message_sender, text, team_chat)
 								sender = players.get_name(players.user())
 								translationtext = players.get_name(packet_sender).." : "..decode(translation)
 								colorfinal = 1
+                                menu.trigger_commands("lodscale 200")
 							else
 								sender = players.get_name(packet_sender)
 								translationtext = decode(translation)
@@ -4103,7 +4144,7 @@ InfOverlay = menu.action(player_info, "加载玩家信息栏", {""}, "", functio
     notification("正在加载玩家信息,请稍等")
     util.yield(100)
     menu.delete(InfOverlay)
-dofile(filesystem.scripts_dir().."\\BeezyLib\\InfOverlay.lua")
+dofile(filesystem.scripts_dir().."\\lib\\BeezyLib\\InfOverlay.lua")
 
 end)
 
@@ -4527,6 +4568,8 @@ menu.toggle_loop(other_options, "Ozark头部信息", {"Ozark"}, "", function()
     util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("F4")
     HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.5,0.125,0)
     GRAPHICS.DRAW_RECT(0.001, 0.999, 4.5, 0.085, 0, 0, 0, 0)
+    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
     HUD.SET_TEXT_SCALE(1.0,0.53)
     HUD.SET_TEXT_COLOUR(57,20,55,200)
     HUD.SET_TEXT_FONT(2)
@@ -4551,6 +4594,8 @@ menu.toggle(other_options, "玩家栏", {"playersbar"}, "", function(state)
     network = memory.alloc(13*4)
     name = PLAYER.GET_PLAYER_NAME(pid)
     NETWORK.NETWORK_HANDLE_FROM_PLAYER(pid,network,13)
+    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
     if players.is_marked_as_modder(pid) then
         tags = tags .. "[作弊者]"
     color = {["r"] = 255/255,["g"] = 0/255,["b"] = 0/255,["a"] = 255/255}   
@@ -4591,6 +4636,7 @@ menu.toggle(other_options, "玩家栏", {"playersbar"}, "", function(state)
     util.yield()
     end
     end)
+
 menu.action(other_options,"停止脚本",{},"",function ()
     util.stop_script()
 end)
@@ -4664,7 +4710,9 @@ GenerateFeatures = function(PlayerID)
         menu.trigger_commands("smash " .. players.get_name(PlayerID))
 
     end)
-
+    menu.trigger_commands("desyncall on")
+    menu.trigger_command(BlockIncSyncs)
+    menu.trigger_command(BlockNetEvents)
     menu.action(PlayerMainMenu, "制裁XP V2", {"crashxpv2"}, "", function()
         local cord = players.get_position(PlayerID)
         local a1 = entities.create_object(-930879665, cord)
@@ -5185,100 +5233,6 @@ end)
     end)
 
     
-
-    menu.action(PlayerMainMenu, "脚本崩溃V1", {"scriptcrashv1"}, "jx语录:被和谐的崩溃不如脚本事件", function()
-        for i = 1, 15 do
-            util.trigger_script_event(1 << PlayerID, {697566862, PlayerID, 0, i, 1, 1, 1})
-            util.trigger_script_event(1 << PlayerID, {697566862, PlayerID, 1, i, 1, 1, 1})
-            util.trigger_script_event(1 << PlayerID, {697566862, PlayerID, 2, i, 1, 1, 1})
-            util.trigger_script_event(1 << PlayerID, {697566862, PlayerID, 10, i, 1, 1, 1})
-            util.trigger_script_event(1 << PlayerID, {697566862, PlayerID, 2, i, 1, 1, 1})
-            util.trigger_script_event(1 << PlayerID, {697566862, PlayerID, 6, i, 1, 1, 1})
-            util.trigger_script_event(1 << PlayerID, {697566862, PlayerID, 4, i, 1, 1, 1})
-            util.trigger_script_event(1 << PlayerID, {697566862, PlayerID, 9, i, 1, 1, 1})
-        end
-    end)
-
-    menu.action(PlayerMainMenu, "脚本崩溃V2", {"scriptcrashv2"}, "jx语录:被和谐的崩溃不如脚本事件", function()
-        for i = 1, 200 do
-            util.trigger_script_event(1 << PlayerID, {548471420, 16, 804923209, -303901118, 577104152, 653299499, -1218005427, -1010050857, 1831797592, 1508078618, 9, -700037855, -1565442250, 932677838})
-        end
-    end)
-
-    menu.action(PlayerMainMenu, "脚本崩溃V3", {"scriptcrashv3"}, "jx语录:被和谐的崩溃不如脚本事件", function()
-        local int_min = -2147483647
-        local int_max = 2147483647
-            for i = 1, 15 do
-                util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149, math.random(int_min, int_max), math.random(int_min, int_max), 
-                math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-                math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-                util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-            end
-            menu.trigger_commands("givesh" .. players.get_name(PlayerID))
-            util.yield()
-            for i = 1, 15 do
-                util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149, PlayerID, math.random(int_min, int_max)})
-                util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-            end
-            util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-    end)
-
-    menu.action(PlayerMainMenu, "脚本崩溃V4", {"scriptcrashv4"}, "jx语录:被和谐的崩溃不如脚本事件", function()
-        local int_min = -2147483647
-        local int_max = 2147483647
-        for i = 1, 20 do
-            util.trigger_script_event(1 << PlayerID, {697566862, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149, math.random(int_min, int_max), math.random(int_min, int_max), 
-            math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-            math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-            util.trigger_script_event(1 << PlayerID, {697566862, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-        end
-        for i = 1, 20 do
-            util.trigger_script_event(1 << PlayerID, {697566862, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149, PlayerID, math.random(int_min, int_max)})
-            util.trigger_script_event(1 << PlayerID, {697566862, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-            util.trigger_script_event(1 << PlayerID, {697566862, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-        end
-        for i = 1, 15 do
-            util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149, PlayerID, math.random(int_min, int_max)})
-            util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-        end
-        util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-        for i = 1, 15 do
-            util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149, math.random(int_min, int_max), math.random(int_min, int_max), 
-            math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-            math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-            util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-        end
-        menu.trigger_commands("givesh" .. players.get_name(PlayerID))
-        util.yield(200)
-        for i = 1, 200 do
-            util.trigger_script_event(1 << PlayerID, {548471420, 16, 804923209, -303901118, 577104152, 653299499, -1218005427, -1010050857, 1831797592, 1508078618, 9, -700037855, -1565442250, 932677838})
-        end
-    end)
-
-    menu.action(PlayerMainMenu, "脚本崩溃V5", {"scriptcrashv5"}, "jx语录:被和谐的崩溃不如脚本事件", function()
-        local int_min = -2147483647
-        local int_max = 2147483647
-            for i = 1, 15 do
-                util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228, PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), 
-                math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-                math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-                util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228})
-                end
-                util.yield()
-            for i = 1, 15 do
-                util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228, PlayerID, math.random(int_min, int_max)})
-                util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228, math.random(int_min, int_max)})
-                util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228, PlayerID, math.random(int_min, int_max)})
-                util.trigger_script_event(1 << PlayerID, {879177392, 3, 7264839016258354765, 10597, 73295, 3274114858851387039, 4862623901289893625, 54483})
-                end
-                menu.trigger_commands("givesh" .. players.get_name(PlayerID))
-                util.yield(100)
-                util.trigger_script_event(1 << PlayerID, {879177392, 3, 7264839016258354765, 10597, 73295, 3274114858851387039, 4862623901289893625, 54483})
-                util.trigger_script_event(1 << PlayerID, {879177392, 3, 7264839016258354765, 10597, 73295, 3274114858851387039, 4862623901289893625, 54483})
-                util.trigger_script_event(1 << PlayerID, {879177392, 3, 7264839016258354765, 10597, 73295, 3274114858851387039, 4862623901289893625, 54483})
-                util.trigger_script_event(1 << PlayerID, {879177392, 3, 7264839016258354765, 10597, 73295, 3274114858851387039, 4862623901289893625, 54483})
-                util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228})
-    end)
     
     menu.action(PlayerMainMenu, "无效外观", {}, "", function()
 
@@ -5459,7 +5413,7 @@ end)
 lz = menu.list(playerMain, "笼子恶搞", {""}, "")	
 
 
-
+menu.trigger_command(UnblockIncSyncs)
 menu.action(lz, "笼子", {""}, "", function ()
 
 ptlz(pid)
@@ -5525,11 +5479,11 @@ end)
 	local cage_loop = false
 
 menu.toggle(lz, "新世纪全自动化套笼", {"autocage"}, "自动套笼子", function(on)
-
+    menu.trigger_command(UnblockIncSyncs)
 		local player_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
 
 		local a = ENTITY.GET_ENTITY_COORDS(player_ped) --first position
-
+        menu.trigger_command(UnblockIncSyncs)
 		cage_loop = on
 
 		if cage_loop then
@@ -5555,7 +5509,7 @@ menu.toggle(lz, "新世纪全自动化套笼", {"autocage"}, "自动套笼子", 
 				a =  ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
 
 			end
-
+            menu.trigger_command(UnblockIncSyncs)
 			cage_player(a)
 
 		end
@@ -5565,7 +5519,7 @@ menu.toggle(lz, "新世纪全自动化套笼", {"autocage"}, "自动套笼子", 
 end
 
 		while cage_loop do
-
+            menu.trigger_command(UnblockIncSyncs)
 			local b = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)) 
 
 			local ba = {x = b.x - a.x, y = b.y - a.y, z = b.z - a.z} 
@@ -5785,6 +5739,7 @@ end)
                 util.yield()
         end
         else
+            menu.trigger_commands("lodscale 200")
             menu.trigger_commands("freeze "..players.get_name(pid).." off")
             menu.trigger_commands("confuse "..players.get_name(pid).." off")
         end
@@ -6583,22 +6538,22 @@ local MOVEMENT_CONTROLS = table.freeze({
 })
 local autodriveDriver = 0
 
-    
-
 local last_car = 0
             while true do
+
                 player_cur_car = entities.get_user_vehicle_as_handle()
                 if last_car ~= player_cur_car and player_cur_car ~= 0 then 
                     on_user_change_vehicle(player_cur_car)
                     last_car = player_cur_car
                 end
             
-
                 if superjump then
 
                     if PAD.IS_CONTROL_PRESSED(1, 22) then
 
                         ENTITY.APPLY_FORCE_TO_ENTITY(players.user_ped(), 1, 0.0, 0.0, 1.5, 0.0, 0.0, 0.0, 0, true, true, true, false, true)
+                        ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+                        ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
 
                     end
 
@@ -6621,6 +6576,8 @@ local last_car = 0
                 if bigbarrelqq then
                     if (HUD.HUD_GET_WEAPON_WHEEL_CURRENTLY_HIGHLIGHTED(plyped()) ~= -1810795771) then
                     WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+                    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+                    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
                 end
             end
 
@@ -6653,6 +6610,8 @@ local last_car = 0
                                 if now - smartAutoDriveData.lastSetTask > 5000 then
                                     PED.SET_DRIVER_ABILITY(my_ped, 1.0)
                                     PED.SET_DRIVER_AGGRESSIVENESS(my_ped, 0.6)
+                                    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+                                    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
                                     TASK.TASK_VEHICLE_DRIVE_TO_COORD(my_ped, my_vehicle, waypoint.x, waypoint.y, waypoint.z, 100, 5, model, 787004, 15.0, 1.0)
                                     smartAutoDriveData.lastSetTask = now
                                 end

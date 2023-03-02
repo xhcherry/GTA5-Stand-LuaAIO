@@ -206,6 +206,8 @@ function request_model(model)
 	if STREAMING.IS_MODEL_VALID(model) and not STREAMING.HAS_MODEL_LOADED(model) then
 		STREAMING.REQUEST_MODEL(model)
 		while not STREAMING.HAS_MODEL_LOADED(model) do
+            ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
 			util.yield()
 		end
 	end
@@ -216,6 +218,8 @@ function Request_Model(Hash)
     if STREAMING.IS_MODEL_VALID(Hash) then
         STREAMING.REQUEST_MODEL(Hash)
         while not STREAMING.HAS_MODEL_LOADED(Hash) do
+            ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
             STREAMING.REQUEST_MODEL(Hash)
             util.yield()
         end
@@ -225,6 +229,8 @@ end
  function request_model_load(hash)
     request_time = os.time()
     if not STREAMING.IS_MODEL_VALID(hash) then
+        ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
         return
     end
     STREAMING.REQUEST_MODEL(hash)
@@ -287,7 +293,8 @@ function attach_to_player(hash, bone, x, y, z, xrot, yrot, zrot)           --att
         util.yield()
     end
     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
-
+    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
     local object = OBJECT.CREATE_OBJECT(hash, 0.0,0.0,0, true, true, false)
     ENTITY.ATTACH_ENTITY_TO_ENTITY(object, user_ped, PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), bone), x, y, z, xrot, yrot, zrot, false, false, false, false, 2, true) 
 end
@@ -297,6 +304,8 @@ function delete_object(model)
     for k, object in pairs(entities.get_all_objects_as_handles()) do
         if ENTITY.GET_ENTITY_MODEL(object) == hash then
             ENTITY.SET_ENTITY_AS_MISSION_ENTITY(object, false, false) 
+            ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
             entities.delete_by_handle(object)
         end
     end
@@ -306,6 +315,8 @@ function RqModel (hash)
     STREAMING.REQUEST_MODEL(hash)
     local count = 0
     notification("正在请求模型...")
+    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(),players.user_ped(), 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
     while not STREAMING.HAS_MODEL_LOADED(hash) and count < 100 do
         STREAMING.REQUEST_MODEL(hash)
         count = count + 1

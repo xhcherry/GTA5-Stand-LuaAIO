@@ -348,7 +348,7 @@ function creep(pid)
 
 		request_fx_asset(appears.asset)
 		GRAPHICS.USE_PARTICLE_FX_ASSET(appears.asset)
-		WIRI_GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+		GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
 			appears.name,
 			ped,
 			0.0, 0.0, -1.0,
@@ -373,7 +373,7 @@ function creep(pid)
 			elseif pos:distance(targetPos) < 3.0 and request_control(ped) then
 				request_fx_asset(explosion.asset)
 				GRAPHICS.USE_PARTICLE_FX_ASSET(explosion.asset)
-				WIRI_GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
+				GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
 					explosion.name,
 					pos.x, pos.y, pos.z,
 					0.0, 0.0, 0.0,
@@ -778,11 +778,11 @@ function anfangyanhua()
 end
 function yanhuafashe(f)
     if #placed_firework_boxes == 0 then 
-        --notification("请先安放烟花!",colors.green)
+        util.toast("请先安放烟花!")
         return 
     end
     request_ptfx_asset(ptfx_asset)
-    --notification("烟花发射wow",colors.red)
+    util.toast("烟花发射wow")
     for i=1, 50 do
         for k,box in pairs(placed_firework_boxes) do 
             GRAPHICS.USE_PARTICLE_FX_ASSET(ptfx_asset)
@@ -792,7 +792,7 @@ function yanhuafashe(f)
     end
     for k,box in pairs(placed_firework_boxes) do 
         entities.delete_by_handle(box)
-        placed_firework_boxes[box] = nil
+        placed_firework_boxes = {}
     end
 end
 
@@ -1762,7 +1762,7 @@ function zidanleixing()
                     end
                     local x, y, z = v3.get(inst)
                     local wpEnt = WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(PLAYER.PLAYER_PED_ID(), false)
-                    local wpCoords = ENTITY._GET_ENTITY_BONE_POSITION_2(wpEnt, ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(wpEnt, "gun_muzzle"))
+                    local wpCoords = ENTITY1._GET_ENTITY_BONE_POSITION_2(wpEnt, ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(wpEnt, "gun_muzzle"))
                     MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(wpCoords.x, wpCoords.y, wpCoords.z, x, y, z, 1, true, weapon, PLAYER.PLAYER_PED_ID(), true, false, 1000)
                 end
                 util.yield()
@@ -2391,13 +2391,15 @@ local modded_weapons = {
     "weapon_digiscanner",
 }
 --玩家无敌检测
+function GetSpawnState(pid)
+    return memory.read_int(memory.script_global(((2657589 + 1) + (pid * 466)) + 232)) -- Global_2657589[PLAYER::PLAYER_ID() /*466*/].f_232
+end
 function god_detection()
-    for _, pid in ipairs(players.list(false, true, true)) do
+    for _, pid in players.list(false, true, true) do
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-        local pos = ENTITY.GET_ENTITY_COORDS(ped, false)
-        for i, interior in ipairs(interior_stuff) do
-            if players.is_godmode(pid) and not NETWORK.NETWORK_IS_PLAYER_FADING(pid) and ENTITY.IS_ENTITY_VISIBLE(ped) and get_spawn_state(pid) == 99 and get_interior_player_is_in(pid) == interior then
-                util.draw_debug_text(players.get_name(pid) .. "是无敌,很有可能是作弊者")
+        for _, id in interior_stuff do
+            if players.is_godmode(pid) and not players.is_in_interior(pid) and not NETWORK.NETWORK_IS_PLAYER_FADING(pid) and ENTITY.IS_ENTITY_VISIBLE(ped) and GetSpawnState(pid) == 99 and GetInteriorPlayerIsIn(pid) == id then
+                util.draw_debug_text(players.get_name(pid) .. " 是无敌模式")
                 break
             end
         end
@@ -2681,16 +2683,16 @@ function remote_car_jump(pid)
         end
     end
 --喇叭加速
-function remote_horn_boost(pid)
+function remote_horn_boost()
         local player_ped = PLAYER.GET_PLAYER_PED(pid)
         local player_vehicle = get_vehicle_ped_is_in(player_ped, false)
         if AUDIO.IS_HORN_ACTIVE(player_vehicle) then
             NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(player_vehicle)
-            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(player_vehicle, 1, 0.0, 1.0, 0.0, true, true, true, true) -- alternatively, VEHICLE.SET_VEHICLE_FORWARD_SPEED(...) -- not tested
+            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(player_vehicle, 1, 0.0, 1.0, 0.0, true, true, true, true)
         end
 end
 ---喇叭传送
-function horn_boost_tp(pid)
+function horn_boost_tp()
         local player_ped = PLAYER.GET_PLAYER_PED(pid)
         local player_vehicle = get_vehicle_ped_is_in(player_ped, false)
         if AUDIO.IS_HORN_ACTIVE(player_vehicle) then
@@ -3438,7 +3440,7 @@ local effect_stuff = {
 }
 local ufo = util.joaat("sum_prop_dufocore_01a")
 local dufo = util.joaat("imp_prop_ship_01a")
-local function request_model(hash, timeout)
+function request_model(hash, timeout)
     timeout = timeout or 3
     STREAMING.REQUEST_MODEL(hash)
     local end_time = os.time() + timeout
@@ -3447,7 +3449,7 @@ local function request_model(hash, timeout)
     until STREAMING.HAS_MODEL_LOADED(hash) or os.time() >= end_time
     return STREAMING.HAS_MODEL_LOADED(hash)
 end
-local function get_entity_owner(addr)
+function get_entity_owner(addr)
     if util.is_session_started() and not util.is_session_transition_active() then
         local netObject = memory.read_long(addr + 0xD0)
         if netObject == 0 then
@@ -3458,135 +3460,15 @@ local function get_entity_owner(addr)
     end
     return players.user()
 end
-local function get_transition_state(pid)
+function get_transition_state(pid)
     return memory.read_int(memory.script_global(((0x2908D3 + 1) + (pid * 0x1C5)) + 230))
 end
-local function get_blip_coords(blipId)
+function get_blip_coords(blipId)
     local blip = HUD.GET_FIRST_BLIP_INFO_ID(blipId)
     if blip ~= 0 then return HUD.GET_BLIP_COORDS(blip) end
     return v3(0, 0, 0)
 end
-local window_x = 0.01
-local window_y = 0.03
-local text_margin = 0.003
-local text_height = 0.018 
-local window_width = 0.12
-local window_height = 0.2
-local menu_items = {
-    "加入群聊",
-    "qq群",
-    "343798401"
-   
-}
-local selected_index = 0
 
-local blur_rect_instance
-
-local function colour(r, g, b, a)
-    return { 
-        r = r / 255,
-        g = g / 255,
-        b = b / 255,
-        a = a / 255
-    }
-end
-
-local function gui_background(x, y, width, height, blur_radius)
-    local background = colour(10, 0, 10, 100)
-
-    local border_color_left = colour(255, 0, 255, 255)
-    local border_color_right = colour(0, 0, 0, 255)
-
-    directx.blurrect_draw(
-        blur_rect_instance, 
-        x, y, width, height,
-        blur_radius or 5
-    )
-
-    directx.draw_rect(
-        x, y,
-        width, height,
-        background
-    )
-
-    directx.draw_line(
-        x, y,
-        x, y + height,
-        border_color_left
-    )
-
-    
-    directx.draw_line(
-        x, y,
-        x + width, y,
-        border_color_left, border_color_right
-    )
-
-    directx.draw_line(
-        x + width, y,
-        x + width, y + height,
-        border_color_right
-    )
-
-   
-    directx.draw_line(
-        x, y + height,
-        x + width, y + height,
-        border_color_left, border_color_right
-    )
-end
-local function text(text, x, y, text_scale, highlighted)
-    if highlighted then
-        directx.draw_rect(
-            x, y,
-            window_width - (text_margin * 2), text_height,
-            colour(15, 15, 15, 0)
-        )
-    end
-    directx.draw_text(
-        x, y, text, ALIGN_TOP_LEFT, text_scale,
-        colour(255, 255, 255, 255)
-    )
-end
-local function render_list(x, y, list, selected_index)
-    local ty = 0
-    local text_scale = 0.5 
-    for i,v in pairs(list) do
-        local highlighed = i == selected_index - 1
-
-        text(v, x, y + ty, text_scale, highlighed)
-        ty = ty + text_height
-    end
-end
-local function edition_string()
-    local edition = menu.get_edition()
-    if edition == 0 then
-        return "免费版"
-    elseif edition == 1 then
-        return "基础版"
-    elseif edition == 2 then
-        return "荔枝版"
-    elseif edition == 3 then
-        return "毒毒版"
-    end
-end
-local function render_menu()
-    local width = window_width
-    local height = window_height
-    gui_background(window_x, window_y,
-        width, height)
-    text("Stand " .. edition_string(),
-        window_x + text_margin,
-        window_y + text_margin,
-        0.6, false)
-    local top_margin = 0.025
-    
-    render_list(
-        window_x + text_margin,
-        window_y + text_margin + top_margin,
-        menu_items, selected_index
-    )
-end
 local function set_menu_open(toggle) end 
 local menu_is_open = false
 local function input_handler()
@@ -3711,6 +3593,7 @@ function gen_fren_funcs(name)
 	menu.action(balls,"打开玩家档案", {"pf "..name}, "",function()
 		menu.trigger_commands("nameprofile "..name)
 	end)
+    menu.readonly(balls, "复制玩家昵称: ", name)
 end
 function get_friend_count()
     native_invoker.begin_call();native_invoker.end_call("203F1CFD823B27A4");
@@ -4732,54 +4615,54 @@ function requestweapon(...)
 	end
 end
 function attachweapon(spawnweapon)
-	if (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 416676503) or (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 690389602) then
+	if (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 416676503) or (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 690389602) then
 		ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x192A), 0.15, 0, 0.13, 270, 0, 0, false, true, false, false, 1, true)
 	end
-	if (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == -728555052) or (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == -1609580060) then
-		if (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_bat")) then
+	if (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == -728555052) or (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == -1609580060) then
+		if (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_bat")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x60F2), 0.3, -0.18, -0.15, 0, 300, 0, false, true, false, false, 1, true)
 		end
-		if (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_crowbar")) then
+		if (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_crowbar")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x192A), 0.2, 0, 0.13, 0, 270, 90, false, true, false, false, 1, true)
 		end
-		if (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_battleaxe")) then
+		if (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_battleaxe")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x60F2), 0.2, -0.18, -0.1, 0, 300, 0, false, true, false, false, 1, true)
 		end
-		if (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_golfclub")) then
+		if (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_golfclub")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x60F2), 0.2, -0.18, -0.1, 0, 300, 0, false, true, false, false, 1, true)
 		end
-		if (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_hatchet")) then
+		if (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_hatchet")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x60F2), 0.2, -0.18, -0.1, 0, 300, 0, false, true, false, false, 1, true)
 		end
-		if (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_poolcue")) then
+		if (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_poolcue")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x60F2), -0.2, -0.18, 0.1, 0, 120, 0, false, true, false, false, 1, true)
 		end
-		if (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_stone_hatchet")) then
+		if (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_stone_hatchet")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x60F2), 0.2, -0.18, -0.1, 0, 300, 0, false, true, false, false, 1, true)
 		end
-		if (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_knuckle")) then
+		if (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_knuckle")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x192A), 0.2, 0, 0.13, 0, 270, 90, false, true, false, false, 1, true)
 		end
-		if not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_bat"))  and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_crowbar")) and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_battleaxe"))and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_golfclub")) and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_hatchet")) and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_poolcue")) and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_stone_hatchet")) and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_knuckle")) then
+		if not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_bat"))  and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_crowbar")) and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_battleaxe"))and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_golfclub")) and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_hatchet")) and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_poolcue")) and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_stone_hatchet")) and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_knuckle")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x192A), 0, 0, 0.13, 0, 90, 270, false, true, false, false, 1, true)
 		end
 	end
-	if (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 1548507267) or (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == -37788308) or (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 1595662460) then	
-		if (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_petrolcan")) or (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_hazardcan")) or (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_fertilizercan")) then
+	if (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 1548507267) or (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == -37788308) or (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 1595662460) then	
+		if (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_petrolcan")) or (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_hazardcan")) or (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_fertilizercan")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x60F2), 0, -0.18, -0, 0, 90, 0, false, true, false, false, 1, true)
 		end
-		if (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_proxmine")) or (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_stickybomb")) then
+		if (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_proxmine")) or (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_stickybomb")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x192A), 0.2, 0, 0.13, 0, 0, 270, false, true, false, false, 1, true)
 		end
-		if (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_fireextinguisher")) then
+		if (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_fireextinguisher")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x192A), 0, -0.05, 0.13, 0, 270, 90, false, true, false, false, 1, true)
 		end
-		if not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_petrolcan")) and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_hazardcan")) and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_fertilizercan")) and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_proxmine")) and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_stickybomb")) and not (HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_fireextinguisher")) then
+		if not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_petrolcan")) and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_hazardcan")) and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_fertilizercan")) and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_proxmine")) and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_stickybomb")) and not (HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped()) == util.joaat("weapon_fireextinguisher")) then
 			ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x192A), 0.2, 0, 0.13, 0, 270, 270, false, true, false, false, 1, true)
 		end
 	end
 
-	if not (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 416676503) and not (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 690389602) and not (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == -728555052) and not (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == -1609580060) and not (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 1548507267) and not (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == -37788308) and not (WEAPON.GET_WEAPONTYPE_GROUP(HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 1595662460) then
+	if not (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 416676503) and not (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 690389602) and not (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == -728555052) and not (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == -1609580060) and not (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 1548507267) and not (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == -37788308) and not (WEAPON.GET_WEAPONTYPE_GROUP(HUDdaidai._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(plyped())) == 1595662460) then
 		ENTITY.ATTACH_ENTITY_TO_ENTITY(spawnweapon, plyped(), PED.GET_PED_BONE_INDEX(plyped(), 0x60F2), 0, -0.18, 0, 180, 220, 0, false, true, false, false, 1, true)
 	end
 end
@@ -4861,7 +4744,7 @@ function notification123:help(format, colour, ...)
 	if Config.general.standnotifications then
 		return self.stand(msg)
 	end
-	HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(colour or self.defaultColour)
+	HUDdaidai._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(colour or self.defaultColour)
 	util.BEGIN_TEXT_COMMAND_THEFEED_POST("~BLIP_INFO_ICON~ " .. msg)
 	HUD.END_TEXT_COMMAND_THEFEED_POST_TICKER_WITH_TOKENS(true, true)
 end
@@ -4880,7 +4763,7 @@ function notification123:normal(format, colour, ...)
 	else
 		picture = "wcnmdpjd"
 	end
-	HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(colour or self.defaultColour)
+	HUDdaidai._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(colour or self.defaultColour)
 	util.BEGIN_TEXT_COMMAND_THEFEED_POST(msg)
 	HUD.END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT(picture, "bart", true, 4, self.title, self.subtitle)
 	--HUD.END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT(self.txdDict, self.txdName, true, 4, self.title, self.subtitle)
@@ -5417,6 +5300,15 @@ end
 
 --神指
 function godfinger()
+   ------准星
+    HUD.SET_TEXT_SCALE(1.0,0.5)
+    HUD.SET_TEXT_FONT(0)
+    HUD.SET_TEXT_CENTRE(1)
+    HUD.SET_TEXT_OUTLINE(0)
+    HUD.SET_TEXT_COLOUR(255, 255, 255, 180)
+    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("·")
+    HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.49997,0.478,0)
+  ------神指
     if is_player_pointing() then
 		write_global.int(4521801 + 935, NETWORK.GET_NETWORK_TIME())
 		if not ENTITY.DOES_ENTITY_EXIST(targetEntity) then

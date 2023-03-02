@@ -1,8 +1,3 @@
--- Constructor Lib
--- by Hexarobi
--- A Lua Script for the Stand mod menu for GTA5
--- Allows for constructing custom vehicles and maps
--- https://github.com/hexarobi/stand-lua-constructor
 
 local SCRIPT_VERSION = "0.28"
 
@@ -10,14 +5,6 @@ local constructor_lib = {
     LIB_VERSION = SCRIPT_VERSION
 }
 
----
---- Dependencies
----
-
---util.ensure_package_is_installed('lua/natives-1663599433')
---util.require_natives(1663599433)
---local status_natives, natives = pcall(require, "natives-1663599433")
---if not status_natives then error("Could not natives lib. Make sure it is selected under Stand > Lua Scripts > Repository > natives-1663599433") end
 
 local status_inspect, inspect = pcall(require, "lib.daidailib.constructor.inspect")
 if not status_inspect then error("Could not load inspect lib. This should have been auto-installed.") end
@@ -206,9 +193,9 @@ constructor_lib.default_entity_attributes = function(attachment)
 end
 
 constructor_lib.serialize_entity_attributes = function(attachment)
-    local pos = WIRI_ENTITY.GET_WORLD_POSITION_OF_ENTITY_BONE(attachment.handle, 0)
+    local pos = ENTITY.GET_WORLD_POSITION_OF_ENTITY_BONE(attachment.handle, 0)
     attachment.position = {x=pos.x, y=pos.y, z=pos.z}
-    local rot = WIRI_ENTITY.GET_ENTITY_ROTATION(attachment.handle, attachment.rotation_order)
+    local rot = ENTITY.GET_ENTITY_ROTATION(attachment.handle, attachment.rotation_order)
     attachment.world_rotation = {x=rot.x, y=rot.y, z=rot.z}
 end
 
@@ -219,38 +206,38 @@ constructor_lib.deserialize_entity_attributes = function(attachment)
     else
         if attachment.options.alpha ~= nil then
             if attachment.options.alpha < 255 then
-                WIRI_ENTITY.SET_ENTITY_ALPHA(attachment.handle, attachment.options.alpha, false)
+                ENTITY.SET_ENTITY_ALPHA(attachment.handle, attachment.options.alpha, false)
             else
-                WIRI_ENTITY.RESET_ENTITY_ALPHA(attachment.handle)
+                ENTITY.RESET_ENTITY_ALPHA(attachment.handle)
             end
         end
         if attachment.options.is_visible ~= nil then
-            WIRI_ENTITY.SET_ENTITY_VISIBLE(attachment.handle, attachment.options.is_visible, 0)
+            ENTITY.SET_ENTITY_VISIBLE(attachment.handle, attachment.options.is_visible, 0)
         end
     end
 
-    if attachment.num_bones == nil or attachment.num_bones == 200 then attachment.num_bones = WIRI_ENTITY.GET_ENTITY_BONE_COUNT(attachment.handle) end
-    if attachment.type == nil then attachment.type = constructor_lib.ENTITY_TYPES[WIRI_ENTITY.GET_ENTITY_TYPE(attachment.handle)] end
-    if attachment.flash_start_on ~= nil then WIRI_ENTITY.SET_ENTITY_VISIBLE(attachment.handle, attachment.flash_start_on, 0) end
-    if attachment.options.is_invincible ~= nil then WIRI_ENTITY.SET_ENTITY_INVINCIBLE(attachment.handle, attachment.options.is_invincible) end
-    if attachment.options.is_scorched ~= nil then WIRI_ENTITY.SET_ENTITY_RENDER_SCORCHED(attachment.handle, attachment.options.is_scorched) end
-    if attachment.options.radio_loud ~= nil then WIRI_AUDIO.SET_VEHICLE_RADIO_LOUD(attachment.handle, attachment.options.radio_loud) end
-    if attachment.options.lod_distance ~= nil then WIRI_ENTITY.SET_ENTITY_LOD_DIST(attachment.handle, attachment.options.lod_distance) end
+    if attachment.num_bones == nil or attachment.num_bones == 200 then attachment.num_bones = ENTITY.GET_ENTITY_BONE_COUNT(attachment.handle) end
+    if attachment.type == nil then attachment.type = constructor_lib.ENTITY_TYPES[ENTITY.GET_ENTITY_TYPE(attachment.handle)] end
+    if attachment.flash_start_on ~= nil then ENTITY.SET_ENTITY_VISIBLE(attachment.handle, attachment.flash_start_on, 0) end
+    if attachment.options.is_invincible ~= nil then ENTITY.SET_ENTITY_INVINCIBLE(attachment.handle, attachment.options.is_invincible) end
+    if attachment.options.is_scorched ~= nil then ENTITY.SET_ENTITY_RENDER_SCORCHED(attachment.handle, attachment.options.is_scorched) end
+    if attachment.options.radio_loud ~= nil then AUDIO.SET_VEHICLE_RADIO_LOUD(attachment.handle, attachment.options.radio_loud) end
+    if attachment.options.lod_distance ~= nil then ENTITY.SET_ENTITY_LOD_DIST(attachment.handle, attachment.options.lod_distance) end
 
-    if attachment.options.is_dynamic ~= nil then WIRI_ENTITY.SET_ENTITY_DYNAMIC(attachment.handle, attachment.options.is_dynamic) end
-    if attachment.options.has_gravity ~= nil then WIRI_ENTITY.SET_ENTITY_HAS_GRAVITY(attachment.handle, attachment.options.has_gravity) end
+    if attachment.options.is_dynamic ~= nil then ENTITY.SET_ENTITY_DYNAMIC(attachment.handle, attachment.options.is_dynamic) end
+    if attachment.options.has_gravity ~= nil then ENTITY.SET_ENTITY_HAS_GRAVITY(attachment.handle, attachment.options.has_gravity) end
     if attachment.options.is_light_on == true then
-        WIRI_VEHICLE.SET_VEHICLE_SIREN(attachment.handle, true)
-        WIRI_VEHICLE.SET_VEHICLE_HAS_MUTED_SIRENS(attachment.handle, true)
-        WIRI_ENTITY.SET_ENTITY_LIGHTS(attachment.handle, false)
-        WIRI_AUDIO.TRIGGER_SIREN_AUDIO(attachment.handle, true)
-        WIRI_AUDIO.SET_SIREN_BYPASS_MP_DRIVER_CHECK(attachment.handle, true)
+        VEHICLE.SET_VEHICLE_SIREN(attachment.handle, true)
+        VEHICLE.SET_VEHICLE_HAS_MUTED_SIRENS(attachment.handle, true)
+        ENTITY.SET_ENTITY_LIGHTS(attachment.handle, false)
+        AUDIO.TRIGGER_SIREN_AUDIO(attachment.handle, true)
+        AUDIO.SET_SIREN_BYPASS_MP_DRIVER_CHECK(attachment.handle, true)
     end
     if (attachment.options.is_bullet_proof ~= nil or attachment.options.is_fire_proof ~= nil
         or attachment.options.is_explosion_proof ~= nil or attachment.options.is_melee_proof ~= nil)
         and attachment.options.is_on_fire == nil
     then
-        WIRI_ENTITY.SET_ENTITY_PROOFS(
+        ENTITY.SET_ENTITY_PROOFS(
                 attachment.handle,
                 attachment.options.is_bullet_proof, attachment.options.is_fire_proof,
                 attachment.options.is_explosion_proof, attachment.options.is_melee_proof,
@@ -271,7 +258,7 @@ constructor_lib.attach_entity = function(attachment)
                 debug_log("Cannot attach attachment to itself "..tostring(attachment.name))
             else
                 debug_log("Attaching entity to entity "..tostring(attachment.name))
-                WIRI_ENTITY.ATTACH_ENTITY_TO_ENTITY(
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(
                         attachment.handle, attachment.parent.handle, attachment.options.bone_index,
                         attachment.offset.x or 0, attachment.offset.y or 0, attachment.offset.z or 0,
                         attachment.rotation.x or 0, attachment.rotation.y or 0, attachment.rotation.z or 0,
@@ -281,10 +268,10 @@ constructor_lib.attach_entity = function(attachment)
         end
     else
         if attachment.options.is_frozen ~= nil then
-            WIRI_ENTITY.FREEZE_ENTITY_POSITION(attachment.handle, attachment.options.is_frozen)
+            ENTITY.FREEZE_ENTITY_POSITION(attachment.handle, attachment.options.is_frozen)
         end
         if attachment.options.is_frozen and attachment.options.has_collision ~= nil then
-            WIRI_ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(attachment.handle, attachment.options.has_collision, true)
+            ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(attachment.handle, attachment.options.has_collision, true)
         end
     end
 end
@@ -391,7 +378,7 @@ constructor_lib.update_attachment_position = function(attachment)
     --debug_log("Updating attachment position "..tostring(attachment.name))
     if attachment == attachment.parent or attachment.options.is_attached == false then
         --debug_log("Updating attachment world rotation "..tostring(attachment.name))
-        WIRI_ENTITY.SET_ENTITY_ROTATION(
+        ENTITY.SET_ENTITY_ROTATION(
                 attachment.handle,
                 attachment.world_rotation.x,
                 attachment.world_rotation.y,
@@ -400,14 +387,14 @@ constructor_lib.update_attachment_position = function(attachment)
         )
         if attachment.position ~= nil then
             if attachment.is_preview then
-                WIRI_ENTITY.SET_ENTITY_COORDS_NO_OFFSET(
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(
                         attachment.handle,
                         attachment.position.x,
                         attachment.position.y,
                         attachment.position.z,
                         true, false, false
                 )
-                WIRI_ENTITY.SET_ENTITY_ROTATION(
+                ENTITY.SET_ENTITY_ROTATION(
                         attachment.handle,
                         attachment.rotation.x,
                         attachment.rotation.y,
@@ -415,7 +402,7 @@ constructor_lib.update_attachment_position = function(attachment)
                         2, true
                 )
             else
-                WIRI_ENTITY.SET_ENTITY_COORDS(
+                ENTITY.SET_ENTITY_COORDS(
                         attachment.handle,
                         attachment.position.x,
                         attachment.position.y,
@@ -474,7 +461,7 @@ constructor_lib.create_entity = function(attachment)
     end
     if attachment.is_player and attachment.is_preview ~= true then
         if attachment.model == nil and attachment.hash == nil then
-            attachment.hash = WIRI_ENTITY.GET_ENTITY_MODEL(players.user_ped())
+            attachment.hash = ENTITY.GET_ENTITY_MODEL(players.user_ped())
             attachment.model = util.reverse_joaat(attachment.hash)
         else
             debug_log("Setting player model to "..tostring(attachment.model).." hash="..tostring(attachment.hash))
@@ -517,7 +504,7 @@ constructor_lib.create_entity = function(attachment)
         end
         constructor_lib.deserialize_vehicle_attributes(attachment)
     elseif attachment.type == "PED" then
-        local pos = WIRI_ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(attachment.parent.handle, attachment.offset.x, attachment.offset.y, attachment.offset.z)
+        local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(attachment.parent.handle, attachment.offset.x, attachment.offset.y, attachment.offset.z)
         if is_networked then
             attachment.handle = entities.create_ped(1, attachment.hash, pos, attachment.heading)
         else
@@ -539,7 +526,7 @@ constructor_lib.create_entity = function(attachment)
         if attachment.position ~= nil then
             pos = attachment.position
         else
-            pos = WIRI_ENTITY.GET_ENTITY_COORDS(attachment.root.handle)
+            pos = ENTITY.GET_ENTITY_COORDS(attachment.root.handle)
         end
         attachment.handle = OBJECT.CREATE_OBJECT_NO_OFFSET(
                 attachment.hash,
@@ -618,7 +605,7 @@ end
 
 constructor_lib.detach_attachment = function(attachment)
     debug_log("Detaching attachment "..tostring(attachment.name))
-    WIRI_ENTITY.DETACH_ENTITY(attachment.handle, true, true)
+    ENTITY.DETACH_ENTITY(attachment.handle, true, true)
     constructor_lib.array_remove(attachment.parent.children, function(t, i)
         local child_attachment = t[i]
         return child_attachment ~= attachment
@@ -705,7 +692,7 @@ end
 constructor_lib.clone_attachment = function(attachment)
     debug_log("Cloning attachment "..tostring(attachment.name))
     if attachment.type == "VEHICLE" then
-        attachment.heading = WIRI_ENTITY.GET_ENTITY_HEADING(attachment.handle) or 0
+        attachment.heading = ENTITY.GET_ENTITY_HEADING(attachment.handle) or 0
     end
     local clone = constructor_lib.serialize_attachment(attachment)
     if attachment == attachment.parent then
@@ -725,7 +712,7 @@ end
 
 constructor_lib.update_attachment_tick = function(attachment)
     if attachment.options ~= nil and attachment.options.is_frozen ~= nil then
-        WIRI_ENTITY.FREEZE_ENTITY_POSITION(attachment.handle, attachment.options.is_frozen)
+        ENTITY.FREEZE_ENTITY_POSITION(attachment.handle, attachment.options.is_frozen)
     end
     constructor_lib.update_particle_tick(attachment)
 end
@@ -781,7 +768,7 @@ constructor_lib.request_control_once = function(entity)
 end
 
 constructor_lib.request_control = function(entity, timeout)
-    if not WIRI_ENTITY.DOES_ENTITY_EXIST(entity) then
+    if not ENTITY.DOES_ENTITY_EXIST(entity) then
         return false
     end
     local end_time = util.current_time_millis() + (timeout or 500)
@@ -796,7 +783,7 @@ end
 
 constructor_lib.set_attachment_visibility = function(attachment)
     if attachment.options.is_visible ~= nil then
-        WIRI_ENTITY.SET_ENTITY_VISIBLE(attachment.handle, attachment.options.is_visible, 0)
+        ENTITY.SET_ENTITY_VISIBLE(attachment.handle, attachment.options.is_visible, 0)
     end
     for _, child_attachment in pairs(attachment.children) do
         constructor_lib.set_attachment_visibility(child_attachment)
@@ -822,8 +809,8 @@ constructor_lib.constantize_network_id = function(attachment)
 end
 
 constructor_lib.make_entity_networked = function(attachment)
-    WIRI_ENTITY.SET_ENTITY_AS_MISSION_ENTITY(attachment.handle, false, true)
-    WIRI_ENTITY.SET_ENTITY_SHOULD_FREEZE_WAITING_ON_COLLISION(attachment.handle, false)
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(attachment.handle, false, true)
+    ENTITY.SET_ENTITY_SHOULD_FREEZE_WAITING_ON_COLLISION(attachment.handle, false)
     constructor_lib.constantize_network_id(attachment)
     NETWORK.SET_NETWORK_ID_CAN_MIGRATE(NETWORK.OBJ_TO_NET(attachment.handle), false)
 end
@@ -847,7 +834,7 @@ end
 ---
 
 constructor_lib.set_attachment_internal_collisions = function(attachment, new_attachment)
-    WIRI_ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(attachment.handle, new_attachment.handle)
+    ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(attachment.handle, new_attachment.handle)
     if attachment.children ~= nil then
         for _, child_attachment in pairs(attachment.children) do
             constructor_lib.set_attachment_internal_collisions(child_attachment, new_attachment)
@@ -856,7 +843,7 @@ constructor_lib.set_attachment_internal_collisions = function(attachment, new_at
 end
 
 constructor_lib.completely_disable_attachment_collision = function(attachment)
-    WIRI_ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(attachment.handle, false, true)
+    ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(attachment.handle, false, true)
     for _, child_attachment in pairs(attachment.children) do
         constructor_lib.completely_disable_attachment_collision(child_attachment)
     end
@@ -870,10 +857,10 @@ constructor_lib.set_preview_visibility = function(attachment)
     local preview_alpha = attachment.alpha
     if preview_alpha == nil then preview_alpha = 206 end
     if attachment.options.is_visible == false then preview_alpha = 0 end
-    WIRI_ENTITY.SET_ENTITY_ALPHA(attachment.handle, preview_alpha, false)
-    WIRI_ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(attachment.handle, false, true)
-    WIRI_ENTITY.FREEZE_ENTITY_POSITION(attachment.handle, true)
-    --WIRI_ENTITY.SET_ENTITY_HAS_GRAVITY(attachment.handle, false)
+    ENTITY.SET_ENTITY_ALPHA(attachment.handle, preview_alpha, false)
+    ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(attachment.handle, false, true)
+    ENTITY.FREEZE_ENTITY_POSITION(attachment.handle, true)
+    --ENTITY.SET_ENTITY_HAS_GRAVITY(attachment.handle, false)
 end
 
 ---
@@ -905,7 +892,7 @@ constructor_lib.draw_bounding_box = function(entity, colour)
         colour = {r=255,g=0,b=0,a=255}
     end
 
-    MISC.GET_MODEL_DIMENSIONS(WIRI_ENTITY.GET_ENTITY_MODEL(entity), minimum, maximum)
+    MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(entity), minimum, maximum)
     local minimum_vec = v3.new(minimum)
     local maximum_vec = v3.new(maximum)
     constructor_lib.draw_bounding_box_with_dimensions(entity, colour, minimum_vec, maximum_vec)
@@ -915,12 +902,12 @@ constructor_lib.draw_bounding_box_with_dimensions = function(entity, colour, min
 
     local dimensions = {x = maximum_vec.y - minimum_vec.y, y = maximum_vec.x - minimum_vec.x, z = maximum_vec.z - minimum_vec.z}
 
-    WIRI_ENTITY.GET_ENTITY_MATRIX(entity, rightVector_pointer, forwardVector_pointer, upVector_pointer, position_pointer);
+    ENTITY.GET_ENTITY_MATRIX(entity, rightVector_pointer, forwardVector_pointer, upVector_pointer, position_pointer);
     local forward_vector = v3.new(forwardVector_pointer)
     local right_vector = v3.new(rightVector_pointer)
     local up_vector = v3.new(upVector_pointer)
 
-    local top_right =           WIRI_ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity,       maximum_vec.x, maximum_vec.y, maximum_vec.z)
+    local top_right =           ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity,       maximum_vec.x, maximum_vec.y, maximum_vec.z)
     local top_right_back =      {x = forward_vector.x * -dimensions.y + top_right.x,        y = forward_vector.y * -dimensions.y + top_right.y,         z = forward_vector.z * -dimensions.y + top_right.z}
     local bottom_right_back =   {x = up_vector.x * -dimensions.z + top_right_back.x,        y = up_vector.y * -dimensions.z + top_right_back.y,         z = up_vector.z * -dimensions.z + top_right_back.z}
     local bottom_left_back =    {x = -right_vector.x * dimensions.x + bottom_right_back.x,  y = -right_vector.y * dimensions.x + bottom_right_back.y,   z = -right_vector.z * dimensions.x + bottom_right_back.z}
@@ -1001,7 +988,7 @@ constructor_lib.serialize_hash_and_model = function(attachment)
     elseif attachment.model == nil and attachment.hash ~= nil then
         attachment.model = util.reverse_joaat(attachment.hash)
     elseif attachment.hash == nil and attachment.model == nil and attachment.handle ~= nil and attachment.handle > 0 then
-        attachment.hash = WIRI_ENTITY.GET_ENTITY_MODEL(attachment.handle)
+        attachment.hash = ENTITY.GET_ENTITY_MODEL(attachment.handle)
         attachment.model = util.reverse_joaat(attachment.hash)
     end
 end
@@ -1043,7 +1030,7 @@ constructor_lib.serialize_vehicle_attributes = function(vehicle)
     if vehicle.type ~= "VEHICLE" then return end
     debug_log("Serializing vehicle attributes "..tostring(vehicle.name))
     constructor_lib.default_vehicle_attributes(vehicle)
-    if not WIRI_ENTITY.DOES_ENTITY_EXIST(vehicle.handle) then return end
+    if not ENTITY.DOES_ENTITY_EXIST(vehicle.handle) then return end
     debug_log("Serializing vehicle attributes "..tostring(vehicle.name))
     constructor_lib.serialize_vehicle_paint(vehicle)
     constructor_lib.serialize_vehicle_neon(vehicle)
@@ -1060,8 +1047,8 @@ constructor_lib.deserialize_vehicle_attributes = function(vehicle)
     if vehicle.vehicle_attributes == nil then return end
     debug_log("Deserializing vehicle attributes "..tostring(vehicle.name))
 
-    WIRI_VEHICLE.SET_VEHICLE_MOD_KIT(vehicle.handle, 0)
-    WIRI_ENTITY.SET_ENTITY_AS_MISSION_ENTITY(vehicle.handle, true, true)    -- Needed for plate text
+    VEHICLE.SET_VEHICLE_MOD_KIT(vehicle.handle, 0)
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(vehicle.handle, true, true)    -- Needed for plate text
 
     constructor_lib.deserialize_vehicle_neon(vehicle)
     constructor_lib.deserialize_vehicle_paint(vehicle)
@@ -1084,9 +1071,9 @@ end
 
 constructor_lib.deserialize_vehicle_headlights = function(vehicle)
     if vehicle.vehicle_attributes.headlights == nil then return end
-    WIRI_VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vehicle.handle, vehicle.vehicle_attributes.headlights.headlights_color)
+    VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vehicle.handle, vehicle.vehicle_attributes.headlights.headlights_color)
     VEHICLE.TOGGLE_VEHICLE_MOD(vehicle.handle, 22, vehicle.vehicle_attributes.headlights.headlights_type or false)
-    WIRI_VEHICLE.SET_VEHICLE_LIGHT_MULTIPLIER(vehicle.handle, vehicle.vehicle_attributes.headlights.multiplier or 1)
+    VEHICLE.SET_VEHICLE_LIGHT_MULTIPLIER(vehicle.handle, vehicle.vehicle_attributes.headlights.multiplier or 1)
 end
 
 constructor_lib.serialize_vehicle_paint = function(vehicle)
@@ -1129,7 +1116,7 @@ constructor_lib.serialize_vehicle_paint = function(vehicle)
     vehicle.vehicle_attributes.paint.extra_colors = { pearlescent = memory.read_int(color.r), wheel = memory.read_int(color.g) }
     VEHICLE.GET_VEHICLE_EXTRA_COLOUR_6(vehicle.handle, color.r)
     vehicle.vehicle_attributes.paint.dashboard_color = memory.read_int(color.r)
-    WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vehicle.handle, color.r)
+    VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vehicle.handle, color.r)
     vehicle.vehicle_attributes.paint.interior_color = memory.read_int(color.r)
     vehicle.vehicle_attributes.paint.fade = VEHICLE.GET_VEHICLE_ENVEFF_SCALE(vehicle.handle)
     vehicle.vehicle_attributes.paint.dirt_level = VEHICLE.GET_VEHICLE_DIRT_LEVEL(vehicle.handle)
@@ -1146,19 +1133,19 @@ end
 constructor_lib.deserialize_vehicle_paint = function(vehicle)
     if vehicle.vehicle_attributes == nil or vehicle.vehicle_attributes.paint == nil then return end
 
-    WIRI_VEHICLE.SET_VEHICLE_MOD_KIT(vehicle.handle, 0)
+    VEHICLE.SET_VEHICLE_MOD_KIT(vehicle.handle, 0)
     if vehicle.vehicle_attributes.paint.color_combo ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_COLOUR_COMBINATION(vehicle.handle, vehicle.vehicle_attributes.paint.color_combo or -1)
+        VEHICLE.SET_VEHICLE_COLOUR_COMBINATION(vehicle.handle, vehicle.vehicle_attributes.paint.color_combo or -1)
     end
 
     if vehicle.vehicle_attributes.paint.vehicle_custom_color ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(
+        VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(
                 vehicle.handle,
                 vehicle.vehicle_attributes.paint.vehicle_custom_color.r,
                 vehicle.vehicle_attributes.paint.vehicle_custom_color.g,
                 vehicle.vehicle_attributes.paint.vehicle_custom_color.b
         )
-        WIRI_VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(
+        VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(
                 vehicle.handle,
                 vehicle.vehicle_attributes.paint.vehicle_custom_color.r,
                 vehicle.vehicle_attributes.paint.vehicle_custom_color.g,
@@ -1169,14 +1156,14 @@ constructor_lib.deserialize_vehicle_paint = function(vehicle)
     if vehicle.vehicle_attributes.paint.primary ~= nil then
         if vehicle.vehicle_attributes.paint.primary.vehicle_standard_color ~= nil
                 or vehicle.vehicle_attributes.paint.secondary.vehicle_standard_color ~= nil then
-            WIRI_VEHICLE.SET_VEHICLE_COLOURS(
+            VEHICLE.SET_VEHICLE_COLOURS(
                     vehicle.handle,
                     vehicle.vehicle_attributes.paint.primary.vehicle_standard_color,
                     vehicle.vehicle_attributes.paint.secondary.vehicle_standard_color
             )
         end
         if vehicle.vehicle_attributes.paint.primary.is_custom then
-            WIRI_VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(
+            VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(
                     vehicle.handle,
                     vehicle.vehicle_attributes.paint.primary.custom_color.r,
                     vehicle.vehicle_attributes.paint.primary.custom_color.g,
@@ -1184,7 +1171,7 @@ constructor_lib.deserialize_vehicle_paint = function(vehicle)
             )
         end
         if vehicle.vehicle_attributes.paint.primary.paint_type ~= nil then
-            WIRI_VEHICLE.SET_VEHICLE_MOD_COLOR_1(
+            VEHICLE.SET_VEHICLE_MOD_COLOR_1(
                     vehicle.handle,
                     vehicle.vehicle_attributes.paint.primary.paint_type,
                     vehicle.vehicle_attributes.paint.primary.color,
@@ -1192,7 +1179,7 @@ constructor_lib.deserialize_vehicle_paint = function(vehicle)
             )
         end
         if vehicle.vehicle_attributes.paint.secondary.is_custom then
-            WIRI_VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(
+            VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(
                     vehicle.handle,
                     vehicle.vehicle_attributes.paint.secondary.custom_color.r,
                     vehicle.vehicle_attributes.paint.secondary.custom_color.g,
@@ -1200,7 +1187,7 @@ constructor_lib.deserialize_vehicle_paint = function(vehicle)
             )
         end
         if vehicle.vehicle_attributes.paint.secondary.paint_type ~= nil then
-            WIRI_VEHICLE.SET_VEHICLE_MOD_COLOR_2(
+            VEHICLE.SET_VEHICLE_MOD_COLOR_2(
                     vehicle.handle,
                     vehicle.vehicle_attributes.paint.secondary.paint_type,
                     vehicle.vehicle_attributes.paint.secondary.color
@@ -1209,7 +1196,7 @@ constructor_lib.deserialize_vehicle_paint = function(vehicle)
     end
 
     if vehicle.vehicle_attributes.paint.extra_colors.pearlescent ~= nil or vehicle.vehicle_attributes.paint.extra_colors.wheel ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOURS(
+        VEHICLE.SET_VEHICLE_EXTRA_COLOURS(
                 vehicle.handle,
                 vehicle.vehicle_attributes.paint.extra_colors.pearlescent,
                 vehicle.vehicle_attributes.paint.extra_colors.wheel
@@ -1217,28 +1204,28 @@ constructor_lib.deserialize_vehicle_paint = function(vehicle)
     end
 
     if vehicle.vehicle_attributes.headlights_color ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vehicle.handle, vehicle.vehicle_attributes.headlights_color)
+        VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vehicle.handle, vehicle.vehicle_attributes.headlights_color)
     end
     if vehicle.vehicle_attributes.paint.dashboard_color ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_6(vehicle.handle, vehicle.vehicle_attributes.paint.dashboard_color)
+        VEHICLE.SET_VEHICLE_EXTRA_COLOUR_6(vehicle.handle, vehicle.vehicle_attributes.paint.dashboard_color)
     end
     if vehicle.vehicle_attributes.paint.interior_color ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vehicle.handle, vehicle.vehicle_attributes.paint.interior_color)
+        VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vehicle.handle, vehicle.vehicle_attributes.paint.interior_color)
     end
     if vehicle.vehicle_attributes.paint.fade ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle.handle, vehicle.vehicle_attributes.paint.fade)
+        VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle.handle, vehicle.vehicle_attributes.paint.fade)
     end
     if vehicle.vehicle_attributes.paint.dirt_level ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle.handle, vehicle.vehicle_attributes.paint.dirt_level)
+        VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle.handle, vehicle.vehicle_attributes.paint.dirt_level)
     end
     if vehicle.vehicle_attributes.paint.livery ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle.handle, 48, vehicle.vehicle_attributes.paint.livery)
+        VEHICLE.SET_VEHICLE_MOD(vehicle.handle, 48, vehicle.vehicle_attributes.paint.livery)
     end
     if vehicle.vehicle_attributes.paint.livery_legacy ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_LIVERY(vehicle.handle, vehicle.vehicle_attributes.paint.livery_legacy)
+        VEHICLE.SET_VEHICLE_LIVERY(vehicle.handle, vehicle.vehicle_attributes.paint.livery_legacy)
     end
     if vehicle.vehicle_attributes.paint.livery2_legacy ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_LIVERY2(vehicle.handle, vehicle.vehicle_attributes.paint.livery2_legacy)
+        VEHICLE.SET_VEHICLE_LIVERY2(vehicle.handle, vehicle.vehicle_attributes.paint.livery2_legacy)
     end
 end
 
@@ -1263,13 +1250,13 @@ end
 constructor_lib.deserialize_vehicle_neon = function(vehicle)
     if vehicle.vehicle_attributes == nil or vehicle.vehicle_attributes.neon == nil then return end
     if vehicle.vehicle_attributes.neon.lights then
-        WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle.handle, 0, vehicle.vehicle_attributes.neon.lights.left or false)
-        WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle.handle, 1, vehicle.vehicle_attributes.neon.lights.right or false)
-        WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle.handle, 2, vehicle.vehicle_attributes.neon.lights.front or false)
-        WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle.handle, 3, vehicle.vehicle_attributes.neon.lights.back or false)
+        VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle.handle, 0, vehicle.vehicle_attributes.neon.lights.left or false)
+        VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle.handle, 1, vehicle.vehicle_attributes.neon.lights.right or false)
+        VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle.handle, 2, vehicle.vehicle_attributes.neon.lights.front or false)
+        VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle.handle, 3, vehicle.vehicle_attributes.neon.lights.back or false)
     end
     if vehicle.vehicle_attributes.neon.color then
-        WIRI_VEHICLE.SET_VEHICLE_NEON_COLOUR(
+        VEHICLE.SET_VEHICLE_NEON_COLOUR(
                 vehicle.handle,
                 vehicle.vehicle_attributes.neon.color.r,
                 vehicle.vehicle_attributes.neon.color.g,
@@ -1281,36 +1268,36 @@ end
 local function vehicle_wheels_invis(attachment)
     local DBL_MAX = 1.79769e+308
     constructor_lib.request_control(attachment.handle, 800)
-    WIRI_VEHICLE.SET_VEHICLE_FORWARD_SPEED(attachment.handle, DBL_MAX*DBL_MAX)
+    VEHICLE.SET_VEHICLE_FORWARD_SPEED(attachment.handle, DBL_MAX*DBL_MAX)
     SYSTEM.WAIT(100)
-    WIRI_VEHICLE.SET_VEHICLE_CHEAT_POWER_INCREASE(attachment.handle, DBL_MAX*DBL_MAX)
+    VEHICLE.SET_VEHICLE_CHEAT_POWER_INCREASE(attachment.handle, DBL_MAX*DBL_MAX)
     VEHICLE.MODIFY_VEHICLE_TOP_SPEED(attachment.handle, DBL_MAX*DBL_MAX)
-    WIRI_ENTITY.APPLY_FORCE_TO_ENTITY(attachment.handle, 1, 0.0, 0.0, -DBL_MAX*DBL_MAX, 0.0, 0.0, 0.0, 0, false, true, true, true, false, true)
+    ENTITY.APPLY_FORCE_TO_ENTITY(attachment.handle, 1, 0.0, 0.0, -DBL_MAX*DBL_MAX, 0.0, 0.0, 0.0, 0, false, true, true, true, false, true)
     SYSTEM.WAIT(100)
-    WIRI_VEHICLE.SET_VEHICLE_CHEAT_POWER_INCREASE(attachment.handle, 1)
+    VEHICLE.SET_VEHICLE_CHEAT_POWER_INCREASE(attachment.handle, 1)
     VEHICLE.MODIFY_VEHICLE_TOP_SPEED(attachment.handle, 1)
 end
 
 local function vehicle_wheels_uninvis(attachment)
     constructor_lib.request_control(attachment.handle, 800)
     for wheel_index = 0, 7 do
-        WIRI_VEHICLE.SET_VEHICLE_TYRE_FIXED(attachment.handle, wheel_index)
+        VEHICLE.SET_VEHICLE_TYRE_FIXED(attachment.handle, wheel_index)
     end
-    WIRI_VEHICLE.SET_VEHICLE_FIXED(attachment.handle)
-    WIRI_VEHICLE.SET_VEHICLE_DEFORMATION_FIXED(attachment.handle)
+    VEHICLE.SET_VEHICLE_FIXED(attachment.handle)
+    VEHICLE.SET_VEHICLE_DEFORMATION_FIXED(attachment.handle)
     VEHICLE.RESET_VEHICLE_WHEELS(attachment.handle)
-    WIRI_VEHICLE.SET_VEHICLE_DIRT_LEVEL(attachment.handle, 0)
-    WIRI_VEHICLE.SET_VEHICLE_ENGINE_CAN_DEGRADE(attachment.handle, 0)
-    WIRI_VEHICLE.SET_VEHICLE_ENGINE_HEALTH(attachment.handle, 2000)
-    WIRI_VEHICLE.SET_VEHICLE_PETROL_TANK_HEALTH(attachment.handle, 2000)
-    WIRI_VEHICLE.SET_VEHICLE_BODY_HEALTH(attachment.handle, 2000)
-    WIRI_VEHICLE.SET_VEHICLE_UNDRIVEABLE(attachment.handle, false)
-    WIRI_VEHICLE.SET_VEHICLE_ENGINE_ON(attachment.handle, 1, 1)
+    VEHICLE.SET_VEHICLE_DIRT_LEVEL(attachment.handle, 0)
+    VEHICLE.SET_VEHICLE_ENGINE_CAN_DEGRADE(attachment.handle, 0)
+    VEHICLE.SET_VEHICLE_ENGINE_HEALTH(attachment.handle, 2000)
+    VEHICLE.SET_VEHICLE_PETROL_TANK_HEALTH(attachment.handle, 2000)
+    VEHICLE.SET_VEHICLE_BODY_HEALTH(attachment.handle, 2000)
+    VEHICLE.SET_VEHICLE_UNDRIVEABLE(attachment.handle, false)
+    VEHICLE.SET_VEHICLE_ENGINE_ON(attachment.handle, 1, 1)
 
-    WIRI_VEHICLE.SET_VEHICLE_CHEAT_POWER_INCREASE(attachment.handle, 0)
+    VEHICLE.SET_VEHICLE_CHEAT_POWER_INCREASE(attachment.handle, 0)
     VEHICLE.MODIFY_VEHICLE_TOP_SPEED(attachment.handle, 0)
     SYSTEM.WAIT(100)
-    WIRI_VEHICLE.SET_VEHICLE_CHEAT_POWER_INCREASE(attachment.handle, 1)
+    VEHICLE.SET_VEHICLE_CHEAT_POWER_INCREASE(attachment.handle, 1)
     VEHICLE.MODIFY_VEHICLE_TOP_SPEED(attachment.handle, 1)
 end
 
@@ -1329,19 +1316,19 @@ end
 constructor_lib.deserialize_vehicle_wheels = function(vehicle)
     if vehicle.vehicle_attributes == nil or vehicle.vehicle_attributes.wheels == nil then return end
     if vehicle.vehicle_attributes.wheels.bulletproof_tires ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle.handle, not vehicle.vehicle_attributes.wheels.bulletproof_tires)
+        VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle.handle, not vehicle.vehicle_attributes.wheels.bulletproof_tires)
     end
-    WIRI_VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle.handle, vehicle.vehicle_attributes.wheels.wheel_type or -1)
+    VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle.handle, vehicle.vehicle_attributes.wheels.wheel_type or -1)
     if vehicle.vehicle_attributes.wheels.tire_smoke_color then
-        WIRI_VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle.handle, vehicle.vehicle_attributes.wheels.tire_smoke_color.r or 255,
+        VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle.handle, vehicle.vehicle_attributes.wheels.tire_smoke_color.r or 255,
                 vehicle.vehicle_attributes.wheels.tire_smoke_color.g or 255, vehicle.vehicle_attributes.wheels.tire_smoke_color.b or 255)
     end
     if vehicle.vehicle_attributes.wheels.tires_burst then
         for _, tire_position in pairs(constants.tire_position_names) do
             if vehicle.vehicle_attributes.wheels.tires_burst["_"..tire_position.index] then
-                WIRI_VEHICLE.SET_VEHICLE_TYRE_BURST(vehicle.handle, tire_position.index, true, 1.0)
+                VEHICLE.SET_VEHICLE_TYRE_BURST(vehicle.handle, tire_position.index, true, 1.0)
             else
-                WIRI_VEHICLE.SET_VEHICLE_TYRE_FIXED(vehicle.handle, tire_position.index)
+                VEHICLE.SET_VEHICLE_TYRE_FIXED(vehicle.handle, tire_position.index)
             end
         end
     end
@@ -1353,7 +1340,7 @@ constructor_lib.deserialize_vehicle_wheels = function(vehicle)
         end
     end
     if vehicle.vehicle_attributes.wheels.drift_tires ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_REDUCE_GRIP(vehicle.handle, vehicle.vehicle_attributes.wheels.drift_tires)
+        VEHICLE.SET_VEHICLE_REDUCE_GRIP(vehicle.handle, vehicle.vehicle_attributes.wheels.drift_tires)
     end
 end
 
@@ -1373,24 +1360,24 @@ end
 
 constructor_lib.deserialize_vehicle_doors = function(vehicle)
     if vehicle.vehicle_attributes == nil or vehicle.vehicle_attributes.doors == nil then return end
-    if vehicle.vehicle_attributes.doors.broken.frontleft then WIRI_VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 0, true) end
-    if vehicle.vehicle_attributes.doors.broken.frontright then WIRI_VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 1, true) end
-    if vehicle.vehicle_attributes.doors.broken.backleft then WIRI_VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 2, true) end
-    if vehicle.vehicle_attributes.doors.broken.backright then WIRI_VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 3, true) end
-    if vehicle.vehicle_attributes.doors.broken.hood then WIRI_VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 4, true) end
-    if vehicle.vehicle_attributes.doors.broken.trunk then WIRI_VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 5, true) end
-    if vehicle.vehicle_attributes.doors.broken.trunk2 then WIRI_VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 6, true) end
+    if vehicle.vehicle_attributes.doors.broken.frontleft then VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 0, true) end
+    if vehicle.vehicle_attributes.doors.broken.frontright then VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 1, true) end
+    if vehicle.vehicle_attributes.doors.broken.backleft then VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 2, true) end
+    if vehicle.vehicle_attributes.doors.broken.backright then VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 3, true) end
+    if vehicle.vehicle_attributes.doors.broken.hood then VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 4, true) end
+    if vehicle.vehicle_attributes.doors.broken.trunk then VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 5, true) end
+    if vehicle.vehicle_attributes.doors.broken.trunk2 then VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle.handle, 6, true) end
 
-    if vehicle.vehicle_attributes.doors.open.frontleft then WIRI_VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 0, true, true) end
-    if vehicle.vehicle_attributes.doors.open.frontright then WIRI_VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 1, true, true) end
-    if vehicle.vehicle_attributes.doors.open.backleft then WIRI_VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 2, true, true) end
-    if vehicle.vehicle_attributes.doors.open.backright then WIRI_VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 3, true, true) end
-    if vehicle.vehicle_attributes.doors.open.hood then WIRI_VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 4, true, true) end
-    if vehicle.vehicle_attributes.doors.open.trunk then WIRI_VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 5, true, true) end
-    if vehicle.vehicle_attributes.doors.open.trunk2 then WIRI_VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 6, true, true) end
+    if vehicle.vehicle_attributes.doors.open.frontleft then VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 0, true, true) end
+    if vehicle.vehicle_attributes.doors.open.frontright then VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 1, true, true) end
+    if vehicle.vehicle_attributes.doors.open.backleft then VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 2, true, true) end
+    if vehicle.vehicle_attributes.doors.open.backright then VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 3, true, true) end
+    if vehicle.vehicle_attributes.doors.open.hood then VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 4, true, true) end
+    if vehicle.vehicle_attributes.doors.open.trunk then VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 5, true, true) end
+    if vehicle.vehicle_attributes.doors.open.trunk2 then VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle.handle, 6, true, true) end
 
     if vehicle.vehicle_attributes.doors.lock_status ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle.handle, vehicle.vehicle_attributes.doors.lock_status)
+        VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle.handle, vehicle.vehicle_attributes.doors.lock_status)
     end
 end
 
@@ -1434,7 +1421,7 @@ constructor_lib.deserialize_vehicle_windows = function(vehicle)
         local window_broken = vehicle.vehicle_attributes.windows.broken[window_name]
         if window_broken ~= nil then
             if window_broken then
-                WIRI_VEHICLE.SMASH_VEHICLE_WINDOW(vehicle.handle, window_index-1)
+                VEHICLE.SMASH_VEHICLE_WINDOW(vehicle.handle, window_index-1)
             else
                 VEHICLE.FIX_VEHICLE_WINDOW(vehicle.handle, window_index-1)
             end
@@ -1462,7 +1449,7 @@ constructor_lib.deserialize_vehicle_mods = function(vehicle)
         if mod_index >= 17 and mod_index <= 22 then
             VEHICLE.TOGGLE_VEHICLE_MOD(vehicle.handle, mod_index, vehicle.vehicle_attributes.mods["_"..mod_index])
         else
-            WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle.handle, mod_index, vehicle.vehicle_attributes.mods["_"..mod_index] or -1)
+            VEHICLE.SET_VEHICLE_MOD(vehicle.handle, mod_index, vehicle.vehicle_attributes.mods["_"..mod_index] or -1)
         end
     end
 end
@@ -1484,7 +1471,7 @@ constructor_lib.deserialize_vehicle_extras = function(vehicle)
         if vehicle.vehicle_attributes.extras["_"..extra_index] ~= nil then
             state = vehicle.vehicle_attributes.extras["_"..extra_index]
         end
-        WIRI_VEHICLE.SET_VEHICLE_EXTRA(vehicle.handle, extra_index, not state)
+        VEHICLE.SET_VEHICLE_EXTRA(vehicle.handle, extra_index, not state)
     end
 end
 
@@ -1493,7 +1480,7 @@ constructor_lib.serialize_vehicle_options = function(vehicle)
     if vehicle.vehicle_attributes.options == nil then vehicle.vehicle_attributes.options = {} end
     vehicle.vehicle_attributes.options.bulletproof_tires = VEHICLE.GET_VEHICLE_TYRES_CAN_BURST(vehicle.handle)
     vehicle.vehicle_attributes.options.window_tint = VEHICLE.GET_VEHICLE_WINDOW_TINT(vehicle.handle)
-    vehicle.vehicle_attributes.options.radio_loud = WIRI_AUDIO.CAN_VEHICLE_RECEIVE_CB_RADIO(vehicle.handle)
+    vehicle.vehicle_attributes.options.radio_loud = AUDIO.CAN_VEHICLE_RECEIVE_CB_RADIO(vehicle.handle)
     vehicle.vehicle_attributes.options.engine_running = VEHICLE.GET_IS_VEHICLE_ENGINE_RUNNING(vehicle.handle)
     vehicle.vehicle_attributes.options.siren = VEHICLE.IS_VEHICLE_SIREN_AUDIO_ON(vehicle.handle)
     vehicle.vehicle_attributes.options.emergency_lights = VEHICLE.IS_VEHICLE_SIREN_ON(vehicle.handle)
@@ -1505,50 +1492,50 @@ end
 constructor_lib.deserialize_vehicle_options = function(vehicle)
     if vehicle.vehicle_attributes == nil or vehicle.vehicle_attributes.options == nil then return end
     if vehicle.vehicle_attributes.options.siren then
-        WIRI_AUDIO.SET_SIREN_WITH_NO_DRIVER(vehicle.handle, true)
-        WIRI_VEHICLE.SET_VEHICLE_HAS_MUTED_SIRENS(vehicle.handle, false)
-        WIRI_AUDIO.SET_SIREN_BYPASS_MP_DRIVER_CHECK(vehicle.handle, true)
-        WIRI_AUDIO.TRIGGER_SIREN_AUDIO(vehicle.handle, true)
+        AUDIO.SET_SIREN_WITH_NO_DRIVER(vehicle.handle, true)
+        VEHICLE.SET_VEHICLE_HAS_MUTED_SIRENS(vehicle.handle, false)
+        AUDIO.SET_SIREN_BYPASS_MP_DRIVER_CHECK(vehicle.handle, true)
+        AUDIO.TRIGGER_SIREN_AUDIO(vehicle.handle, true)
     end
     if vehicle.vehicle_attributes.engine_sound ~= nil then
         local hash = util.joaat(vehicle.vehicle_attributes.engine_sound)
         if STREAMING.IS_MODEL_VALID(hash) and VEHICLE.IS_THIS_MODEL_A_CAR(hash) then
-            WIRI_AUDIO.FORCE_USE_AUDIO_GAME_OBJECT(vehicle.handle, vehicle.vehicle_attributes.engine_sound)
+            AUDIO.FORCE_USE_AUDIO_GAME_OBJECT(vehicle.handle, vehicle.vehicle_attributes.engine_sound)
         end
     end
     if vehicle.vehicle_attributes.options.lights_state ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_LIGHTS(vehicle.handle, vehicle.vehicle_attributes.options.lights_state)
+        VEHICLE.SET_VEHICLE_LIGHTS(vehicle.handle, vehicle.vehicle_attributes.options.lights_state)
     end
     if vehicle.vehicle_attributes.options.interior_light ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_INTERIORLIGHT(vehicle.handle, vehicle.vehicle_attributes.options.interior_light)
+        VEHICLE.SET_VEHICLE_INTERIORLIGHT(vehicle.handle, vehicle.vehicle_attributes.options.interior_light)
     end
     if vehicle.vehicle_attributes.options.is_windscreen_detached == true then
         VEHICLE.POP_OUT_VEHICLE_WINDSCREEN(vehicle.handle)
     end
     if vehicle.vehicle_attributes.options.emergency_lights ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_SIREN(vehicle.handle, vehicle.vehicle_attributes.options.emergency_lights)
+        VEHICLE.SET_VEHICLE_SIREN(vehicle.handle, vehicle.vehicle_attributes.options.emergency_lights)
     end
     if vehicle.vehicle_attributes.options.search_light ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_SEARCHLIGHT(vehicle.handle, vehicle.vehicle_attributes.options.search_light, true)
+        VEHICLE.SET_VEHICLE_SEARCHLIGHT(vehicle.handle, vehicle.vehicle_attributes.options.search_light, true)
     end
     if vehicle.vehicle_attributes.options.radio_loud ~= nil then
-        WIRI_AUDIO.SET_VEHICLE_RADIO_LOUD(vehicle.handle, vehicle.vehicle_attributes.options.radio_loud)
+        AUDIO.SET_VEHICLE_RADIO_LOUD(vehicle.handle, vehicle.vehicle_attributes.options.radio_loud)
     end
     if vehicle.vehicle_attributes.options.license_plate_text ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle.handle, vehicle.vehicle_attributes.options.license_plate_text)
+        VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle.handle, vehicle.vehicle_attributes.options.license_plate_text)
     end
     if vehicle.vehicle_attributes.options.license_plate_type ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(vehicle.handle, vehicle.vehicle_attributes.options.license_plate_type)
+        VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(vehicle.handle, vehicle.vehicle_attributes.options.license_plate_type)
     end
     if vehicle.vehicle_attributes.options.engine_running == true then
-        WIRI_VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle.handle, true, true, false)
-        WIRI_VEHICLE.SET_VEHICLE_KEEP_ENGINE_ON_WHEN_ABANDONED(vehicle.handle, true)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle.handle, true, true, false)
+        VEHICLE.SET_VEHICLE_KEEP_ENGINE_ON_WHEN_ABANDONED(vehicle.handle, true)
     end
     if vehicle.vehicle_attributes.options.doors_locked ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle.handle, vehicle.vehicle_attributes.options.doors_locked or false)
+        VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle.handle, vehicle.vehicle_attributes.options.doors_locked or false)
     end
     if vehicle.vehicle_attributes.options.engine_health ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_ENGINE_HEALTH(vehicle.handle, vehicle.vehicle_attributes.options.engine_health)
+        VEHICLE.SET_VEHICLE_ENGINE_HEALTH(vehicle.handle, vehicle.vehicle_attributes.options.engine_health)
     end
 end
 
@@ -1634,7 +1621,7 @@ constructor_lib.deserialize_ped_attributes = function(attachment)
     end
     if attachment.options.is_on_fire == true then
         FIRE.START_ENTITY_FIRE(attachment.handle)
-        WIRI_ENTITY.SET_ENTITY_PROOFS(
+        ENTITY.SET_ENTITY_PROOFS(
                 attachment.handle,
                 attachment.options.is_bullet_proof, true,
                 attachment.options.is_explosion_proof, attachment.options.is_melee_proof,
@@ -1642,7 +1629,7 @@ constructor_lib.deserialize_ped_attributes = function(attachment)
         )
     elseif attachment.options.is_on_fire == false then
         FIRE.STOP_ENTITY_FIRE(attachment.handle)
-        WIRI_ENTITY.SET_ENTITY_PROOFS(
+        ENTITY.SET_ENTITY_PROOFS(
                 attachment.handle,
                 attachment.options.is_bullet_proof, attachment.options.is_fire_proof,
                 attachment.options.is_explosion_proof, attachment.options.is_melee_proof,

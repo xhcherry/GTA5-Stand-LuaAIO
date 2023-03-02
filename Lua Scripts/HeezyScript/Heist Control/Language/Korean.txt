@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 2023/01/06 12:39:21 AM
-# Heist Control Version: V 3.1.0
+# Generated Date: 2023/01/18 11:12:05 PM
+# Heist Control Version: V 3.1.3
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -35,9 +35,6 @@ Automated Presets = 자동화된 설정된 습격
 4 Players = 4인
 Sapphire Panther = 사파이어 팬서
 Ruby Necklace = 루비 목걸이
-Standard Preset = 스탠다드 설정된 습격
-Semi-Original Preset = 반 오리지널 설정된 습격
-- Remember to deactivate the preset at the end. = - 습격이 끝난 후 비활성화 해야 한다는 것을 기억하세요.
 Custom Teleport = 커스텀 순간 이동
 Compound = 창고
 El Rubio's Office = 엘 루비오의 오피스
@@ -311,20 +308,9 @@ Credits = 크레딧
 Let me know about stats info. = Stat 정보에 대해 알려주었습니다.
 Translators = 번역가
 Maintains HC's translation = 헤이스트 컨트롤 번역 유지
-
-
-# Start of newly updated translations.
-# Translate them!
-
-
-Native file for HC doesn't exist. = Native file for HC doesn't exist.
-Please re-enable 'Stand > Lua Scripts > Repository > natives-1672190175' feature or download the native file manually from somewhere! = Please re-enable 'Stand > Lua Scripts > Repository > natives-1672190175' feature or download the native file manually from somewhere!
-language file for HC doesn't exist. = language file for HC doesn't exist.
-Please install HC properly again! = Please install HC properly again!
 [NOT WORKING] = [작동 안함]
 - This feature isn't working due to the latest GTA Online patch: = - 이 기능은 최근 GTA 온라인 패치로 인해 작동하지 않습니다:
 Please download the lastest version of Heist Control or wait for Heist Control's developer patching. = 헤이스트 컨트롤의 최신 버전을 다운로드 해주시거나 헤이스트 컨트롤의 패치를 기다려주세요.
-HC Logo for In-Game notification doesn't exist. = 인-게임 알림을 위한 헤이스트 컨트롤 로고가 존재하지 않습니다.
 Please re-enable 'Stand > Lua Scripts > Repository > Heist Control' to fix! = 고치기 위해서 'Stand > Lua Script > 저장소 > Heist Control'을 다시 활성화해주세요!
 Except [NOT WORKING] features should work! = [작동 안함] 기능을 제외하고는 작동해야 합니다!
 But, all features of HC should work! = 그렇지만, 헤이스트 컨트롤의 모든 기능이 작동해야 합니다!
@@ -332,7 +318,6 @@ Coded GTA Online Version: = 코드된 GTA 온라인 버전:
 Current GTA Online Version: = 현재 GTA 온라인 버전:
 ULP Missions = ULP 미션
 Settings And About HC = 설정 및 헤이스트 컨트롤에 대해
-- Remember to choose your preset before entering the Submarine = - 잠수함에 들어가기 전에 설정된 습격을 선택해야 한다는 점을 잊지 마세요
 Quick Preset (1 - 4P) = 빠른 설정된 습격 (1 - 4인)
 There are no secondary targets, there's only the primary target. Your goal is get it. = 보조 목표물이 없으며, 오직 주요 목표물만 있습니다. 목표는 주요 목표물을 얻는 것입니다.
 Drainage Pipe = 배수구 파이프
@@ -388,7 +373,6 @@ Force The Final Cutscene = 강제 피날레 컷씬
 Set Heist To Default (Reset) = 습격 기본값으로 설정 (초기화)
 Diamonds = 다이아몬드
 $3.5 Million For All Players = 모든 플레이어 $350만
-ALWAYS Choose The Low Level Buyer! = "항상" 가장 낮은 비용의 바이어를 선택하세요!
 Skip Drilling The Vault Door = 금고 문 드릴질 건너뛰기
 Planning Boards (Arcade) = 계획 보드 (아케이드)
 Garage Exit (Arcade) = 차고 출구 (아케이드)
@@ -487,8 +471,6 @@ Valentine's Day = 발렌타인 데이
 Unlock Hats And Many Shirts = 많은 모자 및 셔츠 잠금 해제
 Unlock Sasquatch Outfit = 원숭이 의상 잠금 해제
 Unlock 'Don't Cross the Line Tee' = '선 넘지 마' 티 잠금 해제
-Tattos = Tattos
-Unlock Some Tattos = Unlock Some Tattos
 Unlock Some Trade Prices = 할인된 가격 잠금 해제
 Taxi Livery = 택시 도색
 a.k.a: 'Downtown Cab Co.' livery = '다운타운 캡' 도색으로도 알려져 있습니다.
@@ -530,7 +512,6 @@ Renaming CEO/MC = CEO/MC 이름 변경
 CEO Abilities = CEO 활동
 Casino Services: Chips = 카지노 서비스: 칩
 (Risky) = (위험)
-Make sure don't buy chip more than 1.5M per a day (real-time). Otherwise, you can be banned! = Make sure don't buy chip more than 1.5M per a day (real-time). Otherwise, you can be banned!
 VIP = VIP
 N/A = N/A
 Chips Amount = 칩 양
@@ -559,7 +540,6 @@ Change Lucky Wheel Reward = 럭키 휠 보상 변경
 Vehicle Discount = 차량 가격 할인
 How many time to play Auto Cayo Bot = 몇 번 자동 카요 봇을 플레이할 것인지
 Teleport to the Lucky Wheel = 럭키 휠로 순간 이동
-If this doesn't work properly, please press again. = 만약, 잘 작동하지 않으면, 다시 눌러주세요.
 Make sure your spawning position is 'Last Location' = 자신의 소환 위치가 '마지막 위치' 인지 다시 한 번 더 확인해주세요.
 You can set it on Interaction Menu. = 상호 작용 메뉴에서 설정할 수 있습니다.
 Kosatka has been requested. Wait for a few secs. = 코사트카가 요청되었습니다. 몇 초 동안 기다려주세요.
@@ -621,13 +601,11 @@ Name of The File = 파일의 이름
 HC will overwrite if name of the file already exists. = 이미 그 이름의 파일이 존재할 경우, 헤이스트 컨트롤은 해당 파일을 덮어 쓸 것입니다.
 Please input name of the file! = 해당 파일의 이름을 입력해주세요!
 Waiting for updating English.txt... = English.txt의 업데이트를 기다리는 중입니다...
-Sucessfully Generated! = 성공적으로 생성되었습니다!
 Directory of the file: = 파일의 경로:
 Update Translation File = 번역 파일 업데이트
 Refresh = 새로고침
 Refresh the list via restarting Heist Control. = 헤이스트 컨트롤을 재시작하며 해당 목록을 새로 고칩니다.
-This action will take a few seconds. Please wait for it patiently, don't press multiple times. = 이 액션을 몇 초 동안 걸릴 것입니다. 차분히 기다려주시고, 여러 번 누르지 말아주세요.
-Sucessfully Updated! = 성공적으로 업데이트 되었습니다!
+This action will take a few seconds. Please wait for it patiently, don't press multiple times. = 몇 초 동안 걸릴 것입니다. 차분히 기다려주시고, 여러 번 누르지 말아주세요.
 - Total number of translations: = - 총 번역 수:
 - Number of not modified translations: = - 수정되지 않은 번역 수:
 - Number of modified (updated) translations: = - 수정된 (업데이트된) 번역 수:
@@ -643,3 +621,59 @@ Get Support, Report Bugs and Enjoy Other Stuffs! = 질문을 하거나 도움을
 Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D = 헤이스트 컨트롤의 튜토리얼에 대한 영상들이 여기에 업로드되며, 채널을 구독하여 개발자를 도와주세요 :D
 If you don't know how to use HC, click me! = 헤이스트 컨트롤 사용법을 모르겠다면, 클릭하세요!
 If you want to know what was changed in the latest version, click me! = 최신 버전에서 무엇이 바뀌었는지 궁금하다면, 클릭하세요!
+When using this method, the percentage and final payment will be random! = 이 방식을 쓸 때에는, %와 피날레 몫이 랜덤입니다!
+Works On Both: Fingerprint and Keypad = 지문과 키패드 해킹 모두 작동합니다.
+Choose Masks = 마스크 선택
+(Final Heist) = (피날레)
+Setup: Server Farm (Lester) = 준비 작업: 서버 팜 (레스터)
+Will be applied only to you and you have to be the host = 자신에게만 적용되며 자신이 호스트여야만 합니다.
+- Only do this only 1-2 times in less than 24 hours. = - 24시간 이내에 오직 1~2번만 하세요.
+- Otherwise, you can be banned! = - 그렇지 않으면, 밴될 수도 있습니다!
+Always keep this option enabled before starting a contract = 항상 이 옵션을 계약을 시작하기 전에 활성화하셔야 합니다.
+Note: You may need to keep activating to use some of Independence Day's contents. = 참고: 몇몇 독립기념일 컨텐츠를 사용하기 위해서는 계속 활성화 해야할 지도 모릅니다.
+Tattoos = 타투
+Unlock Some Tattoos = 몇몇 타투 잠금 해제
+Ceramic Pistol = 세라믹 피스톨
+You try removing banked money amount that more than currently you have. = 자신이 가지고 있는 예금보다 더 많은 돈을 제거하는 것을 시도하고 있습니다.
+All of features use undetected methods but use at own your risk. If you earn too much, you can be banned. = 모든 기능들은 감지되지 않은 방식을 사용하지만, 조심해서 사용하세요. 너무 많은 돈을 벌면 밴될 수도 있습니다.
+Solo Cayo Perico Heist will be done by Heist Control automatically per 20 mins to get $2.09M. Don't press any keys to prevent some game bugs. = 솔로 카요 페리코 습격이 헤이스트 컨트롤에 의해 자동으로 끝날 것이며, 20분마다 $209만를 벌어줄 것입니다. 게임 버그가 발생하는 것을 막기 위해, 어떠한 키도 누르지 마세요.
+Don't earn more than $50M per a day (real-time), otherwise it'll lead you get banned! = 현실 시간으로 24시간 안에 $5000만 이상 벌지 마세요, 그렇지 않으면 밴될 것입니다!
+Note that not working on ULP Missions - Superyatch = 참고로 ULP 미션 - Superyatch에서는 작동하지 않을 것입니다.
+Cooldown time has passed, you can play the heist again! = 쿨타임이 지나갔습니다, 다시 해당 습격을 플레이할 수 있습니다!
+Wallet Money = 예금
+Mins = 분
+Use at your own risk! Setting certain stats may cause a ban like casino-related stats. = 조심해서 사용하세요! 카지노 관련 Stat은 밴을 유발할 지도 모릅니다.
+Years = 년
+Months = 개월
+All = 모두
+One Line = 한 줄
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+HC Logo image file doesn't exist. = HC 로고 이미지 파일이 존재하지 않습니다.
+Native file for HC doesn't exist. = 헤이스트 컨트롤을 위한 Native 파일이 존재하지 않습니다.
+Please re-enable 'Stand > Lua Scripts > Repository > natives-1672190175' or please join HC DC server to get support! = 'Stand > Lua Scripts > Repository > natives-1672190175' 을 다시 활성화 해보시거나 헤이스트 컨트롤 디스코드 서버를 가입하여 지원을 받으세요!
+Your current Stand version isn't compatible with current Heist Control version. Please update Stand to use it. = 현재 Stand 버전이 현재 헤이스트 컨트롤 버전과 호환되지 않습니다. 사용하기 위해서는 Stand를 업데이트하여야 합니다.
+- Current your Heist Control version: = - 현재 헤이스트 컨트롤 버전:
+- At least required Stand version: = - 최소 요구되는 Stand 버전:
+- Current your Stand version: = - 현재 Stand 버전:
+You should enable the preset until the end of the heist! = 습격이 끝날 때까지 설정된 습격을 활성화하고 있어야 합니다!
+- How to change the line color: Stand > Settings > Appearance > Colours > HUD Colour = - 선 색상 바꾸는 법: Stand > 설정 > 외모 > 색상 > HUD 색상
+- How to change the AR Beacon color: Stand > Settings > Appearance > Colours > AR Colour = - AR 비컨 색상 바꾸는 법: Stand > 설정 > 외모 > 색상 > AR 색상
+Use with Cayo Perico Heist > Custom Teleport > Island > Drainage Pipe! = 카요 페리코 습격 > 커스텀 순간 이동 > 섬 > 배수구 파이프 기능과 함께 사용하세ㅛ!
+Refresh Kosatka Planning Table = 코사트카 준비 작업 테이블 새로 고침
+You can update changed cayo perico heist stats in the Kosatka by refreshing it. = 새로고침하면 카요 페리코 습격 stat들을 코사트카 안에서도 업데이트할 수 있습니다.
+Successfully cancelled! = 성공적으로 취소되었습니다!
+Works unless you are in the casino. = 카지노 안에 있지 않으면 작동합니다.
+If you are in it, not required to use. Just use 'Auto Lucky Wheel' = 만약에 카지노 안에 있다면 사용할 필요가 없습니다. 그냥 '자동 럭키 휠' 을 사용하세요.
+Acid Lab = 마약 실험실
+RC Bandito = RC 밴디토
+RC Tank = RC 탱크
+Waiting for generating: = 생성하는 것을 기다리는 중입니다:
+Successfully Generated! = 성공적으로 생성되었습니다!
+Successfully Updated! = 성공적으로 업데이트되었습니다!
+'Stand' setting is synced with Stand's default feature: 'Stand > Settings > Appearance > Colours > AR Colour' = 'Stand' 설정은 Stand의 기본 기능과 연동됩니다: 'Stand > 설정 > 외모 > 색상 > AR 색상'
+If you changed the Stand's setting while HC is still running, need to restart HC to apply. = Stand의 설정을 헤이스트 컨트롤이 작동 중일 때 변경하셨다면, 적용하기 위해서는 헤이스트 컨트롤을 재시작할 필요가 있습니다.

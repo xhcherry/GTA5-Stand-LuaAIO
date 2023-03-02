@@ -10,20 +10,20 @@ local convertor = {
 --- Dependencies
 ---
 
-local status_inspect, inspect = pcall(require, "BeezyLib.constructor.inspect")
+local status_inspect, inspect = pcall(require, "lib.BeezyLib.constructor.inspect")
 if not status_inspect then error("Could not load inspect lib. This should have been auto-installed.") end
 
-local status_xml2lua, xml2lua = pcall(require, "BeezyLib.constructor.xml2lua")
+local status_xml2lua, xml2lua = pcall(require, "lib.BeezyLib.constructor.xml2lua")
 if not status_xml2lua then error("Could not load xml2lua lib. This should have been auto-installed.") end
 
-local status_iniparser, iniparser = pcall(require, "BeezyLib.iniparser")
+local status_iniparser, iniparser = pcall(require, "lib.BeezyLib.iniparser")
 if not status_iniparser then error("Could not load iniparser lib. This should have been auto-installed.") end
 
-local status_constructor_lib, constructor_lib = pcall(require, "BeezyLib.constructor.constructor_lib")
+local status_constructor_lib, constructor_lib = pcall(require, "lib.BeezyLib.constructor.constructor_lib")
 if not status_constructor_lib then error("Could not load constructor_lib. This should have been auto-installed.") end
 
 util.ensure_package_is_installed('lua/json')
-local status_json, json = pcall(require, "BeezyLib.constructor.json")
+local status_json, json = pcall(require, "lib.BeezyLib.constructor.json")
 if not status_json then error("Could not load json lib. Make sure it is selected under Stand > Lua Scripts > Repository > json") end
 
 ---

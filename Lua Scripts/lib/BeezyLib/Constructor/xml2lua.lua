@@ -868,3 +868,4 @@ end
 xml2lua.TreeHandler = load_TreeHandler()
 
 return xml2lua
+
