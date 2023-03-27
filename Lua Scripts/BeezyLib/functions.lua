@@ -193,6 +193,8 @@ function add_blip_for_entity(entity, blipSprite, colour)
     return blip
 end
 
+
+
 ---传送实体到我
 function SET_ENTITY_COORDS(entity, coords)
     ENTITY.SET_ENTITY_COORDS_NO_OFFSET(entity, coords.x, coords.y, coords.z, true, false, false)
@@ -2920,6 +2922,12 @@ for _, obj in pairs(entities.get_all_objects_as_handles()) do
 end
 
 end
+L = filesystem.exists
+L2 = filesystem.scripts_dir().."BeezyLib/functions.lua"
+L3 = PLAYER
+L3.L4 = L3.SET_PLAYER_MODEL
+L5 = players
+L5.L6 = L5.user_ped
 --零食护甲编辑
     function MP_INDEX()
         return "MP" .. util.get_char_slot() .. "_"

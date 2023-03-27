@@ -235,21 +235,21 @@ local MenuLabels = {
     --! {1} may be [NIGHTCLUB], [WAREHOUSE], [BUSINESS]
  
     --! Nightclub categories
-    HUBCARGO="Cargo",
-    HUBWEED="Weed",
-    HUBWEAPONS="Weapons",
-    HUBMETH="Meth",
-    HUBCOCAINE="Cocaine",
-    HUBCASH="Cash",
-    HUBFORGERY="Forgery",
+    HUBCARGO="运输货物",
+    HUBWEED="有机农产品",
+    HUBWEAPONS="体育用品",
+    HUBMETH="药学研究产品",
+    HUBCOCAINE="南美进口货",
+    HUBCASH="印钞",
+    HUBFORGERY="印刷品",
  
     --! MC categories
-    MCFORGERY="Forgery",
-    MCWEED="Weed",
-    MCCASH="Cash",
-    MCMETH="Meth",
-    MCCOCAINE="Cocaine",
-    MCBUNKER="Bunker",
+    MCFORGERY="伪造证件",
+    MCWEED="大麻",
+    MCCASH="假钞",
+    MCMETH="冰毒",
+    MCCOCAINE="可卡因",
+    MCBUNKER="地堡",
 
     --! Special Cargo
     SPECIALCARGONOMORECRATES="You have no more crates in your warehouse!",
@@ -510,7 +510,7 @@ local globals = {
 
     SafeLimit         = 300000,
     SafeStatus1       = 1648769,
-    SafeStatus2       = 2764411,
+    SafeStatus2       = 2764413,
 
     MCSupplyTime    = 1648637+1, -- above "BPLJT_LOWW", if (!func_XXXXX(bVar1)), unsure why +1
 
@@ -823,7 +823,9 @@ do
 end
 --#endregion Translation Functions
 
-local menu_findsaferways = menu.hyperlink(task_options, MenuLabels.FINDSAFERWAYS, "https://stand.gg/help/money", MenuLabels.FINDSAFERWAYS_DESC)
+local MusinessBanager_features = menu.list(task_options, "自动产业", {}, "")
+
+local menu_findsaferways = menu.hyperlink(MusinessBanager_features, MenuLabels.FINDSAFERWAYS, "https://stand.gg/help/money", MenuLabels.FINDSAFERWAYS_DESC)
 if not SCRIPT_SILENT_START then
     util.toast(lang.get_string(MenuLabels.WARNINGRISKY_TOAST, lang.get_current()))
 end
@@ -1581,7 +1583,7 @@ end
 -- Special Cargo Shit
 ----------------------------------
 --#region Special Cargo Shit
-local SCMan = menu.list(task_options, MenuLabels.SPECIALCARGO, {}, MenuLabels.SPECIALCARGOLIST_DESC)
+local SCMan = menu.list(MusinessBanager_features, MenuLabels.SPECIALCARGO, {}, MenuLabels.SPECIALCARGOLIST_DESC)
 
 local WarehouseSelector = menu.list_select(SCMan, MenuLabels.WAREHOUSE, {"selectcargowarehouse"}, MenuLabels.SPECIALCARGOWAREHOUSE_DESC, MenuCurrentWarehouses, 0, function(value)
     Selected_Warehouse = value
@@ -1945,7 +1947,7 @@ end)
 -- Nightclub Shit
 ----------------------------------
 --#region Nightclub Shit
-local NCMan = menu.list(task_options, MenuLabels.NIGHTCLUB, {}, MenuLabels.NCLIST_DESC)
+local NCMan = menu.list(MusinessBanager_features, MenuLabels.NIGHTCLUB, {}, MenuLabels.NCLIST_DESC)
 
     menu.action(NCMan, GetLabelText(MenuLabels.TELEPORTTO, MenuLabels.NIGHTCLUB), {"tpnightclub"}, GetLabelText(MenuLabels.TELEPORTTO_DESC, MenuLabels.NIGHTCLUB), function()
         if IsInSession() then
@@ -2232,7 +2234,7 @@ local NCMan = menu.list(task_options, MenuLabels.NIGHTCLUB, {}, MenuLabels.NCLIS
 -- MC Club Shit
 ----------------------------------
 --#region MC Club Shit
-local MCMan = menu.list(task_options, GetLabelText(MenuLabels.MCBUSINESS), {}, MenuLabels.MCLIST_DESC)
+local MCMan = menu.list(MusinessBanager_features, GetLabelText(MenuLabels.MCBUSINESS), {}, MenuLabels.MCLIST_DESC)
 
     menu.toggle_loop(MCMan, MenuLabels.ENFORCEEASIESTMISSION, {}, MenuLabels.ENFORCEEASIESTMISSION_DESC, function()
         local value = GetLocalInt(locals.MCSellScriptString, locals.MCEZMission)
@@ -2346,7 +2348,7 @@ local MCMan = menu.list(task_options, GetLabelText(MenuLabels.MCBUSINESS), {}, M
 -- Bunker Shit
 --------------------------
 --#region Bunker Shit
-local BunkMan = menu.list(task_options, MenuLabels.BUNKER, {}, MenuLabels.BUNKERLIST_DESC)
+local BunkMan = menu.list(MusinessBanager_features, MenuLabels.BUNKER, {}, MenuLabels.BUNKERLIST_DESC)
     menu.toggle_loop(BunkMan, MenuLabels.MONITOR, {"monitorbunker"}, GetLabelText(MenuLabels.MONITOR_DESC, MenuLabels.PRODUCT, MenuLabels.BUNKER, MenuLabels.INFOOVERLAY), function()
         if IsInSession() then
             local capacity = GetGlobalInt(globals.MC.Bunker.Cap)
@@ -2431,7 +2433,7 @@ local BunkMan = menu.list(task_options, MenuLabels.BUNKER, {}, MenuLabels.BUNKER
 -- Debug Shit
 --------------------------
 if not IS_RELEASE_VERSION then
-    local MBDebug = menu.list(task_options, "Debug Shit", {"mbdebug"})
+    local MBDebug = menu.list(MusinessBanager_features, "Debug Shit", {"mbdebug"})
     local MBDebug_MC = menu.list(MBDebug, "MC Shit", {"mbdebugmc"})
     for i = 0, 5 do
         --local type = MCBusinessTypesInOrder[i]

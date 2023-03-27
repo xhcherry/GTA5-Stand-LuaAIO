@@ -12,6 +12,7 @@
 --Dog白又看你爹脚本呢？？？
 --Dog白又看你爹脚本呢？？？
 --Dog白又看你爹脚本呢？？？
+local set = {alert = true}
 local object_stuff = {
     names = {
         "摩天轮",
@@ -45,6 +46,9 @@ local values = {
     [3] = 160,
     [4] = 208,
 }
+
+nitro_duration = 5000
+nitro_power = 2000
 active_bowling_balls = 0
 windows = {
     {name = "左前", number = 0},
@@ -56,10 +60,134 @@ windows = {
     {name = "左中", number = 6},
     {name = "中右", number = 7}
 }
+Bigobjlist =  {
+    '陨石',
+    '飞碟',
+    '货机',
+    '摩天轮',
+    '拖船',
+
+ }
+
+ Bigobj = {
+    'prop_asteroid_01',
+    'imp_prop_ship_01a',
+    'cargoplane',
+    'prop_ld_ferris_wheel',
+    'hei_prop_heist_tug',
+
+ }
+Fxcorelist = {
+
+    "混凝土碎块",
+    "手榴弹",
+    "闪光弹",
+    "糖块",
+    "血(让你变成魔女嘉莉)",
+    "金属碎片",
+    "超大喷泉",
+    "油(游戏开始故障)",
+    "狗仔队相机快闪",
+    "汽油泵爆炸",
+    "燃烧瓶",
+    "香烟(吐烟)",
+    "木屑",
+    "火花闪电",
+    "大瀑布？",
+    "聚苯乙烯",
+    "汽油",
+    "火焰(肉身火炬)",
+    "赌场筹码",
+    "飞翔的香烟",
+    "橙子雨",
+    "载具刹车烟雾(显卡杀手)",
+    "火花",
+    "大爆炸",
+    "灰尘(显卡杀手)",
+    "垃圾报纸",
+    "灭火器(显卡杀手)",
+    "泼洒尿液",
+    "泡沐雨",
+    "水雾(显卡杀手)",
+    "硬币",
+    "铸造飞溅的铁水(显卡杀手)",
+    "邮件",
+    "蓝色射线(太炫酷了吧喂)",
+    "灭火器水(游戏开始故障)",
+    "烟雾弹(显卡杀手)",
+    "电线杆故障",
+    "电磁脉冲",
+    "电器箱故障(显卡杀手)",
+}
+
+ Fxha = {
+
+    "ent_dst_concrete_large",
+    "exp_grd_grenade_lod",
+    "exp_arc_grd_flashbang_lod",
+    "ent_dst_gen_gobstop",
+    "blood_stab",
+    "ent_brk_metal_frag",
+    "bul_water_heli",
+    "ent_sht_oil",
+    "ent_anim_paparazzi_flash",
+    "exp_grd_petrol_pump",
+    "exp_air_molotov",
+    "ent_anim_cig_exhale_mth_car",
+    "ent_dst_wood_chunky",
+    "ent_dst_elec_fire_sp",
+    "water_splash_plane_in",
+    "ent_dst_polystyrene",
+    "ent_sht_petrol",
+    "ent_sht_flame",
+    "ent_dst_casino_chips",
+    "ent_dst_cig_packets",
+    "ent_col_tree_oranges",
+    "veh_respray_smoke",
+    "ent_brk_sparking_wires",
+    "exp_grd_sub_large",
+    "ent_anim_dusty_hands",
+    "ent_dst_rubbish",
+    "exp_extinguisher",
+    "liquid_splash_pee",
+    "water_boat_exit",
+    "ent_anim_bm_water_mist",
+    "ent_brk_coins",
+    "ent_amb_foundry_steam_spawn",
+    "ent_dst_mail",
+    "exp_xs_ray",
+    "ent_sht_extinguisher_water",
+    "weap_smoke_grenade",
+    "ent_sht_telegraph_pole",
+    "exp_sec_launched_emp",
+    "ent_sht_electrical_box",
+ }
+Config = {
+	controls = {
+		vehicleweapons = 86,
+		airstrikeaircraft = 86
+	},
+	general = {
+		standnotifications = false,
+		showscripthost = false
+	},
+	ufo = {
+		disableboxes = false, 	
+		targetplayer = false 
+	},
+	handlingAutoload = {}
+}
+carvis = {
+	"外星冲击",
+	"小丑出现",
+	"蓝色火花",
+	"外星衰变",
+	"火粒子",
+}
 hud_rgb_index = 1
 hud_rgb_colors = {6, 18, 9}
 cTime = util.current_time_millis
-Version = "10.7.0"
+Version = "Finaledition"
 function SETUP_SINGLE_LINE(scaleform)
 	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SETUP_SINGLE_LINE")
 	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
@@ -79,9 +207,117 @@ function ADD_TEXT_TO_SINGLE_LINE(scaleform, text, font, colour)
 	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_BOOL(true)
 	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
 end
+
 function ends_with(str, ending)
     return ending == "" or str:sub(-#ending) == ending
  end
+ Ini = {}
+ function Streamptfx(lib)
+    STREAMING.REQUEST_NAMED_PTFX_ASSET(lib)
+    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(lib) do
+        util.yield()
+    end
+    GRAPHICS.USE_PARTICLE_FX_ASSET(lib)
+end
+
+local ptfx = {lib = 'scr_rcbarry2', sel = 'scr_clown_appears'}
+function ftpxspam(pid)
+    local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
+    Streamptfx(ptfx.lib)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD( ptfx.sel, tar1.x, tar1.y, tar1.z + 1, 0, 0, 0, 10.0, true, true, true)
+end
+function blockcrasheffect()
+    local coords = ENTITY.GET_ENTITY_COORDS(players.user_ped() , false);
+    GRAPHICS.REMOVE_PARTICLE_FX_IN_RANGE(coords.x, coords.y, coords.z, 400)
+    GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(players.user_ped())
+end
+local wasDead = false
+local respawnPos
+local respawnRot
+function custom_respawn()
+    if respawnPos == nil then return end
+    local isDead = PLAYER.IS_PLAYER_DEAD(players.user())
+    if wasDead and not isDead then
+        while PLAYER.IS_PLAYER_DEAD(players.user()) do
+            util.yield()
+        end
+        for i = 0, 30 do
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), respawnPos.x, respawnPos.y, respawnPos.z, false, false, false)
+            ENTITY.SET_ENTITY_ROTATION(players.user_ped(), respawnRot.x, respawnRot.y, respawnRot.z, 2, true)
+            util.yield()
+        end
+    end
+    wasDead = isDead
+end
+function getZoneName(pid)
+    return util.get_label_text(ZONE.GET_NAME_OF_ZONE(v3.get(players.get_position(pid))))
+end
+
+function save_custom_respawn()
+    respawnPos = players.get_position(players.user())
+    respawnRot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+    menu.set_menu_name(custom_respawn_toggle, '自定义复活' ..': '.. getZoneName(players.user()))
+    local pos = 'X: '.. respawnPos.x ..'\nY: '.. respawnPos.y ..'\nZ: '.. respawnPos.z
+    menu.set_help_text(custom_respawn_toggle,  pos)
+    menu.set_help_text(custom_respawn_location,  '当前位置' ..':\n'.. pos)
+end
+
+
+function blockfireeffect()
+    local coords = ENTITY.GET_ENTITY_COORDS(players.user_ped() , false);
+    FIRE.STOP_FIRE_IN_RANGE(coords.x, coords.y, coords.z, 100)
+    FIRE.STOP_ENTITY_FIRE(players.user_ped())
+end
+function ftpxspam_set(fxsel)
+    ptfx.sel = Fxha[fxsel]
+    ptfx.lib = 'core'
+end
+function Ini.save(fileName, obj)
+	local file <close> = assert(io.open(fileName, "w"), "error loading file")
+	local s = {}
+	for section, tbl in pairs(obj) do
+		assert(type(tbl) == "table", "expected field " .. section .. " to be a table, got " .. type(tbl))
+		local l = {}
+		table.insert(l, string.format("[%s]", section))
+		for k, v in pairs(tbl) do table.insert(l, string.format("%s=%s", k, v)) end
+		table.insert(s, table.concat(l, '\n') .. '\n')
+	end
+	file:write(table.concat(s, '\n'))
+end
+function log(content)
+    if verbose then
+        util.log("[CqCqScript] " .. content)
+    end
+end
+function Ini.load(fileName)
+	assert(type(fileName) == "string", "fileName must be a string")
+	local file <close> = assert(io.open(fileName, "r"), "error loading file: " .. fileName)
+	local data = {}
+	local section
+	for line in io.lines(fileName) do
+		local tempSection = string.match(line, '^%[([^%]]+)%]$')
+
+		if tempSection ~= nil then
+			section = tonumber(tempSection) and tonumber(tempSection) or tempSection
+			data[section] = data[section] or {}
+		end
+
+		local param, value = string.match(line, '^([%w_]+)%s*=%s*(.+)$')
+		if section ~= nil and param and value ~= nil then
+			if value == "true" then
+				value = true
+			elseif value == "false" then
+				value = false
+			elseif tonumber(value) then
+				value = tonumber(value)
+			end
+			data[section][tonumber(param) or param] = value
+		end
+	end
+	return data
+end
+
 colors = {
     green = 190,
     red = 15,
@@ -105,12 +341,30 @@ disguise_objects = {
     [3] = "prop_streetlight_01",
     [4] = "prop_recyclebin_04_b" -- Good to clip the player under the terrain
 }
+
+visual_stuff = {
+    {"提升饱和度", "rply_saturation"},
+    {"提升亮度", "AmbientPush"},
+    {"提升曝光度", "LostTimeFlash"},
+    {"雾之夜", "casino_main_floor_heist"},
+    {"正常雾天", "Forest"},
+    {"大雾天", "nervousRON_fog"},
+    {"黄昏天", "MP_Arena_theme_evening"},
+    {"暖色调", "mp_bkr_int01_garage"},
+    {"死气沉沉", "MP_deathfail_night"},
+    {"石化", "stoned"},
+    {"水下", "underwater"},
+}
 disguise_names = {
     [0] = "灌木丛",
     [1] = "树",
     [2] = "棕榈树",
     [3] = "路灯",
     [4] = "垃圾桶"
+}
+bones = {
+    26612,
+    58868,
 }
 station_name = {
     ["布莱恩郡之声电台"] = "RADIO_11_TALK_02", 
@@ -141,8 +395,9 @@ station_name = {
     ["放松依旧洛圣都"] = "RADIO_27_DLC_PRHEI4",
 }
 visual_stuff = {
-    {"提升亮度", "AmbientPush"},
+    
     {"提升饱和度", "rply_saturation"},
+    {"提升亮度", "AmbientPush"},
     {"提升曝光度", "LostTimeFlash"},
     {"雾之夜", "casino_main_floor_heist"},
     {"更好的夜晚", "dlc_island_vault"},
@@ -165,10 +420,11 @@ drugged_effects = {
     "药品 7",
     "药品 8",
 }
-
+custom_hooker_options = {"克隆玩家", "莱斯特", "特雷西", "贝克女士", "裸体女孩"}
 local visual_stuff = {
-    {"提升亮度", "AmbientPush"},
+   
     {"提升饱和度", "rply_saturation"},
+    {"提升亮度", "AmbientPush"},
     {"提升曝光度", "LostTimeFlash"},
     {"雾之夜", "casino_main_floor_heist"},
     {"更好的夜晚", "dlc_island_vault"},
@@ -453,6 +709,50 @@ function addr_from_pointer_chain(addr, offsets)
 	addr = addr + offsets[#offsets]
 	return addr
 end
+function request_ptfx_asset_firemen(asset)
+    local request_time = os.time()
+    STREAMING.REQUEST_NAMED_PTFX_ASSET(asset)
+    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(asset) do
+        if os.time() - request_time >= 10 then
+            break
+        end
+        util.yield()
+    end
+end
+looped_ptfxs = {}
+burning_man_ptfx_asset = "core"
+burning_man_ptfx_effect = "fire_wrecked_plane_cockpit"
+function elqes()
+vehicleelqs = CreateVehicle (1491277511,ENTITY.GET_ENTITY_COORDS(players.user_ped(),false),0,true)
+ENTITY.SET_ENTITY_RENDER_SCORCHED(vehicleelqs,true)
+VEHICLE.SET_VEHICLE_COLOURS(vehicleelqs,147,147)
+VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicleelqs,30,15)
+PED.SET_PED_INTO_VEHICLE(players.user_ped(),vehicleelqs,-1)
+util.yield(500)
+request_ptfx_asset_firemen(burning_man_ptfx_asset)
+        for _, boneName in pairs({"wheel_lf", "wheel_lr"}) do
+GRAPHICS.USE_PARTICLE_FX_ASSET(burning_man_ptfx_asset)
+            local bone_id = ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(vehicleelqs, boneName)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(burning_man_ptfx_effect, vehicleelqs, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, bone_id, 0.9, false, false, false, 0, 0, 0, 0)
+            looped_ptfxs[#looped_ptfxs+1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 100, 100, 100, false)
+      end
+end
+function fangendou()
+    local hash = util.joaat("prop_ecola_can")
+    request_model_load(hash)
+    local prop = entities.create_object(hash, players.get_position(players.user()))
+    ENTITY.FREEZE_ENTITY_POSITION(prop)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(), prop, 0, 0, 0, 0, 0, 0, 0, true, false, false, false, 0, true)
+    local hdg = CAM.GET_GAMEPLAY_CAM_ROT(0).z
+    ENTITY.SET_ENTITY_ROTATION(prop, 0, 0, hdg, 1)
+    for i=1, -360, -16 do
+        ENTITY.SET_ENTITY_ROTATION(prop, i, 0, hdg, 1)
+        util.yield()
+    end
+    ENTITY.DETACH_ENTITY(players.user_ped())
+    entities.delete_by_handle(prop)
+end
 function zuijiumoshi(val)
 if val > 0 then
     CAM.SHAKE_GAMEPLAY_CAM("DRUNK_SHAKE", val)
@@ -462,6 +762,38 @@ else
     CAM.SHAKE_GAMEPLAY_CAM("DRUNK_SHAKE", 0)
 end
 end
+kidnap_types = {"卡车", "直升机"}
+function kidnapplayer(pid, index,value)
+    local p_hash = util.joaat("s_m_y_factory_01")
+        local v_hash = 0
+        pluto_switch index do 
+            case 1:
+                v_hash = util.joaat("boxville3")
+                break 
+            case 2:
+                v_hash = util.joaat("cargobob")
+                break
+        end
+        local user_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        request_model_load(v_hash)
+        request_model_load(p_hash)
+        local c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(user_ped, 0.0, 2.0, 0.0)
+        local truck = entities.create_vehicle(v_hash, c, ENTITY.GET_ENTITY_HEADING(user_ped))
+        local driver = entities.create_ped(5, p_hash, c, 0)
+        PED.SET_PED_INTO_VEHICLE(driver, truck, -1)
+        PED.SET_PED_FLEE_ATTRIBUTES(driver, 0, false)
+        ENTITY.SET_ENTITY_INVINCIBLE(driver, true)
+        ENTITY.SET_ENTITY_INVINCIBLE(truck, true)
+        request_model_load(prop_hash)
+        PED.SET_PED_CAN_BE_DRAGGED_OUT(driver, false)
+        PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(driver, true)
+        util.yield(2000)
+        if index == 1 then
+            TASK.TASK_VEHICLE_DRIVE_TO_COORD(driver, truck, math.random(1000), math.random(1000), math.random(100), 100, 1, ENTITY.GET_ENTITY_MODEL(truck), 786996, 5, 0)
+        elseif index == 2 then 
+            TASK.TASK_HELI_MISSION(driver, truck, 0, 0, math.random(1000), math.random(1000), 1500, 4, 200.0, 0.0, 0, 100, 1000, 0.0, 16)
+        end
+    end
 
 function VicecityWater()
 if ENTITY.IS_ENTITY_IN_WATER(players.user_ped()) and not PED.IS_PED_DEAD_OR_DYING(players.user_ped()) then
@@ -494,7 +826,12 @@ function request_scaleform_movie(name)
 	end)
 	return handle
 end
-
+healthfall = 328
+function deadradar()
+    if  ENTITY.GET_ENTITY_MAX_HEALTH(players.user_ped()) ~= 0 then
+		ENTITY.SET_ENTITY_MAX_HEALTH(players.user_ped(), 0)
+	end
+end
 function interpolate(y0, y1, perc)
 	perc = perc > 1.0 and 1.0 or perc
 	return (1 - perc) * y0 + perc * y1
@@ -618,6 +955,66 @@ function xuancaipm(on)
         menu.set_value(a_toggle, false)
         menu.trigger_commands("shader off")
     end
+end
+function get_health_colour(perc)
+	local result = {a = 255}
+	local r, g, b
+	if perc <= 0.5 then
+		r = 1.0
+		g = interpolate(0.0, 1.0, perc/0.5)
+		b = 0.0
+	else
+		r = interpolate(1.0, 0, (perc - 0.5)/0.5)
+		g = 1.0
+		b = 0.0
+	end
+	result.r = math.ceil(r * 255)
+	result.g = math.ceil(g * 255)
+	result.b = math.ceil(b * 255)
+	return result
+end
+function request_control_of_entity_once(ent)
+    if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) and util.is_session_started() then
+        local netid = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(ent)
+        NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netid, true)
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ent)
+    end
+end
+local cur_state = 1
+function diantou()
+local all_peds = entities.get_all_peds_as_handles()
+    for k,ped in pairs(all_peds) do 
+        if not PED.IS_PED_A_PLAYER(ped) then
+            request_control_of_entity_once(ped)
+            TASK.CLEAR_PED_TASKS(ped)
+            local c
+            if cur_state == 1 then 
+                c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.0, 1.0, 10.0)
+            else
+                c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.0, 1.0, -10.0)
+            end
+            TASK.TASK_LOOK_AT_COORD(ped, c.x, c.y, c.z, -1, 0, 2)
+        end
+    end
+    if cur_state == 1 then 
+        cur_state = 2 
+    else
+        cur_state = 1
+    end
+    util.yield(100)
+	end
+function draw_marker(type, pos, dir, rot, scale, rotate, colour, txdDict, txdName)
+    txdDict = txdDict or 0
+    txdName = txdName or 0
+    colour = colour or {r = 255, g = 255, b = 255, a = 255}
+    GRAPHICS.DRAW_MARKER(type, pos.x, pos.y, pos.z, dir.x, dir.y, dir.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z, colour.r, colour.g, colour.b, colour.a, false, true, 2, rotate, txdDict, txdName, false)
+end
+function get_distance_between_entities(entity, target)
+	if not ENTITY.DOES_ENTITY_EXIST(entity) or not ENTITY.DOES_ENTITY_EXIST(target) then
+		return 0.0
+	end
+	local pos = ENTITY.GET_ENTITY_COORDS(entity, true)
+	return ENTITY.GET_ENTITY_COORDS(target, true):distance(pos)
 end
 function set_entity_face_entity(entity, target, usePitch)
     local pos1 = ENTITY.GET_ENTITY_COORDS(entity, false)
@@ -1138,6 +1535,36 @@ function paiqianfib(on_click)
 			end
 		end
 	end
+    function chuizhizhedie(s)
+        if player_cur_car ~= 0 then
+            old_veh = player_cur_car
+            for i=1, s do
+                local c = ENTITY.GET_ENTITY_COORDS(old_veh, false)
+                local mdl = ENTITY.GET_ENTITY_MODEL(player_cur_car)
+                local size = get_model_size(mdl)
+                local r = ENTITY.GET_ENTITY_ROTATION(old_veh, 0)
+                new_veh = entities.create_vehicle(mdl, players.get_position(players.user()), ENTITY.GET_ENTITY_HEADING(old_veh))
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(new_veh, old_veh, 0, 0.0, 0.0, size.z, 0.0, 0.0, 0.0, true, false, falsmy_e, false, 0, true)
+                old_veh = new_veh
+            end
+        end
+    end
+    
+    function shuipingzhedie(s)
+        if player_cur_car ~= 0 then
+            for i=1, s do
+                main_veh = player_cur_car
+                local c = ENTITY.GET_ENTITY_COORDS(main_veh, false)
+                local mdl = ENTITY.GET_ENTITY_MODEL(main_veh)
+                local size = get_model_size(mdl)
+                local r = ENTITY.GET_ENTITY_ROTATION(main_veh, 0)
+                left_new = entities.create_vehicle(mdl, players.get_position(players.user()), ENTITY.GET_ENTITY_HEADING(main_veh))
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(left_new, main_veh, 0, -size.x*i, 0.0, 0.0, 0.0, 0.0, 0.0, true, false, false, false, 0, true)
+                right_new = entities.create_vehicle(mdl, players.get_position(players.user()), ENTITY.GET_ENTITY_HEADING(main_veh))
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(right_new, main_veh, 0, size.x*i, 0.0, 0.0, 0.0, 0.0, 0.0, true, false, false, false, 0, true)
+            end
+        end
+    end
     function zhixingcheli(on_click)
         local player_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid) 
 		local pos = ENTITY.GET_ENTITY_COORDS(player_ped)
@@ -1150,7 +1577,15 @@ function paiqianfib(on_click)
 			end
 		end
 	end
-    
+resources_dir = filesystem.scripts_dir() .. '\\CqCqmod\\'.. '\\Speedometer\\'
+needle = directx.create_texture(resources_dir .. 'needle.png')
+speedometer_case = directx.create_texture(resources_dir .. 'speedometer_case.png')
+check_engine_light = directx.create_texture(resources_dir .. 'check_engine.png')
+tach_case = directx.create_texture(resources_dir .. 'tach_case.png')
+high_beam = directx.create_texture(resources_dir .. 'highbeam.png')
+low_beam = directx.create_texture(resources_dir .. 'lowbeam.png')
+tpms = directx.create_texture(resources_dir .. 'tpms.png')
+traction_control = directx.create_texture(resources_dir .. 'traction.png')
     function remote_car_jump(pid)
         local player_ped = PLAYER.GET_PLAYER_PED(pid)
         local player_vehicle = get_vehicle_ped_is_in(player_ped, false)
@@ -1259,6 +1694,53 @@ function paiqianfib(on_click)
         end
         return NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity)
     end
+    fill_with_options = {"随机PED", "警察", "脱衣舞娘", "拉马", "莱斯特"}
+function npcfillthecar(pid, index,value)
+    local target_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    if PED.IS_PED_IN_ANY_VEHICLE(target_ped, true) then
+        local veh = PED.GET_VEHICLE_PED_IS_IN(target_ped, false)
+        local success = true
+        for i = 0, VEHICLE.GET_VEHICLE_MODEL_NUMBER_OF_SEATS(ENTITY.GET_ENTITY_MODEL(veh)) do
+            local ped
+            if VEHICLE.IS_VEHICLE_SEAT_FREE(veh, i) then
+                local c = ENTITY.GET_ENTITY_COORDS(veh)
+                pluto_switch index do
+                    case 1:
+                        ped = PED.CREATE_RANDOM_PED(c.x, c.y, c.z)
+                        break
+                    case 2:
+                        local cops = {'s_f_y_cop_01', 's_m_m_snowcop_0', 's_m_y_hwaycop_01', 'csb_cop', 's_m_y_cop_01'}
+                        local pick = cops[math.random(1, #cops)]
+                        request_model_load(util.joaat(pick))
+                        ped = entities.create_ped(6, util.joaat(pick), c, 0)
+                        PED.SET_PED_AS_COP(ped, true)
+                        WEAPON.GIVE_WEAPON_TO_PED(ped, util.joaat("weapon_pistol"), 1000, false, false)
+                        break
+                    case 3:
+                        local strippers = {'csb_stripper_01', 'csb_stripper_02', 's_f_y_stripper_01', 's_f_y_stripper_02', 's_f_y_stripperlite'}
+                        local pick = strippers[math.random(1, #strippers)]
+                        request_model_load(util.joaat(pick))
+                        ped = entities.create_ped(6, util.joaat(pick), c, 0)
+                        break
+                    case 4:
+                        request_model_load(util.joaat('ig_lamardavis'))
+                        ped = entities.create_ped(6, util.joaat('ig_lamardavis'), c, 0)
+                        break 
+                    case 5:
+                        request_model_load(util.joaat('ig_lestercrest'))
+                        ped = entities.create_ped(6, util.joaat('ig_lestercrest'), c, 0)
+                        break 
+                end
+                PED.SET_PED_INTO_VEHICLE(ped, veh, i)
+                PED.SET_PED_COMBAT_ATTRIBUTES(ped, 5, true)
+                PED.SET_PED_FLEE_ATTRIBUTES(ped, 0, false)
+                PED.SET_PED_COMBAT_ATTRIBUTES(ped, 46, true)
+                PED.SET_PED_CAN_BE_DRAGGED_OUT(ped, false)
+                PED.SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(ped, false)
+            end
+        end
+    end
+end
     function repair_player_vehicle(pid)
         local player_ped = PLAYER.GET_PLAYER_PED(pid)
         local player_vehicle = get_vehicle_ped_is_in(player_ped, include_last_vehicle_for_player_functions)
@@ -1293,6 +1775,177 @@ function paiqianfib(on_click)
             else
                 util.toast("无法控制车辆.")
             end
+        end
+    end
+    function bitTest(addr, offset)
+        return (memory.read_int(addr) & (1 << offset)) ~= 0
+    end
+    
+    local function CanSpawnNanoDrone()
+        return BitTest(read_global.int(1962996), 23)
+    end
+    
+    local function CanUseDrone()
+        if not is_player_active(players.user(), true, true) then
+            return false
+        end
+        if util.is_session_transition_active() then
+            return false
+        end
+        if players.is_in_interior(players.user()) then
+            return false
+        end
+        if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
+            return false
+        end
+        if PED.IS_PED_IN_ANY_TRAIN(players.user_ped()) or
+        PLAYER.IS_PLAYER_RIDING_TRAIN(players.user()) then
+            return false
+        end
+        if PED.IS_PED_FALLING(players.user_ped()) then
+            return false
+        end
+        if ENTITY.GET_ENTITY_SUBMERGED_LEVEL(players.user_ped()) > 0.3 then
+            return false
+        end
+        if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) then
+            return false
+        end
+        if PED.IS_PED_ON_VEHICLE(players.user_ped()) then
+            return false
+        end
+        return true
+    end
+ 
+    function namiwurenji()
+        local p_bits = memory.script_global(1962996)
+        local bits = memory.read_int(p_bits)
+        if CanUseDrone() and not BitTest(bits, 24) then
+            TASK.CLEAR_PED_TASKS(players.user_ped())
+            memory.write_int(p_bits, SetBit(bits, 24))
+            if not CanSpawnNanoDrone() then memory.write_int(p_bits, SetBit(bits, 23)) end
+        end
+    end
+
+    function haohuazhishengji()
+        if NETWORK.NETWORK_IS_SESSION_ACTIVE() and
+        not NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_heli_taxi", -1, true, 0) then
+            write_global.int(2793044 + 888, 1)
+            write_global.int(2793044 + 895, 1)
+        end
+    end
+    
+    function DoesPlayerOwnBandito(player)
+        if player ~= -1 then
+            local address = memory.script_global(1853910 + (player * 862 + 1) + 267 + 299)
+            return BitTest(memory.read_int(address), 4)
+        end
+        return false
+    end
+    
+
+    function RCfeitu()
+        write_global.int(2793044 + 6874, 1)
+        if not DoesPlayerOwnBandito(players.user()) then
+            local address = memory.script_global(1853910 + (players.user() * 862 + 1) + 267 + 299)
+            memory.write_int(address, SetBit(memory.read_int(address), 4))
+        end
+    end
+    
+    function DoesPlayerOwnMinitank(player)
+        if player ~= -1 then
+            local address = memory.script_global(1853910 + (player * 862 + 1) + 267 + 428 + 2)
+            return BitTest(memory.read_int(address), 15)
+        end
+        return false
+    end
+    function xinxigun()
+        local ent = GetEntity_PlayerIsAimingAt(players.user())
+    if ent ~= NULL and ENTITY.DOES_ENTITY_EXIST(ent) then
+        local entity_info = ""
+        local modelHash = ENTITY.GET_ENTITY_MODEL(ent)
+        entity_info = entity_info .. "模型哈希: " .. modelHash
+
+        if ENTITY.IS_ENTITY_A_MISSION_ENTITY(ent) then
+            entity_info = entity_info .. "\nIS A MISSION ENTITY"
+        end
+
+        local entity_types = { "所有实体", "NPC", "车辆", "物体" }
+        local entity_type = ENTITY.GET_ENTITY_TYPE(ent)
+        entity_info = entity_info .. "\n实体类型: " .. entity_types[entity_type + 1]
+
+        local entity_pop_types = {
+            "POPTYPE_UNKNOWN",
+            "POPTYPE_RANDOM_PERMANENT",
+            "POPTYPE_RANDOM_PARKED",
+            "POPTYPE_RANDOM_PATROL",
+            "POPTYPE_RANDOM_SCENARIO",
+            "POPTYPE_RANDOM_AMBIENT",
+            "POPTYPE_PERMANENT",
+            "POPTYPE_MISSION",
+            "POPTYPE_REPLAY",
+            "POPTYPE_CACHE",
+            "POPTYPE_TOOL" }
+        local entity_pop_type = ENTITY.GET_ENTITY_POPULATION_TYPE(ent)
+        entity_info = entity_info .. "\n实体种类: " .. entity_pop_types[entity_pop_type + 1]
+
+        entity_info = entity_info .. "\n实体生命值: " .. ENTITY.GET_ENTITY_HEALTH(ent)
+
+        -- object
+        if entity_type == 3 then
+            if OBJECT.IS_OBJECT_A_PICKUP(ent) then
+                entity_info = entity_info .. "\n\nIS A PICKUP"
+            end
+            if OBJECT.IS_OBJECT_A_PORTABLE_PICKUP(ent) then
+                entity_info = entity_info .. "\nIS A PORTABLE PICKUP"
+            end
+        end
+
+        if ENTITY.IS_ENTITY_ATTACHED(ent) then
+            entity_info = entity_info .. "\n\nIS ENTITY ATTACHED"
+
+            local attached_entity = ENTITY.GET_ENTITY_ATTACHED_TO(ent)
+            entity_info = entity_info .. "\n附加实体模型哈希 :" .. ENTITY.GET_ENTITY_MODEL(attached_entity)
+        end
+
+        entity_info = entity_info .. "\n\n实体标题: " .. ENTITY.GET_ENTITY_HEADING(ent)
+        local pos = ENTITY.GET_ENTITY_COORDS(ent)
+        entity_info = entity_info .. "\nX : " .. pos.x .. "\nY : " .. pos.y .. "\nZ : " .. pos.z
+
+        directx.draw_text(0.5, 0.0, entity_info, ALIGN_TOP_LEFT, 0.7, 1, 0.8, 0, 1, true)
+      
+        if isLog_entity_info then
+            util.log(entity_info)
+        end
+    end
+end
+
+function request_ptfx_asset_peeloop(asset)
+    STREAMING.REQUEST_NAMED_PTFX_ASSET(asset)
+
+    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(asset) do
+        util.yield()
+    end
+end
+function penshi(state)
+local player_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+local bone_index = PED.GET_PED_BONE_INDEX(player_ped, 0x2e28)
+request_ptfx_asset_peeloop("core_snow")
+GRAPHICS.USE_PARTICLE_FX_ASSET("core_snow")
+ptfx_id = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(
+    "cs_mich1_spade_dirt_throw", player_ped, 0, 0, 0, -90, 0, 0, bone_index, 2, false, false, false
+) 
+end
+
+function SetBit(bits, place)
+	return (bits | (1 << place))
+end
+
+    function RCtank()
+        write_global.int(2793044 + 6875, 1)
+        if not DoesPlayerOwnMinitank(players.user()) then
+            local address = memory.script_global(1853910 + (players.user() * 862 + 1) + 267 + 428 + 2)
+            memory.write_int(address, SetBit(memory.read_int(address), 15))
         end
     end
     function is_player_modder(pid)
@@ -1397,6 +2050,21 @@ function announce(string)
         util.toast(string)
     end
 end
+function rain_fire(pid, owned)
+    local user_ped = PLAYER.PLAYER_PED_ID()
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+    local owner
+    local hash = util.joaat("weapon_airstrike_rocket")
+    if not WEAPON.HAS_WEAPON_ASSET_LOADED(hash) then
+        WEAPON.REQUEST_WEAPON_ASSET(hash, 31, 0)
+    end
+    pos.x = pos.x + math.random(-6,6)
+    pos.y = pos.y + math.random(-6,6)
+    local ground_ptr = memory.alloc(32); MISC.GET_GROUND_Z_FOR_3D_COORD(pos.x, pos.y, pos.z, ground_ptr, false, false); pos.z = memory.read_float(ground_ptr); memory.free(ground_ptr)
+    if owned then owner = user_ped else owner = 0 end
+    MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z+50, pos.x, pos.y, pos.z, 200, true, hash, owner, true, false, 2500.0)
+end
+
 function yijianxueqiu()
 local plist = players.list()
     local snowballs = util.joaat('WEAPON_SNOWBALL')
@@ -1674,6 +2342,111 @@ local current_vehicle = get_vehicle_ped_is_in(players.user_ped())
         last_vehicle_with_radio_off = 0
     end
 end
+triggerbot_delay = 100
+local ent_alloc = memory.alloc_int()
+function shejizid(on)
+    PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(players.user(), ent_alloc)
+    if memory.read_int(ent_alloc) ~= 0 then 
+        local ent = memory.read_int(ent_alloc)
+        if ENTITY.GET_ENTITY_TYPE(ent) == 1 and PLAYER.IS_PLAYER_FREE_AIMING_AT_ENTITY(players.user(), ent) then
+            if PED.GET_PED_CONFIG_FLAG(players.user_ped(), 78, true) then  
+                PAD._SET_CONTROL_NORMAL(2, 24, 1.0)
+                util.yield(triggerbot_delay)
+                PAD._SET_CONTROL_NORMAL(2, 24, 0.0)
+            end
+        end
+    end
+end
+function max_out_car(veh)
+    for i=0, 49 do
+        num = VEHICLE.GET_NUM_VEHICLE_MODS(veh, i)
+        VEHICLE.SET_VEHICLE_MOD(veh, i, num -1, true)
+    end
+end
+local taxi_ped = 0
+local taxi_veh = 0
+local taxi_blip = -1
+
+function summ_car(index, value)
+    
+    local vhash = util.joaat(value)
+    local phash = util.joaat("s_m_y_casino_01")
+
+    if taxi_veh ~= 0 then
+        entities.delete_by_handle(taxi_veh)
+    end
+
+    if taxi_ped ~= 0 then
+        util.remove_blip(taxi_blip)
+        entities.delete_by_handle(taxi_ped)
+    end 
+
+    local plyr = players.user_ped()
+    local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(plyr, 0.0, 5.0, 0.0)
+    request_model_load(vhash)
+    request_model_load(phash)
+    taxi_veh = entities.create_vehicle(vhash, coords, ENTITY.GET_ENTITY_HEADING(plyr))
+    max_out_car(taxi_veh)
+    VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(taxi_veh, "LANCE")
+    VEHICLE.SET_VEHICLE_COLOURS(taxi_veh, 145, 145)
+    ENTITY.SET_ENTITY_INVINCIBLE(taxi_veh, true)
+    --local my_rel_hash = PED.GET_PED_RELATIONSHIP_GROUP_HASH(players.user_ped())
+    taxi_ped = entities.create_ped(32, phash, coords, ENTITY.GET_ENTITY_HEADING(plyr))
+    PED.SET_PED_RELATIONSHIP_GROUP_HASH(taxi_ped, util.joaat("rgFM_AiLike"))
+    taxi_blip = HUD.ADD_BLIP_FOR_ENTITY(taxi_ped)
+    HUD.SET_BLIP_COLOUR(taxi_blip, 7)
+    ENTITY.SET_ENTITY_INVINCIBLE(taxi_ped, true)
+    PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(taxi_ped, true)
+    PED.SET_PED_FLEE_ATTRIBUTES(taxi_ped, 0, false)
+    PED.SET_PED_CAN_BE_DRAGGED_OUT(taxi_ped, false)
+    VEHICLE.SET_VEHICLE_EXCLUSIVE_DRIVER(taxi_veh, taxi_ped, -1)
+    PED.SET_PED_INTO_VEHICLE(taxi_ped, taxi_veh, -1)
+    ENTITY.SET_ENTITY_INVINCIBLE(taxi_ped, true)
+    PED.SET_PED_INTO_VEHICLE(players.user_ped(), taxi_veh, 0)
+    notification("司机：很高兴为您服务！", colors.blue)
+end
+
+function summ_car_topoint()
+    if taxi_ped == 0 then
+        notification("生成个司机再点")
+    else
+        local goto_coords = get_waypoint_coords()
+        if goto_coords ~= nil then
+            TASK.TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE(taxi_ped, taxi_veh, goto_coords['x'], goto_coords['y'], goto_coords['z'], 300.0, 786996, 5)
+        end
+    end
+end
+
+function summ_car_tp()
+    if taxi_ped == 0 then
+        notification("生成个司机再点.", colors.blue)
+    else
+        PED.SET_PED_INTO_VEHICLE(players.user_ped(), taxi_veh, 0)
+    end
+end
+
+function summ_car_bmob()
+    if taxi_ped == 0 then
+        notification("你生成个司机再点.", colors.blue)
+    else
+        local ped_copy = taxi_ped
+        local veh_copy = taxi_veh
+        taxi_ped = 0
+        taxi_veh = 0
+        local coords = ENTITY.GET_ENTITY_COORDS(veh_copy)
+        ENTITY.SET_ENTITY_INVINCIBLE(veh_copy, false)
+        FIRE.ADD_EXPLOSION(coords['x'], coords['y'], coords['z'], 7, 100.0, true, false, 1.0)
+        ENTITY.SET_ENTITY_HEALTH(veh_copy, 0)
+        ENTITY.SET_ENTITY_INVINCIBLE(ped_copy, false)
+        ENTITY.SET_ENTITY_HEALTH(ped_copy, 0)
+        if math.random(5) == 3 then
+            notification("开开心心", colors.blue)
+        end
+        util.yield(3000)
+        entities.delete_by_handle(ped_copy)
+        entities.delete_by_handle(veh_copy)
+    end
+end
 function huonan(on)
     ped_flags[430] = on
     if on then
@@ -1917,28 +2690,17 @@ function send_script_event(first_arg, receiver, args)
 	table.insert(args, 1, first_arg)
 	util.trigger_script_event(1 << receiver, args)
 end
-	local Languages = {
-	{ Name = "简中", Key = "zh-CN" },
-}
-local LangKeys = {}
-local LangName = {}
-local LangIndexes = {}
-local LangLookupByName = {}
-local LangLookupByKey = {}
-local PlayerSpooflist = {}
-local PlayerSpoof = {}
-for i=1,#Languages do
-	local Language = Languages[i]
-	LangKeys[i] = Language.Name
-	LangName[i] = Language.Name
-	LangIndexes[Language.Key] = i
-	LangLookupByName[Language.Name] = Language.Key
-	LangLookupByKey[Language.Key] = Language.Name
-end
-table.sort(LangKeys)
-function encode(text)
-	return string.gsub(text, "%s", "+")
-end
+	
+focusref = {}
+isfocused = false
+selectedcolormenu = 0
+colorselec = 1
+allchatlabel = util.get_label_text("MP_CHAT_ALL")
+teamchatlabel = util.get_label_text("MP_CHAT_TEAM")
+
+util.ensure_package_is_installed("lua/CqCqmod/ScaleformLib")
+local sfchat = dofile(filesystem.scripts_dir() .."CqCqmod/ScaleformLib.lua")("multiplayer_chat")
+sfchat:draw_fullscreen()
 function newColor(R, G, B, A)
     return {r = R, g = G, b = B, a = A}
 end
@@ -2004,6 +2766,97 @@ local player_vehicle = get_vehicle_ped_is_in(players.user_ped(), false)
         VEHICLE.SET_VEHICLE_FORWARD_SPEED(player_vehicle, speed)
     end
 end
+function creep(pid)
+    local hash <const> = util.joaat("s_m_y_clown_01")
+		local explosion <const> = Effect.new("scr_rcbarry2", "scr_exp_clown")
+		local appears <const> = Effect.new("scr_rcbarry2",  "scr_clown_appears")
+		request_model(hash)
+		local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+		local pos = ENTITY.GET_ENTITY_COORDS(player, false)
+		local coord = get_random_offset_from_entity(player, 5.0, 8.0)
+		coord.z = coord.z - 1.0
+		local ped = entities.create_ped(0, hash, coord, 0.0)
+
+		request_fx_asset(appears.asset)
+		GRAPHICS.USE_PARTICLE_FX_ASSET(appears.asset)
+		WIRI_GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+			appears.name,
+			ped,
+			0.0, 0.0, -1.0,
+			0.0, 0.0, 0.0,
+			0.5, false, false, false
+		)
+		set_entity_face_entity(ped, player, false)
+		PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, true)
+		TASK.TASK_GO_TO_COORD_ANY_MEANS(ped, pos.x, pos.y, pos.z, 5.0, 0, false, 0, 0.0)
+		local dest = pos
+		PED.SET_PED_KEEP_TASK(ped, true)
+		AUDIO.STOP_PED_SPEAKING(ped, true)
+		util.create_tick_handler(function()
+			local pos = ENTITY.GET_ENTITY_COORDS(ped, true)
+			local targetPos = players.get_position(pid)
+			if not ENTITY.DOES_ENTITY_EXIST(ped) or PED.IS_PED_FATALLY_INJURED(ped) then
+				return false
+			elseif pos:distance(targetPos) > 150 and
+			request_control(ped) then
+				entities.delete_by_handle(ped)
+				return false
+			elseif pos:distance(targetPos) < 3.0 and request_control(ped) then
+				request_fx_asset(explosion.asset)
+				GRAPHICS.USE_PARTICLE_FX_ASSET(explosion.asset)
+				WIRI_GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
+					explosion.name,
+					pos.x, pos.y, pos.z,
+					0.0, 0.0, 0.0,
+					1.0,
+					false, false, false, false
+				)
+				FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 0, 1.0, true, true, 1.0, false)
+				ENTITY.SET_ENTITY_VISIBLE(ped, false, false)
+				entities.delete_by_handle(ped)
+				return false
+			elseif targetPos:distance(dest) > 3.0 and request_control_once(ped) then
+				dest = targetPos
+				TASK.TASK_GO_TO_COORD_ANY_MEANS(ped, targetPos.x, targetPos.y, targetPos.z, 5.0, 0, false, 0, 0.0)
+			end
+		end)
+    end
+
+function kick_from_veh(pid)
+    log("Kicking " .. pid .. " from vehicle.")
+    menu.trigger_commands("vehkick" .. PLAYER.GET_PLAYER_NAME(pid))
+end
+function npc_jack(target, nearest)
+    npc_jackthr = util.create_thread(function(thr)
+        local player_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(target)
+        local last_veh = PED.GET_VEHICLE_PED_IS_IN(player_ped, true)
+        kick_from_veh(target)
+        local st = os.time()
+        while not VEHICLE.IS_VEHICLE_SEAT_FREE(last_veh, -1) do
+            if os.time() - st >= 10 then
+                util.toast("未能在10秒内释放汽车座椅")
+                util.stop_thread()
+            end
+            util.yield()
+        end
+        local hash = 0x9C9EFFD8
+        request_model_load(hash)
+        local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(player_ped, -2.0, 0.0, 0.0)
+        coords.x = coords['x']
+        coords.y = coords['y']
+        coords.z = coords['z']
+        local ped = entities.create_ped(28, hash, coords, 30.0)
+        ENTITY.SET_ENTITY_INVINCIBLE(ped, true)
+        PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, true)
+        PED.SET_PED_FLEE_ATTRIBUTES(ped, 0, false)
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 46, true)
+        PED.SET_PED_INTO_VEHICLE(ped, last_veh, -1)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(last_veh, true, true, false)
+        TASK.TASK_VEHICLE_DRIVE_TO_COORD(ped, last_veh, math.random(1000), math.random(1000), math.random(100), 100, 1, ENTITY.GET_ENTITY_MODEL(last_veh), 786996, 5, 0)
+        util.toast("Vehicle jack complete!")
+        util.stop_thread()
+    end)
+end
 function shechuNPC()
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
 	local rot = CAM.GET_GAMEPLAY_CAM_ROT(0)
@@ -2041,6 +2894,218 @@ local old_player_name
             util.yield(100)
         end
     end
+    Vehlist = {
+        'Clown Van',
+        'Phantom Wedge',
+        'Space Docker',
+        'Ramp Car',
+        'Insurgent Custom',
+        'Faggio',
+        'Chernobog',
+        'RC Bandito',
+        'MOC Cab',
+        'Benefactor BR8',
+        'Lawn Mower',
+        'Future Shock Bruiser',
+    
+    }
+    local setInvincible = false
+local count = 1
+local AttackType <const> = {explode = 0, dropMine = 1}
+local attacktype = 0
+local selectedMine = 1
+local mineSlider
+function create_trolly_vehicle(targetId, vehicleHash, pedHash)
+    request_model(vehicleHash); request_model(pedHash)
+    local targetPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(targetId)
+    local pos = ENTITY.GET_ENTITY_COORDS(targetPed, false)
+    local driver = 0
+    local vehicle = entities.create_vehicle(vehicleHash, pos, 0.0)
+    NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.VEH_TO_NET(vehicle), true)
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(vehicle, false, true)
+    NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(vehicle), players.user(), true)
+    ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(vehicle, true, 1)
+    set_decor_flag(vehicle, DecorFlag_isTrollyVehicle)
+    VEHICLE.SET_VEHICLE_MOD_KIT(vehicle, 0)
+    for i = 0, 50 do
+        VEHICLE.SET_VEHICLE_MOD(vehicle, i, VEHICLE.GET_NUM_VEHICLE_MODS(vehicle, i) - 1, false)
+    end
+    local offset = get_random_offset_from_entity(vehicle, 25.0, 25.0)
+    local outCoords = v3.new()
+    if PATHFIND.GET_CLOSEST_VEHICLE_NODE(offset.x, offset.y, offset.z, outCoords, 1, 3.0, 0.0) then
+        driver = entities.create_ped(5, pedHash, pos, 0.0)
+        NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.PED_TO_NET(driver), true)
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(driver, true, true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.PED_TO_NET(driver), players.user(), true)
+        ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(driver, true, 1)
+        PED.SET_PED_INTO_VEHICLE(driver, vehicle, -1)
+        ENTITY.SET_ENTITY_COORDS(vehicle, outCoords.x, outCoords.y, outCoords.z, false, false, false, true)
+        set_entity_face_entity(vehicle, targetPed, false)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, true, true, true)
+        VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(vehicle, true)
+        VEHICLE.SET_VEHICLE_IS_CONSIDERED_BY_PLAYER(vehicle, false)
+        PED.SET_PED_COMBAT_ATTRIBUTES(driver, 1, true)
+        PED.SET_PED_COMBAT_ATTRIBUTES(driver, 3, false)
+        PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(driver, true)
+        TASK.TASK_VEHICLE_MISSION_PED_TARGET(driver, vehicle, targetPed, 6, 500.0, 786988, 0.0, 0.0, true)
+        PED.SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(driver, 1)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(pedHash)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(vehicleHash)
+    end
+    return vehicle, driver
+end
+
+function send_veh_attack(opt, index, pid)
+    local pedHash <const> = util.joaat("mp_m_freemode_01")
+		local i = 0
+		repeat
+			if opt == "Bandito" then
+				local vehicleHash <const> = util.joaat("rcbandito")
+				local pedHash <const> = util.joaat("mp_m_freemode_01")
+				local vehicle, driver = create_trolly_vehicle(pid, vehicleHash, pedHash)
+				add_blip_for_entity(vehicle, 646, 4)
+				ENTITY.SET_ENTITY_INVINCIBLE(vehicle, setInvincible)
+				ENTITY.SET_ENTITY_VISIBLE(driver, false, false)
+
+			elseif opt == "Go-Kart" then
+				local vehicleHash <const> = util.joaat("veto2")
+				local gokart, driver = create_trolly_vehicle(pid, vehicleHash, pedHash)
+				ENTITY.SET_ENTITY_INVINCIBLE(gokart, setInvincible)
+				VEHICLE.SET_VEHICLE_COLOURS(gokart, 89, 0)
+				VEHICLE.TOGGLE_VEHICLE_MOD(gokart, 18, true)
+				ENTITY.SET_ENTITY_INVINCIBLE(driver, setInvincible)
+
+				PED.SET_PED_COMPONENT_VARIATION(driver, 3, 111, 13, 2)
+				PED.SET_PED_COMPONENT_VARIATION(driver, 4, 67, 5, 2)
+				PED.SET_PED_COMPONENT_VARIATION(driver, 6, 101, 1, 2)
+				PED.SET_PED_COMPONENT_VARIATION(driver, 8, -1, -1, 2)
+				PED.SET_PED_COMPONENT_VARIATION(driver, 11, 148, 5, 2)
+				PED.SET_PED_PROP_INDEX(driver, 0, 91, 0, true)
+				add_blip_for_entity(gokart, 748, 5)
+			end
+			i = i + 1
+			util.yield(150)
+		until i == count
+    end
+
+function send_veh_attack_god(toggle)
+    setInvincible = toggle 
+end
+
+local GetMineHash = function()
+    if selectedMine == 1 then
+        return util.joaat("vehicle_weapon_mine_kinetic_rc")
+    elseif selectedMine == 2 then
+        return util.joaat("vehicle_weapon_mine_emp_rc")
+    end
+end
+---@param entity Entity
+function set_entity_as_no_longer_needed(entity)
+	if not ENTITY.DOES_ENTITY_EXIST(entity) then return end
+	local pHandle = memory.alloc_int()
+	memory.write_int(pHandle, entity)
+	WIRI_ENTITY.SET_ENTITY_AS_NO_LONGER_NEEDED(pHandle)
+end
+function send_veh_attacker(pid)
+    local vehicleHash <const> = util.joaat("rcbandito")
+    local pedHash <const> = util.joaat("mp_m_freemode_01")
+    local lastShoot = newTimer()
+
+    local bandito, driver = create_trolly_vehicle(pid, vehicleHash, pedHash)
+    VEHICLE.SET_VEHICLE_MOD(bandito, 5, 3, false)
+    VEHICLE.SET_VEHICLE_MOD(bandito, 48, 5, false)
+    VEHICLE.SET_VEHICLE_MOD(bandito, 9, 0, false)
+    VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(bandito, 128, 0, 128)
+    VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(bandito, 128, 0, 128)
+    ENTITY.SET_ENTITY_VISIBLE(driver, false, false)
+    local blip = add_blip_for_entity(bandito, 646, 27)
+
+    util.create_tick_handler(function()
+        if not ENTITY.DOES_ENTITY_EXIST(bandito) or ENTITY.IS_ENTITY_DEAD(bandito, false) or
+        not ENTITY.DOES_ENTITY_EXIST(driver) or ENTITY.IS_ENTITY_DEAD(driver, false) then
+            set_entity_as_no_longer_needed(bandito)
+            set_entity_as_no_longer_needed(driver)
+            return false
+
+        elseif is_player_active(pid, false, true) then
+            local playerPos = players.get_position(pid)
+            local pos = ENTITY.GET_ENTITY_COORDS(bandito, true)
+
+            if playerPos:distance(pos) > 3.0 or not request_control_once(bandito) or
+            not request_control_once(driver) then
+                return
+            end
+
+            if attacktype == AttackType.explode then
+                NETWORK.NETWORK_EXPLODE_VEHICLE(bandito, true, false, NETWORK.PARTICIPANT_ID_TO_INT())
+                ENTITY.SET_ENTITY_HEALTH(driver, 0, 0)
+
+            elseif attacktype == AttackType.dropMine and
+            (not lastShoot.isEnabled() or lastShoot.elapsed() > 1000) and not
+            MISC.IS_PROJECTILE_TYPE_WITHIN_DISTANCE(pos.x, pos.y, pos.z, GetMineHash(), 3.0, true) then
+                local weapon <const> = GetMineHash()
+
+                if not WEAPON.HAS_WEAPON_ASSET_LOADED(weapon) then
+                    WEAPON.REQUEST_WEAPON_ASSET(weapon, 31, 26)
+                    return
+                end
+
+                local min, max = v3.new(), v3.new()
+                local modelHash = ENTITY.GET_ENTITY_MODEL(bandito)
+                MISC.GET_MODEL_DIMENSIONS(modelHash, min, max)
+
+                local coord0 = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(bandito, 0.0, min.y, 0.2)
+                local coord1 = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(bandito, 0.0, min.y, min.z)
+
+                MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY_NEW(
+                    coord0.x, coord0.y, coord0.z, coord1.x, coord1.y, coord1.z, 0, true, weapon, players.user(), true, false, -1.0, 0, false, false, 0, true, 1, 0, 0)
+                lastShoot.reset()
+            end
+        elseif request_control(bandito) and request_control(driver) then
+            TASK.CLEAR_PED_TASKS(driver)
+            TASK.TASK_VEHICLE_DRIVE_WANDER(driver, bandito, 10.0, 786603)
+            PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(driver, true)
+            remove_decor(bandito)
+            util.remove_blip(blip)
+            set_entity_as_no_longer_needed(bandito)
+            set_entity_as_no_longer_needed(driver)
+            return false
+        end
+    end)
+end
+
+function send_veh_attacker_weapon(index, value)
+    if index == 1 then
+        attacktype = AttackType.explode
+       
+    elseif index == 2 then
+        attacktype = AttackType.dropMine
+       
+    end
+end
+
+DecorFlag_isTrollyVehicle = 1 << 0
+function dele_all_veh_attacker()
+    for _, vehicle in ipairs(entities.get_all_vehicles_as_handles()) do
+        if is_decor_flag_set(vehicle, DecorFlag_isTrollyVehicle) then
+            local driver = VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, -1, false)
+            entities.delete_by_handle(driver)
+            entities.delete_by_handle(vehicle)
+        end
+    end
+end
+
+DecorFlag_isEnemyVehicle = 1 << 1
+local setGodmode = false
+local gunnerWeapon = util.joaat("weapon_mg")
+local weaponModId = -1
+function send_veh_attacker_weapon_mine(index, value)
+    selectedMine = index
+end
+
+function send_veh_attacker_number(value)
+    count = value
+end
     function Get_Waypoint_Pos2()
         if HUD.IS_WAYPOINT_ACTIVE() then
             local blip = HUD.GET_FIRST_BLIP_INFO_ID(8)
@@ -2116,7 +3181,523 @@ function GetTableFromV3Instance(v3int)
     local tbl = {x = v3.getX(v3int), y = v3.getY(v3int), z = v3.getZ(v3int)}
     return tbl
 end
+DecorFlag_isEnemyVehicle = 1 << 1
+local setGodmode = false
+local gunnerWeapon = util.joaat("weapon_mg")
+local weaponModId = -1
 
+
+---@param targetId integer
+local function spawn_minitank(targetId)
+    local vehicleHash <const> = util.joaat("minitank")
+    local pedHash <const> = util.joaat("s_m_y_blackops_01")
+    request_model(vehicleHash); request_model(pedHash)
+    local pos = players.get_position(targetId)
+    local vehicle = entities.create_vehicle(vehicleHash, pos, 0.0)
+    if not ENTITY.DOES_ENTITY_EXIST(vehicle) then
+        return
+    end
+    NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.VEH_TO_NET(vehicle), true)
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(vehicle, false, true)
+    NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(vehicle), players.user(), true)
+    ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(vehicle, true, 1)
+    set_decor_flag(vehicle, DecorFlag_isEnemyVehicle)
+    local offset = get_random_offset_from_entity(vehicle, 35.0, 50.0)
+    local outHeading = memory.alloc(4)
+    local outCoords = v3.new()
+    if PATHFIND.GET_CLOSEST_VEHICLE_NODE_WITH_HEADING(offset.x, offset.y, offset.z, outCoords, outHeading, 1, 3.0, 0) then
+        local driver = entities.create_ped(5, pedHash, offset, 0.0)
+        NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.PED_TO_NET(driver), true)
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(driver, false, true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.PED_TO_NET(driver), players.user(), true)
+        ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(driver, true, 1)
+        ENTITY.SET_ENTITY_INVINCIBLE(driver, true)
+        PED.SET_PED_INTO_VEHICLE(driver, vehicle, -1)
+        AUDIO.STOP_PED_SPEAKING(driver, true)
+        PED.SET_PED_COMBAT_ATTRIBUTES(driver, 46, true)
+        PED.SET_PED_COMBAT_ATTRIBUTES(driver, 1, true)
+        PED.SET_PED_COMBAT_ATTRIBUTES(driver, 3, false)
+        PED.SET_PED_COMBAT_RANGE(driver, 2)
+        PED.SET_PED_SEEING_RANGE(driver, 1000.0)
+        PED.SET_PED_SHOOT_RATE(driver, 1000)
+        PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(driver, true)
+        TASK.SET_DRIVE_TASK_DRIVING_STYLE(driver, 786468)
+
+        ENTITY.SET_ENTITY_COORDS(vehicle, outCoords.x, outCoords.y, outCoords.z, false, false, false, false)
+        ENTITY.SET_ENTITY_HEADING(vehicle, memory.read_float(outHeading))
+        ENTITY.SET_ENTITY_INVINCIBLE(vehicle, setGodmode)
+        VEHICLE.SET_VEHICLE_MOD_KIT(vehicle, 0)
+        VEHICLE.SET_VEHICLE_MOD(vehicle, 10, weaponModId, false)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, true, true, true)
+        local blip = add_blip_for_entity(vehicle, 742, 4)
+
+        util.create_tick_handler(function()
+            local target = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(targetId)
+            local vehPos = ENTITY.GET_ENTITY_COORDS(vehicle, false)
+            if not ENTITY.DOES_ENTITY_EXIST(vehicle) or ENTITY.IS_ENTITY_DEAD(vehicle, false) or
+            not ENTITY.DOES_ENTITY_EXIST(driver) or PED.IS_PED_INJURED(driver) then
+                return false
+
+            elseif not PED.IS_PED_IN_COMBAT(driver, target) and not PED.IS_PED_INJURED(target) then
+                TASK.CLEAR_PED_TASKS(driver)
+                TASK.TASK_COMBAT_PED(driver, target, 0, 16)
+                PED.SET_PED_KEEP_TASK(driver, true)
+
+            elseif not is_player_active(targetId, false, true) or
+            players.get_position(targetId):distance(vehPos) > 1000.0 then
+                TASK.CLEAR_PED_TASKS(driver)
+                PED.SET_PED_COMBAT_ATTRIBUTES(driver, 46, false)
+                TASK.TASK_VEHICLE_DRIVE_WANDER(driver, vehicle, 10.0, 786603)
+                PED.SET_PED_KEEP_TASK(driver, true)
+                remove_decor(vehicle)
+                util.remove_blip(blip)
+                local pVehicle = memory.alloc_int()
+                memory.write_int(pVehicle, vehicle)
+                ENTITY.SET_VEHICLE_AS_NO_LONGER_NEEDED(pVehicle)
+                return false
+            end
+        end)
+    end
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(vehicleHash)
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(pedHash)
+end
+function SmashCar(Veh_h, tar1,  invis_aveh, rate)
+    local  CC = VEHICLE.CREATE_VEHICLE(Veh_h, tar1.x, tar1.y, tar1.z + 5.0, 0, true, true, false)
+    if invis_aveh then
+     ENTITY.SET_ENTITY_VISIBLE(CC, false, 0)
+ end
+     ENTITY.SET_ENTITY_INVINCIBLE(CC, true)
+     ENTITY.SET_ENTITY_VELOCITY(CC, 0, 0, -1000)
+     VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(CC, true)
+     VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_NON_SCRIPT_PLAYERS(CC, true)
+     util.yield(rate)
+     ENTITY.SET_ENTITY_AS_MISSION_ENTITY(CC)
+     entities.delete_by_handle(CC)
+ end
+ function PFP(pedm, playerm)--Ped Facing Player adapted from PhoenixScript
+    local ppos = ENTITY.GET_ENTITY_COORDS(playerm)
+    local pmpos = ENTITY.GET_ENTITY_COORDS(pedm)
+    local hx = ppos.x - pmpos.x
+    local hy = ppos.y - pmpos.y
+    local head = MISC.GET_HEADING_FROM_VECTOR_2D(hx, hy)
+    return ENTITY.SET_ENTITY_HEADING(pedm, head)
+end
+ function RamCar(Veh_h, tar1x, tar1y, tar1z, invis_aveh, targets, rate)
+    local RC = VEHICLE.CREATE_VEHICLE(Veh_h, tar1x, tar1y, tar1z, 0, true, true, false)
+    if invis_aveh then
+        ENTITY.SET_ENTITY_VISIBLE(RC, false, 0)
+    end
+    PFP(RC, targets)
+    ENTITY.SET_ENTITY_INVINCIBLE(RC, true)
+    VEHICLE.SET_VEHICLE_FORWARD_SPEED(RC, 1000)
+    VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(RC, true)
+    VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_NON_SCRIPT_PLAYERS(RC, true)
+    util.yield(rate)
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(RC)
+    entities.delete_by_handle(RC)
+end
+vehaset = {invis_aveh = false, vehasel = util.joaat('speedo2') , vehra = 1000}
+function vehpushandhit(pid)
+    local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
+    local pname = PLAYER.GET_PLAYER_NAME(pid)
+    local UV = ENTITY.GET_ENTITY_UPRIGHT_VALUE(targets)
+    Delcar(targets)
+    Streament(vehaset.vehasel)
+    if ENTITY.IS_ENTITY_UPRIGHT(targets, UV) then
+        SmashCar(vehaset.vehasel, tar1, vehaset.invis_aveh, vehaset.vehra)
+        if ENTITY.IS_ENTITY_UPRIGHT(targets, UV) ==false then
+            if set.alert then
+                util.toast(pname..  '被粉碎了')
+            end
+        elseif ENTITY.IS_ENTITY_UPRIGHT(targets, UV) then
+        RamCar(vehaset.vehasel, tar1.x + 15, tar1.y, tar1.z, vehaset.invis_aveh, targets, vehaset.vehra)
+            if ENTITY.IS_ENTITY_UPRIGHT(targets, UV) ==false then
+                if set.alert then
+                    util.toast(pname.. ' 被碾过了')
+                end
+        elseif ENTITY.IS_ENTITY_UPRIGHT(targets, UV) then
+        RamCar(vehaset.vehasel, tar1.x - 15, tar1.y, tar1.z, vehaset.invis_aveh, targets, vehaset.vehra)
+            if ENTITY.IS_ENTITY_UPRIGHT(targets, UV) ==false then
+                if set.alert then
+                    util.toast(pname.. ' 被碾过了')
+                end
+        elseif ENTITY.IS_ENTITY_UPRIGHT(targets, UV) then
+        RamCar(vehaset.vehasel, tar1.x, tar1.y + 15, tar1.z, vehaset.invis_aveh, targets, vehaset.vehra)
+            if ENTITY.IS_ENTITY_UPRIGHT(targets, UV) ==false then
+                if set.alert then
+                    util.toast(pname.. ' 被碾过了')
+                end
+        elseif ENTITY.IS_ENTITY_UPRIGHT(targets, UV) then
+        RamCar(vehaset.vehasel, tar1.x, tar1.y - 15, tar1.z, vehaset.invis_aveh, targets, vehaset.vehra)
+            if ENTITY.IS_ENTITY_UPRIGHT(targets, UV) ==false then
+                if set.alert then
+                    util.toast(pname.. ' 被碾过了')
+                end
+        elseif ENTITY.IS_ENTITY_UPRIGHT(targets, UV) then
+        RamCar(vehaset.vehasel, tar1.x - 15, tar1.y - 15, tar1.z, vehaset.invis_aveh, targets, vehaset.vehra)
+            if ENTITY.IS_ENTITY_UPRIGHT(targets, UV) ==false then
+                if set.alert then
+                    util.toast(pname.. ' 被碾过了')
+                end
+        elseif ENTITY.IS_ENTITY_UPRIGHT(targets, UV) then
+        RamCar(vehaset.vehasel, tar1.x + 15, tar1.y + 15, tar1.z, vehaset.invis_aveh, targets, vehaset.vehra)
+            if ENTITY.IS_ENTITY_UPRIGHT(targets, UV) ==false then
+                if set.alert then
+                    util.toast(pname.. ' 被碾过了')
+                end
+        elseif ENTITY.IS_ENTITY_UPRIGHT(targets, UV) then
+        RamCar(vehaset.vehasel, tar1.x + 15, tar1.y - 15, tar1.z, vehaset.invis_aveh, targets, vehaset.vehra)
+            if ENTITY.IS_ENTITY_UPRIGHT(targets, UV) ==false then
+                if set.alert then
+                    util.toast(pname.. ' 被碾过了')
+                end
+        elseif ENTITY.IS_ENTITY_UPRIGHT(targets, UV) then
+        RamCar(vehaset.vehasel, tar1.x - 15, tar1.y + 15, tar1.z, vehaset.invis_aveh, targets, vehaset.vehra)
+            if ENTITY.IS_ENTITY_UPRIGHT(targets, UV) ==false then
+                if set.alert then
+                    util.toast(pname.. ' 被碾过了')
+                end
+
+
+        else
+            if set.alert then
+                util.toast('无法攻击 ' ..pname)
+            end
+
+        end
+        end
+        end
+        end
+        end
+        end
+        end
+        end
+        end
+    end
+    if not players.exists(pid) then
+        if set.alert then
+            util.toast('你让他们怒不可遏')
+        end
+        util.stop_thread()
+    end
+end
+
+deleteVehiclePassengers = function(vehicle)
+    for seat = -1, VEHICLE.GET_VEHICLE_MAX_NUMBER_OF_PASSENGERS(vehicle) -1 do
+        if VEHICLE.IS_VEHICLE_SEAT_FREE(vehicle, seat, false) then
+            continue
+        end
+        local passenger = VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, seat, false)
+        if request_control(passenger, 1000) then entities.delete_by_handle(passenger) end
+    end
+end
+function seizurev1(pid)
+    local id = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local playerpos = ENTITY.GET_ENTITY_COORDS(id)
+    playerpos.z = playerpos.z + 3
+    
+    local khanjali = util.joaat("cargobob")
+    STREAMING.REQUEST_MODEL(khanjali)
+    while not STREAMING.HAS_MODEL_LOADED(khanjali) do
+        util.yield()
+    end
+    
+    local vehicle1 = entities.create_vehicle(khanjali, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED(pid), 0, 2, 3), ENTITY.GET_ENTITY_HEADING(id))
+    local vehicle2 = entities.create_vehicle(khanjali, playerpos, 0)
+    local vehicle3 = entities.create_vehicle(khanjali, playerpos, 0)
+    local vehicle4 = entities.create_vehicle(khanjali, playerpos, 0)
+    
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle1)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle2)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle3)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle4)
+    
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle2, vehicle1, 0, 0, 3, 0, 0, 0, -180, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle3, vehicle1, 0, 3, 3, 0, 0, 0, -180, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle4, vehicle1, 0, 3, 0, 0, 0, 0, 0, 0, false, true, false, 0, true)
+    ENTITY.SET_ENTITY_VISIBLE(vehicle1, true)
+    util.yield(0)
+    entities.delete_by_handle(vehicle1)
+    
+    local khanjali = util.joaat("kosatka")
+    STREAMING.REQUEST_MODEL(khanjali)
+    while not STREAMING.HAS_MODEL_LOADED(khanjali) do
+        util.yield()
+    end
+    
+    local vehicle1 = entities.create_vehicle(khanjali, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED(pid), 0, 2, 3), ENTITY.GET_ENTITY_HEADING(id))
+    local vehicle2 = entities.create_vehicle(khanjali, playerpos, 0)
+    local vehicle3 = entities.create_vehicle(khanjali, playerpos, 0)
+    local vehicle4 = entities.create_vehicle(khanjali, playerpos, 0)
+    
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle1)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle2)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle3)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle4)
+    
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle2, vehicle1, 0, 0, 3, 0, 0, 0, -180, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle3, vehicle1, 0, 3, 3, 0, 0, 0, -180, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle4, vehicle1, 0, 3, 0, 0, 0, 0, 0, 0, false, true, false, 0, true)
+    ENTITY.SET_ENTITY_VISIBLE(vehicle1, true)
+    util.yield(0)
+    entities.delete_by_handle(vehicle1)
+    end
+    --闪屏 V2
+    function seizurev2(pid)
+    local id = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local playerpos = ENTITY.GET_ENTITY_COORDS(id)
+    playerpos.z = playerpos.z + 3
+    
+    local khanjali = util.joaat("cargoplane")
+    STREAMING.REQUEST_MODEL(khanjali)
+    while not STREAMING.HAS_MODEL_LOADED(khanjali) do
+        util.yield()
+    end
+    
+    local vehicle1 = entities.create_vehicle(khanjali, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED(pid), 0, 2, 3), ENTITY.GET_ENTITY_HEADING(id))
+    local vehicle2 = entities.create_vehicle(khanjali, playerpos, 0)
+    local vehicle3 = entities.create_vehicle(khanjali, playerpos, 0)
+    local vehicle4 = entities.create_vehicle(khanjali, playerpos, 0)
+    
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle1)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle2)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle3)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle4)
+    
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle2, vehicle1, 0, 0, 3, 0, 0, 0, 180, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle3, vehicle1, 0, 3, 3, 0, 0, 0, 180, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle4, vehicle1, 0, 3, 0, 0, 0, 0, 0, 0, false, true, false, 0, true)
+    ENTITY.SET_ENTITY_VISIBLE(vehicle1, true)
+    util.yield(0)
+    entities.delete_by_handle(vehicle1)
+    
+    local id = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local playerpos = ENTITY.GET_ENTITY_COORDS(id)
+    playerpos.z = playerpos.z + 3
+    
+    local khanjali = util.joaat("cargoplane")
+    STREAMING.REQUEST_MODEL(khanjali)
+    while not STREAMING.HAS_MODEL_LOADED(khanjali) do
+        util.yield()
+    end
+    
+    local vehicle1 = entities.create_vehicle(khanjali, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED(pid), 0, 2, 3), ENTITY.GET_ENTITY_HEADING(id))
+    local vehicle2 = entities.create_vehicle(khanjali, playerpos, 0)
+    local vehicle3 = entities.create_vehicle(khanjali, playerpos, 0)
+    local vehicle4 = entities.create_vehicle(khanjali, playerpos, 0)
+    
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle1)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle2)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle3)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle4)
+    
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle2, vehicle1, 0, 0, 3, 0, 0, 0, -180, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle3, vehicle1, 0, 3, 3, 0, 0, 0, -180, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle4, vehicle1, 0, 3, 0, 0, 0, 0, 0, 0, false, true, false, 0, true)
+    ENTITY.SET_ENTITY_VISIBLE(vehicle1, true)
+    util.yield(0)
+    entities.delete_by_handle(vehicle1)
+    
+    local khanjali = util.joaat("cargobob")
+    STREAMING.REQUEST_MODEL(khanjali)
+    while not STREAMING.HAS_MODEL_LOADED(khanjali) do
+        util.yield()
+    end
+    
+    local vehicle1 = entities.create_vehicle(khanjali, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED(pid), 0, 2, 3), ENTITY.GET_ENTITY_HEADING(id))
+    local vehicle2 = entities.create_vehicle(khanjali, playerpos, 0)
+    local vehicle3 = entities.create_vehicle(khanjali, playerpos, 0)
+    local vehicle4 = entities.create_vehicle(khanjali, playerpos, 0)
+    
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle1)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle2)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle3)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle4)
+    
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle2, vehicle1, 0, 0, 3, 0, 0, 0, -180, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle3, vehicle1, 0, 3, 3, 0, 0, 0, -180, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle4, vehicle1, 0, 3, 0, 0, 0, 0, 0, 0, false, true, false, 0, true)
+    ENTITY.SET_ENTITY_VISIBLE(vehicle1, true)
+    util.yield(0)
+    entities.delete_by_handle(vehicle1)
+    
+    local khanjali = util.joaat("kosatka")
+    STREAMING.REQUEST_MODEL(khanjali)
+    while not STREAMING.HAS_MODEL_LOADED(khanjali) do
+        util.yield()
+    end
+    
+    local vehicle1 = entities.create_vehicle(khanjali, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED(pid), 0, 2, 3), ENTITY.GET_ENTITY_HEADING(id))
+    local vehicle2 = entities.create_vehicle(khanjali, playerpos, 0)
+    local vehicle3 = entities.create_vehicle(khanjali, playerpos, 0)
+    local vehicle4 = entities.create_vehicle(khanjali, playerpos, 0)
+    
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle1)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle2)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle3)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle4)
+    
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle2, vehicle1, 0, 0, 3, 0, 0, 0, -180, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle3, vehicle1, 0, 3, 3, 0, 0, 0, -180, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(vehicle4, vehicle1, 0, 3, 0, 0, 0, 0, 0, 0, false, true, false, 0, true)
+    ENTITY.SET_ENTITY_VISIBLE(vehicle1, true)
+    util.yield(0)
+    entities.delete_by_handle(vehicle1)
+    end
+    
+function dele_veh_attacker()
+    for _, vehicle in ipairs(entities.get_all_vehicles_as_handles()) do
+        if is_decor_flag_set(vehicle, DecorFlag_isEnemyVehicle) and request_control(vehicle, 1000) then
+            deleteVehiclePassengers(vehicle)
+            entities.delete_by_handle(vehicle)
+        end
+    end
+end
+---@param blip Blip
+---@param name string
+---@param isLabel? boolean
+function set_blip_name(blip, name, isLabel)
+	HUD.BEGIN_TEXT_COMMAND_SET_BLIP_NAME("STRING")
+	if not isLabel then
+		HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(name)
+	else
+		HUD.ADD_TEXT_COMPONENT_SUBSTRING_TEXT_LABEL(name)
+	end
+	HUD.END_TEXT_COMMAND_SET_BLIP_NAME(blip)
+end
+---@param targetId integer
+local function spawn_buzzard(targetId)
+    local vehicleHash <const> = util.joaat("buzzard")
+    local pedHash <const> = util.joaat("s_m_y_blackops_01")
+    request_model(vehicleHash);	request_model(pedHash)
+    local target = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(targetId)
+    local playerRelGroup = PED.GET_PED_RELATIONSHIP_GROUP_HASH(target)
+    PED.SET_RELATIONSHIP_BETWEEN_GROUPS(5, util.joaat("ARMY"), playerRelGroup)
+    PED.SET_RELATIONSHIP_BETWEEN_GROUPS(5, playerRelGroup, util.joaat("ARMY"))
+    PED.SET_RELATIONSHIP_BETWEEN_GROUPS(0, util.joaat("ARMY"), util.joaat("ARMY"))
+
+    local pos = players.get_position(targetId)
+    local heli = entities.create_vehicle(vehicleHash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
+    if ENTITY.DOES_ENTITY_EXIST(heli) then
+        NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.VEH_TO_NET(heli), true)
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(heli, false, true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(heli), players.user(), true)
+        ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(heli, true, 1)
+        set_decor_flag(heli, DecorFlag_isEnemyVehicle)
+        local pos = get_random_offset_from_entity(target, 20.0, 40.0)
+        pos.z = pos.z + 20.0
+        ENTITY.SET_ENTITY_COORDS(heli, pos.x, pos.y, pos.z, false, false, false, false)
+        NETWORK.SET_NETWORK_ID_CAN_MIGRATE(NETWORK.VEH_TO_NET(heli), false)
+        ENTITY.SET_ENTITY_INVINCIBLE(heli, setGodmode)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(heli, true, true, true)
+        VEHICLE.SET_HELI_BLADES_FULL_SPEED(heli)
+        local blip = add_blip_for_entity(heli, 422, 4)
+        set_blip_name(blip, "buzzard2", true)
+
+        local pilot = entities.create_ped(29, pedHash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
+        PED.SET_PED_INTO_VEHICLE(pilot, heli, -1)
+        PED.SET_PED_MAX_HEALTH(pilot, 500)
+        ENTITY.SET_ENTITY_HEALTH(pilot, 500, 0)
+        ENTITY.SET_ENTITY_INVINCIBLE(pilot, setGodmode)
+        PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(pilot, true)
+        PED.SET_PED_KEEP_TASK(pilot, true)
+        TASK.TASK_HELI_MISSION(pilot, heli, 0, target, 0.0, 0.0, 0.0, 23, 40.0, 40.0, -1.0, 0, 10, -1.0, 0)
+
+        for seat = 1, 2 do
+            local ped = entities.create_ped(29, pedHash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
+            PED.SET_PED_INTO_VEHICLE(ped, heli, seat)
+            WEAPON.GIVE_WEAPON_TO_PED(ped, gunnerWeapon, -1, false, true)
+            PED.SET_PED_COMBAT_ATTRIBUTES(ped, 20, true)
+            PED.SET_PED_MAX_HEALTH(ped, 500)
+            ENTITY.SET_ENTITY_HEALTH(ped, 500, 0)
+            ENTITY.SET_ENTITY_INVINCIBLE(ped, setGodmode)
+            PED.SET_PED_SHOOT_RATE(ped, 1000)
+            PED.SET_PED_RELATIONSHIP_GROUP_HASH(ped, util.joaat("ARMY"))
+            TASK.TASK_COMBAT_HATED_TARGETS_AROUND_PED(ped, 200.0, 0)
+        end
+    end
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(pedHash)
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(vehicleHash)
+end
+
+---@param targetId integer
+local function spawn_lazer(targetId)
+    local jetHash <const> = util.joaat("lazer")
+    local pedHash <const> = util.joaat("s_m_y_blackops_01")
+    request_model(jetHash); request_model(pedHash)
+    local target = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(targetId)
+    local pos = players.get_position(targetId)
+    local jet = entities.create_vehicle(jetHash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
+    if ENTITY.DOES_ENTITY_EXIST(jet) then
+        NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.VEH_TO_NET(jet), true)
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(jet, false, true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(jet), players.user(), true)
+        ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(jet, true, 1)
+        set_decor_flag(jet, DecorFlag_isEnemyVehicle)
+        local pos = get_random_offset_from_entity(jet, 30.0, 80.0)
+        pos.z = pos.z + 500.0
+        ENTITY.SET_ENTITY_COORDS(jet, pos.x, pos.y, pos.z, false, false, false, false)
+        set_entity_face_entity(jet, target, false)
+        local blip = add_blip_for_entity(jet, 16, 4)
+        set_blip_name(blip, "blip_4xz66m0", true) -- random collision for 0x2257C97F
+        VEHICLE.CONTROL_LANDING_GEAR(jet, 3)
+        ENTITY.SET_ENTITY_INVINCIBLE(jet, setGodmode)
+        VEHICLE.SET_VEHICLE_FORCE_AFTERBURNER(jet, true)
+
+        local pilot = entities.create_ped(5, pedHash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(pilot, false, true)
+        PED.SET_PED_INTO_VEHICLE(pilot, jet, -1)
+        TASK.TASK_PLANE_MISSION(pilot, jet, 0, target, 0.0, 0.0, 0.0, 6, 100.0, 0.0, 0.0, 80.0, 50.0, 0)
+        PED.SET_PED_COMBAT_ATTRIBUTES(pilot, 1, true)
+        VEHICLE.SET_VEHICLE_FORWARD_SPEED(jet, 60.0)
+    end
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(jetHash)
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(pedHash)
+end
+
+function veh_attacker_spawn(pid, index, option)
+    local i = 0
+    while i < count and players.exists(pid) do
+        if option == "Minitank" then
+            spawn_minitank(pid)
+        elseif option == "Lazer" then
+            spawn_lazer(pid)
+        elseif option == "Buzzard" then spawn_buzzard(pid) end
+        i = i + 1
+        util.yield(150)
+    end
+end
+
+local minitankModIds <const> =
+{
+    stockWeapon = -1,
+    plasmaCannon = 1,
+    rocket = 2,
+}
+
+function mintank_weapon(index)
+    if index == 1 then
+        weaponModId = minitankModIds.stockWeapon
+    elseif index == 2 then
+        weaponModId = minitankModIds.plasmaCannon
+    elseif index == 3 then
+        weaponModId = minitankModIds.rocket
+    end
+end
+
+local gunnerWeapons <const> = {"weapon_mg", "weapon_rpg"}
+function gunner_weapon(index)
+    gunnerWeapon = util.joaat(gunnerWeapons[index])
+end
+
+function veh_attacker_spawn_count(value)
+    count = value 
+end
+
+function veh_attacker_spawn_god(toggle)
+    setGodmode = toggle
+end
 function DoesTableContainValue(table, value)
     for _, v in pairs(table) do
         if v == value then return true end
@@ -2234,7 +3815,67 @@ FRAME_STP = false
                     GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 100, 100, 100, false)
               end
         end
-        
+        function SET_INT_GLOBAL(Global, Value)
+            memory.write_int(memory.script_global(Global), Value)
+        end
+        local alphabet = "abcdefghijklmnopqrstuvwxyzABCEDFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+local function random_string(length)
+    local res = {}
+    for i=1, length do 
+        res[i] = alphabet[math.random(#alphabet)]
+    end
+    return table.concat(res)
+end
+
+local function random_ip_address()
+    local ip = {}
+    for i=1, 4 do 
+            ip[i] = tostring(math.random(1, 255)) 
+    end
+    return table.concat(ip, '.')
+end
+
+local random_name_spoof = false
+function ramdomfakename(on)
+    random_name_spoof = on
+    if on then 
+        menu.trigger_commands("spoofedname " .. random_string(16))
+    end
+end
+
+local random_ip_spoof = false
+function ramdomfakeip(on)
+    random_ip_spoof = on
+    if on then 
+        menu.trigger_commands("spoofedip " .. random_ip_address())
+    end
+end
+
+local random_rank_spoof = false
+function ramdomfakelvl(on)
+    random_rank_spoof = on
+    if on then 
+        menu.trigger_commands("spoofedrank " .. math.random(10000))
+    end
+end
+
+function spamtextname(on)
+    menu.trigger_commands("spamtext " .. random_string(254))
+    util.yield(100)
+end
+
+util.on_transition_finished(function()
+    if random_name_spoof then
+        menu.trigger_commands("spoofedname " .. random_string(16))
+    end
+    if random_ip_spoof then
+        menu.trigger_commands("spoofedip " .. random_ip_address())
+    end
+    if random_rank_spoof then
+        menu.trigger_commands("spoofedrank " .. math.random(10000))
+    end
+end)
 function juqishoulai()
     if PAD.IS_CONTROL_PRESSED(1, 323) then
                     while not STREAMING.HAS_ANIM_DICT_LOADED("random@mugging3") do
@@ -2253,6 +3894,83 @@ function juqishoulai()
                     PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(), false)
                 end
     end
+    local notifications = true
+local blockInProgress = false
+function blockAvailable(areaBlocked, areaName)
+    if blockInProgress then util.toast('一个阻挡已经在运行') return false end
+    if areaBlocked then util.toast(areaName ..' '.. '已被阻挡') return false end
+    return true
+end
+function startBusySpinner(message)
+    HUD.BEGIN_TEXT_COMMAND_BUSYSPINNER_ON("STRING")
+    HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(message)
+    HUD.END_TEXT_COMMAND_BUSYSPINNER_ON(5)
+end
+function setBlockStatus(on, areaName)
+    if on then
+        blockInProgress = true
+        startBusySpinner('阻挡中')
+        return
+    end
+    HUD.BUSYSPINNER_OFF()
+    if notifications then util.toast('已成功阻挡' ..' '.. areaName ..'.') end
+    blockInProgress = false
+end
+
+function blocksomewhere()
+    local dir = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 5.0, 0)
+    GRAPHICS._DRAW_SPHERE(dir.x, dir.y, dir.z, 0.3, 52, 144, 233, 0.5)
+    if JSkey.is_key_down('VK_B') then
+        if blockInProgress then util.toast('一个阻挡已经在运行') return end
+        setBlockStatus(true)
+        block({dir.x, dir.y, dir.z - 0.6})
+        setBlockStatus(false, '区域')
+    end
+end
+
+function netItAll(entity)
+    local netID = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(entity)
+    while not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) do
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
+    end
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_NETWORK_ID(netID)
+    NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(netID)
+    NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netID, false)
+    local playerList = players.list(true, true, true)
+    for i = 1, #playerList do
+        if NETWORK.NETWORK_IS_PLAYER_CONNECTED(i) then
+            NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(netID, playerList[i], true)
+        end
+    end
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(entity, true, false)
+    ENTITY._SET_ENTITY_CLEANUP_BY_ENGINE(entity, false)
+    if ENTITY.IS_ENTITY_AN_OBJECT(entity) then
+        NETWORK.OBJ_TO_NET(entity)
+    end
+    ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
+end
+
+function loadModel(hash)
+    STREAMING.REQUEST_MODEL(hash)
+    while not STREAMING.HAS_MODEL_LOADED(hash) do util.yield() end
+end
+
+function block(cord)
+    local hash = 309416120
+    loadModel(hash)
+    for i = 0, 180, 8 do
+        local wall = OBJECT.CREATE_OBJECT_NO_OFFSET(hash, cord[1], cord[2], cord[3], true, true, true)
+        ENTITY.SET_ENTITY_HEADING(wall, i)
+        netItAll(wall)
+        util.yield(10)
+    end
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
+end
+
+function string.capitalize(str)
+    return str:sub(1,1):upper()..str:sub(2):lower()
+end
+
 function Disbet(pid)
     local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
@@ -2602,6 +4320,37 @@ expLoopDelay = new.delay(250, 0, 0)
             exp     = 25,
         }
     }
+    function sendsexgirl(pid, index, value)
+        local hooker
+        local c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), -5.0, 0.0, 0.0)
+        pluto_switch index do
+            case 1:
+                hooker = PED.CLONE_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true, false, true)
+                break
+            case 2:
+                request_model_load(util.joaat('cs_lestercrest'))
+                hooker = entities.create_ped(28, util.joaat('cs_lestercrest'), c, math.random(270))
+                break
+            case 3:
+                request_model_load(util.joaat('cs_tracydisanto'))
+                hooker = entities.create_ped(28, util.joaat('cs_tracydisanto'), c, math.random(270))
+                break
+            case 4:
+                request_model_load(util.joaat('csb_agatha'))
+                hooker = entities.create_ped(28, util.joaat('csb_agatha'), c, math.random(270))
+                break
+            case 5:
+                request_model_load(util.joaat('a_f_y_topless_01'))
+                hooker = entities.create_ped(28, util.joaat('a_f_y_topless_01'), c, math.random(270))
+                PED.SET_PED_COMPONENT_VARIATION(hooker, 8, 1, 1, 1)
+                break
+            
+        end
+        local c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), -5.0, 0.0, 0.0)
+        ENTITY.SET_ENTITY_COORDS(hooker, c.x, c.y, c.z)
+        TASK.TASK_START_SCENARIO_IN_PLACE(hooker, "WORLD_HUMAN_PROSTITUTE_HIGH_CLASS", 0, false)
+    end
+    
 function getTotalDelayabcd(delayTable)
     return (delayTable.ms + (delayTable.s * 1000) + (delayTable.min * 1000 * 60))
 end
@@ -3489,6 +5238,847 @@ function Damage_point()
         end
     end
 end
+function qzsswj(on)
+local p_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+
+for _, v_ptr in pairs(entities.get_all_vehicles_as_pointers()) do 
+    local v_pos = entities.get_position(v_ptr)
+    if v3.distance(ENTITY.GET_ENTITY_COORDS(p_ped), v_pos) < 200 then
+        ENTITY.SET_ENTITY_HEALTH(entities.pointer_to_handle(v_ptr), 0.0)
+        FIRE.ADD_EXPLOSION(v_pos.x, v_pos.y, v_pos.z, 17, 1.0, true, false, 100.0, false)
+    end
+end
+
+for _, p_ptr in pairs(entities.get_all_peds_as_pointers()) do 
+    local p_pos = entities.get_position(p_ptr)
+    if v3.distance(ENTITY.GET_ENTITY_COORDS(p_ped), p_pos) < 200 then 
+        ENTITY.SET_ENTITY_HEALTH(entities.pointer_to_handle(p_ptr), 0.0)
+        FIRE.ADD_EXPLOSION(p_pos.x, p_pos.y, p_pos.z, 17, 1.0, true, false, 100.0, false)
+    end
+end
+
+local c = players.get_position(user)
+ FIRE.ADD_EXPLOSION(c.x, c.y, c.z, 82, 1.0, true, false, 100.0, false)
+
+for _, v_ptr in pairs(entities.get_all_objects_as_pointers()) do 
+    local o_pos = entities.get_position(v_ptr)
+    if v3.distance(ENTITY.GET_ENTITY_COORDS(p_ped), o_pos) < 20 then
+        FIRE.ADD_EXPLOSION(o_pos.x, o_pos.y, o_pos.z, 17, 1.0, false, true, 0.0, false)
+        util.yield(10)
+    end
+end
+
+end
+Vehha = {
+    'speedo2',
+    'phantom2',
+    'dune2',
+    'dune4',
+    'insurgent3',
+    'faggio3',
+    'chernobog',
+    'rcbandito',
+    'hauler2',
+    'openwheel1',
+    'mower',
+    'bruiser2',
+}
+vehaset = {invis_aveh = false, vehasel = util.joaat('speedo2') , vehra = 1000}
+function vehhitcantsee(on)
+    vehaset.invis_aveh = on
+end
+function laughsound(pid)
+    local target_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local voice = "A_F_M_EASTSA_01_LATINO_FULL_01"
+    local speech = "FEMALE_DISTANT_LAUGH"
+    local z_off = 0
+    if PED.IS_PED_IN_ANY_VEHICLE(target_ped, false) then 
+        z_off = get_model_size(ENTITY.GET_ENTITY_MODEL(PED.GET_VEHICLE_PED_IS_IN(target_ped, false))).z
+    end
+    local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(target_ped, 0.0, -1.0, 0.0 + z_off)
+    request_model_load(util.joaat("s_f_m_shop_high"))
+    local voice_ped = entities.create_ped(28, util.joaat("s_f_m_shop_high"), coords, 0)
+    ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(voice_ped, true, false)
+    ENTITY.SET_ENTITY_VISIBLE(voice_ped, false, 0)
+    ENTITY.FREEZE_ENTITY_POSITION(voice_ped, true)
+    ENTITY.SET_ENTITY_INVINCIBLE(voice_ped, true)
+    AUDIO.PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(voice_ped, speech, voice, "SPEECH_PARAMS_FORCE", 0)
+    util.yield(1500)
+    entities.delete_by_handle(voice_ped)
+end
+
+function stcnm(pid)
+    AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "SPAWN", PLAYER.GET_PLAYER_PED(pid), "BARRY_01_SOUNDSET", true, 2)
+    AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "External_Explosion", PLAYER.GET_PLAYER_PED(pid), "Methamphetamine_Job_Sounds", true, 1)
+end
+
+function phonesoundcnm(pid)
+    AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Menu_Accept", PLAYER.GET_PLAYER_PED(pid), "Phone_SoundSet_Default", true, 2)
+end
+
+function send_player_label_sms(label, pid)
+    local event_data = {-791892894, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    local out = label:sub(1, 127)
+    for i = 0, #out -1 do
+        local slot = i // 8
+        local byte = string.byte(out, i + 1)
+        event_data[slot + 3] = event_data[slot + 3] | byte << ( (i - slot * 8) * 8)
+    end
+    util.trigger_script_event(1 << pid, event_data)
+end
+function JuggleCar(Vehj_h, tar1,  invisjugc, jugr)
+    local  CC = VEHICLE.CREATE_VEHICLE(Vehj_h, tar1.x, tar1.y, tar1.z - 5.0, 0, true, true, false)
+    if invisjugc then
+     ENTITY.SET_ENTITY_VISIBLE(CC, false, 0)
+ end
+     ENTITY.SET_ENTITY_INVINCIBLE(CC, true)
+     ENTITY.SET_ENTITY_VELOCITY(CC, 0, 0, 1000)
+     VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(CC, true)
+     VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_NON_SCRIPT_PLAYERS(CC, true)
+     util.yield(jugr)
+     ENTITY.SET_ENTITY_AS_MISSION_ENTITY(CC)
+     entities.delete_by_handle(CC)
+end
+
+function give_car_addon(pid, hash, center, ang)
+    local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
+    local pos = ENTITY.GET_ENTITY_COORDS(car, true)
+    pos.x = pos['x']
+    pos.y = pos['y']
+    pos.z = pos['z']
+    request_model_load(hash)
+    local ramp = OBJECT.CREATE_OBJECT_NO_OFFSET(hash, pos['x'], pos['y'], pos['z'], true, false, false)
+    local size = get_model_size(ENTITY.GET_ENTITY_MODEL(car))
+    if center then
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(ramp, car, 0, 0.0, 0.0, 0.0, 0.0, 0.0, ang, true, true, true, false, 0, true)
+    else
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(ramp, car, 0, 0.0, size['y']+1.0, 0.0, 0.0, 0.0, ang, true, true, true, false, 0, true)
+    end
+end
+function gethimcar(pid)
+    control_vehicle(pid, function(vehicle)
+        local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(vehicle, -2.0, 0.0, 0.1)
+        ENTITY.SET_ENTITY_VELOCITY(vehicle, 0, 0, 0)
+        local ped = PED.CREATE_RANDOM_PED(pos.x, pos.y, pos.z)
+        TASK.TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, true)
+        PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, true)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, true, true)
+        TASK.TASK_ENTER_VEHICLE(ped, vehicle, -1, -1, 1.0, 24)
+        if hijackLevel == 1 then
+            util.yield(20)
+            VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(vehicle, true)
+        end
+        for _ = 1, 20 do
+            TASK.TASK_VEHICLE_DRIVE_WANDER(ped, vehicle, 100.0, 2883621)
+            util.yield(50)
+        end
+    end)
+end
+function letcarlagging(pid)
+    local ped = PLAYER.GET_PLAYER_PED(pid)
+   if PED.IS_PED_IN_ANY_VEHICLE(ped) then
+       local veh = PED.GET_VEHICLE_PED_IS_IN(ped, false)
+       local velocity = ENTITY.GET_ENTITY_VELOCITY(veh)
+       local oldcoords = ENTITY.GET_ENTITY_COORDS(ped)
+       wait(500)
+       local nowcoords = ENTITY.GET_ENTITY_COORDS(ped)
+       for a = 1, 10 do
+           NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+           wait()
+       end
+       ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, oldcoords.x, oldcoords.y, oldcoords.z, false, false, false)
+       wait(200)
+       for b = 1, 10 do
+           NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+           wait()
+       end
+       ENTITY.SET_ENTITY_VELOCITY(veh, velocity.x, velocity.y, velocity.z)
+       for c = 1, 10 do
+           NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+           wait()
+       end
+       ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, nowcoords.x, nowcoords.y, nowcoords.z, false, false, false)
+       for d = 1, 10 do
+           NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+           wait()
+       end
+       ENTITY.SET_ENTITY_VELOCITY(veh, velocity.x, velocity.y, velocity.z)
+       wait(500)
+   else
+       util.toast("玩家 " .. getPlayerName_pid(pid) .. " 不在车内")
+   end
+end
+local glitchVeh = false
+function glitchcar(toggle, pid)
+    glitchVeh = toggle
+        local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        local pos = ENTITY.GET_ENTITY_COORDS(ped, false)
+        local player_veh = PED.GET_VEHICLE_PED_IS_USING(ped)
+        local veh_model = players.get_vehicle_model(pid)
+        local ped_hash = util.joaat("a_m_m_acult_01")
+        local object_hash = util.joaat("prop_ld_ferris_wheel")
+        request_model(ped_hash)
+        request_model(object_hash)
+        
+        while glitchVeh do
+            if not players.exists(pid) then 
+                util.toast("玩家不存在. :/")
+                menu.set_value(glitchVehCmd, false);
+            util.stop_thread() end
+
+            if v3.distance(ENTITY.GET_ENTITY_COORDS(players.user_ped(), false), players.get_position(pid)) > 1000.0 
+            and v3.distance(pos, players.get_cam_pos(players.user())) > 1000.0 then
+                util.toast("玩家太远了. :/")
+                menu.set_value(glitchVehCmd, false);
+            break end
+
+            if not PED.IS_PED_IN_VEHICLE(ped, player_veh, false) then 
+                util.toast("他不在车里! ")
+                menu.set_value(glitchVehCmd, false);
+            break end
+
+            if not VEHICLE.ARE_ANY_VEHICLE_SEATS_FREE(player_veh) then
+                util.toast("车上没空座位了\n建议你给他车砸了.")
+                menu.set_value(glitchVehCmd, false);
+            break end
+
+            local seat_count = VEHICLE.GET_VEHICLE_MODEL_NUMBER_OF_SEATS(veh_model)
+            local glitch_obj = entities.create_object(object_hash, pos)
+            local glitched_ped = entities.create_ped(26, ped_hash, pos, 0)
+            local things = {glitched_ped, glitch_obj}
+
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(glitch_obj)
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(glitched_ped)
+
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(glitch_obj, glitched_ped, 0, 0, 0, 0, 0, 0, 0, true, true, false, 0, true)
+
+            for i, spawned_objects in ipairs(things) do
+                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(spawned_objects)
+                ENTITY.SET_ENTITY_VISIBLE(spawned_objects, false)
+                ENTITY.SET_ENTITY_INVINCIBLE(spawned_objects, true)
+            end
+
+            for i = 0, seat_count -1 do
+                if VEHICLE.ARE_ANY_VEHICLE_SEATS_FREE(player_veh) then
+                    local emptyseat = i
+                    for l = 1, 25 do
+                        PED.SET_PED_INTO_VEHICLE(glitched_ped, player_veh, emptyseat)
+                        ENTITY.SET_ENTITY_COLLISION(glitch_obj, true, true)
+                        util.yield()
+                    end
+                end
+            end
+            if not menu.get_value(glitchVehCmd) then
+                entities.delete_by_handle(glitched_ped)
+                entities.delete_by_handle(glitch_obj)
+            end
+            if glitched_ped ~= nil then
+                entities.delete_by_handle(glitched_ped) 
+            end
+            if glitch_obj ~= nil then 
+                entities.delete_by_handle(glitch_obj)
+            end
+        end
+    end
+    ---@param player Player
+---@return boolean
+function is_player_in_any_interior(player)
+	local address = memory.script_global(2689235 + (player * 453 + 1) + 243)
+	return address ~= NULL and memory.read_int(address) ~= 0
+end
+---@param player Player
+---@return boolean
+function is_player_passive(player)
+	if player ~= players.user() then
+		local address = memory.script_global(1892703 + (player * 599 + 1) + 8)
+		if address ~= NULL then return memory.read_byte(address) == 1 end
+	else
+		local address = memory.script_global(1574582)
+		if address ~= NULL then return memory.read_int(address) == 1 end
+	end
+	return false
+end
+function orbital(pid) 
+    for i = 0, 30 do 
+        pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+        for j = -2, 2 do 
+            for k = -2, 2 do 
+                local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+                FIRE.ADD_OWNED_EXPLOSION(PLAYER.PLAYER_PED_ID(), pos.x + j, pos.y + j, pos.z + (30 - i), 29, 999999.99, true, false, 8)
+            end
+        end
+        util.yield(20)
+    end
+end
+
+function caremp(pid)
+    local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
+    if car ~= 0 then
+        local c = ENTITY.GET_ENTITY_COORDS(car)
+        FIRE.ADD_EXPLOSION(c.x, c.y, c.z, 83, 100.0, false, true, 0.0)
+    end
+end
+    function carspin(pid)
+        local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
+        if car ~= 0 then
+            request_control_of_entity_once(car)
+            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(car, 4, 0.0, 0.0, 300.0, 0, true, true, false, true, true, true)
+        end
+    end
+function randomupdatcar(pid)
+    control_vehicle(pid, function(vehicle)
+        VEHICLE.SET_VEHICLE_MOD_KIT(vehicle, 0)
+        for x = 0, 49 do
+            local max = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle, x)
+            VEHICLE.SET_VEHICLE_MOD(vehicle, x, math.random(-1, max))
+        end
+        VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, math.random(-1,5))
+        for x = 17, 22 do
+            VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, x, math.random() > 0.5)
+        end
+        VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vehicle, math.random(0, 255), math.random(0, 255), math.random(0, 255))
+        VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vehicle, math.random(0, 255), math.random(0, 255), math.random(0, 255))
+    end)
+end
+function fastNet(entity, playerID)
+    local netID = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(entity)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
+    if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) then
+        for i = 1, 30 do
+            if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) then
+                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
+                wait(10)
+            else
+                goto continue
+            end    
+        end
+    end
+    ::continue::
+    if SE_Notifications then
+        util.toast("有控制权.")
+    end
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_NETWORK_ID(netID)
+    wait(10)
+    NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(netID)
+    wait(10)
+    NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netID, false)
+    wait(10)
+    NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(netID, playerID, true)
+    wait(10)
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(entity, true, false)
+    wait(10)
+    ENTITY._SET_ENTITY_CLEANUP_BY_ENGINE(entity, false)
+    wait(10)
+    if ENTITY.IS_ENTITY_AN_OBJECT(entity) then
+        NETWORK.OBJ_TO_NET(entity)
+    end
+    wait(10)
+    if BA_visible then
+        ENTITY.SET_ENTITY_VISIBLE(entity, true, 0)
+    else
+        ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
+        wait()
+        ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
+        wait()
+        ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
+    end
+end
+function qfmq(pid)
+    local ped = PLAYER.GET_PLAYER_PED(pid)
+    local forwardOffset = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0, 4, 0)
+    local pheading = ENTITY.GET_ENTITY_HEADING(ped)
+    local hash = 309416120
+    STREAMING.REQUEST_MODEL(hash)
+    while not STREAMING.HAS_MODEL_LOADED(hash) do wait() end
+    local a1 = OBJECT.CREATE_OBJECT(hash, forwardOffset.x, forwardOffset.y, forwardOffset.z - 1, true, true, true)
+    ENTITY.SET_ENTITY_HEADING(a1, pheading + 90)
+    fastNet(a1, pid)
+    local b1 = OBJECT.CREATE_OBJECT(hash, forwardOffset.x, forwardOffset.y, forwardOffset.z + 1, true, true, true)
+    ENTITY.SET_ENTITY_HEADING(b1, pheading + 90)
+    fastNet(b1, pid)
+    wait(500)
+    entities.delete_by_handle(a1)
+    entities.delete_by_handle(b1)
+end
+
+function tpcartomv2(coord)
+    for k,pid in pairs(players.list(false, true, true)) do
+        tpcartomv1(pid, coord)
+    end
+end
+function longzi_veh(pid)
+    give_car_addon(pid, util.joaat("prop_gold_cont_01b"), true, -90.0)
+    end
+function changemodel(pid)
+    give_car_addon(pid, util.joaat("h4_prop_h4_loch_monster"), true, -90.0)
+    end
+knock123 = {"不上锁","上锁"}
+function deleplayercar(pid)
+    local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local player_veh = PED.GET_VEHICLE_PED_IS_USING(player)
+    if not PED.IS_PED_IN_ANY_VEHICLE(player, true) then
+        util.toast("玩家不在载具里. :/")
+        return
+    end
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(player_veh)
+    util.yield(500)
+    if NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(player_veh) then
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(player_veh, false, false)
+        entities.delete_by_handle(player_veh)
+    else
+        util.toast("无法控制此玩家载具. :/")
+    end
+end
+
+function kickcar(pid)
+    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
+        player_veh = PED.GET_VEHICLE_PED_IS_USING(ped)
+        DECORATOR.DECOR_REGISTER("Player_Vehicle", 3)
+        DECORATOR.DECOR_SET_INT(player_veh,"Player_Vehicle", 0)
+    else
+        util.toast("玩家不在车内. :/")
+    end
+end
+function GetPlayVeh(pid, opt)
+    local pedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    if not players.exists(pid) then
+        util.stop_thread()
+    end
+    local spec = menu.get_value(menu.ref_by_rel_path(menu.player_root(pid), "Spectate>Ninja Method"))
+    if set.alert then
+        util.toast('获得对车辆的控制')
+    end
+    if Disbet(pid) > 750000  then
+        Specon(pid)
+    if PED.IS_PED_IN_ANY_VEHICLE(pedm, true) then
+        opt()
+        if not spec then
+            Specoff(pid)
+        end
+        return
+    else
+        if set.alert then
+        util.toast('玩家不在车内')
+        end
+        Specoff(pid)
+    end
+    elseif Disbet(pid) < 750000 then
+        if PED.IS_PED_IN_ANY_VEHICLE(pedm, true) then
+            opt()
+            if not spec then
+                Specoff(pid)
+            end
+        return
+        end
+    else
+        if set.alert then
+        util.toast('玩家不在车内')
+        end
+    end
+end
+
+function Disbet(pid)
+    local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
+    local play = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
+    local disbet = GENERIC_SYSTEM.VDIST2(play.x, play.y, play.z, tar1.x, tar1.y, tar1.z)
+    return disbet
+end
+
+function Rolladown(pid)
+    local pedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
+    local spec = menu.get_value(menu.ref_by_rel_path(menu.player_root(pid), "Spectate>Ninja Method"))
+    GetControl(pedm, spec, pid)
+    VEHICLE.ROLL_DOWN_WINDOWS(vmod)
+end
+
+function Rollaup(pid)
+    local pedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
+    local spec = menu.get_value(menu.ref_by_rel_path(menu.player_root(pid), "Spectate>Ninja Method"))
+    GetControl(pedm, spec, pid)
+    for i = 0, 7 do
+        VEHICLE.ROLL_UP_WINDOW(vmod, i)
+    end
+end
+
+function Rolldindivid(pid, win)
+    local pedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
+    local spec = menu.get_value(menu.ref_by_rel_path(menu.player_root(pid), "Spectate>Ninja Method"))
+    GetControl(pedm, spec, pid)
+    VEHICLE.ROLL_DOWN_WINDOW(vmod, win)
+end
+
+function Rolluindivid(pid, win)
+    local pedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
+    local spec = menu.get_value(menu.ref_by_rel_path(menu.player_root(pid), "Spectate>Ninja Method"))
+    GetControl(pedm, spec, pid)
+    VEHICLE.ROLL_UP_WINDOW(vmod, win)
+end
+function hitplane(pid, index, plane)
+    local hash <const> = util.joaat(plane)
+    request_model(hash)
+    local targetPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local pos = get_random_offset_from_entity(targetPed, 20.0, 20.0)
+    pos.z = pos.z + 30.0
+    local plane = entities.create_vehicle(hash, pos, 0.0)
+    set_entity_face_entity(plane, targetPed, true)
+    VEHICLE.SET_VEHICLE_FORWARD_SPEED(plane, 150.0)
+    VEHICLE.CONTROL_LANDING_GEAR(plane, 3)
+end
+Features = {}
+Translation = {}
+
+---@param section string
+---@param name string
+---@return string
+function translate(section, name)
+	Features[section] = Features[section] or {}
+	Features[section][name] = Features[section][name] or ""
+	if Config.general.language == "english" then
+		return name
+	end
+	Translation[section] = Translation[section] or Features[section]
+	if not Translation[section][name] then
+		Translation[section][name] = ""
+		return name
+	end
+	if Translation[section][name] == "" then
+		return name
+	end
+	return Translation[section][name]
+end
+
+function textspoof(pid)
+    if index == 1 then
+        for i=1, #sexts do
+            send_player_label_sms(sexts[i], pid)
+        end
+    else
+        for i=1, 100 do
+            send_player_label_sms(all_labels[math.random(1, #all_labels)], pid)
+            util.yield()
+        end
+    end
+    util.toast("完成")
+end
+function BitTest(bits, place)
+    return (bits & (1 << place)) ~= 0
+end
+function IsPlayerFlyingAnyDrone(player)
+    return BitTest(memory.read_int(memory.script_global(1853910 + (player * 862 + 1) + 267 + 365)), 26) -- Global_1853910[PLAYER::PLAYER_ID() /*862*/].f_267.f_365, 26
+ end
+ 
+function IsPlayerUsingGuidedMissile(player)
+     return (memory.read_int(memory.script_global(2657589 + 1 + (player * 466) + 321 + 10)) ~= -1 and IsPlayerFlyingAnyDrone(player)) -- Global_2657589[PLAYER::PLAYER_ID() /*466*/].f_321.f_10 
+ end
+ 
+function IsPlayerInRcBandito(player)
+     return BitTest(memory.read_int(memory.script_global(1853348 + (player * 834 + 1) + 267 + 348)), 29)  -- Global_1853348[PLAYER::PLAYER_ID() /*834*/].f_267.f_348, 29
+ end
+ function IsPlayerInRcTank(player)
+    return BitTest(memory.read_int(memory.script_global(1853348 + (player * 834 + 1) + 267 + 428 + 2)), 16) -- Global_1853910[PLAYER::PLAYER_ID() /*862*/].f_267.f_428.f_2
+end
+VehTeleportLoadIterations = 20
+function TeleportEveryonesVehicleToOcean()
+    local oldcoords = getEntityCoords(GetLocalPed())
+    for i = 0, 31 do
+        if NETWORK.NETWORK_IS_PLAYER_CONNECTED(i) then
+            local ped = getPlayerPed(i)
+            local pedCoords = getEntityCoords(ped)
+            for c = 0, VehTeleportLoadIterations do --teleports us to them so we load their veh
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(GetLocalPed(), pedCoords.x, pedCoords.y, pedCoords.z + 10, false, false, false)
+                wait(100)
+            end
+            if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
+                local veh = PED.GET_VEHICLE_PED_IS_IN(ped, false)
+                for a = 0, 10 do
+                    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, 4500, -4400, 4, false, false, false)
+                    wait(100)
+                end
+                for b = 0, 10 do
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, 4500, -4400, 4, false, false, false)
+                end
+            end
+        end
+    end
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(GetLocalPed(), oldcoords.x, oldcoords.y, oldcoords.z, false, false, false)
+end
+
+function TeleportEveryonesVehicleToMazeBank()
+    local oldcoords = getEntityCoords(GetLocalPed())
+    for i = 0, 31 do
+        if NETWORK.NETWORK_IS_PLAYER_CONNECTED(i) then
+            local pped = getPlayerPed(i)
+            local pedCoords = getEntityCoords(pped)
+            for c = 0, VehTeleportLoadIterations do --teleports us to them so we load their veh
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(GetLocalPed(), pedCoords.x, pedCoords.y, pedCoords.z + 10, false, false, false)
+                wait(100)
+            end
+            if PED.IS_PED_IN_ANY_VEHICLE(pped, false) then
+                local veh = PED.GET_VEHICLE_PED_IS_IN(pped, false)
+                for a = 0, 10 do
+                    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, -76, -819, 327, false, false, false)
+                    wait(100)
+                end
+                for b = 0, 10 do
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, -76, -819, 327, false, false, false)
+                end
+            end
+        end
+    end
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(GetLocalPed(), oldcoords.x, oldcoords.y, oldcoords.z, false, false, false)
+end
+-- 所有控制的实体
+control_ent_list = {}
+-- 所有控制实体的menu.list
+control_ent_menu_list = {}
+
+--返回瞄准的实体
+GetEntity_PlayerIsAimingAt = function(p)
+    local ent = NULL
+    if PLAYER.IS_PLAYER_FREE_AIMING(p) then
+        local ptr = memory.alloc_int()
+        if PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(p, ptr) then
+            ent = memory.read_int(ptr)
+        end
+        memory.free(ptr)
+        if ENTITY.IS_ENTITY_A_PED(ent) and PED.IS_PED_IN_ANY_VEHICLE(ent) then
+            local vehicle = PED.GET_VEHICLE_PED_IS_IN(ent, false)
+            ent = vehicle
+        end
+    end
+    return ent
+end
+-- 遍历数组 判断某值是否在表中
+function isInTable(tbl, value)
+    for k, v in pairs(tbl) do
+        if v == value then
+            return true
+        end
+    end
+    return false
+end
+
+-- 根据值清空对应的元素（非删除操作）
+function clearTableValue(t, value)
+    for k, v in pairs(t) do
+        if v == value then
+            t[k] = nil
+        end
+    end
+end
+function entity_control_all(menu_parent, ent)
+    menu.action(menu_parent, "检测该实体是否存在", {}, "", function()
+        if ENTITY.DOES_ENTITY_EXIST(ent) then
+            util.toast("实体存在")
+        else
+            util.toast("该实体已经不存在，请删除此条实体记录！")
+        end
+    end)
+    menu.action(menu_parent, "删除此条实体记录", {}, "", function()
+        menu.delete(menu_parent)
+        clearTableValue(control_ent_menu_list, menu_parent)
+        clearTableValue(control_ent_list, ent)
+    end)
+    --- ---
+    menu.divider(menu_parent, "实体")
+
+    menu.toggle(menu_parent, "无敌", {}, "", function(toggle)
+        ENTITY.SET_ENTITY_INVINCIBLE(ent, toggle)
+        ENTITY.SET_ENTITY_PROOFS(ent, toggle, toggle, toggle, toggle, toggle, toggle, toggle, toggle)
+    end)
+    menu.toggle(menu_parent, "冻结", {}, "", function(toggle)
+        ENTITY.FREEZE_ENTITY_POSITION(ent, toggle)
+    end)
+    --- ---
+    menu.divider(menu_parent, "血量")
+    menu.action(menu_parent, "获取当前血量", {}, "", function()
+        util.toast("当前血量: " .. ENTITY.GET_ENTITY_HEALTH(ent))
+    end)
+    local control_ent_health = 1000
+    menu.slider(menu_parent, "血量", { "control_ent_health" }, "", 0, 30000, 1000, 100, function(value)
+        control_ent_health = value
+    end)
+    menu.action(menu_parent, "设置血量", {}, "", function()
+        ENTITY.SET_ENTITY_HEALTH(ent, control_ent_health)
+    end)
+    --- ---
+    menu.divider(menu_parent, "移动")
+    menu.click_slider(menu_parent, "前/后移动", {}, "", -100, 100, 0, 1, function(value)
+        local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ent, 0.0, value, 0.0)
+        ENTITY.SET_ENTITY_COORDS(ent, coords.x, coords.y, coords.z, true, false, false, false)
+    end)
+
+    menu.click_slider(menu_parent, "左/右移动", {}, "", -100, 100, 0, 1, function(value)
+        local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ent, value, 0.0, 0.0)
+        ENTITY.SET_ENTITY_COORDS(ent, coords.x, coords.y, coords.z, true, false, false, false)
+    end)
+
+    menu.click_slider(menu_parent, "上/下移动", {}, "", -100, 100, 0, 1, function(value)
+        local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ent, 0.0, 0.0, value)
+        ENTITY.SET_ENTITY_COORDS(ent, coords.x, coords.y, coords.z, true, false, false, false)
+    end)
+
+    menu.click_slider(menu_parent, "朝向", {}, "", -360, 360, 0, 10, function(value)
+        local head = ENTITY.GET_ENTITY_HEADING(ent)
+        ENTITY.SET_ENTITY_HEADING(ent, head + value)
+    end)
+    --- ---
+    menu.divider(menu_parent, "传送")
+    menu.click_slider(menu_parent, "传送到我面前", {}, "", -10, 10, 2, 1, function(value)
+        local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0.0, value, 0.0)
+        ENTITY.SET_ENTITY_COORDS(ent, coords.x, coords.y, coords.z, true, false, false, false)
+    end)
+
+    menu.toggle_loop(menu_parent, "锁定传送在我头上", {}, "", function()
+        local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0.0, 0.0, 2.0)
+        ENTITY.SET_ENTITY_COORDS(ent, coords.x, coords.y, coords.z, true, false, false, false)
+    end)
+
+    menu.action(menu_parent, "离我的距离", {}, "", function()
+        local my_pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+        local ent_pos = ENTITY.GET_ENTITY_COORDS(ent)
+        util.toast(vect.dist(my_pos, ent_pos))
+    end)
+
+    menu.click_slider(menu_parent, "最大速度", { "control_ent_max_speed" }, "", 0.0, 1000.0, 30.0, 10.0, function(value)
+        ENTITY.SET_ENTITY_MAX_SPEED(ent, value)
+    end)
+
+end
+function entity_control_vehicle(menu_parent, vehicle)
+    menu.divider(menu_parent, "车辆")
+
+    menu.action(menu_parent, "踢出载具内NPC", {}, "", function()
+        local seats = VEHICLE.GET_VEHICLE_MODEL_NUMBER_OF_SEATS(vehicle)
+        for k = -1, seats do
+            local ped = VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, k)
+            if ped > 0 then
+                PED.SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(ped, KNOCKOFFVEHICLE_EASY)
+                PED.KNOCK_PED_OFF_VEHICLE(ped)
+            end
+        end
+    end)
+
+    menu.action(menu_parent, "拆下车门", {}, "", function()
+        for i = 0, 3 do
+            VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle, i, false)
+        end
+    end)
+
+    menu.toggle(menu_parent, "车门开关", {}, "", function(toggle)
+        if toggle then
+            for i = 0, 3 do
+                VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle, i, false, false)
+            end
+        else
+            VEHICLE.SET_VEHICLE_DOORS_SHUT(vehicle, false)
+        end
+    end)
+
+    menu.toggle(menu_parent, "车门锁", {}, "", function(toggle)
+        if toggle then
+            VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle, 2)
+        else
+            VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle, 1)
+            VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_PLAYER(vehicle, players.user(), false)
+        end
+    end)
+
+    menu.click_slider(menu_parent, "向前的速度", { "control_veh_forward_speed" }, "", 0.0, 1000.0, 30.0, 10.0, function(value)
+        VEHICLE.SET_VEHICLE_FORWARD_SPEED(vehicle, value)
+    end)
+
+    menu.action(menu_parent, "修复载具", {}, "", function()
+        VEHICLE.SET_VEHICLE_FIXED(vehicle)
+        VEHICLE.SET_VEHICLE_ENGINE_HEALTH(vehicle, 1000.0)
+    end)
+end
+function entitycontrol()
+    local ent = GetEntity_PlayerIsAimingAt(players.user())
+    if ent ~= NULL and ENTITY.DOES_ENTITY_EXIST(ent) then
+        if not isInTable(control_ent_list, ent) then
+            table.insert(control_ent_list, ent)
+            ---
+            local modelHash = ENTITY.GET_ENTITY_MODEL(ent)
+            local entity_types = { "No entity", "Ped", "Vehicle", "Object" }
+            local entity_type = entity_types[ENTITY.GET_ENTITY_TYPE(ent) + 1]
+            if ENTITY.GET_ENTITY_TYPE(ent) == 3 then
+                if OBJECT.IS_OBJECT_A_PICKUP(ent) or OBJECT.IS_OBJECT_A_PORTABLE_PICKUP(ent) then
+                    entity_type = "Pickup"
+                end
+            end
+            local entity_info = "Hash: " .. modelHash .. " (" .. entity_type .. ")"
+            util.toast(entity_info)
+            ---
+            menu_control_entity = menu.list(entity_control, entity_info, {}, "")
+            entity_control_all(menu_control_entity, ent)
+            -- ped
+            if ENTITY.GET_ENTITY_TYPE(ent) == 1 then
+                entity_control_ped(menu_control_entity, ent)
+            end
+            -- vehicle
+            if ENTITY.GET_ENTITY_TYPE(ent) == 2 then
+                entity_control_vehicle(menu_control_entity, ent)
+            end
+
+            table.insert(control_ent_menu_list, menu_control_entity)
+        end
+    end
+end
+
+function clearcontrollog()
+    for k, v in pairs(control_ent_menu_list) do
+        if v ~= nil then
+            menu.delete(v)
+        end
+    end
+    -- 所有控制的实体
+    control_ent_list = {}
+    -- 所有控制实体的menu.list
+    control_ent_menu_list = {}
+end
+
+function entitycontrol()
+    local ent = GetEntity_PlayerIsAimingAt(players.user())
+    if ent ~= NULL and ENTITY.DOES_ENTITY_EXIST(ent) then
+        if not isInTable(control_ent_list, ent) then
+            table.insert(control_ent_list, ent)
+            ---
+            local modelHash = ENTITY.GET_ENTITY_MODEL(ent)
+            local entity_types = { "No entity", "Ped", "Vehicle", "Object" }
+            local entity_type = entity_types[ENTITY.GET_ENTITY_TYPE(ent) + 1]
+            if ENTITY.GET_ENTITY_TYPE(ent) == 3 then
+                if OBJECT.IS_OBJECT_A_PICKUP(ent) or OBJECT.IS_OBJECT_A_PORTABLE_PICKUP(ent) then
+                    entity_type = "Pickup"
+                end
+            end
+            local entity_info = "Hash: " .. modelHash .. " (" .. entity_type .. ")"
+            util.toast(entity_info)
+            ---
+            menu_control_entity = menu.list(entity_control, entity_info, {}, "")
+            entity_control_all(menu_control_entity, ent)
+            -- ped
+            if ENTITY.GET_ENTITY_TYPE(ent) == 1 then
+                entity_control_ped(menu_control_entity, ent)
+            end
+            -- vehicle
+            if ENTITY.GET_ENTITY_TYPE(ent) == 2 then
+                entity_control_vehicle(menu_control_entity, ent)
+            end
+
+            table.insert(control_ent_menu_list, menu_control_entity)
+        end
+    end
+end
+
 function get_best_mug_target()
     local most = 0
     local mostp = 0
@@ -3688,6 +6278,507 @@ function get_richest_player()
         return nil
     end
 end
+local gbigbig = false
+function dachui20(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_gate_farm_post"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("h4_prop_h4_barrel_01a"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        gbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        gbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local igbigbig = false
+function dachui19(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("a_f_m_fatwhite_01"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_asteroid_01"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, 0.5, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        igbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        igbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local new = {}
+function new.delay(MS, S, MIN)
+    return {ms = MS, s = S, min = MIN}
+end
+function new.hudSettings(X, Y, ALIGNMENT)
+    return {xOffset = X, yOffset = Y, scale = 0.5, alignment = ALIGNMENT, textColour = new.colour( 255, 255, 255 )}
+end
+cashFakeMoney = 0
+bankFakeMoney = 0
+fakeMoneyLoopDelay = new.delay(250, 0, 0)
+fakeMoneyTransactionPending = true
+
+function generateDelaySettings(root, name, delayTable)
+    menu.slider(root, '毫秒', {'JS'..name..'DelayMs'}, '延迟是毫秒、秒和最小值的总和.', 1, 999, delayTable.ms, 1, function(value)
+        delayTable.ms = value
+    end)
+    menu.slider(root, '秒', {'JS'..name..'DelaySec'}, '延迟是毫秒、秒和最小值的总和.', 0, 59, delayTable.s, 1, function(value)
+        delayTable.s = value
+    end)
+    menu.slider(root, '分钟', {'JS'..name..'DelayMin'}, '延迟是毫秒、秒和最小值的总和.', 0, 60, delayTable.min, 1, function(value)
+        delayTable.min = value
+    end)
+end
+
+
+function startBusySpinner(message)
+    HUD.BEGIN_TEXT_COMMAND_BUSYSPINNER_ON("STRING")
+    HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(message)
+    HUD.END_TEXT_COMMAND_BUSYSPINNER_ON(5)
+end
+
+local function transactionPending()
+    if not fakeMoneyTransactionPending then return end
+    startBusySpinner('交易处理中')
+    util.yield(math.random(1, 1000))
+    HUD.BUSYSPINNER_OFF()
+end
+
+function addfakemoney()
+    HUD._SET_PLAYER_CASH_CHANGE(cashFakeMoney, bankFakeMoney)
+    transactionPending()
+end
+
+function loopaddfakemoney()
+    HUD._SET_PLAYER_CASH_CHANGE(cashFakeMoney, bankFakeMoney)
+    transactionPending()
+    util.yield(getTotalDelay(fakeMoneyLoopDelay))
+end
+local mbigbigbig = false
+function dachui18(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_juicestand"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, 0.5, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        mbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        mbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local nbigbigbig = false
+function dachui17(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("stt_prop_stunt_soccer_ball"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, 0.5, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        nbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        nbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+------------------------------------
+local function STAT_GET_INT_MPPLY(Stat)
+    STATS.STAT_GET_INT(util.joaat(Stat), Int_PTR, -1)
+    return memory.read_int(Int_PTR)
+end
+
+local last_LW_seconds = 0
+function casinolucky()
+    if STAT_GET_INT_MPPLY('mpply_lucky_wheel_usage') < util.current_unix_time_seconds() then util.toast('幸运转盘目前可用') return end
+    local secondsLeft = STAT_GET_INT_MPPLY('mpply_lucky_wheel_usage') - util.current_unix_time_seconds()
+    local hours = math.floor(secondsLeft / 3600)
+    local minutes = math.floor((secondsLeft / 60) % 60)
+    local seconds = secondsLeft % 60
+    if last_LW_seconds != seconds then
+        util.toast((hours < 10 and ('0'.. hours) or hours) ..':'.. (minutes < 10 and ('0'.. minutes) or minutes) ..':'.. (seconds < 10 and ('0'.. seconds) or seconds))
+        last_LW_seconds = seconds
+    end
+end
+
+function casinolp()
+    local chips = STAT_GET_INT_MPPLY('mpply_casino_chips_won_gd')
+    if chips > 0 then
+        util.toast('您赢了' ..' '.. chips ..' '.. '筹码')
+    elseif chips < 0 then
+        util.toast('您输了' ..' '.. chips * -1 ..' '.. '筹码')
+    else
+        util.toast('您还没有赢或输任何筹码.')
+    end
+end
+local vbigbigbig = false
+function dachui16(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("stt_prop_stunt_bowling_ball"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        vbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        vbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local xbigbigbig = false
+function dachui15(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_staticmixer_01"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        xbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        xbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+
+function refresh_daily_winnings()
+    menus.daily_winnings.value = "$" .. format_large_number(get_daily_winnings())
+    debug_log("Refreshed daily winning to "..menus.daily_winnings.value)
+end
+
+local zbigbigbig = false
+function dachui14(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("p_airdancer_01_s"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        zbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        zbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local lbigbigbig = false
+function dachui13(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_sub_trans_02a"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        lbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        lbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local kbigbigbig = false
+function dachui12(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("hei_prop_carrier_defense_02"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        kbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        kbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local jbigbigbig = false
+function dachui11(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("hei_prop_carrier_radar_1"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        jbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        jbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local ibigbigbig = false
+function dachui10(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_cratepile_02a"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        ibigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        ibigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local hbigbigbig = false
+function dachui9(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_gascyl_02a"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        hbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        hbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local gbigbigbig = false
+function dachui8(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_disp_cabinet_01"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        gbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        gbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local fbigbigbig = false
+function dachui7(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_xmas_tree_int"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        fbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        fbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local ebigbigbig = false
+function dachui6(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_mp_num_0"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        ebigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        ebigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local dbigbigbig = false
+function dachui5(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_sc1_06_gate_l"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        dbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        dbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local cbigbigbig = false
+function dachui4(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_lrggate_02"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        cbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        cbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local bbigbigbig = false
+function dachui3(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("gr_prop_gr_doorpart"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        bbigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        bbigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
+local abigbigbig = false
+function dachui2(on)
+    if on then
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)
+        tongzi = OBJECT.CREATE_OBJECT(util.joaat("prop_mineshaft_door"), pos.x, pos.y, pos.z, true, true, false)
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(dachui, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(tongzi,dachui, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
+        util.yield(1000)
+        abigbigbig = on
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(dachui)
+        entities.delete_by_handle(tongzi)
+        abigbigbig = off
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),-1810795771)
+    end
+end
 function roundDecimals(float, decimals)
     decimals = 10 ^ decimals
     return math.floor(float * decimals) / decimals
@@ -3701,6 +6792,60 @@ chatSpamSettings = {
     ignoreTeam = true,
     identicalMessages = 5,
 }
+function getgroupsize(group)
+    local unkPtr, sizePtr = memory.alloc(1), memory.alloc(1)
+    PED.GET_GROUP_SIZE(group, unkPtr, sizePtr)
+    return memory.read_int(sizePtr)
+end
+
+mygroup = PLAYER.GET_PLAYER_GROUP(players.user())
+
+CHONGwu = table.freeze({
+    "Rottweiler",
+    "Husky",
+    "Poodle",
+    "Pug",
+    "Retriever",
+    "Westy",
+    "Shepherd",
+    "Cat_01",
+})
+
+doganimations = {
+    "WORLD_DOG_SITTING_ROTTWEILER",
+    "WORLD_DOG_SITTING_RETRIEVER",
+    "WORLD_DOG_SITTING_SHEPHERD",
+    "WORLD_DOG_SITTING_SMALL",
+}
+---@param min number
+---@param max number
+---@return number
+function random_float(min, max)
+	return min + math.random() * (max - min)
+end
+---@param coords v3
+---@param minDistance number
+---@param maxDistance number
+---@return v3
+function get_random_offset_in_range(coords, minDistance, maxDistance)
+	local radius = random_float(minDistance, maxDistance)
+	local angle = random_float(0, 2 * math.pi)
+	local delta = v3.new(math.cos(angle), math.sin(angle), 0.0)
+	delta:mul(radius)
+	coords:add(delta)
+	return coords
+end
+
+---@param entity Entity
+---@param minDistance number
+---@param maxDistance number
+---@return v3
+function get_random_offset_from_entity(entity, minDistance, maxDistance)
+	local pos = ENTITY.GET_ENTITY_COORDS(entity, false)
+	return get_random_offset_in_range(pos, minDistance, maxDistance)
+end
+
+activedogs = {}
 function executeNuke(pos)
     for a = 0, 100, 4 do
         FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z + a, 8, 10.0, true, false, 1.0, false)
@@ -3711,10 +6856,758 @@ function executeNuke(pos)
     FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 82, 10.0, true, false, 1.0, false)
     FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 82, 10.0, true, false, 1.0, false)
 end
+---@param ped Ped
+---@param forcedOn boolean
+---@param hasCone boolean
+---@param noticeRange number
+---@param colour integer
+---@param sprite integer
+function add_ai_blip_for_ped(ped, forcedOn, hasCone, noticeRange, colour, sprite)
+	if colour == -1 then
+		HUD.SET_PED_HAS_AI_BLIP(ped, true)
+	else
+		HUD._SET_PED_HAS_AI_BLIP_WITH_COLOR(ped, true, colour)
+	end
+	HUD.SET_PED_AI_BLIP_NOTICE_RANGE(ped, noticeRange)
+	if sprite ~= -1 then HUD._SET_PED_AI_BLIP_SPRITE(ped, sprite) end
+	HUD.SET_PED_AI_BLIP_HAS_CONE(ped, hasCone)
+	HUD.SET_PED_AI_BLIP_FORCED_ON(ped, forcedOn)
+end
+
+DecorFlag_isAttacker = 1 << 2
+local attacker = {
+    stationary 	= false,
+    godmode = false
+}
+---@param player Player
+---@param isPlaying boolean
+---@param inTransition boolean
+---@return boolean
+function is_player_active(player, isPlaying, inTransition)
+	if player == -1 or
+	not NETWORK.NETWORK_IS_PLAYER_ACTIVE(player) then
+		return false
+	end
+	if isPlaying and not PLAYER.IS_PLAYER_PLAYING(player) then
+		return false
+	end
+	if inTransition and
+	read_global.int(2689235 + (player * 453 + 1)) ~= 4 then
+		return false
+	end
+	return true
+end
+---@param entity Entity
+---@param flag integer
+function set_decor_flag(entity, flag)
+	WIRI_DECORATOR.DECOR_SET_INT(entity, "Casino_Game_Info_Decorator", flag)
+end
+---@param entity Entity
+function remove_decor(entity)
+	WIRI_DECORATOR.DECOR_REMOVE(entity, "Casino_Game_Info_Decorator")
+end
+
+local make_attacker = function (ped, targetId, weaponHash)
+    set_decor_flag(ped, DecorFlag_isAttacker)
+    PED.SET_PED_MAX_HEALTH(ped, 500)
+    ENTITY.SET_ENTITY_HEALTH(ped, 500, 0)
+    WEAPON.GIVE_WEAPON_TO_PED(ped, weaponHash, -1, true, true)
+    WEAPON.SET_CURRENT_PED_WEAPON(ped, weaponHash, false)
+    ENTITY.SET_ENTITY_INVINCIBLE(ped, attacker.godmode)
+    PED.SET_PED_COMBAT_MOVEMENT(ped, attacker.stationary and 0 or 2)
+    PED.SET_PED_COMBAT_ATTRIBUTES(ped, 46, true)
+    PED.SET_PED_COMBAT_ATTRIBUTES(ped, 0, false)
+    PED.SET_RAGDOLL_BLOCKING_FLAGS(ped, 1)
+    PED.SET_PED_TARGET_LOSS_RESPONSE(ped, 2)
+    PED.SET_PED_CONFIG_FLAG(ped, 208, true)
+    PED.SET_PED_HEARING_RANGE(ped, 150.0)
+    PED.SET_PED_SEEING_RANGE(ped, 150.0)
+    add_ai_blip_for_ped(ped, true, false, 250.0, -1, -1)
+
+    util.create_tick_handler(function ()
+        local target = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(targetId)
+        local pedPos = ENTITY.GET_ENTITY_COORDS(ped, false)
+        if not ENTITY.DOES_ENTITY_EXIST(ped) or ENTITY.IS_ENTITY_DEAD(ped, false) then
+            return false
+        elseif not is_player_active(targetId, false, true) or
+        players.get_position(targetId):distance(pedPos) > 250.0 and not PED.IS_PED_INJURED(ped) then
+            remove_decor(ped)
+            PED.SET_PED_COMBAT_ATTRIBUTES(ped, 46, false)
+            WEAPON.REMOVE_ALL_PED_WEAPONS(ped, true)
+            HUD.SET_PED_HAS_AI_BLIP(ped, false)
+            TASK.CLEAR_PED_TASKS(ped)
+            PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, false)
+            TASK.TASK_WANDER_STANDARD(ped, 10.0, 10)
+            PED.SET_PED_KEEP_TASK(ped, true)
+            local pHandle = memory.alloc_int()
+            memory.write_int(pHandle, ped)
+            ENTITY.SET_PED_AS_NO_LONGER_NEEDED(pHandle)
+            return false
+        elseif not PED.IS_PED_IN_COMBAT(ped, target) and not ENTITY.IS_ENTITY_DEAD(target, false) then
+            TASK.CLEAR_PED_TASKS(ped)
+            PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, true)
+            TASK.TASK_COMBAT_PED(ped, target, 0, 16)
+        end
+    end)
+end
+function spawn_attacker(pid, caption, model)
+    local i = 0
+    local modelHash <const> = util.joaat(model)
+    request_model(modelHash)
+    repeat
+        i = i + 1
+        local targetPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        local pos = get_random_offset_from_entity(targetPed, 2.0, 4.0)
+        pos.z = pos.z - 1.0
+        local ped = entities.create_ped(0, modelHash, pos, 0.0)
+        NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.PED_TO_NET(ped), true)
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ped, false, true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.PED_TO_NET(ped), players.user(), true)
+        ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(ped, true, 1)
+        set_entity_face_entity(ped, targetPed, false)
+        local weapon <const> = weaponList.selected or table.random(Weapons)
+        local weaponHash <const> = util.joaat(weapon)
+        make_attacker(ped, pid, weaponHash)
+        util.yield(150)
+    until count == i
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(modelHash)
+end
+
+function spawn_attacker_own(pid)
+    local i = 0
+    repeat
+        i = i + 1
+        local target = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        local pos = get_random_offset_from_entity(target, 2.0, 4.0)
+        pos.z = pos.z - 1.0
+        local clone = entities.create_ped(4, ENTITY.GET_ENTITY_MODEL(target), pos, 0.0)
+        NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.PED_TO_NET(clone), true)
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(clone, false, true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.PED_TO_NET(clone), players.user(), true)
+        ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(clone, true, 1)
+        PED.CLONE_PED_TO_TARGET(target, clone)
+        set_entity_face_entity(clone, target, false)
+        local weapon <const> = weaponList.selected or table.random(Weapons)
+        local weaponHash <const> = util.joaat(weapon)
+        make_attacker(clone, pid, weaponHash)
+        util.yield(150)
+    until count == i
+end
+
+function spawn_attacker_click(pid)
+    local i = 0
+local pedHash <const> = util.joaat("a_c_chop")
+request_model(pedHash)
+repeat
+    i = i + 1
+    local target = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local pos = get_random_offset_from_entity(target, 2.0, 4.0)
+    pos.z = pos.z - 1.0
+    local ped = entities.create_ped(28, pedHash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
+    NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.PED_TO_NET(ped), true)
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ped, false, true)
+    NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.PED_TO_NET(ped), players.user(), true)
+    ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(ped, true, 1)
+    set_entity_face_entity(ped, target, false)
+    make_attacker(ped, pid, util.joaat("weapon_animal"))
+    util.yield(150)
+until count == i;
+STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(pedHash)
+end
+
+function spawn_attacker_count(value)
+    count = value 
+end
+
+function spawn_police_car(pid)
+    local targetPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local offset = get_random_offset_from_entity(targetPed, 50.0, 60.0)
+    local outCoords = v3.new()
+    local outHeading = memory.alloc(4)
+    if PATHFIND.GET_CLOSEST_VEHICLE_NODE_WITH_HEADING(offset.x, offset.y, offset.z, outCoords, outHeading, 1, 3.0, 0) then
+        local vehicleHash <const> = util.joaat("police3")
+        local pedHash <const> = util.joaat("s_m_y_cop_01")
+        request_model(vehicleHash); request_model(pedHash)
+
+        local pos = ENTITY.GET_ENTITY_COORDS(targetPed, false)
+        local vehicle = entities.create_vehicle(vehicleHash, pos, 0.0)
+        if not ENTITY.DOES_ENTITY_EXIST(vehicle) then return end
+        ENTITY.SET_ENTITY_COORDS(vehicle, outCoords.x, outCoords.y, outCoords.z, false, false, false, false)
+        ENTITY.SET_ENTITY_HEADING(vehicle, memory.read_float(outHeading))
+        VEHICLE.SET_VEHICLE_SIREN(vehicle, true)
+        AUDIO.BLIP_SIREN(vehicle)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, true, true, true)
+        ENTITY.SET_ENTITY_INVINCIBLE(vehicle, attacker.godmode)
+
+        local pSequence = memory.alloc_int()
+        TASK.OPEN_SEQUENCE_TASK(pSequence)
+        TASK.TASK_COMBAT_PED(0, targetPed, 0, 16)
+        TASK.TASK_GO_TO_ENTITY(0, targetPed, 6000, 10.0, 3.0, 0.0, 0)
+        TASK.SET_SEQUENCE_TO_REPEAT(memory.read_int(pSequence), true)
+        TASK.CLOSE_SEQUENCE_TASK(memory.read_int(pSequence))
+
+        for seat = -1, 0 do
+            local cop = entities.create_ped(5, pedHash, outCoords, 0.0)
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(cop, true, false)
+            set_decor_flag(cop, DecorFlag_isAttacker)
+            PED.SET_PED_INTO_VEHICLE(cop, vehicle, seat)
+            PED.SET_PED_RANDOM_COMPONENT_VARIATION(cop, 0)
+            local weapon <const> = (seat == -1) and "weapon_pistol" or "weapon_pumpshotgun"
+            WEAPON.GIVE_WEAPON_TO_PED(cop, util.joaat(weapon), -1, false, true)
+            PED.SET_PED_COMBAT_ATTRIBUTES(cop, 1, true)
+            PED.SET_PED_AS_COP(cop, true)
+            ENTITY.SET_ENTITY_INVINCIBLE(cop, attacker.godmode)
+            TASK.TASK_PERFORM_SEQUENCE(cop, memory.read_int(pSequence))
+        end
+
+        TASK.CLEAR_SEQUENCE_TASK(pSequence)
+        AUDIO.PLAY_POLICE_REPORT("SCRIPTED_SCANNER_REPORT_FRANLIN_0_KIDNAP", 0.0)
+    end
+end
+attackerList = {
+    ["Prisoner (Muscular)"] = "s_m_y_prismuscl_01",
+    ["Mime Artist"] = "s_m_y_mime",
+    ["Movie Astronaut"] = "s_m_m_movspace_01",
+    ["SWAT"] = "s_m_y_swat_01",
+    ["Ballas Ganster"] = "g_m_y_ballaorig_01",
+    ["Marine"]= "csb_ramp_marine",
+    ["Cop Female"] = "s_f_y_cop_01",
+    ["Cop Male"] = "s_m_y_cop_01",
+    ["Jesus"] = "u_m_m_jesus_01",
+    ["Zombie"] = "u_m_y_zombie_01",
+    ["Avon Juggernaut"] = "u_m_y_juggernaut_01",
+    ["Clown"] = "s_m_y_clown_01",
+    ["Hooker"] = "s_f_y_hooker_02",
+    ["Altruist"] = "a_m_y_acult_01",
+    ["Fireman Male"] = "s_m_y_fireman_01",
+    ["Bigfoot"] = "ig_orleans",
+    ["Mariachi"] = "u_m_y_mani",
+    ["Priest"] = "ig_priest",
+    ["Transvestite Male"] = "a_m_m_tranvest_01",
+    ["General Fat Male"] = "a_m_m_genfat_01",
+    ["Grandma"] = "a_f_o_genstreet_01",
+    ["Bouncer"] = "s_m_m_bouncer_01",
+    ["High Security"] = "s_m_m_highsec_02",
+    ["Maid"] = "s_f_m_maid_01",
+    ["Juggalo Female"] = "a_f_y_juggalo_01",
+    ["Beach Female"] = "a_f_m_beach_01",
+    ["Beverly Hills Female"] = "a_f_m_bevhills_01",
+    ["Hipster"] = "ig_ramp_hipster",
+    ["Hipster Female"] = "a_f_y_hipster_01",
+    ["FIB Agent"] = "mp_m_fibsec_01",
+    ["Female Baywatch"] = "s_f_y_baywatch_01",
+    ["Franklyn"] = "player_one",
+    ["Trevor"] = "player_two",
+    ["Michael"] = "player_zero",
+    ["Pogo the Monkey"] = "u_m_y_pogo_01",
+    ["Space Ranger"] = "u_m_y_rsranger_01",
+    ["Stone Man"] = "s_m_m_strperf_01",
+    ["Street Art Male"] = "u_m_m_streetart_01",
+    ["Impotent Rage"] = "u_m_y_imporage",
+    ["Mechanic"] = "s_m_y_xmech_02",
+}
+function pairs_by_keys(t, f)
+	local a = {}
+	for n in pairs(t) do table.insert(a, n) end
+	table.sort(a, f)
+	local i = 0
+	local iter = function()
+		i = i + 1
+		if a[i] == nil then return nil
+		else return a[i], t[a[i]]
+		end
+	end
+	return iter
+end
+
+---@class ModelList
+ModelList =
+{
+    reference = 0,
+    default = nil,
+    name = "",
+    command = "",
+    ---@type fun(caption: string, model: string)?
+    onClick = nil,
+    changeName = false,
+    ---@type table
+    options = {},
+    foundOpts = {},
+}
+ModelList.__index = ModelList
+
+---@param parent integer
+---@param name string
+---@param command string
+---@param helpText string
+---@param tbl table
+---@param onClick? fun(caption: string, model: string)
+---@param changeName boolean #If the list's name will change to show the selected model.
+---@param searchOpt boolean
+---@return ModelList
+function ModelList.new(parent, name, command, helpText, tbl, onClick, changeName, searchOpt)
+    local self = setmetatable({}, ModelList)
+    self.name = name
+    self.command = command
+    self.onClick = onClick
+    self.changeName = changeName
+    self.foundOpts = {}
+    self.options = tbl
+    self.reference = menu.list(parent, name, {self.command}, helpText or "")
+
+    if searchOpt then
+        self:createSearchList(self.reference, "搜索")
+    end
+
+    for caption, value in pairs_by_keys(self.options) do
+        if type(value) == "string" then
+            self:addOpt(self.reference, caption, value)
+
+        elseif type(value) == "table" then
+            local section = menu.list(self.reference, caption, {}, "")
+            self:addSection(section, value)
+        end
+    end
+
+    return self
+end
+
+
+---@param parent integer
+---@param caption string
+---@param model string
+function ModelList:addOpt(parent, caption, model)
+    local command = self.command ~= "" and self.command .. caption or ""
+
+    return menu.action(parent, caption, {command}, "", function(click)
+        if self.changeName then
+            local newName = string.format("%s: %s", self.name, caption)
+            menu.set_menu_name(self.reference, newName)
+        end
+        if (click & CLICK_FLAG_AUTO) == 0 then menu.focus(self.reference) end
+        if self.onClick then self.onClick(caption, model) end
+    end)
+end
+
+
+---@param parent integer
+---@param tbl table<string, string>
+---@param outReferences integer[]?
+function ModelList:addSection(parent, tbl, outReferences)
+    for caption, name in pairs_by_keys(tbl) do
+        local reference = self:addOpt(parent, caption, name)
+        if outReferences then table.insert(outReferences, reference) end
+    end
+end
+
+
+---@param parent integer
+---@param menu_name string
+function ModelList:createSearchList(parent, menu_name)
+    local reference = menu.list(parent, menu_name, {}, "")
+
+    menu.action(reference, menu_name, {}, "", function (click)
+        if (CLICK_FLAG_AUTO & click) ~= 0 then
+            return
+        end
+
+        for _, reference in ipairs(self.foundOpts) do
+            menu.delete(reference)
+            self.foundOpts = {}
+        end
+
+        local text = get_input_from_screen_keyboard(customLabels.Search, 20, "")
+        if text == "" then
+            return
+        else
+            text = string.lower(text)
+        end
+
+        for caption, value in pairs(self.options) do
+            if type(value) == "string" then
+                if string.lower(caption):find(text) or value:find(text) then
+                    local opt = self:addOpt(reference, caption, value)
+                    table.insert(self.foundOpts, opt)
+                end
+
+            elseif type(value) == "table" then
+                local tbl = value
+                local matches = self.getSectionMatches(caption, text, tbl)
+                self:addSection(reference, matches, self.foundOpts)
+            end
+        end
+    end)
+end
+
+
+---@param section string
+---@param find string
+---@param tbl table<string, string>
+---@return table
+function ModelList.getSectionMatches(section, find, tbl)
+    local matches = {}
+    find = string.lower(find)
+
+    for caption, model in pairs(tbl) do
+        if string.lower(caption):find(find) or
+        model:find(find) then matches[section .. " > " .. caption] = model end
+    end
+    return matches
+end
+
+
+Weapons =
+{
+    -- Shotguns
+    VAULT_WMENUI_2 =
+    {
+        WT_SG_PMP = "weapon_pumpshotgun",
+        WT_SG_PMP2 = "weapon_pumpshotgun_mk2",
+        WT_SG_SOF = "weapon_sawnoffshotgun",
+        WT_SG_BLP = "weapon_bullpupshotgun",
+        WT_SG_ASL = "weapon_assaultshotgun",
+        WT_MUSKET = "weapon_musket",
+        WT_HVYSHOT = "weapon_heavyshotgun",
+        WT_DBSHGN = "weapon_dbshotgun",
+        WT_AUTOSHGN = "weapon_autoshotgun",
+        WT_CMBSHGN = "weapon_combatshotgun",
+    },
+    -- Machine guns
+    VAULT_WMENUI_3 =
+    {
+        WT_SMG_MCR = "weapon_microsmg",
+        WT_MCHPIST = "weapon_machinepistol",
+        WT_MINISMG = "weapon_minismg",
+        WT_SMG = "weapon_smg",
+        WT_SMG2 = "weapon_smg_mk2",
+        WT_SMG_ASL = "weapon_assaultsmg",
+        WT_COMBATPDW = "weapon_combatpdw",
+        WT_MG = "weapon_mg",
+        WT_MG_CBT = "weapon_combatmg",
+        WT_MG_CBT2 = "weapon_combatmg_mk2",
+        WT_GUSENBERG = "weapon_gusenberg",
+        WT_RAYCARBINE = "weapon_raycarbine",
+    },
+    -- Rifles
+    VAULT_WMENUI_4 =
+    {
+        WT_RIFLE_ASL = "weapon_assaultrifle",
+        WT_RIFLE_ASL2 = "weapon_assaultrifle_mk2",
+        WT_RIFLE_CBN = "weapon_carbinerifle",
+        WT_RIFLE_CBN2 = "weapon_carbinerifle_mk2",
+        WT_RIFLE_ADV = "weapon_advancedrifle",
+        WT_RIFLE_SCBN = "weapon_specialcarbine",
+        WT_SPCARBINE2 = "weapon_specialcarbine_mk2",
+        WT_BULLRIFLE = "weapon_bullpuprifle",
+        WT_BULLRIFLE2 = "weapon_bullpuprifle_mk2",
+        WT_CMPRIFLE = "weapon_compactrifle",
+        WT_MLTRYRFL = "weapon_militaryrifle",
+        WT_HEAVYRIFLE = "WEAPON_HEAVYRIFLE",
+        WT_TACRIFLE = "WEAPON_TACTICALRIFLE",
+    },
+    -- Sniper rifles
+    VAULT_WMENUI_5 =
+    {
+        WT_SNIP_RIF = "weapon_sniperrifle",
+        WT_SNIP_HVY = "weapon_heavysniper",
+        WT_SNIP_HVY2 = "weapon_heavysniper_mk2",
+        WT_MKRIFLE = "weapon_marksmanrifle",
+        WT_MKRIFLE2 = "weapon_marksmanrifle_mk2",
+        WT_PRCSRIFLE = "WEAPON_PRECISIONRIFLE",
+    },
+    -- Heavy weapons
+    VAULT_WMENUI_6 =
+    {
+        WT_GL = "weapon_grenadelauncher",
+        WT_RPG = "weapon_rpg",
+        WT_MINIGUN = "weapon_minigun",
+        WT_FWRKLNCHR = "weapon_firework",
+        WT_RAILGUN = "weapon_railgun",
+        WT_HOMLNCH = "weapon_hominglauncher",
+        WT_CMPGL = "weapon_compactlauncher",
+        WT_RAYMINIGUN = "weapon_rayminigun",
+    },
+    -- Melee weapons
+    VAULT_WMENUI_8 =
+    {
+        WT_UNARMED = "weapon_unarmed",
+        WT_KNIFE = "weapon_knife",
+        WT_NGTSTK = "weapon_nightstick",
+        WT_HAMMER = "weapon_hammer",
+        WT_BAT = "weapon_bat",
+        WT_CROWBAR = "weapon_crowbar",
+        WT_GOLFCLUB = "weapon_golfclub",
+        WT_BOTTLE = "weapon_bottle",
+        WT_DAGGER = "weapon_dagger",
+        WT_SHATCHET = "weapon_stone_hatchet",
+        WT_KNUCKLE = "weapon_knuckle",
+        WT_MACHETE = "weapon_machete",
+        WT_FLASHLIGHT = "weapon_flashlight",
+        WT_SWTCHBLDE = "weapon_switchblade",
+        WT_BATTLEAXE = "weapon_battleaxe",
+        WT_POOLCUE = "weapon_poolcue",
+        WT_WRENCH = "weapon_wrench",
+        WT_HATCHET = "weapon_hatchet",
+    },
+    -- Pistols
+    VAULT_WMENUI_9 =
+    {
+        WT_PIST = "weapon_pistol",
+        WT_PIST2  = "weapon_pistol_mk2",
+        WT_PIST_CBT = "weapon_combatpistol",
+        WT_PIST_50 = "weapon_pistol50",
+        WT_SNSPISTOL = "weapon_snspistol",
+        WT_SNSPISTOL2 = "weapon_snspistol_mk2",
+        WT_HEAVYPSTL = "weapon_heavypistol",
+        WT_VPISTOL = "weapon_vintagepistol",
+        WT_CERPST = "weapon_ceramicpistol",
+        WT_MKPISTOL = "weapon_marksmanpistol",
+        WT_REVOLVER = "weapon_revolver",
+        WT_REVOLVER2 = "weapon_revolver_mk2",
+        WT_REV_DA = "weapon_doubleaction",
+        WT_REV_NV= "weapon_navyrevolver",
+        WT_GDGTPST = "weapon_gadgetpistol",
+        WT_STUN = "weapon_stungun",
+        WT_FLAREGUN = "weapon_flaregun",
+        WT_RAYPISTOL = "weapon_raypistol",
+        WT_PIST_AP = "weapon_appistol",
+    },
+}
+
+---@class WeaponList
+WeaponList =
+{
+    reference = 0,
+    ---@type string?
+    name = "",
+    ---@type string?
+    command = "",
+    ---@type fun(caption: string, model: string)?
+    onClick = nil,
+    changeName = false,
+    selected = nil,
+}
+WeaponList.__index = WeaponList
+
+---@param parent integer
+---@param name string
+---@param command? string
+---@param helpText? string
+---@param onClick? fun(caption: string, model: string)
+---@param changeName boolean
+---@return WeaponList
+function WeaponList.new(parent, name, command, helpText, onClick, changeName)
+    local self = setmetatable({}, WeaponList)
+    self.name = name
+    self.command = command
+    self.changeName = changeName
+    self.onClick = onClick
+    self.reference = menu.list(parent, name, {self.command}, helpText or "")
+    for section, tbl in pairs_by_keys(Weapons) do self:addSection(section, tbl) end
+    return self
+end
+
+---@param parent integer
+---@param label string
+---@param model string
+function WeaponList:addOpt(parent, label, model)
+    local name = util.get_label_text(label)
+    local command = self.command ~= "" and self.command .. name or ""
+    menu.action(parent, name, {command}, "", function(click)
+        if self.changeName then
+            local newName = string.format("%s: %s", self.name, name)
+            menu.set_menu_name(self.reference, newName)
+        end
+        self.selected = model
+        if click == CLICK_MENU then menu.focus(self.reference) end
+        if self.onClick then self.onClick(name, model) end
+    end)
+end
+
+---@param section string
+---@param weapons table<string, string>
+function WeaponList:addSection(section, weapons)
+    local list = menu.list(self.reference, util.get_label_text(section), {}, "")
+    for label, model in pairs_by_keys(weapons) do self:addOpt(list, label, model) end
+end
+function send_attacker_god(toggle)
+    attacker.godmode = toggle 
+end
+
+function send_attacker_stay(toggle)
+    attacker.stationary = toggle
+end
+---@param entity Entity
+---@param flag integer
+function set_decor_flag(entity, flag)
+	WIRI_DECORATOR.DECOR_SET_INT(entity, "Casino_Game_Info_Decorator", flag)
+end
+
+
+---@param entity Entity
+---@param flag integer
+---@return boolean
+function is_decor_flag_set(entity, flag)
+	if ENTITY.DOES_ENTITY_EXIST(entity) and
+	WIRI_DECORATOR.DECOR_EXIST_ON(entity, "Casino_Game_Info_Decorator") then
+		local value = WIRI_DECORATOR.DECOR_GET_INT(entity, "Casino_Game_Info_Decorator")
+		return (value & flag) ~= 0
+	end
+	return false
+end
+function attacker_dele()
+    for _, ped in ipairs(entities.get_all_peds_as_handles()) do
+        if is_decor_flag_set(ped, DecorFlag_isAttacker) then entities.delete_by_handle(ped) end
+    end
+end
+function GenerateNametagOnPed(ped, nametag)
+    util.create_thread(function()
+        while ENTITY.DOES_ENTITY_EXIST(ped) do
+            local headpos = PED.GET_PED_BONE_COORDS(ped, 0x796e, 0,0,0)
+            GRAPHICS.SET_DRAW_ORIGIN(headpos.x, headpos.y, headpos.z+0.4, 0)
+
+            HUD.SET_TEXT_COLOUR(200,200,200,220)
+            HUD.SET_TEXT_SCALE(1, 0.5)
+            HUD.SET_TEXT_CENTRE(true)
+            HUD.SET_TEXT_FONT(4)
+            HUD.SET_TEXT_OUTLINE()
+
+            HUD.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING")
+            HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(nametag)
+            HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0,0,0)
+            GRAPHICS.CLEAR_DRAW_ORIGIN()
+            util.yield()
+        end
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0,0,0)
+        GRAPHICS.CLEAR_DRAW_ORIGIN()
+    end)
+end
+function newTimer()
+	local self = {start = util.current_time_millis()}
+	local function reset()
+		self.start = util.current_time_millis()
+	end
+	local function elapsed()
+		return util.current_time_millis() - self.start
+	end
+	return
+	{
+		reset = reset,
+		elapsed = elapsed
+	}
+end
+---@class Sound
+Sound = {Id = -1, name = "", reference = ""}
+Sound.__index = Sound
+
+---@alias nullptr 0
+
+---@param name string|nullptr
+---@param reference string|nullptr
+---@return Sound
+function Sound.new(name, reference)
+	local inst = setmetatable({}, Sound)
+	inst.name = name
+	inst.reference = reference
+	return inst
+end
+
+function Sound:play()
+	if self.Id == -1 then
+        self.Id = AUDIO.GET_SOUND_ID()
+        AUDIO.PLAY_SOUND_FRONTEND(self.Id, self.name, self.reference, true)
+    end
+end
+
+function Sound:stop()
+	if self.Id ~= -1 then
+        AUDIO.STOP_SOUND(self.Id)
+        AUDIO.RELEASE_SOUND_ID(self.Id)
+        self.Id = -1
+    end
+end
+
+function Sound:hasFinished()
+	return AUDIO.HAS_SOUND_FINISHED(self.Id)
+end
+
+function Sound:playFromEntity(entity)
+	if self.Id == -1 then
+		self.Id = AUDIO.GET_SOUND_ID()
+		AUDIO.PLAY_SOUND_FROM_ENTITY(self.Id, self.name, entity, self.reference, true, 0)
+	end
+end
+local hash <const> = util.joaat("VEHICLE_WEAPON_PLAYER_LAZER")
+local showNotification = true
+local lastShot = newTimer()
+local sound = Sound.new("Fire_Loop", "DLC_IE_VV_Gun_Player_Sounds")
 function Streament(hash) --Streaming Model
     STREAMING.REQUEST_MODEL(hash)
     while STREAMING.HAS_MODEL_LOADED(hash) ==false do
     util.yield()
+    end
+end
+function dispatch_mariachi(target)
+    mariachi_thr = util.create_thread(function()
+        local men = {}
+        local player_ped
+        local pos_offsets = {-1.0, 0.0, 1.0}
+        local p_hash = -927261102
+        local pos
+        request_model_load(p_hash)
+        player_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(target)
+        for i=1, 3 do
+            local spawn_pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(player_ped, pos_offsets[i], 1.0, 0.0)
+            local ped = entities.create_ped(1, p_hash, spawn_pos, 0.0)
+            local flag = entities.create_object(util.joaat("prop_flag_mexico"), spawn_pos, 0)
+            ENTITY.SET_ENTITY_HEADING(ped, ENTITY.GET_ENTITY_HEADING(player_ped)+180)
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(flag, ped, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, false, true, 1, true)
+            ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(ped, true, false)
+            TASK.TASK_START_SCENARIO_IN_PLACE(ped, "WORLD_HUMAN_MUSICIAN", 0, false)
+            PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, true)
+            PED.SET_PED_FLEE_ATTRIBUTES(ped, 0, false)
+            PED.SET_PED_CAN_RAGDOLL(ped, false)
+            ENTITY.SET_ENTITY_INVINCIBLE(ped, true)
+            men[#men + 1] = ped
+        end
+    end)
+end
+function baozhayan()
+    HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
+    DisableControlActions()
+    if not WEAPON.HAS_WEAPON_ASSET_LOADED(hash) then
+        WEAPON.REQUEST_WEAPON_ASSET(hash, 31, 26)
+    end
+
+    if not PAD.IS_DISABLED_CONTROL_PRESSED(51, 51) then
+        if not sound:hasFinished() then
+            sound:stop()
+        end
+    elseif lastShot.elapsed() > 100 then
+        local pos = PED.GET_PED_BONE_COORDS(players.user_ped(), 0x322C, 0.0, 0.0, 0.0)
+        local offset = get_offset_from_cam(80)
+        if  sound:hasFinished() then
+            sound:playFromEntity(players.user_ped())
+            AUDIO.SET_VARIABLE_ON_SOUND(sound.Id, "fireRate", 10.0)
+        end
+        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(
+            pos.x, pos.y, pos.z,
+            offset.x, offset.y, offset.z,
+            200,
+            true,
+            hash, players.user_ped(), true, true, -1.0
+        )
+        lastShot.reset()
+    end
+end
+
+function restore_model()
+    if PED.IS_PED_MALE(PLAYER.PLAYER_PED_ID()) then
+        menu.trigger_commands("mpmale")
+        menu.trigger_commands("walkstyle normal")
+    else
+        menu.trigger_commands("mpfemale")
+        menu.trigger_commands("walkstyle normal")
     end
 end
 local function SF_ff9()
@@ -4228,6 +8121,22 @@ function passive_mode_kill(pid)
 
     util.toast("无法弄死" .. players.get_name(pid) .. ". 他是挂壁！！！")
 end
+function clumsy()
+    if PED.IS_PED_RAGDOLL(players.user_ped()) then util.yield(3000) return end
+        PED.SET_PED_RAGDOLL_ON_COLLISION(players.user_ped(), true)
+end
+function SE_add_owned_explosion(ped, x, y, z, exptype, dmgscale, isheard, isinvis, camshake)
+    FIRE.ADD_OWNED_EXPLOSION(ped, x, y, z, exptype, dmgscale, isheard, isinvis, camshake)
+end
+function stumble()
+    local vector = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
+    PED.SET_PED_TO_RAGDOLL_WITH_FALL(players.user_ped(), 1500, 2000, 2, vector.x, -vector.y, vector.z, 1, 0, 0, 0, 0, 0, 0)
+end
+
+
+function ragdoll_self()
+    PED.SET_PED_TO_RAGDOLL(players.user_ped(), 2000, 2000, 0, true, true, true)
+end
 function beidongsharen()
     for k,v in pairs(players.list(false, true, true)) do
         passive_mode_kill(v)
@@ -4297,7 +8206,16 @@ local function pairsByKeys(t, f)
     end
     return iter
 end
-
+function biansewuqi()
+local plyr = players.user_ped()
+if start_tint == nil then
+    start_tint = WEAPON.GET_PED_WEAPON_TINT_INDEX(plyr, WEAPON.GET_SELECTED_PED_WEAPON(plyr))
+    cur_tint = start_tint
+end
+cur_tint = if cur_tint == 8 then 0 else cur_tint + 1
+WEAPON.SET_PED_WEAPON_TINT_INDEX(plyr,WEAPON.GET_SELECTED_PED_WEAPON(plyr), cur_tint)
+util.yield(50)
+end
 function getLabelTableFromKeys(keyTable)
     local labelTable = {}
     for k, v in pairsByKeys(keyTable) do
@@ -4375,10 +8293,10 @@ local function fake_chat_with_percentage_and_target(action)
     chat.send_message(action .. " ${name}. [||||||||||||||| ] (89%)", false, true, true)
     util.yield(math.random(3000, 5000))
 end
-function hackchat()
+--[[function hackchat()
     fake_chat_with_percentage_and_target("黑入")
     chat.send_message("黑入失败" .. " ${name}. " .. "原因：没有屁眼", false, true, true)
-end
+end]]
 function loopsuijixiaohua()
     if util.is_session_started() then
         local joke = get_random_joke()
@@ -4696,6 +8614,42 @@ local function OpenParachuteCrash(PlayerID)
         NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(SelfPlayerPos.x, SelfPlayerPos.y, SelfPlayerPos.z, 0, false, false, 0)
     end)
 end
+function get_stand_stdout(tbl, n)
+    local all_lines = {}
+    local disp_lines = {}
+    local size = #tbl
+    local index = 1
+    if size >= n then 
+        index = #tbl - n
+    end
+
+    for i=index, size do 
+        local line = tbl[i]
+        local line_copy = line
+        if line ~= "" and line ~= '\n' then
+            all_lines[#all_lines + 1] = line
+            if not timestamp_toggle then
+               -- at this point, the line is already added to all lines, so we can just customize it and it wont affect STDOUT clipboard copy
+                local _, second_segment = string.partition(line, ']')
+                if second_segment ~= nil then
+                    line = second_segment
+                end
+            end
+            if string.len(line) > max_chars then
+                disp_lines[#disp_lines + 1] = line:sub(1, max_chars) .. ' ...'
+            else
+                disp_lines[#disp_lines + 1] = line
+            end
+        end
+    end
+
+    -- full_stdout exists so that we can copy the entire console output without "aesthetic" changes or trimming
+    -- disp_stdout is the aesthetic, possibly-formatted version that you actually see in-game, WITH trimming
+    full_stdout = table.concat(all_lines, '\n')
+    disp_stdout = table.concat(disp_lines, '\n')
+end
+
+
 function bianhuanmoce()
 local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), include_last_vehicle_for_vehicle_functions)
     if vehicle == 0 then util.toast("上载具啊，糊了") else
@@ -4736,7 +8690,57 @@ local function ChangeParachuteCrash(PlayerID)
         PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
     end)
 end
-
+function raycast_gameplay_cam(flag, distance)
+    local ptr1, ptr2, ptr3, ptr4 = memory.alloc(), memory.alloc(), memory.alloc(), memory.alloc()
+    local cam_rot = CAM.GET_GAMEPLAY_CAM_ROT(0)
+    local cam_pos = CAM.GET_GAMEPLAY_CAM_COORD()
+    local direction = v3.toDir(cam_rot)
+    local destination = 
+    { 
+        x = cam_pos.x + direction.x * distance, 
+        y = cam_pos.y + direction.y * distance, 
+        z = cam_pos.z + direction.z * distance 
+    }
+    SHAPETEST.GET_SHAPE_TEST_RESULT(
+        SHAPETEST.START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(
+            cam_pos.x, 
+            cam_pos.y, 
+            cam_pos.z, 
+            destination.x, 
+            destination.y, 
+            destination.z, 
+            flag, 
+            players.user_ped(), 
+            1
+        ), ptr1, ptr2, ptr3, ptr4)
+    local p1 = memory.read_int(ptr1)
+    local p2 = memory.read_vector3(ptr2)
+    local p3 = memory.read_vector3(ptr3)
+    local p4 = memory.read_int(ptr4)
+    return {p1, p2, p3, p4}
+end
+function wuqizhunxin()
+    weaponzhunxin('visualflow')
+    local rc = raycast_gameplay_cam(-1, 10000.0)[2]
+    local c = players.get_position(players.user())
+    local dist = MISC.GET_DISTANCE_BETWEEN_COORDS(rc.x, rc.y, rc.z, c.x, c.y, c.z, false)
+    local dir = v3.toDir(CAM.GET_GAMEPLAY_CAM_ROT(0))
+    size = {}
+    size.x = 0.5+(dist/50)
+    size.y = 0.5+(dist/50)
+    size.z = 0.5+(dist/50)
+    GRAPHICS.DRAW_MARKER(3, rc.x, rc.y, rc.z, 0.0, 0.0, 0.0, 0.0, 90.0, 0.0, size.y, 1.0, size.x, 255, 255, 255, 50, false, true, 2, false, 'visualflow', 'crosshair')
+end
+function weaponzhunxin(dict_name)
+    request_time = os.time()
+    GRAPHICS.REQUEST_STREAMED_TEXTURE_DICT(dict_name, true)
+    while not GRAPHICS.HAS_STREAMED_TEXTURE_DICT_LOADED(dict_name) do
+        if os.time() - request_time >= 10 then
+            break
+        end
+        util.yield()
+    end
+end
 local function DogCrash(PlayerID)
     local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
     local SelfPlayerPed = PLAYER.PLAYER_PED_ID()
@@ -5131,6 +9135,11 @@ function pedcageg(pid)
         local head = MISC.GET_HEADING_FROM_VECTOR_2D(hx, hy)
         return ENTITY.SET_ENTITY_HEADING(pedm, head)
     end
+    function Stopsound()
+        for i = 0, 99 do
+            AUDIO.STOP_SOUND(i)
+        end
+    end
     function IPM(targets, tar1, pname, cage_table, pid)
         local tar2 = ENTITY.GET_ENTITY_COORDS(targets)
         Disbet = SYSTEM.VDIST2(tar2.x, tar2.y, tar2.z, tar1.x, tar1.y, tar1.z)
@@ -5246,6 +9255,84 @@ function pedcageg(pid)
             return {closest, closest_dist}
         else
             return nil 
+        end
+    end
+    bigfireWings = {
+        [1] = {pos = {[1] = 120, [2] =  75}},
+        [2] = {pos = {[1] = 120, [2] = -75}},
+        [3] = {pos = {[1] = 135, [2] =  75}},
+        [4] = {pos = {[1] = 135, [2] = -75}},
+        [5] = {pos = {[1] = 180, [2] =  75}},
+        [6] = {pos = {[1] = 180, [2] = -75}},
+        [7] = {pos = {[1] = 190, [2] =  75}},
+        [8] = {pos = {[1] = 190, [2] = -75}},
+        [9] = {pos = {[1] = 130, [2] =  75}},
+        [10] = {pos = {[1] = 130, [2] = -75}},
+        [11] = {pos = {[1] = 140, [2] =  75}},
+        [12] = {pos = {[1] = 140, [2] = -75}},
+        [13] = {pos = {[1] = 150, [2] =  75}},
+        [14] = {pos = {[1] = 150, [2] = -75}},
+        [15] = {pos = {[1] = 210, [2] =  75}},
+        [16] = {pos = {[1] = 210, [2] = -75}},
+        [17] = {pos = {[1] = 195, [2] =  75}},
+        [18] = {pos = {[1] = 195, [2] = -75}},
+        [19] = {pos = {[1] = 160, [2] =  75}},
+        [20] = {pos = {[1] = 160, [2] = -75}},
+        [21] = {pos = {[1] = 170, [2] =  75}},
+        [22] = {pos = {[1] = 170, [2] = -75}},
+        [23] = {pos = {[1] = 200, [2] =  75}},
+        [24] = {pos = {[1] = 200, [2] = -75}},
+        [25] = {pos = {[1] = 225, [2] =  75}},
+        [26] = {pos = {[1] = 225, [2] = -75}},
+    }
+    function YHyy(toggle)
+        fireWingsSettings.on = toggle
+        if fireWingsSettings.on then
+            ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+            if ptfxEgg == nil then
+                local eggHash = 1803116220
+                loadModel(eggHash)
+                ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+                ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+                STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+            end
+            for i = 1, #bigfireWings do
+                while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('weap_xs_vehicle_weapons') do
+                    STREAMING.REQUEST_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
+                    util.yield()
+                end
+                GRAPHICS.USE_PARTICLE_FX_ASSET('weap_xs_vehicle_weapons')
+                bigfireWings[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('muz_xs_turret_flamethrower_looping', ptfxEgg, 0, 0, 0.1, bigfireWings[i].pos[1], 0, bigfireWings[i].pos[2], 1, false, false, false)
+
+                util.create_tick_handler(function()
+                    local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                    ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
+                    ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                    for i = 1, #bigfireWings do
+                        GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(bigfireWings[i].ptfx, fireWingsSettings.scale)
+                        GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(bigfireWings[i].ptfx,fireWingsSettings.colour.r, fireWingsSettings.colour.g, fireWingsSettings.colour.b)
+
+                    end
+                    ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                    return fireWingsSettings.on
+                end)
+                
+            end
+            
+            
+            
+        else
+            for i = 1, #fireWings do
+                if fireWings[i].ptfx then
+                    GRAPHICS.REMOVE_PARTICLE_FX(fireWings[i].ptfx, true)
+                    fireWings[i].ptfx = nil
+                end
+                if ptfxEgg then
+                    entities.delete_by_handle(ptfxEgg)
+                    ptfxEgg = nil
+                end
+            end
+            STREAMING.REMOVE_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
         end
     end
     function ycxs()
@@ -5626,6 +9713,32 @@ function baocunwq()
     file:close()
     util.toast("保存完成了！")
 end
+local function tpTableToPlayer(tbl, pid)
+    if NETWORK.NETWORK_IS_PLAYER_CONNECTED(pid) then
+        local c = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+        for _, v in pairs(tbl) do
+            if (not PED.IS_PED_A_PLAYER(v)) then
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(v, c.x, c.y, c.z, false, false, false)
+            end
+        end
+    end
+end
+function TpAllPeds(player)
+    local pedHandles = entities.get_all_peds_as_handles()
+    tpTableToPlayer(pedHandles, player)
+end
+function TpAllVehs(player)
+    local vehHandles = entities.get_all_vehicles_as_handles()
+    tpTableToPlayer(vehHandles, player)
+end
+function TpAllObjects(player)
+    local objHandles = entities.get_all_objects_as_handles()
+    tpTableToPlayer(objHandles, player)
+end
+function TpAllPickups(player)
+    local pickupHandles = entities.get_all_pickups_as_handles()
+    tpTableToPlayer(pickupHandles, player)
+end
 
 function jiazaiwq()
     if filesystem.exists(STOREDIR .. "loadout.lua") then
@@ -5803,6 +9916,29 @@ function generate_cosmetics(weapon_hash, weapon_name)
             end
     )
 end
+WeaponName_ListItem = {
+    { "小刀" },
+    { "穿甲手枪" },
+    { "电击枪" },
+    { "微型冲锋枪" },
+    { "特质卡宾步枪" },
+    { "突击霰弹枪" },
+    { "火神机枪" },
+    { "火箭筒" },
+    { "电磁步枪" }
+}
+WeaponModel_List = {
+    "WEAPON_KNIFE",
+    "WEAPON_APPISTOL",
+    "WEAPON_STUNGUN",
+    "WEAPON_MICROSMG",
+    "WEAPON_SPECIALCARBINE",
+    "WEAPON_ASSAULTSHOTGUN",
+    "WEAPON_MINIGUN",
+    "WEAPON_RPG",
+    "WEAPON_RAILGUN"
+}
+
 
 function generate_attachments(category, weapon_name, weapon_hash)
     if weapon_deletes[weapon_name] == nil then
@@ -6906,7 +11042,7 @@ function menyoo_preprocess_car(vehicle, data)
     
     for k,v in pairs(neons) do
         local comp = {['Left']=0, ['Right']=1, ['Front']=2, ['Back']=3}
-        VEHICLE._SET_VEHICLE_NEON_LIGHT_ENABLED(vehicle, comp[k], to_boolean(v))
+        CCCCC_VEHICLE._SET_VEHICLE_NEON_LIGHT_ENABLED(vehicle, comp[k], to_boolean(v))
     end
 
     VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle, tonumber(data['WheelType']))
@@ -7670,8 +11806,9 @@ function Janos()
 	end
 	end
     proofs = {
-        bullet = {name="子弹",on=false},
         fire = {name="火烧",on=false},
+        bullet = {name="子弹",on=false},
+        
         explosion = {name="爆炸",on=false},
         collision = {name="撞击",on=false},
         melee = {name="近战",on=false},

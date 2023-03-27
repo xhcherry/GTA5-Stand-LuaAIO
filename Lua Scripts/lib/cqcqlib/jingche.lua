@@ -1,3 +1,4 @@
+require "lib.natives-1660775568"
 local SCRIPT_VERSION = "2.4"
 C_VEHICLE={
     ["_GET_VEHICLE_XENON_LIGHTS_COLOR"]=--[[int]] function(--[[Vehicle (int)]] vehicle)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.end_call("3DFF319A831E0CDB");return native_invoker.get_return_value_int();end,

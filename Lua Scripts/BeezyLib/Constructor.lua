@@ -2747,7 +2747,7 @@ menu.readonly(menus.credits, t("French"), t("ukn"))
 ---
 
 if SCRIPT_MANUAL_START and not SCRIPT_SILENT_START then
-    local logo_path = filesystem.store_dir() .. '/LM/OtherLuascripts/constructor/constructor_logo.png'
+    local logo_path = filesystem.scripts_dir() .. '/BeezyLib/Constructor/constructor_logo.png'
     local logo_status, logo = pcall(directx.create_texture, logo_path)
     if not logo_status then
         debug_log("Failed to load constructor logo. "..tostring(logo))

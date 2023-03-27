@@ -1,3 +1,4 @@
+require "lib.natives-1660775568"
 -- SprunkStop
 -- a Lua script the Stand Mod Menu for GTA5
 -- Save this file in `Stand/Lua Scripts`

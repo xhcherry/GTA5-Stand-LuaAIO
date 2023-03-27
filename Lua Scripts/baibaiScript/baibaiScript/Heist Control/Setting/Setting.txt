@@ -1,5 +1,0 @@
-1: Chinese - 中文
-2: Stand
-3: HC Logo
-4: Black
-5: White
