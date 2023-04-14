@@ -1,0 +1,678 @@
+# <  README  >
+# Thanks to translate HC!
+# You should translate right-side texts. Otherwise, it'll cause errors.
+# You can use all characters except "=" character.
+# Using "#" character means the line will be ignored like the comment in coding.
+# If you wanna release your own translation, contact to Dev of HC in DC Server.
+# Learn More: https://icedoomfist.com/Stand_Heist_Control/How_To_Translate/
+
+
+--- [ # General ] ---
+
+Heist Control = Heist Control
+Announcement = Ankündigungen
+You are using latest version of HC! = Du nutzt die aktuelleste Version von HC, sehr gut!
+You are using outdated version of HC! = Du nutzt eine veraltete Version von HC! :/
+Current Version: = Deine Version:
+Latest Version: = Aktuellste Version:
+Stand can't get latest version info of HC. = Stand kann die neuste Versionsinfo von HC nicht abrufen :/
+HC website currently has connection issue. = Die HC-Website hat aktuell Verbindungsprobleme.
+Coded GTAO Version: = Geschrieben für GTAO-Version:
+Current GTAO Version: = Deine GTAO-Version:
+Hard = Schwer
+Normal = Normal
+Notification = Benachrichtigung
+[Risky] = [Riskant]
+[Locally] = [Lokal]
+Custom Payout = Custom Auszahlung
+You didn't input the value. Please input it! = Du hast keinen Wert eingegeben. Bitte gib ihn an!
+Enable = Aktivieren
+Sucessfully set! = Erfolgreich gesetzt!
+Would you like to restart HC now? = Möchtest du HC jetzt neu starten?
+Others = Diverses
+Good bye, thank you for using HC! :D = Bis bald, danke, dass du HC nutzt! :D
+
+
+--- [ # Main Tabs ] ---
+
+Cayo Perico Heist = Cayo Perico Heist
+Diamond Casino Heist = Diamond Casino Heist
+Doomsday Heist = Doomsday Heist
+Classic Heist = Klassische Heists
+LS Tuners Robbery = LS Tuners-Überfall
+The Contract: Agency = Agenturmissionen
+Master Unlocker = Master Unlocker
+Tools = Nützliches
+Settings & About HC = Einstellungen & Über HC
+
+
+--- [ # Cayo Perico Heist ] ---
+
+Automated Presets = Automatisches Preset (aka Voreinstellungen)
+1 Player = 1 Spieler
+2 Players = 2 Spieler
+3 Players = 3 Spieler
+4 Players = 4 Spieler
+Sapphire Panther = Saphir- Panther
+Ruby Necklace = Rubin- Halskette
+
+Quick Preset [1 ~ 4P] = Quickie-Preset  [1 ~ 4 Spieler]
+There are no secondary targets, only one primary target exists. Your goal is get it. = Es gibt keine Sekundärziele, nur das Prmärziel. Schnapp es dir Tiger!
+
+Standard Preset = Standard-Preset
+Semi-Original Preset = Semi-Standard Preset
+- Remember to choose your preset outside the Submarine or in the Main Deck = - Wähle dein Preset außerhalb des U-Boots und des Hauptdecks.
+- Remember to deactivate the preset at the end. = - Denk dran, das Preset am Ende wieder zu deaktivieren.
+
+Custom Teleport = Custom Teleports
+Compound = Villa
+El Rubio's Office = El Rubio's Büro
+Front Gate Exit = Ausgang vorderes Tor
+Storage = Lager
+North = Norden
+West = Westen
+South = Süden
+Vault = Tresor
+Island = Insel
+Airstrip = Flugfeld
+Crop Fields = Felder
+Main Dock = Hauptdock
+North Dock = Norddock
+Loot = Beute
+Radio Tower = Funkturm
+Drainage = Entwässerungskanal
+Drainage: 2nd Checkpoint = Entwässerungskanal: 2. Checkpoint
+Ocean Safe Place = Ozean (sicherer Ort)
+Kosatka: Heist Board [Call Kosatka first] = Kosatka: Heist Planungsbildschirm [Rufe als erstes die Kosatka]
+You have not bought Kosatka yet. Buy it first to teleport! = Du hast die Kosatka noch nicht gekauft du Dulli. Kauf sie erst!
+
+Advanced Features = Weitere Features
+Players Cut = Spieleranteil
+Your Cut = Dein Anteil
+Player 2 = Spieler 2
+Player 3 = Spieler 3
+Player 4 = Spieler 4
+Set 100% to everyone = 100% für alle setzen
+
+Bag Capacity Modifier = Beutetaschenmodifikationen
+Normal Bag Limit = Normales Beutetaschenlimit
+Simulate Bag to 2 players = Beutetaschen wie für 2 Spieler simulieren
+Simulate Bag to 3 players = Beutetaschen wie für 3 Spieler simulieren
+Simulate Bag to 4 players = Beutetaschen wie für 4 Spieler simulieren
+Infinite Bag = Unendlich große Beutetasche
+Skip Hacking = Hacking überspringen
+Skip Sewer Cutter = Kanalgitter schneiden überspringen
+Open Plasma Glass Immediately = Glas mit dem plasmaschneider sofort öffnen
+Bypass Plasma Glass Cutter Heat = Plasma-Glassschneider Überhitzen umgehen
+Infinite Voltage Timer = Unendlicher Voltage-Timer
+Remove Fencing Fee & Pavel Cut = Hehlergebühr + Pavels Anteil entfernen
+Leave activated until the end of the heist = Lass dies bis zum Ende des Heists aktiviert
+Auto-finish Primary Target = Primärziel automatisch abschließen
+Remove Drainage Pipe = Remove Drainage Pipe
+
+Heist Vehicles = Heistfahrzeuge
+Submarine KOSATKA = U-Boot KOSATKA
+Plane ALKONOST = Flugzeug ALKONOST
+Plane VELUM = Flugzeug VELUM
+Helicopter STEALTH ANNIHILATOR = Heli STEALTH ANNIHILATOR
+Boat PATROL BOAT = Boot PATROL BOAT
+Boat LONGFIN = Boot LONGFIN
+Unlock All Vehicles = Alle Fahrzeuge freischalten
+
+Primary Target = Primärziel
+
+Secondary Target = Sekundärziele
+When using this method, the percentage and final payment is random! = Wenn du diese Methode nutzt, sind die %-Anteile und die finale Auszahlung zufällig!
+Remove All = Alle entfernen
+
+Compound Loot = Villa-Loot
+
+Weapon Loadouts = Beaffnung
+Aggressor = Aggressives Loadout
+- Assault SG + Machine Pistol = - AR + MP
+- Machete + Grenade = - Machete + Granate
+Conspirator = Verschwörer-Loadout
+- Military Rifle + AP = - Militärgewehr + AP
+- Knuckles + Stickies = - Haftbomben
+Crackshot = Hitman-Loadout
+- Sniper + AP = - Sniper + AP-Pistole
+- Knife + Molotov = - Messer + Molotov
+Saboteur = Saboteur-Loadou
+- SMG Mk2 + SNS Pistol = - SMG Mk2 + SNS Pistole
+Marksman = Marksman-Loadout
+- AK-47 + Pistol .50 = - AK-47 + Pistole .50
+- Machete + Pipe Bomb = - Machete + Rohrbombe
+
+Equipments Spawn Location = Equipment-Spawnorte
+- Guard Clothing = - Wächter-Klamotten
+- Bolt Cutters = - Bolzenschneider
+
+Supply Truck Location = Unterstützungs-LKW Spawnort
+Heist Difficulty = Heist Schwierigkeitsgrad
+
+Unlock Heist Awards = Heist Awards freischalten
+Complete all Missions only = Nur alle Missionen abschließen
+Force the longest final Cutscene = Längste Finale- Cutscene erzwingen
+Keep in mind that you must use this option before starting the Heist = Du musst dies aktivieren, bevor du den Heist startest!
+Set Heist to Default [Reset] = Heist auf Standard setzen [Reset]
+
+
+--- [ # Casino Heist ] ---
+
+Silent & Sneaky Approach = Still und leise Herangehensweise
+BigCon Approach = Große Täuschung
+Aggressive Approach = Aggressive Herangehensweise
+$3.5 Millions & For All Players = 3,5 Mio.$ & für alle Spieler
+ALWAYS choose Low Level Buyer! = Nimm IMMER den billigsten Käufer
+
+Advanced Features = Weitere Features
+Your Cut (Non-Host) = Dein Anteil (Nicht-Host)
+Works on both of sorts: Fingerprint and Keypad = Geht sowohl mit Fingerabducksensoren als auch Keypads
+Instant Vault Door Laser = Sofort Tresortür auflasern
+
+Inside = Innen
+Planning Boards = Planungstafeln
+Garage Exit = Garagenausgang
+Waste Disposal = Abfallentsorgung
+2-Keypad Door = 2-Keypad-Tür
+Inside Vault = Innerer Tresor
+Pre-Inside Vault = Vor den inneren Tresor
+Daily Bonus = Täglicher Bonus
+Daily Bonus Room = Täglicher Bonus-Raum
+Outside = Draußen
+Main Gate = Haupttor
+Staff Lobby = Mitarbeiter-Lobby
+
+Heist Planning [Board 1] = Heist vorbereiten [Tafel 1]
+
+Change Approach and Difficulty = Herangehensweise und Schwierigkeit ändern
+Change Target = Ziel ändern
+Diamond = Diamanten
+Gold = Gold
+Artwork = Gemälde
+Cash = Bargeld
+P.O.I & Access Points = Interessante Orte (P.O.I) & Zugangspunkte
+Change your session to apply! = Wechsel die Session zum Anwenden!
+
+Heist Planning [Board 2] = Heist vorbereiten [Tafel 2]
+
+Change Gunman = Schützen ändern
+Chester McCoy = Chester McCoy
+Gustavo Mota = Gustavo Mota
+Patrick McReary = Patrick McReary
+Charlie Reed = Charlie Reed
+Karl Abolaji = Karl Abolaji
+Random = Zufällig
+Remove = Entfernen
+
+Weapon Variation = Waffen-Auswahl
+
+Change Vehicle = Fahrzeug ändern
+Chester McCoy = Chester McCoy
+Eddie Toh = Eddie Toh
+Taliana Martinez = Taliana Martinez
+Zach Nelson = Zach Nelson
+Karim Denz = Karim Denz
+
+Vehicle Variation = Auto-Auswahl
+Best = Beste
+Good = Gute
+Fine = So semi^^
+Worst = Beschissene
+
+Change Hacker = Hacker ändern
+Avi Schwartzman = Avi Schwartzman
+Paige Harris = Paige Harris
+Christian Feltz = Christian Feltz
+Yohan Blair = Yohan Blair
+Rickie Luken = Rickie Luken
+
+Choose Mask = Maske wählen
+Remove Mask = Maske entfernen
+Geometric = Geometrisch
+Hunter = Jäger
+Oni Half Mask = Oni Halbmasken
+Emoji = Emoji
+Ornate Skull = Totenschädel
+Lucky Fruit = Lustige Früchtchen
+Guerilla = Guerilla
+Clown = Clown
+Animal = Tiere
+Riot = Aufstand
+Oni = Oni
+Hockey = Hockey
+
+Unlock Scan Card Level = Zugangskartenlevel freischalten
+Duggan Guards = Duggans Wachen
+0 - Strongest Guards = 0 - Stärkste Wachen
+3 - Weakest Guards = 3 - Schwächste Wachen
+
+Heist Planning [Board 3] = Heist vorbereiten [Tafel 3]
+Remove Drills = Bohren entfernen
+Silent & Sneaky and Aggressive Approach = Still + leise & agressive Herangehensweise
+
+Board Loader & Unloader = Planungstafeln laden & entladen
+Load all Boards = Alle Planungstafeln laden
+Unload all Boards = Alle Planungstafeln entladen
+
+Casino Story Missions = Casino-Storymissionen
+Loose Cheng = Loose Cheng
+House Keeping = House Keeping
+Strong Arm Tactics = Strong Arm Tactics
+Play to Win = Play to Win
+Bad Beat = Bad Beat
+Cashing Out = Cashing Out
+
+Remove Heist Prepare Cooldown = Heist Abklingzeit entfernen
+Skip Agatha Baker missions to the last one = Alle Agatha Baker Missionen bis zur letzten überspringen
+
+
+--- [ # Doomsday Heist ] ---
+
+[Final Heist] = [Finaler Heist]
+The Data Breaches ACT I = Das Datenleck AKT I
+The Bogdan Problem ACT II = Das Bogdan-Problem AKT II
+The Doomsday Scenario ACT III = Das Weltuntergangs- Szenario AKT III
+
+Heist board = Heisttafel (Planungsraum?)
+Prisoner cell = Gefängniszelle
+
+Modify ACT I Payment [$2.5 Millions] = AKT I Auszahlung ändern [$2.5 Millionen]
+Modify ACT II Payment [$2.5 Millions] = AKT II Auszahlung ändern [$2.5 Millionen]
+Modify ACT III Payment [$2.5 Millions] = AKT III Auszahlung ändern [$2.5 Millionen]
+Set difficulty as hard. In-Game percentage may seem weird. Applied to everyone. = Setze die Schwierigkeit auf hart. Die Spieleranteile können ingame weird aussehen. Angewendet für alle.
+
+Setup: Server Farm (Lester) = Setup: Serverfarm (Lester)
+Unlock All Doomsday Heist = Alle Doomsday Heist freischalten
+Complete all preparations (Not Setup) = Alle Vorbereitungen abschließen (Noch kein Setup)
+
+
+--- [ # Classic Heist ] ---
+
+Fleeca Heist = Fleeca Heist
+Your Payout (Millions) = Deine Auszahlung (in Millionen)
+Will be applied only to you & have to host = Wird nur dir als Host gegeben
+- Only do this only one time or twice in less than 24 hours. = - Mache dies nur 1 oder 2 Mal innerhalb von 24 Stunden.
+- Otherwise, you can be banned! = - Ansonsten riskierst du einen Ban!
+Modify Payout Amount = Auszahlungsbetrag ändern
+Complete all Setup = Alle Setups abschließen
+You may need to choose a Heist and then complete the first setup, activated until then = Möglicherweise musst du erst einen Heist auswählen und die erste Setup-Mission abschließen, lass dies solange aktiviert.
+
+
+--- [ # LS Robbery ] ---
+
+Modify Contracts payout - $1 MILLIONs = Ändere die Auszahlungen - 1 MILLION $
+Always keep this option actived before starting a contract = Hab diese Option immer aktiviert, bevor du einen Contract startest
+Changes will only happen if you are outside your Auto-Shop! = Es ändert sich nur was, wenn du außerhalb von deiner Autowerkstatt bist!
+Union Depository = Union Depository
+The Superdollar Deal = The Superdollar Deal
+The Bank Contract = The Bank Contract
+The ECU Job = The ECU Job
+The Prison Contract = The Prison Contract
+The Agency Deal = The Agency Deal
+The Lost Contract = The Lost Contract
+The Data Contract = The Data Contract
+Complete missions (only) = Nur Missionen abschließen
+
+Reset Missions (only) = Nur Missionen zurücksetzen
+Reset Contracts = Contract-Missionen zurücksetzen
+Reset Total Gains & Completed Missions = Geasmtverdienste & abgeschlossene Missionen zurücksetzen
+
+
+--- [ # The Contract : Agency ] ---
+
+VIP Contract: Dr.Dre = VIP-Klient: Dr.Dre
+The feature to be worked properly, you may need to log out of F.Clinton & Partner = Damit dieses Feature funtioniert, musst du vom Agentur-PC ausgeloggt sein.
+
+NightLife Leak = NightLife Leak
+The Nightclub (Prep) = The Nightclub (Vorbereitungsmission)
+The Marina (Prep) = The Marina (Vorbereitungsmission)
+NightLife Leak (Mission) = NightLife Leak (Hauptmission)
+
+High Society Leak = High Society Leak
+The Country Club (Prep) = The Country Club (Vorbereitungsmission)
+Guest List (Prep) = Guest List (Vorbereitungsmission)
+High Society (Mission) = High Society (Hauptmission)
+
+South Central Leak = South Central Leak
+Davis (Prep) = Davis (Vorbereitungsmission)
+The Ballas (Prep) = The Ballas (Vorbereitungsmission)
+Agency Studio (Mission) = Agency Studio (Hauptmission)
+Final Contract: Don't Fuck with Dre = Finale Mission : Don't Fuck with Dre
+
+Modify Final Contract Payout (2 Millions) = Auszahlung finale Mission ändern auf 2 Millionen
+Skip Cooldown of Payphone hits & contracts = Cooldown der Telefonzellenattentate und Contract-Missionen skippen
+Make sure enabled before starting any contract or hit. = Stelle sicher, dass du diese Option aktivierst bevor du eine der Missionen startest.
+Remove Security Missions Cooldown = Cooldown der Security-Missionen entfernen
+Complete all Missions = Alle Missionen abschließen
+
+
+--- [ # Master Unlocker ] ---
+
+DLCs = DLCs
+Arena Wars DLC = Arena Wars DLC
+Unlock all Arena Wars Trophy and Toys = Alle Arena Wars Trophäen und Spielzeuge erhalten
+Arena Wars Clothing = Arena Wars-Klamotten
+Summer 2020 DLC = Sommer 2020 DLC
+Summer 2020 Awards = Sommer 2020 Belohnungen
+Unlock Summer DLC Clothing = Sommer-DLC-Klamotten freischalten
+LS Tuners DLC = LS Tuners DLC
+Unlock Drip Fed Outfits = Unveröffentlichte Outfits freischalten
+Unlock Awards = Auszeichnungen freischalten
+The Contract DLC = The Contract DLC 
+Unlock Animal Masks = Tiermasken freischalten
+Unlock DJ Pooh Shirts = DJ Pooh-Shirts freischalten
+
+Buildings = Gebäude
+Arcade Unlockers = Spielhallen- Freischaltungen
+Unlock Arcade Trophys and Toys = Spielhallen Trophäen und Spielzeuge erhalten
+Unlock Arcade Clothing = Spielhallen-Klamotten freischalten
+Unlock NightClub Awards = NightClub-Belohnungen freischalten
+Casino Store Ace Masks = Casino Store Ace Masken
+Add cosmetics items to the Office/MC = Kosmetisches Zeugs für dein Büro/MC-Clubhaus
+
+Missions = Missionen
+Cayo Perico unlockables = Cayo Perico-Freischaltungen
+Unlock Yacht Missions = Yacht-Missionen freischalten
+Unlock all Contacts = Alle Kontaktmissionen freischalten
+Skip Lamar Missions to the last one = Lamar-Missionen bis zur letzten überspringen
+
+Special Anniversaries = Spezielle Feiertagsevents
+Christmas = Weihnachtssachen
+Bypass Christmas Clothing = Weihnachts-Klamotten-Einschränkungen umgehen
+You must always keep this feature activated to wear! = Du musst dieses Feature immer aktiviert lassen, während du die Sachen trägst!
+Unlock Christmas Liveries = Weihnachtslackierungen freischalten
+Unlock Christmas Content = Weihnachts-Content freischalten
+Valentine = Valentinstag-Freischaltungen
+Independence Day = Unabhängigkeitstag-Freischaltungen
+
+Clothes = Klamotten
+Unlock Hats and many Shirts = Hüte und viele Shirts freischalten
+Unlock Don't Cross the Line Tee = Schalte das Don't Cross the Line T-Shirt frei
+
+Vehicles = Fahrzeuge
+Unlock some vehicles trade price = Einkaufspreis bei einigen Fahrzeugen freischalten
+Unlock Shotaro = Shotaro freischalten
+
+Weapons = Waffen
+Stone Hatchet Challenge = Steinaxt-Herausforderung
+Double Action Revolver = Double Action Revolver
+Navy Revolver = Navy Revolver
+Up-N-Atomizer = Up-N-Atomizer
+
+Vanilla Unicorn Award = Vanilla Unicorn Awards erhalten
+Alien Tatto (Illuminati) = Alien Tattoo freischalten o.O
+Returning Bonus = Wiederkehrer-Bonus
+
+
+--- [ # Tools ] ---
+
+Tunables = Coole Modifikationen
+Remove Cooldowns = Cooldowns entfernen
+Resupply Delay = Delay Nachschublieferungen
+MC Business = MC Business
+Bunker = Bunker
+Buy & Sell = Kaufen & Verkaufen
+Special Cargo = Spezialfracht
+Vehicle Cargo = Autoimport / -export
+Air Freight Cargo = Luftfracht
+Client Job = Client Jobs (Terrorbyte)
+Launch Kosatka Missiles = Kosatka-Raketen starten
+
+Multipliers = Multiplikatoren
+LS Car Meet = LS Car Meet
+Street Race = Straßenrennen
+Pursuit Race = Verfolgungsrennen
+Scramble = Scramble
+Head 2 Head = Kopf an Kopf-Rennen
+LS Car Meet Track = LS Car Meet-Strecke
+
+Trigger Special Crate Missions = Spezialfrachtmissionen auslösen
+Note that buying special crates can only in the Terrobyte. = Beachte, dass du die Spezialfracht nur im Terrorbyte kaufen kannst
+Ornamental Egg = Dekoratives Ei
+Gold Minigun = Goldene Minigun
+Large Diamond = Fetter Diamant
+Rage Hide = Rage Hide
+Film Reel = Filmrolle
+Rare Pocket Watch = Seltene Taschenuhr
+
+Bunker Mission Selector = Bunkermissionen-Auswahl
+[SPECIAL] Trigger Alien Egg Mission = [SPECIAL] Alienei-Mission auslösen
+
+Steal Supplies = Vorräte stehlen
+Altruist Camp = Altruistencamp
+The Dune Buggy = Der Dune Buggy
+Police Riot = Polizei Riot
+Mine = Meins
+The Technical Aqua = Der Technical Aqua
+Rival Operation = Rival Operation
+Zancudo River = Zancudo River
+LSIA = LSIA
+Merryweather HQ = Merryweather HQ
+Training Ground (Tank) = Übungsplatz (Panzer)
+Del Perro Beach = Del Perro Beach
+Cholla Springs Avenue = Cholla Springs Avenue
+Chupacabra Street = Chupacabra Street
+
+Sell Weapons = Waffen verkaufen
+HVY Insurgent Pick Up = HVY Insurgent Pick Up
+HVY Insurgent (Normal) = HVY Insurgent (Normal)
+Marshall = Marshall
+HVY Insurgent Pick Up (Custom) = HVY Insurgent Pick Up (Custom)
+Phantom Wedge = Phantom Wedge
+Dune FAV = Dune FAV
+
+Remove Other Cost = Andere Kosten deaktivieren
+Repair Vehicle Cargo = Fahrzeuglieferung reparieren
+When you sell vehicle, block paying related repair. = Wenn du das Fahrzeug verkaufst, werden Reperaturkosten geblockt.
+Ron's Cut of Air Freight Cargo = Ron's Anteil an der Luftfracht
+Tony's Cut of Nightclub = Tony's Anteil vom Nightclub
+Resupply MC Business = MC Business mit Vorräten versorgen
+Resupply Bunker = Bunker mit Vorräten versorgen
+
+Single MC Vehicle Sell = Nur 1 MC-Verkaufsfahrzeug
+Makes always number of MC business selling's vehicle is one. = Damit hast du immer nur 1 MC-Verkaufsfahrzeug.
+Bypass Transaction Error Messages = Transaction Error-Nachrichten vermeiden 
+Prevents appearing transaction error messages, can be used for a lot of stuffs like when you get CEO Money. = Das Umgehen der Transaction Error-Nachrichten kann für vieles sinnvoll sein, zum Beispiel CEO Money.
+Make One Snack Full Health = Ein Snack heilt dich vollständig
+Whatever you use a snack, will make you full health. = Egal welchen Snack du isst, er heilt dich vollständig.
+Infinite Stone Hatchet Power = Unendliche Stein-Kriegsaxt-Power
+Complete Headhunter = Headhunter abschließen
+Complete Sightseer = Sightseer abschließen
+Complete working in progress the mission. = Missionsfortschritt abschließen
+7 Years GTAO Playtime = 7 Jahre Spielzeit in GTA Online
+Make your account like played GTAO 7 years. = Lässt deinen Accoun so erscheinen, als würde er bereits seit 7 Jahren GTAO spielen
+
+Custom Money Remover = Eigenes Geld entfernen
+Easy way to remove GTAO bank account money = Ein einfacher Weg, Geld von deinem GTA Account zu entfernen, wenn du zu viel hast ^^
+Firstly, buy ballistic equipment. To remove money, call it in the interaction menu = Kauf als erstes die ballistische Ausrüstung. Fordere sie dann im Interaktionsmenü an, um das Geld zu entfernen
+
+AFK Money = AFK Money
+Methods are safe to use, but if you earn too much money, can be banned. Always use at own your risk. = Die Methode an sich ist sicher, aber wenn du zu viel Geld machst, kannst du immer noch gebannt werden. Nutzen auf eigene Gefahr.
+Cooldown Time [Sec] = Abklingzeit [Sek]
+Auto Time Trial = Auto Zeitrennen
+Auto Rig Slot Machine = Automatisch Spielautomaten manipulieren
+Ratio of Jackpot and Loss = Verhältnis von Gewinnen und Verlieren
+Playing Time Trial one time is done! Waiting for cooldown time... = Ein Zeitrennen wurde abgeschlossen! Warte während der Abklingzeit...
+Auto Black Jack = Auto Blackjack
+
+Heist Cooldown Timer = Heist Cooldown Timer
+When set time passed, HC will let you know heist cooldown has been passed. = HC wird dich benachrichtigen, wenn die Abklingzeit des Heists vorüber ist.
+Text Position = Textposition
+Cooldown time passed, you can play the heist again! = Abklingzeit vorüber, du kannst jetzt den nächsten Heist starten!
+Custom Heist = Custom Heist
+Use Stand's Overlay = Stand's Overlay nutzen
+Enabled: Use Stand's Overlay & Settings: Game > Info Overlay = Aktiviert: Stands Overlay und Einstellungen werden genutzt
+Disabled: Use Heist Control's Overlay & Settings = Deaktiviert: HCs Overlay und Einstellungen werden genutzt
+Set Custom Time = Eigene Zeit setzen
+
+Manage Near Peds & Cams = NPCs und Kameras in der Umgebung
+Work only to hostile peds = Funktioniert nur auf feindlichen NPCs
+Enabled: Ped options work only to hostile peds = Aktiviert: NPC-Optionen gehen nur auf feindlichen NPCs
+Disabled: Ped options work to all peds = Deaktiviert: NPC-Optionen gehen jetzt für alle NPCs
+Peds = NPCs
+Remove Weapons = Entwaffnen
+Delete = Löschen
+Kill = Killen
+Cams = Kameras
+
+Bypass Locked Doors = Verschlossene Türen umgehen
+Speed of Improved No Clip = Geschwindigkeit des verbesserten Noclip
+Distance of Teleport To Forward = Distanz des vorwärts teleportierens
+Instant Doors Crack = Türen sofort öffnen
+Improved No Clip = Verbesserter Noclip
+Teleport To Forward = Vorwärts teleportieren
+
+Request Services = Services anfordern
+MOC = MOC
+Avenger = Avenger
+Terrobyte = Terrobyte
+Kosatka = Kosatka
+Dingy = Dingy
+Ballistic Armor = Ballistische Panzerung
+
+Info Spoofing = Info-Spoofing
+Value = Wert
+Total Money = Geld insgesamt
+Kills = Kills
+Deaths = Tode
+
+Business Upgrade States = Business-Upgrades
+Document = Dokumente
+Weed = Bubatz
+Counterfit = Gemälde
+Meth = Meth
+Cocaine = Kokain
+Bunker = Bunker
+Arcade = Spielhalle
+Nightclub = Nachtclub
+Equipment Upgrade = Equipment-Upgrade
+Staff Upgrade = Mitarbeiter-Upgrade
+Secuirity Upgrade = Sicherheitsupgrade
+Decor Upgrade = Deko-Upgrade
+Firing Range Upgrade = Schießstand-Upgrade
+Gunlocker Upgrade = Gunlocker Upgrade
+Personal Quarters Upgrade = Persönliches Quartier-Upgrade
+Transportation Upgrade = Transportat-Upgrade (Caddys)
+Drone Station = Drohnenstation
+Business Hub = Businessverwaltungs-Station
+Floor = Boden
+Style = Stil
+Wall = Wände
+Garage = Garage
+Neon Lights = Neonlichter
+High Score Screen = Highscore-Screen
+Lighting = Beleuchtung
+Dancers = Tänzer
+Paid DJs = Kaufbare DJs
+
+Stat Editor & Reader = Stat Editor & Reader
+Presets Stat Editor = Presets Stat Editor
+Modify Stat = Stat modifizieren
+Set Stat = Stat setzen
+
+Crew Rank = Crew-Rang
+
+Playtime = Spielzeit
+Method = Methode
+Use Adding Playtime = Spielzeit hinzufügen (Methode 1) nutzen
+Enabled: Use adding playtime method = Aktiviert: Du nutzt jetzt die Methode 1 (Spielzeit hinzufügen)
+- Add from your current playtime = - Auf deine aktuelle Spielzeit drauf setzen
+Disabled: Use setting playtime method = Deaktiviert: Nutze die Methode 2 (Spielzeit (neu) setzen)
+- Set equal you will set time = - Setze die Spielzeit fest
+Note that set method supports up to only 24.8 days, but add method supports up to 50K days = Über Spielzeit neu setzen kannst du bis zu 24,8 Tage hinzufügen, aber über die Hinzufüge-Methode bis zu 50!
+Day = Tage
+Hour = Stunden
+Min = Minuten
+Total Playtime = Gesamte Spielzeit
+GTA:O Playtime = GTA:O-Spielzeit
+Deathmatches = Deathmatches
+Races = Rennen
+Creator = Creator-Modus
+
+Cash Earned & Spent = Verdientes und ausgegebenes Geld
+Cash Amount = Geldbetrag
+Total Earned = Gesamt verdient
+Total Spent = Gesamt ausgegeben
+Related Earned Cash = Zugehörige verdientes Geld
+Jobs = Jobs
+Betting = Wetten
+Shared = Geteilt
+Car Sales = Autoverkäufe
+Picked Up = Aufgesammelt
+
+Stat Name = Stat Name
+Stat Value = Stat Wert
+Example Stat = Beispiel-Stat
+
+Custom Stat Editor = Custom Stat Editor
+Setting some certain stats may cause a ban. Use at your own risk! = Falsche Einstellungen an dieser Stelle können zu einem Ban führen. Nutze dies auf eigene Gefahr und nur wenn du weißt, was du tust!
+Note: MP0_ or MP1_ will be selected by HC automatically, therefore don't write it. = Beachte: MP0 oder MP1 (Dein Charakter 1 oder 2) wird automatisch von HC gewählt, also ändere hier nichts
+
+Custom Stat Reader = Custom Stat Reader
+Copy Stat Value = Stat-Wert kopieren
+Read Stat = Stat einlesen
+Sucessfully read! = Erfolgreich eingelesen!
+
+Language Setting = Spracheinstellungen
+How To Translate = Wie man übersetzt
+Always looking for new translators not existing language. If you interested in translating HC, click! = Ich bin immer auf der Suche nach Übersetzern für Sprachen, für die es noch keine Übersetzung gibt. Wenn du interessiert bist, klicke hier!
+Language = Sprache
+
+
+--- [ # Settings ] ---
+
+Settings = Einstellungen
+In-Game Customize = In-Game-Anpassung
+
+Sort = Benachrichtigungsart
+In-Game = In-Game
+No Notification = Keine Benachrichtigung
+
+Icon = Symbol
+HC Logo = HC Logo
+Lester = Lester
+Legend Of Heist = Heist-Legende
+Skull Head = Totenschädel
+Warstock = Warstock
+Black R* = Schwarzes R*-Logo
+R* Social Club = R* Social Club
+
+Background Color = Hintergrundfarbe
+Black = Schwarz
+White = Weiß
+Red = Rot
+Orange = Orange
+Yellow = Gelb
+Mint = Mint
+Green = Grün
+Light Blue = Hellblau
+
+Text Color = Textfarbe
+
+
+--- [ # About HC ] ---
+
+About HC = Über HC
+Join Discord Server! = Discord Server beitreten!
+Get support, Download beta version, Enjoy other stuffs! = Stelle Fragen, erhalte Support bei Problemen, downloade die Beta-Version und Vieles mehr!
+Youtube = Youtube
+Videos that related HC tutorial are uploaded, subscribe the channel for me, :D = HC-Tutorials und mehr, lass gerne ein Abo da wenn es dir gefällt! :)
+Tutorial = Tutorial
+If you don't know how to use HC, click! = Wenn du nicht weißt, wie du HC verwenden sollst, klicke hier!
+Changelog = Changelog
+If you want to know what latest version was changed, click! = Wenn du wissen willst, was sich alles geändert hat, klicke hier!
+
+
+--- [ # Credits ] ---
+
+Credits = Danksagungen
+If you click features, will show the user's profile image & copy name or be redirected to mentioned website. = Wenn du etwas anklickst, wird das Profilbild der Person bzw. die entsprechende Webseite angezeigt.
+2Take1 Heist Control Dev, He allowed me to use his code. Without him, HC doesn't exist. Really thanks to him! = Dev des Heist Control-Scripts von 2take1. Er erlaubt mir, seinen Code zu nutzen; ohne ihn würde HC nicht existieren. Großes Danke dafür!
+Creator of Wiriscript & Lancescript that help me coding HC = Autoren von Wiriscript & Lancescript, die mir bei der Arbeit an HC geholfen haben!
+Helped a lot of stuffs for HC's website maintenance. = Hat jede Menge bei der Wartung der HC-Website geholfen.
+Helped me coding website's design. = Hat das neue Website-Design erstellt.
+Made logo, banner and etc for HC. = Hat ein neues Logo & Banner für HC erstellt.
+Let me know about stats info. = Hat mir viel bei Stats geholfen.
+Translators = Übersetzer
+Maintains HC's translation = Kümmert sich um HCs Übersetzung

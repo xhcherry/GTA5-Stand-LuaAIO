@@ -793,7 +793,7 @@ local function save_plate(vehicle)
     }
 end
 
-local function set_plate(vehicle)
+local function set_plate(vehicle, plate_text)
     -- Set Exempt plate
     ENTITY.SET_ENTITY_AS_MISSION_ENTITY(vehicle, true, true)
     VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(vehicle, 4)
@@ -1024,7 +1024,7 @@ end
 --- Menu Options
 ---
 
-menu.toggle(jingche, "警用车辆", {"policify"}, "把当前载具设置成警用车辆", function(on)
+menu.toggle(jingche, "警用车辆", {"policify"}, "把当前载具设置成警用车辆\n注意，如果你不在车内开启此功能会报错", function(on)
     if on then
         policify_current_vehicle()
         rebuild_edit_attachments_menu()

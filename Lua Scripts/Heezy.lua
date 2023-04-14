@@ -54,9 +54,7 @@ tpms = directx.create_texture(resources_dir .. 'tpms.png')
 traction_control = directx.create_texture(resources_dir .. 'traction.png')
 --
 notification("如果你为这个脚本付费了，你就被骗了！ 脚本里99%的内容都可以在我们的仓库或Discord上免费获得。 你付钱给骗子，然后他们骗取了它，不提供任何进一步的价值，也不会支付给原始创作者们一分钱。")
-notification("My Bro")
 util.toast("如果你为这个脚本付费了，你就被骗了！ 脚本里99%的内容都可以在我们的仓库或Discord上免费获得。 你付钱给骗子，然后他们骗取了它，不提供任何进一步的价值，也不会支付给原始创作者们一分钱。")
-
 util.on_stop(function()
 	util.toast("lua不见啦")
 end)                      

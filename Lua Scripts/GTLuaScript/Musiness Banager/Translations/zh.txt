@@ -1,15 +1,15 @@
 @Author=zzzz#5116
 @Version=0.3.2
-! 感谢您选择翻译成您的语言穆斯林香蕉!
-! 之前请不要更改任何内容 "="!,
-! 标签列表中添加的内容将标记为 "+ " 在标签之前,但是没有引号.您可以在文件中搜索 "+ " 每次更新都会找到新的标签!
-! 标签列表中的删除将标记为 "- " 在唱片公司之前. PLEASE DELETE THE ENTIRE LINE. 删除留在里面是为了帮助您了解某些内容是否被替换!
+! Thank you for choosing to translate Musiness Banager into your language!
+! Please do not change anything before the "="!,
+! Additions in the labels list will be marked with "+ " before the label, but without the quotes. You can search the file for "+ " every update to find the new labels!
+! Deletions in the labels list will be marked with "- " before the label. PLEASE DELETE THE ENTIRE LINE. The deletions are left in to help you understand if something was replaced!
 ! For lines that begin with "+ ", remove the "+ ".
-! 与 "!" 或者 "+" 或者 "@" 在开头将该行标记为注释，该行将被忽略.
-! 包含 "{x}" 其中 x 是一个数字,表示另一段文本.不要添加、删除或更改其中的数字.
-! 不过你可以把它们移来移去. 例如，如果一行是 "Press {1} to open {2}", 你可以随心所欲地移动它们，比如 "打开 {2} press {1}".
-! 添加它是为了使从右向左阅读的语言比通常从左向右阅读的语言更容易.
-! 还有一件事: 两个角色 "\n" 表示一条新线.在游戏中，将有一条新线 "\n" 是.
+! Lines with a "!" or "+" or "@" at the beginnning mark the line as a comment and that line will be ignored.
+! The labels that contain "{x}" where x is a number, indicate an additional piece of text. Do not add or remove or change the numbers inside of them.
+! You may however, move them around. For example if a line is "Press {1} to open {2}", you can move them around in any way you want such as "To open {2} press {1}".
+! It has been added to make it easier for languages that read right to left instead of the usual left to right.
+! One more thing: the two characters "\n" represents a new line. In game, there will be a new line where "\n" is.
 
 BUNKER=地堡
 BUSINESS=产业

@@ -8,7 +8,7 @@ THIS FILE IS PART OF WIRISCRIPT
 require "lib.GTSCRIPTS.O"
 
 local self = {}
-local version = 27
+local version = 29
 local UfoState <const> =
 {
     nonExistent = -1,
@@ -86,19 +86,19 @@ local drawInstructionalButtons = function ()
         Instructional.add_control(75, "BB_LC_EXIT")
         if isCannonActive then
             Instructional.add_control(69, "ORB_CAN_FIRE")
-            Instructional.add_control(80, "关闭天基炮")
-            if WIRI.IS_USING_KEYBOARD_AND_MOUSE(0) then
+            Instructional.add_control(80, "Disable Cannon")
+            if PAD.IS_USING_KEYBOARD_AND_MOUSE(0) then
                 Instructional.add_control_group(29, "ORB_CAN_ZOOM")
             end
             Instructional.add_control_group(21, "HUD_INPUT101")
         else
-            Instructional.add_control(119, "垂直飞行")
-            Instructional.add_control(80, "天基炮")
+            Instructional.add_control(119, "Vertical flight")
+            Instructional.add_control(80, "Cannon")
             if #targetVehicles > 0 then
-                Instructional.add_control(22, "释放车辆")
+                Instructional.add_control(22, "Release vehicles")
             end
             if #targetVehicles < 15 then
-                Instructional.add_control(73, "牵引光束")
+                Instructional.add_control(73, "Tractor beam")
             end
         end
         Instructional:set_background_colour(0, 0, 0, 80)
@@ -189,7 +189,7 @@ end
 local drawLockonSprite = function (pos, hudColour, alpha)
     local colour = get_hud_colour(hudColour)
     local txdSizeX = 0.013
-    local txdSizeY = 0.013 * WIRI.GET_ASPECT_RATIO(false)
+    local txdSizeY = 0.013 * GRAPHICS.GET_ASPECT_RATIO(false)
     GRAPHICS.SET_DRAW_ORIGIN(pos.x, pos.y, pos.z, 0)
     size = 0.015
     GRAPHICS.DRAW_SPRITE("helicopterhud", "hud_corner", -size * 0.5, -size, txdSizeX, txdSizeY, 0.0, colour.r, colour.g, colour.b, alpha, true, 0)
@@ -282,7 +282,7 @@ end
 
 
 local setCannonCamZoom = function ()
-    if not WIRI.IS_USING_KEYBOARD_AND_MOUSE(0) then
+    if not PAD.IS_USING_KEYBOARD_AND_MOUSE(0) then
         return
     end
     if PAD.IS_CONTROL_JUST_PRESSED(0, 241) and zoom < 1.0 then
@@ -321,7 +321,7 @@ local function setCannonCamRot()
     local maxRotX <const> = -25.0
     local minRotX <const> = -89.0
 
-    if WIRI.IS_USING_KEYBOARD_AND_MOUSE(0) then
+    if PAD.IS_USING_KEYBOARD_AND_MOUSE(0) then
 		mult = 3.0
 		axisX = axisX * mult
 		axisY = axisY * mult

@@ -1482,7 +1482,7 @@ function laser_eyes()
                 right_eye_id = 27474
                 break
             case 225514697:
-            pluto_default:
+            default:
                 left_eye_id = 5956
                 right_eye_id = 6468
         end

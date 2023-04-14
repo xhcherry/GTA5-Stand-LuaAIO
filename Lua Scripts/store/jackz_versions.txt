@@ -1,3 +1,0 @@
-# DO NOT EDIT ! File is used for changelogs
-actions: 1.10.8
-Actions: 1.10.10

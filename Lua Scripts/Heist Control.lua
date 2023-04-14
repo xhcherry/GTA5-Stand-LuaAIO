@@ -1,6 +1,6 @@
---[[   <   To everyone who uses Heist Control.lua   >
+--[[   To everyone who uses Heist Control.lua
 
-    Developed and maintenanced by IceDoomfist#0001: https://icedoomfist.com/My_Profile/
+    Developed and maintenanced by IceDoomfist#0001 on Discord
     This script is only compatible with Stand Lua API: https://stand.gg/
 
     Stand Heist Control contains some global, local variables and stats from Heist Control V2 & Master Unlocker Lua Scripts for 2Take1 and UnknownCheats
@@ -13,7 +13,7 @@
 
 ]]--
 
---[[   <   To developers who wanna learn about stats, global and local variables or Stand Lua Script API by looking into Heist Control.lua   >
+--[[   To developers who wanna learn about stats, global and local variables or Stand Lua Script API by looking into Heist Control.lua
 
     Thanks for looking into my script to learn something.
     This lua script is only one heist related script without these stuffs. (ALL open-source and highly polished code)
@@ -38,7 +38,7 @@
 
 ]]--
 
---[[   <   LICENSING   >
+--[[   LICENSING
 
     1. You can use my code if your project is *open-source and specify credit this Github page: https://github.com/IceDoomfist/Stand-Heist-Control
     2. Prohibited to use my code in ANY *mod menus. (Especially, Rebound mod menu)
@@ -54,7 +54,7 @@
 
     --- Important
 
-        HC_VERSION = "V 3.2.5"
+        HC_VERSION = "V 3.2.6"
         CODED_GTAO_VERSION = 1.66
         SUPPORTED_STAND_VERSION = 101 -- Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
 
@@ -227,8 +227,8 @@
             end
         end
 
-        function SET_BIT(Bits, Place) -- Credit goes to WiriScript
-            return (Bits | (1 << Place))
+        function SET_BIT(bits, place) -- Credit goes to WiriScript
+            return (bits | (1 << place))
         end
         function SET_LOCAL_BIT(script, script_local, bit)
             if memory.script_local(script, script_local) ~= 0 then
@@ -886,7 +886,7 @@
                     STAT_SET_INT("H4_PLAYTHROUGH_STATUS", 5)
 
                     local Value = menu.get_value(QUICK_PRESET_TARGET)
-                    local CPTargets = { -- { STAT_SET_INT, SET_INT_GLOBAL }
+                    local CPTargets = { -- { stat_set_int, set_int_global }
                         { 5, 262145 + 29987 }, -- H4CNF_TARGET, IH_PRIMARY_TARGET_VALUE_SAPPHIRE_PANTHER_STATUE
                         { 4, 262145 + 29986 }, -- H4CNF_TARGET, IH_PRIMARY_TARGET_VALUE_MADRAZO_FILES
                         { 3, 262145 + 29985 }, -- H4CNF_TARGET, IH_PRIMARY_TARGET_VALUE_PINK_DIAMOND
@@ -1705,12 +1705,16 @@
         TELEPORT_CP_KOSATKA = menu.action(TELEPORT_CP, TRANSLATE("Kosatka: Heist Board"), {"hctpsub"}, "", function()
             if STAT_GET_INT("IH_SUB_OWNED") ~= 0 then
                 if not HUD.DOES_BLIP_EXIST(SubBlip) and not HUD.DOES_BLIP_EXIST(SubControlBlip) then
-                    NOTIFY(TRANSLATE("Waiting for requesting Kosatka..."))
-                    local CommandRef = menu.ref_by_command_name("hcreq")
-                    menu.trigger_command(CommandRef, "kosatka")
-                    util.arspinner_enable()
-                    repeat util.yield_once() until HUD.DOES_BLIP_EXIST(SubBlip)
-                    util.arspinner_disable()
+                    local PlayerPos = players.get_position(players.user())
+                    local Interior = INTERIOR.GET_INTERIOR_AT_COORDS(PlayerPos.x, PlayerPos.y, PlayerPos.z)
+                    if Interior ~= 281345 then
+                        NOTIFY(TRANSLATE("Waiting for requesting Kosatka..."))
+                        local CommandRef = menu.ref_by_command_name("hcreq")
+                        menu.trigger_command(CommandRef, "kosatka")
+                        util.arspinner_enable()
+                        repeat util.yield_once() until HUD.DOES_BLIP_EXIST(SubBlip)
+                        util.arspinner_disable()
+                    end
                 end
 
                 TELEPORT(1561.2369, 385.8771, -49.689915)
@@ -1835,7 +1839,8 @@
         end)
 
         menu.action(PERICO_ADV, TRANSLATE("Remove The Drainage Pipe"), {"hccprempipe"}, "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Island") .. " > " .. TRANSLATE("Drainage Pipe") .. ")", function()
-            DELETE_OBJECT_BY_HASH(-1297635988) -- Thanks for letting me know the hash value, Sapphire#6031
+            local Object = util.joaat("prop_chem_grill_bit") -- Thanks for letting me know the object, Sapphire#6031
+            DELETE_OBJECT_BY_HASH(Object)
         end)
 
         menu.action(PERICO_ADV, TRANSLATE("Refresh Kosatka Planning Table"), {"hccprefreshboard"}, IS_WORKING(true) .. TRANSLATE("You can update changed cayo perico heist stats in the Kosatka by refreshing it."), function()
@@ -3446,7 +3451,8 @@
     end)
 
     menu.action(DOOMS_HEIST, TRANSLATE("Remove EMP Mines"), {}, TRANSLATE("(ACT III, Setup - Air Defense)"), function()
-        DELETE_OBJECT_BY_HASH(3711724380)
+        local Object = util.joaat("xm_prop_sam_turret_01")
+        DELETE_OBJECT_BY_HASH(Object)
     end)
 
     menu.action(DOOMS_HEIST, TRANSLATE("Unlock All Doomsday Heists"), {}, TRANSLATE("Makes able to play all of Doomsday heists, ACT I, II, III."), function()
@@ -4507,7 +4513,7 @@
 
     UNLOCKER_SHIRT_HAT = menu.list(MASTER_UNLOCKR, TRANSLATE("Clothes"), {}, "", function(); end)
     
-        menu.action(UNLOCKER_SHIRT_HAT, TRANSLATE("Unlock Lots of Hats And Shirts"), {}, IS_WORKING(false), function()
+        menu.action(UNLOCKER_SHIRT_HAT, TRANSLATE("Unlock Lots of Hats And Shirts"), {}, IS_WORKING(true) .. TRANSLATE("500+ unlocks are included, try and see how many clothes would be unlocked."), function()
             SET_PACKED_INT_GLOBAL(11955, 11964, 1) -- DLC_SHIRT_MELTDOWN, DLC_SHIRT_CAPOLAVORO
             SET_PACKED_INT_GLOBAL(12591, 12613, 1) -- AWARD_LOW_HATS_MAGNETICS_SCRIPT, AWARD_LOW_TSHIRT_VAMPIRES_ON_THE_BEACH
             SET_PACKED_INT_GLOBAL(15222, 15236, 1) -- ACCOUNTANTSHIRTEVENT, CRESTTSHIRTEVENT
@@ -4524,9 +4530,60 @@
             SET_PACKED_INT_GLOBAL(31871, 31873, 1) -- FIXER_LOGIN_DJ_POOH_ORANGE, FIXER_LOGIN_DJ_POOH_BLUE
             SET_INT_GLOBAL(262145 + 25706, 1) -- ENABLE_RACE_CREATOR_JUBILEE
 
+            -- https://www.unknowncheats.me/forum/grand-theft-auto-v/461672-gtahax-1-57-external-thread-3-a-23.html
+            SET_INT_GLOBAL(262145 + 25791, 1) -- Kifflom Tee
+
             for i = 31768, 32273 do
-                SET_PACKED_STAT_BOOL_CODE(i, 1) -- freemode.c, https://www.unknowncheats.me/forum/3196991-post328.html
+                SET_PACKED_STAT_BOOL_CODE(i, 1) -- Found by me in freemode.c, https://www.unknowncheats.me/forum/3196991-post328.html
             end
+
+            -- https://www.unknowncheats.me/forum/3704307-post121.html
+            SET_PACKED_STAT_BOOL_CODE(15408, true) -- Black Shrewsbury Cap
+            SET_PACKED_STAT_BOOL_CODE(34510, true) -- Glow Believe Backwards Cap
+            SET_PACKED_STAT_BOOL_CODE(34509, true) -- Black Believe Backwards Cap
+            SET_PACKED_STAT_BOOL_CODE(34508, true) -- Gray Believe Backwards Cap
+            SET_PACKED_STAT_BOOL_CODE(34375, true) -- Black LD Organics Forwards Cap
+            SET_PACKED_STAT_BOOL_CODE(27087, true) -- Unicorn
+            SET_PACKED_STAT_BOOL_CODE(34372, true) -- Horror Pumpkin
+            SET_PACKED_STAT_BOOL_CODE(27088, true) -- Gingerbread
+            SET_PACKED_STAT_BOOL_CODE(34378, true) -- Junk Energy Drink Chute Bag
+            SET_PACKED_STAT_BOOL_CODE(32275, true) -- Circoloco Tee
+            SET_PACKED_STAT_BOOL_CODE(32316, true) -- Marathon Hoodie
+            SET_PACKED_STAT_BOOL_CODE(34507, true) -- White UFO Boxer Shorts
+            SET_PACKED_STAT_BOOL_CODE(34506, true) -- Green UFO Boxer Shorts
+            SET_PACKED_STAT_BOOL_CODE(89, true) -- Rockstar V Neck
+            SET_PACKED_STAT_BOOL_CODE(87, true) -- Red Skull V Neck 
+            SET_PACKED_STAT_BOOL_CODE(36809, true) -- All Type of 'Nemesis' Tees
+            SET_PACKED_STAT_BOOL_CODE(22176, true) -- White Solomun Tee
+            SET_PACKED_STAT_BOOL_CODE(22192, true) -- Tale Of Us Black Box Tee
+            SET_PACKED_STAT_BOOL_CODE(16008, true) -- White Dixon Repeated Logo Tee
+            SET_PACKED_STAT_BOOL_CODE(16009, true) -- The Black Madonna Star Tee
+            SET_PACKED_STAT_BOOL_CODE(22172, true) -- Black Solomun Yellow Logo Tee
+            SET_PACKED_STAT_BOOL_CODE(22170, true) -- Black Tale Of Us Emb. Tee
+            SET_PACKED_STAT_BOOL_CODE(22162, true) -- Black Dixon Wilderness Tee
+            SET_PACKED_STAT_BOOL_CODE(22150, true) -- Black The Black Madonna Emb. Tee
+            SET_PACKED_STAT_BOOL_CODE(30702, true) -- Blue Keinemusik Tee
+            SET_PACKED_STAT_BOOL_CODE(30701, true) -- Moodymann Tee
+            SET_PACKED_STAT_BOOL_CODE(30699, true) -- Palms Trax LS Tee
+            SET_PACKED_STAT_BOOL_CODE(34380, true) -- Pumpkin Tee 
+            SET_PACKED_STAT_BOOL_CODE(3613, true) -- Elitas T-shirt
+            SET_PACKED_STAT_BOOL_CODE(3781, true) -- Elite Lousy T-shirt
+            SET_PACKED_STAT_BOOL_CODE(3780, true) -- Elite Challenge T-Shirt
+            SET_PACKED_STAT_BOOL_CODE(3779, true) -- Showroom T-shirt
+            SET_PACKED_STAT_BOOL_CODE(3778, true) -- Shot Caller T-shirt
+            SET_PACKED_STAT_BOOL_CODE(3777, true) -- One Man Army T-shirt
+            SET_PACKED_STAT_BOOL_CODE(3776, true) -- Psycho Killer T-shirt
+            SET_PACKED_STAT_BOOL_CODE(3775, true) -- Decorated T-shirt
+            SET_PACKED_STAT_BOOL_CODE(3774, true) -- Can't Touch This T-shirt
+            SET_PACKED_STAT_BOOL_CODE(3773, true) -- Asshole T-shirt
+            SET_PACKED_STAT_BOOL_CODE(3771, true) -- For Hire T-shirt
+            SET_PACKED_STAT_BOOL_CODE(3770, true) -- Death Defying T-shirt
+            SET_PACKED_STAT_BOOL_CODE(113, true) -- I Heart LC T-shirt
+            SET_PACKED_STAT_BOOL_CODE(7551, true) -- DCTL T-Shirt
+            SET_PACKED_STAT_BOOL_CODE(9374, true) -- R* Crosswalk Tee
+            SET_PACKED_STAT_BOOL_CODE(9385, true) -- Crosswalk Tee
+            SET_PACKED_STAT_BOOL_CODE(15402, true) -- White Ammu-Nation Tee
+            SET_PACKED_STAT_BOOL_CODE(15392, true) -- Black Coil Hoodie
         end)
 
         menu.action(UNLOCKER_SHIRT_HAT, TRANSLATE("Unlock Sasquatch Outfit"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3492512-post53.html
@@ -6498,7 +6555,7 @@
 
                                     local GeneratedTransTable = {}
                                     for _, trans in pairs(TransTable) do
-                                        GeneratedTransTable[#GeneratedTransTable+1] = { nil, nil } -- english_translation, local_language_translation
+                                        GeneratedTransTable[#GeneratedTransTable+1] = { nil, nil } -- { english_translation, local_language_translation }
                                     end
 
                                     local BlacklistedChars = {
@@ -6572,9 +6629,7 @@
                                         "# You should translate right-side of '=' character.",
                                         "# You can use all characters except '=' character.",
                                         "# Using '#' character means the line will be ignored.",
-                                        "# If you want to release your own translation officially, please contact to the developer of Heist Control in its Discord server.",
-                                        "# Learn more: https://icedoomfist.com/Stand_Heist_Control/How_To_Translate/",
-                                        "",
+                                        "# Please join the Discord Server for Heist Control if you don't know how to translate.",
                                         "",
                                     }
                                     for _, trans in pairs(ExistsNoteTrans) do
@@ -6636,8 +6691,6 @@
             ---
 
         ---
-
-        -- menu.hyperlink(INFOS, TRANSLATE("How To Translate"), "https://icedoomfist.com/Stand_Heist_Control/How_To_Translate", TRANSLATE("Always looking for translators for non-existing languages. If you're interested in translating HC, click!"))
 
     ---
 
@@ -6794,11 +6847,13 @@
 
             menu.divider(CREDITS, TRANSLATE("Heist Control"))
 
-                menu.action(CREDITS, "Nowiri", {}, TRANSLATE("Creator of WiriScript which helped me code HC!"), function(); end)
-                menu.action(CREDITS, "Baloo", {}, TRANSLATE("Helped me with a lot of things for HC website's maintenance."), function();end)
-                menu.action(CREDITS, "Zetax", {}, TRANSLATE("Helped me code the website's design."), function(); end)
-                menu.action(CREDITS, "Aji", {}, TRANSLATE("Made the logo, banner and other images for HC."), function(); end)
-                menu.hyperlink(CREDITS, "UnknownCheats", "https://www.unknowncheats.me/forum/grand-theft-auto-v/", TRANSLATE("Let me know about stats info."))
+                menu.action(CREDITS, "Nowiri", {}, "", function(); end)
+                menu.action(CREDITS, "Aji", {}, "", function(); end)
+                menu.action(CREDITS, "Vsus", {}, "", function(); end)
+                menu.action(CREDITS, "sG.wolf", {}, "", function(); end)
+                menu.action(CREDITS, "41Baloo", {}, "", function();end)
+                menu.action(CREDITS, "Zetax", {}, "", function(); end)
+                menu.hyperlink(CREDITS, "UnknownCheats", "https://www.unknowncheats.me/forum/grand-theft-auto-v/", "")
 
             ---
 
@@ -6819,10 +6874,9 @@
 
         ---
 
-        menu.hyperlink(INFOS, TRANSLATE("Join Discord Server!"), "https://discord.gg/KTFAYQn5Xz", TRANSLATE("Get Support, Report Bugs and Enjoy Other Stuffs!"))
-        menu.hyperlink(INFOS, TRANSLATE("Youtube"), "https://www.youtube.com/@standheistcontrol", TRANSLATE("Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D")) -- https://icedoomfist.com/Link/HC_Youtube
-        -- menu.hyperlink(INFOS, TRANSLATE("Tutorial"), "https://icedoomfist.com/Stand_Heist_Control/Tutorial", TRANSLATE("If you don't know how to use HC, click me!"))
-        menu.hyperlink(INFOS, TRANSLATE("Changelog"), "https://github.com/IceDoomfist/Stand-Heist-Control/releases", TRANSLATE("If you want to know what was changed in the latest version, click me!")) -- https://icedoomfist.com/Stand_Heist_Control/Changelog
+        menu.hyperlink(INFOS, TRANSLATE("Join Discord Server!"), "https://discord.gg/KTFAYQn5Xz", TRANSLATE("If you have any questions regarding Heist Control? Joining it will help you so much!") .. "\n\n" .. TRANSLATE("- Download sharable customized translations and GTAHaXUI stat files.") .. "\n" .. TRANSLATE("- Post a suggestion or an issue to improve Heist Control."))
+        menu.hyperlink(INFOS, TRANSLATE("Youtube"), "https://www.youtube.com/@standheistcontrol", TRANSLATE("Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D"))
+        menu.hyperlink(INFOS, TRANSLATE("Changelog"), "https://github.com/IceDoomfist/Stand-Heist-Control/releases", TRANSLATE("If you want to know what was changed in the latest version, click me!"))
 
     ---
 

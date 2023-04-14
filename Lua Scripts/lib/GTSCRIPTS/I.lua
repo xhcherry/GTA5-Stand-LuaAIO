@@ -6,7 +6,6 @@
 --the functions are made by me even tho when i looked at glance they seem to be a bit the same but well yeah some things are skidded tho bc it was not worth to need to look for new things on how to do it. 
 --hope u like this
 util.keep_running()
-util.require_natives(1663599433)
 
 if not SCRIPT_SILENT_START then
     util.toast("已加载信息栏内容") 

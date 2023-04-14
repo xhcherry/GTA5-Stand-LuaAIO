@@ -1,8 +1,13 @@
+--[[
+--------------------------------
+THIS FILE IS PART OF WIRISCRIPT
+         Nowiry#2663
+--------------------------------
+]]
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 json = require "lib.GTSCRIPTS.GTP.json"
 local self = {}
-self.version = 26
+self.version = 29
 
 Config = {
 	controls = {
@@ -11,11 +16,21 @@ Config = {
 	},
 	general = {
 		standnotifications = false,
-		showscripthost = false
+		displayhealth = true,
+		language = "english",
+		developer = false, 	-- developer flag (enables/disables some debug features)
+		showintro = true
 	},
 	ufo = {
-		disableboxes = false, 	
-		targetplayer = false 
+		disableboxes = false, 	-- determines if boxes are drawn on players to show their position
+		targetplayer = false 	-- wether tractor beam only targets players or not
+	},
+	vehiclegun = {
+		disablepreview = false,
+	},
+	healthtxtpos = {
+		x = 0.03,
+		y = 0.05
 	},
 	handlingAutoload = {}
 }
@@ -59,70 +74,164 @@ local NULL <const> = 0
 -- NOTIFICATION
 --------------------------
 
----@class Notification
-notification123 =
-{
-	txdDict = "DIA_ZOMBIE1",
-	txdName = "DIA_ZOMBIE1",
-	title = "GT",
-	subtitle = "~b~" .. util.get_label_text("PM_PANE_FEE") .. "~s~",
-	defaultColour = HudColour.blue
-}
+--FUCKING NOTIFICATION--
 
----@param msg string
-function notification123.stand(msg)
-	assert(type(msg) == "string", "msg must be a string, got " .. type(msg))
-	msg = msg:gsub('~[%w_]-~', ""):gsub('<C>(.-)</C>', '%1')
-	util.toast("[GT脚本] " .. msg)
+--------------------------
+-- MENU
+--------------------------
+
+Features = {}
+Translation = {}
+
+---@param section string
+---@param name string
+---@return string
+function translate(section, name)
+	Features[section] = Features[section] or {}
+	Features[section][name] = Features[section][name] or ""
+	if Config.general.language == "english" then
+		return name
+	end
+	Translation[section] = Translation[section] or Features[section]
+	if not Translation[section][name] then
+		Translation[section][name] = ""
+		return name
+	end
+	if Translation[section][name] == "" then
+		return name
+	end
+	return Translation[section][name]
 end
 
 
----@param format string
----@param colour? HudColour
-function notification123:help(format, colour, ...)
-	assert(type(format) == "string", "msg must be a string, got " .. type(format))
-
-	local msg = string.format(format, ...)
-	if Config.general.standnotifications then
-		return self.stand(msg)
+---@param value any
+---@param e string
+function type_match (value, e)
+	local t = type(value)
+	for w in e:gmatch('[^|]+') do
+		if t == w then return true end
 	end
-
-	HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(colour or self.defaultColour)
-	util.BEGIN_TEXT_COMMAND_THEFEED_POST("~BLIP_INFO_ICON~ " .. msg)
-	HUD.END_TEXT_COMMAND_THEFEED_POST_TICKER_WITH_TOKENS(true, true)
-end
-
-local resource_dir = filesystem.resources_dir()
----@param format string
----@param colour? HudColour
-function notification123:normal(format, colour, ...)
-	assert(type(format) == "string", "msg must be a string, got " .. type(format))
-
-	local msg = string.format(format, ...)
-	if Config.general.standnotifications then
-		return self.stand(msg)
-	end
-
-	local picture
-	if not filesystem.exists(resource_dir) then
-		picture = "CHAR_SOCIAL_CLUB"
-	else
-		picture = "wcnmdpjd"
-	end
-
-	HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(colour or self.defaultColour)
-	util.BEGIN_TEXT_COMMAND_THEFEED_POST(msg)
-	HUD.END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT(picture, "bart", true, 4, self.title, self.subtitle)
-	--HUD.END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT(self.txdDict, self.txdName, true, 4, self.title, self.subtitle)
-	HUD.END_TEXT_COMMAND_THEFEED_POST_TICKER(false, false)
+	local msg = "must be %s, got %s"
+	return false, msg:format(e:gsub('|', " or "), t)
 end
 
 
+---@param tbl table
+---@param types {[1]: string, [2]:string}
+---@return boolean
+---@return string? errmsg
+local check_table_types = function (tbl, types)
+	if type(tbl) ~= "table" then
+		return false, "tbl must be a tble"
+	end
+	for key, value in pairs(tbl) do
+		local ok, errmsg = type_match(key, types[1])
+		if not ok then return false, "field " .. key .. ' ' .. errmsg end
 
+		local ok, errmsg = type_match(value, types[2])
+		if not ok then return false, "field " .. key .. ' ' .. errmsg end
+	end
+	return true
+end
+
+
+---@param obj table
+---@return boolean
+---@return string? errmsg
+function is_translation_valid (obj)
+	for sect_name, section in pairs(obj) do
+		if type(sect_name) ~= "string" then
+			return false, "got unexpected key type: " .. type(sect_name)
+		end
+
+		if type(section) ~= "table" then
+			return false, "field " .. sect_name .. " must be a table, got " .. type(section)
+		end
+
+		local ok, err = check_table_types(section, {"string", "string"})
+		if not ok then return false, err end
+	end
+	return true
+end
+
+
+---@param language string
+---@return boolean
+---@return string? errmsg
+function load_translation(language)
+	local path = filesystem.scripts_dir() .. "WiriScript\\language\\" .. language
+	if not filesystem.exists(path) then
+		return false, "no such a file"
+	end
+
+	local ok, result = json.parse(path, false)
+	if not ok then
+		return false, result
+	end
+
+	local ok, errmsg = is_translation_valid(result)
+	if not ok then
+		return false, errmsg
+	end
+
+	Translation = result
+	util.log("Translation file successfully loaded: %s", language)
+	return true
+end
 
 --------------------------
 -- FILE
 --------------------------
+
+Ini = {}
+
+---Saves a table with key-value pairs in an ini format file.
+---@param fileName string
+---@param obj table
+function Ini.save(fileName, obj)
+	local file <close> = assert(io.open(fileName, "w"), "error loading file")
+	local s = {}
+	for section, tbl in pairs(obj) do
+		assert(type(tbl) == "table", "expected field " .. section .. " to be a table, got " .. type(tbl))
+		local l = {}
+		table.insert(l, string.format("[%s]", section))
+		for k, v in pairs(tbl) do table.insert(l, string.format("%s=%s", k, v)) end
+		table.insert(s, table.concat(l, '\n') .. '\n')
+	end
+	file:write(table.concat(s, '\n'))
+end
+
+
+---Parses a table from an ini format file.
+---@param fileName any
+---@return table
+function Ini.load(fileName)
+	assert(type(fileName) == "string", "fileName must be a string")
+	local file <close> = assert(io.open(fileName, "r"), "error loading file: " .. fileName)
+	local data = {}
+	local section
+	for line in io.lines(fileName) do
+		local tempSection = string.match(line, '^%[([^%]]+)%]$')
+
+		if tempSection ~= nil then
+			section = tonumber(tempSection) and tonumber(tempSection) or tempSection
+			data[section] = data[section] or {}
+		end
+
+		local param, value = string.match(line, '^([%w_]+)%s*=%s*(.+)$')
+		if section ~= nil and param and value ~= nil then
+			if value == "true" then
+				value = true
+			elseif value == "false" then
+				value = false
+			elseif tonumber(value) then
+				value = tonumber(value)
+			end
+			data[section][tonumber(param) or param] = value
+		end
+	end
+	return data
+end
 
 
 local parseJson = json.parse
@@ -239,7 +348,7 @@ function get_hud_colour(hudColour)
 	local g = memory.alloc(1)
 	local b = memory.alloc(1)
 	local a = memory.alloc(1)
-	WIRI_HUD.GET_HUD_COLOUR(hudColour, r, g, b, a)
+	HUD.GET_HUD_COLOUR(hudColour, r, g, b, a)
 	return {r = memory.read_int(r), g = memory.read_int(g), b = memory.read_int(b), a = memory.read_int(a)}
 end
 
@@ -334,7 +443,7 @@ end
 ---@param index integer
 ---@param name string
 function Instructional.add_control(index, name)
-	local button = PAD.GET_CONTROL_INSTRUCTIONAL_BUTTON(2, index, true)
+	local button = PAD.GET_CONTROL_INSTRUCTIONAL_BUTTONS_STRING(2, index, true)
     Instructional:add_data_slot(index, name, button)
 end
 
@@ -342,7 +451,7 @@ end
 ---@param index integer
 ---@param name string
 function Instructional.add_control_group (index, name)
-	local button = PAD.GET_CONTROL_GROUP_INSTRUCTIONAL_BUTTON(2, index, true)
+	local button = PAD.GET_CONTROL_GROUP_INSTRUCTIONAL_BUTTONS_STRING(2, index, true)
     Instructional:add_data_slot(index, name, button)
 end
 
@@ -434,62 +543,6 @@ function set_explosion_proof(entity, value)
 	memory.write_uint(pEntity + 0x188, damageBits)
 end
 
-local draw_line = function (start, to, colour)
-	GRAPHICS.DRAW_LINE(start.x, start.y, start.z, to.x, to.y, to.z, colour.r, colour.g, colour.b, colour.a)
-end
-
-local draw_rect = function (pos0, pos1, pos2, pos3, colour)
-	GRAPHICS.DRAW_POLY(pos0.x, pos0.y, pos0.z, pos1.x, pos1.y, pos1.z, pos3.x, pos3.y, pos3.z, colour.r, colour.g, colour.b, colour.a)
-	GRAPHICS.DRAW_POLY(pos3.x, pos3.y, pos3.z, pos2.x, pos2.y, pos2.z, pos0.x, pos0.y, pos0.z, colour.r, colour.g, colour.b, colour.a)
-end
-
-function draw_bounding_box(entity, showPoly, colour)
-	if not ENTITY.DOES_ENTITY_EXIST(entity) then
-		return
-	end
-	colour = colour or {r = 255, g = 0, b = 0, a = 255}
-	local min = v3.new()
-	local max = v3.new()
-	MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(entity), min, max)
-	min:abs(); max:abs()
-
-	local upperLeftRear = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, -max.x, -max.y, max.z)
-	local upperRightRear = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, min.x, -max.y, max.z)
-	local lowerLeftRear = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, -max.x, -max.y, -min.z)
-	local lowerRightRear = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, min.x, -max.y, -min.z)
-
-	draw_line(upperLeftRear, upperRightRear, colour)
-	draw_line(lowerLeftRear, lowerRightRear, colour)
-	draw_line(upperLeftRear, lowerLeftRear, colour)
-	draw_line(upperRightRear, lowerRightRear, colour)
-
-	local upperLeftFront = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, -max.x, min.y, max.z)
-	local upperRightFront = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, min.x, min.y, max.z)
-	local lowerLeftFront = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, -max.x, min.y, -min.z)
-	local lowerRightFront = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, min.x, min.y, -min.z)
-
-	draw_line(upperLeftFront, upperRightFront, colour)
-	draw_line(lowerLeftFront, lowerRightFront, colour)
-	draw_line(upperLeftFront, lowerLeftFront, colour)
-	draw_line(upperRightFront, lowerRightFront, colour)
-
-	draw_line(upperLeftRear, upperLeftFront, colour)
-	draw_line(upperRightRear, upperRightFront, colour)
-	draw_line(lowerLeftRear, lowerLeftFront, colour)
-	draw_line(lowerRightRear, lowerRightFront, colour)
-
-	if type(showPoly) ~= "boolean" or showPoly then
-		draw_rect(lowerLeftRear, upperLeftRear, lowerLeftFront, upperLeftFront, colour)
-		draw_rect(upperRightRear, lowerRightRear, upperRightFront, lowerRightFront, colour)
-
-		draw_rect(lowerLeftFront, upperLeftFront, lowerRightFront, upperRightFront, colour)
-		draw_rect(upperLeftRear, lowerLeftRear, upperRightRear, lowerRightRear, colour)
-
-		draw_rect(upperRightRear, upperRightFront, upperLeftRear, upperLeftFront, colour)
-		draw_rect(lowerRightFront, lowerRightRear, lowerLeftFront, lowerLeftRear, colour)
-	end
-end
-
 
 ---@param entity Entity
 ---@param target Entity
@@ -513,20 +566,20 @@ end
 ---@param colour integer
 ---@return Blip
 function add_blip_for_entity(entity, blipSprite, colour)
-	local blip = WIRI_HUD.ADD_BLIP_FOR_ENTITY(entity)
-	WIRI_HUD.SET_BLIP_SPRITE(blip, blipSprite)
-	WIRI_HUD.SET_BLIP_COLOUR(blip, colour)
-	WIRI_HUD.SHOW_HEIGHT_ON_BLIP(blip, false)
+	local blip = HUD.ADD_BLIP_FOR_ENTITY(entity)
+	HUD.SET_BLIP_SPRITE(blip, blipSprite)
+	HUD.SET_BLIP_COLOUR(blip, colour)
+	HUD.SHOW_HEIGHT_ON_BLIP(blip, false)
 
 	util.create_tick_handler(function ()
-		if not WIRI_ENTITY.DOES_ENTITY_EXIST(entity)or WIRI_ENTITY.IS_ENTITY_DEAD(entity, false) then
+		if not ENTITY.DOES_ENTITY_EXIST(entity)or ENTITY.IS_ENTITY_DEAD(entity, false) then
 			util.remove_blip(blip)
 			return false
-		elseif not WIRI_HUD.DOES_BLIP_EXIST(blip) then
+		elseif not HUD.DOES_BLIP_EXIST(blip) then
 			return false
 		else
-			local heading = WIRI_ENTITY.GET_ENTITY_HEADING(entity)
-        	WIRI_HUD.SET_BLIP_ROTATION(blip, math.ceil(heading))
+			local heading = ENTITY.GET_ENTITY_HEADING(entity)
+        	HUD.SET_BLIP_ROTATION(blip, math.ceil(heading))
 		end
 	end)
 
@@ -661,11 +714,80 @@ function get_entities_in_player_range(pId, radius)
 end
 
 
+---@param start v3
+---@param to v3
+---@param colour Colour
+local draw_line = function (start, to, colour)
+	GRAPHICS.DRAW_LINE(start.x, start.y, start.z, to.x, to.y, to.z, colour.r, colour.g, colour.b, colour.a)
+end
+
+
+---@param pos0 v3
+---@param pos1 v3
+---@param pos2 v3
+---@param pos3 v3
+---@param colour Colour
+local draw_rect = function (pos0, pos1, pos2, pos3, colour)
+	GRAPHICS.DRAW_POLY(pos0.x, pos0.y, pos0.z, pos1.x, pos1.y, pos1.z, pos3.x, pos3.y, pos3.z, colour.r, colour.g, colour.b, colour.a)
+	GRAPHICS.DRAW_POLY(pos3.x, pos3.y, pos3.z, pos2.x, pos2.y, pos2.z, pos0.x, pos0.y, pos0.z, colour.r, colour.g, colour.b, colour.a)
+end
+
+
+---@param entity Entity
+---@param showPoly? boolean
+---@param colour? Colour	
+function draw_bounding_box(entity, showPoly, colour)
+	if not ENTITY.DOES_ENTITY_EXIST(entity) then
+		return
+	end
+	colour = colour or {r = 255, g = 0, b = 0, a = 255}
+	local min = v3.new()
+	local max = v3.new()
+	MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(entity), min, max)
+	min:abs(); max:abs()
+
+	local upperLeftRear = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, -max.x, -max.y, max.z)
+	local upperRightRear = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, min.x, -max.y, max.z)
+	local lowerLeftRear = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, -max.x, -max.y, -min.z)
+	local lowerRightRear = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, min.x, -max.y, -min.z)
+
+	draw_line(upperLeftRear, upperRightRear, colour)
+	draw_line(lowerLeftRear, lowerRightRear, colour)
+	draw_line(upperLeftRear, lowerLeftRear, colour)
+	draw_line(upperRightRear, lowerRightRear, colour)
+
+	local upperLeftFront = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, -max.x, min.y, max.z)
+	local upperRightFront = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, min.x, min.y, max.z)
+	local lowerLeftFront = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, -max.x, min.y, -min.z)
+	local lowerRightFront = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, min.x, min.y, -min.z)
+
+	draw_line(upperLeftFront, upperRightFront, colour)
+	draw_line(lowerLeftFront, lowerRightFront, colour)
+	draw_line(upperLeftFront, lowerLeftFront, colour)
+	draw_line(upperRightFront, lowerRightFront, colour)
+
+	draw_line(upperLeftRear, upperLeftFront, colour)
+	draw_line(upperRightRear, upperRightFront, colour)
+	draw_line(lowerLeftRear, lowerLeftFront, colour)
+	draw_line(lowerRightRear, lowerRightFront, colour)
+
+	if type(showPoly) ~= "boolean" or showPoly then
+		draw_rect(lowerLeftRear, upperLeftRear, lowerLeftFront, upperLeftFront, colour)
+		draw_rect(upperRightRear, lowerRightRear, upperRightFront, lowerRightFront, colour)
+
+		draw_rect(lowerLeftFront, upperLeftFront, lowerRightFront, upperRightFront, colour)
+		draw_rect(upperLeftRear, lowerLeftRear, upperRightRear, lowerRightRear, colour)
+
+		draw_rect(upperRightRear, upperRightFront, upperLeftRear, upperLeftFront, colour)
+		draw_rect(lowerRightFront, lowerRightRear, lowerLeftFront, lowerLeftRear, colour)
+	end
+end
+
 
 ---@param entity Entity
 ---@param flag integer
 function set_decor_flag(entity, flag)
-	WIRI_DECORATOR.DECOR_SET_INT(entity, "Casino_Game_Info_Decorator", flag)
+	DECORATOR.DECOR_SET_INT(entity, "Casino_Game_Info_Decorator", flag)
 end
 
 
@@ -674,8 +796,8 @@ end
 ---@return boolean
 function is_decor_flag_set(entity, flag)
 	if ENTITY.DOES_ENTITY_EXIST(entity) and
-	WIRI_DECORATOR.DECOR_EXIST_ON(entity, "Casino_Game_Info_Decorator") then
-		local value = WIRI_DECORATOR.DECOR_GET_INT(entity, "Casino_Game_Info_Decorator")
+	DECORATOR.DECOR_EXIST_ON(entity, "Casino_Game_Info_Decorator") then
+		local value = DECORATOR.DECOR_GET_INT(entity, "Casino_Game_Info_Decorator")
 		return (value & flag) ~= 0
 	end
 	return false
@@ -684,17 +806,9 @@ end
 
 ---@param entity Entity
 function remove_decor(entity)
-	WIRI_DECORATOR.DECOR_REMOVE(entity, "Casino_Game_Info_Decorator")
+	DECORATOR.DECOR_REMOVE(entity, "Casino_Game_Info_Decorator")
 end
 
-function memory_scan(name, pattern, callback)
-	local address = memory.scan(pattern)
-
-	if address == NULL then error("内存扫描失败：" .. name) end
-
-	callback(address)
-	util.log("成功找到内存 %s", name)
-end
 
 ---@param ped Ped
 ---@param forcedOn boolean
@@ -706,10 +820,10 @@ function add_ai_blip_for_ped(ped, forcedOn, hasCone, noticeRange, colour, sprite
 	if colour == -1 then
 		HUD.SET_PED_HAS_AI_BLIP(ped, true)
 	else
-		HUD._SET_PED_HAS_AI_BLIP_WITH_COLOR(ped, true, colour)
+		WIRI_HUD.SET_PED_HAS_AI_BLIP_WITH_COLOUR(ped, true, colour)
 	end
 	HUD.SET_PED_AI_BLIP_NOTICE_RANGE(ped, noticeRange)
-	if sprite ~= -1 then HUD._SET_PED_AI_BLIP_SPRITE(ped, sprite) end
+	if sprite ~= -1 then HUD.SET_PED_AI_BLIP_SPRITE(ped, sprite) end
 	HUD.SET_PED_AI_BLIP_HAS_CONE(ped, hasCone)
 	HUD.SET_PED_AI_BLIP_FORCED_ON(ped, forcedOn)
 end
@@ -744,7 +858,7 @@ function set_entity_as_no_longer_needed(entity)
 	if not ENTITY.DOES_ENTITY_EXIST(entity) then return end
 	local pHandle = memory.alloc_int()
 	memory.write_int(pHandle, entity)
-	WIRI_ENTITY.SET_ENTITY_AS_NO_LONGER_NEEDED(pHandle)
+	ENTITY.SET_ENTITY_AS_NO_LONGER_NEEDED(pHandle)
 end
 
 
@@ -821,7 +935,7 @@ end
 ---@return boolean
 function is_player_passive(player)
 	if player ~= players.user() then
-		local address = memory.script_global(1892703 + (player * 599 + 1) + 8)
+		local address = memory.script_global(1894573 + (player * 608 + 1) + 8)
 		if address ~= NULL then return memory.read_byte(address) == 1 end
 	else
 		local address = memory.script_global(1574582)
@@ -834,7 +948,7 @@ end
 ---@param player Player
 ---@return boolean
 function is_player_in_any_interior(player)
-	local address = memory.script_global(2689235 + (player * 453 + 1) + 243)
+	local address = memory.script_global(2657589 + (player * 466 + 1) + 245)
 	return address ~= NULL and memory.read_int(address) ~= 0
 end
 
@@ -845,12 +959,12 @@ function is_player_in_interior(player)
 	if player == -1 then
 		return false
 	end
-	local bits = read_global.int(1853348 + (player * 834 + 1) + 267 + 30)
+	local bits = read_global.int(1853910 + (player * 862 + 1) + 267 + 31)
 	if (bits & (1 << 0)) ~= 0 then
 		return true
 	elseif (bits & (1 << 1)) ~= 0 then
 		return true
-	elseif read_global.int(2689235 + (player * 453 + 1) + 318 + 6) ~= -1 then
+	elseif read_global.int(2657589 + (player * 466 + 1) + 321 + 7) ~= -1 then
 		return true
 	end
 	return false
@@ -861,7 +975,7 @@ end
 ---@return boolean
 function is_player_in_rc_bandito(player)
 	if player ~= -1 then
-		local address = memory.script_global(1853348 + (player * 834 + 1) + 267 + 348)
+		local address = memory.script_global(1853910 + (player * 862 + 1) + 267 + 365)
 		return BitTest(memory.read_int(address), 29)
 	end
 	return false
@@ -872,7 +986,7 @@ end
 ---@return boolean
 function is_player_in_rc_tank(player)
 	if player ~= -1 then
-		local address = memory.script_global(1853348 + (player * 834 + 1) + 267 + 408 + 2)
+		local address = memory.script_global(1853910 + (player * 862 + 1) + 267 + 428 + 2)
 		return BitTest(memory.read_int(address), 16)
 	end
 	return false
@@ -883,7 +997,7 @@ end
 ---@return boolean
 function is_player_in_rc_personal_vehicle(player)
 	if player ~= -1 then
-		local address = memory.script_global(1853348 + (player * 834 + 1) + 267 + 408 + 3)
+		local address = memory.script_global(1853910 + (player * 862 + 1) + 267 + 428 + 3)
 		return BitTest(memory.read_int(address), 6)
 	end
 	return false
@@ -913,7 +1027,7 @@ end
 ---@param colour integer
 ---@return integer
 function get_hud_colour_from_org_colour(colour)
-	pluto_switch colour do
+	switch colour do
 		case 0:
 			return 192
 		case 1:
@@ -958,7 +1072,7 @@ function get_player_org_blip_colour(player)
 		local rgba = get_hud_colour(hudColour)
 		return (rgba.r << 24) + (rgba.g << 16) + (rgba.b << 8) + rgba.a
 	end
-	return 1
+	return 0
 end
 
 
@@ -990,7 +1104,7 @@ function is_player_active(player, isPlaying, inTransition)
 		return false
 	end
 	if inTransition and
-	read_global.int(2689235 + (player * 453 + 1)) ~= 4 then
+	read_global.int(2657589 + (player * 466 + 1)) ~= 4 then
 		return false
 	end
 	return true
@@ -1036,7 +1150,9 @@ TraceFlag =
 ---@field surfaceNormal v3
 ---@field hitEntity Entity
 
-
+---@param dist number
+---@param flag? integer
+---@return RaycastResult
 function get_raycast_result(dist, flag)
 	local result = {}
 	flag = flag or TraceFlag.everything
@@ -1061,6 +1177,7 @@ function get_raycast_result(dist, flag)
 	result.hitEntity = memory.read_int(hitEntity)
 	return result
 end
+
 --------------------------
 -- STREAMING
 --------------------------
@@ -1119,7 +1236,7 @@ function set_scaleform_movie_as_no_longer_needed(handle)
 	util.spoof_script("main_persistent", function ()
 		local ptr = memory.alloc_int()
 		memory.write_int(ptr, handle)
-		WIRI.SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED(ptr)
+		GRAPHICS.SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED(ptr)
 	end)
 end
 
@@ -1180,40 +1297,50 @@ read_global = {
 HudTimer = {}
 
 HudTimer.SetHeightMultThisFrame = function (mult)
-	write_global.int(1649593 + 1163, mult)
+	write_global.int(1655472 + 1163, mult)
 end
 
 HudTimer.DisableThisFrame = function()
-	write_global.int(2727091, 1)
+	write_global.int(2696211, 1)
 end
 
 
 function EnableOTR()
-	local toggle_addr = 2689235 + ((PLAYER.PLAYER_ID() * 453) + 1) + 208
+	local toggle_addr = 2657589 + ((PLAYER.PLAYER_ID() * 466) + 1) + 210
 	if read_global.int(toggle_addr) == 1 then
 		return
 	end
 	write_global.int(toggle_addr, 1)
-	write_global.int(2703735 + 56, NETWORK.GET_NETWORK_TIME() + 1)
+	write_global.int(2672505 + 56, NETWORK.GET_NETWORK_TIME() + 1)
 end
 
 function DisableOTR()
-	write_global.int(2689235 + ((PLAYER.PLAYER_ID() * 453) + 1) + 208, 0)
+	write_global.int(2657589 + ((PLAYER.PLAYER_ID() * 466) + 1) + 210, 0)
 end
 
 function DisablePhone()
-    write_global.int(20249, 1)
+    write_global.int(20366, 1)
 end
 
 
 function is_phone_open()
-	if read_global.int(20266 + 1) > 3 then
-		return true
-	end
-	if SCRIPT._GET_NUMBER_OF_REFERENCES_OF_SCRIPT_WITH_NAME_HASH(util.joaat("cellphone_flashhand")) > 0 then
+	if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(util.joaat("cellphone_flashhand")) > 0 then
 		return true
 	end
 	return false
+end
+
+
+---@param name string
+---@param pattern string
+---@param callback fun(address: integer)
+function memory_scan(name, pattern, callback)
+	local address = memory.scan(pattern)
+
+	if address == NULL then error("Failed to find " .. name) end
+
+	callback(address)
+	util.log("Found %s", name)
 end
 
 --------------------------
@@ -1345,7 +1472,7 @@ end
 ---@return number?
 function get_ground_z(pos)
 	local pGroundZ = memory.alloc(4)
-	WIRI.GET_GROUND_Z_FOR_3D_COORD(pos, pGroundZ, false, true)
+	MISC.GET_GROUND_Z_FOR_3D_COORD(pos.x, pos.y, pos.z, pGroundZ, false, true)
 	local groundz = memory.read_float(pGroundZ)
 	return groundz
 end
@@ -1408,7 +1535,15 @@ end
 function draw_marker(type, pos, scale, colour, textureDict, textureName)
 	textureDict = textureDict or 0
 	textureName = textureName or 0
-	WIRI.DRAW_MARKER(type, pos, v3(), v3(), v3(scale, scale, scale), colour.r, colour.g, colour.b, colour.a, false, false, 0, true, textureDict, textureName, false)
+	GRAPHICS.DRAW_MARKER(
+		type,
+		pos.x, pos.y, pos.z,
+		0.0, 0.0, 0.0,
+		0.0, 0.0, 0.0,
+		scale, scale, scale,
+		colour.r, colour.g, colour.b, colour.a,
+		false, false, 0, true, textureDict, textureName, false
+	)
 end
 
 
@@ -1418,7 +1553,7 @@ local orgLog = util.log
 ---@param ... any
 util.log = function (format, ...)
 	local strg = type(format) ~= "string" and tostring(format) or format:format(...)
-	orgLog("[GTLUA] " .. strg)
+	orgLog("[WiriScript] " .. strg)
 end
 
 function draw_debug_text(...)
