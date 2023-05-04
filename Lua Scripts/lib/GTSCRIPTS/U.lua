@@ -189,7 +189,7 @@ end
 local drawLockonSprite = function (pos, hudColour, alpha)
     local colour = get_hud_colour(hudColour)
     local txdSizeX = 0.013
-    local txdSizeY = 0.013 * GRAPHICS.GET_ASPECT_RATIO(false)
+    local txdSizeY = 0.013 * WIRI.GET_ASPECT_RATIO(false)
     GRAPHICS.SET_DRAW_ORIGIN(pos.x, pos.y, pos.z, 0)
     size = 0.015
     GRAPHICS.DRAW_SPRITE("helicopterhud", "hud_corner", -size * 0.5, -size, txdSizeX, txdSizeY, 0.0, colour.r, colour.g, colour.b, alpha, true, 0)

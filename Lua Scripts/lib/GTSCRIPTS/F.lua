@@ -285,7 +285,7 @@ while UItoggle do
                             case -821520672: 
                                 mode = 'GUN'
                                 break 
-                            pluto_default: 
+                            default: 
                                 mode = "NAV"
                         end
                     else

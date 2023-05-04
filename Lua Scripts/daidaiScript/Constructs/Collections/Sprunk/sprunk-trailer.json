@@ -1,0 +1,429 @@
+{
+	"name": "trailer",
+	"objects": [{
+		"boneIndex": 0,
+		"name": "prop_boxpile_10a",
+		"visible": true,
+		"id": 3,
+		"rotation": {
+			"y": 0,
+			"z": 90,
+			"x": 0
+		},
+		"offset": {
+			"y": -0.69,
+			"z": 2.23,
+			"x": 0.53
+		},
+		"model": -1480604471
+	}, {
+		"boneIndex": 0,
+		"name": "prop_boxpile_10a",
+		"visible": true,
+		"id": 1,
+		"rotation": {
+			"y": 0,
+			"z": 180,
+			"x": 0
+		},
+		"offset": {
+			"y": -0.19,
+			"z": 1.3,
+			"x": 0.05
+		},
+		"model": -1480604471
+	}, {
+		"boneIndex": 0,
+		"name": "prop_boxpile_10a",
+		"visible": true,
+		"id": 2,
+		"rotation": {
+			"y": 0,
+			"z": 90,
+			"x": 0
+		},
+		"offset": {
+			"y": -0.69,
+			"z": 2.23,
+			"x": -0.44
+		},
+		"model": -1480604471
+	}, {
+		"boneIndex": 0,
+		"name": "ba_prop_club_tonic_can",
+		"visible": true,
+		"id": 3,
+		"rotation": {
+			"y": 0,
+			"z": 0,
+			"x": 0
+		},
+		"offset": {
+			"y": 0.35,
+			"z": 0.4,
+			"x": 0.69
+		},
+		"model": -360789139
+	}, {
+		"boneIndex": 0,
+		"name": "prop_boxpile_10a",
+		"visible": true,
+		"id": 2,
+		"rotation": {
+			"y": 0,
+			"z": 90,
+			"x": 0
+		},
+		"offset": {
+			"y": -1.65,
+			"z": 1.3,
+			"x": -0.45
+		},
+		"model": -1480604471
+	}, {
+		"boneIndex": 0,
+		"name": "prop_vend_soda_02",
+		"visible": true,
+		"id": 1,
+		"rotation": {
+			"y": 0,
+			"z": -90,
+			"x": 0
+		},
+		"offset": {
+			"y": 4.1,
+			"z": 1.3,
+			"x": -0.5
+		},
+		"model": 1114264700
+	}, {
+		"boneIndex": 0,
+		"name": "prop_vend_soda_02",
+		"visible": true,
+		"id": 2,
+		"rotation": {
+			"y": 0,
+			"z": 90,
+			"x": 0
+		},
+		"offset": {
+			"y": 4.1,
+			"z": 1.3,
+			"x": 0.5
+		},
+		"model": 1114264700
+	}, {
+		"boneIndex": 0,
+		"name": "prop_boxpile_10a",
+		"visible": true,
+		"id": 3,
+		"rotation": {
+			"y": 0,
+			"z": 0,
+			"x": 0
+		},
+		"offset": {
+			"y": -3.09,
+			"z": 1.3,
+			"x": 0
+		},
+		"model": -1480604471
+	}, {
+		"boneIndex": 0,
+		"name": "prop_vend_soda_02",
+		"visible": true,
+		"id": 2,
+		"rotation": {
+			"y": 0,
+			"z": -90,
+			"x": 0
+		},
+		"offset": {
+			"y": 2.02,
+			"z": 1.3,
+			"x": -0.5
+		},
+		"model": 1114264700
+	}, {
+		"boneIndex": 0,
+		"name": "prop_vend_soda_02",
+		"visible": true,
+		"id": 4,
+		"rotation": {
+			"y": 0,
+			"z": -90,
+			"x": 0
+		},
+		"offset": {
+			"y": 3.09,
+			"z": 1.3,
+			"x": -0.5
+		},
+		"model": 1114264700
+	}, {
+		"boneIndex": 0,
+		"name": "prop_boxpile_10a",
+		"visible": true,
+		"id": 1,
+		"rotation": {
+			"y": 0,
+			"z": 90,
+			"x": 0
+		},
+		"offset": {
+			"y": -1.66,
+			"z": 1.3,
+			"x": 0.51
+		},
+		"model": -1480604471
+	}, {
+		"boneIndex": 0,
+		"name": "prop_jetski_ramp_01",
+		"visible": true,
+		"id": 1,
+		"rotation": {
+			"y": 0,
+			"z": 0,
+			"x": 15
+		},
+		"offset": {
+			"y": -6.71,
+			"z": 0.6,
+			"x": 0
+		},
+		"model": -1081534242
+	}, {
+		"boneIndex": 0,
+		"name": "prop_boxpile_10a",
+		"visible": true,
+		"id": 5,
+		"rotation": {
+			"y": 0,
+			"z": -90,
+			"x": 0
+		},
+		"offset": {
+			"y": -2.57,
+			"z": 2.23,
+			"x": -0.46
+		},
+		"model": -1480604471
+	}, {
+		"boneIndex": 0,
+		"name": "prop_vend_soda_02",
+		"visible": true,
+		"id": 1,
+		"rotation": {
+			"y": 0,
+			"z": 90,
+			"x": 0
+		},
+		"offset": {
+			"y": 2.02,
+			"z": 1.3,
+			"x": 0.5
+		},
+		"model": 1114264700
+	}, {
+		"boneIndex": 0,
+		"name": "prop_vend_soda_02",
+		"visible": true,
+		"id": 3,
+		"rotation": {
+			"y": 0,
+			"z": 90,
+			"x": 0
+		},
+		"offset": {
+			"y": 3.09,
+			"z": 1.3,
+			"x": 0.5
+		},
+		"model": 1114264700
+	}, {
+		"boneIndex": 0,
+		"name": "prop_boxpile_10a",
+		"visible": true,
+		"id": 4,
+		"rotation": {
+			"y": 0,
+			"z": -90,
+			"x": 0
+		},
+		"offset": {
+			"y": -2.57,
+			"z": 2.23,
+			"x": 0.53
+		},
+		"model": -1480604471
+	}],
+	"created": 1661908812,
+	"base": {
+		"data": {
+			"type": "VEHICLE",
+			"visible": true,
+			"godmode": true,
+			"rotation": {
+				"y": 0,
+				"z": 0,
+				"x": 0
+			},
+			"model": -1352468814
+		},
+		"savedata": {
+			"Dirt Level": 7,
+			"Engine Running": false,
+			"Name": "TRAILER",
+			"RadioLoud": false,
+			"Tire Smoke": {
+				"r": 0,
+				"g": 0,
+				"b": 255
+			},
+			"Manufacturer": "",
+			"Bulletproof Tires": true,
+			"Lights": {
+				"SearchLightActive": false,
+				"Xenon Color": 255,
+				"SirenActive": false,
+				"Neon": {
+					"Left": true,
+					"Right": true,
+					"Color": {
+						"r": 0,
+						"g": 255,
+						"b": 0
+					},
+					"Back": true,
+					"Front": true
+				}
+			},
+			"Model": -1352468814,
+			"Wheel Type": 0,
+			"Format": "JSTAND 1.4.0",
+			"Interior Color": 55,
+			"Type": "Industrial",
+			"Mods": {
+				"Hood": -1,
+				"Plate Holders": -1,
+				"Transmission": -1,
+				"Ornaments": -1,
+				"Grille": -1,
+				"Trim Design": -1,
+				"Shifter Leavers": -1,
+				"Engine": -1,
+				"Steering Wheel": -1,
+				"Toggles": {
+					"Xenon Headlights": false,
+					"Tire Smoke": false,
+					"UNK19": false,
+					"UNK17": false,
+					"UNK21": false,
+					"Turbo Turning": false
+				},
+				"Roof": -1,
+				"Plaques": -1,
+				"Right Fender": -1,
+				"Spoilers": -1,
+				"Horns": -1,
+				"Motorcycle Back Wheel Design": -1,
+				"Wheels Design": -1,
+				"Side Skirt": -1,
+				"Hydraulics": -1,
+				"Brakes": -1,
+				"Frame": -1,
+				"Livery": -1,
+				"Fender": -1,
+				"Armor": -1,
+				"Suspension": -1,
+				"Front Bumper": -1,
+				"Dial Design": -1,
+				"Rear Bumper": -1,
+				"Exhaust": -1
+			},
+			"Extras": [],
+			"Dashboard Color": 55,
+			"Colors": {
+				"Paint Fade": 0.27450981736183,
+				"Color Combo": -1,
+				"Secondary": {
+					"Custom": true,
+					"Custom Color": {
+						"r": 0,
+						"g": 255,
+						"b": 0
+					}
+				},
+				"Extras": {
+					"Pearlescent": 0,
+					"Wheel": 0
+				},
+				"Primary": {
+					"Custom": true,
+					"Custom Color": {
+						"r": 0,
+						"g": 255,
+						"b": 0
+					}
+				},
+				"Vehicle": {
+					"r": 8,
+					"g": 8,
+					"Secondary": 0,
+					"Primary": 0,
+					"b": 8
+				}
+			},
+			"Livery": {
+				"Count": -1,
+				"Style": -1
+			},
+			"License Plate": {
+				"Text": " SPRUNK ",
+				"Type": 3
+			},
+			"Window Tint": -1
+		},
+		"model": -1352468814
+	},
+	"peds": [{
+		"name": "s_m_m_bouncer_02",
+		"model": 1376128402,
+		"boneIndex": 0,
+		"visible": true,
+		"godmode": true,
+		"id": 5,
+		"rotation": {
+			"y": 0,
+			"z": 90,
+			"x": 0
+		},
+		"offset": {
+			"y": 0.93,
+			"z": 1.4,
+			"x": -0.7
+		},
+		"animdata": ["anim@amb@casino@peds@", "amb_world_human_stand_guard_male_base"]
+	}, {
+		"name": "s_m_m_bouncer_02",
+		"model": 1376128402,
+		"boneIndex": 0,
+		"visible": true,
+		"godmode": true,
+		"id": 7,
+		"rotation": {
+			"y": 0,
+			"z": -90,
+			"x": 0
+		},
+		"offset": {
+			"y": 0.93,
+			"z": 1.4,
+			"x": 0.7
+		},
+		"animdata": ["anim@amb@casino@peds@", "amb_world_human_stand_guard_male_base"]
+	}],
+	"version": "Jackz Builder 1.3.1",
+	"vehicles": [],
+	"blipIcon": 791
+}

@@ -28,19 +28,19 @@ GenerateFeatures = function()
 
 menu.toggle(nfs_cs,"NFS版速度表", {"nfssp"}, "开启之后需要在车内方可显示，下车建议关闭",function(pog)	
 	if pog then
-		sp_bg_tex_name = "nfs_spc.png"
-		sp_pin_tex_name = "nfs_pin_spc.png"
-		sp_bg_tex = directx.create_texture(resources_dir..sp_bg_tex_name) 
-		sp_pin_tex = directx.create_texture(resources_dir..sp_pin_tex_name)
-		txt_colour = {["r"] = 1.0,["g"] = 1.0,["b"] = 1.0,["a"] = 1.0}
-		sp_colour = {["r"] = 0.9,["g"] = 0.9,["b"] = 0.9,["a"] = 1.0}
+		local sp_bg_tex_name = "nfs_spc.png"
+		local sp_pin_tex_name = "nfs_pin_spc.png"
+		local sp_bg_tex = directx.create_texture(resources_dir..sp_bg_tex_name) 
+		local sp_pin_tex = directx.create_texture(resources_dir..sp_pin_tex_name)
+		local txt_colour = {["r"] = 1.0,["g"] = 1.0,["b"] = 1.0,["a"] = 1.0}
+		local sp_colour = {["r"] = 0.9,["g"] = 0.9,["b"] = 0.9,["a"] = 1.0}
 	else
-		sp_bg_tex_name = "nfs_spc2.png"
-		sp_pin_tex_name = "nfs_pin_spc2.png"
-		sp_bg_tex = directx.create_texture(resources_dir..sp_bg_tex_name) 
-		sp_pin_tex = directx.create_texture(resources_dir..sp_pin_tex_name)
-		txt_colour = {["r"] = 0.0,["g"] = 0.0,["b"] = 0.0,["a"] = 0.0}
-		sp_colour = {["r"] = 1.0,["g"] = 0.0,["b"] = 1.0,["a"] = 0.0}
+		local sp_bg_tex_name = "nfs_spc2.png"
+		local sp_pin_tex_name = "nfs_pin_spc2.png"
+		local sp_bg_tex = directx.create_texture(resources_dir..sp_bg_tex_name) 
+		local sp_pin_tex = directx.create_texture(resources_dir..sp_pin_tex_name)
+		local txt_colour = {["r"] = 0.0,["g"] = 0.0,["b"] = 0.0,["a"] = 0.0}
+		local sp_colour = {["r"] = 1.0,["g"] = 0.0,["b"] = 1.0,["a"] = 0.0}
 	end
 	local sp_bg_tex = directx.create_texture(resources_dir..sp_bg_tex_name) 
 	local sp_pin_tex = directx.create_texture(resources_dir..sp_pin_tex_name)
@@ -149,3 +149,7 @@ while true do
 		end	
 		util.yield() 
 	end			
+
+
+
+	

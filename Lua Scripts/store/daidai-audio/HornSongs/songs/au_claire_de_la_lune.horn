@@ -1,0 +1,12 @@
+{
+  "name": "Au Claire De La Lune",
+  "description": "法国民间歌曲\n编码者：Hexarobi",
+  "target_version": 1.2,
+  "bpm": 60,
+  "notes": [
+    "F", "F", "F", "G", { "pitch": "A", "length": 0.5 }, { "pitch": "G", "length": 0.5 }, "rest",
+    "F", "A", "G", "G", { "pitch": "F", "length": 1 }, "rest",
+    "F", "F", "F", "G", { "pitch": "A", "length": 0.5 }, { "pitch": "G", "length": 0.5 }, "rest",
+    "F", "A", "G", "G", { "pitch": "F", "length": 0.5 }, "rest"
+  ]
+}

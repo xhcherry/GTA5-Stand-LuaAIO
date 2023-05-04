@@ -1,6 +1,5 @@
 --on为开启，off为关闭，按需修改(请不要修改除了on与off之外的的任何内容)
-if not SCRIPT_SILENT_START then
-    menu.trigger_commands("watermark on") --彩虹信息栏
+if SCRIPT_MANUAL_START then 
     menu.trigger_commands("hostqu on") --主机序列
     menu.trigger_commands("scriptname on") --脚本名称
     menu.trigger_commands("hostqus off") --实体池显示

@@ -383,7 +383,7 @@
     --- Translation Settings
 
         if READ_SETTING("Language") == "Unknown" then -- When execute HC for first time
-            WRITE_SETTING("Language", "English")
+            WRITE_SETTING("Language", "Chinese")
 
             local LangByStandCodes = {
                 { "zh", "Chinese - 中文" },
@@ -839,7 +839,6 @@
         
         menu.action(autocayosolo, "一键完成任务", {}, "", function()
             menu.trigger_commands("scripthost")
-    
             SET_INT_LOCAL("fm_mission_controller_2020", 42279 + 1, 51338752)
             SET_INT_LOCAL("fm_mission_controller_2020", 42279 + 1375 + 1, 50)
         ;  end)
@@ -890,8 +889,8 @@
             , function()
                 menu.trigger_commands("scripthost")
     
-                SET_INT_LOCAL("fm_mission_controller_2020", 42279 + 1, 51338752)
-                SET_INT_LOCAL("fm_mission_controller_2020", 42279 + 1375 + 1, 50)
+                SET_INT_GLOBAL("fm_mission_controller_2020", 42279 + 1, 51338752)
+                SET_INT_GLOBAL("fm_mission_controller_2020", 42279 + 1375 + 1, 50)
         end)
         
         menu.action(autocayomult, "杀死队友", {}, "", function()
@@ -984,11 +983,11 @@
         menu.action(autocasinoheist, "一键完成任务", { "hcinsfincah" }, IS_WORKING(false), function()
             menu.trigger_commands("scripthost")
                     
-            SET_INT_LOCAL("fm_mission_controller", 19707 + 1741, 151)
-            SET_INT_LOCAL("fm_mission_controller", 19707 + 2686, 10000000)
-            SET_INT_LOCAL("fm_mission_controller", 27471 + 859, 99999)
-            SET_INT_LOCAL("fm_mission_controller", 31585 + 69, 99999)
-            SET_INT_LOCAL("fm_mission_controller", 31585 + 97, 79)
+            SET_INT_GLOBAL("fm_mission_controller", 19707 + 1741, 151)
+            SET_INT_GLOBAL("fm_mission_controller", 19707 + 2686, 10000000)
+            SET_INT_GLOBAL("fm_mission_controller", 27471 + 859, 99999)
+            SET_INT_GLOBAL("fm_mission_controller", 31585 + 69, 99999)
+            SET_INT_GLOBAL("fm_mission_controller", 31585 + 97, 79)
         end)
         
         menu.action(autocasinoheist, TRANSLATE("游戏厅车库门口"), {}, "", function()

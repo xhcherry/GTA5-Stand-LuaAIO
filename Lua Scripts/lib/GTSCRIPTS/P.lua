@@ -1,4 +1,3 @@
-
 local required <const> = {
     "lib/GTSCRIPTS/O.lua",
 	"lib/GTP/json.lua",
@@ -358,7 +357,7 @@ function ProfileManager.new(parent)
 	local name <const> = "虚假配置文件禁用"
 	menu.action(self.reference, name, {"disableprofile"}, "", function()
 		if not self:isAnyProfileEnabled() then
-			notification123:help(trans.NotUsingProfile, HudColour.red)
+			notification(trans.NotUsingProfile, HudColour.red)
 		else
 			local name <const> = self.activeProfile.name
 			self:disableSpoofing()
@@ -380,7 +379,7 @@ function ProfileManager.new(parent)
 	local helpText = "键入配置文件的RID"
 	menu.text_input(addList, name, {"profilerid"}, helpText, function(rid, click)
 		if click ~= CLICK_SCRIPTED and rid ~= "" then
-			if not tonumber(rid) then return notification123:help(trans.NotNumber, HudColour.red) end
+			if not tonumber(rid) then return notification(trans.NotNumber, HudColour.red) end
 			profile.rid = rid
 		end
 	end)
@@ -388,15 +387,15 @@ function ProfileManager.new(parent)
 	local name <const> = "保存虚假配置文件"
 	menu.action(addList, name, {"saveprofile"}, "", function()
 		if not profile.name or not profile.rid then
-			return notification123:help(trans.MissingData, HudColour.red)
+			return notification(trans.MissingData, HudColour.red)
 		end
 		local valid, errmsg = Profile.isValid(profile)
 		if not valid then
-			return notification123:help("%s: %s", HudColour.red, trans.InvalidProfile, errmsg)
+			return notification("%s: %s", HudColour.red, trans.InvalidProfile, errmsg)
 		end
 		local profile = Profile.new(profile)
 		if self:includes(profile) then
-			return notification123:help(trans.AlreadyExists, HudColour.red)
+			return notification(trans.AlreadyExists, HudColour.red)
 		end
 		self:save(profile, true)
 		notification("已保存", colors.pink)
@@ -539,13 +538,13 @@ function ProfileManager:load()
 
 		local ok, result = json.parse(path, false)
 		if not ok then
-			notification123:help(result, HudColour.red)
+			notification(result, HudColour.red)
 			goto LABEL_CONTINUE
 		end
 
 		local valid, errmsg = Profile.isValid(result)
 		if not valid then
-			notification123:help(trans.InvalidProfile, HudColour.red, filename, errmsg)
+			notification(trans.InvalidProfile, HudColour.red, filename, errmsg)
 			goto LABEL_CONTINUE
 		end
 
@@ -1449,7 +1448,7 @@ Weapons =
  
 	 menu.action(self.mgr, trans.Save, {}, "", function()
 		 local ok, errmsg = self:save()
-		 if not ok then notification123:help(errmsg, HudColour.red) return end
+		 if not ok then notification(errmsg, HudColour.red) return end
 		 notification(trans.BodyguardSaved, colors.blue)
 	 end)
  
@@ -1725,7 +1724,140 @@ end
 		 self.isOpen = false
 	 end)
 	 self.group = Group.new()
- 
+
+----- 保镖马东锡 -----
+local bodyguard_veh_options = menu.list(self.ref, "马东锡的护法", {}, "为了让你们当总统，这可是一个字一个字敲出来的")
+
+local veh_list = {}
+local veh_ped_list = {}
+
+local bodyguard_veh = {
+    name = "limo2",
+    veh_godmode = false,
+    ped_godmode = false
+}
+
+local sel_veh_name_list = { "武装加特林礼车", "FBI巡逻车", "奔驰迈巴赫", "限量版大G" }
+local sel_veh_model_list = { "limo2", "fbi2", "cognoscenti2", "dubsta2" }
+menu.slider_text(bodyguard_veh_options, "生成的载具类型", {}, "您需要单击以更改", sel_veh_name_list, function(value)
+    bodyguard_veh.name = sel_veh_model_list[value]
+end)
+
+menu.toggle(bodyguard_veh_options, "载具是否无敌", {}, "", function(toggle)
+    bodyguard_veh.veh_godmode = toggle
+end)
+
+menu.action(bodyguard_veh_options, "现在就当总统！", {}, "由于Stand的TASK_VEHICLE_FOLLOW这项API十分乐色\n如果生成的保镖没有继续跟随你\n那么就重新生成一个\n我的建议为首先禁用交通", function()
+    local veh_hash = util.joaat(bodyguard_veh.name)
+    local ped_hash = util.joaat("s_m_y_blackops_01")
+    local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    pos.x = pos.x + math.random(-8, 8)
+    pos.y = pos.y + math.random(-8, 8)
+    pos.z = pos.z + 0
+
+	requestModels(ped_hash, veh_hash)
+    relationship:friendly(players.user_ped())
+    veh = entities.create_vehicle(veh_hash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
+
+	if not ENTITY.DOES_ENTITY_EXIST(veh) then
+        util.toast("创建车辆失败,可能因为触发了Stand实体控制器")
+        return
+		else
+		local vehNetId = NETWORK.VEH_TO_NET(veh)
+        if NETWORK.NETWORK_GET_ENTITY_IS_NETWORKED(NETWORK.NET_TO_PED(vehNetId)) then
+        NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(vehNetId, true)
+        end
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(vehNetId, players.user(), true)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(veh, true, true, true)
+		VEHICLE.SET_VEHICLE_SEARCHLIGHT(veh, true, true)
+        addBlipForEntity(veh, 1, 27)
+		--血量
+		WIRI_ENTITY.SET_ENTITY_INVINCIBLE(veh, bodyguard_veh.veh_godmode)
+		WIRI_ENTITY.SET_ENTITY_MAX_HEALTH(veh, 10000)
+		WIRI_ENTITY.SET_ENTITY_HEALTH(veh, 10000)
+
+		table.insert(veh_list, veh)
+		end
+
+		pilot = entities.create_ped(29, ped_hash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
+		PED.SET_PED_INTO_VEHICLE(pilot, veh, -1)
+		PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(pilot, true)
+		--跟随
+		TASK.TASK_VEHICLE_FOLLOW(pilot, veh, players.user_ped(), 80, 1, 10, 10)
+		PED.SET_PED_KEEP_TASK(pilot, true)
+		--血量
+		PED.SET_PED_MAX_HEALTH(pilot, 1000)
+		ENTITY.SET_ENTITY_HEALTH(pilot, 1000)
+		ENTITY.SET_ENTITY_INVINCIBLE(pilot, bodyguard_veh.ped_godmode)
+
+		relationship:friendly(ped)
+		relationship:friendly(pilot)
+
+		table.insert(veh_ped_list, veh)
+    
+		--local seats = VEHICLE.GET_VEHICLE_MODEL_NUMBER_OF_SEATS(heli)
+		for seat = 0, 2 do
+		ped = entities.create_ped(29, ped_hash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
+		local pedNetId = NETWORK.PED_TO_NET(ped)
+		if NETWORK.NETWORK_GET_ENTITY_IS_NETWORKED(ped) then
+		NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(pedNetId, true)
+		end
+		NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(pedNetId, players.user(), true)
+		PED.SET_PED_INTO_VEHICLE(ped, veh, seat)
+		--战斗
+		WEAPON.GIVE_WEAPON_TO_PED(ped, util.joaat("weapon_mg"), -1, false, true)
+        WEAPON.SET_PED_INFINITE_AMMO_CLIP(ped, true)
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 5, true)
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 3, false)
+        PED.SET_PED_COMBAT_MOVEMENT(ped, 2)
+        PED.SET_PED_COMBAT_ABILITY(ped, 2)
+        PED.SET_PED_COMBAT_RANGE(ped, 2)
+        PED.SET_PED_SEEING_RANGE(ped, 500.0)
+        PED.SET_PED_HEARING_RANGE(ped, 500.0)
+        PED.SET_PED_TARGET_LOSS_RESPONSE(ped, 1)
+        PED.SET_PED_HIGHLY_PERCEPTIVE(ped, true)
+        PED.SET_PED_VISUAL_FIELD_PERIPHERAL_RANGE(ped, 500.0)
+        PED.SET_COMBAT_FLOAT(ped, 10, 500.0)
+        PED.SET_PED_SHOOT_RATE(ped, 1000.0)
+        PED.SET_PED_ACCURACY(ped, 100.0)
+        PED.SET_PED_CAN_BE_SHOT_IN_VEHICLE(ped, true)
+        --血量
+        PED.SET_PED_MAX_HEALTH(ped, 1000)
+        ENTITY.SET_ENTITY_HEALTH(ped, 1000)
+        ENTITY.SET_ENTITY_INVINCIBLE(ped, bodyguard_veh.ped_godmode)
+
+		PED.SET_PED_KEEP_TASK(ped, true)
+
+		relationship:friendly(pilot)
+        relationship:friendly(ped)
+
+        table.insert(veh_ped_list, ped)
+    end
+
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_hash)
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(ped_hash)
+end)
+
+menu.action(bodyguard_veh_options, "所有人下车", {}, "注意:下车后他们将不能再上车", function ()
+	TASK.TASK_EVERYONE_LEAVE_VEHICLE(veh)
+end)
+
+menu.action(bodyguard_veh_options, "移除所有护法", {}, "这将移除您当前生成的所有护法载具,包括载具内的NPC\n这项功能同样可以移除迷路的护法", function()
+    for k, ent in pairs(veh_ped_list) do
+        entities.delete_by_handle(ent)
+    end
+    for k, ent in pairs(veh_list) do
+        entities.delete_by_handle(ent)
+    end
+	for k, ent in pairs(veh_ped_list) do
+    entities.delete_by_handle(pilot)
+	end
+end)
+
+menu.action(bodyguard_veh_options, "超级清除", {}, "", function ()
+	menu.trigger_commands("superc")
+end)
+
 ----- 保镖直升机 -----
 local bodyguard_heli_options = menu.list(self.ref, "保镖直升机", {}, "")
 
@@ -1761,7 +1893,7 @@ menu.action(bodyguard_heli_options, "生成保镖直升机", {}, "", function()
     local heli = entities.create_vehicle(heli_hash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
 
     if not ENTITY.DOES_ENTITY_EXIST(heli) then
-        util.toast("Failed to create vehicle. Please try again")
+        util.toast("创建载具失败,可能因为触发了Stand实体控制器")
         return
     else
         local heliNetId = NETWORK.VEH_TO_NET(heli)
@@ -1841,11 +1973,10 @@ menu.action(bodyguard_heli_options, "删除所有保镖直升机", {}, "", funct
         entities.delete_by_handle(ent)
     end
 end)
----------------------
-
+---
 	 ModelList.new(self.ref, "生成", "spawnbg", "", PedList, function (caption, model)
 		 if self.group:getSize() >= 7 then
-			 return notification123:help(trans.ReachedMaxNumBodyguards, HudColour.red)
+			 return notification(trans.ReachedMaxNumBodyguards, HudColour.red)
 		 end
 		 local modelHash <const> = util.joaat(model)
 		 request_model(modelHash)
@@ -1862,7 +1993,7 @@ end)
  
 	 menu.action(self.ref, "克隆我自己", {"clonebg"}, "", function ()
 		 if self.group:getSize() >= 7 then
-			 return notification123:help(trans.ReachedMaxNumBodyguards, HudColour.red)
+			 return notification(trans.ReachedMaxNumBodyguards, HudColour.red)
 		 end
 		 local member = Member:createMember()
 		 self.group:pushMember(member)
@@ -1879,10 +2010,10 @@ end)
  
 	 saved:addSubOpt("生成", function(name, ext, path)
 		 if self.group:getSize() >= 7 then
-			 return notification123:help(trans.ReachedMaxNumBodyguards, HudColour.red)
+			 return notification(trans.ReachedMaxNumBodyguards, HudColour.red)
 		 end
 		 local ok, result = json.parse(path)
-		 if not ok then return notification123:help(result, HudColour.red) end
+		 if not ok then return notification(result, HudColour.red) end
  
 		 local modelHash <const> = result.ModelHash
 		 request_model(modelHash)
@@ -1897,7 +2028,7 @@ end)
  
 		 local ok, errmsg = member:setOutfit(result.Outfit)
 		 if not ok then
-			 notification123:help(trans.InvalidOutfit, HudColour.red, name, errmsg)
+			 notification(trans.InvalidOutfit, HudColour.red, name, errmsg)
 		 end
  
 		 member:giveWeapon(weaponHash)
@@ -1907,7 +2038,7 @@ end)
  
 	 saved:addSubOpt("删除文件", function (name, ext, path)
 		 local ok, errmsg = os.remove(path)
-		 if not ok then return notification123:help(errmsg, HudColour.red) end
+		 if not ok then return notification(errmsg, HudColour.red) end
 		 saved:reload()
 	 end)
  

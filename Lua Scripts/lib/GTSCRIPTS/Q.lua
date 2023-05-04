@@ -1,3 +1,4 @@
+--Musiness Banager Product Stand Development Team
 --[[ https://imgur.com/a/kchuhXW
 
 Credits:
@@ -13,7 +14,7 @@ local THIS_RELEASE_VERSION <const> = "1.0.0"
 local STAND_RESOURCE_DIR = filesystem.scripts_dir()
 local MB_RESOUCES_DIR = STAND_RESOURCE_DIR .. '\\GTLuaScript\\' .. "Musiness Banager/"
 local MB_TRANSLATIONS_DIR = MB_RESOUCES_DIR .. "Translations/"
-local MBPrefix = "[GTMENU] "
+local MBPrefix = "[GRANDTOURINGVIP] "
 local og_toast = util.toast
 local og_log = util.log
 local nullsub = function() --[[util.toast("nullsub")]] end
