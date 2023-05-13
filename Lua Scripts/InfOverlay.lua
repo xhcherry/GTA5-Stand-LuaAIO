@@ -1,48 +1,10 @@
 -- InfOverlay
 -- by lev
 
-local SCRIPT_VERSION = "1.1"
-
--- Auto Updater from https://github.com/hexarobi/stand-lua-auto-updater
-local status, auto_updater = pcall(require, "auto-updater")
-if not status then
-    local auto_update_complete = nil util.toast("Installing auto-updater...", TOAST_ALL)
-    async_http.init("raw.githubusercontent.com", "/hexarobi/stand-lua-auto-updater/main/auto-updater.lua",
-            function(result, headers, status_code)
-                local function parse_auto_update_result(result, headers, status_code)
-                    local error_prefix = "Error downloading auto-updater: "
-                    if status_code ~= 200 then util.toast(error_prefix..status_code, TOAST_ALL) return false end
-                    if not result or result == "" then util.toast(error_prefix.."Found empty file.", TOAST_ALL) return false end
-                    filesystem.mkdir(filesystem.scripts_dir() .. "lib")
-                    local file = io.open(filesystem.scripts_dir() .. "lib\\auto-updater.lua", "wb")
-                    if file == nil then util.toast(error_prefix.."Could not open file for writing.", TOAST_ALL) return false end
-                    file:write(result) file:close() util.toast("Successfully installed auto-updater lib", TOAST_ALL) return true
-                end
-                auto_update_complete = parse_auto_update_result(result, headers, status_code)
-            end, function() util.toast("Error downloading auto-updater lib. Update failed to download.", TOAST_ALL) end)
-    async_http.dispatch() local i = 1 while (auto_update_complete == nil and i < 40) do util.yield(250) i = i + 1 end
-    if auto_update_complete == nil then error("Error downloading auto-updater lib. HTTP Request timeout") end
-    auto_updater = require("auto-updater")
+if not SCRIPT_SILENT_START then
+    util.toast("欢迎使用 InfOverlay(信息显示) 脚本.\n中文翻译: lu_zi") 
 end
-if auto_updater == true then error("Invalid auto-updater lib. Please delete your Stand/Lua Scripts/lib/auto-updater.lua and try again") end
-
--- Run auto-update
-local auto_update_config = {
-    source_url="https://raw.githubusercontent.com/Lev200501/InfOverlay/main/InfOverlay.lua",
-    script_relpath=SCRIPT_RELPATH,
-    dependencies={
-        {
-            source_url="https://raw.githubusercontent.com/Lev200501/InfOverlay/main/resources/Blip.png",
-            script_relpath="resources/Blip.png",
-        },
-        {
-            source_url="https://raw.githubusercontent.com/Lev200501/InfOverlay/main/resources/Map.png",
-            script_relpath="resources/Map.png",
-        },
-    }
-}
-auto_updater.run_auto_update(auto_update_config)
-
+local SCRIPT_VERSION = "1.1"
 --natives
 util.require_natives(1640181023)
 
@@ -99,7 +61,7 @@ local textures =
 
 --render window toggle
 local render_window = false
-local infoverlay = menu.attach_before(menu.ref_by_path("Players>Settings>Tags"), menu.list(menu.shadow_root(), SCRIPT_NAME.." Settings", {}, "", 
+local infoverlay = menu.attach_before(menu.ref_by_path("Players>Settings>Tags"), menu.list(menu.shadow_root(), SCRIPT_NAME.." 设置", {}, "", 
 function()
     render_window = true 
 end, 
@@ -108,116 +70,116 @@ function()
 end))
 
 --settings
-menu.action(menu.my_root(), "Players > Settings > "..SCRIPT_NAME.." Settings", {}, "Shortcut to the settings for the overlay.", function(on_click)
+menu.action(menu.my_root(), "玩家 > 设置 > "..SCRIPT_NAME.." 设置", {}, "转到设置的快捷方式.", function(on_click)
     menu.trigger_command(infoverlay)
 end)
 
 --set position
-menu.divider(infoverlay, "Position")
-menu.slider(infoverlay, "X:", {"overlayx"}, "Horizontal position of the info overlay.", 0, RES_X, 0, 10, function(s)
+menu.divider(infoverlay, "位置")
+menu.slider(infoverlay, "X:", {"overlayx"}, "信息显示框的横轴位置.", 0, RES_X, 0, 10, function(s)
     gui_x = s/RES_X
 end)
-menu.slider(infoverlay, "Y:", {"overlayy"}, "Vertical position of the info overlay.", 0, RES_Y, 0, 10, function(s)
+menu.slider(infoverlay, "Y:", {"overlayy"}, "信息显示框的纵轴位置.", 0, RES_Y, 0, 10, function(s)
     gui_y = s/RES_Y
 end)
 
 --appearance divider
-menu.divider(infoverlay, "Appearance")
+menu.divider(infoverlay, "外观")
 
 --set colours
-local colours = menu.list(infoverlay, "Overlay colours", {}, "")
+local colours = menu.list(infoverlay, "颜色", {}, "")
 
-menu.divider(colours, "Elements")
+menu.divider(colours, "元素")
 
-menu.colour(colours, "Title Bar Colour", {"overlaytitle_bar"}, "Colour of the title bar.", colour.title_bar, true, function(on_change)
+menu.colour(colours, "标题栏", {"overlaytitle_bar"}, "更改标题栏颜色.", colour.title_bar, true, function(on_change)
     colour.title_bar = on_change
 end)
-menu.colour(colours, "Background Colour", {"overlaybg"}, "Colour of the background.", colour.background, true, function(on_change)
+menu.colour(colours, "背景", {"overlaybg"}, "更改背景颜色.", colour.background, true, function(on_change)
     colour.background = on_change
 end)
-menu.colour(colours, "Health Bar Colour", {"overlayhealth_bar"}, "Colour of the health bar.", colour.health_bar, true, function(on_change)
+menu.colour(colours, "血量", {"overlayhealth_bar"}, "更改血条颜色.", colour.health_bar, true, function(on_change)
     colour.health_bar = on_change
 end)
-menu.colour(colours, "Armour Bar Colour", {"overlayarmour_bar"}, "Colour of the armour bar.", colour.armour_bar, true, function(on_change)
+menu.colour(colours, "护甲", {"overlayarmour_bar"}, "更改护甲条颜色.", colour.armour_bar, true, function(on_change)
     colour.armour_bar = on_change
 end)
-menu.colour(colours, "Map Colour", {"overlaymap"}, "Colour of the map.", colour.map, true, function(on_change)
+menu.colour(colours, "地图", {"overlaymap"}, "更改地图颜色.", colour.map, true, function(on_change)
     colour.map = on_change
 end)
-menu.colour(colours, "Blip Colour", {"overlayblip"}, "Colour of the map blip.", colour.blip, true, function(on_change)
+menu.colour(colours, "光标", {"overlayblip"}, "更改地图上玩家标志颜色.", colour.blip, true, function(on_change)
     colour.blip = on_change
 end)
 
-menu.divider(colours, "Text")
-menu.colour(colours, "Name Colour", {"overlayname"}, "Colour of the player name text.", colour.name, true, function(on_change)
+menu.divider(colours, "文本")
+menu.colour(colours, "名称", {"overlayname"}, "更改玩家名称文字颜色.", colour.name, true, function(on_change)
     colour.name = on_change
 end)
-menu.colour(colours, "Label Colour", {"overlaylabel"}, "Colour of the label text.", colour.label, true, function(on_change)
+menu.colour(colours, "标签", {"overlaylabel"}, "更改信息标签颜色.", colour.label, true, function(on_change)
     colour.label = on_change
 end)
-menu.colour(colours, "Info Colour", {"overlayinfo"}, "Colour of the info text.", colour.info, true, function(on_change)
+menu.colour(colours, "信息", {"overlayinfo"}, "更改信息颜色.", colour.info, true, function(on_change)
     colour.info = on_change
 end)
 
 --set element sizing & spacing
-local element_dim = menu.list(infoverlay, "Element Sizing & Spacing", {}, "")
+local element_dim = menu.list(infoverlay, "元素大小 & 间距", {}, "")
 
-menu.divider(element_dim, "Element Sizing & Spacing")
+menu.divider(element_dim, "大小 & 间距")
 
-menu.slider(element_dim, "Title Bar Height", {}, "Height of the title bar.", 0, math.floor(3 * name_h * RES_Y), math.floor(name_h * RES_Y), 1, function(on_change)
+menu.slider(element_dim, "标题栏宽度", {}, "更改标题栏宽度.", 0, math.floor(3 * name_h * RES_Y), math.floor(name_h * RES_Y), 1, function(on_change)
     name_h = on_change/RES_Y
 end)
-menu.slider(element_dim, "Overlay Width", {"overlaywidth"}, "Width of the text window minus the padding.", 0, math.floor(3 * gui_w * RES_Y), math.floor(gui_w * RES_Y), 10, function(on_change)
+menu.slider(element_dim, "信息框长度", {"overlaywidth"}, "更改信息框长度.", 0, math.floor(3 * gui_w * RES_Y), math.floor(gui_w * RES_Y), 10, function(on_change)
     gui_w = on_change/RES_Y
 end)
-menu.slider(element_dim, "Padding", {}, "Padding around the info text.", 0, math.floor(3 * padding * RES_Y), math.floor(padding * RES_Y), 1, function(on_change)
+menu.slider(element_dim, "缩放", {}, "更改信息框缩放程度.", 0, math.floor(3 * padding * RES_Y), math.floor(padding * RES_Y), 1, function(on_change)
     padding = on_change/RES_Y
 end)
-menu.slider(element_dim, "Spacing", {}, "Spacing of the different elements.", 0, math.floor(5 * spacing * RES_Y), math.floor(spacing * RES_Y), 1, function(on_change)
+menu.slider(element_dim, "间距", {}, "更改不同元素间的间距.", 0, math.floor(5 * spacing * RES_Y), math.floor(spacing * RES_Y), 1, function(on_change)
     spacing = on_change/RES_Y
 end)
-menu.slider_float(element_dim, "Bar Width Multiplier", {}, "Multiplier for the width of the health and armour bar.", 0, math.floor(3 * bar_w_mult * 100), math.floor(bar_w_mult * 100), 10, function(on_change)
+menu.slider_float(element_dim, "玩家状态", {}, "更改血条和护甲条信息的宽度.", 0, math.floor(3 * bar_w_mult * 100), math.floor(bar_w_mult * 100), 10, function(on_change)
     bar_w_mult = on_change/100
 end)
-menu.slider_float(element_dim, "Blip Size", {}, "Size of the map blip.", 0, math.floor(3 * blip_size * 10000), math.floor(blip_size * 10000), 1, function(on_change)
+menu.slider_float(element_dim, "光标大小", {}, "更改地图上玩家标志的大小.", 0, math.floor(3 * blip_size * 10000), math.floor(blip_size * 10000), 1, function(on_change)
     blip_size = on_change/10000
 end)
 
 --set text sizing & spacing
-local text_dim = menu.list(infoverlay, "Text Sizing & Spacing", {}, "")
+local text_dim = menu.list(infoverlay, "文字大小 & 间距", {}, "")
 
-menu.divider(text_dim, "Text Sizing & Spacing")
+menu.divider(text_dim, "大小 & 间距")
 
-menu.slider_float(text_dim, "Name", {}, "Size of the player name text.", 0, 100, math.floor(name_size * 100), 1, function(on_change)
+menu.slider_float(text_dim, "名称", {}, "更改玩家名称文字大小.", 0, 100, math.floor(name_size * 100), 1, function(on_change)
     name_size = on_change/100
 end)
-menu.slider_float(text_dim, "Info Text", {}, "Size of the info text.", 0, 100, math.floor(text_size * 100), 1, function(on_change)
+menu.slider_float(text_dim, "信息", {}, "更改信息文字大小.", 0, 100, math.floor(text_size * 100), 1, function(on_change)
     text_size = on_change/100
 end)
-menu.slider(text_dim, "Line Spacing", {}, "Spacing inbetween lines of info text.", 0, math.floor(3 * line_spacing * RES_Y), math.floor(line_spacing * RES_Y), 1, function(on_change)
+menu.slider(text_dim, "行间距", {}, "更改信息文字之间的间距.", 0, math.floor(3 * line_spacing * RES_Y), math.floor(line_spacing * RES_Y), 1, function(on_change)
     line_spacing = on_change/RES_Y
 end)
 
 --set border
-local border = menu.list(infoverlay, "Border", {}, "")
+local border = menu.list(infoverlay, "边框", {}, "")
 
-menu.divider(border, "Border Settings")
+menu.divider(border, "设置")
 
-menu.slider(border, "Width", {}, "Width of the border rendered around the elements.", 0, math.floor(3 * spacing * RES_Y), 0, 1, function(on_change)
+menu.slider(border, "宽度", {}, "更改边框宽度.", 0, math.floor(3 * spacing * RES_Y), 0, 1, function(on_change)
     border_width = on_change/RES_Y
 end)
-local border_c_slider = menu.colour(border, "Colour", {"overlayborder"}, "Colour of the rendered border.", colour.border, true, function(on_change)
+local border_c_slider = menu.colour(border, "颜色", {"overlayborder"}, "更改边框颜色.", colour.border, true, function(on_change)
     colour.border = on_change
 end)
 border_c_slider:rainbow()
 
 --set blur
-menu.slider(infoverlay, "Background Blur", {}, "Amount of blur applied to background.", 0, 255, blur_strength, 1, function(on_change)
+menu.slider(infoverlay, "背景不透明度", {}, "更改背景的不透明度.", 0, 255, blur_strength, 1, function(on_change)
     blur_strength = on_change
 end)
 
 --restart script
-menu.action(infoverlay, "Restart Script", {}, "", function()
+menu.action(infoverlay, "重启脚本", {}, "", function()
     util.restart_script()
 end)
 
@@ -253,17 +215,17 @@ local function hashToWeapon(hash)
             return util.get_label_text(v.label_key)
         end
     end
-    return "Unarmed"
+    return "徒手"
 end
 
 --boolean function
 local function boolText(bool)
-    if bool then return "Yes" else return "No" end
+    if bool then return "是" else return "否" end
 end
 
 --check function
 local function checkValue(pInfo)
-    if pInfo == "" or pInfo == 0 or pInfo == nil or pInfo == "NULL" then return "None" else return pInfo end 
+    if pInfo == "" or pInfo == 0 or pInfo == nil or pInfo == "NULL" then return "无" else return pInfo end 
 end
 
 --format money
@@ -302,55 +264,55 @@ while true do
                     width = total_w/2,
                     content =
                     {
-                        {"Rank", players.get_rank(pid)},
+                        {"等级", players.get_rank(pid)},
                         {"K/D", roundNum(players.get_kd(pid), 2)},
-                        {"Wallet", "$"..formatMoney(players.get_wallet(pid))},
-                        {"Bank", "$"..formatMoney(players.get_bank(pid))}
+                        {"现金", "$"..formatMoney(players.get_wallet(pid))},
+                        {"存款", "$"..formatMoney(players.get_bank(pid))}
                     }
                 },
                 {
                     width = total_w/2,
                     content =
                     {
-                        {"Language", ({"English","French","German","Italian","Spanish","Brazilian","Polish","Russian","Korean","Chinese (T)","Japanese","Mexican","Chinese (S)"})[players.get_language(pid) + 1]},
-                        {"Controller", boolText(players.is_using_controller(pid))},
-                        {"Ping", math.floor(NETWORK._NETWORK_GET_AVERAGE_LATENCY_FOR_PLAYER(pid) + 0.5).." ms"},
-                        {"Host Queue", "#"..players.get_host_queue_position(pid)},
+                        {"语言", ({"英语","法语","德语","意大利语","Spanish","葡萄牙语(巴西)","波兰语","俄语","韩语","繁体中文","日语","西班牙语(墨西哥)","简体中文"})[players.get_language(pid) + 1]},
+                        {"手柄", boolText(players.is_using_controller(pid))},
+                        {"延迟", math.floor(NETWORK._NETWORK_GET_AVERAGE_LATENCY_FOR_PLAYER(pid) + 0.5).." ms"},
+                        {"主机令牌", "#"..players.get_host_queue_position(pid)},
                     }
                 },
                 {
                     width = total_w + spacing_x,
                     content =
                     {
-                        {"Model", util.reverse_joaat(ENTITY.GET_ENTITY_MODEL(ped))},
-                        {"Zone", util.get_label_text(ZONE.GET_NAME_OF_ZONE(player_pos.x, player_pos.y, player_pos.z))},
-                        {"Weapon", hashToWeapon(WEAPON.GET_SELECTED_PED_WEAPON(ped))},
-                        {"Vehicle", checkValue(util.get_label_text(players.get_vehicle_model(pid)))}
+                        {"模型", util.reverse_joaat(ENTITY.GET_ENTITY_MODEL(ped))},
+                        {"地区", util.get_label_text(ZONE.GET_NAME_OF_ZONE(player_pos.x, player_pos.y, player_pos.z))},
+                        {"武器", hashToWeapon(WEAPON.GET_SELECTED_PED_WEAPON(ped))},
+                        {"载具", checkValue(util.get_label_text(players.get_vehicle_model(pid)))}
                     }
                 },
                 {
                     width = total_w/2,
                     content =
                     {
-                        {"Distance", math.floor(MISC.GET_DISTANCE_BETWEEN_COORDS(player_pos.x, player_pos.y, player_pos.z, my_pos.x, my_pos.y, my_pos.z)).." m"},
-                        {"Speed", math.floor(ENTITY.GET_ENTITY_SPEED(ped) * 3.6).." km/h"},
-                        {"Going", ({"North","West","South","East","North"})[math.ceil((heading + 45)/90)]..", "..math.ceil(heading).."°"}
+                        {"距离", math.floor(MISC.GET_DISTANCE_BETWEEN_COORDS(player_pos.x, player_pos.y, player_pos.z, my_pos.x, my_pos.y, my_pos.z)).." m"},
+                        {"速度", math.floor(ENTITY.GET_ENTITY_SPEED(ped) * 3.6).." km/h"},
+                        {"方向", ({"北","西","南","东","北"})[math.ceil((heading + 45)/90)]..", "..math.ceil(heading).."度"}
                     }
                 },
                 {
                     width = total_w/2,
                     content =
                     {
-                        {"Organization", ({"None","CEO","MC"})[players.get_org_type(pid) + 2]},
-                        {"Wanted", PLAYER.GET_PLAYER_WANTED_LEVEL(pid).."/5"},
-                        {"Cutscene", boolText(NETWORK.IS_PLAYER_IN_CUTSCENE(pid))}
+                        {"组织", ({"无","保镖事务所","摩托帮"})[players.get_org_type(pid) + 2]},
+                        {"通缉", PLAYER.GET_PLAYER_WANTED_LEVEL(pid).."/5星"},
+                        {"过场动画中", boolText(NETWORK.IS_PLAYER_IN_CUTSCENE(pid))}
                     }
                 },
                 {
                     width = total_w + spacing_x,
                     content =
                     {
-                        {"Tags", checkValue(players.get_tags_string(pid))}
+                        {"标签", checkValue(players.get_tags_string(pid))}
                     }
                 }
             }

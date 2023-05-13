@@ -40,7 +40,7 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '5.03'
+GT_version = '5.07'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -53,7 +53,7 @@ bbtct = "如果您打开脚本后无法正常使用，例如不显示内容，�
 Name_info = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
 gtoast("欢迎使用GRANDTOURINGVIP!\n \n当前版本 " .. GT_version .. " 欢迎 ".. Name_info .."\n" .. "\n" .. "进群获取最新版本...\n" .. "\n" .. "祝您游戏愉快儿 :)")
 util.show_corner_help("~b~~h~GRANDTOURINGVIP " .. GT_version .. "  ~q~ \n~r~我们的脚本完全免费\n~q~加入QQ群:238394690\n~y~免费获得最新版本")
-if SCRIPT_MANUAL_START then
+--[[if SCRIPT_MANUAL_START then
 scaleform_thread = util.create_thread(function (thr)
 scaleForm = GRAPHICS.REQUEST_SCALEFORM_MOVIE("POPUP_WARNING")
 GRAPHICS.DRAW_RECT(-1, .5, 1, -1, 255, 158, 177, 255)
@@ -65,7 +65,7 @@ GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("~h~~r~∑~y~G~g~R
 GRAPHICS.END_SCALEFORM_MOVIE_METHOD(scaleForm)
 starttime = os.time()
 while true do
-if os.time() - starttime >= 5 then
+if os.time() - starttime >= 3 then
 util.stop_thread()
 end
 if GRAPHICS.HAS_SCALEFORM_MOVIE_LOADED(scaleForm) then
@@ -74,12 +74,12 @@ end
 wait(0)
 end
 end)
-end
+end]]
 --
 function toFloat(num)
 return (num / 10) * 10
 end
-
+--
 function SETUP_SINGLE_LINE(scaleform)
 	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SETUP_SINGLE_LINE")
 	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
@@ -2020,7 +2020,7 @@ TTPos = ENTITY.GET_ENTITY_COORDS(TTPed, true)
 hud_rgb_index = 1
 hud_rgb_colors = {6, 18, 9}
 cTime = util.current_time_millis
-Version = "5.03"
+Version = "5.07"
 
 function give_car_addon(pid, hash, center, ang)
     local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
@@ -4739,6 +4739,7 @@ function kill_player(pid)
     local entity = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local coords = ENTITY.GET_ENTITY_COORDS(entity, true)
     FIRE.ADD_EXPLOSION(coords['x'], coords['y'], coords['z'] + 2, 7, 1000, false, true, 0)
+    menu.trigger_commands("kill" .. players.get_name(pid))
 end
 
 protected_area_radius = 100
@@ -8143,7 +8144,799 @@ function set_carvis(index)
     selectedOpt = index
 end
 
-
+--封号斗罗
+function kongzhihk(toggle)
+    local radius = 0.3
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.97, c.x + x2, c.y + y2, c.z-0.95, 255, 255, 255, 255)
+    end
+    end
+    
+    function kongzhiha(toggle)
+    local radius = 0.31
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.97, c.x + x2, c.y + y2, c.z-0.97, 255, 255, 255, 255)
+    end
+    end
+    
+    function kongzhihb(toggle)
+    local radius = 0.32
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.97, c.x + x2, c.y + y2, c.z-0.97, 255, 255, 255, 255)
+    end
+    end
+    
+    function kongzhihc(toggle)
+    local radius = 0.33
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.97, c.x + x2, c.y + y2, c.z-0.97, 255, 255, 255, 255)
+    end
+    end
+    
+    function kongzhihd(toggle)
+    local radius = 0.34
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.97, c.x + x2, c.y + y2, c.z-0.97, 255, 255, 255, 255)
+    end
+    end
+    
+    function hunhuan(toggle)
+    kongzhihk()
+    kongzhiha()
+    kongzhihb()
+    kongzhihc()
+    kongzhihd()
+    end
+    
+    function kongzhikk(toggle)
+    local radius = 0.5
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.95, c.x + x2, c.y + y2, c.z-0.95, 255, 255, 0, 255)
+    end
+    end
+    
+    function kongzhika(toggle)
+    local radius = 0.51
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.95, c.x + x2, c.y + y2, c.z-0.95, 255, 255, 0, 255)
+    end
+    end
+    
+    function kongzhikb(toggle)
+    local radius = 0.52
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.95, c.x + x2, c.y + y2, c.z-0.95, 255, 255, 0, 255)
+    end
+    end
+    
+    function kongzhikc(toggle)
+    local radius = 0.53
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.95, c.x + x2, c.y + y2, c.z-0.95, 255, 255, 0, 255)
+    end
+    end
+    
+    function kongzhikd(toggle)
+    local radius = 0.54
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.95, c.x + x2, c.y + y2, c.z-0.95, 255, 255, 0, 255)
+    end
+    end
+    
+    function hunhuan1(toggle)
+    kongzhikk()
+    kongzhika()
+    kongzhikb()
+    kongzhikc()
+    kongzhikd()
+    end
+    
+    function kongzhiak(toggle)
+    local radius = 0.7
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.90, c.x + x2, c.y + y2, c.z-0.90, 150, 50, 200, 255)
+    end
+    end
+    
+    function kongzhiba(toggle)
+    local radius = 0.71
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.90, c.x + x2, c.y + y2, c.z-0.90, 150, 50, 200, 255)
+    end
+    end
+    
+    function kongzhicb(toggle)
+    local radius = 0.72
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.90, c.x + x2, c.y + y2, c.z-0.90, 150, 50, 200, 255)
+    end
+    end
+    
+    function kongzhidc(toggle)
+    local radius = 0.73
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.90, c.x + x2, c.y + y2, c.z-0.90, 150, 50, 200, 255)
+    end
+    end
+    
+    function kongzhied(toggle)
+    local radius = 0.74
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.90, c.x + x2, c.y + y2, c.z-0.90, 150, 50, 200, 255)
+    end
+    end
+    
+    function hunhuan2(toggle)
+    kongzhiak()
+    kongzhiba()
+    kongzhicb()
+    kongzhidc()
+    kongzhied()
+    end
+    
+    function kongzhiaa(toggle)
+    local radius = 0.9
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.8, c.x + x2, c.y + y2, c.z-0.8, 0, 0, 0, 255)
+    end
+    end
+    
+    function kongzhibb(toggle)
+    local radius = 0.91
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.8, c.x + x2, c.y + y2, c.z-0.8, 0, 0, 0, 255)
+    end
+    end
+    
+    function kongzhicc(toggle)
+    local radius = 0.92
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.8, c.x + x2, c.y + y2, c.z-0.8, 0, 0, 0, 255)
+    end
+    end
+    
+    function kongzhidd(toggle)
+    local radius = 0.93
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.8, c.x + x2, c.y + y2, c.z-0.8, 0, 0, 0, 255)
+    end
+    end
+    
+    function kongzhiee(toggle)
+    local radius = 0.94
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.8, c.x + x2, c.y + y2, c.z-0.8, 0, 0, 0, 255)
+    end
+    end
+    
+    function hunhuan3(toggle)
+    kongzhiaa()
+    kongzhibb()
+    kongzhicc()
+    kongzhidd()
+    kongzhiee()
+    end
+    
+    function honga(toggle)
+    local radius = 1.2
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.7, c.x + x2, c.y + y2, c.z-0.7, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongb(toggle)
+    local radius = 1.21
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.7, c.x + x2, c.y + y2, c.z-0.7, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongc(toggle)
+    local radius = 1.22
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.7, c.x + x2, c.y + y2, c.z-0.7, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongd(toggle)
+    local radius = 1.23
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.7, c.x + x2, c.y + y2, c.z-0.7, 255, 0, 0, 255)
+    end
+    end
+    
+    function honge(toggle)
+    local radius = 1.24
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.7, c.x + x2, c.y + y2, c.z-0.7, 255, 0, 0, 255)
+    end
+    end
+    
+    function hunhuan4(toggle)
+    honga()
+    hongb()
+    hongc()
+    hongd()
+    honge()
+    end
+    
+    function hongaa(toggle)
+    local radius = 1.5
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.5, c.x + x2, c.y + y2, c.z-0.5, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongbb(toggle)
+    local radius = 1.51
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.5, c.x + x2, c.y + y2, c.z-0.5, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongcc(toggle)
+    local radius = 1.52
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.5, c.x + x2, c.y + y2, c.z-0.5, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongdd(toggle)
+    local radius = 1.53
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.5, c.x + x2, c.y + y2, c.z-0.5, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongee(toggle)
+    local radius = 1.54
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.5, c.x + x2, c.y + y2, c.z-0.5, 255, 0, 0, 255)
+    end
+    end
+    
+    function hunhuan5(toggle)
+    hongaa()
+    hongbb()
+    hongcc()
+    hongdd()
+    hongee()
+    end
+    
+    function hongaaa(toggle)
+    local radius = 1.7
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.3, c.x + x2, c.y + y2, c.z-0.3, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongbbb(toggle)
+    local radius = 1.71
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.3, c.x + x2, c.y + y2, c.z-0.3, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongccc(toggle)
+    local radius = 1.72
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.3, c.x + x2, c.y + y2, c.z-0.3, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongddd(toggle)
+    local radius = 1.73
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.3, c.x + x2, c.y + y2, c.z-0.3, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongeee(toggle)
+    local radius = 1.74
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.3, c.x + x2, c.y + y2, c.z-0.3, 255, 0, 0, 255)
+    end
+    end
+    
+    function hunhuan6(toggle)
+    hongaaa()
+    hongbbb()
+    hongccc()
+    hongddd()
+    hongeee()
+    end
+    
+    function hongaaaa(toggle)
+    local radius = 1.9
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.1, c.x + x2, c.y + y2, c.z-0.1, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongbbbb(toggle)
+    local radius = 1.91
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.1, c.x + x2, c.y + y2, c.z-0.1, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongcccc(toggle)
+    local radius = 1.92
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.1, c.x + x2, c.y + y2, c.z-0.1, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongdddd(toggle)
+    local radius = 1.93
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.1, c.x + x2, c.y + y2, c.z-0.1, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongeeee(toggle)
+    local radius = 1.94
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.1, c.x + x2, c.y + y2, c.z-0.1, 255, 0, 0, 255)
+    end
+    end
+    
+    function hunhuan7(toggle)
+    hongaaaa()
+    hongbbbb()
+    hongcccc()
+    hongdddd()
+    hongeeee()
+    end
+    
+    function hongaaaaa(toggle)
+    local radius = 2.2
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z+0.1, c.x + x2, c.y + y2, c.z+0.1, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongbbbbb(toggle)
+    local radius = 2.21
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z+0.1, c.x + x2, c.y + y2, c.z+0.1, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongccccc(toggle)
+    local radius = 2.22
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z+0.1, c.x + x2, c.y + y2, c.z+0.1, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongddddd(toggle)
+    local radius = 2.23
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z+0.1, c.x + x2, c.y + y2, c.z+0.1, 255, 0, 0, 255)
+    end
+    end
+    
+    function hongeeeee(toggle)
+    local radius = 2.24
+    local numSegments = 100 
+    local segmentAngle = 360 / numSegments 
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z+0.1, c.x + x2, c.y + y2, c.z+0.1, 255, 0, 0, 255)
+    end
+    end
+    
+    function hunhuan8(toggle)
+    hongaaaaa()
+    hongbbbbb()
+    hongccccc()
+    hongddddd()
+    hongeeeee()
+    end
+--FUCK YOU
 speed = 6
 function do_vehicle_fly() 
     veh = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false);
@@ -8205,7 +8998,74 @@ function do_vehicle_fly()
 end
 
 --杂项
+--原创功能 缝合死妈
+function hengfugt(f)
+    starttime = os.time()
+    local startX = -0.5
+    local endX = 0.5
+    local speed = 0.002
+    hfgt = f
+    while hfgt do
+        wait()
+        startX = startX + speed
+        endX = endX + speed
+        if startX >= 0.5 then
+            startX = -0.5
+            endX = 0.5
+        end
+        GRAPHICS.DRAW_RECT(.5, .5, 1, 0.05, 150, 50, 200, 255)
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.085, 0.10)
+        HUD.SET_TEXT_SCALE(0.5, 0.4)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~检测到皇榜会员 " .. playerid .. " 正在该战局")
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.485)
 
+        if os.time() - starttime >= 8 then
+        hfgt = false
+        return
+        end
+        end
+        --hfgt = false
+    end
+--开发横幅
+function devhengfu(f)
+    starttime = os.time()
+    local startX = -0.5
+    local endX = 0.5
+    local speed = 0.002
+    devhf = f
+    while devhf do
+        wait()
+        startX = startX + speed
+        endX = endX + speed
+        if startX >= 0.5 then
+            startX = -0.5
+            endX = 0.5
+        end
+        
+        GRAPHICS.DRAW_RECT(.5, .5, 1, 0.05, 255, 90, 160, 255)
+        GRAPHICS.DRAW_RECT(.5, .51, 1, 0.05, 255, 160, 190, 255)
+        GRAPHICS.DRAW_RECT(.5, .53, 1, 0.011, 255, 90, 160, 255)
+
+
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.085, 0.10)
+        HUD.SET_TEXT_SCALE(0.5, 0.45)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~GTLua开发人员 " .. playerrid .. " 目前在你的战局")
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.485)
+        
+        if os.time() - starttime >= 8 then
+        devhf = false
+        end
+        end
+        --devhf = false
+    end
 --入侵载具
 function control_vehicle(pid, output_toast, callback, opts)
     local vehicle = ent_func.get_player_vehicle_in_control(pid, opts)
@@ -8219,7 +9079,61 @@ function control_vehicle(pid, output_toast, callback, opts)
         return false
     end
 end
-
+--启动页面3
+function huanyingjiemian(f) 
+    local rainbowr = 255
+    local rainbowg = 255
+    local rainbowb = 255
+    local startX = 0.5     
+    local endX = 0.5      
+    local startY = -0.1     
+    local endY = 0.01 
+    local speed = 0.001
+    hfgt = f
+    local timer = os.clock() 
+    while hfgt and os.clock() - timer <= 4 do 
+        wait()
+        startY = startY + speed 
+        endY = endY + speed 
+        if startY >= 0.3 then
+            startY = -0.1
+            endY = -0.1
+        end
+        rainbowr = rainbowr + math.random(0, 8)
+        rainbowg = rainbowg + math.random(0, 8)
+        rainbowb = rainbowb + math.random(0, 8)
+        if rainbowr > 255 then
+        rainbowr = rainbowr - 255
+        end
+        if rainbowg > 255 then
+        rainbowg = rainbowg - 255
+        end
+        if rainbowb > 255 then
+        rainbowb = rainbowb - 255
+        end
+        GRAPHICS.DRAW_RECT(startX, startY + 0.23, 1, 0.2, 150, 50, 200, 150)
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.085, 0.10)
+        HUD.SET_TEXT_SCALE(0.5, 2)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        HUD.SET_TEXT_COLOUR(rainbowr, rainbowg, rainbowb, 255)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~GRANDTOURINGVIP")
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX, startY + 0.15) 
+    end
+end
+--hundouluo
+function hunhuan9()
+hunhuan()
+hunhuan1()
+hunhuan2()
+hunhuan3()
+hunhuan4()
+hunhuan5()
+hunhuan6()
+hunhuan7()
+hunhuan8()
+end
 --强制云保存
 function savedata()
     menu.trigger_commands("forcecloudsave")
@@ -8240,7 +9154,7 @@ end
 -------------玩家崩溃---------------
 ------------------------------------
 function fireworkcrash(PlayerID)
-    notification("正在引导...")
+    notification("寂寞陪伴着他们...")
     local cord = getEntityCoords(getPlayerPed(PlayerID))
     local object = entities.create_object(util.joaat("docktrailer"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
     local object = entities.create_object(util.joaat("docktug"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
@@ -8274,8 +9188,27 @@ function fireworkcrash(PlayerID)
     util.yield(300)
     MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(cord.x, cord.y, cord.z + 1, cord.x, cord.y, cord.z, 0, true, util.joaat("weapon_heavysniper_mk2"), players.user_ped(), false, true, 1.0)
     ENTITY.DETACH_ENTITY(object, object)
-    --entities.delete_by_handle(object)
-    util.toast("为您防止了一个崩溃 (模型碰撞冲突)")
+
+    local stupid_pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)) stupid_pos.x = stupid_pos.x - 2
+    util.create_thread(function ()
+        local object = entities.create_object(util.joaat("apa_mp_apa_yacht_jacuzzi_ripple2"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local mod_vel = {-692292317,-1323100960,4244420235,444583674,184361638,642617954,586013744,920453016,3186376089,1030400667,240201337,
+    1492612435, 3517794615, 3889340782, 3253274834,970385471, 2336777441, 184361638, 1030400667, 920453016, 240201337, 642617954, 
+    586013744, 868868440, 1550581940, 3334677549, 3186376089,0xc5dd6967,0x58f77553,0x1446590a}
+    for _spawn, value in pairs(mod_vel) do
+    local s = {}
+    for i = 1, 10, 1 do  
+    s[_spawn] = CreateVehicle(value,stupid_pos,0)
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(Entity, true, false)
+    wait(0)
+    end
+    end
+    wait(0)
+    local ar_vs = entities.get_all_vehicles_as_handles()
+    for key, value in pairs(ar_vs) do
+    entities.delete_by_handle(value)
+    end
+    end,nil)
 end
 
 function rocketkoko(PlayerID)
@@ -8330,7 +9263,6 @@ function weedfire(PlayerID)
         util.yield(10)
     end
 end
-
 --
 function spawn_vehicle(hash,pos,isGodMode,isFreeze)
     STREAMING.REQUEST_MODEL(hash)
@@ -12472,7 +13404,7 @@ end
 function blocksomewhere()
     local dir = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 5.0, 0)
     GRAPHICS._DRAW_SPHERE(dir.x, dir.y, dir.z, 0.3, 52, 144, 233, 0.5)
-    if JSkey.is_key_down('VK_B') then
+    if K.is_key_down('VK_B') then
         if blockInProgress then util.toast('一个阻挡已经在运行') return end
         setBlockStatus(true)
         block({dir.x, dir.y, dir.z - 0.6})
@@ -14213,19 +15145,19 @@ extraZoom2 = 0
 modifiedAimFov = {}
 ---@diagnostic disable-next-line: undefined-global
 function gunzoom()
-    JSkey.disable_control_action(0, 'INPUT_SNIPER_ZOOM_IN_ONLY')
-        JSkey.disable_control_action(0, 'INPUT_SNIPER_ZOOM_OUT_ONLY')
+    K.disable_control_action(0, 'INPUT_SNIPER_ZOOM_IN_ONLY')
+        K.disable_control_action(0, 'INPUT_SNIPER_ZOOM_OUT_ONLY')
 
-        if not JSkey.is_control_pressed(0, 'INPUT_AIM') then
+        if not K.is_control_pressed(0, 'INPUT_AIM') then
             extraZoom2 = 0
             return
         end
 
         local step = if extraZoom2 > 60 or extraZoom2 < -5 then 3 else 6
 
-        if not (extraZoom2 <= -35) and JSkey.is_disabled_control_just_pressed(0, 'INPUT_SNIPER_ZOOM_IN_ONLY') then
+        if not (extraZoom2 <= -35) and K.is_disabled_control_just_pressed(0, 'INPUT_SNIPER_ZOOM_IN_ONLY') then
             extraZoom2 -= step
-        elseif not (extraZoom2 >= 100) and JSkey.is_disabled_control_just_pressed(0, 'INPUT_SNIPER_ZOOM_OUT_ONLY') then
+        elseif not (extraZoom2 >= 100) and K.is_disabled_control_just_pressed(0, 'INPUT_SNIPER_ZOOM_OUT_ONLY') then
             extraZoom2 += step
         end
 
@@ -15865,7 +16797,7 @@ function expaniamlgun(toggle)
         if weaponType == 3 or (weaponType == 5 and WEAPON.GET_WEAPONTYPE_GROUP(weaponHash) != 1548507267) then --weapons that shoot bullets or explosions and isn't in the throwables category (grenades, proximity mines etc...)
             disable_firing = true
             disableFiringLoop()
-            if JSkey.is_disabled_control_pressed(2, 'INPUT_ATTACK') and PLAYER.IS_PLAYER_FREE_AIMING(players.user_ped()) then
+            if K.is_disabled_control_pressed(2, 'INPUT_ATTACK') and PLAYER.IS_PLAYER_FREE_AIMING(players.user_ped()) then
                 util.create_thread(function()
                     local hash = util.joaat(exp_animal)
                     loadModel(hash)
@@ -15922,7 +16854,7 @@ local flameThrower = {
 }
 
 function flamegun()
-    if WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped()) != 1119849093 or not JSkey.is_control_pressed(2, 'INPUT_AIM') then
+    if WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped()) != 1119849093 or not K.is_control_pressed(2, 'INPUT_AIM') then
         if not flameThrower.ptfx then return end
 
         GRAPHICS.REMOVE_PARTICLE_FX(flameThrower.ptfx, true)
@@ -20618,7 +21550,7 @@ function Zoom_map(value)
 end
 
 function disableNumpad()
-    if not menu.is_open() or JSkey.is_key_down('VK_LBUTTON') or JSkey.is_key_down('VK_RBUTTON') then return end
+    if not menu.is_open() or K.is_key_down('VK_LBUTTON') or K.is_key_down('VK_RBUTTON') then return end
     for _, control in pairs(numpadControls) do
         PAD.DISABLE_CONTROL_ACTION(2, control, true)
     end

@@ -1,4 +1,47 @@
 
+----列车选项
+models = {
+    util.joaat("metrotrain"), 
+    util.joaat("freight"), 
+    util.joaat("freightcar"), 
+    util.joaat("freightcont1"), 
+    util.joaat("freightcont2"), 
+    util.joaat("freightgrain"), 
+    util.joaat("tankercar")
+}
+variations = {
+    "Variation 1", "Variation 2", "Variation 3", 
+    "Variation 4", "Variation 5", "Variation 6", 
+    "Variation 7", "Variation 8", "Variation 9", 
+    "Variation 10", "Variation 11", "Variation 12", 
+    "Variation 13", "Variation 14", "Variation 15", 
+    "Variation 16", "Variation 17", "Variation 18", 
+    "Variation 19", "Variation 20", "Variation 21", "Variation 22"
+}
+
+----在车内生成NPC
+some_ped_list = {
+    "a_m_m_bevhills_02",    --1
+    "a_m_m_business_01",    --2
+    "a_m_m_bevhills_01",    --3
+    "a_m_m_farmer_01",      --4
+    "a_m_m_paparazzi_01",   --5
+    "a_m_m_prolhost_01",    --6
+    "a_m_m_stlat_02"        --7
+}
+
+
+----移动笼子
+kidnap_types = {"卡车", "直升机"}
+
+
+----力场pro
+s_forcefield_names = {
+    [0] = "推",
+    [1] = "发射",
+    [2] = "拉"
+}
+
 
 -----保镖直升机
 heli_list = {} --生成的直升机
@@ -935,40 +978,22 @@ cageModels =
     }
 
 ------载具枪
-Objn = {
-    '义警',
-    '天煞',
-    'Ramp Buggy',
-    '尖锥魅影',
+Objoptions_all = {
+    "灵蛇",
+    "天煞",
+    "叛乱分子",
+    "尖锥魅影",
     'BR8',
-    'Topless Female',
-    'Naked Cultist',
-    'Go kart',
-    'Space Docker',
-    'P-996 LAZER',
-    'Dildo',
-    'Christmas Tree',
-    'Trash Can',
-    'Yule Monster',
-    'Rabbit',
-    'Furry',
+    '丁卡',
+    '太空码头工',
 }
-Objl = {
-    'vigilante',
-    'lazer',
-    'dune4',
-    'phantom2',
+Objvehicles = {
+	"adder",
+	"lazer",
+	"insurgent2",
+	"phantom2",
     'openwheel1',
-    'a_f_y_topless_01',
-    'a_m_m_acult_01',
     'veto',
     'dune2',
-    'lazer',
-    'prop_cs_dildo_01',
-    'xm_prop_x17_xmas_tree_int',
-    'prop_barrel_03d',
-    'U_M_M_YuleMonster',
-    'A_C_Rabbit_02',
-    'IG_Furry',
 }
 ----------------------

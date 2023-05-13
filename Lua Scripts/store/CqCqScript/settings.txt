@@ -1,1 +1,0 @@
-hide_name_on_script_startup=false

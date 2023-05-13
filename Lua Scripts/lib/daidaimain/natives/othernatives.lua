@@ -3,6 +3,7 @@ AUDIO1={
 }
 
 VEHICLE1={
+    ["_SET_VEHICLE_CONTROLS_INVERTED"]=function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] state)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_bool(state);native_invoker.end_call("5B91B229243351A8");end,
     ["SET_VEHICLE_SHOOT_AT_TARGET"]=function(...)return native_invoker.uno_void(0x74CD9A9327A282EA,...)end,
     ["_SET_VEHICLE_XENON_LIGHTS_COLOR"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[int]] colorIndex)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_int(colorIndex);native_invoker.end_call("E41033B25D003A07");end,
     ["_SET_VEHICLE_NEON_LIGHTS_COLOUR"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[int]] r,--[[int]] g,--[[int]] b)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_int(r);native_invoker.push_arg_int(g);native_invoker.push_arg_int(b);native_invoker.end_call("8E0A582209A62695");end,
@@ -21,6 +22,7 @@ WEAPON1={
 }
 
 ENTITY1={
+    ["_SET_ENTITY_CLEANUP_BY_ENGINE"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.push_arg_bool(toggle);native_invoker.end_call("3910051CCECDB00C");end,
     ["_ATTACH_ENTITY_BONE_TO_ENTITY_BONE"]=function(--[[Entity (int)]] entity1,--[[Entity (int)]] entity2,--[[int]] boneIndex1,--[[int]] boneIndex2,--[[BOOL (bool)]] p4,--[[BOOL (bool)]] p5)native_invoker.begin_call();native_invoker.push_arg_int(entity1);native_invoker.push_arg_int(entity2);native_invoker.push_arg_int(boneIndex1);native_invoker.push_arg_int(boneIndex2);native_invoker.push_arg_bool(p4);native_invoker.push_arg_bool(p5);native_invoker.end_call("5C48B75732C8456C");end,
     ["DOES_ENTITY_EXIST"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x7239B21A38F536BA)return native_invoker.get_return_value_bool()end,
     ["_GET_ENTITY_BONE_POSITION_2"]=--[[Vector3 (vector3)]] function(--[[Entity (int)]] entity,--[[int]] boneIndex)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.push_arg_int(boneIndex);native_invoker.end_call("46F8696933A63C9B");return native_invoker.get_return_value_vector3();end,
@@ -51,6 +53,7 @@ NETWORK1={
 }
 
 GRAPHICS1={
+    ["_DRAW_SPHERE"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[int]] red,--[[int]] green,--[[int]] blue,--[[float]] alpha)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.push_arg_float(z);native_invoker.push_arg_float(radius);native_invoker.push_arg_int(red);native_invoker.push_arg_int(green);native_invoker.push_arg_int(blue);native_invoker.push_arg_float(alpha);native_invoker.end_call("799017F9E3B10112");end,
     ["_SET_FORCE_VEHICLE_TRAILS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("4CC7F0FEA5283FE0");end,
     ["_SET_FORCE_PED_FOOTSTEPS_TRACKS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("AEEDAD1420C65CC0");end,
     ["REQUEST_NAMED_PTFX_ASSET"]=function(...)return native_invoker.uno_void(0xB80D8756B4668AB6,...)end,

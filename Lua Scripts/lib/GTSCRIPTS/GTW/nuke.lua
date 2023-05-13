@@ -102,7 +102,7 @@ function ent_func.get_player_vehicle_in_control(pid, options)
 
     --if you were not spectating before you turn off spectating
     if not is_spectating then
-      menu.trigger_commands("spectate" .. players.get_name(pid) .. " off")
+        menu.trigger_commands("spectate" .. players.get_name(pid) .. " off")
     end
 
     --return the controlled vehicle--

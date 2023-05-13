@@ -13,5 +13,6 @@ blacklistplayers={
     "Non_toxic_baby",
     "dekerniuzai",
     "Yolincar",
-    "lihaibin241"
+    "lihaibin241",
+    "movingbush12"
 }

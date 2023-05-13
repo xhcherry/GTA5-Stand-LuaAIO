@@ -677,7 +677,7 @@ function JSkey.get_disabled_control_unbound_normal(controlType, control)
 end
 
 function JSkey.get_control_instructional_button(controlType, control)
-    return PAD.GET_CONTROL_INSTRUCTIONAL_BUTTON(controlTypes[controlType] or controlType, controls[control] or control, true --[[unused variable]])
+    return PAD.GET_CONTROL_INSTRUCTIONAL_BUTTONS_STRING(controlTypes[controlType] or controlType, controls[control] or control, true --[[unused variable]])
 end
 
 function JSkey.get_control_group_instructional_button(controlType, control)
