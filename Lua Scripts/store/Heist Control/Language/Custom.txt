@@ -1,18 +1,15 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 03/22/2023 09:45:33 PM
-# Heist Control Version: V 3.2.4
+# Generated Date: 05/08/2023 10:08:57 PM
+# Heist Control Version: V 3.3.0
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
 # You can use all characters except '=' character.
 # Using '#' character means the line will be ignored.
-# If you want to release your own translation officially, please contact to the developer of Heist Control in its Discord server.
-# Learn more: https://icedoomfist.com/Stand_Heist_Control/How_To_Translate/
-
+# Please join the Discord Server for Heist Control if you don't know how to translate.
 
 Heist Control = Heist Control
-Announcement = Announcement
 Hard = Hard
 Normal = Normal
 Notification = Notification
@@ -145,7 +142,6 @@ Unlock Awards = Unlock Awards
 Unlock Animal Masks = Unlock Animal Masks
 Unlock DJ Pooh Shirts = Unlock DJ Pooh Shirts
 Buildings = Buildings
-Arcade Unlockers = Arcade Unlockers
 Casino Store Ace Masks = Casino Store Ace Masks
 Missions = Missions
 Unlock Yacht Missions = Unlock Yacht Missions
@@ -185,7 +181,6 @@ Ratio of Jackpot and Loss = Ratio of Jackpots to Losses
 Heist Cooldown Timer = Heist Cooldown Timers
 Use Stand's Overlay = Use Stand's Overlay
 Disabled: Use Heist Control's Overlay & Settings = Disabled: Use Heist Control's Overlay & Settings
-Work only to hostile peds = Only affect hostile peds
 Peds = Peds
 Remove Weapons = Remove Weapons
 Delete = Delete
@@ -233,7 +228,6 @@ Note: MP0_ or MP1_ will be selected by HC automatically, therefore don't write i
 Custom Stat Reader = Custom Stat Reader
 Copy Stat Value = Copy Stat Value
 Read Stat = Read Stat
-How To Translate = How To Translate
 Language = Language
 Settings = Settings
 In-Game = In-Game
@@ -259,10 +253,8 @@ Text Color = Text Color
 About HC = About HC
 Join Discord Server! = Join Discord Server!
 Youtube = Youtube
-Tutorial = Tutorial
 Changelog = Changelog
 Credits = Credits
-Let me know about stats info. = Let me know about stat's names
 Translators = Translators
 Maintains HC's translation = Maintains HC's translation
 [NOT WORKING] = [NOT WORKING]
@@ -374,13 +366,11 @@ Pants / Caps / Hats = Pants / Caps / Hats
 Earphones / Masks / Tech Demon = Earphones / Masks / Tech Demon
 Shoes (Sliders) / Tiger = Shoes (Sliders) / Tiger
 Drug War DLC = Drug War DLC
-Unlock Arcade Trophies and Toys = Unlock Arcade Trophies and Toys
 Acid Lab Equipment Upgrade = Acid Lab Equipment Upgrade
 Unlock Nightclub Awards = Unlock Nightclub Awards
 Make sure click before buying. When you change your session, will be changed to non-unlocked status. = Make sure click before buying. When you change your session, will be changed to non-unlocked status.
 Add Cosmetic Decorations To The Office/MC = Add Cosmetic Decorations To The Office/MC
 To apply, sell special crate or vehicle cargo and change your session! = To apply, sell special crate or vehicle cargo and change your session!
-Cayo Perico Unlockables = Cayo Perico Unlockables
 Unlock Taxi Missions = Unlock Taxi Missions
 Unlock All Contacts = Unlock All Contacts
 Skip Lamar Missions To The Last One = Skip Lamar Missions To The Last One
@@ -446,8 +436,6 @@ Enabled: Use Stand's Overlay & Settings: Game > Info Overlay = Enabled: Use Stan
 Set Custom Time (Seconds) = Set Custom Time (Seconds)
 Custom Timer = Custom Timer
 Manage Nearby Peds And Cams = Manage Nearby Peds And Cams
-Enabled: Ped options will only affect hostile peds = Enabled: Ped options will only affect hostile peds
-Disabled: Ped options will affect all peds = Disabled: Ped options will affect all peds
 Shoot = Shoot
 Cameras = Cameras
 Stat Spoofing = Stat Spoofing
@@ -485,17 +473,10 @@ This action will take a few seconds. Please wait for it patiently, don't press m
 - Total number of translations: = - Total number of translations:
 - Number of not modified translations: = - Number of not modified translations:
 - Number of modified (updated) translations: = - Number of modified (updated) translations:
-Always looking for translators for non-existing languages. If you're interested in translating HC, click! = Always looking for translators for non-existing languages. If you're interested in translating HC, click!
 Notification's Style = Notification's Style
 Type = Type
 Heist Control for 2Take1 Developer. He allowed me to use his code. HC wouldn't exist without his help. Serious thanks to him! = Heist Control for 2Take1 Developer. He allowed me to use his code. HC wouldn't exist without his help. Serious thanks to him!
-Creator of WiriScript which helped me code HC! = Creator of WiriScript which helped me code HC!
-Helped me with a lot of things for HC website's maintenance. = Helped me with a lot of things for HC website's maintenance.
-Helped me code the website's design. = Helped me code the website's design.
-Made the logo, banner and other images for HC. = Made the logo, banner and other images for HC.
-Get Support, Report Bugs and Enjoy Other Stuffs! = Get Support, Report Bugs and Enjoy Other Stuffs!
 Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D = Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D
-If you don't know how to use HC, click me! = If you don't know how to use HC, click me!
 If you want to know what was changed in the latest version, click me! = If you want to know what was changed in the latest version, click me!
 When using this method, the percentage and final payment will be random! = When using this method, the percentage and final payment will be random!
 Works On Both: Fingerprint and Keypad = Works On Both: Fingerprint and Keypad
@@ -558,7 +539,6 @@ Mid = Mid
 High = High
 Bypass Minimum And Maximum Percentage = Bypass Minimum And Maximum Percentage
 Only works if you are host of the heist. = Only works if you are host of the heist.
-Bypass minimum percentage 15(%) and maximum percentage 70(%). This feature will allow you set 0 ~ 100(%). = Bypass minimum percentage 15(%) and maximum percentage 70(%). This feature will allow you set 0 ~ 100(%).
 Successfully cancelled! = Successfully cancelled!
 Works unless you are in the casino. = Works unless you are in the casino.
 If you are in it, not required to use. Just use 'Auto Lucky Wheel' = If you are in it, not required to use. Just use 'Auto Lucky Wheel'
@@ -589,7 +569,6 @@ This feature has been controlled by another feature. = This feature has been con
 Select Primary Target = Select Primary Target
 Teleport Places = Teleport Places
 Kosatka: Heist Board = Kosatka: Heist Board
-$3.5 Millions For All Players = $3.5 Millions For All Players
 When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout. = When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout.
 Entrance Of Your Arcade = Entrance Of Your Arcade
 Note that works perfectly when no other players are in your session. = Note that works perfectly when no other players are in your session.
@@ -626,7 +605,6 @@ Remote Access: Agency App = Remote Access: Agency App
 Note that you don't have the app, some of functions won't work. = Note that you don't have the app, some of functions won't work.
 Open = Open
 Close = Close
-Keep Full Nightclub Population = Keep Full Nightclub Population
 Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader. = Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader.
 The best way to remove GTA Online banked money up to $2B at once! = The best way to remove GTA Online banked money up to $2B at once!
 Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you. = Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you.
@@ -730,3 +708,16 @@ Clearing a black box with white help texts where are left, above of the screen. 
 Can be used for getting targets slightly more fast. = Can be used for getting targets slightly more fast.
 Please make sure you can play ULP Missions now! = Please make sure you can play ULP Missions now!
 Unlock Clothing = Unlock Clothing
+Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist. = Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist.
+If the Heist Planning (Board 3) is empty, then please re-enable the preset that you enabled! = If the Heist Planning (Board 3) is empty, then please re-enable the preset that you enabled!
+It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts. = It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts.
+Skip Nightclub Setups = Skip Nightclub Setups
+Skip all of setups when you buy a Nightclub first: Equipment, Staff, and Collect DJ = Skip all of setups when you buy a Nightclub first: Equipment, Staff, and Collect DJ
+Unlock Arcade Awards = Unlock Arcade Awards
+Trophies, toys, and clothings are included. = Trophies, toys, and clothings are included.
+500+ unlocks are included, try and see how many clothes would be unlocked. = 500+ unlocks are included, try and see how many clothes would be unlocked.
+Club Work = Club Work
+Taze = Taze
+If you have any questions regarding Heist Control? Joining it will help you so much! = If you have any questions regarding Heist Control? Joining it will help you so much!
+- Download sharable customized translations and GTAHaXUI stat files. = - Download sharable customized translations and GTAHaXUI stat files.
+- Post a suggestion or an issue to improve Heist Control. = - Post a suggestion or an issue to improve Heist Control.

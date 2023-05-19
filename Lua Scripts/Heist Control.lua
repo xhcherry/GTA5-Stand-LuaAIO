@@ -54,7 +54,7 @@
 
     --- Important
 
-        HC_VERSION = "V 3.2.6"
+        HC_VERSION = "V 3.3.0"
         CODED_GTAO_VERSION = 1.66
         SUPPORTED_STAND_VERSION = 101 -- Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
 
@@ -230,6 +230,10 @@
         function SET_BIT(bits, place) -- Credit goes to WiriScript
             return (bits | (1 << place))
         end
+        function SET_GLOBAL_BIT(global, bit)
+            local Addr = memory.script_global(global)
+            memory.write_int(Addr, SET_BIT(memory.read_int(Addr), bit))
+        end
         function SET_LOCAL_BIT(script, script_local, bit)
             if memory.script_local(script, script_local) ~= 0 then
                 local Addr = memory.script_local(script, script_local)
@@ -241,7 +245,7 @@
     
     --- Folders and Log Functions
 
-        util.require_natives(1676318796)
+        util.require_natives(1681379138)
 
         for _, folder in pairs(FolderDirs) do
             if not filesystem.exists(folder) then
@@ -902,6 +906,8 @@
                     end
                     
                     menu.set_value(CP_REM_FEE, true)
+                    menu.set_value(CP_NON_HOST_CUT, 100)
+                    menu.set_value(CP_NON_HOST_CUT_LOOP, false)
                     menu.set_value(CP_HOST_CUT, 100)
                     menu.set_value(CP_HOST_CUT_LOOP, true)
                     menu.set_value(CP_2P_CUT, 145)
@@ -979,7 +985,7 @@
                                 CayoPresetLists[i][2] = true
                             end
                         end
-                        for i = 1, 2 do
+                        for i = 1, 3 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.set_help_text(ForCayoPresets[i][j][1], TRANSLATE("This feature has been controlled by another feature.") .. "\n" .. "- " .. menu.get_menu_name(CAYO_PRESETS) .. " > " .. menu.get_menu_name(menu.get_parent(AUTOAMTED_SOLO_SAPPHIRE)) .. " > " .. menu.get_menu_name(AUTOAMTED_SOLO_SAPPHIRE))
                             end
@@ -990,7 +996,7 @@
                                 CayoPresetLists[i][2] = false
                             end
                         end
-                        for i = 1, 2 do
+                        for i = 1, 3 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.apply_default_state(ForCayoPresets[i][j][1])
                                 menu.set_help_text(ForCayoPresets[i][j][1], ForCayoPresets[i][j][2])
@@ -1000,6 +1006,8 @@
 
                     while menu.get_value(AUTOAMTED_SOLO_SAPPHIRE) do
                         menu.set_value(CP_REM_FEE, false)
+                        menu.set_value(CP_NON_HOST_CUT, 100)
+                        menu.set_value(CP_NON_HOST_CUT_LOOP, false)
                         menu.set_value(CP_HOST_CUT, 100)
                         menu.set_value(CP_HOST_CUT_LOOP, true)
 
@@ -1056,7 +1064,7 @@
                                 CayoPresetLists[i][2] = true
                             end
                         end
-                        for i = 1, 2 do
+                        for i = 1, 3 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.set_help_text(ForCayoPresets[i][j][1], TRANSLATE("This feature has been controlled by another feature.") .. "\n" .. "- " .. menu.get_menu_name(CAYO_PRESETS) .. " > " .. menu.get_menu_name(menu.get_parent(AUTOMATED_SOLO_RUBY)) .. " > " .. menu.get_menu_name(AUTOMATED_SOLO_RUBY))
                             end
@@ -1067,7 +1075,7 @@
                                 CayoPresetLists[i][2] = false
                             end
                         end
-                        for i = 1, 2 do
+                        for i = 1, 3 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.apply_default_state(ForCayoPresets[i][j][1])
                                 menu.set_help_text(ForCayoPresets[i][j][1], ForCayoPresets[i][j][2])
@@ -1077,6 +1085,8 @@
 
                     while menu.get_value(AUTOMATED_SOLO_RUBY) do
                         menu.set_value(CP_REM_FEE, false)
+                        menu.set_value(CP_NON_HOST_CUT, 100)
+                        menu.set_value(CP_NON_HOST_CUT_LOOP, false)
                         menu.set_value(CP_HOST_CUT, 100)
                         menu.set_value(CP_HOST_CUT_LOOP, true)
 
@@ -1137,7 +1147,7 @@
                                 CayoPresetLists[i][2] = true
                             end
                         end
-                        for i = 1, 3 do
+                        for i = 1, 4 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.set_help_text(ForCayoPresets[i][j][1], TRANSLATE("This feature has been controlled by another feature.") .. "\n" .. "- " .. menu.get_menu_name(CAYO_PRESETS) .. " > " .. menu.get_menu_name(menu.get_parent(AUTOAMTED_2P_SAPPHIRE)) .. " > " .. menu.get_menu_name(AUTOAMTED_2P_SAPPHIRE))
                             end
@@ -1148,7 +1158,7 @@
                                 CayoPresetLists[i][2] = false
                             end
                         end
-                        for i = 1, 3 do
+                        for i = 1, 4 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.apply_default_state(ForCayoPresets[i][j][1])
                                 menu.set_help_text(ForCayoPresets[i][j][1], ForCayoPresets[i][j][2])
@@ -1158,6 +1168,8 @@
 
                     while menu.get_value(AUTOAMTED_2P_SAPPHIRE) do
                         menu.set_value(CP_REM_FEE, false)
+                        menu.set_value(CP_NON_HOST_CUT, 50)
+                        menu.set_value(CP_NON_HOST_CUT_LOOP, false)
                         menu.set_value(CP_HOST_CUT, 50)
                         menu.set_value(CP_HOST_CUT_LOOP, true)
                         menu.set_value(CP_2P_CUT, 50)
@@ -1216,7 +1228,7 @@
                                 CayoPresetLists[i][2] = true
                             end
                         end
-                        for i = 1, 3 do
+                        for i = 1, 4 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.set_help_text(ForCayoPresets[i][j][1], TRANSLATE("This feature has been controlled by another feature.") .. "\n" .. "- " .. menu.get_menu_name(CAYO_PRESETS) .. " > " .. menu.get_menu_name(menu.get_parent(AUTOAMTED_2P_RUBY)) .. " > " .. menu.get_menu_name(AUTOAMTED_2P_RUBY))
                             end
@@ -1227,7 +1239,7 @@
                                 CayoPresetLists[i][2] = false
                             end
                         end
-                        for i = 1, 3 do
+                        for i = 1, 4 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.apply_default_state(ForCayoPresets[i][j][1])
                                 menu.set_help_text(ForCayoPresets[i][j][1], ForCayoPresets[i][j][2])
@@ -1237,6 +1249,8 @@
 
                     while menu.get_value(AUTOAMTED_2P_RUBY) do
                         menu.set_value(CP_REM_FEE, false)
+                        menu.set_value(CP_NON_HOST_CUT, 50)
+                        menu.set_value(CP_NON_HOST_CUT_LOOP, false)
                         menu.set_value(CP_HOST_CUT, 50)
                         menu.set_value(CP_HOST_CUT_LOOP, true)
                         menu.set_value(CP_2P_CUT, 50)
@@ -1299,7 +1313,7 @@
                                 CayoPresetLists[i][2] = true
                             end
                         end
-                        for i = 1, 4 do
+                        for i = 1, 5 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.set_help_text(ForCayoPresets[i][j][1], TRANSLATE("This feature has been controlled by another feature.") .. "\n" .. "- " .. menu.get_menu_name(CAYO_PRESETS) .. " > " .. menu.get_menu_name(menu.get_parent(AUTOAMTED_3P_SAPPHIRE)) .. " > " .. menu.get_menu_name(AUTOAMTED_3P_SAPPHIRE))
                             end
@@ -1310,7 +1324,7 @@
                                 CayoPresetLists[i][2] = false
                             end
                         end
-                        for i = 1, 4 do
+                        for i = 1, 5 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.apply_default_state(ForCayoPresets[i][j][1])
                                 menu.set_help_text(ForCayoPresets[i][j][1], ForCayoPresets[i][j][2])
@@ -1320,6 +1334,8 @@
 
                     while menu.get_value(AUTOAMTED_3P_SAPPHIRE) do
                         menu.set_value(CP_REM_FEE, false)
+                        menu.set_value(CP_NON_HOST_CUT, 30)
+                        menu.set_value(CP_NON_HOST_CUT_LOOP, false)
                         menu.set_value(CP_HOST_CUT, 30)
                         menu.set_value(CP_HOST_CUT_LOOP, true)
                         menu.set_value(CP_2P_CUT, 35)
@@ -1380,7 +1396,7 @@
                                 CayoPresetLists[i][2] = true
                             end
                         end
-                        for i = 1, 4 do
+                        for i = 1, 5 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.set_help_text(ForCayoPresets[i][j][1], TRANSLATE("This feature has been controlled by another feature.") .. "\n" .. "- " .. menu.get_menu_name(CAYO_PRESETS) .. " > " .. menu.get_menu_name(menu.get_parent(AUTOAMTED_3P_RUBY)) .. " > " .. menu.get_menu_name(AUTOAMTED_3P_RUBY))
                             end
@@ -1391,7 +1407,7 @@
                                 CayoPresetLists[i][2] = false
                             end
                         end
-                        for i = 1, 4 do
+                        for i = 1, 5 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.apply_default_state(ForCayoPresets[i][j][1])
                                 menu.set_help_text(ForCayoPresets[i][j][1], ForCayoPresets[i][j][2])
@@ -1401,6 +1417,8 @@
 
                     while menu.get_value(AUTOAMTED_3P_RUBY) do
                         menu.set_value(CP_REM_FEE, false)
+                        menu.set_value(CP_NON_HOST_CUT, 30)
+                        menu.set_value(CP_NON_HOST_CUT_LOOP, false)
                         menu.set_value(CP_HOST_CUT, 30)
                         menu.set_value(CP_HOST_CUT_LOOP, true)
                         menu.set_value(CP_2P_CUT, 35)
@@ -1465,7 +1483,7 @@
                                 CayoPresetLists[i][2] = true
                             end
                         end
-                        for i = 1, 5 do
+                        for i = 1, 6 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.set_help_text(ForCayoPresets[i][j][1], TRANSLATE("This feature has been controlled by another feature.") .. "\n" .. "- " .. menu.get_menu_name(CAYO_PRESETS) .. " > " .. menu.get_menu_name(menu.get_parent(AUTOAMTED_4P_SAPPHIRE)) .. " > " .. menu.get_menu_name(AUTOAMTED_4P_SAPPHIRE))
                             end
@@ -1476,7 +1494,7 @@
                                 CayoPresetLists[i][2] = false
                             end
                         end
-                        for i = 1, 5 do
+                        for i = 1, 6 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.apply_default_state(ForCayoPresets[i][j][1])
                                 menu.set_help_text(ForCayoPresets[i][j][1], ForCayoPresets[i][j][2])
@@ -1486,6 +1504,8 @@
 
                     while menu.get_value(AUTOAMTED_4P_SAPPHIRE) do
                         menu.set_value(CP_REM_FEE, false)
+                        menu.set_value(CP_NON_HOST_CUT, 25)
+                        menu.set_value(CP_NON_HOST_CUT_LOOP, false)
                         menu.set_value(CP_HOST_CUT, 25)
                         menu.set_value(CP_HOST_CUT_LOOP, true)
                         menu.set_value(CP_2P_CUT, 25)
@@ -1548,7 +1568,7 @@
                                 CayoPresetLists[i][2] = true
                             end
                         end
-                        for i = 1, 5 do
+                        for i = 1, 6 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.set_help_text(ForCayoPresets[i][j][1], TRANSLATE("This feature has been controlled by another feature.") .. "\n" .. "- " .. menu.get_menu_name(CAYO_PRESETS) .. " > " .. menu.get_menu_name(menu.get_parent(AUTOAMTED_4P_RUBY)) .. " > " .. menu.get_menu_name(AUTOAMTED_4P_RUBY))
                             end
@@ -1559,7 +1579,7 @@
                                 CayoPresetLists[i][2] = false
                             end
                         end
-                        for i = 1, 5 do
+                        for i = 1, 6 do
                             for j = 1, #ForCayoPresets[i] do
                                 menu.apply_default_state(ForCayoPresets[i][j][1])
                                 menu.set_help_text(ForCayoPresets[i][j][1], ForCayoPresets[i][j][2])
@@ -1569,6 +1589,8 @@
 
                     while menu.get_value(AUTOAMTED_4P_RUBY) do
                         menu.set_value(CP_REM_FEE, false)
+                        menu.set_value(CP_NON_HOST_CUT, 25)
+                        menu.set_value(CP_NON_HOST_CUT_LOOP, false)
                         menu.set_value(CP_HOST_CUT, 25)
                         menu.set_value(CP_HOST_CUT_LOOP, true)
                         menu.set_value(CP_2P_CUT, 25)
@@ -1730,6 +1752,18 @@
 
         PERICO_CUTS = menu.list(PERICO_ADV, TRANSLATE("Player's Cut"), {}, TRANSLATE("Don't forget changing this feature before starting the heist! Otherwise, won't be applied."), function(); end)
 
+            PERICO_NON_HOST_CUT = menu.list(PERICO_CUTS, TRANSLATE("Your Cut (Non-Host)"), {}, TRANSLATE("Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist."), function(); end)
+
+                CP_NON_HOST_CUT_LOOP = menu.toggle_loop(PERICO_NON_HOST_CUT, TRANSLATE("Enable"), {"hccpnonhostloop"}, IS_WORKING(false), function()
+                    SET_INT_GLOBAL(2684801 + 6589, menu.get_value(CP_NON_HOST_CUT)) -- heist_island_planning.c
+                end, function()
+                    SET_INT_GLOBAL(2684801 + 6589, menu.get_default_state(CP_NON_HOST_CUT))
+                end)
+
+                CP_NON_HOST_CUT = menu.slider(PERICO_NON_HOST_CUT, TRANSLATE("Custom Percentage"), {"hccpnonhost"}, "(%)", 0, 1000, 100, 5, function(); end)
+
+            ---
+
             PERICO_HOST_CUT = menu.list(PERICO_CUTS, TRANSLATE("Your Cut"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_HOST_CUT_LOOP = menu.toggle_loop(PERICO_HOST_CUT, TRANSLATE("Enable"), {"hccphostcutloop"}, IS_WORKING(false), function()
@@ -1801,9 +1835,7 @@
         end)
 
         menu.toggle_loop(PERICO_ADV, TRANSLATE("Skip Cutting The Sewer Grill"), {}, IS_WORKING(true) .. "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Island") .. " > " .. TRANSLATE("Drainage Pipe") .. ")", function() 
-            if IS_HELP_MSG_DISPLAYED("UT_WELD_PROMPT") then -- "~s~Press ~INPUT_CONTEXT~ to cut through the grill."
-                PAD.SET_CONTROL_VALUE_NEXT_FRAME(2, 51, 1)
-            elseif GET_INT_LOCAL("fm_mission_controller_2020", 26746) == 4 then -- https://www.unknowncheats.me/forum/3389282-post1.html  
+            if GET_INT_LOCAL("fm_mission_controller_2020", 26746) == 4 then -- https://www.unknowncheats.me/forum/3389282-post1.html  
                 SET_INT_LOCAL("fm_mission_controller_2020", 26746, 6)
             end
         end)
@@ -2288,12 +2320,10 @@
 
     CASINO_PRESETS = menu.list(CASINO_HEIST, TRANSLATE("Automated Presets"), {}, TRANSLATE("Entrance and Exit will be selected 'Staff Lobby' and Buyer will be selected 'Low' by HC. But, selected Buyer won't be visible at the board somehow, don't change those options when you are before launching the heist.") .. "\n\n" .. TRANSLATE("Please don't forget that buyer should be selected 'Low'! Otherwise, won't get money."), function(); end)
 
-        CASINO_PRESETS_DIAMOND = menu.list(CASINO_PRESETS, TRANSLATE("Diamonds"), {}, TRANSLATE("$3.5 Millions For All Players"), function(); end)
+        CASINO_PRESETS_DIAMOND = menu.list(CASINO_PRESETS, TRANSLATE("Diamonds"), {}, TRANSLATE("If the Heist Planning (Board 3) is empty, then please re-enable the preset that you enabled!"), function(); end)
 
             DIAMOND_SS = menu.toggle(CASINO_PRESETS_DIAMOND, TRANSLATE("Silent & Sneaky Approach"), {"hccahdiasil"}, IS_WORKING(false), function()
                 if menu.get_value(DIAMOND_SS) then
-                    menu.trigger_commands("hccahreset"); util.yield_once()
-
                     menu.trigger_commands("hccahbuyer low"); util.yield_once()
                     menu.trigger_commands("hccahentrance stafflobby"); util.yield_once()
                     menu.trigger_commands("hccahexit stafflobby"); util.yield_once()
@@ -2352,8 +2382,6 @@
 
             DIAMOND_BA = menu.toggle(CASINO_PRESETS_DIAMOND, TRANSLATE("BigCon Approach"), {"hccahdiabig"}, IS_WORKING(false), function()
                 if menu.get_value(DIAMOND_BA) then
-                    menu.trigger_commands("hccahreset"); util.yield_once()
-
                     menu.trigger_commands("hccahbuyer low"); util.yield_once()
                     menu.trigger_commands("hccahentrance stafflobby"); util.yield_once()
                     menu.trigger_commands("hccahexit stafflobby"); util.yield_once()
@@ -2414,8 +2442,6 @@
 
             DIAMOND_AA = menu.toggle(CASINO_PRESETS_DIAMOND, TRANSLATE("Aggressive Approach"), {"hccahdiaagg"}, IS_WORKING(false), function()
                 if menu.get_value(DIAMOND_AA) then
-                    menu.trigger_commands("hccahreset"); util.yield_once()
-
                     menu.trigger_commands("hccahbuyer low"); util.yield_once()
                     menu.trigger_commands("hccahentrance stafflobby"); util.yield_once()
                     menu.trigger_commands("hccahexit stafflobby"); util.yield_once()
@@ -2474,12 +2500,10 @@
 
         ---
 
-        CASINO_PRESETS_GOLD = menu.list(CASINO_PRESETS, TRANSLATE("Gold"), {}, TRANSLATE("$3.5 Millions For All Players"), function(); end)
+        CASINO_PRESETS_GOLD = menu.list(CASINO_PRESETS, TRANSLATE("Gold"), {}, TRANSLATE("If the Heist Planning (Board 3) is empty, then please re-enable the preset that you enabled!"), function(); end)
 
             GOLD_SS = menu.toggle(CASINO_PRESETS_GOLD, TRANSLATE("Silent & Sneaky Approach"), {"hccahgoldsil"}, IS_WORKING(false), function()
                 if menu.get_value(GOLD_SS) then
-                    menu.trigger_commands("hccahreset"); util.yield_once()
-
                     menu.trigger_commands("hccahbuyer low"); util.yield_once()
                     menu.trigger_commands("hccahentrance stafflobby"); util.yield_once()
                     menu.trigger_commands("hccahexit stafflobby"); util.yield_once()
@@ -2538,8 +2562,6 @@
 
             GOLD_BA = menu.toggle(CASINO_PRESETS_GOLD, TRANSLATE("BigCon Approach"), {"hccahgoldbig"}, IS_WORKING(false), function()
                 if menu.get_value(GOLD_BA) then
-                    menu.trigger_commands("hccahreset"); util.yield_once()
-
                     menu.trigger_commands("hccahbuyer low"); util.yield_once()
                     menu.trigger_commands("hccahentrance stafflobby"); util.yield_once()
                     menu.trigger_commands("hccahexit stafflobby"); util.yield_once()
@@ -2600,8 +2622,6 @@
 
             GOLD_AA = menu.toggle(CASINO_PRESETS_GOLD, TRANSLATE("Aggressive Approach"), {"hccahgoldagg"}, IS_WORKING(false), function()
                 if menu.get_value(GOLD_AA) then
-                    menu.trigger_commands("hccahreset"); util.yield_once()
-
                     menu.trigger_commands("hccahbuyer low"); util.yield_once()
                     menu.trigger_commands("hccahentrance stafflobby"); util.yield_once()
                     menu.trigger_commands("hccahexit stafflobby"); util.yield_once()
@@ -2665,34 +2685,34 @@
     
         CAH_PLAYER_CUT = menu.list(CAH_ADVCED, TRANSLATE("Player's Cut"), {}, TRANSLATE("Don't forget changing this feature before starting the heist! Otherwise, won't be applied."), function(); end)
 
-            CAH_NON_HOST = menu.list(CAH_PLAYER_CUT, TRANSLATE("Your Cut (Non-Host)"), {}, "", function(); end)
+            CAH_NON_HOST = menu.list(CAH_PLAYER_CUT, TRANSLATE("Your Cut (Non-Host)"), {}, TRANSLATE("Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist."), function(); end)
 
                 CAH_NON_HOST_CUT_LOOP = menu.toggle_loop(CAH_NON_HOST, TRANSLATE("Enable"), {"hccahnonhostloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(2684801 + 6546, menu.get_value(CAH_NON_HOST_CUT)) -- gb_casino_heist.c
+                    SET_INT_GLOBAL(2684801 + 6589, menu.get_value(CAH_NON_HOST_CUT)) -- gb_casino_heist_planning.c
                 end, function()
-                    SET_INT_GLOBAL(2684801 + 6546, menu.get_default_state(CAH_NON_HOST_CUT))
+                    SET_INT_GLOBAL(2684801 + 6589, menu.get_default_state(CAH_NON_HOST_CUT))
                 end)
 
                 CAH_NON_HOST_CUT = menu.slider(CAH_NON_HOST, TRANSLATE("Custom Percentage"), {"hccahnonhost"}, "(%)", 0, 1000, 100, 5, function(); end)
 
             ---
 
-            CAH_1P = menu.list(CAH_PLAYER_CUT, TRANSLATE("Your Cut"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
+            CAH_HOST = menu.list(CAH_PLAYER_CUT, TRANSLATE("Your Cut"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
-                CAH_1P_CUT_LOOP = menu.toggle_loop(CAH_1P, TRANSLATE("Enable"), {"hccah1pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 1, menu.get_value(CAH_1P_CUT)) -- gb_casino_heist.c
+                CAH_HOST_CUT_LOOP = menu.toggle_loop(CAH_HOST, TRANSLATE("Enable"), {"hccah1pcutloop"}, IS_WORKING(false), function()
+                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 1, menu.get_value(CAH_HOST_CUT)) -- gb_casino_heist_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 1, menu.get_default_state(CAH_1P_CUT))
+                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 1, menu.get_default_state(CAH_HOST_CUT))
                 end)
 
-                CAH_1P_CUT = menu.slider(CAH_1P, TRANSLATE("Custom Percentage"), {"hccah1pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
+                CAH_HOST_CUT = menu.slider(CAH_HOST, TRANSLATE("Custom Percentage"), {"hccah1pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
 
             ---
 
             CAH_2P = menu.list(CAH_PLAYER_CUT, TRANSLATE("Player 2"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CAH_2P_CUT_LOOP = menu.toggle_loop(CAH_2P, TRANSLATE("Enable"), {"hccah2pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 2, menu.get_value(CAH_2P_CUT)) -- gb_casino_heist.c
+                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 2, menu.get_value(CAH_2P_CUT)) -- gb_casino_heist_planning.c
                 end, function()
                     SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 2, menu.get_default_state(CAH_2P_CUT))
                 end)
@@ -2704,7 +2724,7 @@
             CAH_3P = menu.list(CAH_PLAYER_CUT, TRANSLATE("Player 3"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CAH_3P_CUT_LOOP = menu.toggle_loop(CAH_3P, TRANSLATE("Enable"), {"hccah3pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 3, menu.get_value(CAH_3P_CUT)) -- gb_casino_heist.c
+                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 3, menu.get_value(CAH_3P_CUT)) -- gb_casino_heist_planning.c
                 end, function()
                     SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 3, menu.get_default_state(CAH_3P_CUT))
                 end)
@@ -2716,7 +2736,7 @@
             CAH_4P = menu.list(CAH_PLAYER_CUT, TRANSLATE("Player 4"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
                 
                 CAH_4P_CUT_LOOP = menu.toggle_loop(CAH_4P, TRANSLATE("Enable"), {"hccah4pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 4, menu.get_value(CAH_4P_CUT)) -- gb_casino_heist.c
+                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 4, menu.get_value(CAH_4P_CUT)) -- gb_casino_heist_planning.c
                 end, function()
                     SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 4, menu.get_default_state(CAH_4P_CUT))
                 end)
@@ -3253,6 +3273,8 @@
             end
 
             while menu.get_value(DOOMS_PRESETS_ACT1) do
+                menu.set_value(DOOMS_NON_HOST_CUT, 209)
+                menu.set_value(DOOMS_NON_HOST_CUT_LOOP, false)
                 menu.set_value(DOOMS_HOST_CUT, 209)
                 menu.set_value(DOOMS_HOST_CUT_LOOP, true)
                 menu.set_value(DOOMS_2P_CUT, 209)
@@ -3295,6 +3317,8 @@
             end
 
             while menu.get_value(DOOMS_PRESETS_ACT2) do
+                menu.set_value(DOOMS_NON_HOST_CUT, 142)
+                menu.set_value(DOOMS_NON_HOST_CUT_LOOP, false)
                 menu.set_value(DOOMS_HOST_CUT, 142)
                 menu.set_value(DOOMS_HOST_CUT_LOOP, true)
                 menu.set_value(DOOMS_2P_CUT, 142)
@@ -3337,6 +3361,8 @@
             end
 
             while menu.get_value(DOOMS_PRESETS_ACT3) do
+                menu.set_value(DOOMS_NON_HOST_CUT, 113)
+                menu.set_value(DOOMS_NON_HOST_CUT_LOOP, false)
                 menu.set_value(DOOMS_HOST_CUT, 113)
                 menu.set_value(DOOMS_HOST_CUT_LOOP, true)
                 menu.set_value(DOOMS_2P_CUT, 113)
@@ -3388,55 +3414,75 @@
 
     ---
 
-    DDHEIST_PLYR_MANAGER = menu.list(DOOMS_HEIST, TRANSLATE("Player's Cut"), {}, TRANSLATE("Don't forget changing this feature before starting the heist! Otherwise, won't be applied."), function(); end)
+    DOOMS_PLAYER_CUT = menu.list(DOOMS_HEIST, TRANSLATE("Player's Cut"), {}, TRANSLATE("Don't forget changing this feature before starting the heist! Otherwise, won't be applied."), function(); end)
 
-        DDHEIST_HOST_MANAGER = menu.list(DDHEIST_PLYR_MANAGER, TRANSLATE("Your Cut"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
+        DOOMS_NON_HOST = menu.list(DOOMS_PLAYER_CUT, TRANSLATE("Your Cut (Non-Host)"), {}, TRANSLATE("Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist."), function(); end)
 
-            DOOMS_HOST_CUT_LOOP = menu.toggle_loop(DDHEIST_HOST_MANAGER, TRANSLATE("Enable"), {"hcdooms1ploop"}, IS_WORKING(false), function()
+            DOOMS_NON_HOST_CUT_LOOP = menu.toggle_loop(DOOMS_NON_HOST, TRANSLATE("Enable"), {"hcdoomsnonhostloop"}, IS_WORKING(false), function()
+                SET_INT_GLOBAL(2684801 + 6589, menu.get_value(DOOMS_NON_HOST_CUT)) -- gb_gang_ops_planning.c
+            end, function()
+                SET_INT_GLOBAL(2684801 + 6589, menu.get_default_state(DOOMS_NON_HOST_CUT))
+            end)
+
+            DOOMS_NON_HOST_CUT = menu.slider(DOOMS_NON_HOST, TRANSLATE("Custom Percentage"), {"hcdoomsnonhost"}, "(%)", 0, 1000, 100, 5, function(); end)
+
+        ---
+
+        DOOMS_HOST = menu.list(DOOMS_PLAYER_CUT, TRANSLATE("Your Cut"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
+
+            DOOMS_HOST_CUT_LOOP = menu.toggle_loop(DOOMS_HOST, TRANSLATE("Enable"), {"hcdooms1ploop"}, IS_WORKING(false), function()
                 SET_INT_GLOBAL(1966831 + 812 + 50 + 1, menu.get_value(DOOMS_HOST_CUT)) -- gb_gang_ops_planning.c
             end, function()
                 SET_INT_GLOBAL(1966831 + 812 + 50 + 1, menu.get_default_state(DOOMS_HOST_CUT))
             end)
 
-            DOOMS_HOST_CUT = menu.slider(DDHEIST_HOST_MANAGER, TRANSLATE("Custom Percentage"), {"hcdooms1pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
+            DOOMS_HOST_CUT = menu.slider(DOOMS_HOST, TRANSLATE("Custom Percentage"), {"hcdooms1pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
 
         ---
 
-        DDHEIST_PLAYER2_MANAGER = menu.list(DDHEIST_PLYR_MANAGER, TRANSLATE("Player 2"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
+        DOOMS_2P = menu.list(DOOMS_PLAYER_CUT, TRANSLATE("Player 2"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
             
-            DOOMS_2P_CUT_LOOP = menu.toggle_loop(DDHEIST_PLAYER2_MANAGER, TRANSLATE("Enable"), {"hcdooms2pcutloop"}, IS_WORKING(false), function()
+            DOOMS_2P_CUT_LOOP = menu.toggle_loop(DOOMS_2P, TRANSLATE("Enable"), {"hcdooms2pcutloop"}, IS_WORKING(false), function()
                 SET_INT_GLOBAL(1966831 + 812 + 50 + 2, menu.get_value(DOOMS_2P_CUT)) -- gb_gang_ops_planning.c
             end, function()
                 SET_INT_GLOBAL(1966831 + 812 + 50 + 2, menu.get_default_state(DOOMS_2P_CUT))
             end)
 
-            DOOMS_2P_CUT = menu.slider(DDHEIST_PLAYER2_MANAGER, TRANSLATE("Custom Percentage"), {"hcdooms2pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
+            DOOMS_2P_CUT = menu.slider(DOOMS_2P, TRANSLATE("Custom Percentage"), {"hcdooms2pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
 
         ---
 
-        DDHEIST_PLAYER3_MANAGER = menu.list(DDHEIST_PLYR_MANAGER, TRANSLATE("Player 3"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
+        DOOMS_3P = menu.list(DOOMS_PLAYER_CUT, TRANSLATE("Player 3"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
-            DOOMS_3P_CUT_LOOP = menu.toggle_loop(DDHEIST_PLAYER3_MANAGER, TRANSLATE("Enable"), {"hcdooms3pcutloop"}, IS_WORKING(false), function()
+            DOOMS_3P_CUT_LOOP = menu.toggle_loop(DOOMS_3P, TRANSLATE("Enable"), {"hcdooms3pcutloop"}, IS_WORKING(false), function()
                 SET_INT_GLOBAL(1966831 + 812 + 50 + 3, menu.get_value(DOOMS_3P_CUT)) -- gb_gang_ops_planning.c
             end, function()
                 SET_INT_GLOBAL(1966831 + 812 + 50 + 3, menu.get_default_state(DOOMS_3P_CUT))
             end)
 
-            DOOMS_3P_CUT = menu.slider(DDHEIST_PLAYER3_MANAGER, TRANSLATE("Custom Percentage"), {"hcdooms3pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
+            DOOMS_3P_CUT = menu.slider(DOOMS_3P, TRANSLATE("Custom Percentage"), {"hcdooms3pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
 
         ---
 
-        DDHEIST_PLAYER4_MANAGER = menu.list(DDHEIST_PLYR_MANAGER, TRANSLATE("Player 4"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
+        DOOMS_4P = menu.list(DOOMS_PLAYER_CUT, TRANSLATE("Player 4"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
-            DOOMS_4P_CUT_LOOP = menu.toggle_loop(DDHEIST_PLAYER4_MANAGER, TRANSLATE("Enable"), {"hcdooms4pcutloop"}, IS_WORKING(false), function()
+            DOOMS_4P_CUT_LOOP = menu.toggle_loop(DOOMS_4P, TRANSLATE("Enable"), {"hcdooms4pcutloop"}, IS_WORKING(false), function()
                 SET_INT_GLOBAL(1966831 + 812 + 50 + 4, menu.get_value(DOOMS_4P_CUT)) -- gb_gang_ops_planning.c
             end, function()
                 SET_INT_GLOBAL(1966831 + 812 + 50 + 4, menu.get_default_state(DOOMS_4P_CUT))
             end)
 
-            DOOMS_4P_CUT = menu.slider(DDHEIST_PLAYER4_MANAGER, TRANSLATE("Custom Percentage"), {"hcdooms4pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
+            DOOMS_4P_CUT = menu.slider(DOOMS_4P, TRANSLATE("Custom Percentage"), {"hcdooms4pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
 
         ---
+
+        menu.toggle_loop(DOOMS_PLAYER_CUT, TRANSLATE("Bypass Minimum And Maximum Percentage"), {}, IS_WORKING(true) .. TRANSLATE("Only works if you are host of the heist.") .. "\n\n" .. TRANSLATE("It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts."), function()
+            SET_INT_GLOBAL(262145 + 23290, 0) -- -2020782937, https://www.unknowncheats.me/forum/3732338-post132.html
+            SET_INT_GLOBAL(262145 + 23291, 100) -- 944111042
+        end, function()
+            SET_INT_GLOBAL(262145 + 23290, 15)
+            SET_INT_GLOBAL(262145 + 23291, 85)
+        end)
 
     ---
 
@@ -3462,7 +3508,6 @@
 
     menu.action(DOOMS_HEIST, TRANSLATE("Complete All Prep Missions"), {}, "", function()
         STAT_SET_INT("GANGOPS_FM_MISSION_PROG", -1)
-
         menu.trigger_commands("hcdoomsrefreshscreen")
     end)
 
@@ -3500,6 +3545,7 @@
     PACIFIC_STANDARD_HEIST = menu.list(CLASSIC_HEISTS, TRANSLATE("Pacific Standard Heist"), {}, "", function(); end)
 
         menu.toggle_loop(PACIFIC_STANDARD_HEIST, TRANSLATE("Keep Cash $1.85M Take"), {}, IS_WORKING(true) .. TRANSLATE("This makes you won't lose money by getting shot to the cash bags from polices"), function()
+            if util.spoof_script("gb_casino_heist", function(); end) then return end -- If playing Diamond Casino Heist
             SET_INT_LOCAL("fm_mission_controller", 19707 + 2686, 1850000) -- How much did you take in the casino and pacific standard heist
         end)
 
@@ -3509,7 +3555,7 @@
 
     ---
 
-    menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Bypass Minimum And Maximum Percentage"), {}, IS_WORKING(true) .. TRANSLATE("Only works if you are host of the heist.") .. "\n\n" .. TRANSLATE("Bypass minimum percentage 15(%) and maximum percentage 70(%). This feature will allow you set 0 ~ 100(%)."), function()
+    menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Bypass Minimum And Maximum Percentage"), {}, IS_WORKING(true) .. TRANSLATE("Only works if you are host of the heist.") .. "\n\n" .. TRANSLATE("It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts."), function()
         SET_INT_GLOBAL(262145 + 9084, 100) -- MAX_HEIST_CUT_AMOUNT, Default: 70(%), https://www.unknowncheats.me/forum/3664875-post95.html
         SET_INT_GLOBAL(262145 + 9186, 0) -- MEMBER_MIN_HEIST_FINALE_TAKE_PERCENTAGE, Default: 15(%)
         SET_INT_GLOBAL(262145 + 9187, 0) -- LEADER_MIN_HEIST_FINALE_TAKE_PERCENTAGE, Default: 15(%)
@@ -3584,16 +3630,16 @@
         STAT_SET_INT("TUNER_GEN_BS", -1)
     end)
     
-    ROBBERY_RESETER = menu.list(LS_ROBBERY, TRANSLATE("Others"), {}, "", function(); end)
+    ROBBERY_OTHERS = menu.list(LS_ROBBERY, TRANSLATE("Others"), {}, "", function(); end)
     
-        menu.action(ROBBERY_RESETER, TRANSLATE("Reset The Preps"), {"hclsresetmisson"}, "", function()
+        menu.action(ROBBERY_OTHERS, TRANSLATE("Reset The Preps"), {"hclsresetmisson"}, "", function()
             STAT_SET_INT("TUNER_GEN_BS", 12467)
         end)
-        menu.action(ROBBERY_RESETER, TRANSLATE("Reset The Contracts"), {"hclsresetcontract"}, "", function()
+        menu.action(ROBBERY_OTHERS, TRANSLATE("Reset The Contracts"), {"hclsresetcontract"}, "", function()
             STAT_SET_INT("TUNER_GEN_BS", 8371)
             STAT_SET_INT("TUNER_CURRENT", -1)
         end)
-        menu.action(ROBBERY_RESETER, TRANSLATE("Reset Total Gains And Completed Contracts"), {"hclsresetgain"}, "", function()
+        menu.action(ROBBERY_OTHERS, TRANSLATE("Reset Total Gains And Completed Contracts"), {"hclsresetgain"}, "", function()
             STAT_SET_INT("TUNER_COUNT", 0)
             STAT_SET_INT("TUNER_EARNINGS", 0)
         end)
@@ -3725,7 +3771,7 @@
             SET_INT_GLOBAL(262145 + 31781, 1200000)
         end)
 
-        menu.textslider(TH_CONTRACT, TRANSLATE("Remote Access: Agency App"), {"hcagencyapp"}, TRANSLATE("Note that you don't have the app, some of functions won't work."), {
+        menu.textslider(TH_CONTRACT, TRANSLATE("Remote Access: Agency App"), {"hcappagency"}, TRANSLATE("Note that you don't have the app, some of functions won't work."), {
             TRANSLATE("Open"),
             TRANSLATE("Close"),
         }, function()
@@ -3976,100 +4022,11 @@
 
     UNLOCKER_BUILDING = menu.list(MASTER_UNLOCKR, TRANSLATE("Buildings"), {}, "", function(); end)
 
-        ARCADE_TOOL = menu.list(UNLOCKER_BUILDING, TRANSLATE("Arcade Unlockers"), {}, "", function(); end)
-
-            menu.action(ARCADE_TOOL, TRANSLATE("Unlock Arcade Trophies and Toys"), {}, "", function()
-                STAT_SET_INT("AWD_PREPARATION", 40)
-                STAT_SET_INT("AWD_ASLEEPONJOB", 20)
-                STAT_SET_INT("AWD_DAICASHCRAB", 100000)
-                STAT_SET_INT("AWD_BIGBRO", 40)
-                STAT_SET_INT("AWD_SHARPSHOOTER", 40)
-                STAT_SET_INT("AWD_RACECHAMP", 40)
-                STAT_SET_INT("AWD_BATSWORD", 1000000)
-                STAT_SET_INT("AWD_COINPURSE", 950000)
-                STAT_SET_INT("AWD_ASTROCHIMP", 3000000)
-                STAT_SET_INT("AWD_MASTERFUL", 40000)
-                STAT_SET_INT("SCGW_NUM_WINS_GANG_0", 50)
-                STAT_SET_INT("SCGW_NUM_WINS_GANG_1", 50)
-                STAT_SET_INT("SCGW_NUM_WINS_GANG_2", 50)
-                STAT_SET_INT("SCGW_NUM_WINS_GANG_3", 50)
-                STAT_SET_INT("CH_ARC_CAB_CLAW_TROPHY", -1)
-                STAT_SET_INT("CH_ARC_CAB_LOVE_TROPHY", -1)
-                STAT_SET_INT("IAP_MAX_MOON_DIST", INT_MAX)
-                STAT_SET_INT("IAP_SCORE_0", 69644)
-                STAT_SET_INT("IAP_SCORE_1", 50333)
-                STAT_SET_INT("IAP_SCORE_2", 63512)
-                STAT_SET_INT("IAP_SCORE_3", 46136)
-                STAT_SET_INT("IAP_SCORE_4", 21638)
-                STAT_SET_INT("IAP_SCORE_5", 2133)
-                STAT_SET_INT("IAP_SCORE_6", 1215)
-                STAT_SET_INT("IAP_SCORE_7", 2444)
-                STAT_SET_INT("IAP_SCORE_8", 38023)
-                STAT_SET_INT("IAP_SCORE_9", 2233)
-                STAT_SET_INT("SCGW_SCORE_1", 50)
-                STAT_SET_INT("SCGW_SCORE_2", 50)
-                STAT_SET_INT("SCGW_SCORE_3", 50)
-                STAT_SET_INT("SCGW_SCORE_4", 50)
-                STAT_SET_INT("SCGW_SCORE_5", 50)
-                STAT_SET_INT("SCGW_SCORE_6", 50)
-                STAT_SET_INT("SCGW_SCORE_7", 50)
-                STAT_SET_INT("SCGW_SCORE_8", 50)
-                STAT_SET_INT("SCGW_SCORE_9", 50)
-
-                for i = 0, 9 do
-                    STAT_SET_INT("IAP_INITIALS_" .. i, 50)
-                    STAT_SET_INT("DG_DEFENDER_INITIALS_" .. i, 69644)
-                    STAT_SET_INT("DG_DEFENDER_SCORE_" .. i, 50)
-                    STAT_SET_INT("DG_MONKEY_INITIALS_" .. i, 69644)
-                    STAT_SET_INT("DG_MONKEY_SCORE_" .. i, 50)
-                    STAT_SET_INT("DG_PENETRATOR_INITIALS_" .. i, 69644)
-                    STAT_SET_INT("DG_PENETRATOR_SCORE_" .. i, 50)
-                    STAT_SET_INT("GGSM_INITIALS_" .. i, 69644)
-                    STAT_SET_INT("GGSM_SCORE_" .. i, 50)
-                    STAT_SET_INT("TWR_INITIALS_" .. i, 69644)
-                    STAT_SET_INT("TWR_SCORE_" .. i, 50)
-                end
-
-                STAT_SET_BOOL("AWD_SCOPEOUT", true)
-                STAT_SET_BOOL("AWD_CREWEDUP", true)
-                STAT_SET_BOOL("AWD_MOVINGON", true)
-                STAT_SET_BOOL("AWD_PROMOCAMP", true)
-                STAT_SET_BOOL("AWD_GUNMAN", true)
-                STAT_SET_BOOL("AWD_SMASHNGRAB", true)
-                STAT_SET_BOOL("AWD_INPLAINSI", true)
-                STAT_SET_BOOL("AWD_UNDETECTED", true)
-                STAT_SET_BOOL("AWD_ALLROUND", true)
-                STAT_SET_BOOL("AWD_ELITETHEIF", true)
-                STAT_SET_BOOL("AWD_PRO", true)
-                STAT_SET_BOOL("AWD_SUPPORTACT", true)
-                STAT_SET_BOOL("AWD_SHAFTED", true)
-                STAT_SET_BOOL("AWD_COLLECTOR", true)
-                STAT_SET_BOOL("AWD_DEADEYE", true)
-                STAT_SET_BOOL("AWD_PISTOLSATDAWN", true)
-                STAT_SET_BOOL("AWD_TRAFFICAVOI", true)
-                STAT_SET_BOOL("AWD_CANTCATCHBRA", true)
-                STAT_SET_BOOL("AWD_WIZHARD", true)
-                STAT_SET_BOOL("AWD_APEESCAPE", true)
-                STAT_SET_BOOL("AWD_MONKEYKIND", true)
-                STAT_SET_BOOL("AWD_AQUAAPE", true)
-                STAT_SET_BOOL("AWD_KEEPFAITH", true)
-                STAT_SET_BOOL("AWD_TRUELOVE", true)
-                STAT_SET_BOOL("AWD_NEMESIS", true)
-                STAT_SET_BOOL("AWD_FRIENDZONED", true)
-                STAT_SET_BOOL("IAP_CHALLENGE_0", true)
-                STAT_SET_BOOL("IAP_CHALLENGE_1", true)
-                STAT_SET_BOOL("IAP_CHALLENGE_2", true)
-                STAT_SET_BOOL("IAP_CHALLENGE_3", true)
-                STAT_SET_BOOL("IAP_CHALLENGE_4", true)
-                STAT_SET_BOOL("IAP_GOLD_TANK", true)
-                STAT_SET_BOOL("SCGW_WON_NO_DEATHS", true)
-            end)
-
-            menu.action(ARCADE_TOOL, TRANSLATE("Unlock Clothing"), {}, IS_WORKING(false), function()
-                SET_PACKED_INT_GLOBAL(28316, 28336, 1) -- STREET_CRIMES_BOXART_TEE, RED_FAME_OR_SHAME_KRONOS
-            end)
-
-        ---
+        menu.action(UNLOCKER_BUILDING, TRANSLATE("Skip Nightclub Setups"), {}, TRANSLATE("Skip all of setups when you buy a Nightclub first: Equipment, Staff, and Collect DJ") .. "\n\n" .. TRANSLATE("Change your session to apply!"), function() -- https://www.unknowncheats.me/forum/3735297-post3416.html
+            SET_PACKED_STAT_BOOL_CODE(18161, true)
+            SET_PACKED_STAT_BOOL_CODE(22067, true)
+            SET_PACKED_STAT_BOOL_CODE(22068, true)
+        end)
 
         menu.action(UNLOCKER_BUILDING, TRANSLATE("Acid Lab Equipment Upgrade"), {}, "", function() -- https://www.unknowncheats.me/forum/3631045-post2754.html
             STAT_SET_INT("AWD_CALLME", 10)
@@ -4103,6 +4060,95 @@
             STAT_SET_BOOL("AWD_CLUB_COORD", true)
         end)
 
+        menu.action(UNLOCKER_BUILDING, TRANSLATE("Unlock Arcade Awards"), {}, IS_WORKING(false) .. TRANSLATE("Trophies, toys, and clothings are included."), function()
+            STAT_SET_INT("AWD_PREPARATION", 40)
+            STAT_SET_INT("AWD_ASLEEPONJOB", 20)
+            STAT_SET_INT("AWD_DAICASHCRAB", 100000)
+            STAT_SET_INT("AWD_BIGBRO", 40)
+            STAT_SET_INT("AWD_SHARPSHOOTER", 40)
+            STAT_SET_INT("AWD_RACECHAMP", 40)
+            STAT_SET_INT("AWD_BATSWORD", 1000000)
+            STAT_SET_INT("AWD_COINPURSE", 950000)
+            STAT_SET_INT("AWD_ASTROCHIMP", 3000000)
+            STAT_SET_INT("AWD_MASTERFUL", 40000)
+            STAT_SET_INT("SCGW_NUM_WINS_GANG_0", 50)
+            STAT_SET_INT("SCGW_NUM_WINS_GANG_1", 50)
+            STAT_SET_INT("SCGW_NUM_WINS_GANG_2", 50)
+            STAT_SET_INT("SCGW_NUM_WINS_GANG_3", 50)
+            STAT_SET_INT("CH_ARC_CAB_CLAW_TROPHY", -1)
+            STAT_SET_INT("CH_ARC_CAB_LOVE_TROPHY", -1)
+            STAT_SET_INT("IAP_MAX_MOON_DIST", INT_MAX)
+            STAT_SET_INT("IAP_SCORE_0", 69644)
+            STAT_SET_INT("IAP_SCORE_1", 50333)
+            STAT_SET_INT("IAP_SCORE_2", 63512)
+            STAT_SET_INT("IAP_SCORE_3", 46136)
+            STAT_SET_INT("IAP_SCORE_4", 21638)
+            STAT_SET_INT("IAP_SCORE_5", 2133)
+            STAT_SET_INT("IAP_SCORE_6", 1215)
+            STAT_SET_INT("IAP_SCORE_7", 2444)
+            STAT_SET_INT("IAP_SCORE_8", 38023)
+            STAT_SET_INT("IAP_SCORE_9", 2233)
+            STAT_SET_INT("SCGW_SCORE_1", 50)
+            STAT_SET_INT("SCGW_SCORE_2", 50)
+            STAT_SET_INT("SCGW_SCORE_3", 50)
+            STAT_SET_INT("SCGW_SCORE_4", 50)
+            STAT_SET_INT("SCGW_SCORE_5", 50)
+            STAT_SET_INT("SCGW_SCORE_6", 50)
+            STAT_SET_INT("SCGW_SCORE_7", 50)
+            STAT_SET_INT("SCGW_SCORE_8", 50)
+            STAT_SET_INT("SCGW_SCORE_9", 50)
+
+            for i = 0, 9 do
+                STAT_SET_INT("IAP_INITIALS_" .. i, 50)
+                STAT_SET_INT("DG_DEFENDER_INITIALS_" .. i, 69644)
+                STAT_SET_INT("DG_DEFENDER_SCORE_" .. i, 50)
+                STAT_SET_INT("DG_MONKEY_INITIALS_" .. i, 69644)
+                STAT_SET_INT("DG_MONKEY_SCORE_" .. i, 50)
+                STAT_SET_INT("DG_PENETRATOR_INITIALS_" .. i, 69644)
+                STAT_SET_INT("DG_PENETRATOR_SCORE_" .. i, 50)
+                STAT_SET_INT("GGSM_INITIALS_" .. i, 69644)
+                STAT_SET_INT("GGSM_SCORE_" .. i, 50)
+                STAT_SET_INT("TWR_INITIALS_" .. i, 69644)
+                STAT_SET_INT("TWR_SCORE_" .. i, 50)
+            end
+
+            STAT_SET_BOOL("AWD_SCOPEOUT", true)
+            STAT_SET_BOOL("AWD_CREWEDUP", true)
+            STAT_SET_BOOL("AWD_MOVINGON", true)
+            STAT_SET_BOOL("AWD_PROMOCAMP", true)
+            STAT_SET_BOOL("AWD_GUNMAN", true)
+            STAT_SET_BOOL("AWD_SMASHNGRAB", true)
+            STAT_SET_BOOL("AWD_INPLAINSI", true)
+            STAT_SET_BOOL("AWD_UNDETECTED", true)
+            STAT_SET_BOOL("AWD_ALLROUND", true)
+            STAT_SET_BOOL("AWD_ELITETHEIF", true)
+            STAT_SET_BOOL("AWD_PRO", true)
+            STAT_SET_BOOL("AWD_SUPPORTACT", true)
+            STAT_SET_BOOL("AWD_SHAFTED", true)
+            STAT_SET_BOOL("AWD_COLLECTOR", true)
+            STAT_SET_BOOL("AWD_DEADEYE", true)
+            STAT_SET_BOOL("AWD_PISTOLSATDAWN", true)
+            STAT_SET_BOOL("AWD_TRAFFICAVOI", true)
+            STAT_SET_BOOL("AWD_CANTCATCHBRA", true)
+            STAT_SET_BOOL("AWD_WIZHARD", true)
+            STAT_SET_BOOL("AWD_APEESCAPE", true)
+            STAT_SET_BOOL("AWD_MONKEYKIND", true)
+            STAT_SET_BOOL("AWD_AQUAAPE", true)
+            STAT_SET_BOOL("AWD_KEEPFAITH", true)
+            STAT_SET_BOOL("AWD_TRUELOVE", true)
+            STAT_SET_BOOL("AWD_NEMESIS", true)
+            STAT_SET_BOOL("AWD_FRIENDZONED", true)
+            STAT_SET_BOOL("IAP_CHALLENGE_0", true)
+            STAT_SET_BOOL("IAP_CHALLENGE_1", true)
+            STAT_SET_BOOL("IAP_CHALLENGE_2", true)
+            STAT_SET_BOOL("IAP_CHALLENGE_3", true)
+            STAT_SET_BOOL("IAP_CHALLENGE_4", true)
+            STAT_SET_BOOL("IAP_GOLD_TANK", true)
+            STAT_SET_BOOL("SCGW_WON_NO_DEATHS", true)
+
+            SET_PACKED_INT_GLOBAL(28316, 28336, 1) -- STREET_CRIMES_BOXART_TEE, RED_FAME_OR_SHAME_KRONOS, For Clothing
+        end)
+
         menu.action(UNLOCKER_BUILDING, TRANSLATE("Casino Store Ace Masks"), {}, IS_WORKING(true) .. TRANSLATE("Make sure click before buying. When you change your session, will be changed to non-unlocked status."), function()
             SET_PACKED_INT_GLOBAL(27530, 27533, 1) -- VC_ACE_OF_SPADES, VC_ACE_OF_DIAMONDS
         end)
@@ -4132,7 +4178,7 @@
 
     UNLOCKER_HEISTS = menu.list(MASTER_UNLOCKR, TRANSLATE("Heists"), {}, TRANSLATE("Unlocks almost of unlockable stuffs related the heist like clothing, etc."), function(); end)
 
-        menu.action(UNLOCKER_HEISTS, TRANSLATE("Cayo Perico Heist"), {}, "", function()
+        menu.action(UNLOCKER_HEISTS, TRANSLATE("Cayo Perico Heist"), {}, IS_WORKING(false), function()
             STAT_SET_INT("AWD_LOSTANDFOUND", 500000)
             STAT_SET_INT("AWD_SUNSET", 1800000)
             STAT_SET_INT("AWD_TREASURE_HUNTER", 1000000)
@@ -4167,6 +4213,11 @@
             STAT_SET_BOOL("COMPLETE_H4_F_USING_ANNIH", true)
             STAT_SET_BOOL("COMPLETE_H4_F_USING_ALKONOS", true)
             STAT_SET_BOOL("COMPLETE_H4_F_USING_PATROLB", true)
+            SET_PACKED_INT_GLOBAL(30209, 30232, 1) -- TOPS_ISLAND_HEIST_EVENT_JACKET_1, PANTS_BIGNESS_TIE_DYE_SWEAT_PANTS
+            SET_PACKED_INT_GLOBAL(30238, 30277, 1) -- ACCESSORIES_GLOW_BRACELET_1, ACCESSORIES_GLOW_NECKLACE_16
+            SET_PACKED_INT_GLOBAL(30282, 30301, 1) -- HEIST4_FESTIVE_MASK_0, HEIST4_FESTIVE_MASK_19
+            SET_PACKED_INT_GLOBAL(30866, 30901, 1) -- ACCESSORIES_SUNGLASSES_1_0, ACCESSORIES_SUNGLASSES_3_11
+            SET_PACKED_INT_GLOBAL(30911, 30916, 1) -- PALMS_TRAX_EVENT_TEE_1, STILL_SLIPPING_EVENT_TEE_2
         end)
 
         menu.action(UNLOCKER_HEISTS, TRANSLATE("Diamond Casino Heist"), {}, "", function()
@@ -4413,14 +4464,6 @@
 
     UNLOCKER_MISSIONS = menu.list(MASTER_UNLOCKR, TRANSLATE("Missions"), {}, "", function(); end)
 
-        menu.action(UNLOCKER_MISSIONS, TRANSLATE("Cayo Perico Unlockables"), {}, IS_WORKING(false), function()
-            SET_PACKED_INT_GLOBAL(30209, 30232, 1) -- TOPS_ISLAND_HEIST_EVENT_JACKET_1, PANTS_BIGNESS_TIE_DYE_SWEAT_PANTS
-            SET_PACKED_INT_GLOBAL(30238, 30277, 1) -- ACCESSORIES_GLOW_BRACELET_1, ACCESSORIES_GLOW_NECKLACE_16
-            SET_PACKED_INT_GLOBAL(30282, 30301, 1) -- HEIST4_FESTIVE_MASK_0, HEIST4_FESTIVE_MASK_19
-            SET_PACKED_INT_GLOBAL(30866, 30901, 1) -- ACCESSORIES_SUNGLASSES_1_0, ACCESSORIES_SUNGLASSES_3_11
-            SET_PACKED_INT_GLOBAL(30911, 30916, 1) -- PALMS_TRAX_EVENT_TEE_1, STILL_SLIPPING_EVENT_TEE_2
-        end)
-
         menu.action(UNLOCKER_MISSIONS, TRANSLATE("Unlock Taxi Missions"), {}, IS_WORKING(false), function() -- https://github.com/ImSapphire/unlock_drug_war_content/blob/main/unlock_drug_war_content.lua
             SET_INT_GLOBAL(262145 + 33770, 1) -- XM22_TAXI_DRIVER_ENABLE
         end)
@@ -4534,7 +4577,7 @@
             SET_INT_GLOBAL(262145 + 25791, 1) -- Kifflom Tee
 
             for i = 31768, 32273 do
-                SET_PACKED_STAT_BOOL_CODE(i, 1) -- Found by me in freemode.c, https://www.unknowncheats.me/forum/3196991-post328.html
+                SET_PACKED_STAT_BOOL_CODE(i, true) -- Found by me in freemode.c, https://www.unknowncheats.me/forum/3196991-post328.html
             end
 
             -- https://www.unknowncheats.me/forum/3704307-post121.html
@@ -4816,6 +4859,18 @@
                     SET_INT_GLOBAL(262145 + 24643, 600000)
                 end)
 
+                menu.toggle_loop(TUNABLES_CD, TRANSLATE("Club Work"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3735173-post133.html
+                    SET_INT_GLOBAL(2765974 + 93 + 1 + 13, 0) -- Deathmatch
+                    SET_INT_GLOBAL(2765974 + 93 + 1 + 25, 0) -- Joust
+                    SET_INT_GLOBAL(2765974 + 93 + 1 + 30, 0) -- Stand Your Ground
+                    SET_INT_GLOBAL(2765974 + 93 + 1 + 31, 0) -- Caged In
+                    SET_INT_GLOBAL(262145 + 13081, 0) -- GB_COOLDOWN_UNTIL_NEXT_BOSS_WORK
+                    SET_INT_GLOBAL(262145 + 18746, 0) -- 1107909355
+                end, function()
+                    SET_INT_GLOBAL(262145 + 13081, 300000)
+                    SET_INT_GLOBAL(262145 + 18746, 180000)
+                end)
+
                 REMOVE_LUCKY_WHEEL_COOLDOWN = menu.toggle_loop(TUNABLES_CD, TRANSLATE("Spin Lucky Wheel"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3531489-post51.html
                     STAT_SET_INT("LUCKY_WHEEL_NUM_SPIN", 0)
                     SET_INT_GLOBAL(262145 + 27196, 1) -- 9960150
@@ -4955,10 +5010,6 @@
                 end
             end)
 
-            menu.toggle_loop(TUNABLES_OTH, TRANSLATE("Keep Full Nightclub Population"), {}, "", function()
-                STAT_SET_INT("CLUB_POPULARITY", 1000)
-            end)
-
             menu.toggle_loop(TUNABLES_OTH, TRANSLATE("Infinite Stone Hatchet's Power"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3484239-post11.html
                 SET_INT_GLOBAL(262145 + 25302, 99999) -- Duration, BB_HATCHET_RAMPAGE_DURATION_MAX
                 SET_INT_GLOBAL(262145 + 25303, 99999) -- Added Duration per Kill, BB_HATCHET_RAMPAGE_DURATION_EXTENSION
@@ -4988,25 +5039,28 @@
         ---
 
         CUSTOM_MONEY_REMOVER = menu.slider(TUNABLES, TRANSLATE("Custom Money Remover"), {"hcmoneyremove"}, IS_WORKING(true) .. TRANSLATE("The best way to remove GTA Online banked money up to $2B at once!"), 0, 2000000000, 5000, 10000, function(Value)
-            if menu.get_value(CUSTOM_MONEY_REMOVER) < players.get_bank(players.user()) then
-                menu.show_warning(TUNABLES, CLICK_MENU, TRANSLATE("Do you sure remove your money?"), function()
-                    SET_INT_GLOBAL(262145 + 20288, Value) -- -156036296, https://www.unknowncheats.me/forum/3276092-post3.html
-                    SET_PACKED_STAT_BOOL_CODE(15382, true) -- Makes able to buy the Ballistic Armor
-                    SET_PACKED_STAT_BOOL_CODE(9461, true) -- Makes you have the Ballistic Armor
-        
-                    menu.trigger_commands("nopimenugrey on")
-                    if util.is_interaction_menu_open() then IA_MENU_OPEN_OR_CLOSE() end
-                    SET_INT_GLOBAL(2766487, 85) -- Renders Ballistic Equipment Services screen of the Interaction Menu
-                    IA_MENU_OPEN_OR_CLOSE()
-                    IA_MENU_ENTER(1)
-                    NOTIFY(TRANSLATE("Because this feature works via requesting the Ballistic Armor, it'll be dropped nearby soon."))
-                end, function()
-                    menu.focus(CUSTOM_MONEY_REMOVER)
-                    NOTIFY(TRANSLATE("Successfully cancelled!"))
-                end)
-            else
-                NOTIFY(TRANSLATE("You try removing banked money amount that more than currently you have."))
+            if players.are_stats_ready(players.user()) then
+                if not menu.get_value(CUSTOM_MONEY_REMOVER) < players.get_bank(players.user()) then
+                    NOTIFY(TRANSLATE("You try removing banked money amount that more than currently you have."))
+                    return
+                end
             end
+
+            menu.show_warning(TUNABLES, CLICK_MENU, TRANSLATE("Do you sure remove your money?"), function()
+                SET_INT_GLOBAL(262145 + 20288, Value) -- -156036296, https://www.unknowncheats.me/forum/3276092-post3.html
+                SET_PACKED_STAT_BOOL_CODE(15382, true) -- Makes able to buy the Ballistic Armor
+                SET_PACKED_STAT_BOOL_CODE(9461, true) -- Makes you have the Ballistic Armor
+    
+                menu.trigger_commands("nopimenugrey on")
+                if util.is_interaction_menu_open() then IA_MENU_OPEN_OR_CLOSE() end
+                SET_INT_GLOBAL(2766487, 85) -- Renders Ballistic Equipment Services screen of the Interaction Menu
+                IA_MENU_OPEN_OR_CLOSE()
+                IA_MENU_ENTER(1)
+                NOTIFY(TRANSLATE("Because this feature works via requesting the Ballistic Armor, it'll be dropped nearby soon."))
+            end, function()
+                menu.focus(CUSTOM_MONEY_REMOVER)
+                NOTIFY(TRANSLATE("Successfully cancelled!"))
+            end)
         end)
 
     ---
@@ -5191,10 +5245,10 @@
                 util.yield(1500)
 
                 local Rewards = {
-                    { 15 },
-                    { 17 },
-                    { 4 },
-                    { 0, 8, 12, 16 },
+                    { 15 }, -- 25K Chips
+                    { 17 }, -- 15K RP
+                    { 4 }, -- Vehicle Discount
+                    { 0, 8, 12, 16 }, -- Clothing
                 }
                 local Value = menu.get_value(LUCKY_WHEEL_REWARD)
                 local Random = math.random(#Rewards[Value])
@@ -5278,31 +5332,31 @@
 
     REMOTE_ACCESS = menu.list(TOOLS, TRANSLATE("Remote Access"), {"hcapp"}, TRANSLATE("Let you open remotely some of apps for missions.") .. "\n\n" .. TRANSLATE("Note that you don't have the app, some of functions won't work."), function(); end)
 
-        menu.textslider(REMOTE_ACCESS, TRANSLATE("Bunker"), {"hcbunkerapp"}, "", {
+        menu.textslider(REMOTE_ACCESS, TRANSLATE("Bunker"), {"hcappbunker"}, "", {
             TRANSLATE("Open"),
             TRANSLATE("Close"),
         }, function()
             START_SCRIPT("CEO", "appbunkerbusiness")
         end)
-        menu.textslider(REMOTE_ACCESS, TRANSLATE("Air Cargo"), {"hcaircargoapp"}, "", {
+        menu.textslider(REMOTE_ACCESS, TRANSLATE("Air Cargo"), {"hcappaircargo"}, "", {
             TRANSLATE("Open"),
             TRANSLATE("Close"),
         }, function()
             START_SCRIPT("CEO", "appsmuggler")
         end)
-        menu.textslider(REMOTE_ACCESS, TRANSLATE("Nightclub"), {"hcnightclubapp"}, "", {
+        menu.textslider(REMOTE_ACCESS, TRANSLATE("Nightclub"), {"hcappnightclub"}, "", {
             TRANSLATE("Open"),
             TRANSLATE("Close"),
         }, function()
             START_SCRIPT("CEO", "appbusinesshub")
         end)
-        menu.action(REMOTE_ACCESS, TRANSLATE("The Open Road"), {"hctheopenroadapp"}, "(" .. TRANSLATE("Biker Business Management") .. ")", function()
+        menu.action(REMOTE_ACCESS, TRANSLATE("The Open Road"), {"hcapptheopenroad"}, "(" .. TRANSLATE("Biker Business Management") .. ")", function()
             START_SCRIPT("MC", "appbikerbusiness")
         end)
-        menu.action(REMOTE_ACCESS, TRANSLATE("Master Control Terminal"), {"hcmastercontrolapp"}, "", function()
+        menu.action(REMOTE_ACCESS, TRANSLATE("Master Control Terminal"), {"hcappmastercontrol"}, "", function()
             START_SCRIPT("CEO", "apparcadebusinesshub")
         end)
-        menu.action(REMOTE_ACCESS, TRANSLATE("Touchscreen Terminal"), {"hctouchscreenapp"}, "(" .. TRANSLATE("Terrobyte") .. ")", function()
+        menu.action(REMOTE_ACCESS, TRANSLATE("Touchscreen Terminal"), {"hcapptouchscreen"}, "(" .. TRANSLATE("Terrobyte") .. ")", function()
             START_SCRIPT("CEO", "apphackertruck")
         end)
 
@@ -5587,12 +5641,6 @@
 
     NEAR_PED_CAM = menu.list(TOOLS, TRANSLATE("Manage Nearby Peds And Cams"), {}, "", function(); end)
 
-        menu.divider(NEAR_PED_CAM, TRANSLATE("Settings"))
-            
-            IS_HOSTILE_PED = menu.toggle(NEAR_PED_CAM, TRANSLATE("Work only to hostile peds"), {}, TRANSLATE("Enabled: Ped options will only affect hostile peds") .. "\n\n" .. TRANSLATE("Disabled: Ped options will affect all peds"), function() end)
-
-        ---
-
         menu.divider(NEAR_PED_CAM, TRANSLATE("Peds"))
 
             menu.toggle_loop(NEAR_PED_CAM, TRANSLATE("Ignore You"), {"hcignoreped"}, TRANSLATE("Makes hostile peds (Included guards, polices, and gangs) ignore you even saw you. Except for the rare case, they don't shoot to you."), function()
@@ -5604,7 +5652,6 @@
             menu.action(NEAR_PED_CAM, TRANSLATE("Remove Weapons"), {"hcremwepon"}, "", function()
                 for _, ped in pairs(entities.get_all_peds_as_handles()) do
                     if IS_PLAYER_PED(ped) or ENTITY.IS_ENTITY_DEAD(ped) then goto out end
-                    if menu.get_value(IS_HOSTILE_PED) and not PED.IS_PED_IN_COMBAT(ped, players.user()) then goto out end
                     WEAPON.REMOVE_ALL_PED_WEAPONS(ped, true)
                     ::out::
                 end
@@ -5613,7 +5660,6 @@
             menu.action(NEAR_PED_CAM, TRANSLATE("Delete"), {"hcdelped"}, "", function()
                 for _, ped in pairs(entities.get_all_peds_as_handles()) do
                     if IS_PLAYER_PED(ped) or ENTITY.IS_ENTITY_DEAD(ped) then goto out end
-                    if menu.get_value(IS_HOSTILE_PED) and not PED.IS_PED_IN_COMBAT(ped, players.user()) then goto out end
                     entities.delete_by_handle(ped)
                     ::out::
                 end
@@ -5622,7 +5668,6 @@
             menu.action(NEAR_PED_CAM, TRANSLATE("Kill"), {"hckillped"}, "", function()
                 for _, ped in pairs(entities.get_all_peds_as_handles()) do
                     if IS_PLAYER_PED(ped) or ENTITY.IS_ENTITY_DEAD(ped) then goto out end
-                    if menu.get_value(IS_HOSTILE_PED) and not PED.IS_PED_IN_COMBAT(ped, players.user()) then goto out end
                     ENTITY.SET_ENTITY_HEALTH(ped, 0)
                     ::out::
                 end
@@ -5631,12 +5676,11 @@
             menu.action(NEAR_PED_CAM, TRANSLATE("Shoot"), {"hcshootped"}, "", function() -- Thanks for coding this, Pedro9558#3559
                 for _, ped in pairs(entities.get_all_peds_as_handles()) do
                     if IS_PLAYER_PED(ped) or ENTITY.IS_ENTITY_DEAD(ped) then goto out end
-                    if menu.get_value(IS_HOSTILE_PED) and not PED.IS_PED_IN_COMBAT(ped, players.user()) then goto out end
-
-                    local PedPos = v3.new(ENTITY.GET_ENTITY_COORDS(ped))
-                    local AddPos = v3.new(ENTITY.GET_ENTITY_COORDS(ped))
-                    AddPos:add(v3.new(0, 0, 1))
                     if PED.GET_VEHICLE_PED_IS_USING(ped) ~= 0 then TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped) end
+
+                    local PedPos = ENTITY.GET_ENTITY_COORDS(ped)
+                    local AddPos = ENTITY.GET_ENTITY_COORDS(ped)
+                    AddPos.z = AddPos.z + 1
                     MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(AddPos.x, AddPos.y, AddPos.z, PedPos.x, PedPos.y, PedPos.z, 1000, false, 0xC472FE2, players.user_ped(), false, true, 1000)
                     ::out::
                 end
@@ -5646,25 +5690,39 @@
 
         menu.divider(NEAR_PED_CAM, TRANSLATE("Cameras"))
 
-            menu.action(NEAR_PED_CAM, TRANSLATE("Delete"), {"hcdelcam"}, "(" .. TRANSLATE("Cayo Perico Heist") .. " & " .. TRANSLATE("Diamond Casino Heist") .. " & " .. TRANSLATE("The Data Breaches ACT I") .. " - " .. TRANSLATE("Setup: Server Farm (Lester)") .. " & " .. TRANSLATE("Fleeca Heist") .. ")", function()
-                local Cams = {  
-                    util.joaat("prop_cctv_cam_01a"),
-                    util.joaat("prop_cctv_cam_01b"),
-                    util.joaat("prop_cctv_cam_02a"),
-                    util.joaat("prop_cctv_cam_03a"),
-                    util.joaat("prop_cctv_cam_04a"),
-                    util.joaat("prop_cctv_cam_04c"),
-                    util.joaat("prop_cctv_cam_05a"),
-                    util.joaat("prop_cctv_cam_06a"),
-                    util.joaat("prop_cctv_cam_07a"),
-                    util.joaat("prop_cs_cctv"),
-                    util.joaat("p_cctv_s"),
-                    util.joaat("hei_prop_bank_cctv_01"),
-                    util.joaat("hei_prop_bank_cctv_02"),
-                    util.joaat("ch_prop_ch_cctv_cam_02a"),
-                    util.joaat("xm_prop_x17_server_farm_cctv_01"),
-                }
-                for _, cam in pairs(Cams) do
+            AllCamLists = {
+                util.joaat("prop_cctv_cam_01a"),
+                util.joaat("prop_cctv_cam_01b"),
+                util.joaat("prop_cctv_cam_02a"),
+                util.joaat("prop_cctv_cam_03a"),
+                util.joaat("prop_cctv_cam_04a"),
+                util.joaat("prop_cctv_cam_04c"),
+                util.joaat("prop_cctv_cam_05a"),
+                util.joaat("prop_cctv_cam_06a"),
+                util.joaat("prop_cctv_cam_07a"),
+                util.joaat("prop_cs_cctv"),
+                util.joaat("p_cctv_s"),
+                util.joaat("hei_prop_bank_cctv_01"),
+                util.joaat("hei_prop_bank_cctv_02"),
+                util.joaat("ch_prop_ch_cctv_cam_02a"),
+                util.joaat("xm_prop_x17_server_farm_cctv_01"),
+            }
+
+            menu.action(NEAR_PED_CAM, TRANSLATE("Taze"), {"hctazecam"}, "", function()
+                for _, ent in pairs(entities.get_all_objects_as_handles()) do
+                    for __, cam in pairs(AllCamLists) do
+                        if ENTITY.GET_ENTITY_MODEL(ent) == cam then
+                            local CamPos = ENTITY.GET_ENTITY_COORDS(ent)
+                            local AddPos = ENTITY.GET_ENTITY_COORDS(ent)
+                            AddPos.z = AddPos.z + 1
+                            MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(AddPos.x, AddPos.y, AddPos.z, CamPos.x, CamPos.y, CamPos.z, 1000, false, 0x3656C8C1, players.user_ped(), false, true, 1000)
+                        end
+                    end
+                end
+            end)
+
+            menu.action(NEAR_PED_CAM, TRANSLATE("Delete"), {"hcdelcam"}, "", function()
+                for _, cam in pairs(AllCamLists) do
                     DELETE_OBJECT_BY_HASH(cam)
                 end
             end)
@@ -5919,7 +5977,8 @@
                         menu.focus(STAT_EDITOR_NAME)
                         NOTIFY(TRANSLATE("You didn't specify the value. Please specify it!"))
                     else
-                        STAT_SET_FLOAT(menu.get_value(STAT_EDITOR_NAME), menu.get_value(STAT_EDITOR_VALUE))
+                        -- STAT_SET_FLOAT(menu.get_value(STAT_EDITOR_NAME), menu.get_value(STAT_EDITOR_VALUE))
+                        STATS.STAT_SET_FLOAT(util.joaat(ADD_MP_INDEX(stat)), value, true)
                         NOTIFY(TRANSLATE("Successfully set!") .. "\n\n" .. TRANSLATE("Stat Name") .. ": " .. ADD_MP_INDEX(menu.get_value(STAT_EDITOR_NAME)) .. "\n" .. TRANSLATE("Stat Value") .. ": " .. menu.get_value(STAT_EDITOR_VALUE))
                         FORCE_CLOUD_SAVE()
                     end
@@ -6904,6 +6963,10 @@
             { CP_REM_FEE, IS_WORKING(false) },
         },
         {
+            { CP_NON_HOST_CUT, "(%)" },
+            { CP_NON_HOST_CUT_LOOP, IS_WORKING(false) },     
+        },
+        {
             { CP_HOST_CUT, "(%)" },
             { CP_HOST_CUT_LOOP, IS_WORKING(false) },
         },
@@ -6949,8 +7012,10 @@
     end)
 
     ForCasinoPresets = { -- { command_ref, value, default_help_text }
-        { CAH_1P_CUT, 60, "(%)" },
-        { CAH_1P_CUT_LOOP, true, IS_WORKING(false) },
+        { CAH_NON_HOST_CUT, 60, "(%)" },
+        { CAH_NON_HOST_CUT_LOOP, false, IS_WORKING(false) },
+        { CAH_HOST_CUT, 60, "(%)" },
+        { CAH_HOST_CUT_LOOP, true, IS_WORKING(false) },
         { CAH_2P_CUT, 147, "(%)" },
         { CAH_2P_CUT_LOOP, true, IS_WORKING(false) },
         { CAH_3P_CUT, 147, "(%)" },
@@ -6984,6 +7049,8 @@
     end)
 
     ForDoomsPresets = { -- { command_ref, default_help_text }
+        { DOOMS_NON_HOST_CUT, "(%)" },
+        { DOOMS_NON_HOST_CUT_LOOP, IS_WORKING(false) },
         { DOOMS_HOST_CUT, "(%)" },
         { DOOMS_HOST_CUT_LOOP, IS_WORKING(false) },
         { DOOMS_2P_CUT, "(%)" },
