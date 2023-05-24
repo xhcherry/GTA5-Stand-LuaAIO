@@ -24,6 +24,26 @@ local SND_FILENAME<const> = 0x00020000
     local sound_location = store_dir .. '\\' .. file_selection
         PlaySound(sound_location, SND_FILENAME | SND_ASYNC) ]]
 
+----通知
+function request_streamed_texture_dict(textureDict)
+	util.spoof_script("main_persistent", function()
+		GRAPHICS.REQUEST_STREAMED_TEXTURE_DICT(textureDict, false)
+	end)
+end
+if filesystem.exists(filesystem.resources_dir() .. "/daidai-img/DaiTextures.ytd") then
+	util.register_file(filesystem.resources_dir() .. "/daidai-img/DaiTextures.ytd")
+	request_streamed_texture_dict("DaiTextures")
+else
+	error("required file not found: DaiTextures.ytd" )
+end
+function notification(format, colour)
+	local msg = string.format(format)
+	HUD.THEFEED_SET_BACKGROUND_COLOR_FOR_NEXT_POST(colour or HudColour.blue)
+	util.BEGIN_TEXT_COMMAND_THEFEED_POST(msg)
+	HUD.END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT("DaiTextures", "logo", true, 4, "daidai", "~b~通知")
+	HUD.END_TEXT_COMMAND_THEFEED_POST_TICKER(false, false)
+end
+
 ----声音create
 function Sound_new(name, reference)----原函数名Sound.new
     local inst = setmetatable({}, Sound)
@@ -187,10 +207,163 @@ function mod_uses(type, incr)
         object_uses = object_uses + incr
     end
 end
+
+----创建PED(鲨鱼枪,黑人抬棺,)
+function Cped(type, hash, pos, dir)
+    request_model(hash, 300)
+    local ped = entities.create_ped(type, hash, pos, dir, true, false)
+    STREAMING.REQUEST_MODEL(hash)
+    return ped
+end
+
+
+----文件写入
+function filewrite(filepath, method, content)
+    local file = io.open(filepath, method)--"w+"文件不存在即创建
+    file:write(content)
+    file:close()
+end
+----读取文件
+function fileread(filepath, method, rtype)
+    if filesystem.exists(filepath) then
+        local file = io.open(filepath, method)
+        local data = file:read(rtype)--'*all'从当前位置读取整个文件
+        file:close()
+        return data
+    end
+end
 ------------------------------------------------------------------------------------------------------
 
 
 
+
+
+----消防栓大喷水
+function firefighting(pid)
+    local objects = {}
+    for i = 1, 11 do
+        local coords = players.get_position(pid)
+        objects[#objects + 1] = entities.create_object(200846641, v3.new(coords.x + math.random(-5, 5), coords.y + math.random(-5, 5), coords.z))
+        util.yield()
+    end
+    util.yield(500)
+    for i, obj in ipairs(objects) do
+        local objcoords = ENTITY.GET_ENTITY_COORDS(obj)
+        FIRE.ADD_EXPLOSION(objcoords.x, objcoords.y, objcoords.z, 64, 100, true, true, 0.5, true)
+    end
+    util.yield(13000)
+    for i = 1, #objects do
+        entities.delete_by_handle(objects[i])
+    end
+end
+
+
+
+
+----讲个故事
+function story(story_amount)
+    if story_amount == 0 then
+        story_content = "师傅,你都已经讲了5遍啦:)"
+        notification("~y~~bold~"..story_content, math.random(0, 200))
+        return
+    else
+        story_content = "从前有座山,"..
+        "\n山里有座庙,"..
+        "\n庙里有一个老和尚跟"..story_amount.."个小和尚讲故事,"..
+        "\n讲的什么呢:)\n"
+        notification("~y~~bold~"..story_content, math.random(0, 200))
+        util.yield(5000)
+        return story(story_amount-1)
+    end
+end
+
+
+
+--intToIp
+function intToIp(num)
+    ip = ""
+    local int16 = string.format("%x", num)
+    for i = 1, #int16 do
+      if 0 == math.fmod(i, 2) then
+        if ip ~= "" then
+          ip = ip .. "." .. var_int
+        else
+          ip = var_int
+        end
+      else
+        var_int = tostring(tonumber(string.sub(int16, i, i + 1), 16))
+      end
+    end
+    return ip
+end
+
+
+----鲨鱼枪
+function Shark_gun()
+    local pos = v3.new()
+	if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pos) then
+        local NPC = Cped(26, 0x06C3F072, pos , 0)
+        ENTITY.FREEZE_ENTITY_POSITION(NPC, true)
+        ENTITY.SET_ENTITY_ROTATION(NPC, 90, 0, 0, true)
+        FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 4, 100, true, false, 1, false)
+        FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 13, 1, true, false, 0, false)
+    end
+end
+
+
+----NPC杀
+function NPC_kill(pid)
+    local hash = util.joaat("mp_m_weapexp_01")
+    STREAMING.REQUEST_MODEL(hash)
+    for i = 1, 10 do
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+        pos.x = pos.x + math.random(-20, 20 + i)--获取随机数
+        pos.y = pos.y + math.random(-20, 20)
+        
+        local Peds = PED.CREATE_PED(4, hash, pos.x, pos.y, pos.z, 1.0, true, false)
+        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(Peds, 0x476BF155, 0, true)
+        ENTITY.SET_ENTITY_HEALTH(Peds, 410)
+        PED.SET_PED_COMBAT_ABILITY(Peds, 2)
+        PED.SET_PED_COMBAT_ATTRIBUTES(Peds, 5, true)
+        TASK.TASK_COMBAT_PED(Peds, PLAYER.GET_PLAYER_PED(pid), 1, 16)
+        PED.SET_PED_RELATIONSHIP_GROUP_HASH(Peds, 0x84DCFAAD)
+        local posped = ENTITY.GET_ENTITY_COORDS(Peds)
+        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(posped.x, posped.y, posped.z, posped.x, posped.y, posped.z + 0.1, 0, 0, 453432689, PLAYER.GET_PLAYER_PED(pid), false, true, 100)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)   
+    end
+end
+
+
+
+----伪装
+function player_disguise_select(index)
+    disguise_object = index
+end
+function player_disguise(state)
+    disguise_state = state
+    if disguise_state then
+        ENTITY.SET_ENTITY_ALPHA(players.user_ped(), 0, false)
+        while disguise_state do
+            if disguise_objectt ~= disguise_object and ENTITY.DOES_ENTITY_EXIST(object) then
+                entities.delete_by_handle(object)
+            end
+            disguise_objectt = disguise_object
+            object_hash = util.joaat(disguise_objects[disguise_objectt])
+            player_pos = players.get_position(players.user())
+            if object == nil or not ENTITY.DOES_ENTITY_EXIST(object) then
+                object = entities.create_object(object_hash, player_pos)
+            end
+            ENTITY.SET_ENTITY_COLLISION(object, false, false)
+            player_rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 5)
+            ENTITY.SET_ENTITY_COORDS(object, player_pos.x, player_pos.y, player_pos.z - 1, false, false, false, false)
+            ENTITY.SET_ENTITY_ROTATION(object, 0, 0, player_rot.z, false, false, false, false)
+            util.yield()
+        end
+    else
+        entities.delete_by_handle(object)
+        ENTITY.SET_ENTITY_ALPHA(players.user_ped(), 255, false)
+    end
+end
 
 
 
@@ -207,18 +380,14 @@ function get_closest_train()
     util.toast("找不到最近的火车")
     return 0
 end
-local last_train = 0
-local last_train_menu = 0
-function spawn_train(variation, pos) 
+function spawn_train(variation)
+    local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), false)
     local train = VEHICLE.CREATE_MISSION_TRAIN(variation, pos.x, pos.y, pos.z, 0)
-    last_train = train
-    local posTrain = ENTITY.GET_ENTITY_COORDS(last_train)
+    local posTrain = ENTITY.GET_ENTITY_COORDS(train)
     local netid = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(veh)
     NETWORK.NETWORK_REQUEST_CONTROL_OF_NETWORK_ID(netid)
     NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netid, false)
-    util.toast(string.format("火车生成于 (%.1f, %.1f, %.1f) 变体 %d", posTrain.x, posTrain.y, posTrain.z, variation))
-    last_train_menu = submenu
-    return train
+    util.toast(string.format("火车生成于 (%.1f, %.1f, %.1f) 类型 %d", posTrain.x, posTrain.y, posTrain.z, variation))
 end
 
 
@@ -267,16 +436,17 @@ end
 
 --保存配置
 function save_config()
-    util.toast("配置已保存")
+    notification("~y~~bold~配置已保存", HudColour.blue)
     local config_txt = 
         "--[Lua配置]"..
         "\nconfig_active1 = "..menu.get_value(host_sequence)..         ------------主机序列
-        "\nconfig_active1_x = "..menu.get_value(host_sequence_x)..         ------------主机序列x坐标
-        "\nconfig_active1_y = "..menu.get_value(host_sequence_y)..         ------------主机序列y坐标
+        "\nconfig_active1_x = "..menu.get_value(host_sequence_x)..       ------------主机序列x坐标
+        "\nconfig_active1_y = "..menu.get_value(host_sequence_y)..       ------------主机序列y坐标
         "\nconfig_active2 = "..menu.get_value(show_time)..             ------------显示时间
         "\nconfig_active3 = "..menu.get_value(script_name)..           ------------显示脚本名称
         "\nconfig_active4 = "..menu.get_value(numfps)..                -----------显示fps
-        "\nconfig_active5 = "..menu.get_value(show_entityinfo)         -----------实体池信息
+        "\nconfig_active5 = "..menu.get_value(show_entityinfo)..       -----------实体池信息
+        "\nconfig_active6 = "..menu.get_value(players_info)            -----------绘制玩家信息
 
     local file = io.open(selected_lang_path, 'w')
     file:write(config_txt)
@@ -524,8 +694,7 @@ function Cage_proof()
         end
         local ownerId = get_entity_owner(obj)
         local msg = string.format(format, get_condensed_player_name(ownerId))
-        if ownerId ~= players.user() and is_player_active(ownerId, false, false) and
-        (lastMsg ~= msg or lastNotification.elapsed() >= 15000) then
+        if ownerId ~= players.user() and is_player_active(ownerId, false, false) and(lastMsg ~= msg or lastNotification.elapsed() >= 15000) then
             util.toast(msg)
             lastMsg = msg
             lastNotification.reset()
@@ -1568,7 +1737,7 @@ function getOffsetFromEntityGivenDistance(entity, distance)
 	local coords = vect.new(pos.x + distance * math.cos(theta),pos.y + distance * math.sin(theta),pos.z)
 	return coords
 end
-function send_Angry_Trevor(on_click)
+function send_Angry_Trevor(pid)
     local vehicleHash = util.joaat("bodhi2")
     local pedHash = -1686040670
     requestModels(vehicleHash, pedHash)
@@ -1662,13 +1831,11 @@ end
 
 --烟花
 placed_firework_boxes = {}
-ptfx_asset = "scr_indep_fireworks"
-effect_name = "scr_indep_firework_trailburst"
+local animlib = 'anim@mp_fireworks'
+local ptfx_asset = "scr_indep_fireworks"
+local anim_name = 'place_firework_3_box'
+local effect_name = "scr_indep_firework_trailburst"
 function anfangyanhua()
-    local animlib = 'anim@mp_fireworks'
-    local ptfx_asset = "scr_indep_fireworks"
-    local anim_name = 'place_firework_3_box'
-    local effect_name = "scr_indep_firework_trailburst"
     request_anim_dict(animlib)
     local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0.0, 0.52, 0.0)
     local ped = players.user_ped()
@@ -1683,21 +1850,21 @@ function anfangyanhua()
     ENTITY.FREEZE_ENTITY_POSITION(firework_box, true)
     placed_firework_boxes[#placed_firework_boxes + 1] = firework_box
 end
-function yanhuafashe(f)
+function yanhuafashe()
     if #placed_firework_boxes == 0 then 
         util.toast("请先安放烟花!")
         return 
     end
     request_ptfx_asset(ptfx_asset)
     util.toast("烟花发射wow")
-    for i=1, 50 do
-        for k,box in pairs(placed_firework_boxes) do 
+    for i = 1, 50 do
+        for k, box in pairs(placed_firework_boxes) do 
             GRAPHICS.USE_PARTICLE_FX_ASSET(ptfx_asset)
             GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(effect_name, box, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 1.0, 0.0, 0.0, 0.0)
             util.yield(100)
         end
     end
-    for k,box in pairs(placed_firework_boxes) do 
+    for k, box in pairs(placed_firework_boxes) do 
         entities.delete_by_handle(box)
         placed_firework_boxes = {}
     end
@@ -1716,7 +1883,6 @@ gUsingValkRocket = toggle
         local draw_rect = function(x, y, z, w)
             GRAPHICS.DRAW_RECT(x, y, z, w, 255, 255, 255, 255, false)
         end
-
         while gUsingValkRocket do
             util.yield_once()
             if PED.IS_PED_SHOOTING(players.user_ped()) and not init then
@@ -1732,7 +1898,6 @@ gUsingValkRocket = toggle
                     NETWORK.SET_NETWORK_ID_CAN_MIGRATE(NETWORK.OBJ_TO_NET(rocket), false)
                     ENTITY.SET_ENTITY_RECORDS_COLLISIONS(rocket, true)
                     ENTITY.SET_ENTITY_HAS_GRAVITY(rocket, false)
-
                     CAM.DESTROY_ALL_CAMS(true)
                     cam = CAM.CREATE_CAM("DEFAULT_SCRIPTED_CAMERA", true)
                     CAM.SET_CAM_NEAR_CLIP(cam, 0.01)
@@ -1742,7 +1907,6 @@ gUsingValkRocket = toggle
                     CAM1.HARD_ATTACH_CAM_TO_ENTITY(cam, rocket, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true)
                     CAM.SET_CAM_ACTIVE(cam, true)
                     CAM.RENDER_SCRIPT_CAMS(true, false, 0, true, true, 0)
-
                     PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), true)
                     ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
                 else
@@ -1750,16 +1914,13 @@ gUsingValkRocket = toggle
                     local coords = ENTITY.GET_ENTITY_COORDS(rocket, false)
                     local force = rot:toDir()
                     force:mul(40.0)
-
                     ENTITY.SET_ENTITY_ROTATION(rocket, rot.x, rot.y, rot.z, 0, true)
                     STREAMING.SET_FOCUS_POS_AND_VEL(coords.x, coords.y, coords.z, rot.x, rot.y, rot.z)
                     ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(rocket, 1, force.x, force.y, force.z, false, false, false, false)
-
                     HUD.HIDE_HUD_AND_RADAR_THIS_FRAME()
                     PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), true)
                     ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
                     HUD1.HUD_SUPPRESS_WEAPON_WHEEL_RESULTS_THIS_FRAME()
-
                     draw_rect(0.5, 0.5 - 0.025, 0.050, 0.002)
                     draw_rect(0.5, 0.5 + 0.025, 0.050, 0.002)
                     draw_rect(0.5 - 0.025, 0.5, 0.002, 0.052)
@@ -1768,14 +1929,12 @@ gUsingValkRocket = toggle
                     draw_rect(0.5 - 0.050, 0.5, 0.050, 0.002)
                     draw_rect(0.5, 0.500 + 0.05, 0.002, 0.05)
                     draw_rect(0.5, 0.500 - 0.05, 0.002, 0.05)
-
                     local maxTime = 7000 -- `ms`
                     local length = 0.5 - 0.5 * (timer.elapsed() / maxTime) -- timer length
                     local perc = length / 0.5
                     local color = get_blended_colour(perc) -- timer color
                     GRAPHICS.DRAW_RECT(0.25, 0.5, 0.03, 0.5, 255, 255, 255, 120, false)
                     GRAPHICS.DRAW_RECT(0.25, 0.75 - length / 2, 0.03, length, color.r, color.g, color.b, color.a, false)
-
                     if ENTITY.HAS_ENTITY_COLLIDED_WITH_ANYTHING(rocket) or length <= 0 then
                         local impactCoord = ENTITY.GET_ENTITY_COORDS(rocket, false)
                         FIRE.ADD_EXPLOSION(impactCoord.x, impactCoord.y, impactCoord.z, 32, 1.0, true, false, 0.4, false)
@@ -1889,116 +2048,6 @@ function Streamptfx(lib)
 end
 
 
-----大春逗崩溃
-function big_chungus()
-    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-    local pos = ENTITY.GET_ENTITY_COORDS(ped, true)
-    local mdl = util.joaat("A_C_Cat_01")
-    local mdl2 = util.joaat("U_M_Y_Zombie_01")
-    local mdl3 = util.joaat("A_F_M_ProlHost_01")
-    local mdl4 = util.joaat("A_M_M_SouCent_01")
-    local veh_mdl = util.joaat("insurgent2")
-    local veh_mdl2 = util.joaat("brawler")
-        util.request_model(veh_mdl)
-        util.request_model(veh_mdl2)
-        util.request_model(mdl)
-        util.request_model(mdl2)
-        util.request_model(mdl3)
-        util.request_model(mdl4)
-    for i = 1, 250 do
-        local ped1 = entities.create_ped(1, mdl, pos + 20, 0)
-        local ped_ = entities.create_ped(1, mdl2, pos + 20, 0)
-        local ped3 = entities.create_ped(1, mdl3, pos + 20, 0)
-        local ped3 = entities.create_ped(1, mdl4, pos + 20, 0)
-        local veh = entities.create_vehicle(veh_mdl, pos + 20, 0)
-        local veh2 = entities.create_vehicle(veh_mdl2, pos + 20, 0)
-        PED.SET_PED_INTO_VEHICLE(ped1, veh, -1)
-        PED.SET_PED_INTO_VEHICLE(ped_, veh, -1)
-        PED.SET_PED_INTO_VEHICLE(ped1, veh2, -1)
-        PED.SET_PED_INTO_VEHICLE(ped_, veh2, -1)
-        PED.SET_PED_INTO_VEHICLE(ped1, veh, -1)
-        PED.SET_PED_INTO_VEHICLE(ped_, veh, -1)
-        PED.SET_PED_INTO_VEHICLE(ped1, veh2, -1)
-        PED.SET_PED_INTO_VEHICLE(ped_, veh2, -1)
-        PED.SET_PED_INTO_VEHICLE(mdl3, veh, -1)
-        PED.SET_PED_INTO_VEHICLE(mdl3, veh2, -1)
-        PED.SET_PED_INTO_VEHICLE(mdl4, veh, -1)
-        PED.SET_PED_INTO_VEHICLE(mdl4, veh2, -1)
-        TASK.TASK_VEHICLE_HELI_PROTECT(ped1, veh, ped, 10.0, 0, 10, 0, 0)
-        TASK.TASK_VEHICLE_HELI_PROTECT(ped_, veh, ped, 10.0, 0, 10, 0, 0)
-        TASK.TASK_VEHICLE_HELI_PROTECT(ped1, veh2, ped, 10.0, 0, 10, 0, 0)
-        TASK.TASK_VEHICLE_HELI_PROTECT(ped_, veh2, ped, 10.0, 0, 10, 0, 0)
-        TASK.TASK_VEHICLE_HELI_PROTECT(mdl3, veh, ped, 10.0, 0, 10, 0, 0)
-        TASK.TASK_VEHICLE_HELI_PROTECT(mdl3, veh2, ped, 10.0, 0, 10, 0, 0)
-        TASK.TASK_VEHICLE_HELI_PROTECT(mdl4, veh, ped, 10.0, 0, 10, 0, 0)
-        TASK.TASK_VEHICLE_HELI_PROTECT(mdl4, veh2, ped, 10.0, 0, 10, 0, 0)
-        TASK.TASK_VEHICLE_HELI_PROTECT(ped1, veh, ped, 10.0, 0, 10, 0, 0)
-        TASK.TASK_VEHICLE_HELI_PROTECT(ped_, veh, ped, 10.0, 0, 10, 0, 0)
-        TASK.TASK_VEHICLE_HELI_PROTECT(ped1, veh2, ped, 10.0, 0, 10, 0, 0)
-        TASK.TASK_VEHICLE_HELI_PROTECT(ped_, veh2, ped, 10.0, 0, 10, 0, 0)
-        util.yield(100)
-        PED.SET_PED_COMPONENT_VARIATION(mdl, 0, 2, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl, 0, 1, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl, 0, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl2, 0, 2, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl2, 0, 1, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl2, 0, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl3, 0, 2, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl3, 0, 1, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl3, 0, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl4, 0, 2, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl4, 0, 1, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl4, 0, 0, 0)
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(mdl)
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(mdl2)
-        TASK.TASK_START_SCENARIO_IN_PLACE(mdl, "CTaskDoNothing", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(mdl, "CTaskDoNothing", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(mdl, "CTaskDoNothing", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(mdl2, "CTaskDoNothing", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(mdl2, "CTaskDoNothing", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(mdl2, "CTaskDoNothing", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(mdl3, "CTaskDoNothing", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(mdl4, "CTaskDoNothing", 0, false)
-        ENTITY.SET_ENTITY_HEALTH(mdl, false, 200)
-        ENTITY.SET_ENTITY_HEALTH(mdl2, false, 200)
-        ENTITY.SET_ENTITY_HEALTH(mdl3, false, 200)
-        ENTITY.SET_ENTITY_HEALTH(mdl4, false, 200)
-        PED.SET_PED_COMPONENT_VARIATION(mdl, 0, 2, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl, 0, 1, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl, 0, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl2, 0, 2, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl2, 0, 1, 0)
-        PED.SET_PED_COMPONENT_VARIATION(mdl2, 0, 0, 0)
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(mdl2)
-        TASK.TASK_START_SCENARIO_IN_PLACE(mdl2, "CTaskInVehicleBasic", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(mdl2, "CTaskAmbientClips", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(mdl3, "CTaskAmbientClips", 0, false)
-        PED.SET_PED_INTO_VEHICLE(mdl, veh, -1)
-        PED.SET_PED_INTO_VEHICLE(mdl2, veh, -1)
-        ENTITY.SET_ENTITY_PROOFS(veh_mdl, true, true, true, true, true, false, false, true)
-        ENTITY.SET_ENTITY_PROOFS(veh_mdl2, true, true, true, true, true, false, false, true)
-        TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl, "CTaskExitVehicle", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl, "CTaskWaitForSteppingOut", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl, "CTaskInVehicleSeatShuffle", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl, "CTaskExitVehicleSeat", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl2, "CTaskExitVehicle", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl2, "CTaskWaitForSteppingOut", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl2, "CTaskInVehicleSeatShuffle", 0, false)
-        TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl2, "CTaskExitVehicleSeat", 0, false)
-    end
-        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(mdl)
-        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(mdl2)
-        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl)
-        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl2)
-        entities.delete_by_handle(mdl)
-        entities.delete_by_handle(mdl2)
-        entities.delete_by_handle(mdl3)
-        entities.delete_by_handle(mdl4)
-        entities.delete_by_handle(veh_mdl)
-        entities.delete_by_handle(veh_mdl2)
-    util.yield(1000)
-end
-
 ------轰炸区
 active_bowling_balls = 0
 function bomb_shower_tick_handler(ent)
@@ -2055,7 +2104,7 @@ end)
 -----悲伤的耶稣
 function dispatch_griefer_jesus(target)
     griefer_jesus = util.create_thread(function(thr)
-        util.toast("[呆呆提醒] \n悲伤耶稣派来了!")
+        util.toast("悲伤耶稣派来了!")
         request_model_load(-835930287)
         local target_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(target)
         coords = ENTITY.GET_ENTITY_COORDS(target_ped, false)
@@ -2084,12 +2133,12 @@ function dispatch_griefer_jesus(target)
             end
             -- if jesus disappears we can just make another lmao
             if not ENTITY.DOES_ENTITY_EXIST(jesus) then
-                util.toast("[呆呆提醒] \n耶稣显然不再存在。或许已被玩家清除。")
+                util.toast("耶稣显然不再存在。或许已被玩家清除。")
                 util.stop_thread()
             end
             local target_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(target)
             if not players.exists(target) then
-                util.toast("[呆呆提醒] \n玩家目标已丢失。悲伤的耶稣线正在停止")
+                util.toast("玩家目标已丢失。悲伤的耶稣线正在停止")
                 util.stop_thread()
             else
                 TASK.TASK_COMBAT_PED(jesus, target_ped, 0, 16)
@@ -2381,7 +2430,7 @@ function show_mugger()
 			if not notified and p_sender ~= 0 and memory.read_int(p_sender) ~= players.user() and
 			is_player_active(memory.read_int(p_sender), false, false) then
 				local sender = memory.read_int(p_sender)
-				util.toast("[呆呆 提示] \n给你发送了一个劫匪")
+				util.toast("给你发送了一个劫匪")
 				notified = true
 			end
 		end)
@@ -2491,7 +2540,6 @@ function zidanleixing()
                         v3.mul(inst, 1000)
                         v3.set(tmp, CAM.GET_FINAL_RENDERED_CAM_COORD())
                         v3.add(inst, tmp)
-                        v3.free(tmp)
                     end
                     local x, y, z = v3.get(inst)
                     local wpEnt = WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(PLAYER.PLAYER_PED_ID(), false)
@@ -2510,46 +2558,46 @@ end
 ---------举手
 function juqishoulai()
     if PAD.IS_CONTROL_PRESSED(1, 323) then
-                    while not STREAMING.HAS_ANIM_DICT_LOADED("random@mugging3") do
-                        STREAMING.REQUEST_ANIM_DICT("random@mugging3")
-                        util.yield(100)
-                    end
-                    if not ENTITY.IS_ENTITY_PLAYING_ANIM(PLAYER.PLAYER_PED_ID(), "random@mugging3", "handsup_standing_base", 3) then
-                        WEAPON.SET_CURRENT_PED_WEAPON(PLAYER.PLAYER_PED_ID(), MISC.GET_HASH_KEY("WEAPON_UNARMED"), true)
-                        TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), "random@mugging3", "handsup_standing_base", 3, 3, -1, 51, 0, false, false, false)
-                        STREAMING.REMOVE_ANIM_DICT("random@mugging3")
-                        PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(), true)
-                    end
-                end
-                if PAD.IS_CONTROL_RELEASED(1, 323) and ENTITY.IS_ENTITY_PLAYING_ANIM(PLAYER.PLAYER_PED_ID(), "random@mugging3", "handsup_standing_base", 3) then
-                    TASK.CLEAR_PED_SECONDARY_TASK(PLAYER.PLAYER_PED_ID())
-                    PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(), false)
-                end
+        while not STREAMING.HAS_ANIM_DICT_LOADED("random@mugging3") do
+            STREAMING.REQUEST_ANIM_DICT("random@mugging3")
+            util.yield(100)
+        end
+        if not ENTITY.IS_ENTITY_PLAYING_ANIM(PLAYER.PLAYER_PED_ID(), "random@mugging3", "handsup_standing_base", 3) then
+            WEAPON.SET_CURRENT_PED_WEAPON(PLAYER.PLAYER_PED_ID(), MISC.GET_HASH_KEY("WEAPON_UNARMED"), true)
+            TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), "random@mugging3", "handsup_standing_base", 3, 3, -1, 51, 0, false, false, false)
+            STREAMING.REMOVE_ANIM_DICT("random@mugging3")
+            PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(), true)
+        end
     end
+    if PAD.IS_CONTROL_RELEASED(1, 323) and ENTITY.IS_ENTITY_PLAYING_ANIM(PLAYER.PLAYER_PED_ID(), "random@mugging3", "handsup_standing_base", 3) then
+        TASK.CLEAR_PED_SECONDARY_TASK(PLAYER.PLAYER_PED_ID())
+        PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(), false)
+    end
+end
 
 
 -------忍者跑
 function renzhepao(on)
-local renzhe = "missfbi1"
+    local renzhe = "missfbi1"
     local pao = "ledge_loop"
-            while not STREAMING.HAS_ANIM_DICT_LOADED(renzhe) do 
-                STREAMING.REQUEST_ANIM_DICT(renzhe)
-                util.yield()
-            end
-            if on then
-                menu.trigger_commands("walkspeed 3.1")
-                menu.trigger_commands("superrun 0.75")
-                menu.trigger_commands("grace on")
-                TASK.TASK_PLAY_ANIM(players.user_ped(), renzhe, pao, 3, 3, -1, 51, 0, false, false, false)
-                PED.SET_ENABLE_HANDCUFFS(players.user_ped(),on)
-            else
-                menu.trigger_commands("walkspeed 1")
-                menu.trigger_commands("superrun 0")
-                menu.trigger_commands("grace off")
-                TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
-                PED.SET_ENABLE_HANDCUFFS(players.user_ped(),off)
-            end
-        end
+    while not STREAMING.HAS_ANIM_DICT_LOADED(renzhe) do 
+        STREAMING.REQUEST_ANIM_DICT(renzhe)
+        util.yield()
+    end
+    if on then
+        menu.trigger_commands("walkspeed 3.1")
+        menu.trigger_commands("superrun 0.75")
+        menu.trigger_commands("grace on")
+        TASK.TASK_PLAY_ANIM(players.user_ped(), renzhe, pao, 3, 3, -1, 51, 0, false, false, false)
+        PED.SET_ENABLE_HANDCUFFS(players.user_ped(),on)
+    else
+        menu.trigger_commands("walkspeed 1")
+        menu.trigger_commands("superrun 0")
+        menu.trigger_commands("grace off")
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
+        PED.SET_ENABLE_HANDCUFFS(players.user_ped(),off)
+    end
+end
 
 
 --------匿名杀死所有人
@@ -2559,21 +2607,21 @@ function kill_player(pid)
     FIRE.ADD_EXPLOSION(coords['x'], coords['y'], coords['z'] + 2, 7, 1000, false, true, 0)
 end
 function nimingsharen()
-for k,v in pairs(players.list(false, true, true)) do
-    kill_player(v)
-    util.yield()
-end
+    for k,v in pairs(players.list(false, true, true)) do
+        kill_player(v)
+        util.yield()
+    end
 end
 
 -----显示时间
 function daidaishijian(state)
     timeos = state
-        if timeos then
-            while timeos do
-                util.yield(0)
-                draw_string(string.format(os.date('~bold~~italic~~o~%Y-%m-%d ~b~%H:%M:%S', os.time())), 0.43,0.05, 0.47,5)
-            end
-        end 
+    if timeos then
+        while timeos do
+            draw_string(string.format(os.date('~bold~~italic~~o~%Y-%m-%d ~b~%H:%M:%S', os.time())), 0.43,0.05, 0.47,5)
+            util.yield()
+        end
+    end 
 end
 
 --------笼子恶搞
@@ -2925,29 +2973,29 @@ end
 
 --------------自定义假R*警告
 function custom_alert(l1) -- totally not skidded from lancescript
-        poptime = os.time()
-        while true do
-            if PAD.IS_CONTROL_JUST_RELEASED(18, 18) then
-                if os.time() - poptime > 0.1 then
-                    break
-                end
+    poptime = os.time()
+    while true do
+        if PAD.IS_CONTROL_JUST_RELEASED(18, 18) then
+            if os.time() - poptime > 0.1 then
+                break
             end
-            native_invoker.begin_call()
-            native_invoker.push_arg_string("ALERT")
-            native_invoker.push_arg_string("JL_INVITE_ND")
-            native_invoker.push_arg_int(2)
-            native_invoker.push_arg_string("")
-            native_invoker.push_arg_bool(true)
-            native_invoker.push_arg_int(-1)
-            native_invoker.push_arg_int(-1)
-            native_invoker.push_arg_string(l1)
-            native_invoker.push_arg_int(0)
-            native_invoker.push_arg_bool(true)
-            native_invoker.push_arg_int(0)
-            native_invoker.end_call("701919482C74B5AB")
-            util.yield()
         end
+        native_invoker.begin_call()
+        native_invoker.push_arg_string("ALERT")
+        native_invoker.push_arg_string("JL_INVITE_ND")
+        native_invoker.push_arg_int(2)
+        native_invoker.push_arg_string("")
+        native_invoker.push_arg_bool(true)
+        native_invoker.push_arg_int(-1)
+        native_invoker.push_arg_int(-1)
+        native_invoker.push_arg_string(l1)
+        native_invoker.push_arg_int(0)
+        native_invoker.push_arg_bool(true)
+        native_invoker.push_arg_int(0)
+        native_invoker.end_call("701919482C74B5AB")
+        util.yield()
     end
+end
 
 -----------线上请求服务-------------
 --即时纳米无人机
@@ -3020,7 +3068,7 @@ function autogethost()
         end
     end
     if players.get_name(players.user()) == players.get_name(players.get_host()) then
-        util.toast("[呆呆 提示] \n获得主机,已禁用自动获取主机")
+        util.toast("获得主机,已禁用自动获取主机")
         menu.set_value(auto_host, false)
     end
 end
@@ -4875,4 +4923,55 @@ function Finely_chopped(pid)
     VEHICLE.SET_VEHICLE_ENGINE_ON(heli, true, true, true)
     util.yield(3000)
     entities.delete_by_handle(heli)
+end
+
+
+----儿童锁
+function Child_Lock(on,pid)
+    usingChildLock = on
+    if not usingChildLock then return end
+    while usingChildLock and is_player_active(pid, false, true) and not util.is_session_transition_active() do
+        local vehicle = get_vehicle_player_is_in(pid)
+        if ENTITY.DOES_ENTITY_EXIST(vehicle) and request_control_once(vehicle) then
+            VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle, 4)
+        end
+        util.yield_once()
+    end
+    local vehicle = get_vehicle_player_is_in(pid)
+    if ENTITY.DOES_ENTITY_EXIST(vehicle) and request_control(vehicle, 1000) then
+        VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle, 1)
+    end
+end
+
+
+----火箭人
+function Rocket_Man()
+    PED.SET_PED_TO_RAGDOLL(players.user_ped(), 2500, 0, 0, false, false, false)
+    local forces = {10, 15, 20, 20, 20, 10, 10, 10, 10, 10, 10}
+    local delays = {1000, 900, 800, 700, 600, 500, 400, 300, 200, 175, 125}
+    for i = 1, #forces do
+        ENTITY.APPLY_FORCE_TO_ENTITY(players.user_ped(), 3, 0.0, 0.0, forces[i], 0.0, 0.0, 0.0, 0, false, false, true, false, false)
+        local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+        use_fx_asset("cut_xm3")
+        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("cut_xm3_rpg_explosion", pos.x, pos.y, pos.z-0.5, 0, 0, 0, 1.0, true, true, true)
+        AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Bomb_Countdown_Beep", players.user_ped(), "DLC_MPSUM2_ULP2_Rogue_Drones", true, false)
+        util.yield(delays[i])
+    end
+    for i = 1, 2 do
+        local delay = util.current_time_millis() + 500
+        repeat
+            ENTITY.APPLY_FORCE_TO_ENTITY(players.user_ped(), 3, 0.0, 0.0, 10, 0.0, 0.0, 0.0, 0, false, false, true, false, false)
+            pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+            use_fx_asset("cut_xm3")
+            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("cut_xm3_rpg_explosion", pos.x, pos.y, pos.z-0.5, 0, 0, 0, 1.0, true, true, true)
+            AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Bomb_Countdown_Beep", players.user_ped(), "DLC_MPSUM2_ULP2_Rogue_Drones", true, false)
+            util.yield(i == 1 and 100 or 10)
+        until delay <= util.current_time_millis()
+    end
+    AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Bomb_Detonate", players.user_ped(), "DLC_MPSUM2_ULP2_Rogue_Drones", true, false)
+    pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    use_fx_asset("scr_xm_orbital")
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("scr_xm_orbital_blast", pos.x, pos.y, pos.z, 0, 180, 0, 1.0, true, true, true)
+    STREAMING.REMOVE_NAMED_PTFX_ASSET("cut_xm3")
+    STREAMING.REMOVE_NAMED_PTFX_ASSET("scr_xm_orbital")
 end

@@ -1,18 +1,15 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 03/19/2023 08:16:57 AM
-# Heist Control Version: V 3.2.4
+# Generated Date: 05/17/2023 11:52:10 PM
+# Heist Control Version: V 3.3.0
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
 # You can use all characters except '=' character.
 # Using '#' character means the line will be ignored.
-# If you want to release your own translation officially, please contact to the developer of Heist Control in its Discord server.
-# Learn more: https://icedoomfist.com/Stand_Heist_Control/How_To_Translate/
-
+# Please join the Discord Server for Heist Control if you don't know how to translate.
 
 Heist Control = Heist Control
-Announcement = Anúncio
 Hard = Difícil
 Normal = Normal
 Notification = Notificação
@@ -155,7 +152,6 @@ Unlock Awards = Destravar Prêmios
 Unlock Animal Masks = Destravar Máscaras de Animais
 Unlock DJ Pooh Shirts = Destravar Camisas do DJ Pooh
 Buildings = Construções
-Arcade Unlockers = Destravadores do Fliperama
 Casino Store Ace Masks = Máscaras Faciais da Loja do Cassino
 Missions = Missões
 Unlock Yacht Missions = Destravar Missões do Iate
@@ -195,7 +191,6 @@ Ratio of Jackpot and Loss = Proporção de Jackpots e Perdas
 Heist Cooldown Timer = Tempo de Cooldown do Golpe
 Use Stand's Overlay = Usar Sobreposição do Stand
 Disabled: Use Heist Control's Overlay & Settings = Desabilitado: Usando Sobreposição do Heist Control & Configurações
-Work only to hostile peds = Funcionar apenas em pedestres hostis
 Peds = Pedestres
 Remove Weapons = Remover Armas
 Delete = Deletar
@@ -244,7 +239,6 @@ Note: MP0_ or MP1_ will be selected by HC automatically, therefore don't write i
 Custom Stat Reader = Leitor de Estátistica Customizado
 Copy Stat Value = Copiar Valor da Estátistica
 Read Stat = Ler a Estátistica
-How To Translate = Como Traduzir
 Language = Idioma
 Settings = Configurações
 In-Game = Em Jogo
@@ -270,10 +264,8 @@ Text Color = Cor do Texto
 About HC = Sobre o HC
 Join Discord Server! = Junte-se ao Servidor do Discord!
 Youtube = Youtube
-Tutorial = Tutorial
 Changelog = Atualizações
 Credits = Créditos
-Let me know about stats info. = Por me deixar ligado sobre informações das estátisticas do jogo.
 Translators = Tradutores
 Maintains HC's translation = Mantém as traduções do HC.
 Native file for HC doesn't exist. = Arquivo nativo para HC não existe.
@@ -379,13 +371,11 @@ Pants / Caps / Hats = Calças / Bonés / Chapéus
 Earphones / Masks / Tech Demon = Fones de Ouvido / Mascáras / Demônio da Tecnologia
 Shoes (Sliders) / Tiger = Sapatos (Deslizantes) / Tigre
 Drug War DLC = DLC Drug Wars
-Unlock Arcade Trophies and Toys = Destravar Troféus e Brinquedos do Fliperama
 Acid Lab Equipment Upgrade = Equipamento de Aprimoramento do Laboratório de Ácido
 Unlock Nightclub Awards = Destravar Prêmios da Boate
 Make sure click before buying. When you change your session, will be changed to non-unlocked status. = Certifique-se de clicar antes de comprar. Quando você alterar de sessão, o estado irá alterar para não-destravado.
 Add Cosmetic Decorations To The Office/MC = Adicionar decorações cosméticas para o Escritório/MC
 To apply, sell special crate or vehicle cargo and change your session! = Para aplicar, venda caixa especial de muamba ou exporte um veículo e mude de sessão!
-Cayo Perico Unlockables = Destravaveís de Cayo Perico
 Unlock Taxi Missions = Destravar Missões de Táxi
 Unlock All Contacts = Desbloquear Todos os Contatos
 Skip Lamar Missions To The Last One = Pular Missões do Lamar para a última
@@ -451,8 +441,6 @@ Enabled: Use Stand's Overlay & Settings: Game > Info Overlay = Ativado: Use o Ov
 Set Custom Time (Seconds) = Definir Tempo Customizado (Em Segundos)
 Custom Timer = Tempo de Espera Customizado
 Manage Nearby Peds And Cams = Gerenciar Peds ao Redor e Câmeras
-Enabled: Ped options will only affect hostile peds = Ativado: Opções de Pedestres só irá afetar Pedestres Hostis
-Disabled: Ped options will affect all peds = Desabilitado: Opções de Pedestres irá afetar todos os pedestres
 Shoot = Atirar
 Cameras = Câmeras
 Stat Spoofing = Mascarador de Estátisticas
@@ -490,17 +478,10 @@ This action will take a few seconds. Please wait for it patiently, don't press m
 - Total number of translations: = - Número total de Traduções:
 - Number of not modified translations: = - Número de Traduções não modificadas:
 - Number of modified (updated) translations: = - Número de Traduções Modificadas (Atualizadas):
-Always looking for translators for non-existing languages. If you're interested in translating HC, click! = Sempre procurando por tradutores cujo o idioma não esteje presente aqui. Se estiver interessado em traduzir o HC, clique!
 Notification's Style = Estilo de Notificação
 Type = Tipo
 Heist Control for 2Take1 Developer. He allowed me to use his code. HC wouldn't exist without his help. Serious thanks to him! = Desenvolvedor do Heist Control pro 2Take1. Ele me permitiu usar o código dele. HC não existiria se não fosse por ele. Muito obrigado a ele!
-Creator of WiriScript which helped me code HC! = Criador do WiriScript que me ajudou a programar o HC!
-Helped me with a lot of things for HC website's maintenance. = Me ajudou em muitas coisas relacionadas a manutenção do site do HC.
-Helped me code the website's design. = Me ajudou a fazer o design do site.
-Made the logo, banner and other images for HC. = Fez a logo, banner e outras imagens pro HC.
-Get Support, Report Bugs and Enjoy Other Stuffs! = Obtenha Suporte, Reporte Bugs e Aproveite Outras Coisas!
 Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D = Videos relacionados a tutoriais do HC são publicados aqui, se inscrevan no canal para mostrar seu suporte :D
-If you don't know how to use HC, click me! = Se você não sabe como usar HC, clique-me!
 If you want to know what was changed in the latest version, click me! = Se você quiser saber o que mudou na última versão, clique-me!
 HC Logo image file doesn't exist. = Arquivo da logo do HC não existe.
 Your current Stand version isn't compatible with current Heist Control version. Please update Stand to use it. = Sua versão do Stand não é compativel com a versão atual do Heist Control. Por favor atualize o Stand para usa-lo.
@@ -544,12 +525,6 @@ Successfully Generated! = Gerado com sucesso!
 Successfully Updated! = Atualizado com sucesso!
 'Stand' setting is synced with Stand's default feature: 'Stand > Settings > Appearance > Colours > AR Colour' = Configuração 'Stand' está em sicronia com o recurso Default do Stand: 'Stand > Settings > Appearance > Colours > AR Colour'
 If you changed the Stand's setting while HC is still running, need to restart HC to apply. = Se você alterou a configuranção no Stand enquanto o HC estava rodando, então será necessário reiniciar o HC para aplicar.
-
-
-# Start of newly updated translations.
-# Translate them!
-
-
 Please close your opened pause menu to open any apps remotely. = Por favor, feche o menu de pausa para poder abrir os apps remotamente.
 Seems like you need to be a MC President. So, Heist Control made you become MC President. = Parece que você precisa ser um(a) presidente do MC. Então, o Heist Control lhe fez ser um(a) presidente de MC.
 Seems like you need to be a CEO. So, Heist Control made you become CEO. = Parece que você precisa ser um(a) Chefe. Então, o Heist Control lhe fez ser um(a) Chefe.
@@ -585,7 +560,6 @@ Remove All = Remover Todos
 Equipment Spawn Location = Local do Equipamento
 Entrance and Exit will be selected 'Staff Lobby' and Buyer will be selected 'Low' by HC. But, selected Buyer won't be visible at the board somehow, don't change those options when you are before launching the heist. = HC selecionou 'Lobby de Serviço' para Entrada e Saída e para o comprador será selecionado 'Baixo'. Mas, Comprador selecionado não aparece visivel na tela por algum motivo, não altere estas opções enquanto você não iniciar o golpe.
 Please don't forget that buyer should be selected 'Low'! Otherwise, won't get money. = Por favor não se esqueça que comprador selecionado deve ser 'Baixo'! Ou então, não receberá dinheiro algum.
-$3.5 Millions For All Players = $3.5 Milhões para todos os Jogadores
 Makes Forced Able To Launch = Forçar poder Iniciar o Golpe
 When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout. = Quando você estiver no quadro de selecionar o pagamento dos jogadores, esse recurso irá permitir que você comece o golpe mesmo se os outros jogadores não estiverem prontos. Há um bug visual relacionado aos pagamentos.
 Refresh Arcade Boards = Atualizar Telas do Fliperama
@@ -647,7 +621,6 @@ Pacific Standard Heist = Golpe do Pacific Standard
 Keep Cash $1.85M Take = Manter Dinheiro $1.85M de Ganhos
 This makes you won't lose money by getting shot to the cash bags from polices = Isso garante que você não perderá dinheiro ao ser atirado na sacola de dinheiro por policiais
 Bypass Minimum And Maximum Percentage = Burlar Porcentagens Minimas e Máximas
-Bypass minimum percentage 15(%) and maximum percentage 70(%). This feature will allow you set 0 ~ 100(%). = Burla a porcentagem minima 15(%) e a porcentagem máxima 70(%). Isso permite você colocar porcentagens de 0 ~ 100(%).
 Works on all of the classic heists. You need to activate this until first setup mission is ended. = Funciona em todos os golpes clássicos. Você deve manter isso ativo até a conclusão da primeira preparação.
 The Nightclub = Boate
 (Prep) = (Prep)
@@ -673,7 +646,6 @@ Independence's Day = Dia de Independência (4 de Julho)
 Unlock Lots of Hats And Shirts = Destravar um Monte de Chapéus e Camisas
 Also will increase Kosatka missiles distance. = Isto também irá aumentar a distância dos misseis Kosatka.
 Auto Refill Snacks & Armours = Auto Encher Lanches & Coletes
-Keep Full Nightclub Population = Manter Popularidade da Boate Cheia
 Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader. = Força que apenas haja 1 veiculo de venda dos negócios do MC. Por favor selecione isso uma vez antes de iniciar uma venda. Funciona apenas se você for o líder.
 The best way to remove GTA Online banked money up to $2B at once! = O melhor jeito de remover dinheiro depositado do GTA Online até $2B por vez!
 Change Reward = Alterar Recompensa
@@ -709,7 +681,6 @@ Seems some of lines are invalid. But it doesn't matter too much. Go ahead. = Par
 Please check this file has been typed for GTAHaXUI. Applying it won't affect anything in GTAV. = Por favor cheque se esse arquivo foi feito para o GTAHaXUI. Aplicando-o não afetará nada no GTAV.
 Apply Stats = Aplicar Stats
 Do you sure apply the number of stats? = Tem certeza que quer aplicar esse tanto de stats?
-Open This File = Abrir Esse Arquivo
 Delete This File = Deletar Esse Arquivo
 Do you sure delete this file? It cannot be recovered! = Tem certeza que quer deletar esse arquivo? Isso não pode ser revertido!
 Successfully deleted! = Deletado com Sucesso!
@@ -740,3 +711,22 @@ Open Folder for Translations = Abrir Pasta de Traduções
 Don't enable both of automated presets at once = Não habilite mais de um Preset Automatizado ao mesmo tempo
 Please make sure you can play ULP Missions now! = Por favor, certifique de que você pode jogar as missões do ULP!
 Unlock Clothing = Destravar Roupas
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist. = Obs: Essa modificação não será aplicada a Tela de Planejamento. Você pode checar a fatia aplicada após o final do golpe.
+If the Heist Planning (Board 3) is empty, then please re-enable the preset that you enabled! = Se o Planejamento do Golpe (Tela 3) está vazio, então reabilite a predefinição que você habilitou!
+It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts. = Permite você colocar valores entre 0 ~ 100(%) por modificar a tela de planejamento, ignora todas as restrições de modificação das fatias.
+Skip Nightclub Setups = Pular Preparações da Boate
+Skip all of setups when you buy a Nightclub first: Equipment, Staff, and Collect DJ = Pula todas as Preparações de quando você compra sua primeira boate: Equipamento, Funcionários, e Coletar o DJ
+Unlock Arcade Awards = Destravar Prêmios do Fliperama
+Trophies, toys, and clothings are included. = Trófeus, brinquedos, e roupas inclusas.
+500+ unlocks are included, try and see how many clothes would be unlocked. = Mais de 500 destravaveis inclusos, tente e veja quantas roupas serão destravadas.
+Club Work = Trabalho do Clube
+Taze = Tazer
+If you have any questions regarding Heist Control? Joining it will help you so much! = Tem alguma dúvida relacionada ao Heist Control? Junte-se para que possamos lhe ajudar!
+- Download sharable customized translations and GTAHaXUI stat files. = - Baixe arquivos de tradução compartilhados e customizados e arquivos de stats do GTAHaXUI.
+- Post a suggestion or an issue to improve Heist Control. = - Poste uma sugestão ou problema para melhorar o Heist Control.

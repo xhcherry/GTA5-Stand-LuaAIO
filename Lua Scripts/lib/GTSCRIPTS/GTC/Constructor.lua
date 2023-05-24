@@ -1464,9 +1464,9 @@ end
 ---
 --- Curated Constructs Installer
 ---
-
-local CURATED_CONSTRUCTS_DIR = CONSTRUCTS_DIR..'/Curated'
-filesystem.mkdirs(CURATED_CONSTRUCTS_DIR)
+--预留
+--local CURATED_CONSTRUCTS_DIR = CONSTRUCTS_DIR..'/Curated'
+--filesystem.mkdirs(CURATED_CONSTRUCTS_DIR)
 ---
 --- Item Browser
 ---
@@ -2394,7 +2394,7 @@ constructor.add_attachment_add_attachment_options = function(attachment)
     attachment.menus.add_attachment = menu.list(attachment.menus.main, t("Add Attachment"), {}, t("Options for attaching other entities to this construct"), function()
 
         if attachment.menus.curated_attachments ~= nil then return end
-        attachment.menus.curated_attachments = menu.list(attachment.menus.add_attachment, t("Curated"), {}, t("Browse a curated collection of attachments"))
+        --预留attachment.menus.curated_attachments = menu.list(attachment.menus.add_attachment, t("Curated"), {}, t("Browse a curated collection of attachments"))
         for _, curated_item in pairs(constructor_lib.table_copy(curated_attachments)) do
             build_curated_attachments_menu(attachment, attachment.menus.curated_attachments, curated_item)
         end

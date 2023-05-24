@@ -101,7 +101,7 @@ local targetEntity = NULL
 local lastStop <const> = newTimer()
 local explosionProof = false
 
-menu.toggle_loop(fb, "手指黑洞", {"gtfinger"}, "开启后按B起飞", function()
+menu.toggle_loop(fb, "手指黑洞", {"gtfinger"}, "开启后按B等待即可", function()
     if is_player_pointing() then
         write_global.int(4521801 + 935, NETWORK.GET_NETWORK_TIME()) -- to avoid the animation to stop
         if not ENTITY.DOES_ENTITY_EXIST(targetEntity) then
@@ -176,7 +176,7 @@ menu.toggle_loop(fb, "手指黑洞", {"gtfinger"}, "开启后按B起飞", functi
 end)
 
 dont_stop = false
-menu.toggle_loop(fb,"吹走所有车辆", {"huhuveh"}, "还是按B对准车辆", function()
+menu.toggle_loop(fb,"吹走所有载具", {"huhuveh"}, "开启后按B对准车辆", function()
 if is_player_pointing() then
     write_global.int(4521801 + 935, NETWORK.GET_NETWORK_TIME()) -- to avoid the animation to stop
     if not ENTITY.DOES_ENTITY_EXIST(targetEntity) then
@@ -415,11 +415,11 @@ menu.toggle_loop(ESP_World,"预览物体", {""}, "",function()
     Draw_Box_Objects()
 end)
 
-menu.toggle_loop(ESP_World,"预览车辆", {""}, "",function()
+menu.toggle_loop(ESP_World,"预览载具", {""}, "",function()
     Draw_Box_Vehicles()
 end)
 
-menu.toggle_loop(fb,"抽搐附近车辆", {""}, "", function()
+menu.toggle_loop(fb,"抽搐附近载具", {""}, "", function()
     Draw_Box_Vehicles()
     for k, veh in pairs(entities.get_all_vehicles_as_handles()) do
         local PedInSeat = VEHICLE.GET_PED_IN_VEHICLE_SEAT(veh, -1, true)
@@ -439,7 +439,7 @@ menu.toggle_loop(fb,"抽搐附近车辆", {""}, "", function()
     end
 end)
 
-menu.toggle_loop(fb,"360附近车辆", {""}, "", function()
+menu.toggle_loop(fb,"360附近载具", {""}, "", function()
     Draw_Box_Vehicles()
     for k, veh in pairs(entities.get_all_vehicles_as_handles()) do
         local PedInSeat = VEHICLE.GET_PED_IN_VEHICLE_SEAT(veh, -1, true)
@@ -455,7 +455,7 @@ menu.toggle_loop(fb,"360附近车辆", {""}, "", function()
 end)
 
 local dont_stop = false
-menu.toggle_loop(fb,"控制所有车辆", {""}, "", function()
+menu.toggle_loop(fb,"控制所有载具", {""}, "", function()
     Draw_Box_Vehicles()
     for k, veh in pairs(entities.get_all_vehicles_as_handles()) do
         local PedInSeat = VEHICLE.GET_PED_IN_VEHICLE_SEAT(veh, -1, false)
@@ -546,6 +546,6 @@ for i, ent in pairs(vehicles) do
     end
 end
 
-menu.toggle_loop(fb,"苍蝇载具", {""}, "", function()
+menu.toggle_loop(fb,"苍蝇附近载具", {""}, "", function()
     Destruct()
 end)

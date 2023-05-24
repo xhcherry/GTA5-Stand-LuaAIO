@@ -116,7 +116,8 @@ function save_config()
         "\nconfig_active3 = "..menu.get_value(script_name)..           ------------显示脚本名称
         "\nconfig_active4 = "..menu.get_value(obj_num)..         -----------实体池信息
         "\nconfig_active5 = "..menu.get_value(ridicule)..           -----------攻击嘲讽
-        "\nconfig_active6 = "..menu.get_value(kongzhitai1)         -----------绘制控制台
+        "\nconfig_active6 = "..menu.get_value(kongzhitai1)..         -----------绘制控制台
+        "\nconfig_active7 = "..menu.get_value(shisubiao)         -----------游戏时速表
 
     local file = io.open(selected_lang_path, 'w')
     file:write(config_txt)
@@ -1249,9 +1250,6 @@ end
 function proxysticks_radius(value)
     proxyStickySettings.radius = value
 end
-local HitEffect = {colorCanChange = false}
-HitEffect.__index = HitEffect
-setmetatable(HitEffect, Effect)
 
 --碎片崩溃V1
 function fragcrash_v1(PlayerID)
@@ -1398,7 +1396,7 @@ function start_silent_aimbot()
             local t_pos = PED.GET_PED_BONE_COORDS(target, 31086, 0.01, 0, 0)
             local t_pos2 = PED.GET_PED_BONE_COORDS(target, 31086, -0.01, 0, 0.00)
             -- debug shit, ignore
-            if false then
+            if PED.IS_PED_SHOOTING(PLAYER.PLAYER_PED_ID()) then
                 GRAPHICS.DRAW_MARKER(0, t_pos['x'], t_pos['y'], t_pos['z'], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.1, 255, 0, 255, 100, false, true, 2, false, 0, 0, false)
                 GRAPHICS.DRAW_MARKER(0, t_pos2['x'], t_pos2['y'], t_pos2['z'], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.1, 255, 0, 255, 100, false, true, 2, false, 0, 0, false)
             end
@@ -4193,7 +4191,7 @@ function YM_label_setting(YMlabel, text)
     YM_label_setting("PM_INF_LEAT", "夜幕LUA")
     YM_label_setting("PM_INF_LEAB", "跟随夜幕一同前往GTA故事模式，您的所有游戏进度都将保存在R星的服务器中")
     YM_label_setting("UI_FLOW_OP_CL_M", "关于夜幕团队")
-    YM_label_setting("UI_FLOW_OP_CL", "关于 夜幕团队")
+    YM_label_setting("UI_FLOW_OP_CL", "关于 夜幕团队 ")
     YM_label_setting("UI_FLOW_OP_CL_d", "夜幕秉承 稳定 可靠 配合 简单 简洁的团队理念\n\n主要策划:Ping 副策划:呆呆\n致谢人员：" .. players.get_name(players.user()) .. "感谢你的使用""\n夜幕官方群聊:332017587\n感谢使用夜幕！")
 end
 function has_anim_dict_loaded(dict)

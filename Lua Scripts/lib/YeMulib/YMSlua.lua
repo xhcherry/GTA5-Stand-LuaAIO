@@ -466,35 +466,6 @@ vect.tostring = function(a)
     return "{" .. a.x .. ", " .. a.y .. ", " .. a.z .. "}"
 end
 
-function zdlz(pid)
-	local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
-	local hash = util.joaat("bkr_prop_moneypack_03a")
-	STREAMING.REQUEST_MODEL(hash)
-
-	while not STREAMING.HAS_MODEL_LOADED(hash) do		
-		util.yield()
-	end
-	local cage_object = OBJECT.CREATE_OBJECT(hash, pos.x - .70, pos.y, pos.z, true, true, false) -- front
-	local cage_object2 = OBJECT.CREATE_OBJECT(hash, pos.x + .70, pos.y, pos.z, true, true, false) -- back
-	local cage_object3 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y + .70, pos.z, true, true, false) -- left
-	local cage_object4 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y - .70, pos.z, true, true, false) -- right
-
-	local cage_object = OBJECT.CREATE_OBJECT(hash, pos.x - .70, pos.y, pos.z + .25, true, true, false) -- front
-	local cage_object2 = OBJECT.CREATE_OBJECT(hash, pos.x + .70, pos.y, pos.z + .25, true, true, false) -- back
-	local cage_object3 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y + .70, pos.z + .25, true, true, false) -- left
-	local cage_object4 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y - .70, pos.z + .25, true, true, false) -- right
-
-	local cage_object5 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z + .75, true, true, false) -- above
-	cages[#cages + 1] = cage_object
-	cages[#cages + 1] = cage_object
-	util.yield(15)
-	local rot  = ENTITY.GET_ENTITY_ROTATION(cage_object)
-	rot.y = 90
-	ENTITY.SET_ENTITY_ROTATION(cage_object, rot.x,rot.y,rot.z,1,true)
-	STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(cage_object)
-
-end
-
 
 function yylz(pid)
 	local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
@@ -505,7 +476,6 @@ function yylz(pid)
 		util.yield()
 	end
 	local cage_object = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z - 1, true, true, false)
-	local cage_object = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z, true, true, false)
 	local cage_object3 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z + 1, true, true, false)
 	cages[#cages + 1] = cage_object
 	util.yield(15)
@@ -658,8 +628,6 @@ function clear_area(radius)
     MISC.CLEAR_AREA(target_pos['x'], target_pos['y'], target_pos['z'], radius, true, false, false, false)
 end
 local createPed = PED.CREATE_PED
-local getEntityCoords = ENTITY.GET_ENTITY_COORDS
-local getPlayerPed = PLAYER.GET_PLAYER_PED
 local requestModel = STREAMING.REQUEST_MODEL
 local hasModelLoaded = STREAMING.HAS_MODEL_LOADED
 local noNeedModel = STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED
@@ -780,8 +748,6 @@ function mod_uses(type, incr)
         object_uses = object_uses + incr
     end
 end
-
-local angryplanes_tar = PLAYER.PLAYER_PED_ID()
 function plane_vel_thread(ent, pilot, tar)
     plane_vel_thr = util.create_thread(function(thr)
         local start_time = os.time()
@@ -1167,22 +1133,6 @@ function REQUEST_CONTROL_LOOP(entity)
 		NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netId, true)
 	end
 end
-
-
-
-
-
-
-
-
-local createPed = PED.CREATE_PED
-local getEntityCoords = ENTITY.GET_ENTITY_COORDS
-local getPlayerPed = PLAYER.GET_PLAYER_PED
-local requestModel = STREAMING.REQUEST_MODEL
-local hasModelLoaded = STREAMING.HAS_MODEL_LOADED
-local noNeedModel = STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED
-local setPedCombatAttr = PED.SET_PED_COMBAT_ATTRIBUTES
-local giveWeaponToPed = WEAPON.GIVE_WEAPON_TO_PED
 
 
 function Get_Waypoint_Pos2()
@@ -1833,9 +1783,6 @@ end
 local function getLocalPlayerCoords()
     return ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(players.user()), true)
 end
-local function getLocalPed()
-    return PLAYER.PLAYER_PED_ID()
-end
 
 
 
@@ -1890,8 +1837,6 @@ local function fastNet(entity, playerID)
         ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
     end
 end
-
-
 local function get_waypoint_pos2()
     if HUD.IS_WAYPOINT_ACTIVE() then
         local blip = HUD.GET_FIRST_BLIP_INFO_ID(8)
@@ -1928,14 +1873,6 @@ function csdw(coord)
 end
  joaat = util.joaat
  wait = util.yield
- createPed = PED.CREATE_PED
- getEntityCoords = ENTITY.GET_ENTITY_COORDS
- getPlayerPed = PLAYER.GET_PLAYER_PED
- requestModel = STREAMING.REQUEST_MODEL
- hasModelLoaded = STREAMING.HAS_MODEL_LOADED
- noNeedModel = STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED
- setPedCombatAttr = PED.SET_PED_COMBAT_ATTRIBUTES
- giveWeaponToPed = WEAPON.GIVE_WEAPON_TO_PED
 function sqhy(pid)
          local ped = getPlayerPed(pid)
         local pc = getEntityCoords(ped)
@@ -2720,49 +2657,6 @@ end
     util.toast("地图加载成功")
        
 end
-function fastNet(entity, playerID)
-    local netID = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(entity)
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
-    if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) then
-        for i = 1, 30 do
-            if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) then
-                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
-                wait(10)
-            else
-                goto continue
-            end    
-        end
-    end
-    ::continue::
-    if SE_Notifications then
-        util.toast("有控制权.")
-    end
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_NETWORK_ID(netID)
-    wait(10)
-    NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(netID)
-    wait(10)
-    NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netID, false)
-    wait(10)
-    NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(netID, playerID, true)
-    wait(10)
-    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(entity, true, false)
-    wait(10)
-    ENTITY._SET_ENTITY_CLEANUP_BY_ENGINE(entity, false)
-    wait(10)
-    if ENTITY.IS_ENTITY_AN_OBJECT(entity) then
-        NETWORK.OBJ_TO_NET(entity)
-    end
-    wait(10)
-    if BA_visible then
-        ENTITY.SET_ENTITY_VISIBLE(entity, true, 0)
-    else
-        ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
-        wait()
-        ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
-        wait()
-        ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
-    end
-end
 
          function MP_Index()
             local MP_IPTR = memory.alloc(2)
@@ -2806,15 +2700,6 @@ end
                 STATS.STAT_SET_BOOL(util.joaat("MP1_"..Hash), Value, true)
             end
         end
- function get_waypoint_pos2()
-    if HUD.IS_WAYPOINT_ACTIVE() then
-        local blip = HUD.GET_FIRST_BLIP_INFO_ID(8)
-        local waypoint_pos = HUD.GET_BLIP_COORDS(blip)
-        return waypoint_pos
-    else
-        util.toast("没有设置路标")
-    end
-end
 
 function SE_add_explosion(x, y, z, exptype, dmgscale, isheard, isinvis, camshake, nodmg)
     FIRE.ADD_EXPLOSION(x, y, z, exptype, dmgscale, isheard, isinvis, camshake, nodmg)
@@ -2822,13 +2707,6 @@ end
 
 function SE_add_owned_explosion(ped, x, y, z, exptype, dmgscale, isheard, isinvis, camshake)
     FIRE.ADD_OWNED_EXPLOSION(ped, x, y, z, exptype, dmgscale, isheard, isinvis, camshake)
-end
-
- function getLocalPlayerCoords()
-    return ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(players.user()), true)
-end
- function getLocalPed()
-    return PLAYER.PLAYER_PED_ID()
 end
 
 
@@ -2891,10 +2769,6 @@ function gmfg(pid)
         ENTITY.SET_ENTITY_ROTATION(cage2, 0.0, 90.0, 0.0, 1, true)
 		end
 
- function getPlayerName_pid(pid)
-    local playerName = NETWORK.NETWORK_PLAYER_GET_NAME(pid)
-    return playerName
-end
 function qfmq(pid)
         local ped = getPlayerPed(pid)
         local forwardOffset = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0, 4, 0)
@@ -22622,19 +22496,6 @@ local metaScaleform = {
         end
     end
 }
-local function Scaleform(id)
-    if type(id) == "string" then
-        util.spoof_script("stats_controller",function()
-            id = REQUEST_SCALEFORM_MOVIE(id)
-        end)
-        while not HAS_SCALEFORM_MOVIE_LOADED(id) do
-            util.yield()
-        end
-    end
-    local tbl = {id=id}
-    setmetatable(tbl,metaScaleform)
-    return tbl
-end
 
 
 
@@ -23319,14 +23180,6 @@ function clear_area(radius)
     target_pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     MISC.CLEAR_AREA(target_pos['x'], target_pos['y'], target_pos['z'], radius, true, false, false, false)
 end
-local createPed = PED.CREATE_PED
-local getEntityCoords = ENTITY.GET_ENTITY_COORDS
-local getPlayerPed = PLAYER.GET_PLAYER_PED
-local requestModel = STREAMING.REQUEST_MODEL
-local hasModelLoaded = STREAMING.HAS_MODEL_LOADED
-local noNeedModel = STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED
-local setPedCombatAttr = PED.SET_PED_COMBAT_ATTRIBUTES
-local giveWeaponToPed = WEAPON.GIVE_WEAPON_TO_PED
 function RqModel (hash)
     STREAMING.REQUEST_MODEL(hash)
     local count = 0
@@ -23587,48 +23440,6 @@ function dafeiji()
     entities.delete_by_handle(cum) --delete cum
 end
 
-function start_angryplanes()
-    angryplanes_thr = util.create_thread(function(thr)
-        while true do
-            if not angryplanes then
-                util.stop_thread()
-            end
-            local rand = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), math.random(-500, 500), math.random(-500, 500), 300.0)
-            hashes = {util.joaat("jet"), util.joaat("velum"), util.joaat("titan"), util.joaat("cargoplane"), util.joaat("luxor")}
-            hash = hashes[math.random(1, #hashes)]
-            phash = util.joaat("s_m_m_pilot_01")
-            request_model_load(hash)
-            request_model_load(phash)
-            local aircraft = entities.create_vehicle(hash, rand, math.random(0, 359))
-            VEHICLE.SET_VEHICLE_FORWARD_SPEED(aircraft, VEHICLE.GET_VEHICLE_ESTIMATED_MAX_SPEED(aircraft))
-            VEHICLE.CONTROL_LANDING_GEAR(aircraft, 3)
-            VEHICLE.SET_VEHICLE_ENGINE_ON(aircraft, true, true, false)
-            VEHICLE.SET_HELI_BLADES_FULL_SPEED(aircraft)
-            local pilot = entities.create_ped(1, phash, rand, 0.0)
-            PED.SET_PED_INTO_VEHICLE(pilot, aircraft, -1)
-            PED.SET_PED_COMBAT_ATTRIBUTES(pilot, 5, true)
-            PED.SET_PED_COMBAT_ATTRIBUTES(pilot, 46, true)
-            PED.SET_PED_AS_ENEMY(pilot, true)
-            PED.SET_PED_FLEE_ATTRIBUTES(pilot, 0, false)
-            local c = ENTITY.GET_ENTITY_COORDS(angryplanes_tar, true)
-            TASK.TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE(pilot, aircraft, c['x'], c['y'], c['z'], 100.0, 786996, 0.0)
-            TASK.TASK_PLANE_MISSION(pilot, aircraft, 0, angryplanes_tar, 0, 0, 0, 17, 0.0, 0, 0.0, 50.0, 0.0)
-            plane_vel_thread(aircraft, pilot, angryplanes_tar)
-            util.yield(100)
-        end
-    end)
-end
-
-
-
-
-local bodyguard = {
-	godmode 		= false,
-	ignoreplayers 	= false,
-	spawned 		= {},
-	backup_godmode 	= false,
-	formation 		= 0
-}
 function hjhh()
  	local heli_hash = joaat("swift2")
 	local ped_hash = joaat("s_m_y_blackops_01")
@@ -26662,14 +26473,6 @@ function trapcage_2(pid) -- tall
 	STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
 end
 
-
-local function ADD_RELATIONSHIP_GROUP(name)
-	local ptr = alloc(32)
-	PED.ADD_RELATIONSHIP_GROUP(name, ptr)
-	local rel = memory.read_int(ptr); memory.free(ptr)
-	return rel
-end
-
 relationship = {}
 function relationship:hostile(ped)
 	if not PED._DOES_RELATIONSHIP_GROUP_EXIST(self.hostile_group) then
@@ -26720,22 +26523,6 @@ function REQUEST_CONTROL_LOOP(entity)
 		NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netId, true)
 	end
 end
-
-
-
-
-
-
-
-
-local createPed = PED.CREATE_PED
-local getEntityCoords = ENTITY.GET_ENTITY_COORDS
-local getPlayerPed = PLAYER.GET_PLAYER_PED
-local requestModel = STREAMING.REQUEST_MODEL
-local hasModelLoaded = STREAMING.HAS_MODEL_LOADED
-local noNeedModel = STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED
-local setPedCombatAttr = PED.SET_PED_COMBAT_ATTRIBUTES
-local giveWeaponToPed = WEAPON.GIVE_WEAPON_TO_PED
 
 
 function Get_Waypoint_Pos2()
@@ -26869,16 +26656,6 @@ function send_attacker(hash, pid, givegun)
         PED.SET_PED_COMBAT_ATTRIBUTES(attacker, 46, true)
         if givegun then
             WEAPON.GIVE_WEAPON_TO_PED(attacker, atkgun, 0, false, true)
-        end
-    end
-end
-local function tpTableToPlayer(tbl, pid)
-    if NETWORK.NETWORK_IS_PLAYER_CONNECTED(pid) then
-        local c = getEntityCoords(getPlayerPed(pid))
-        for _, v in pairs(tbl) do
-            if (not PED.IS_PED_A_PLAYER(v)) then
-                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(v, c.x, c.y, c.z, false, false, false)
-            end
         end
     end
 end
@@ -27443,9 +27220,6 @@ KickScriptEvent = {
     -1536413542,
     1778752151,
     }
- function getLocalPed()
-    return PLAYER.PLAYER_PED_ID()
-end
 
 function SE_add_explosion(x, y, z, exptype, dmgscale, isheard, isinvis, camshake, nodmg)
     FIRE.ADD_EXPLOSION(x, y, z, exptype, dmgscale, isheard, isinvis, camshake, nodmg)
@@ -27453,78 +27227,6 @@ end
 
 function SE_add_owned_explosion(ped, x, y, z, exptype, dmgscale, isheard, isinvis, camshake)
     FIRE.ADD_OWNED_EXPLOSION(ped, x, y, z, exptype, dmgscale, isheard, isinvis, camshake)
-end
-
-local function getLocalPlayerCoords()
-    return ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(players.user()), true)
-end
-local function getLocalPed()
-    return PLAYER.PLAYER_PED_ID()
-end
-
-
-
-local function getPlayerName_pid(pid)
-    local playerName = NETWORK.NETWORK_PLAYER_GET_NAME(pid)
-    return playerName
-end
-
-
-
-
-local function fastNet(entity, playerID)
-    local netID = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(entity)
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
-    if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) then
-        for i = 1, 30 do
-            if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) then
-                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
-                wait(10)
-            else
-                goto continue
-            end    
-        end
-    end
-    ::continue::
-    if SE_Notifications then
-        util.toast("有控制权.")
-    end
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_NETWORK_ID(netID)
-    wait(10)
-    NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(netID)
-    wait(10)
-    NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netID, false)
-    wait(10)
-    NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(netID, playerID, true)
-    wait(10)
-    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(entity, true, false)
-    wait(10)
-    ENTITY._SET_ENTITY_CLEANUP_BY_ENGINE(entity, false)
-    wait(10)
-    if ENTITY.IS_ENTITY_AN_OBJECT(entity) then
-        NETWORK.OBJ_TO_NET(entity)
-    end
-    wait(10)
-    if BA_visible then
-        ENTITY.SET_ENTITY_VISIBLE(entity, true, 0)
-    else
-        ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
-        wait()
-        ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
-        wait()
-        ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
-    end
-end
-
-
-local function get_waypoint_pos2()
-    if HUD.IS_WAYPOINT_ACTIVE() then
-        local blip = HUD.GET_FIRST_BLIP_INFO_ID(8)
-        local waypoint_pos = HUD.GET_BLIP_COORDS(blip)
-        return waypoint_pos
-    else
-        util.toast("没有设置路标")
-    end
 end
 
 function qdcc(pid, coord)
@@ -27553,14 +27255,6 @@ function csdw(coord)
 end
  joaat = util.joaat
  wait = util.yield
- createPed = PED.CREATE_PED
- getEntityCoords = ENTITY.GET_ENTITY_COORDS
- getPlayerPed = PLAYER.GET_PLAYER_PED
- requestModel = STREAMING.REQUEST_MODEL
- hasModelLoaded = STREAMING.HAS_MODEL_LOADED
- noNeedModel = STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED
- setPedCombatAttr = PED.SET_PED_COMBAT_ATTRIBUTES
- giveWeaponToPed = WEAPON.GIVE_WEAPON_TO_PED
 function sqhy(pid)
          local ped = getPlayerPed(pid)
         local pc = getEntityCoords(ped)
@@ -28344,49 +28038,6 @@ end
     util.toast("地图加载成功")
        
 end
-function fastNet(entity, playerID)
-    local netID = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(entity)
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
-    if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) then
-        for i = 1, 30 do
-            if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) then
-                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
-                wait(10)
-            else
-                goto continue
-            end    
-        end
-    end
-    ::continue::
-    if SE_Notifications then
-        util.toast("有控制权.")
-    end
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_NETWORK_ID(netID)
-    wait(10)
-    NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(netID)
-    wait(10)
-    NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netID, false)
-    wait(10)
-    NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(netID, playerID, true)
-    wait(10)
-    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(entity, true, false)
-    wait(10)
-    ENTITY._SET_ENTITY_CLEANUP_BY_ENGINE(entity, false)
-    wait(10)
-    if ENTITY.IS_ENTITY_AN_OBJECT(entity) then
-        NETWORK.OBJ_TO_NET(entity)
-    end
-    wait(10)
-    if BA_visible then
-        ENTITY.SET_ENTITY_VISIBLE(entity, true, 0)
-    else
-        ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
-        wait()
-        ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
-        wait()
-        ENTITY.SET_ENTITY_VISIBLE(entity, false, 0)
-    end
-end
 
          function MP_Index()
             local MP_IPTR = memory.alloc(2)
@@ -28430,15 +28081,6 @@ end
                 STATS.STAT_SET_BOOL(util.joaat("MP1_"..Hash), Value, true)
             end
         end
- function get_waypoint_pos2()
-    if HUD.IS_WAYPOINT_ACTIVE() then
-        local blip = HUD.GET_FIRST_BLIP_INFO_ID(8)
-        local waypoint_pos = HUD.GET_BLIP_COORDS(blip)
-        return waypoint_pos
-    else
-        util.toast("没有设置路标")
-    end
-end
 
 function SE_add_explosion(x, y, z, exptype, dmgscale, isheard, isinvis, camshake, nodmg)
     FIRE.ADD_EXPLOSION(x, y, z, exptype, dmgscale, isheard, isinvis, camshake, nodmg)
@@ -28446,13 +28088,6 @@ end
 
 function SE_add_owned_explosion(ped, x, y, z, exptype, dmgscale, isheard, isinvis, camshake)
     FIRE.ADD_OWNED_EXPLOSION(ped, x, y, z, exptype, dmgscale, isheard, isinvis, camshake)
-end
-
- function getLocalPlayerCoords()
-    return ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(players.user()), true)
-end
- function getLocalPed()
-    return PLAYER.PLAYER_PED_ID()
 end
 
 function aball()
@@ -28661,11 +28296,6 @@ function gmfg(pid)
         local cage2 = OBJECT.CREATE_OBJECT_NO_OFFSET(hash, coords['x'], coords['y'], coords['z'], true, false, false)
         ENTITY.SET_ENTITY_ROTATION(cage2, 0.0, 90.0, 0.0, 1, true)
 		end
-
- function getPlayerName_pid(pid)
-    local playerName = NETWORK.NETWORK_PLAYER_GET_NAME(pid)
-    return playerName
-end
 function qfmq(pid)
         local ped = getPlayerPed(pid)
         local forwardOffset = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0, 4, 0)
@@ -48325,86 +47955,6 @@ function SmoothTeleportToVehicle(pedInVehicle)
     else
         util.toast("No waypoint set!")
     end
-end
-
-local function HAS_SCALEFORM_MOVIE_LOADED(scaleformHandle)native_invoker.begin_call()native_invoker.push_arg_int(scaleformHandle)native_invoker.end_call("85F01B8D5B90570E")return native_invoker.get_return_value_bool()end
-local function DRAW_SCALEFORM_MOVIE(scaleformHandle,x,y,width,height,red,green,blue,alpha,unk)native_invoker.begin_call()native_invoker.push_arg_int(scaleformHandle)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(width)native_invoker.push_arg_float(height)native_invoker.push_arg_int(red)native_invoker.push_arg_int(green)native_invoker.push_arg_int(blue)native_invoker.push_arg_int(alpha)native_invoker.push_arg_int(unk)native_invoker.end_call("54972ADAF0294A93")end
-local function DRAW_SCALEFORM_MOVIE_FULLSCREEN(scaleform,red,green,blue,alpha,unk)native_invoker.begin_call()native_invoker.push_arg_int(scaleform)native_invoker.push_arg_int(red)native_invoker.push_arg_int(green)native_invoker.push_arg_int(blue)native_invoker.push_arg_int(alpha)native_invoker.push_arg_int(unk)native_invoker.end_call("0DF606929C105BE1")end
-local function DRAW_SCALEFORM_MOVIE_3D(scaleform,posX,posY,posZ,rotX,rotY,rotZ,p7,p8,p9,scaleX,scaleY,scaleZ,p13)native_invoker.begin_call()native_invoker.push_arg_int(scaleform)native_invoker.push_arg_float(posX)native_invoker.push_arg_float(posY)native_invoker.push_arg_float(posZ)native_invoker.push_arg_float(rotX)native_invoker.push_arg_float(rotY)native_invoker.push_arg_float(rotZ)native_invoker.push_arg_float(p7)native_invoker.push_arg_float(p8)native_invoker.push_arg_float(p9)native_invoker.push_arg_float(scaleX)native_invoker.push_arg_float(scaleY)native_invoker.push_arg_float(scaleZ)native_invoker.push_arg_int(p13)native_invoker.end_call("87D51D72255D4E78")end
-local function DRAW_SCALEFORM_MOVIE_3D_SOLID(scaleform,posX,posY,posZ,rotX,rotY,rotZ,p7,p8,p9,scaleX,scaleY,scaleZ,p13)native_invoker.begin_call()native_invoker.push_arg_int(scaleform)native_invoker.push_arg_float(posX)native_invoker.push_arg_float(posY)native_invoker.push_arg_float(posZ)native_invoker.push_arg_float(rotX)native_invoker.push_arg_float(rotY)native_invoker.push_arg_float(rotZ)native_invoker.push_arg_float(p7)native_invoker.push_arg_float(p8)native_invoker.push_arg_float(p9)native_invoker.push_arg_float(scaleX)native_invoker.push_arg_float(scaleY)native_invoker.push_arg_float(scaleZ)native_invoker.push_arg_int(p13)native_invoker.end_call("1CE592FDC749D6F5")end
-local function SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED(scaleformHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(scaleformHandle)native_invoker.end_call("1D132D614DD86811")end
-local function REQUEST_SCALEFORM_MOVIE(scaleformName)native_invoker.begin_call()native_invoker.push_arg_string(scaleformName)native_invoker.end_call("11FE353CF9733E6F")return native_invoker.get_return_value_int()end
-local function BEGIN_SCALEFORM_MOVIE_METHOD(scaleform,methodName)native_invoker.begin_call()native_invoker.push_arg_int(scaleform)native_invoker.push_arg_string(methodName)native_invoker.end_call("F6E48914C7A8694E")return native_invoker.get_return_value_bool()end
-local function END_SCALEFORM_MOVIE_METHOD()native_invoker.begin_call()native_invoker.end_call("C6796A8FFA375E53")end
-local scaleform_types={
-    ["number"]=function(value)native_invoker.begin_call()native_invoker.push_arg_float(value)native_invoker.end_call("D69736AAE04DB51A")end,
-    ["string"]=function(value)native_invoker.begin_call()native_invoker.push_arg_string(value)native_invoker.end_call("E83A3E3557A56640")end,
-    ["boolean"]=function(value)native_invoker.begin_call()native_invoker.push_arg_bool(value)native_invoker.end_call("C58424BA936EB458")end
-}
-local function CallScaleformMethod(sf, method, ...)
-    local args = {...}
-    if BEGIN_SCALEFORM_MOVIE_METHOD(sf, method) then
-        for i=1,#args do
-            local arg = args[i]
-            local type = type(arg)
-            local push_f = scaleform_types[type]
-            if push_f then
-                push_f(arg)
-            else
-                error("Invalid type passed to scaleform method: "..type)
-            end
-        end
-        END_SCALEFORM_MOVIE_METHOD()
-
-    end
-end
-local ScaleformFunctions = {
-    draw=function(self, x, y, w, h)
-        DRAW_SCALEFORM_MOVIE(self.id, x, y, w, h, 255, 255, 255, 255, 1)
-    end,
-    draw_fullscreen=function(self)
-        DRAW_SCALEFORM_MOVIE_FULLSCREEN(self.id, 255, 255, 255, 255, 1)
-    end,
-    draw_3d=function(self, pos, rot, size)
-        pos = pos or {x=0,y=0,z=0}
-        rot = rot or {x=0,y=0,z=0}
-        size = size or {x=1,y=1,z=1}
-        DRAW_SCALEFORM_MOVIE_3D(self.id, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, 0, 2, 0, size.x, size.y, size.z, 1)
-    end,
-    draw_3d_solid=function(self, pos, rot, size)
-        pos = pos or {x=0,y=0,z=0}
-        rot = rot or {x=0,y=0,z=0}
-        size = size or {x=1,y=1,z=1}
-        DRAW_SCALEFORM_MOVIE_3D_SOLID(self.id, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, 0, 2, 0, size.x, size.y, size.z, 1)
-    end,
-    delete=function(self)
-        local mem = memory.alloc(4)
-        memory.write_int(mem, self.id)
-        util.spoof_script("stats_controller",function()
-            SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED(mem)
-        end)
-        memory.free(mem)
-    end
-}
-local metaScaleform = {
-    __index=function(self, key)
-        return ScaleformFunctions[key] or function(...)
-            CallScaleformMethod(self.id, key, ...)
-        end
-    end
-}
-local function Scaleform(id)
-    if type(id) == "string" then
-        util.spoof_script("stats_controller",function()
-            id = REQUEST_SCALEFORM_MOVIE(id)
-        end)
-        while not HAS_SCALEFORM_MOVIE_LOADED(id) do
-            util.yield()
-        end
-    end
-    local tbl = {id=id}
-    setmetatable(tbl,metaScaleform)
-    return tbl
 end
 
 function acknowledgement()

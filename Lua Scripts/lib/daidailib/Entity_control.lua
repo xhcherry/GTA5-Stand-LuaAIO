@@ -5,9 +5,9 @@ function entity_control_all(menu_parent, ent)
             util.toast("实体存在")
         else
             util.toast("该实体已经不存在，已为你删除此纪录！")
-                menu.delete(menu_parent)
-                clearTableValue(control_ent_menu_list, menu_parent)
-                clearTableValue(control_ent_list, ent)
+            menu.delete(menu_parent)
+            clearTableValue(control_ent_menu_list, menu_parent)
+            clearTableValue(control_ent_list, ent)
         end
     end)
 menu.action(menu_parent, "删除此实体", {}, "", function()

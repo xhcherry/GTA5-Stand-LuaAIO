@@ -19,7 +19,7 @@ else
     PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
 end
 util.keep_running()
-util.show_corner_help("~g~欢迎使用夜幕Lua 此版本号为：~b~4.7~g~‹\n ~o~希望夜幕lua带给你快乐！")
+util.show_corner_help("~g~欢迎使用夜幕Lua 此版本号为：~b~4.8~g~‹\n ~o~希望夜幕lua带给你快乐！")
 YM_logo = directx.create_texture(filesystem.resources_dir() ..'YM.png')
 if SCRIPT_MANUAL_START then
     AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
@@ -236,7 +236,7 @@ function xianshijiaoben1(state)
                 mcb=mcb-1
             end
         end
-    draw_string(string.format("~italic~¦~bold~欢迎使用夜幕-V4.7"), 0.35,0.08, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~欢迎使用夜幕-V4.8"), 0.35,0.08, 0.6,5)
     util.yield()
     end
 end

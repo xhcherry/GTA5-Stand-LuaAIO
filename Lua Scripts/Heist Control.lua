@@ -54,7 +54,7 @@
 
     --- Important
 
-        HC_VERSION = "V 3.3.0"
+        HC_VERSION = "V 3.3.1"
         CODED_GTAO_VERSION = 1.66
         SUPPORTED_STAND_VERSION = 101 -- Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
 
@@ -72,7 +72,7 @@
         }
 
         FileDirs = {
-            Native = filesystem.scripts_dir() .. "lib\\natives-1676318796.lua",
+            Native = filesystem.scripts_dir() .. "lib\\natives-1681379138\\g.lua",
             Setting = FolderDirs.Setting .. "Setting.txt",
             Log = FolderDirs.Setting .. "Log.txt",
         }
@@ -754,7 +754,7 @@
             WRITE_SETTING("Timer Color Code", GET_STAND_STATE("AR Colour"))
         end
         if not filesystem.exists(FileDirs.Native) then
-            ERROR_LOG(TRANSLATE("Native file for HC doesn't exist.") .. "\n\n" .. TRANSLATE("Please re-enable 'Stand > Lua Scripts > Repository > natives-1676318796' or please join HC DC server to get support!"))
+            ERROR_LOG(TRANSLATE("Native file for HC doesn't exist.") .. "\n\n" .. TRANSLATE("Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support!"))
         end
 
         FULL_STAND_VERSION = menu.get_version().version_target
@@ -5039,13 +5039,6 @@
         ---
 
         CUSTOM_MONEY_REMOVER = menu.slider(TUNABLES, TRANSLATE("Custom Money Remover"), {"hcmoneyremove"}, IS_WORKING(true) .. TRANSLATE("The best way to remove GTA Online banked money up to $2B at once!"), 0, 2000000000, 5000, 10000, function(Value)
-            if players.are_stats_ready(players.user()) then
-                if not menu.get_value(CUSTOM_MONEY_REMOVER) < players.get_bank(players.user()) then
-                    NOTIFY(TRANSLATE("You try removing banked money amount that more than currently you have."))
-                    return
-                end
-            end
-
             menu.show_warning(TUNABLES, CLICK_MENU, TRANSLATE("Do you sure remove your money?"), function()
                 SET_INT_GLOBAL(262145 + 20288, Value) -- -156036296, https://www.unknowncheats.me/forum/3276092-post3.html
                 SET_PACKED_STAT_BOOL_CODE(15382, true) -- Makes able to buy the Ballistic Armor

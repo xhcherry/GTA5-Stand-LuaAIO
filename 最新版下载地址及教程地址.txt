@@ -1,0 +1,7 @@
+GitHub源仓库及下载地：https://github.com/xhcherry/GTA5-Stand-LuaAIO
+
+如果你想本次简单安装lua，就看README文件，但每次更新都需要重新下载
+
+下面教程链接是关于如何拉取分支以及直接克隆到本地，每次更新只需要按两下就行了，不用重新下载文件
+
+教程：https://xhcheats.cn/#/git/gitfork

@@ -9,14 +9,13 @@
 util.require_natives("natives-1651208000")
 util.require_natives("natives-1640181023")
 util.require_natives("natives-1660775568")
-require "lib.YeMulib.natives"
 require "lib.YeMulib.YMSlua"
 require "lib.YeMulib.YMload"
-require"lib.YeMulib.YMsr"
-require"lib.YeMulib.YMspo"
-require"lib.YeMulib.main"
-require"lib.YeMulib.YMchaofeng"
-require"lib.YeMulib.YeMulib"
+require "lib.YeMulib.YMsr"
+require "lib.YeMulib.YMspo"
+require "lib.YeMulib.main"
+require "lib.YeMulib.YMchaofeng"
+require "lib.YeMulib.YeMulib"
 require "lib/YeMulib/YMcu"
 
 JSkey = require 'lib.JSkeyLib'
@@ -40,10 +39,10 @@ local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001
 local SND_FILENAME<const> = 0x00020000
 ----------------------------------
-local TIANXIA = "欢迎使用夜幕-V4.7"
+local TIANXIA = "欢迎使用夜幕-V4.8"
 local JIAOBEN = "夜幕脚本"
-Version = 4.7
-date = "2023.5.2"
+Version = 4.8
+date = "2023.5.22"
 wait = util.yield
 joaat = util.joaat
 alloc = memory.alloc
@@ -132,13 +131,6 @@ local function player_toggle_loop(root, PlayerID, menu_name, command_names, help
     end)
 end
 local spawned_objects = {}
-
-local function get_transition_state(PlayerID)
-    return memory.read_int(memory.script_global(((2689235 + 1) + (PlayerID * 453)) + 230))
-end
-local function get_interior_player_is_in(PlayerID)
-    return memory.read_int(memory.script_global(((2689235 + 1) + (PlayerID * 453)) + 243)) 
-end
 local function is_player_in_interior(PlayerID)
     return (memory.read_int(memory.script_global(2689235 + 1 + (PlayerID * 453) + 243)) ~= 0)
 end
@@ -191,7 +183,30 @@ local cleanse = { "清除NPC", "清除载具", "清除物体", "清除可拾取�
 local drivingStyles = {786603, 1074528293, 8388614, 1076, 2883621, 786468, 262144, 786469, 512, 5, 6}
 local interior_stuff = {0, 233985, 169473, 169729, 169985, 170241, 177665, 177409, 185089, 184833, 184577, 163585, 167425, 167169}
 menu.action(menu.my_root(), '一键转到菜单', {}, '跳转速度更加方便', function()
-    menu.focus(menu.ref_by_path('Stand>夜幕-V4.7', 37))
+    menu.focus(menu.ref_by_path('Stand>夜幕-V4.8', 37))
+end)
+menu.action(menu.my_root(),"重启夜幕脚本",{},"",function ()
+    util.restart_script()
+scaleform_thread = util.create_thread(function (thr)
+	scaleForm = GRAPHICS.REQUEST_SCALEFORM_MOVIE("MP_BIG_MESSAGE_FREEMODE")
+    local scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE("mp_big_message_freemode")
+	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleForm, "SHOW_SHARD_WASTED_MP_MESSAGE")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("&#8721; ~bold~夜幕 Lua &#8721;")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("&#8721;你好，尊贵的夜幕Lua用户&#8721;\n\n""~bold~~b~版本号:" .. Version ..  "~bold~~b~更新于" .. date ..  "")
+	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+    AUDIO.PLAY_SOUND_FRONTEND(55, "FocusIn", "HintCamSounds", true)
+	starttime = os.time()
+	while true do
+	if os.time() - starttime >= 5 then
+	    AUDIO.PLAY_SOUND_FRONTEND(55, "FocusOut", "HintCamSounds", true)
+	    util.stop_thread()
+    end
+	if GRAPHICS.HAS_SCALEFORM_MOVIE_LOADED(scaleForm) then
+        GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scaleForm, 155, 155, 255, 255,0)
+    end
+	   util.yield(1)
+        end
+    end)
 end)
 menu.divider(menu.my_root(), "夜幕脚本信息")
     menu.action(menu.my_root(), "夜幕第一制作:Ping", {}, "大帅逼一枚~~~", function()
@@ -4516,26 +4531,6 @@ menu.toggle_loop(jiashi, "随机升级", {}, "仅适用于您出于某种原因�
     end
     util.yield(100)
 end)
-
-menu.toggle(jiashi, "游戏时速表", {"speedmeteor"}, "", function(state)
-        speedm = state  
-        while speedm do
-            local ent
-                local ent1 = players.user_ped()
-                local ent2 = PED.GET_VEHICLE_PED_IS_USING(players.user_ped())
-                if PED.IS_PED_IN_ANY_VEHICLE(ent1,true) then
-                    ent = ent2
-                else
-                    ent = ent1
-                end
-                local speed = ENTITY.GET_ENTITY_SPEED(ent)
-                local speedcalc = speed * 3.6
-                myspeed1 = math.ceil(speedcalc)
-            util.yield()
-            draw_string(string.format("~bold~~italic~~b~"..myspeed1 .. "  ~r~KM/H"), 0.76,0.8, 1,6)
-            end
-    end,speedm)
-menu.trigger_commands("speedmeteor on")
 local veh_jump = menu.list(jiashi, "可以跳跃的车")
 local force = 25.00
 menu.slider_float(veh_jump, "跳跃倍率", {"jumpiness"}, "", 0, 10000, 2500, 100, function(value)
@@ -4901,6 +4896,14 @@ set_self_license = menu.list(jiashi, "自定义车牌", {}, "")
             VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(car, default_license)
         end
     end)
+menu.toggle_loop(jiashi, "循环鸣笛", {}, "来自路怒症的愤怒！", function()
+    if player_cur_car ~= 1 and  PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        VEHICLE.SET_VEHICLE_MOD(player_cur_car, 14, math.random(1, 50), false)
+        PAD._SET_CONTROL_NORMAL(1, 86, 1.0)
+        util.yield()
+        PAD._SET_CONTROL_NORMAL(1, 86, 0.0)
+    end
+end)
 util.ensure_package_is_installed("lua/YeMulib/YMScaleformLib")
 local sfchat = require("lib.YeMulib.YMScaleformLib")("multiplayer_chat")
 sfchat:draw_fullscreen()
@@ -6322,8 +6325,6 @@ zhutibianse = menu.action(zhuti, "加载主题选项", {""}, "", function()
 function newColor(R, G, B, A)
     return {r = R, g = G, b = B, a = A}
 end
-local overlay_x = 0.0052
-local overlay_y = 0.18519
 local run = true
 local x, y = directx.get_client_size()
 local ratio = x/y
@@ -6827,7 +6828,26 @@ obj_num = menu.toggle_loop(jiazaixianshi, "显示实体数量", {}, "", function
     shitixianshi(state)
 end)
 menu.set_value(obj_num, config_active4)
-menu.action(jiazaixianshi, "保存加载显示配置", {}, "仅支持部分功能", function()
+shisubiao = menu.toggle(jiazaixianshi, "游戏时速表", {"speedmeteor"}, "", function(state)
+        speedm = state  
+        while speedm do
+            local ent
+                local ent1 = players.user_ped()
+                local ent2 = PED.GET_VEHICLE_PED_IS_USING(players.user_ped())
+                if PED.IS_PED_IN_ANY_VEHICLE(ent1,true) then
+                    ent = ent2
+                else
+                    ent = ent1
+                end
+                local speed = ENTITY.GET_ENTITY_SPEED(ent)
+                local speedcalc = speed * 3.6
+                myspeed1 = math.ceil(speedcalc)
+            util.yield()
+            draw_string(string.format("~bold~~italic~~b~"..myspeed1 .. "  ~r~KM/H"), 0.76,0.8, 1,6)
+            end
+    end,speedm)
+menu.set_value(shisubiao, config_active7)
+menu.action(misc, "保存加载显示配置", {}, "仅支持部分功能", function()
     save_config()
 end)
 --显示stand版本
@@ -7072,24 +7092,63 @@ util.create_tick_handler(function()
         directx.draw_text(0.0, 0.05, disp_stdout, 0, font_size, text_color, true)
     end
 end)
-module_list = menu.list(sc, "第一模组选项")
-diyimozu = menu.action(module_list, "加载第一模组选项", {""}, "", function()
-notification("正在加载第一模型脚本,请稍等",colors.blue)
-    require "lib.YeMulib.Constructor"
-    menu.delete(diyimozu)
+menu.action(misc, "有个只因", {"KUN"}, "点一下试试？", function()
+        YMscript_logo = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'zhiyin.png')
+      if SCRIPT_MANUAL_START then
+    AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
+    logo_alpha = 0
+    logo_alpha_incr = 0.01
+    logo_alpha_thread = util.create_thread(function (thr)
+        while true do
+            logo_alpha = logo_alpha + logo_alpha_incr
+            if logo_alpha > 1 then
+                logo_alpha = 1
+            elseif logo_alpha < 0 then
+                logo_alpha = 0
+                util.stop_thread()
+            end
+            util.yield()
+        end
+    end)
+    logo_thread = util.create_thread(function (thr)
+        starttime = os.clock()
+        local alpha = 0
+        while true do
+            directx.draw_texture(YMscript_logo,  0.1, 0.3, 0.3, 0.6, 0.4, 0.5,0, 1, 1, 1, logo_alpha)
+            timepassed = os.clock() - starttime
+            if timepassed > 6 then
+                logo_alpha_incr = -0.01
+            end
+            if logo_alpha == 0 then
+                util.stop_thread()
+            end
+            util.yield()
+        end
+    end)
+end
+store_dir = filesystem.store_dir() .. '\\YMss\\'
+sound_selection_dir = store_dir .. '\\sound1.txt'
+if not filesystem.is_dir(store_dir) then
+    util.toast("夜幕音频没有正确安装！.")
+    util.stop_script()
+end
+fp = io.open(sound_selection_dir, 'r')
+local file_selection = fp:read('*a')
+fp:close()
+local sound_location = store_dir .. '\\' .. file_selection
+if not filesystem.exists(sound_location) then
+    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
+else
+    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
+end
+util.keep_running()
 end)
+module_list = menu.list(sc, "第一模组选项")
+    require "lib.YeMulib.Constructor"
 script_meta_menu = menu.list(YM_root, "夜幕脚本支持", {}, "")
     acknowledgement()
     --end)
-local ver= "版本号:" .. Version ..  "更新于" .. date ..  ""
-local festive_div = menu.divider(YM_root, "版本号", {}, "")
-local loading_frames = {''}
-util.create_tick_handler(function()
-    for _, frame in pairs(loading_frames) do
-        menu.set_menu_name(festive_div, frame .. ' ' .. ver .. ' ' .. frame)
-        util.yield(100)
-    end
-end)
+menu.divider(YM_root, "版本号:" .. Version ..  "更新于" .. date ..  "", {}, "")
 menu.toggle_loop(exterior, "发光", {}, "", function()
    FG()
 end)
@@ -7805,7 +7864,7 @@ end)
         0x3779,	-- left foot
         0xCC4D	-- right foot
     }
-    local colour = {r = 1.0, g = 0.0, b = 1.0, a = 1.0}
+    local colour9 = {r = 1.0, g = 0.0, b = 1.0, a = 1.0}
     local timer <const> = newTimer()
     local trailsOpt <const> = menu.list(self,"尾翼选项"), {}, ""
     local effect <const> = Effect.new("scr_rcpaparazzo1", "scr_mich4_firework_sparkle_spawn")
@@ -7841,7 +7900,7 @@ end)
                     false, false, false,
                     0, 0, 0, 0
                 )
-                GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+                GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour9.r, colour9.g, colour9.b, 0)
                 table.insert(effects, fx)
             end
         elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
@@ -7862,15 +7921,15 @@ end)
                     false, false, false,
                     0, 0, 0, 0
                 )
-                GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+                GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour9.r, colour9.g, colour9.b, 0)
                 table.insert(effects, fx)
             end
         end
     end, function ()
         removeFxs(effects); effects = {}
     end)
-    local trailColour = menu.colour(trailsOpt,"颜色", {"trailcolour"}, "", colour, false, function(newColour)
-         colour = newColour 
+    local trailColour = menu.colour(trailsOpt,"颜色", {"trailcolour"}, "", colour9, false, function(newColour)
+         colour9 = newColour 
     end)
     menu.rainbow(trailColour)
 local ragdoll = menu.list(self, '碰瓷', {'JSragdollOptions'}, '想碰瓷吗？.（请勿在现实世界模仿~）')
@@ -8059,22 +8118,10 @@ menu.action(self, "获取位置坐标", {}, "", function()
     z = pos['z'] // 1
     chat.send_message("" .. players.get_name(players.user()) .. "的位置坐标为 x: "..x.." y: "..y.." z: "..z, true, true, false)
 end)
-Heist_Control = menu.list(zidongrenwu, "HC(3.2.6)第一任务选项")
-Heist_Control_Load = menu.action(Heist_Control, "加载第一任务选项", {""}, "", function()
-
-notification("正在加载第一任务脚本选项,请稍等",colors.blue)
-util.yield(2000)
-    require "lib.YeMulib.YMhc"
-    menu.delete(Heist_Control_Load)
-end)
+Heist_Control = menu.list(zidongrenwu, "HC(3.3.0)第一任务选项")
+ require "lib.YeMulib.YMhc"
 renwu = menu.list(zidongrenwu, "第二任务选项")
-Heist_Control_Load2 = menu.action(renwu, "加载第二任务选项", {""}, "", function()
-
-notification("正在加载第二任务脚本选项,请稍等",colors.blue)
-util.yield(2000)
-    require "lib.YeMulib.YMhc2"
-    menu.delete(Heist_Control_Load2)
-end)
+ require "lib.YeMulib.YMhc2"
 baoguo = menu.list(zidongrenwu,"武器厢型车传送", {},"一键传送到对应位置！~")
 zhaobaoguo = menu.action(baoguo, "加载厢型车地点传送选项", {""}, "寻找厢型车！", function()
         notification("正在加载武器厢型车地点传送,请稍等...",colors.blue)

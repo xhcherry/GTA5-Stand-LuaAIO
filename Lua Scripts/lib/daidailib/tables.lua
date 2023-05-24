@@ -1,4 +1,142 @@
 
+
+----在车内生成NPC
+full_with_options = {"随机PED", "警察", "脱衣舞娘", "拉马", "莱斯特"}
+
+
+----敌对行人
+Enemy_Weapons = {
+	-- Shotguns
+	VAULT_WMENUI_2 =
+	{
+		WT_SG_PMP = "weapon_pumpshotgun",
+		WT_SG_PMP2 = "weapon_pumpshotgun_mk2",
+		WT_SG_SOF = "weapon_sawnoffshotgun",
+		WT_SG_BLP = "weapon_bullpupshotgun",
+		WT_SG_ASL = "weapon_assaultshotgun",
+		WT_MUSKET = "weapon_musket",
+		WT_HVYSHOT = "weapon_heavyshotgun",
+		WT_DBSHGN = "weapon_dbshotgun",
+		WT_AUTOSHGN = "weapon_autoshotgun",
+		WT_CMBSHGN = "weapon_combatshotgun",
+	},
+	-- Machine guns
+	VAULT_WMENUI_3 =
+	{
+		WT_SMG_MCR = "weapon_microsmg",
+		WT_MCHPIST = "weapon_machinepistol",
+		WT_MINISMG = "weapon_minismg",
+		WT_SMG = "weapon_smg",
+		WT_SMG2 = "weapon_smg_mk2",
+		WT_SMG_ASL = "weapon_assaultsmg",
+		WT_COMBATPDW = "weapon_combatpdw",
+		WT_MG = "weapon_mg",
+		WT_MG_CBT = "weapon_combatmg",
+		WT_MG_CBT2 = "weapon_combatmg_mk2",
+		WT_GUSENBERG = "weapon_gusenberg",
+		WT_RAYCARBINE = "weapon_raycarbine",
+	},
+	-- Rifles
+	VAULT_WMENUI_4 =
+	{
+		WT_RIFLE_ASL = "weapon_assaultrifle",
+		WT_RIFLE_ASL2 = "weapon_assaultrifle_mk2",
+		WT_RIFLE_CBN = "weapon_carbinerifle",
+		WT_RIFLE_CBN2 = "weapon_carbinerifle_mk2",
+		WT_RIFLE_ADV = "weapon_advancedrifle",
+		WT_RIFLE_SCBN = "weapon_specialcarbine",
+		WT_SPCARBINE2 = "weapon_specialcarbine_mk2",
+		WT_BULLRIFLE = "weapon_bullpuprifle",
+		WT_BULLRIFLE2 = "weapon_bullpuprifle_mk2",
+		WT_CMPRIFLE = "weapon_compactrifle",
+		WT_MLTRYRFL = "weapon_militaryrifle",
+		WT_HEAVYRIFLE = "WEAPON_HEAVYRIFLE",
+		WT_TACRIFLE = "WEAPON_TACTICALRIFLE",
+	},
+	-- Sniper rifles
+	VAULT_WMENUI_5 =
+	{
+		WT_SNIP_RIF = "weapon_sniperrifle",
+		WT_SNIP_HVY = "weapon_heavysniper",
+		WT_SNIP_HVY2 = "weapon_heavysniper_mk2",
+		WT_MKRIFLE = "weapon_marksmanrifle",
+		WT_MKRIFLE2 = "weapon_marksmanrifle_mk2",
+		WT_PRCSRIFLE = "WEAPON_PRECISIONRIFLE",
+	},
+	-- Heavy weapons
+	VAULT_WMENUI_6 =
+	{
+		WT_GL = "weapon_grenadelauncher",
+		WT_RPG = "weapon_rpg",
+		WT_MINIGUN = "weapon_minigun",
+		WT_FWRKLNCHR = "weapon_firework",
+		WT_RAILGUN = "weapon_railgun",
+		WT_HOMLNCH = "weapon_hominglauncher",
+		WT_CMPGL = "weapon_compactlauncher",
+		WT_RAYMINIGUN = "weapon_rayminigun",
+	},
+	-- Melee weapons
+	VAULT_WMENUI_8 =
+	{
+		WT_UNARMED = "weapon_unarmed",
+		WT_KNIFE = "weapon_knife",
+		WT_NGTSTK = "weapon_nightstick",
+		WT_HAMMER = "weapon_hammer",
+		WT_BAT = "weapon_bat",
+		WT_CROWBAR = "weapon_crowbar",
+		WT_GOLFCLUB = "weapon_golfclub",
+		WT_BOTTLE = "weapon_bottle",
+		WT_DAGGER = "weapon_dagger",
+		WT_SHATCHET = "weapon_stone_hatchet",
+		WT_KNUCKLE = "weapon_knuckle",
+		WT_MACHETE = "weapon_machete",
+		WT_FLASHLIGHT = "weapon_flashlight",
+		WT_SWTCHBLDE = "weapon_switchblade",
+		WT_BATTLEAXE = "weapon_battleaxe",
+		WT_POOLCUE = "weapon_poolcue",
+		WT_WRENCH = "weapon_wrench",
+		WT_HATCHET = "weapon_hatchet",
+	},
+	-- Pistols
+	VAULT_WMENUI_9 =
+	{
+		WT_PIST = "weapon_pistol",
+		WT_PIST2  = "weapon_pistol_mk2",
+		WT_PIST_CBT = "weapon_combatpistol",
+		WT_PIST_50 = "weapon_pistol50",
+		WT_SNSPISTOL = "weapon_snspistol",
+		WT_SNSPISTOL2 = "weapon_snspistol_mk2",
+		WT_HEAVYPSTL = "weapon_heavypistol",
+		WT_VPISTOL = "weapon_vintagepistol",
+		WT_CERPST = "weapon_ceramicpistol",
+		WT_MKPISTOL = "weapon_marksmanpistol",
+		WT_REVOLVER = "weapon_revolver",
+		WT_REVOLVER2 = "weapon_revolver_mk2",
+		WT_REV_DA = "weapon_doubleaction",
+		WT_REV_NV= "weapon_navyrevolver",
+		WT_GDGTPST = "weapon_gadgetpistol",
+		WT_STUN = "weapon_stungun",
+		WT_FLAREGUN = "weapon_flaregun",
+		WT_RAYPISTOL = "weapon_raypistol",
+		WT_PIST_AP = "weapon_appistol",
+	},
+}
+
+
+
+----敌对载具
+enemy_options = {"迷你坦克", "秃鹰", "天煞"}
+enemy_veh = {"Minitank", "Buzzard", "Lazer"}
+minitankModIds = {
+	stockWeapon = -1,
+	plasmaCannon = 1,
+	rocket = 2,
+}
+gunnerWeaponNames = {"机枪","火箭发射器","离子炮",}
+gunnerWeapons = {"weapon_mg", "weapon_rpg"}
+enemVehOptions = {"机枪", "火箭炮"}
+
+
 ----列车选项
 models = {
     util.joaat("metrotrain"), 
@@ -254,6 +392,9 @@ MCLabels = {
     "ARC_HT_1B",
 }
 
+
+----发光
+glow_color = {r = 1, g = 1, b = 1, a = 0}
 
 ----彩色翅膀
 fireWing_v2color = {r = 1, g = 0.865, b = 0, a = 0}

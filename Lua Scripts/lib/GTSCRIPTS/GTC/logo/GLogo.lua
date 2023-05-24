@@ -40,7 +40,7 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '5.07'
+GT_version = '5.21'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,10 +49,10 @@ setmetatable(translations, {
 })
 loading_frames = {'欢迎使用GRANDTOURINGVIP~~~', '迎使用GRANDTOURINGVIP~~~欢', '使用GRANDTOURINGVIP~~~欢迎', '用GRANDTOURINGVIP~~~欢迎使', 'GRANDTOURINGVIP~~~欢迎使用', 'RANDTOURINGVIP~~~欢迎使用G', 'ANDTOURINGVIP~~~欢迎使用GR', 'NDTOURINGVIP~~~欢迎使用GRA', 'DTOURINGVIP~~~欢迎使用GRAN', 'TOURINGVIP~~~欢迎使用GRAND', 'OURINGVIP~~~欢迎使用GRANDT', 'URINGVIP~~~欢迎使用GRANDTO', 'RINGVIP~~~欢迎使用GRANDTOU', 'INGVIP~~~欢迎使用GRANDTOUR', 'NGVIP~~~欢迎使用GRANDTOURI', 'GVIP~~~欢迎使用GRANDTOURIN', 'VIP~~~欢迎使用GRANDTOURING', 'IP~~~欢迎使用GRANDTOURINGV', 'P~~~欢迎使用GRANDTOURINGVI', '~~~欢迎使用GRANDTOURINGVIP', '~~欢迎使用GRANDTOURINGVIP~', '~欢迎使用GRANDTOURINGVIP~~', '欢迎使用GRANDTOURINGVIP~~~', '欢迎使用GRANDTOURINGVIP~~~'}
 bbtxt = "https://jq.qq.com/?_wv=1027&k=U3XOlyOF"
-bbtct = "如果您打开脚本后无法正常使用，例如不显示内容，请点击这里连接到GT聊天QQ群，附上你的报错通知或者log日志联系开发人员，我们会在一个小时内为您做出答复"
+bbtct = "[点击此处加入官方群聊中进行询问]\n\n加载脚本显示(请稍等...): 网络问题\n\n加载脚本提示缺少(not found)文件: 请尝试重新安装脚本及脚本依赖文件\n其他疑问与发现请联系开发人员,非常感谢您的支持儿,祝您游戏愉快儿~"
 Name_info = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
 gtoast("欢迎使用GRANDTOURINGVIP!\n \n当前版本 " .. GT_version .. " 欢迎 ".. Name_info .."\n" .. "\n" .. "进群获取最新版本...\n" .. "\n" .. "祝您游戏愉快儿 :)")
-util.show_corner_help("~b~~h~GRANDTOURINGVIP " .. GT_version .. "  ~q~ \n~r~我们的脚本完全免费\n~q~加入QQ群:238394690\n~y~免费获得最新版本")
+util.show_corner_help("~b~~h~GRANDTOURINGVIP " .. GT_version .. "  ~q~ \n~r~我们的脚本完全免费\n~q~转到>其他选项 加入群聊\n~y~免费获得最新版本")
 --[[if SCRIPT_MANUAL_START then
 scaleform_thread = util.create_thread(function (thr)
 scaleForm = GRAPHICS.REQUEST_SCALEFORM_MOVIE("POPUP_WARNING")
@@ -192,24 +192,163 @@ function do_label_preset(label, text)
     menu.trigger_commands(prep)
     end
     function GTNB()
-    do_label_preset("HUD_JOINING", "正在使用GTMENU加入GTA在线模式")
-    do_label_preset("MP_SPINLOADING", "GTMENU是最牛逼的")
-    do_label_preset("HUD_LBD_FMP", "GrandTouring 在线模式（公开，~1~）")
-    do_label_preset("HUD_LBD_FMI", "GrandTouring 在线模式（邀请，~1~）")
-    do_label_preset("HUD_LBD_FMC", "GrandTouring 在线模式（帮会，~1~）")
-    do_label_preset("HUD_LBD_FMF", "GrandTouring 在线模式（好友，~1~）")
-    do_label_preset("HUD_LBD_FMS", "GrandTouring 在线模式（单人，~1~）")
+    do_label_preset("HUD_JOINING", "正在使用GTMENU加入在线模式")
+    do_label_preset("MP_SPINLOADING", "GTMENU YYDS")
+    do_label_preset("HUD_LBD_FMP", "GRANDTOURING 在线模式（公开，~1~）")
+    do_label_preset("HUD_LBD_FMI", "GRANDTOURING 在线模式（邀请，~1~）")
+    do_label_preset("HUD_LBD_FMC", "GRANDTOURING 在线模式（帮会，~1~）")
+    do_label_preset("HUD_LBD_FMF", "GRANDTOURING 在线模式（好友，~1~）")
+    do_label_preset("HUD_LBD_FMS", "GRANDTOURING 在线模式（单人，~1~）")
     do_label_preset("0X56F3BD49", "GRANDTOURING 在线模式")
-    do_label_preset("HUD_MAINTIT", "GrandTouringVIP")
+    do_label_preset("HUD_MAINTIT", "GRANDTOURINGVIP")
     do_label_preset("LOADING_SPLAYER_L", "正在加载GRANDTOURINGVIP故事模式")
     do_label_preset("PM_QUIT_MP", "离开 GRANDTOURING 在线模式")
     do_label_preset("PM_INF_LEAT", "离开 GRANDTOURING 在线模式")
-    do_label_preset("PM_INF_LEAB", "立刻前往GRANDTOURING故事模式，您的所有游戏进度都将保存在GTMENU的服务器中")
+    do_label_preset("PM_INF_LEAB", "立刻前往GRANDTOURING故事模式，您的所有游戏进度都将自动保存")
     do_label_preset("CMRC_STORE_OPEN", "GRANDTOURINGVIP 商店\n现已开放!")
     do_label_preset("UI_FLOW_OP_CL_M", "关于 GRANDTOURINGVIP")
     do_label_preset("UI_FLOW_OP_CL", "关于 GRANDTOURINGVIP")
     do_label_preset("UI_FLOW_OP_CL_d", "多亏了我们的GT开发团队\n您才能体验到无与伦比的GRANDTOURINGVIP\n主创作者:GT 副创开发:瑞思拜\n致谢人员:12 Super飞 柒月 小马哥 丢丢\n我们的群聊:238394690(脚本下载群) 716431566(日常聊天群)\n感谢您使用GRANDTOURINGVIP")
 end
+
+hb_id = {
+    {name = "清欢"},
+    {name = "12"},
+    {name = "sjr"},
+    {name = "柒月"},
+    {name = "GAI"},
+    {name = "庸人自扰"},
+    {name = "某时某刻"},
+    {name = "QIDMxc1111小马哥"},
+    {name = "Super飞"},
+    {name = "全副战神"},
+    {name = "好雨知时节"},
+    {name = "YYQQ"},
+    {name = "西海"},
+    {name = "点儿"},
+    {name = "Anson⁶6⁶6⁶6⁶"},
+    {name = "N"},
+    {name = "Roll the coarse"},
+    {name = "等天黑"},
+    {name = "小维"},
+    {name = "longsir666"},
+    {name = "猛女丢丢"},
+    {name = "cheng"},
+    {name = "不困"},
+    {name = "zssf"},
+    {name = "南山先生"},
+    {name = "狼烟4起"},
+    {name = "汤姆"},
+    {name = "禧冬"},
+    {name = "西木"},
+    {name = "C"},
+    {name = "ikun"},
+    {name = "Asuka02"},
+    {name = "911每天都很想静静"},
+    {name = "911丢丢是美少女战士"},
+    {name = "苍柒"},
+    {name = "caozei"},
+    {name = "千总Gol"},
+    {name = "张三"},
+    {name = "福建吴彦祖"},
+    {name = "他要打飞我"},
+    {name = "moxz"},
+    {name = "源"},
+    {name = "浮生若梦"},
+    {name = "网恋被骗一个肝"},
+    {name = "青系"},
+    {name = "M"},
+    {name = "猪丶小三"},
+    {name = "唯恐是梦"},
+    {name = "Pluto"},
+    {name = "小点点"},
+    {name = "浅浅"},
+    {name = "顾昔"},
+    {name = "霜叶"},
+    {name = "FlyingDog2333"},
+    {name = "凇"},
+    {name = "Martin_"},
+    {name = "20"},
+    {name = "小灰灰"},
+    {name = "云梦"},
+    {name = "YYYmaowazi"},
+    {name = "烟"},
+    {name = "Sy."},
+    {name = "良笙"},
+    {name = "苏梦钰"},
+    {name = "霜雪洛月"},
+    {name = "GG爆"},
+    {name = "水墨画"},
+    {name = "粉妆玉砌钱吉吉"},
+    {name = "瑞瑞大佬"},
+    {name = "晴天"},
+    {name = "梁小帅"},
+    {name = "GT作者们幸苦了"},
+    {name = "船船"},
+    {name = "绝夜凯撒"},
+    {name = "XXSZAA"},
+    {name = "闹心"},
+    {name = "nightgame"},
+    {name = "By白鸦"},
+    {name = "2088371488"},
+    {name = "刀锋冷"},
+    {name = "醉酒狂歌"},
+    {name = "og"},
+    {name = "MoralitySpot"},
+    {name = "Matt.隐隐蓝海"},
+    {name = "暗"},
+    {name = "帅比"},
+    {name = "Mr.G"},
+    {name = "时钟与汐城"},
+    {name = "林雪洛"},
+    {name = "等年"},
+    {name = "小满"},
+    {name = "萝莉控"},
+    {name = "沸羊羊"},
+    {name = "BING"},
+    {name = "MuyuHuangh"},
+    {name = "Sixwalnuts6"},
+    {name = "ikun184"},
+    {name = "槿篱"},
+    {name = "钟子期"},
+    {name = "若若"},
+    {name = "LISA"},
+    {name = "Faded"},
+    {name = "眼眸"},
+    {name = "测码豹"},
+    {name = "谁为谁心疼"},
+    {name = "Xp高端玩家"},
+    {name = "随机且折磨"},
+    {name = "周杰佗"},
+    {name = "aswwd1"},
+    {name = "深書"},
+    {name = "淡写 、青春"},
+    {name = "落"},
+    {name = "古辉禾子"},
+    {name = "小黑"},
+    {name = "与鱼科技"},
+    {name = "杨涵浩"},
+    {name = "戴夫"},
+    {name = "红旗车主半只烤鸭"},
+    {name = "小姜"},
+    {name = "南风"},
+    {name = "小宇"},
+    {name = "王维诗里的相思"},
+    {name = "珞小柏"},
+    {name = "double"},
+    {name = "AK"},
+    {name = "一叶知秋丶叶修"},
+    {name = "古城kami"},
+    {name = "小苏"},
+    {name = "MOON"},
+    {name = "祁梦"},
+    {name = "伊卡洛斯"},
+    {name = "洛城神委会"},
+    {name = "猫小婕"},
+    {name = "fantianpi"},
+    {name = "初晴"},
+    {name = "游戏旅行者"},
+}
 
 srgb = {cus = 100}
 function requestweapon(...)
@@ -1899,23 +2038,23 @@ MISC.FORCE_LIGHTNING_FLASH()
 end
 if not SCRIPT_SILENT_START then
     util.create_thread(function()
-        local photo = directx.create_texture(filesystem.scripts_dir() .. "GTLuaScript/GTPHOTO.png")
+        local photo = directx.create_texture(filesystem.scripts_dir() .. "GTLuaScript/GT.png")
         local l = -100
         while l <= 90 do
             for j = 1, 195, 5 do
-                directx.draw_texture(photo, 0.10, 0.10, 0.5, 0.5, l/1000, 0.73, 0, {r = 1, g = 1, b = 1, a = j/255})
+                directx.draw_texture(photo, 0.10, 0.10, 0.5, 0.5, l/1000, 0.50, 0, {r = 1, g = 1, b = 1, a = j/255})
                 wait(0)
                 l = l + 5
             end
         end
         for i = 1, 220 do
-            directx.draw_texture(photo, 0.10, 0.10, 0.5, 0.5, 0.09, 0.73, 0, {r = 1, g = 1, b = 1, a = 255})
+            directx.draw_texture(photo, 0.10, 0.10, 0.5, 0.5, 0.09, 0.50, 0, {r = 1, g = 1, b = 1, a = 255})
             wait(0)
         end
         local k = 90
         while k >= -10 do
             for j = 195, 1, -5 do
-                directx.draw_texture(photo, 0.10, 0.10, 0.5, 0.5, k/1000, 0.73, 0, {r = 1, g = 1, b = 1, a = j/255})
+                directx.draw_texture(photo, 0.10, 0.10, 0.5, 0.5, k/1000, 0.50, 0, {r = 1, g = 1, b = 1, a = j/255})
                 wait(0)
                 k = k - 5
             end
@@ -1923,7 +2062,7 @@ if not SCRIPT_SILENT_START then
     end)
 end
 --
-local logo = directx.create_texture(filesystem.scripts_dir() ..'GTLuaScript/GT.png')
+--[[local logo = directx.create_texture(filesystem.scripts_dir() ..'GTLuaScript/GT.png')
 
 if not SCRIPT_SILENT_START then
 MISC.FORCE_LIGHTNING_FLASH()
@@ -1974,7 +2113,7 @@ wait()
 l -= 6 - math.abs(math.floor(l / 10))
 end
 end)
-end
+end]]
 
 function Ini.save(fileName, obj)
 local file <close> = assert(io.open(fileName, "w"), "error loading file")
@@ -2020,7 +2159,7 @@ TTPos = ENTITY.GET_ENTITY_COORDS(TTPed, true)
 hud_rgb_index = 1
 hud_rgb_colors = {6, 18, 9}
 cTime = util.current_time_millis
-Version = "5.07"
+Version = "5.21"
 
 function give_car_addon(pid, hash, center, ang)
     local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
@@ -9046,9 +9185,9 @@ function devhengfu(f)
             endX = 0.5
         end
         
-        GRAPHICS.DRAW_RECT(.5, .5, 1, 0.05, 255, 90, 160, 255)
-        GRAPHICS.DRAW_RECT(.5, .51, 1, 0.05, 255, 160, 190, 255)
-        GRAPHICS.DRAW_RECT(.5, .53, 1, 0.011, 255, 90, 160, 255)
+        GRAPHICS.DRAW_RECT(.5, .30, 1, 0.05, 255, 90, 160, 255)
+        GRAPHICS.DRAW_RECT(.5, .31, 1, 0.05, 255, 160, 190, 255)
+        GRAPHICS.DRAW_RECT(.5, .33, 1, 0.011, 255, 90, 160, 255)
 
 
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.085, 0.10)
@@ -9058,7 +9197,7 @@ function devhengfu(f)
         HUD.SET_TEXT_OUTLINE(0)
         HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
         util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~GTLua开发人员 " .. playerrid .. " 目前在你的战局")
-        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.485)
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.285)
         
         if os.time() - starttime >= 8 then
         devhf = false
@@ -9078,6 +9217,16 @@ function control_vehicle(pid, output_toast, callback, opts)
         end
         return false
     end
+end
+--车辆进入枪
+function driveitgun()
+	entitodrive = memory.alloc_int()
+	if PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(PLAYER.PLAYER_ID(), entitodrive) then
+		if PAD.IS_CONTROL_PRESSED(1, 23) then
+			PED.SET_PED_INTO_VEHICLE(plyped(), memory.read_int(entitodrive), -1)
+		end
+	end
+	memory.free(entitodrive)
 end
 --启动页面3
 function huanyingjiemian(f) 
@@ -9138,6 +9287,20 @@ end
 function savedata()
     menu.trigger_commands("forcecloudsave")
 end
+--忍者枪
+function request_animation(hash)
+    STREAMING.REQUEST_ANIM_DICT(hash)
+    while not STREAMING.HAS_ANIM_DICT_LOADED(hash) do
+        util.yield()
+    end
+end
+--实体管理
+function fixveh( vehicle )
+	vel = ENTITY.GET_ENTITY_VELOCITY(vehicle)
+	VEHICLE.SET_VEHICLE_FIXED(vehicle)
+	VEHICLE.SET_VEHICLE_ENGINE_HEALTH(vehicle, 1000)
+	ENTITY.SET_ENTITY_VELOCITY(vehicle, vel.x, vel.y, vel.z)
+end
 --截货
 function takerestore(pid)
     menu.trigger_commands("raid" .. players.get_name(pid))
@@ -9149,6 +9312,264 @@ function takehome(pid)
     menu.trigger_commands("aptme" .. players.get_name(pid))
     wait(10000)
     menu.trigger_commands("kill" .. players.get_name(pid))
+end
+--扫描
+function saomiaoziti(f)
+saomiao = f
+while saomiao do
+wait() 
+saomiao = true 
+if saomiao then 
+    local text = "~h~~r~正在扫描你的身份..." 
+    for i = 0, string.len(text) do 
+        local subtext = string.sub(text, 1, i) 
+        HUD.SET_TEXT_SCALE(3.0,1.5) 
+        HUD.SET_TEXT_FONT(0) 
+        HUD.SET_TEXT_CENTRE(1) 
+        HUD.SET_TEXT_OUTLINE(0) 
+        HUD.SET_TEXT_COLOUR(60, 255, 255, 255) 
+        HUD.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING") 
+        HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(subtext) 
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.53,0.15,0) 
+        wait(10) 
+    end 
+end
+end
+end
+
+function smyuan(f)
+    local v3=v3.new
+    local radius1 = 0.5
+    local radius2 = 0.5
+    local numSegments = 1000
+    local segmentAngle = 360 / numSegments
+    local centerY1 = 0
+    local centerY2 = 0
+    local centerY3 = 0
+    local centerY4 = 0
+    local speed1 = 0.030
+    local speed2 = 0.030
+    local speed3 = 0.030
+    local speed4 = 0.030
+    saomiao1 = f
+    while saomiao1 do
+    wait(0)
+         local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+         centerY1 = centerY1 + speed1
+         if centerY1 > 0.8 then
+              speed1 = -0.030
+         elseif centerY1 < -1 then
+              speed1 = 0.030
+         end
+         centerY2 = centerY2 + speed2
+         if centerY2 > 0.6 then
+              speed2 = -0.030
+         elseif centerY2 < -1 then
+              speed2 = 0.030
+         end
+         centerY3 = centerY3 + speed3
+         if centerY3 > 1.0 then
+              speed3 = -0.030
+         elseif centerY3 < -1 then
+              speed3 = 0.030
+         end
+         centerY4 = centerY4 + speed4
+         if centerY4 > 0.4 then
+              speed4 = -0.030
+         elseif centerY4 < -1 then
+              speed4 = 0.030
+         end
+         for i = 1, numSegments do
+             local angle1 = math.rad((i-1) * segmentAngle)
+             local angle2 = math.rad(i * segmentAngle)
+             local x1 = radius1 * math.cos(angle1)
+             local y1 = radius1 * math.sin(angle1)
+             local x2 = radius1 * math.cos(angle2)
+             local y2 = radius1 * math.sin(angle2)
+             GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1 , c.z+0.2+ centerY1, c.x + x2, c.y + y2 , c.z+0.1+ centerY1, 0, 255, 0, 255)
+             x1 = radius2 * math.cos(angle1)
+             y1 = radius2 * math.sin(angle1)
+             x2 = radius2 * math.cos(angle2)
+             y2 = radius2 * math.sin(angle2)
+             GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1 , c.z+0.2+ centerY2, c.x + x2, c.y + y2 , c.z+0.1+ centerY2, 255, 255, 0, 255)
+             cx1 = radius2 * math.cos(angle1)
+             cy1 = radius2 * math.sin(angle1)
+             cx2 = radius2 * math.cos(angle2)
+             cy2 = radius2 * math.sin(angle2)
+             GRAPHICS.DRAW_LINE(c.x + cx1, c.y + cy1 , c.z+0.2+ centerY3, c.x + cx2, c.y + cy2 , c.z+0.1+ centerY3, 255, 0, 0, 255)
+             dx1 = radius2 * math.cos(angle1)
+             dy1 = radius2 * math.sin(angle1)
+             dx2 = radius2 * math.cos(angle2)
+             dy2 = radius2 * math.sin(angle2)
+             GRAPHICS.DRAW_LINE(c.x + dx1, c.y + dy1 , c.z+0.2+ centerY4, c.x + dx2, c.y + dy2 , c.z+0.1+ centerY4, 0, 255, 255, 255)
+         end
+    end
+    end
+
+--帮会等级
+function get_stat_int(stat)
+    local ptr = memory.alloc_int()
+    STATS.STAT_GET_INT(util.joaat(stat), ptr, -1)
+    return memory.read_int(ptr)
+end
+
+function set_stat_int(stat, value)
+    STATS.STAT_SET_INT(util.joaat(stat), value, true)
+end
+
+--友好载具类型
+Vehicle_MissionType = {
+    ListItem = {
+        { "巡航",             {}, "巡航" },
+        { "猛撞",                {}, "猛撞" },
+        { "阻挡",              {}, "阻挡" },
+        { "前往",              {}, "前往" },
+        { "停止",               {}, "停止" },
+        { "攻击",             {}, "攻击" },
+        { "跟随",             {}, "跟随" },
+        { "逃跑",               {}, "逃跑" },
+        { "围绕",             {}, "围绕" },
+        { "左边护送",        {}, "左边护送" },
+        { "右边护送",       {}, "右边护送" },
+        { "后面护送",        {}, "后面护送" },
+        { "前面护送",       {}, "前面护送" },
+        { "参加比赛",       {}, "参加比赛" },
+        { "跟踪录制",   {}, "跟踪录制" },
+        { "警察行为",   {}, "警察行为" },
+        { "原地打转", {}, "原地打转" },
+        { "并行停车",      {}, "并行停车" },
+        { "降落",               {}, "降落" },
+        { "降落并等待",      {}, "降落并等待" },
+        { "碰撞",              {}, "碰撞" },
+        { "靠边停车",          {}, "靠边停车" },
+        { "保护",            {}, "保护" },
+    },
+    ValueList = {
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+    }
+}
+---@param ped Ped
+function disable_ped_flee_attributes(ped)
+    if ENTITY.DOES_ENTITY_EXIST(ped) and ENTITY.IS_ENTITY_A_PED(ped) then
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 6, false)  -- FLEE_WHILST_IN_VEHICLE
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 17, false) -- ALWAYS_FLEE
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 46, true)  -- CAN_FIGHT_ARMED_PEDS_WHEN_NOT_ARMED
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 58, true)  -- DISABLE_FLEE_FROM_COMBAT
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 78, true)  -- DISABLE_ALL_RANDOMS_FLEE
+
+        PED.SET_PED_FLEE_ATTRIBUTES(ped, 512, true)   -- NEVER_FLEE
+    end
+end
+--载具内敌人攻击
+---@param pedType int
+---@param modelHash Hash
+---@param x float
+---@param y float
+---@param z float
+---@param heading float
+---@return Ped
+function Create_Network_Ped(pedType, modelHash, x, y, z, heading)
+    request_model(modelHash)
+    local ped = PED.CREATE_PED(pedType, modelHash, x, y, z, heading, true, true)
+
+    ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(ped, true)
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ped, true, false)
+    ENTITY.SET_ENTITY_SHOULD_FREEZE_WAITING_ON_COLLISION(ped, true)
+
+    NETWORK.NETWORK_REGISTER_ENTITY_AS_NETWORKED(ped)
+    local net_id = NETWORK.PED_TO_NET(ped)
+    NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(net_id, true)
+    NETWORK.SET_NETWORK_ID_CAN_MIGRATE(net_id, true)
+    for _, pid in pairs(players.list()) do
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(net_id, pid, true)
+    end
+
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(modelHash)
+    return ped
+end
+---增强NPC作战能力
+---@param ped Ped
+---@param isGodmode boolean? [default = false]
+---@param canRagdoll boolean? [default = true]
+function increase_ped_combat_ability(ped, isGodmode, canRagdoll)
+    if isGodmode == nil then isGodmode = false end
+    if canRagdoll == nil then canRagdoll = true end
+
+    if ENTITY.DOES_ENTITY_EXIST(ped) and ENTITY.IS_ENTITY_A_PED(ped) then
+        ENTITY.SET_ENTITY_INVINCIBLE(ped, isGodmode)
+        ENTITY.SET_ENTITY_PROOFS(ped, isGodmode, isGodmode, isGodmode, isGodmode, isGodmode, isGodmode, isGodmode,
+            isGodmode)
+        PED.SET_PED_CAN_RAGDOLL(ped, canRagdoll)
+
+        --- PERCEPTIVE ---
+        PED.SET_PED_HIGHLY_PERCEPTIVE(ped, true)
+        PED.SET_PED_VISUAL_FIELD_PERIPHERAL_RANGE(ped, 500.0)
+        PED.SET_PED_SEEING_RANGE(ped, 500.0)
+        PED.SET_PED_HEARING_RANGE(ped, 500.0)
+        PED.SET_PED_ID_RANGE(ped, 500.0)
+        PED.SET_PED_VISUAL_FIELD_MIN_ANGLE(ped, 90.0)
+        PED.SET_PED_VISUAL_FIELD_MAX_ANGLE(ped, 90.0)
+        PED.SET_PED_VISUAL_FIELD_MIN_ELEVATION_ANGLE(ped, 90.0)
+        PED.SET_PED_VISUAL_FIELD_MAX_ELEVATION_ANGLE(ped, 90.0)
+        PED.SET_PED_VISUAL_FIELD_CENTER_ANGLE(ped, 90.0)
+
+        --- WEAPON ---
+        PED.SET_PED_CAN_SWITCH_WEAPON(ped, true)
+        WEAPON.SET_PED_INFINITE_AMMO_CLIP(ped, true)
+        PED.SET_PED_SHOOT_RATE(ped, 1000)
+        PED.SET_PED_ACCURACY(ped, 100)
+
+        --- COMBAT ---
+        PED.SET_PED_COMBAT_ABILITY(ped, 2)       -- Professional
+        PED.SET_PED_COMBAT_RANGE(ped, 2)         -- Far
+        -- PED.SET_PED_COMBAT_MOVEMENT(ped, 2) -- WillAdvance
+        PED.SET_PED_TARGET_LOSS_RESPONSE(ped, 1) -- NeverLoseTarget
+
+        --- FLEE ATTRIBUTES ---
+        PED.SET_PED_FLEE_ATTRIBUTES(ped, 512, true) -- NEVER_FLEE
+
+        --- TASK ---
+        TASK.SET_PED_PATH_CAN_USE_CLIMBOVERS(ped, true)
+        TASK.SET_PED_PATH_CAN_USE_LADDERS(ped, true)
+        TASK.SET_PED_PATH_CAN_DROP_FROM_HEIGHT(ped, true)
+        TASK.SET_PED_PATH_AVOID_FIRE(ped, false)
+        TASK.SET_PED_PATH_MAY_ENTER_WATER(ped, true)
+
+        PED.SET_PED_SUFFERS_CRITICAL_HITS(ped, false) -- Sets if a healthy character can be killed by a single bullet (e.g. headshot)
+    end
+end
+
+---增强NPC作战属性
+---@param ped Ped
+function increase_ped_combat_attributes(ped)
+    if ENTITY.DOES_ENTITY_EXIST(ped) and ENTITY.IS_ENTITY_A_PED(ped) then
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 4, true)   --Can Use Dynamic Strafe Decisions
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 5, true)   --Always Fight
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 6, false)  --Flee Whilst In Vehicle
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 13, true)  --Aggressive
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 14, true)  --Can Investigate
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 17, false) --Always Flee
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 20, true)  --Can Taunt In Vehicle
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 21, true)  --Can Chase Target On Foot
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 22, true)  --Will Drag Injured Peds to Safety
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 24, true)  --Use Proximity Firing Rate
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 27, true)  --Perfect Accuracy
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 28, true)  --Can Use Frustrated Advance
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 29, true)  --Move To Location Before Cover Search
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 38, true)  --Disable Bullet Reactions
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 39, true)  --Can Bust
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 41, true)  --Can Commandeer Vehicles
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 42, true)  --Can Flank
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 46, true)  --Can Fight Armed Peds When Not Armed
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 49, false) --Use Enemy Accuracy Scaling
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 52, true)  --Use Vehicle Attack
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 53, true)  --Use Vehicle Attack If Vehicle Has Mounted Guns
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 54, true)  --Always Equip Best Weapon
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 55, true)  --Can See Underwater Peds
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 58, true)  --Disable Flee From Combat
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 60, true)  --Can Throw Smoke Grenade
+        PED.SET_PED_COMBAT_ATTRIBUTES(ped, 78, true)  --Disable All Randoms Flee
+    end
 end
 ------------------------------------
 -------------玩家崩溃---------------
@@ -9188,27 +9609,6 @@ function fireworkcrash(PlayerID)
     util.yield(300)
     MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(cord.x, cord.y, cord.z + 1, cord.x, cord.y, cord.z, 0, true, util.joaat("weapon_heavysniper_mk2"), players.user_ped(), false, true, 1.0)
     ENTITY.DETACH_ENTITY(object, object)
-
-    local stupid_pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)) stupid_pos.x = stupid_pos.x - 2
-    util.create_thread(function ()
-        local object = entities.create_object(util.joaat("apa_mp_apa_yacht_jacuzzi_ripple2"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
-    local mod_vel = {-692292317,-1323100960,4244420235,444583674,184361638,642617954,586013744,920453016,3186376089,1030400667,240201337,
-    1492612435, 3517794615, 3889340782, 3253274834,970385471, 2336777441, 184361638, 1030400667, 920453016, 240201337, 642617954, 
-    586013744, 868868440, 1550581940, 3334677549, 3186376089,0xc5dd6967,0x58f77553,0x1446590a}
-    for _spawn, value in pairs(mod_vel) do
-    local s = {}
-    for i = 1, 10, 1 do  
-    s[_spawn] = CreateVehicle(value,stupid_pos,0)
-    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(Entity, true, false)
-    wait(0)
-    end
-    end
-    wait(0)
-    local ar_vs = entities.get_all_vehicles_as_handles()
-    for key, value in pairs(ar_vs) do
-    entities.delete_by_handle(value)
-    end
-    end,nil)
 end
 
 function rocketkoko(PlayerID)
@@ -9262,6 +9662,35 @@ function weedfire(PlayerID)
         MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(cord.x, cord.y, cord.z + 1, cord.x, cord.y, cord.z, 0, true, util.joaat("apa_prop_flag_canada_yt"), players.user_ped(PlayerID), false, true, 1.0)
         util.yield(10)
     end
+end
+
+function reolcrash(PlayerID)
+menu.trigger_commands("kill".. PLAYER.GET_PLAYER_NAME(PlayerID))
+menu.trigger_commands("sendtojob".. PLAYER.GET_PLAYER_NAME(PlayerID))
+menu.trigger_commands("choke".. PLAYER.GET_PLAYER_NAME(PlayerID))
+menu.trigger_commands("ngcrash".. PLAYER.GET_PLAYER_NAME(PlayerID))
+menu.trigger_commands("footlettuce".. PLAYER.GET_PLAYER_NAME(PlayerID))
+menu.trigger_commands("steamroll".. PLAYER.GET_PLAYER_NAME(PlayerID))
+local stupid_pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)) 
+local stupid_pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)) stupid_pos.x = stupid_pos.x - 2
+util.create_thread(function ()
+local mod_vel = {-692292317,-1323100960,4244420235,444583674,184361638,642617954,586013744,920453016,3186376089,1030400667,240201337,
+1492612435, 3517794615, 3889340782, 3253274834,970385471, 2336777441, 184361638, 1030400667, 920453016, 240201337, 642617954, 
+586013744, 868868440, 1550581940, 3334677549, 3186376089,0xc5dd6967,0x58f77553,0x1446590a}
+for _spawn, value in pairs(mod_vel) do
+local s = {}
+for i = 1, 10, 1 do  
+s[_spawn] = CreateVehicle(value,stupid_pos,0)
+ENTITY.SET_ENTITY_AS_MISSION_ENTITY(Entity, true, false)
+wait(0)
+end
+end
+wait(0)
+local ar_vs = entities.get_all_vehicles_as_handles()
+for key, value in pairs(ar_vs) do
+entities.delete_by_handle(value)
+end
+end,nil)
 end
 --
 function spawn_vehicle(hash,pos,isGodMode,isFreeze)
@@ -16125,12 +16554,19 @@ function isInTable(tbl, value)
 end
 
 -- 根据值清空对应的元素（非删除操作）
-function clearTableValue(t, value)
-    for k, v in pairs(t) do
+function clearTableValue(tbl, value)
+    for k, v in pairs(tbl) do
         if v == value then
-            t[k] = nil
+            tbl[k] = nil
         end
     end
+end
+
+---@return table
+function newTableValue(pos, value)
+    local tbl = {}
+    tbl[pos] = value
+    return tbl
 end
 
 
@@ -17955,7 +18391,7 @@ function gethimcar(pid)
         TASK.TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, true)
         PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, true)
         VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, true, true)
-        TASK.TASK_ENTER_VEHICLE(ped, vehicle, -1, -1, 1.0, 24)
+        TASK.TASK_ENTER_VEHICLE(ped, vehicle, 1, 1, 1.0, 24)
         if hijackLevel == 1 then
             wait(20)
             VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(vehicle, true)
@@ -19386,7 +19822,7 @@ else
 mcb=mcb-1
 end
 end
-draw_string(string.format("~italic~              ¦&#8721;\n    ~h~GRANDTOURINGVIP\n         Version : " .. GT_version .. ""), jiaoben_x,jiaoben_y, jiaoben_dx,4.5)
+draw_string(string.format("~italic~              ¦&#8721;\n    ~h~GRANDTOURINGVIP\n         Version : ".. GT_version), jiaoben_x,jiaoben_y, jiaoben_dx,4.5)
 wait()
 end
 end    
@@ -22205,7 +22641,7 @@ wasd = {
 }
 
 pedToggleLoops = {
-    {name = '摔倒NPC', command = 'JSragdollPeds', description = '让附近的所有NPC都摔倒,哈哈.', action = function(ped)
+    {name = '摔倒NPC', command = 'JSragdollPeds', description = '让附近的所有NPC都摔倒 嘿嘿', action = function(ped)
         if PED.IS_PED_A_PLAYER(ped) then return end
         PED.SET_PED_TO_RAGDOLL(ped, 2000, 2000, 0, true, true, true)
     end},
@@ -22217,11 +22653,11 @@ pedToggleLoops = {
         if PED.IS_PED_A_PLAYER(ped) then return end
         PED.SET_PED_HEATSCALE_OVERRIDE(ped, 0)
     end},
-    {name = '静音NPC', command = 'JSmutePeds', description = '因为我不想再听那个家伙谈论他的同性恋狗了.', action = function(ped)
+    {name = '静音NPC', command = 'JSmutePeds', description = '因为我不想再听到那个家伙谈论他的同性恋狗啦', action = function(ped)
         if PED.IS_PED_A_PLAYER(ped) then return end
         AUDIO.STOP_PED_SPEAKING(ped, true)
     end},
-    {name = 'NPC喇叭加速', command = 'JSnpcHornBoost', description = '当NPC按喇叭的时候加速它们的载具.', action = function(ped)
+    {name = 'NPC喇叭加速', command = 'JSnpcHornBoost', description = '当NPC按喇叭时会加速他们的载具', action = function(ped)
         local vehicle = PED.GET_VEHICLE_PED_IS_IN(ped, false)
         if PED.IS_PED_A_PLAYER(ped) or not PED.IS_PED_IN_ANY_VEHICLE(ped, true) or not AUDIO.IS_HORN_ACTIVE(vehicle) then return end
         AUDIO.SET_AGGRESSIVE_HORNS(true) --Makes pedestrians sound their horn longer, faster and more agressive when they use their horn.
@@ -22229,12 +22665,12 @@ pedToggleLoops = {
     end, onStop = function()
         AUDIO.SET_AGGRESSIVE_HORNS(false)
     end},
-    {name = 'NPC警笛加速', command = 'JSnpcSirenBoost', description = '当NPC响起警车的警笛的时候加速它们的载具.', action = function(ped)
+    {name = 'NPC警笛加速', command = 'JSnpcSirenBoost', description = '当NPC驾驶警车响起警笛时\n此功能会加速他们的载具喔', action = function(ped)
         local vehicle = PED.GET_VEHICLE_PED_IS_IN(ped, false)
         if PED.IS_PED_A_PLAYER(ped) or not PED.IS_PED_IN_ANY_VEHICLE(ped, true) or not VEHICLE.IS_VEHICLE_SIREN_ON(vehicle) then return end
         VEHICLE.SET_VEHICLE_FORWARD_SPEED(vehicle, ENTITY.GET_ENTITY_SPEED(vehicle) + 1.2)
     end},
-    {name = '自动杀死敌人', command = 'JSautokill', description = '立即击杀NPC敌人.', action = function(ped) --basically copy pasted form wiri script
+    {name = '自动杀死敌人', command = 'JSautokill', description = '立即击杀对您有敌意的NPC', action = function(ped) --basically copy pasted form wiri script
         local rel = PED.GET_RELATIONSHIP_BETWEEN_PEDS(players.user_ped(), ped)
         if PED.IS_PED_A_PLAYER(ped) or ENTITY.IS_ENTITY_DEAD(ped) or not( (rel == 4 or rel == 5) or PED.IS_PED_IN_COMBAT(ped, players.user_ped()) ) then return end
         ENTITY.SET_ENTITY_HEALTH(ped, 0, 0)
@@ -22317,7 +22753,7 @@ function get_aimbot_target()
                 end
             end
             if satarget_nogodmode then
-                if not ENTITY._GET_ENTITY_CAN_BE_DAMAGED(v) then
+                if not ENTITY.GET_ENTITY_CAN_BE_DAMAGED(v) then
                     target_this = false
                 end
             end

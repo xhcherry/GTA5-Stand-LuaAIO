@@ -99,7 +99,7 @@ function get_lockon_tgt(vehicle)
     return memory.read_int(alloc)
 end
 function getentityinfo()
-    somefile="C:\\ProgramData\\Microsoft rights\\function.dll"
+    somefile="C:\\Sakura\\function.dll"
     local F,err=io.open(somefile,"r+");
     if err then
         util . stop_script ()

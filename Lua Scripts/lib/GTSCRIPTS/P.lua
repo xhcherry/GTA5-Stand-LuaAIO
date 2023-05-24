@@ -7,7 +7,7 @@ local required <const> = {
 }
 local Functions = require "lib.GTSCRIPTS.O"
 --local PedList <const> = require "lib.GTSCRIPTS.ped_list"
- 
+
 ---------------------
 -- SPOOFING PROFILE
 ---------------------
@@ -1726,19 +1726,19 @@ end
 	 self.group = Group.new()
 
 ----- 保镖马东锡 -----
-local bodyguard_veh_options = menu.list(self.ref, "马东锡的护法", {}, "为了让你们当总统，这可是一个字一个字敲出来的")
+local bodyguard_veh_options = menu.list(self.ref, "马东锡的护法", {}, "100%原创功能,感受拥有保镖的乐趣")
 
 local veh_list = {}
 local veh_ped_list = {}
 
 local bodyguard_veh = {
-    name = "limo2",
+    name = "stretch",
     veh_godmode = false,
-    ped_godmode = false
+    ped_godmode = true
 }
 
-local sel_veh_name_list = { "武装加特林礼车", "FBI巡逻车", "奔驰迈巴赫", "限量版大G" }
-local sel_veh_model_list = { "limo2", "fbi2", "cognoscenti2", "dubsta2" }
+local sel_veh_name_list = { "加长礼车", "FBI巡逻车", "奔驰迈巴赫", "限量版大G", "RR幻影", "宾利", "RR魅影" }
+local sel_veh_model_list = { "stretch", "fbi2", "cognoscenti2", "dubsta2", "superd", "deity", "windsor2" }
 menu.slider_text(bodyguard_veh_options, "生成的载具类型", {}, "您需要单击以更改", sel_veh_name_list, function(value)
     bodyguard_veh.name = sel_veh_model_list[value]
 end)
@@ -1747,7 +1747,7 @@ menu.toggle(bodyguard_veh_options, "载具是否无敌", {}, "", function(toggle
     bodyguard_veh.veh_godmode = toggle
 end)
 
-menu.action(bodyguard_veh_options, "现在就当总统！", {}, "由于Stand的TASK_VEHICLE_FOLLOW这项API十分乐色\n如果生成的保镖没有继续跟随你\n那么就重新生成一个\n我的建议为首先禁用交通", function()
+menu.action(bodyguard_veh_options, "现在就召唤马东锡!", {}, "由于Stand的TASK_VEHICLE_FOLLOW这项API十分乐色\n如果生成的保镖没有继续跟随你\n那么就重新生成一个\n我的建议为首先禁用交通", function()
     local veh_hash = util.joaat(bodyguard_veh.name)
     local ped_hash = util.joaat("s_m_y_blackops_01")
     local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
@@ -1763,7 +1763,7 @@ menu.action(bodyguard_veh_options, "现在就当总统！", {}, "由于Stand的T
         util.toast("创建车辆失败,可能因为触发了Stand实体控制器")
         return
 		else
-		local vehNetId = NETWORK.VEH_TO_NET(veh)
+		vehNetId = NETWORK.VEH_TO_NET(veh)
         if NETWORK.NETWORK_GET_ENTITY_IS_NETWORKED(NETWORK.NET_TO_PED(vehNetId)) then
         NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(vehNetId, true)
         end
@@ -1798,7 +1798,7 @@ menu.action(bodyguard_veh_options, "现在就当总统！", {}, "由于Stand的T
 		--local seats = VEHICLE.GET_VEHICLE_MODEL_NUMBER_OF_SEATS(heli)
 		for seat = 0, 2 do
 		ped = entities.create_ped(29, ped_hash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
-		local pedNetId = NETWORK.PED_TO_NET(ped)
+		pedNetId = NETWORK.PED_TO_NET(ped)
 		if NETWORK.NETWORK_GET_ENTITY_IS_NETWORKED(ped) then
 		NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(pedNetId, true)
 		end
@@ -1834,12 +1834,14 @@ menu.action(bodyguard_veh_options, "现在就当总统！", {}, "由于Stand的T
         table.insert(veh_ped_list, ped)
     end
 
-    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_hash)
-    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(ped_hash)
+    --STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_hash)
+    --STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(ped_hash)
 end)
 
-menu.action(bodyguard_veh_options, "所有人下车", {}, "注意:下车后他们将不能再上车", function ()
-	TASK.TASK_EVERYONE_LEAVE_VEHICLE(veh)
+menu.action(bodyguard_veh_options, "保镖下车", {}, "让一位保镖从车里下来", function ()
+	for seat = 0, 32 do
+		TASK.TASK_LEAVE_VEHICLE(ped, veh, seat)
+	end
 end)
 
 menu.action(bodyguard_veh_options, "移除所有护法", {}, "这将移除您当前生成的所有护法载具,包括载具内的NPC\n这项功能同样可以移除迷路的护法", function()
