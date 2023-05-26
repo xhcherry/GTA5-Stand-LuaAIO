@@ -1,5 +1,33 @@
 
 
+----物体笼子
+obj_table = {}
+objsetcage = {
+    'prop_sign_road_01b','prop_sign_road_03b','prop_airport_sale_sign',
+    'poro_06_sig1_c_source','prop_sign_road_03w','prop_sign_road_04zb',
+    'prop_sign_road_04za','prop_sign_road_06s','prop_sign_road_restriction_10',
+    'prop_mineshaft_door','ch_prop_ch_tunnel_door01a','apa_prop_ss1_mpint_garage2',
+    'ch_prop_ch_vault_slide_door_lrg','ch_prop_ch_vault_slide_door_sm','v_ilev_carmod3door',
+    'v_ilev_fh_slidingdoor','prop_ch2_05d_g_door','prop_com_ls_door_01',
+    'prop_ql_revolving_door','prop_sc1_06_gate_l','prop_sec_gate_01d','gr_prop_gr_doorpart',
+    'gr_prop_gr_fnclink_03e','ch_prop_arcade_fortune_door_01a','sum_prop_hangerdoor_01a',
+    'h4_prop_office_elevator_door_01','p_gate_prison_01_s','prop_lrggate_02'
+}
+objsetcage_name = {
+    '路牌1','路牌2','路牌3','路牌4','路牌5','路牌6',
+    '路牌7','路牌8','路牌9','门1','门2','门3','门4',
+    '门5','门6','门7','门8','门9','门10','门11','门12',
+    '门13','门14','门15','门16','门17','门18','门19'
+}
+
+
+
+----ped笼子
+ped_cage_table = {}
+pedset_tab = {'u_m_m_jesus_01',"ig_lestercrest","player_two"}
+pedset_opt = {"悲伤的耶稣","莱斯特","崔弗"}
+
+
 ----在车内生成NPC
 full_with_options = {"随机PED", "警察", "脱衣舞娘", "拉马", "莱斯特"}
 
@@ -393,8 +421,8 @@ MCLabels = {
 }
 
 
-----发光
-glow_color = {r = 1, g = 1, b = 1, a = 0}
+----环境光
+glow_color = {r = 1, g = 0, b = 0, a = 1}
 
 ----彩色翅膀
 fireWing_v2color = {r = 1, g = 0.865, b = 0, a = 0}
@@ -428,8 +456,8 @@ gm = { "[Remove]", "[Kill]", "[Remove + Kill]"}
 
 
 ----UFO
-objModels = {"imp_prop_ship_01a","sum_prop_dufocore_01a"}
-ufo_name = {"外星UFO", "军用UFO"}
+objModels = {"imp_prop_ship_01a","sum_prop_dufocore_01a", "gr_prop_damship_01a"}
+ufo_name = {"外星UFO", "军用UFO", "废弃UFO"}
 
 
 -----自动驾驶
@@ -1101,6 +1129,23 @@ disguise_names = {
 ----防笼子
 cageModels =
     {
+        util.reverse_joaat(1089807209),
+        util.reverse_joaat(-37176073),
+        util.reverse_joaat(684586828),
+        util.reverse_joaat(238789712),
+        util.reverse_joaat(4022605402),
+        'u_m_m_jesus_01',
+        "ig_lestercrest",
+        "player_two",
+        "s_m_y_factory_01",
+        "cargobob",
+        "ch_prop_tree_03a",
+        "ch_prop_tree_02a",
+        "prop_gascage01",
+        "prop_coffin_02b",
+        "boxville3",
+        "prop_container_ld_pu",
+        "p_cablecar_s",
         "prop_gold_cont_01",
         "prop_gold_cont_01b",
         "prop_feeder1_cr",

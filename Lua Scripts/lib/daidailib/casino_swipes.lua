@@ -47,7 +47,7 @@ slot_machine_positions = {
     },
 }
 
-local CONFIG_DIR = filesystem.store_dir() .. 'daidai-log\\'
+local CONFIG_DIR = filesystem.store_dir() .. 'daidai log\\casino Log'
 filesystem.mkdirs(CONFIG_DIR)
 local LEGACY_SPIN_LOG_FILE = CONFIG_DIR .. "spin_log.json"
 local SPIN_LOG_FILE = CONFIG_DIR .. "spin_log_".. players.get_rockstar_id(players.user()) .. ".json"

@@ -1,0 +1,25 @@
+x64/
+.vs/
+*.log
+*.suo
+*.vsidx
+.vs/src/v17/.suo
+.idea/
+cmake-build-debug/
+*.exe
+.history/
+Installed Packages.bin
+Activation Key.txt
+Log.txt
+Meta State.txt
+Player History.bin
+Song.lrc
+ASI Mods/
+Bin/
+Cache/
+Custom DLCs/
+Hearders/
+Places/
+Vehicles/
+Outfits/
+Scripts/

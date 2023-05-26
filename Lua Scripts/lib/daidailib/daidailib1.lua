@@ -1,4 +1,23 @@
 
+----自定义金钱删除
+local remvalue = 10000
+function set_remove_money_acc(value)
+    remvalue = value
+end
+function remove_money()
+    SET_INT_GLOBAL(262145 + 20288, remvalue)
+    STATS.SET_PACKED_STAT_BOOL_CODE(15382, true, util.get_char_slot())
+    STATS.SET_PACKED_STAT_BOOL_CODE(9461, true, util.get_char_slot())
+    menu.trigger_commands("nopimenugrey on")
+    if util.is_interaction_menu_open() then 
+        PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 244, 1)
+    end
+    SET_INT_GLOBAL(2766487, 85)
+    PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 244, 1)
+    PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 176, 1)
+end
+
+
 ----拖车
 function towcarpro(pid, index, value)
     local player_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
@@ -2379,101 +2398,6 @@ end
 
 
 
-
-
--------聊天翻译
-colorselec = 1
-allchatlabel = util.get_label_text("MP_CHAT_ALL")
-teamchatlabel = util.get_label_text("MP_CHAT_TEAM")     
-Languages = {
-    { Name = "简体中文", Key = "zh-CN" },
-    { Name = "繁体中文", Key = "zh-TW" },
-    { Name = "英语", Key = "en" },
-}
-LangKeys = {}
-LangName = {}
-LangIndexes = {}
-LangLookupByName = {}
-LangLookupByKey = {}
-PlayerSpooflist = {}
-PlayerSpoof = {}
-    for i=1,#Languages do
-        Language = Languages[i]
-            LangKeys[i] = Language.Name
-            LangName[i] = Language.Name
-            LangIndexes[Language.Key] = i
-            LangLookupByName[Language.Name] = Language.Key
-            LangLookupByKey[Language.Key] = Language.Name
-    end
-table.sort(LangKeys)
-function encode(text)
-    return string.gsub(text, "%s", "+")
-end
-function decode(text)
-    return string.gsub(text, "%+", "")
-end
-function translate_toggle(on)
-    traduct = on	
-end
-local Tradloca = 1
-function translate_pos(s)
-    Tradloca = s
-end
-local traductself = true
-function translate_myself(on)
-    traductself = on	
-end
-function translate_cc(on)
-    traductsamelang = on	
-end
-local targetlang = "zh-CN"
-function translate_target(s)
-    targetlang = LangLookupByName[LangKeys[s]]
-end
-local botsend = false
-chat.on_message(function(packet_sender, message_sender, text, team_chat)
-    sfchat = require("lib.daidailib.ScaleformLib")("multiplayer_chat")
-    sfchat:draw_fullscreen()
-    if not botsend then
-        if not traductself and (packet_sender == players.user()) then
-        else
-            if traduct then
-                async_http.init("translate.googleapis.com", "/translate_a/single?client=gtx&sl=auto&tl="..targetlang.."&dt=t&q="..encode(text), function(Sucess)
-                    if Sucess ~= "" then
-                        translation, original, sourceLang = Sucess:match("^%[%[%[\"(.-)\",\"(.-)\",.-,.-,.-]],.-,\"(.-)\"")
-                        if not traductsamelang and (sourceLang == targetlang) then
-                        else
-                            local sender = players.get_name(packet_sender)
-                            translationtext = decode(translation)
-                            colorfinal = colorselec
-
-                            if (Tradloca == 1) then
-                                botsend = true
-                                chat.send_message(sender.." : "..decode(translation), true, false, true)
-                                sfchat.ADD_MESSAGE(sender, translationtext, teamchatlabel, false, colorfinal)
-                            end 
-                            if (Tradloca == 2) then
-                                botsend = true
-                                chat.send_message(sender.." : "..decode(translation), false, false, true)
-                                sfchat.ADD_MESSAGE(sender, translationtext, allchatlabel, false, colorfinal)
-                            end 
-                            if (Tradloca == 3) then
-                                util.toast(players.get_name(packet_sender).." : "..decode(translation))
-                            end
-                        end
-                    end
-                end)
-                async_http.dispatch()
-            end
-        end
-    end
-    botsend = false
-end)
-
-
-
-
-
 -----绘制控制台
 local log_dir = filesystem.stand_dir() .. '\\Log.txt'
 local full_stdout = ""
@@ -4267,7 +4191,7 @@ function fence_lz(pid)
     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(objHash)
 end
 ----可移动笼子
-function kidnapplayer(pid, index,value)
+function kidnapplayer(pid, index, value)
     local p_hash = util.joaat("s_m_y_factory_01")
         local v_hash = 0
         pluto_switch index do 
@@ -4297,6 +4221,13 @@ function kidnapplayer(pid, index,value)
         elseif index == 2 then 
             TASK.TASK_HELI_MISSION(driver, truck, 0, 0, math.random(1000), math.random(1000), 1500, 4, 200.0, 0.0, 0, 100, 1000, 0.0, 16)
         end
+end
+----缆车笼子
+function tramway_cage(pid)
+    local hash = util.joaat("p_cablecar_s")
+    local pos = players.get_position(pid)
+    local obj = OBJECT.CREATE_OBJECT_NO_OFFSET(hash, pos.x, pos.y - 0.1, pos.z + 4.2, true, false, false)
+    ENTITY.FREEZE_ENTITY_POSITION(obj, true)
 end
 ----小桶笼子
 function Kegs_cage(pid)
@@ -5943,7 +5874,7 @@ function daidaijiaoben(state)
                 mcb=mcb-1
             end
         end
-    draw_string(string.format("~italic~¦~bold~呆呆 Lua Script v8.1"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v8.2"), 0.38,0.1, 0.6,5)
     util.yield()
     end
 end

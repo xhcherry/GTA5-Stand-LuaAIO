@@ -16,7 +16,7 @@ end
 local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001
 local SND_FILENAME<const> = 0x00020000
-    store_dir = filesystem.store_dir() .. '\\daidai-audio\\GPS\\'
+    store_dir = filesystem.store_dir() .. '\\daidai audio\\GPS\\'
     sound_selection_dir = store_dir .. '\\welcomekeli.txt'
         fp = io.open(sound_selection_dir, 'r')
             local file_selection = fp:read('*a')
@@ -63,7 +63,6 @@ function request_model(hash, timeout)
     until STREAMING.HAS_MODEL_LOADED(hash) or os.time() >= end_time
     return STREAMING.HAS_MODEL_LOADED(hash)
 end
-
 --entity
 function request_control(entity, timeout)
     local end_time = os.time() + (timeout or 5)
@@ -74,6 +73,22 @@ function request_control(entity, timeout)
     end
     return NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity)
 end
+----lance请求控制
+function request_control_of_entity(ent)
+    if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) and util.is_session_started() then
+        local netid = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(ent)
+        NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netid, true)
+        local st_time = os.time()
+        while not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) do
+            if os.time() - st_time >= 5 then
+                break
+            end
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ent)
+            util.yield()
+        end
+    end
+end
+
 
 ----显示按键
 function show_button()--函数位于首部
@@ -232,9 +247,368 @@ function fileread(filepath, method, rtype)
         return data
     end
 end
+
 ------------------------------------------------------------------------------------------------------
 
+----载具附加
+function vehicle_attach(index,pid)
+    local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
+    if car ~= 0 then
+        request_control_of_entity(car)
+        pluto_switch index do
+            case 1: 
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(), car, 0, 0.0, -0.20, 2.00, 1.0, 1.0,1, true, true, true, false, 0, true)
+                break 
+            case 2: 
+                if player_cur_car ~= 0 then
+                    ENTITY.ATTACH_ENTITY_TO_ENTITY(car, player_cur_car, 0, 0.0, -5.00, 0.00, 1.0, 1.0,1, true, true, true, false, 0, true)
+                end
+                break
+            case 3: 
+                if player_cur_car ~= 0 then
+                    ENTITY.ATTACH_ENTITY_TO_ENTITY(player_cur_car, car, 0, 0.0, -5.00, 0.00, 1.0, 1.0,1, true, true, true, false, 0, true)
+                end
+                break
+            case 4: 
+                ENTITY.DETACH_ENTITY(car, false, false)
+                if player_cur_car ~= 0 then
+                    ENTITY.DETACH_ENTITY(player_cur_car, false, false)
+                end
+                ENTITY.DETACH_ENTITY(players.user_ped(), false, false)
+                break
+        end
+    end
+end
 
+
+
+----联网检测
+function Networked_access()
+    if not async_http.have_access() then
+        notification("~y~~bold~请为Lua启用互联网访问", math.random(0, 200))
+        util.stop_script()
+    end
+end
+
+
+----
+local Death_Log = filesystem.store_dir() .. 'daidai log\\Death Log\\Death_Log.txt'
+local DeathlogDir = filesystem.store_dir() .. 'daidai log\\Death Log'
+function add_deathlog(time, name, weapon)
+    local file, errmsg = io.open(Death_Log, "a+")
+    if not file then
+        return false, errmsg
+    end
+    file:write(json.stringify(time..' '..name..' 类型: '..weapon, nil, 0, false)..'\n')
+    file:close()
+    return input, true
+end
+function death_log()
+    if PED.IS_PED_DEAD_OR_DYING(players.user_ped()) then
+        killer = PED.GET_PED_SOURCE_OF_DEATH(players.user_ped())
+        if killer == players.user_ped() then return end
+        if STREAMING.IS_MODEL_A_PED(ENTITY.GET_ENTITY_MODEL(killer)) then
+            local pid = NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(killer)
+            local pname = PLAYER.GET_PLAYER_NAME(pid)
+            local ts = os.time()
+            local time = os.date('%Y-%m-%d %H:%M:%S', ts)
+            if pname != nil then
+                add_deathlog("["..time.."]", "玩家: "..pname, '武器')
+            end
+            util.toast('被'..pname..'使用武器击杀')
+            util.yield(12000)
+        elseif STREAMING.IS_MODEL_A_VEHICLE(ENTITY.GET_ENTITY_MODEL(killer)) then
+            local vehowner = entities.get_owner(entities.handle_to_pointer(killer))
+            local pname = PLAYER.GET_PLAYER_NAME(vehowner)
+            local ts = os.time()
+            local time = os.date('%Y-%m-%d %H:%M:%S', ts)
+            if pname != nil then
+                add_deathlog("["..time.."]", "玩家: "..pname, '载具')
+            end
+            util.toast('被'..pname..'使用载具击杀')
+            util.yield(12000)
+        end
+    end
+end
+function open_dea_log()
+    util.open_folder(DeathlogDir)
+end
+function clear_dea_log()
+    io.remove(Death_Log)
+    notification("~y~~bold~清除完成", math.random(0, 200))
+end
+
+
+
+
+
+
+
+--PED笼子
+local pedset_def = 'u_m_m_jesus_01'
+function Delcar(vic, spec, pid)
+    if PED.IS_PED_IN_ANY_VEHICLE(vic) ==true then
+        local tarcar = PED.GET_VEHICLE_PED_IS_IN(vic, true)
+        GetControl(tarcar, spec, pid)
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(tarcar)
+        entities.delete_by_handle(tarcar)
+    end
+end
+function SetPedCoor(pedS, tarx, tary, tarz)
+    ENTITY.SET_ENTITY_COORDS(pedS, tarx, tary, tarz, false, true, true, false)
+end
+function Teabagtime(p1, p2, p3, p4, p5, p6, p7, p8)
+    util.create_tick_handler (function ()
+        AUDIO.PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(p1, 'LES1A_DHAC', 'LESTER', 'SPEECH_PARAMS_FORCE_SHOUTED', 1)
+        AUDIO.PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(p2, 'TUSCO_AHAD', 'LESTER', 'SPEECH_PARAMS_FORCE_SHOUTED', 1)
+        AUDIO.PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(p3, 'LES1A_DHAC', 'LESTER', 'SPEECH_PARAMS_FORCE_SHOUTED', 1)
+        AUDIO.PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(p4, 'TUSCO_AHAD', 'LESTER', 'SPEECH_PARAMS_FORCE_SHOUTED', 1)
+        AUDIO.PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(p5, 'LES1A_DHAC', 'LESTER', 'SPEECH_PARAMS_FORCE_SHOUTED', 1)
+        AUDIO.PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(p6, 'TUSCO_AHAD', 'LESTER', 'SPEECH_PARAMS_FORCE_SHOUTED', 1)
+        AUDIO.PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(p7, 'LES1A_DHAC', 'LESTER', 'SPEECH_PARAMS_FORCE_SHOUTED', 1)
+        AUDIO.PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(p8, 'TUSCO_AHAD', 'LESTER', 'SPEECH_PARAMS_FORCE_SHOUTED', 1)
+        util.yield(100)
+    end)
+end
+function Jesuslovesyou(ped_tab)
+    util.create_tick_handler (function ()
+        for _, pi in ipairs(ped_tab) do
+            AUDIO.PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(pi, 'BUMP', 'JESSE', 'SPEECH_PARAMS_FORCE', 1)
+            util.yield(250)
+        end
+    end)
+end
+function Trevortime(ped_tab)
+    util.create_tick_handler (function ()
+        for _, pi in ipairs(ped_tab) do
+            AUDIO.PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(pi, 'TR2_ABAJ', 'TREVOR', 'SPEECH_PARAMS_FORCE', 1)
+            util.yield(100)
+        end
+    end)
+end
+function Fuckyou(ped_tab)
+    util.create_tick_handler (function ()
+        for _, pi in ipairs(ped_tab) do
+            AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(pi, 'GENERIC_FUCK_YOU', 'SPEECH_PARAMS_FORCE', 1)
+            util.yield(100)
+        end
+    end)
+end
+function Provoke(ped_tab)
+    util.create_tick_handler (function ()
+        for _, pi in ipairs(ped_tab) do
+            AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(pi, 'Provoke_Trespass', 'Speech_Params_Force_Shouted_Critical', 1)
+            util.yield(100)
+        end
+
+    end)
+end
+function Insulthigh(ped_tab)
+    util.create_tick_handler (function ()
+        for _, pi in ipairs(ped_tab) do
+            AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(pi, 'Generic_Insult_High', 'SPEECH_PARAMS_FORCE', 1)
+            util.yield(100)
+        end
+    end)
+end
+function Warcry(ped_tab)
+    util.create_tick_handler (function ()
+        for _, pi in ipairs(ped_tab) do
+            AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(pi, 'GENERIC_WAR_CRY', 'SPEECH_PARAMS_FORCE', 1)
+            util.yield(100)
+        end
+
+    end)
+end
+function Streamanim(anim) --Streaming Model
+    STREAMING.REQUEST_ANIM_DICT(anim)
+    while STREAMING.HAS_ANIM_DICT_LOADED(anim) ==false do
+        STREAMING.REQUEST_ANIM_DICT(anim)
+        util.yield()
+    end
+end
+function Pedspawn(pedhash, tar1)
+    Streament(pedhash)
+    local pedS = entities.create_ped(1, pedhash, tar1, 0)
+    ENTITY.SET_ENTITY_INVINCIBLE(pedS, true)
+    ENTITY.FREEZE_ENTITY_POSITION(pedS, true)
+    PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(pedS, true)
+    PED.SET_PED_CAN_LOSE_PROPS_ON_DAMAGE(pedS, false)
+    if pedhash == util.joaat('ig_lestercrest') then
+        PED.SET_PED_PROP_INDEX(pedS, 1)
+    end
+    return pedS
+end
+function Runanim(ent, animdict, anim)
+    TASK.TASK_PLAY_ANIM(ent, animdict, anim, 1.0, 1.0, -1, 3, 0.5, false, false, false)
+    while ENTITY.IS_ENTITY_PLAYING_ANIM(ent, animdict, anim, 3) ==false do
+        TASK.TASK_PLAY_ANIM(ent, animdict, anim, 1.0, 1.0, -1, 3, 0.5, false, false, false)
+        util.yield()
+    end
+end
+function Streamptfx(lib)
+    STREAMING.REQUEST_NAMED_PTFX_ASSET(lib)
+    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(lib) do
+        util.yield()
+    end
+    GRAPHICS.USE_PARTICLE_FX_ASSET(lib)
+end
+function PFP(pedm, playerm)--Ped Facing Player adapted from PhoenixScript
+    local ppos = ENTITY.GET_ENTITY_COORDS(playerm)
+    local pmpos = ENTITY.GET_ENTITY_COORDS(pedm)
+    local hx = ppos.x - pmpos.x
+    local hy = ppos.y - pmpos.y
+    local head = MISC.GET_HEADING_FROM_VECTOR_2D(hx, hy)
+    return ENTITY.SET_ENTITY_HEADING(pedm, head)
+end
+function DelEnt(ped_tab)
+    for _, Pedm in ipairs(ped_tab) do
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(Pedm)
+        entities.delete_by_handle(Pedm)
+    end
+end
+function Stopsound()
+    for i = 0, 99 do
+        AUDIO.STOP_SOUND(i)
+    end
+end
+function IPM(targets, tar1, pname, cage_table, pid)
+    local tar2 = ENTITY.GET_ENTITY_COORDS(targets)
+    local disbet = SYSTEM.VDIST2(tar2.x, tar2.y, tar2.z, tar1.x, tar1.y, tar1.z)
+    if disbet <= 0.5  then
+        util.toast(pname..' 已被笼子困住')
+        util.yield(800)
+    elseif disbet >= 0.5  then
+        util.yield(800)
+        util.toast(pname..' 挣脱了笼子')
+        DelEnt(cage_table[pid])
+        cage_table[pid] = false
+        Stopsound()
+    end
+end
+function select_ped_cage(index)
+    pedset_def = pedset_tab[index]
+end
+function auto_ped_cage(pid)
+    local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
+    local pname = PLAYER.GET_PLAYER_NAME(pid)
+    if not ped_cage_table[pid] then
+        local peds = {}
+        local pedhash = util.joaat(pedset_def)
+        local ped_tab = {'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8'}
+        for _, spawned_ped in ipairs(ped_tab) do
+            spawned_ped = Pedspawn(pedhash, tar1)
+            table.insert(peds,  spawned_ped)
+        end
+        SetPedCoor(peds[1], tar1.x, tar1.y - 0.5, tar1.z - 1.0)
+        SetPedCoor(peds[2], tar1.x - 0.5, tar1.y - 0.5, tar1.z - 1.0)
+        SetPedCoor(peds[3], tar1.x - 0.5, tar1.y, tar1.z - 1.0)
+        SetPedCoor(peds[4], tar1.x - 0.5, tar1.y + 0.5, tar1.z - 1.0)
+        SetPedCoor(peds[5], tar1.x, tar1.y + 0.5, tar1.z - 1.0)
+        SetPedCoor(peds[6], tar1.x + 0.5, tar1.y + 0.5, tar1.z - 1.0)
+        SetPedCoor(peds[7], tar1.x + 0.5, tar1.y, tar1.z - 1.0)
+        SetPedCoor(peds[8], tar1.x + 0.5, tar1.y - 0.5, tar1.z - 1.0)
+        if pedhash == util.joaat('IG_LesterCrest')  then
+            Teabagtime(peds[1], peds[2], peds[3], peds[4], peds[5], peds[6], peds[7], peds[8])
+        elseif pedhash == util.joaat('player_two') then
+            Trevortime(peds)
+        elseif pedhash == util.joaat('u_m_m_jesus_01') then
+            Jesuslovesyou(peds)  
+        elseif pedhash ~= util.joaat('IG_LesterCrest') or util.joaat('player_two') then
+            if GENERIC_AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(peds[1], 'GENERIC_FUCK_YOU') ==true then 
+                Fuckyou(peds)
+            elseif GENERIC_AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(peds[1], 'Provoke_Trespass') then 
+                Provoke(peds)
+            elseif GENERIC_AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(peds[1], 'Generic_Insult_High') then 
+                Insulthigh(peds)
+            elseif GENERIC_AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(peds[1], 'GENERIC_WAR_CRY') then 
+                Warcry(peds)
+            end
+        end
+        Streamanim('rcmpaparazzo_2')
+        Streamanim('mp_player_int_upperfinger')
+        Streamanim('misscarsteal2peeing')
+        Streamanim('mp_player_int_upperpeace_sign')
+        local ped_anim = {peds[2], peds[3], peds[4], peds[5], peds[6], peds[7], peds[8]}
+        for _, Pedanim in ipairs(ped_anim) do
+            if pedhash == util.joaat('player_two') then
+                Runanim(Pedanim, 'misscarsteal2peeing','peeing_loop')
+                local tre = PED.GET_PED_BONE_INDEX(Pedanim, 0x2e28)
+                Streamptfx('core')
+                GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("ent_amb_peeing", Pedanim, 0, 0, 0, -90, 0, 0, tre, 2, false, false, false)
+            elseif pedhash == util.joaat('u_m_m_jesus_01') then
+                Runanim(peds[1], 'mp_player_int_upperpeace_sign', 'mp_player_int_peace_sign')
+                Runanim(Pedanim, 'mp_player_int_upperpeace_sign', 'mp_player_int_peace_sign')
+            else
+                Runanim(Pedanim, 'mp_player_int_upperfinger', 'mp_player_int_finger_02_fp')
+                Runanim(peds[1], 'rcmpaparazzo_2', 'shag_loop_a')
+            end
+        end
+        for _, Pedm in ipairs(peds) do
+            PFP(Pedm, targets)
+        end
+        ped_cage_table[pid] = peds
+    end
+    while ped_cage_table[pid] do
+        IPM(targets, tar1, pname, ped_cage_table, pid)
+    end
+end
+
+
+----物体笼子
+local objcageset = 'prop_mineshaft_door'   
+function select_obj_cage(index)
+    objcageset = objsetcage[index]
+end
+function ObjFrezSpawn(hsel, tar1)
+    local objHash = hsel
+  local objfS =  OBJECT.CREATE_OBJECT(objHash, tar1.x, tar1.y, tar1.z, true, true, true)
+  ENTITY.FREEZE_ENTITY_POSITION(objfS, true)
+  return objfS
+end
+function SetObjCo(objS, tarx, tary, tarz)
+    ENTITY.SET_ENTITY_COORDS(objS, tarx, tary, tarz, false, true, true, false)
+end
+function auto_obj_cage(pid)
+    local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
+    local pname = PLAYER.GET_PLAYER_NAME(pid)
+    if not obj_table[pid] then
+        local objs = {}
+        local spec = menu.get_value(menu.ref_by_rel_path(menu.player_root(pid), "Spectate>Nuts Method"))
+        Delcar(targets, spec, pid)
+        local hsel = util.joaat(objcageset)
+        Streament(hsel)
+        local obj_tab = {'o1', 'o2', 'o3', 'o4', 'o5', 'o6', 'o7', 'o8'}
+        for _, spawned_obj in ipairs(obj_tab) do
+            spawned_obj =  ObjFrezSpawn(hsel, tar1)
+            table.insert(objs,  spawned_obj)
+        end
+        obj_table[pid] = objs
+        SetObjCo(objs[1], tar1.x, tar1.y - 0.5, tar1.z - 1.0)
+        SetObjCo(objs[2], tar1.x - 0.5, tar1.y - 0.5, tar1.z - 1.0)
+        SetObjCo(objs[3], tar1.x - 0.5, tar1.y, tar1.z - 1.0)
+        SetObjCo(objs[4], tar1.x - 0.5, tar1.y + 0.5, tar1.z - 1.0)
+        SetObjCo(objs[5], tar1.x, tar1.y + 0.5, tar1.z - 1.0)
+        SetObjCo(objs[6], tar1.x + 0.5, tar1.y + 0.5, tar1.z - 1.0)
+        SetObjCo(objs[7], tar1.x + 0.5, tar1.y, tar1.z - 1.0)
+        SetObjCo(objs[8], tar1.x + 0.5, tar1.y - 0.5, tar1.z - 1.0)
+        ENTITY.SET_ENTITY_ROTATION(objs[1], 0, 0, 180, 1, true)
+        ENTITY.SET_ENTITY_ROTATION(objs[2], 0, 0, 135, 1, true)
+        ENTITY.SET_ENTITY_ROTATION(objs[3], 0, 0, 90, 1, true)
+        ENTITY.SET_ENTITY_ROTATION(objs[4], 0, 0, 45, 1, true)
+        ENTITY.SET_ENTITY_ROTATION(objs[6], 0, 0, 315, 1, true)
+        ENTITY.SET_ENTITY_ROTATION(objs[7], 0, 0, 270, 1, true)
+        ENTITY.SET_ENTITY_ROTATION(objs[8], 0, 0, 225, 1, true)
+        for _, horn in ipairs(objs) do
+            AUDIO.PLAY_SOUND_FROM_ENTITY(-1, 'Alarm_Interior', horn, 'DLC_H3_FM_FIB_Raid_Sounds', 0, 0)
+        end
+    end
+    while obj_table[pid] do
+        IPM(targets, tar1, pname, obj_table, pid)
+    end
+end
 
 
 
@@ -276,7 +650,6 @@ function story(story_amount)
         return story(story_amount-1)
     end
 end
-
 
 
 --intToIp
@@ -681,24 +1054,12 @@ end
 
 
 ------防笼子
-local lastMsg = ""
-local lastNotification = newTimer()
-local format = "笼子物体来自 %s"
 function Cage_proof()
     local myPos = players.get_position(players.user())
     for _, model in ipairs(cageModels) do
         local modelHash =  util.joaat(model)
         local obj = OBJECT.GET_CLOSEST_OBJECT_OF_TYPE(myPos.x,myPos.y,myPos.z, 8.0, modelHash, false, false, false)
-        if obj == 0 or not ENTITY.DOES_ENTITY_EXIST(obj) or not ENTITY.IS_ENTITY_AT_ENTITY(players.user_ped(), obj, 5.0, 5.0, 5.0, false, true, 0) then
-            continue
-        end
-        local ownerId = get_entity_owner(obj)
-        local msg = string.format(format, get_condensed_player_name(ownerId))
-        if ownerId ~= players.user() and is_player_active(ownerId, false, false) and(lastMsg ~= msg or lastNotification.elapsed() >= 15000) then
-            util.toast(msg)
-            lastMsg = msg
-            lastNotification.reset()
-        end
+        --local ownerId = get_entity_owner(obj)--获取实体所有者
         request_control(obj, 1500)
         entities.delete_by_handle(obj)
     end
@@ -2242,24 +2603,16 @@ end
 
 
 -----生成实体垃圾
-bullet_rain = false
-bullet_rain_target = -1
-num_of_spam = 30
-entity_grav = true
 function spam_entity_on_player(ped, hash)
     request_model_load(hash)
-    for i=1, num_of_spam do
+    for i=1, 30 do
         rand_coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, math.random(-1,1), math.random(-1,1), math.random(-1,1))
         rand_coords.x = rand_coords['x']
         rand_coords.y = rand_coords['y']
         rand_coords.z = rand_coords['z']
         obj = OBJECT.CREATE_OBJECT_NO_OFFSET(hash, rand_coords['x'], rand_coords['y'], rand_coords['z'], true, false, false)
-        if entity_grav then
-            grav_factor = 1.0
-        else
-            grav_factor = 0.0
-        end
-        ENTITY.SET_ENTITY_HAS_GRAVITY(obj, entity_grav)
+        grav_factor = 1.0
+        ENTITY.SET_ENTITY_HAS_GRAVITY(obj, true)
         OBJECT.SET_ACTIVATE_OBJECT_PHYSICS_AS_SOON_AS_IT_IS_UNFROZEN(obj, true)
     end
 end
@@ -2624,43 +2977,13 @@ function daidaishijian(state)
     end 
 end
 
---------笼子恶搞
-cages = {} 
-function cage_player(pos)
-	local object_hash = util.joaat("prop_gold_cont_01b")
-	pos.z = pos.z-0.9
-	
-	STREAMING.REQUEST_MODEL(object_hash)
-	while not STREAMING.HAS_MODEL_LOADED(object_hash) do
-		util.yield()
-	end
-	local object1 = OBJECT.CREATE_OBJECT(object_hash, pos.x, pos.y, pos.z, true, true, true)
-	cages[#cages + 1] = object1																			
-	local object2 = OBJECT.CREATE_OBJECT(object_hash, pos.x, pos.y, pos.z, true, true, true)
-	cages[#cages + 1] = object2
-	ENTITY.FREEZE_ENTITY_POSITION(object1, true)
-	ENTITY.FREEZE_ENTITY_POSITION(object2, true)
-	local rot  = ENTITY.GET_ENTITY_ROTATION(object2)
-	rot.x = -180
-	rot.y = -180
-	ENTITY.SET_ENTITY_ROTATION(object2, rot.x,rot.y,rot.z,1,true)
-	STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(object_hash)
-end
+----普通笼子
 function ptlz(pid)
-    local player_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-    local pos = ENTITY.GET_ENTITY_COORDS(player_ped) 
-    if PED.IS_PED_IN_ANY_VEHICLE(player_ped, false) then
-        menu.trigger_commands("freeze"..PLAYER.GET_PLAYER_NAME(pid).." on")
-        util.yield(300)
-        if PED.IS_PED_IN_ANY_VEHICLE(player_ped, false) then
-            util.toast("未能将玩家踢出车辆")
-            menu.trigger_commands("freeze"..PLAYER.GET_PLAYER_NAME(pid).." off")
-            return
-        end
-        menu.trigger_commands("freeze"..PLAYER.GET_PLAYER_NAME(pid).." off")
-        pos =  ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
-    end
-    cage_player(pos)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+    local object_hash = util.joaat("prop_gold_cont_01")
+	pos.z = pos.z-0.9
+	local object1 = OBJECT.CREATE_OBJECT(object_hash, pos.x, pos.y, pos.z, true, true, true)																	
+	ENTITY.FREEZE_ENTITY_POSITION(object1, true)
 end
 --七度空间
 function qdkj(pid)
@@ -2889,7 +3212,7 @@ function gascage(pid)
 end
 
 ---------发送垃圾
-local function tpTableToPlayer(tbl, pid)
+function tpTableToPlayer(tbl, pid)
     if NETWORK.NETWORK_IS_PLAYER_CONNECTED(pid) then
         local c = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
         for _, v in pairs(tbl) do
@@ -2928,7 +3251,6 @@ end
 ------------喷射
 function request_ptfx_asset_peeloop(asset)
     STREAMING.REQUEST_NAMED_PTFX_ASSET(asset)
-
     while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(asset) do
         util.yield()
     end
@@ -3364,15 +3686,6 @@ function turn_player_vehicle(pid)
         announce(players.get_name(pid) .. "'s 车辆转弯.")
     end
 end
-function request_control(entity, timeout)
-    local end_time = os.time() + (timeout or 5)
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
-    while not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) and end_time >= os.time() do
-        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
-        util.yield()
-    end
-    return NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity)
-end
 function repair_player_vehicle(pid)
     local player_ped = PLAYER.GET_PLAYER_PED(pid)
     local player_vehicle = get_vehicle_ped_is_in(player_ped, include_last_vehicle_for_player_functions)
@@ -3646,20 +3959,6 @@ function get_waypoint_coords()
             coords['z'] = estimate
         end
         return coords
-    end
-end
-function request_control_of_entity(ent)
-    if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) and util.is_session_started() then
-        local netid = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(ent)
-        NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netid, true)
-        local st_time = os.time()
-        while not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) do
-            if os.time() - st_time >= 5 then
-                break
-            end
-            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ent)
-            util.yield()
-        end
     end
 end
 function tp_player_car_to_coords(pid, coord)
