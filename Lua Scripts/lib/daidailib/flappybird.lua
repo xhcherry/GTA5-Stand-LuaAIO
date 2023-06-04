@@ -1,9 +1,9 @@
-local bird_file = "/daidai-img/FlappyStand/flappy.png" -- default file name
-local tube_file = "/daidai-img/FlappyStand/tube.png" -- default file name
+local bird_file = "/daidai img/FlappyStand/flappy.png" -- default file name
+local tube_file = "/daidai img/FlappyStand/tube.png" -- default file name
 local bird_tex = directx.create_texture(filesystem.resources_dir() .. bird_file) --  file
 local tube_tex = directx.create_texture(filesystem.resources_dir() .. tube_file) --  file
-local logo_tex = directx.create_texture(filesystem.resources_dir() .. "/daidai-img/FlappyStand/logo.png") --  file
-local over_tex = directx.create_texture(filesystem.resources_dir() .. "/daidai-img/FlappyStand/gameover.png") --  file
+local logo_tex = directx.create_texture(filesystem.resources_dir() .. "/daidai img/FlappyStand/logo.png") --  file
+local over_tex = directx.create_texture(filesystem.resources_dir() .. "/daidai img/FlappyStand/gameover.png") --  file
 
 local bird_posX = 0.4 --default position X
 local bird_posY = 0.5 --default position Y
@@ -43,15 +43,15 @@ local size = 0.05 --default size
  menu.divider(flappygame, "Flappy 设置")
  menu.slider(flappygame, "更改 flappy 风格", {"flappystyle"}, "", 1, 3, 1, 1, function(style)
 	if style == 1 then
-	bird_file = "/daidai-img/FlappyStand/flappy.png"
+	bird_file = "/daidai img/FlappyStand/flappy.png"
 	bird_tex = directx.create_texture(filesystem.resources_dir() .. bird_file) 
 	end
 	if style == 2 then
-	bird_file = "/daidai-img/FlappyStand/flappy_y.png"
+	bird_file = "/daidai img/FlappyStand/flappy_y.png"
 	bird_tex = directx.create_texture(filesystem.resources_dir() .. bird_file) 
 	end
 	if style == 3 then
-	bird_file = "/daidai-img/FlappyStand/flappy_p.png"
+	bird_file = "/daidai img/FlappyStand/flappy_p.png"
 	bird_tex = directx.create_texture(filesystem.resources_dir() .. bird_file) 
 	end
 end)
@@ -61,15 +61,15 @@ end)
 menu.divider(flappygame, "管道设置")
  menu.slider(flappygame, "更改管道风格", {"tubestyle"}, "", 1, 3, 1, 1, function(style)
 	if style == 1 then
-	tube_file = "/daidai-img/FlappyStand/tube.png"
+	tube_file = "/daidai img/FlappyStand/tube.png"
 	tube_tex = directx.create_texture(filesystem.resources_dir() .. tube_file) 
 	end
 	if style == 2 then
-	tube_file = "/daidai-img/FlappyStand/tube_g.png"
+	tube_file = "/daidai img/FlappyStand/tube_g.png"
 	tube_tex = directx.create_texture(filesystem.resources_dir() .. tube_file) 
 	end
 	if style == 3 then
-	tube_file = "/daidai-img/FlappyStand/tube_pain.png"
+	tube_file = "/daidai img/FlappyStand/tube_pain.png"
 	tube_tex = directx.create_texture(filesystem.resources_dir() .. tube_file) 
 	end
 end)

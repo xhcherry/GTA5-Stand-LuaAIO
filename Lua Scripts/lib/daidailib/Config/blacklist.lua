@@ -2,17 +2,6 @@
 blacklistplayers={
     "jiangling6998",
     "SDFRRTG",
-    "xdjzswd",
-    "hentalbaby",
-    "Aurora-XK",
-    "Yaminlmb",
-    "kkjjgnf",
-    "49327hxy",
-    "bad-guy-ex051105",
-    "WhiteGril",
-    "Non_toxic_baby",
-    "dekerniuzai",
-    "Yolincar",
     "lihaibin241",
     "movingbush12"
 }

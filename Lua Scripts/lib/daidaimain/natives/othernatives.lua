@@ -3,6 +3,7 @@ AUDIO1={
 }
 
 VEHICLE1={
+    ["_SET_VEHICLE_REDUCE_TRACTION"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[int]] val)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_int(val)native_invoker.end_call_2(0x6DEE944E1EE90CFB)end,
     ["_SET_VEHICLE_CONTROLS_INVERTED"]=function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] state)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_bool(state);native_invoker.end_call("5B91B229243351A8");end,
     ["SET_VEHICLE_SHOOT_AT_TARGET"]=function(...)return native_invoker.uno_void(0x74CD9A9327A282EA,...)end,
     ["_SET_VEHICLE_XENON_LIGHTS_COLOR"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[int]] colorIndex)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_int(colorIndex);native_invoker.end_call("E41033B25D003A07");end,
@@ -22,6 +23,7 @@ WEAPON1={
 }
 
 ENTITY1={
+    ["SET_ENTITY_COORDS_NO_OFFSET"]=function(...)return native_invoker.uno_void(0x239A3351AC1DA385,...)end,
     ["_SET_ENTITY_CLEANUP_BY_ENGINE"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.push_arg_bool(toggle);native_invoker.end_call("3910051CCECDB00C");end,
     ["_ATTACH_ENTITY_BONE_TO_ENTITY_BONE"]=function(--[[Entity (int)]] entity1,--[[Entity (int)]] entity2,--[[int]] boneIndex1,--[[int]] boneIndex2,--[[BOOL (bool)]] p4,--[[BOOL (bool)]] p5)native_invoker.begin_call();native_invoker.push_arg_int(entity1);native_invoker.push_arg_int(entity2);native_invoker.push_arg_int(boneIndex1);native_invoker.push_arg_int(boneIndex2);native_invoker.push_arg_bool(p4);native_invoker.push_arg_bool(p5);native_invoker.end_call("5C48B75732C8456C");end,
     ["DOES_ENTITY_EXIST"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x7239B21A38F536BA)return native_invoker.get_return_value_bool()end,
@@ -42,6 +44,10 @@ PAD2={
     ["GET_CONTROL_GROUP_INSTRUCTIONAL_BUTTON"]=--[[string]] function(--[[int]] padIndex,--[[int]] controlGroup,--[[BOOL (bool)]] p2)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(controlGroup);native_invoker.push_arg_bool(p2);native_invoker.end_call("80C2FD58D720C801");return native_invoker.get_return_value_string();end,
     ["GET_CONTROL_INSTRUCTIONAL_BUTTON"]=--[[string]] function(--[[int]] padIndex,--[[int]] control,--[[BOOL (bool)]] p2)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.push_arg_bool(p2);native_invoker.end_call("0499D7B09FC9B407");return native_invoker.get_return_value_string();end,
     ["SET_CONTROL_VALUE_NEXT_FRAME"]=function(...)return native_invoker.uno_bool(0xE8A25867FBA3B05E,...)end,
+}
+
+PED1={
+    ["CREATE_RANDOM_PED"]=function(...)return native_invoker.uno_int(0xB4AC7D0CF06BFE8F,...)end,
 }
 
 NETWORK1={
@@ -80,5 +86,11 @@ PLAYER1={
 }
 
 TASK1={
+    ["TASK_ENTER_VEHICLE"]=function(...)return native_invoker.uno_void(0xC20E50AA46D09CA8,...)end,
     ["TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE"]=function(...)return native_invoker.uno_void(0x158BB33F920D360C,...)end,
+}
+
+NETSHOPPING1={
+    ["_NET_GAMESERVER_TRANSFER_WALLET_TO_BANK"]=--[[BOOL (bool)]] function(--[[int]] charSlot,--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(charSlot)native_invoker.push_arg_int(amount)native_invoker.end_call_2(0xC2F7FE5309181C7D)return native_invoker.get_return_value_bool()end,
+    ["_NET_GAMESERVER_TRANSFER_BANK_TO_WALLET"]=--[[BOOL (bool)]] function(--[[int]] charSlot,--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(charSlot)native_invoker.push_arg_int(amount)native_invoker.end_call_2(0xD47A2C1BA117471D)return native_invoker.get_return_value_bool()end,
 }

@@ -1,5 +1,15 @@
 
 
+----NPC在玩家面前自杀
+traumatize_options = {"克隆玩家","莱斯特","西部马仔"}
+traumatize_option_hashes = {"self",1302784073,-927261102}
+
+
+----实体枪1
+entity_hashes = {-422877666, -717142483, 1786752042}
+entity_options = {"蔡徐坤", "足球", "水桶"}
+
+
 ----物体笼子
 obj_table = {}
 objsetcage = {
@@ -482,6 +492,11 @@ veffects = {
     {"scr_rcbarry1", "scr_alien_teleport", 0.1, 400}
 }
 
+----粒子拖尾
+vehparticle_name = {"烟花拖尾1","烟花拖尾2"}
+vehparticle_tb = {"scr_mich4_firework_trail_spawn","scr_mich4_firework_sparkle_spawn"}
+
+
 
 ------生成坡道
 ramps_hashes = {util.joaat("prop_mp_ramp_02_tu"), util.joaat("prop_jetski_ramp_01")}
@@ -780,7 +795,7 @@ read_global = {
 	end
 }
 
------
+-----HudColour颜色表[function.lib已包含]
 HudColour =
 {
 	pureWhite = 0,
@@ -814,7 +829,7 @@ HudColour =
 
 
 
----------可视化速度表
+----可视化速度表
 --默认颜色背景
 sp_colour = {				
     r = 0.9,
@@ -854,149 +869,6 @@ Weap = {
     'weapon_raypistol',
 }
 
-
-
-
-------绿汽水
-sprunk_vehicles = {
-    {
-        model="thrax",
-        livery=8,
-    },
-    {
-        model="tezeract",
-        livery=2,
-    },
-    {
-        model="nero2",
-        livery=6
-    },
-    {
-        model="champion",
-        livery=9
-    },
-    {
-        model="jugular",
-        livery=7
-    },
-    {
-        model="buffalo3",
-        livery=-1
-    },
-    {
-        model="gb200",
-        livery=9
-    },
-    {
-        model="paragon",
-        livery=6
-    },
-    {
-        model="issi7",
-        livery=6
-    },
-    {
-        model="imorgon",
-        livery=4
-    },
-    {
-        model="zr350",
-        livery=6
-    },
-    {
-        model="euros",
-        livery=13
-    },
-    {
-        model="brioso",
-        livery=1
-    },
-    {
-        model="asbo",
-        livery=5
-    },
-    {
-        model="faction3",
-        livery=5
-    },
-    {
-        model="buffalo4",
-        livery=6
-    },
-    {
-        model="novak",
-        livery=6
-    },
-    {
-        model="sanchez",
-        livery=-1,
-        type="motorcycle",
-    },
-    {
-        model="bf400",
-        livery=1,
-        type="motorcycle",
-    },
-    {
-        model="bati2",
-        livery=3,
-        type="motorcycle",
-    },
-    {
-        model="reever",
-        livery=9,
-        type="motorcycle",
-    },
-    {
-        model="formula",
-        livery=1
-    },
-    {
-        model="openwheel1",
-        livery=7
-    },
-    {
-        model="veto2",
-        livery=0,
-        type="gokart",
-    },
-    {
-        model="pony",
-        livery=2,
-        type="van",
-    },
-    {
-        model="stunt",
-        livery=2,
-        type="plane",
-    },
-    {
-        model="alphaz1",
-        livery=5,
-        type="plane",
-    },
-    {
-        model="microlight",
-        livery=4,
-        type="plane",
-    },
-    {
-        model="havok",
-        livery=2,
-        type="helicopter",
-    },
-    {
-        model="starling",
-        livery=7,
-        type="plane",
-    },
-    {
-        model="blimp3",
-        livery=4,
-        type="blimp",
-        is_random_spawn=false
-    },
-}
 
 ----鬼畜玩家
 object_stuff = {
@@ -1109,7 +981,6 @@ planes = {
 }
 
 ----伪装
-disguise_object = 0
 disguise_objects = {
     [0] = "prop_bush_med_03",
     [1] = "prop_tree_lficus_06",
@@ -1127,41 +998,40 @@ disguise_names = {
 
 
 ----防笼子
-cageModels =
-    {
-        util.reverse_joaat(1089807209),
-        util.reverse_joaat(-37176073),
-        util.reverse_joaat(684586828),
-        util.reverse_joaat(238789712),
-        util.reverse_joaat(4022605402),
-        'u_m_m_jesus_01',
-        "ig_lestercrest",
-        "player_two",
-        "s_m_y_factory_01",
-        "cargobob",
-        "ch_prop_tree_03a",
-        "ch_prop_tree_02a",
-        "prop_gascage01",
-        "prop_coffin_02b",
-        "boxville3",
-        "prop_container_ld_pu",
-        "p_cablecar_s",
-        "prop_gold_cont_01",
-        "prop_gold_cont_01b",
-        "prop_feeder1_cr",
-        "prop_rub_cage01a",
-        "stt_prop_stunt_tube_s",
-        "stt_prop_stunt_tube_end",
-        "prop_jetski_ramp_01",
-        "stt_prop_stunt_tube_xs",
-        "prop_fnclink_03e",
-        "prop_container_05a",
-        "prop_jetski_ramp_01",
-        "prop_cs_dumpster_01a",
-        "p_v_43_safe_s",
-        "bkr_prop_moneypack_03a",
-        "prop_elecbox_12"
-    }
+cageModels = {
+    util.reverse_joaat(1089807209),
+    util.reverse_joaat(-37176073),
+    util.reverse_joaat(684586828),
+    util.reverse_joaat(238789712),
+    util.reverse_joaat(4022605402),
+    'u_m_m_jesus_01',
+    "ig_lestercrest",
+    "player_two",
+    "s_m_y_factory_01",
+    "cargobob",
+    "ch_prop_tree_03a",
+    "ch_prop_tree_02a",
+    "prop_gascage01",
+    "prop_coffin_02b",
+    "boxville3",
+    "prop_container_ld_pu",
+    "p_cablecar_s",
+    "prop_gold_cont_01",
+    "prop_gold_cont_01b",
+    "prop_feeder1_cr",
+    "prop_rub_cage01a",
+    "stt_prop_stunt_tube_s",
+    "stt_prop_stunt_tube_end",
+    "prop_jetski_ramp_01",
+    "stt_prop_stunt_tube_xs",
+    "prop_fnclink_03e",
+    "prop_container_05a",
+    "prop_jetski_ramp_01",
+    "prop_cs_dumpster_01a",
+    "p_v_43_safe_s",
+    "bkr_prop_moneypack_03a",
+    "prop_elecbox_12"
+}
 
 ------载具枪
 Objoptions_all = {

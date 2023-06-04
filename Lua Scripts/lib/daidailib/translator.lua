@@ -122,7 +122,7 @@ end
                         translation = translation:gsub("\\(.)", "%1")
                         onSuccess(translation, sourceLang)
                     else
-                        util.toast("翻译错误，原始消息：{arg1}，状态代码：{arg2}", text, tostring(status_code))
+                        util.toast("翻译出错啦")
                     end
                 end)
             for key, value in pairs(HEADERS) do
@@ -146,6 +146,7 @@ end
 
 
     local botSend = false -- 避免无限循环
+    local transl_text_col = 1 --白色
     function createOnMessageCallback(config, translateTextCB)
         return function(sender, reserved, text, team_chat, networked, is_auto)
             if not config.translateOn then
@@ -156,9 +157,9 @@ end
                     return
                 else
                     translateTextCB(text, config.targetLanguageIncoming, config.translationMethodIncoming, config, function(translation, sourceLang)
-                        --ScaleformLib
+                        --[[ --ScaleformLib
                         sfchat = require("lib.daidailib.ScaleformLib")("multiplayer_chat")
-                        sfchat:draw_fullscreen()
+                        sfchat:draw_fullscreen() ]]
                         local senderName = players.get_name(sender)
                         local resultText = translation
                         local translatedMsgLocation = config.translatedMsgLocation
@@ -167,20 +168,20 @@ end
                         end
 
                         if (translatedMsgLocation == 1) then--"团队聊天未联网"
-                            sfchat.ADD_MESSAGE(senderName, resultText, "团队", false, 1)
+                            sfchat.ADD_MESSAGE(senderName, resultText, "团队(未联网)", false, transl_text_col)
                         end
                         if (translatedMsgLocation == 2) then--"团队聊天已联网"
                             botSend = true
                             chat.send_message(senderName .. " : " .. resultText, true, false, true)
-                            sfchat.ADD_MESSAGE(senderName, resultText, "团队", false, 1)
+                            sfchat.ADD_MESSAGE(senderName, resultText, "团队", false, transl_text_col)
                         end
                         if (translatedMsgLocation == 3) then--"全球聊天未联网",
-                            sfchat.ADD_MESSAGE(senderName, resultText, "全部", false, 1)
+                            sfchat.ADD_MESSAGE(senderName, resultText, "全部(未联网)", false, transl_text_col)
                         end
                         if (translatedMsgLocation == 4) then--"全球聊天已联网"
                             botSend = true
                             chat.send_message(senderName .. " : " .. resultText, false, false, true)
-                            sfchat.ADD_MESSAGE(senderName, resultText, "全部", false, 1)
+                            sfchat.ADD_MESSAGE(senderName, resultText, "全部", false, transl_text_col)
                         end
                         if (translatedMsgLocation == 5) then--通知
                             notification("~y~~bold~"..senderName .. " : " .. resultText, math.random(0, 200))
@@ -203,14 +204,9 @@ end
     menu.toggle(chat_transl, "翻译自己", {}, "翻译您自己发送的消息", function(on)
         config.translateSelf = on
     end,true)
-    local TranslatedMsgLocationOptions = {
-        "团队聊天未联网",
-        "团队聊天已联网",
-        "全球聊天未联网",
-        "全球聊天已联网",
-        "通知"
-    }
-    menu.list_select(chat_transl, "翻译位置", {},"选择翻译的位置", TranslatedMsgLocationOptions, 5,function(index, option, prevIndex, clickType)
+
+    local TranslatedMsgLocationOptions = {"团队聊天未联网","团队聊天已联网","全球聊天未联网","全球聊天已联网","通知"}
+    menu.list_select(chat_transl, "翻译位置", {},"选择翻译的位置", TranslatedMsgLocationOptions, 5, function(index, option, prevIndex, clickType)
         config.translatedMsgLocation = index
     end)
 
@@ -225,5 +221,11 @@ end
     menu.list_select(chat_transl, "目标语言", {}, "",config.LangNameList, 1, function(index, option, prevIndex, clickType)
             config.targetLanguageIncoming = config.LangLookupByName[option]
     end)
+
+    local common_settings = menu.list(chat_transl, "通用设置", {},"")
+        local trans_col_name = {"纯白","白色","黑色","灰色","浅灰色","暗灰色","红色","浅红色","暗红色","蓝色","浅蓝色","暗蓝色","黄色","浅黄色","暗黄色","橙色","浅橙色","暗橙色","绿色","浅绿色","暗绿色",}
+        menu.list_select(common_settings, '翻译文本颜色', {''}, '', trans_col_name, 2, function (c)
+            transl_text_col = c - 1
+        end)
 
     chat.on_message(createOnMessageCallback(config, translateText))

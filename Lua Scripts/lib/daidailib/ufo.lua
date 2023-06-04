@@ -516,7 +516,7 @@ self.mainLoop = function ()
                 request_model(vehicleHash)
                 request_model(objHash)
                 local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)
-                jet = entities.create_vehicle(vehicleHash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
+                jet = entities.create_vehicle(vehicleHash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)--飞机模型
                 ENTITY.SET_ENTITY_VISIBLE(jet, false, false)
                 ENTITY.SET_ENTITY_VISIBLE(players.user_ped(), false, true)
 
@@ -525,7 +525,7 @@ self.mainLoop = function ()
                 VEHICLE.SET_PLANE_TURBULENCE_MULTIPLIER(jet, 0.0)
                 setVehicleCamDistance(jet, -20.0)
 
-                object = entities.create_object(objHash, pos)
+                object = entities.create_object(objHash, pos) --ufo模型
                 ENTITY.ATTACH_ENTITY_TO_ENTITY(object, jet, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, false, true, false, false, 0, true, 0)
                 ENTITY.SET_ENTITY_COORDS_NO_OFFSET(jet, pos.x, pos.y, pos.z + 200, false, false, true)
                 PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), jet, -1)

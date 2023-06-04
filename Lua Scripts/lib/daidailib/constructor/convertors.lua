@@ -1,8 +1,14 @@
-local SCRIPT_VERSION = "0.35"
+-- Construct Convertors
+-- Transforms various file formats into Construct format
+
+local SCRIPT_VERSION = "0.37.1"
 local convertor = {
     SCRIPT_VERSION = SCRIPT_VERSION
 }
 
+---
+--- Dependencies
+---
 local inspect = require "lib.daidailib.constructor.inspect"
 local xml2lua = require "lib.daidailib.constructor.xml2lua"
 local constructor_lib = require "lib.daidailib.constructor.constructor_lib"
@@ -288,7 +294,7 @@ local function convert_jackz_object_to_attachment(jackz_object, jackz_save_data,
     if (jackz_object.type or type) then attachment.type = jackz_object.type or type end
     if jackz_object.collision ~= nil then attachment.options.has_collision = jackz_object.collision end
     if jackz_object.visible ~= nil then attachment.options.is_visible = jackz_object.visible end
-    if jackz_object.bone_index ~= nil then attachment.options.bone_index = jackz_object.bone_index end
+    if jackz_object.boneIndex ~= nil then attachment.options.bone_index = jackz_object.boneIndex end
     if jackz_object.offset then
         attachment.rotation = {
             x=jackz_object.rotation.x,
@@ -815,21 +821,27 @@ local function map_ped_placement(attachment, placement)
     if attachment.ped_attributes.props == nil then attachment.ped_attributes.props = {} end
     if placement.PedProperties.PedProps ~= nil then
         for index = 0, 9 do
-            local values = value_splitter(placement.PedProperties.PedProps["_"..index])
-            attachment.ped_attributes.props["_"..index] = {
-                drawable_variation=values[1],
-                texture_variation=values[2],
-            }
+            local value = placement.PedProperties.PedProps["_"..index]
+            if value ~= nil then
+                local values = value_splitter(value)
+                attachment.ped_attributes.props["_"..index] = {
+                    drawable_variation=values[1],
+                    texture_variation=values[2],
+                }
+            end
         end
     end
     if attachment.ped_attributes.components == nil then attachment.ped_attributes.components = {} end
     if placement.PedProperties.PedComps ~= nil then
         for index = 0, 11 do
-            local values = value_splitter(placement.PedProperties.PedComps["_"..index])
-            attachment.ped_attributes.components["_"..index] = {
-                drawable_variation=values[1],
-                texture_variation=values[2],
-            }
+            local value = placement.PedProperties.PedComps["_"..index]
+            if value ~= nil then
+                local values = value_splitter(value)
+                attachment.ped_attributes.components["_"..index] = {
+                    drawable_variation=values[1],
+                    texture_variation=values[2],
+                }
+            end
         end
     end
 
@@ -914,6 +926,70 @@ local function map_placement(attachment, placement)
     map_ped_placement(attachment, placement)
 end
 
+---
+--- MapObject XML
+---
+
+local MAPOBJECT_ENTITY_TYPES = {["Ped"]="PED", ["Vehicle"]="VEHICLE", ["Prop"]="OBJECT"}
+
+local function map_mapobject_placement_position(attachment, placement)
+    if attachment.position == nil then attachment.position = {x=0, y=0, z=0} end
+    if attachment.world_rotation == nil then attachment.world_rotation = {x=0, y=0, z=0} end
+    if attachment.offset == nil then attachment.offset = {x=0, y=0, z=0} end
+    if attachment.rotation == nil then attachment.rotation = {x=0, y=0, z=0} end
+    if placement.Position ~= nil then
+        attachment.position = {
+            x = tonumber(placement.Position.X),
+            y = tonumber(placement.Position.Y),
+            z = tonumber(placement.Position.Z)
+        }
+    end
+    if placement.Rotation ~= nil then
+        attachment.rotation = {
+            x = tonumber(placement.Rotation.X),
+            y = tonumber(placement.Rotation.Y),
+            z = tonumber(placement.Rotation.Z)
+        }
+    end
+    if placement.Quaternion ~= nil then
+        attachment.quaternion = {
+            x = tonumber(placement.Quaternion.X),
+            y = tonumber(placement.Quaternion.Y),
+            z = tonumber(placement.Quaternion.Z),
+            w = tonumber(placement.Quaternion.W)
+        }
+    end
+end
+
+local function map_mapobject_vehicle(attachment, placement)
+    if placement.Type ~= "Vehicle" then return end
+    if attachment.vehicle_attributes == nil then attachment.vehicle_attributes = {} end
+
+    if placement.PrimaryColor ~= nil then
+        attachment.vehicle_options.primary.vehicle_standard_color = placement.PrimaryColor
+    end
+    if placement.SecondaryColor ~= nil then
+        attachment.vehicle_options.secondary.vehicle_standard_color = placement.SecondaryColor
+    end
+end
+
+local function map_mapobject_placement(attachment, placement)
+    --util.log("Processing "..inspect(placement))
+    if attachment == nil then attachment = {} end
+
+    attachment.hash = tonumber(placement.Hash)
+    if attachment.model == nil and attachment.hash ~= nil then
+        attachment.model = util.reverse_joaat(attachment.hash)
+    end
+    attachment.name = attachment.model
+    if placement.Type ~= nil then attachment.type = MAPOBJECT_ENTITY_TYPES[placement.Type] end
+    if placement.Dynamic ~= nil then attachment.options.is_dynamic = toboolean(placement.Dynamic) end
+
+    if attachment.children == nil then attachment.children = {} end
+    map_mapobject_placement_position(attachment, placement)
+    map_mapobject_vehicle(attachment, placement)
+end
+
 convertor.convert_xml_to_construct_plan = function(xmldata)
     local construct_plan = constructor_lib.table_copy(constructor_lib.construct_base)
     construct_plan.temp.source_file_type = "Menyoo XML"
@@ -955,18 +1031,35 @@ convertor.convert_xml_to_construct_plan = function(xmldata)
                 table.insert(construct_plan.children, attachment)
             end
         end
-    elseif vehicle_handler.root.OutfitPedData then
+    elseif vehicle_handler.root.OutfitPedData ~= nil then
         construct_plan.type = "PED"
         construct_plan.is_player = true
         local root = vehicle_handler.root.OutfitPedData
         if root[1] == nil then root = {root} end
         map_placement(construct_plan, root[1])
-        local attachments = root[1].SpoonerAttachments.Attachment
-        if attachments then
-            if attachments[1] == nil then attachments = {attachments} end
-            for _, placement in pairs(attachments) do
+        if root[1].SpoonerAttachments ~= nil then
+            local attachments = root[1].SpoonerAttachments.Attachment
+            if attachments then
+                if attachments[1] == nil then attachments = {attachments} end
+                for _, placement in pairs(attachments) do
+                    local attachment = {}
+                    map_placement(attachment, placement)
+                    table.insert(construct_plan.children, attachment)
+                end
+            end
+        end
+    elseif vehicle_handler.root.Map ~= nil then
+        local root = vehicle_handler.root.Map.Objects.MapObject
+        if root[1] == nil then root = {root} end
+        for _, placement in pairs(root) do
+            if construct_plan.model == nil then
+                map_mapobject_placement(construct_plan, placement)
+                if construct_plan.type == "OBJECT" then
+                    construct_plan.always_spawn_at_position = true
+                end
+            else
                 local attachment = {}
-                map_placement(attachment, placement)
+                map_mapobject_placement(attachment, placement)
                 table.insert(construct_plan.children, attachment)
             end
         end

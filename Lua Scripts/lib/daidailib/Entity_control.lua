@@ -158,7 +158,7 @@ function entity_control_ped(menu_parent, ped)
 
     weapon_list = {"微型冲锋枪", "特质卡宾步枪", "突击霰弹枪", "火神机枪", "火箭筒", "电磁步枪"}
     weapon_list_model = {"WEAPON_MICROSMG", "WEAPON_SPECIALCARBINE", "WEAPON_ASSAULTSHOTGUN", "WEAPON_MINIGUN", "WEAPON_RPG", "WEAPON_RAILGUN"}
-    menu.action_slider(menu_parent, "给予武器", {}, "", weapon_list, function(value)
+    menu.textslider(menu_parent, "给予武器", {}, "", weapon_list, function(value)
         local weaponHash = util.joaat(weapon_list_model[value])
         WEAPON.GIVE_WEAPON_TO_PED(ped, weaponHash, -1, false, true)
         WEAPON.SET_CURRENT_PED_WEAPON(ped, weaponHash, false)
