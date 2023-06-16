@@ -157,9 +157,6 @@ end
                     return
                 else
                     translateTextCB(text, config.targetLanguageIncoming, config.translationMethodIncoming, config, function(translation, sourceLang)
-                        --[[ --ScaleformLib
-                        sfchat = require("lib.daidailib.ScaleformLib")("multiplayer_chat")
-                        sfchat:draw_fullscreen() ]]
                         local senderName = players.get_name(sender)
                         local resultText = translation
                         local translatedMsgLocation = config.translatedMsgLocation

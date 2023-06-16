@@ -1,18 +1,15 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 03/18/2023 03:40:00 PM
-# Heist Control Version: V 3.2.3
+# Generated Date: 05/15/2023 05:30:05 PM
+# Heist Control Version: V 3.3.0
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
 # You can use all characters except '=' character.
 # Using '#' character means the line will be ignored.
-# If you want to release your own translation officially, please contact to the developer of Heist Control in its Discord server.
-# Learn more: https://icedoomfist.com/Stand_Heist_Control/How_To_Translate/
-
+# Please join the Discord Server for Heist Control if you don't know how to translate.
 
 Heist Control = Heist Control
-Announcement = Komunikat
 Hard = Trudny
 Normal = Normalny
 Notification = Powiadomienie
@@ -60,7 +57,7 @@ Infinite Voltage Timer = Nieograniczony Czas Podczas Hakowania Nadajnika
 Heist Vehicles = Pojazdy
 Primary Target = Cel Główny
 Secondary Target = Cele Dodatkowe
-Compound Loot = Cele Dodatkowe w Rezydencji
+Compound Loot = Cele Dodatkowe - Rezydencja
 Weapon Loadouts = Zestaw Broni
 Aggressor = Agresor
 - Machete + Grenade = - Maczeta + Granaty
@@ -113,7 +110,7 @@ Yohan Blair = Yohan Blair
 0 - Strongest Guards = 0 - Najsilniejsi strażnicy
 3 - Weakest Guards = 3 - Najsłabsi strażnicy
 Remove Drills = Usuń Elektryczne Wiertła
-Casino Story Missions = Misje Fabularne Kasyna
+Casino Story Missions = Misje Fabularne
 Loose Cheng = Włóczęga Chenga
 House Keeping = Porządki
 Strong Arm Tactics = Pokerowa Twarz
@@ -145,7 +142,6 @@ Unlock Awards = Odblokuj Nagrody
 Unlock Animal Masks = Odblokuj Maski Zwierząt
 Unlock DJ Pooh Shirts = Odblokuj Koszulki DJ Pooha
 Buildings = Budynki
-Arcade Unlockers = Salon Gier
 Casino Store Ace Masks = Sklep w Kasynie: Odblokuj Maski Asów
 Missions = Misje
 Unlock Yacht Missions = Odblokuj Misje 'Życie na Jachcie'
@@ -185,7 +181,6 @@ Ratio of Jackpot and Loss = Stosunek Wygranych do Przegranych
 Heist Cooldown Timer = Czasomierz
 Use Stand's Overlay = Użyj Nakładki Stand
 Disabled: Use Heist Control's Overlay & Settings = Wyłączone: Użyj nakładki i ustawień Heist Control
-Work only to hostile peds = Zastosuj Tylko Wobec Wrogów
 Peds = NPC
 Remove Weapons = Rozbrój
 Delete = Usuń
@@ -233,7 +228,6 @@ Note: MP0_ or MP1_ will be selected by HC automatically, therefore don't write i
 Custom Stat Reader = Odczytaj Statystykę
 Copy Stat Value = Kopiuj Wartość Statystyki
 Read Stat = Odczytaj Statystykę
-How To Translate = Jak Przetłumaczyć
 Language = Język
 Settings = Ustawienia
 In-Game = Gra
@@ -259,10 +253,8 @@ Text Color = Kolor Tekstu
 About HC = Informacje o Skrypcie
 Join Discord Server! = Serwer Discord
 Youtube = YouTube
-Tutorial = Samouczek
 Changelog = Dziennik Zmian
 Credits = Zasługi
-Let me know about stats info. = Dzięki tej stronie znam większość nazw statystyk.
 Translators = Tłumacze
 Maintains HC's translation = Utrzymuje tłumaczenie HC
 [NOT WORKING] = [NIE DZIAŁA]
@@ -367,20 +359,18 @@ Modify Finale's Payout (2 Million) = Ustaw Wynagrodzenie za Finał - 2,000,000$
 Make sure it's enabled before starting any contracts or hits. = Pamiętaj, że należy aktywować tę funkcję przed rozpoczęciem misji.
 Complete All Missions = Ukończ Wszystkie Misje
 Unlock all Arena Wars Trophies and Toys = Odblokuj Trofea i Zabawki
-Clothing = Odblokuj Ubrania
+Clothing = Ubranie
 The Criminal Enterprises DLC = The Criminal Enterprises
 Jackets / Sweaters / Hoodies / Shirts = Odblokuj Kurtki / Swetry / Bluzy z Kapturem / Koszulki
 Pants / Caps / Hats = Odblokuj Spodnie / Czapki / Kapelusze
 Earphones / Masks / Tech Demon = Odblokuj Słuchawki / Maski / Maski 'Technodemon'
 Shoes (Sliders) / Tiger = Odblokuj Klapki / Maski 'Tygrys'
 Drug War DLC = Los Santos Drug Wars
-Unlock Arcade Trophies and Toys = Odblokuj Trofea i Zabawki
 Acid Lab Equipment Upgrade = Odblokuj Ulepszenie Wyposażenia Wytwórni Kwasu
-Unlock Nightclub Awards = Odblokuj Nagrody 'Życie po Godzinach'
+Unlock Nightclub Awards = Odblokuj Nagrody - Klub Nocny
 Make sure click before buying. When you change your session, will be changed to non-unlocked status. = Pamiętaj, że należy użyć tej funkcji przed skorzystaniem ze sklepu. Gdy zmienisz sesję, status powróci do zablokowanego.
-Add Cosmetic Decorations To The Office/MC = Dodaj Dekoracje do Biura & Klubu Motocyklowego
+Add Cosmetic Decorations To The Office/MC = Dodaj Dekoracje do Biura / Siedziby
 To apply, sell special crate or vehicle cargo and change your session! = Sprzedaj specjalny ładunek lub pojazd eksportowy, a następnie zmień sesję, aby zastosować!
-Cayo Perico Unlockables = Odblokuj Pozostałości (Cayo Perico)
 Unlock Taxi Missions = Odblokuj Misje 'Downtown Cab Co.'
 Unlock All Contacts = Odblokuj Wszystkie Kontakty
 Skip Lamar Missions To The Last One = Odblokuj Ostatnią Misję 'Lowridery'
@@ -422,7 +412,7 @@ Because this feature works via requesting the Ballistic Armor, it'll be dropped 
 Cooldown Time (Seconds) = Czas Odnowienia (Sekundy)
 Auto Cayo Bot = Automatyczny Bot Cayo Perico
 25K Chips = Żetony (25,000)
-15K RP = Punkty Respektu (15,000)
+15K RP = Punkty Reputacji (15,000)
 Vehicle Discount = Zniżka na Pojazd
 Teleport to the Lucky Wheel = Teleportuj do Koła Fortuny
 Make sure your spawning position is 'Last Location' = Upewnij się, że miejsce odrodzenia jest ustawione na 'Ostatnie miejsce'.
@@ -446,8 +436,6 @@ Enabled: Use Stand's Overlay & Settings: Game > Info Overlay = Włączone: Użyj
 Set Custom Time (Seconds) = Ustaw Niestandardowy Czas (Sekundy)
 Custom Timer = Niestandardowy Czasomierz
 Manage Nearby Peds And Cams = Zarządzanie Otoczeniem
-Enabled: Ped options will only affect hostile peds = Włączone: Opcje NPC będą miały wpływ tylko na wrogów
-Disabled: Ped options will affect all peds = Wyłączone: Opcje NPC będą miały wpływ na wszystkich
 Shoot = Zastrzel
 Cameras = Kamery
 Stat Spoofing = Fałszowanie Statystyk
@@ -466,8 +454,8 @@ Successfully set! = Pomyślnie ustawiono!
 GTA Online Playtime = Czas Gry w GTA Online
 You didn't specify the value. Please specify it! = Najpierw należy określić wartość!
 Successfully read! = Pomyślnie odczytano!
-Auto Collect Targets = Automatycznie Zbieraj Cele
-Collects targets via clicking left mouse button. Note that there are some delays before disabling completely. = Ta funkcja umożliwia automatyczne zbieranie celów za pomocą lewego przycisku myszy. Zwróć uwagę, że może wystąpić niewielkie opóźnienie przed jej całkowitym wyłączeniem.
+Auto Collect Targets = Automatycznie Zbieraj Łupy
+Collects targets via clicking left mouse button. Note that there are some delays before disabling completely. = Umożliwia automatyczne zbieranie łupów, które w normalnym przypadku zbierane są poprzez klikanie lewym przyciskiem myszy. Zwróć uwagę, że może wystąpić niewielkie opóźnienie przed całkowitym wyłączeniem tej funkcji.
 Motion Skip = Pomiń Ruch
 a.k.a Pause Menu Glitch = Znane również jako błąd menu pauzy.
 Skips Conversation With NPCs = Pomiń Rozmowę z NPC
@@ -485,18 +473,11 @@ This action will take a few seconds. Please wait for it patiently, don't press m
 - Total number of translations: = - Całkowita liczba linii:
 - Number of not modified translations: = - Liczba niezmodyfikowanych linii:
 - Number of modified (updated) translations: = - Liczba zmodyfikowanych (zaktualizowanych) linii:
-Always looking for translators for non-existing languages. If you're interested in translating HC, click! = W dalszym ciągu poszukujemy tłumaczy dla nieistniejących języków. Jeśli jesteś zainteresowany przetłumaczeniem Heist Control, kliknij!
 Notification's Style = Styl Powiadomień
 Type = Typ
 Heist Control for 2Take1 Developer. He allowed me to use his code. HC wouldn't exist without his help. Serious thanks to him! = Autor Heist Control dla 2Take1, który pozwolił mi wykorzystać swój kod. Ten skrypt nie istniałby bez jego pomocy. Wielkie podziękowania dla niego!
-Creator of WiriScript which helped me code HC! = Autor WiriScript, który pomógł mi zakodować HC!
-Helped me with a lot of things for HC website's maintenance. = Pomógł mi w wielu sprawach dotyczących utrzymania strony internetowej.
-Helped me code the website's design. = Pomógł mi zakodować wygląd strony internetowej.
-Made the logo, banner and other images for HC. = Wykonał logo, baner i inne grafiki dla HC.
-Get Support, Report Bugs and Enjoy Other Stuffs! = Uzyskaj pomoc, zgłoś błędy i ciesz się wieloma innymi rzeczami!
-Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D = Poradniki dotyczące Heist Control są wrzucane tutaj, zasubskrybuj kanał, jeśli chcesz pokazać swoje wsparcie :D
-If you don't know how to use HC, click me! = Kliknij, jeśli nie wiesz jak poprawnie korzystać z Heist Control!
-If you want to know what was changed in the latest version, click me! = Kliknij, jeśli chciałbyś się dowiedzieć, co zostało zmienione w najnowszej wersji Heist Control!
+Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D = Poradniki związane z Heist Control są wrzucane tutaj, zasubskrybuj kanał, jeśli chcesz pokazać swoje wsparcie :D
+If you want to know what was changed in the latest version, click me! = Chciałbyś dowiedzieć się, co zostało zmienione w najnowszej wersji Heist Control? Kliknij!
 When using this method, the percentage and final payment will be random! = Podczas korzystania z tej funkcji podział procentowy i wynagrodzenie będą losowe!
 Works On Both: Fingerprint and Keypad = Ta funkcja będzie miała wpływ zarówno na panele, jak i na odciski palców.
 Choose Masks = Zestaw Masek
@@ -569,7 +550,6 @@ Mid = Średni
 High = Wysoki
 Bypass Minimum And Maximum Percentage = Obejdź Zakres Procentowy
 Only works if you are host of the heist. = Zwróć uwagę, że ta funkcja nie będzie działać, gdy hostem napadu jest inny gracz.
-Bypass minimum percentage 15(%) and maximum percentage 70(%). This feature will allow you set 0 ~ 100(%). = Powoduje obejście ograniczenia procentowego, umożliwiając przydzielenie uczestnikowi napadu wartości pomiędzy 0 a 100 procent.
 Terrorbyte = Terrorbyte
 Auto Paste To Stat Name = Wklej Nazwę Statystyki
 If your clipboard contains stat name, the strings will be pasted into 'Stat Name' automatically. = Skanuje schowek w poszukiwaniu nazw statystyk i automatycznie wkleja je powyżej.
@@ -584,12 +564,11 @@ Max payout for this heist = Maksymalne wynagrodzenie:
 - Fleeca Heist: Under $15.000.000 per run = - Akcja we Fleeca: Nie więcej niż 15,000,000$ za napad
 Enabling one of these presets will complete all of setups, and set as max payout, $2.55 Millions. It will be affected to all of heist players. = Użycie jednego z tych ustawień spowoduje automatyczne ukończenie wszystkich przygotowań oraz ustawienie wynagrodzenia każdego uczestnika napadu na 2,550,000$.
 Recommended = Rekomendowane
-There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.55M) by only getting it. = Dostępny będzie tylko wybrany cel główny. Wszyscy uczestnicy napadu (1 - 4) otrzymają maksymalne wynagrodzenie (2,550,000$), zdobywając tylko ten cel.
+There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.55M) by only getting it. = Zwróć uwagę, że dostępny będzie wyłącznie wybrany cel główny. Wszyscy uczestnicy napadu (1 - 4) otrzymają maksymalne wynagrodzenie (2,550,000$), zdobywając tylko ten cel.
 This feature has been controlled by another feature. = Ta funkcja jest obecnie kontrolowana przez inną funkcję.
 Select Primary Target = Cel Główny
 Teleport Places = Miejsca Teleportacji
 Kosatka: Heist Board = Kosatka: Ekran Planowania
-$3.5 Millions For All Players = Każdy uczestnik napadu otrzyma 3,500,000$.
 When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout. = Ta funkcja umożliwia rozpoczęcie napadu, nawet jeśli inni gracze nie zgłosili gotowości. Zwróć uwagę, że może wystąpić wizualny błąd dotyczący wynagrodzenia.
 Entrance Of Your Arcade = Wejście do Salonu Gier
 Note that works perfectly when no other players are in your session. = Ta funkcja będzie działać idealnie, gdy w Twojej sesji nie będzie innych graczy.
@@ -627,7 +606,6 @@ Note that you don't have the app, some of functions won't work. = Zwróć uwagę
 Open = Otwórz
 Close = Zamknij
 The Contract DLC = The Contract
-Keep Full Nightclub Population = Pełna Popularność Klubu Nocnego
 Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader. = Wymusza pojawienie się tylko jednego pojazdu podczas sprzedaży towaru z wytwórni. Pamiętaj, że należy użyć tej funkcji przed rozpoczęciem misji sprzedaży oraz że to Ty powinieneś być właścicielem tego towaru.
 The best way to remove GTA Online banked money up to $2B at once! = Najlepszy sposób na usunięcie zbędnych pieniędzy z banku. Nawet 2,000,000,000$ za jednym razem!
 Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you. = Natychmiastowe ukończenia to stosunkowo nowe funkcje, dlatego sposób ich działania nie jest w pełni znany. Proszę o wyrozumiałość, ponieważ istnieje ryzyko, że którakolwiek z tych funkcji może nie zadziałać prawidłowo.
@@ -645,7 +623,7 @@ Terrobyte = Terrorbyte
 Heist Control will show how much the cooldown time left, and let you know if it passed. = Heist Control wyświetli, ile pozostało do końca czasu odnowienia i powiadomi Cię, gdy ten czas upłynie.
 Text Position = Pozycja Tekstu
 Ignore You = Ignoruj Mnie
-Makes hostile peds (Included guards, polices, and gangs) ignore you even saw you. Except for the rare case, they don't shoot to you. = Powoduje, że wrogowie (w tym strażnicy, policjanci i gangi) ignorują Cię, nawet jeśli zauważyli Cię wcześniej. Poza kilkoma rzadkimi przypadkami, nie będą oni do Ciebie strzelać.
+Makes hostile peds (Included guards, polices, and gangs) ignore you even saw you. Except for the rare case, they don't shoot to you. = Powoduje, że wrogowie (strażnicy, policjanci oraz gangi) nie będą zwracać na Ciebie uwagi, nawet jeśli zostałeś zauważony. Poza kilkoma rzadkimi przypadkami, nie powinni oni do Ciebie strzelać.
 GTAHaXUI Stat Editor = Edytor Statystyk GTAHaX
 GTAHaXUI is a free mod menu for editing stats, globals, and locals from UnknownCheats. Heist Control can help you using customizable GTAHaXUI's stat txt files. Note that you can download the files by googling easily. = GTAHaX to darmowe narzędzie pochodzące z UnknownCheats, które zostało stworzone do modyfikowania statystyk, wartości globalnych oraz lokalnych. Heist Control może Ci pomóc, wykorzystując pliki 'stat.txt', które zostały stworzone dla GTAHaX. Zwróć uwagę, że możesz łatwo znaleźć te pliki w internecie, korzystając z wyszukiwarki Google.
 Load Custom Stat Files = Załaduj Plik
@@ -658,7 +636,6 @@ Seems some of lines are invalid. But it doesn't matter too much. Go ahead. = Wyg
 Please check this file has been typed for GTAHaXUI. Applying it won't affect anything in GTAV. = Upewnij się, że ten plik został stworzony dla GTAHaX. Zastosowanie go nie będzie miało żadnego wpływu na GTA.
 Apply Stats = Zastosuj
 Do you sure apply the number of stats? = Czy jesteś pewien, że chcesz zastosować tę ilość statystyk?
-Open This File = Otwórz Plik
 Comment = Komentarz
 Information = Informacje
 Except for 'N/A', doesn't matter what it is. Heist Control will make it compatible with GTAV using all methods. = Poza 'N/A' nie ma znaczenia, co tutaj widzisz. Heist Control sprawi, że plik będzie kompatybilny z GTA, wykorzystując wszystkie dostępne metody.
@@ -677,12 +654,6 @@ All Stats List = Lista Wszystkich Statystyk
 Some Useful Stats List = Lista Przydatnych Statystyk
 Open Folder for Translations = Otwórz Folder
 Don't enable both of automated presets at once = Pamiętaj, że nie należy aktywować kilku ustawień jednocześnie!
-
-
-# Start of newly updated translations.
-# Translate them!
-
-
 Waiting for requesting Kosatka... = Oczekiwanie na wynurzenie Kosatki...
 (Submarine) = (Okręt Podwodny)
 Alkonost = Alkonost
@@ -723,15 +694,36 @@ Unlock Lots of Hats And Shirts = Odblokuj Wiele Czapek i Koszulek
 Also will increase Kosatka missiles distance. = Zostanie zwiększony również zasięg tych rakiet.
 Auto Refill Snacks & Armours = Uzupełnij Przekąski oraz Pancerz
 Change Reward = Nagroda
-Can be used to increase your crew level. = Zwróć uwagę, że punkty respektu mogą być wykorzystywane do zwiększania poziomu ekipy.
+Can be used to increase your crew level. = Zwróć uwagę, że punkty reputacji mogą być wykorzystywane do zwiększania poziomu ekipy.
 How Many Times To Play = Liczba Napadów do Rozegrania
 Delete This File = Usuń Plik
 Do you sure delete this file? It cannot be recovered! = Czy jesteś pewien, że chcesz usunąć ten plik? Odzyskanie go nie będzie możliwe!
 Successfully deleted! = Pomyślnie usunięto!
 Auto Become a CEO/MC = Automatycznie Zostań CEO/MC
-Detects the cases that you should be a CEO/MC to start some heists/missions, make you one of it. = Ta funkcja umożliwia automatyczne założenie organizacji lub klubu motocyklowego, gdy jest to wymagane do wykonania napadu lub misji.
+Detects the cases that you should be a CEO/MC to start some heists/missions, make you one of it. = Umożliwia automatyczne zakładanie organizacji lub klubu motocyklowego, gdy jest to wymagane do wykonania napadu lub misji.
 Skipping white texts where are center, under of the screen. = Odnosi się do białego tekstu, który pojawia się w środkowej dolnej części ekranu.
 Would helpful for skipping something cannot be skipped using 'Game > Skip Cutscene' = Może być przydatne do pominięcia czegoś, co nie może zostać pominięte za pomocą 'Gra > Pomiń Przerywnik'.
 Clear All Help Messages = Pomiń Komunikaty Pomocy
 Clearing a black box with white help texts where are left, above of the screen. = Odnosi się do czarnego prostokąta z białym tekstem, który pojawia się w lewym górnym rogu ekranu.
 Can be used for getting targets slightly more fast. = Może być wykorzystywane do nieco szybszego zdobywania celów.
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist. = Zwróć uwagę, że dokonana modyfikacja nie wpłynie na ekran planowania. Wprowadzone zmiany będziesz mógł zobaczyć dopiero po zakończeniu napadu.
+If the Heist Planning (Board 3) is empty, then please re-enable the preset that you enabled! = Jeśli trzecia tablica planowania będzie pusta, należy ponownie aktywować wybrane podejście!
+It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts. = Powoduje obejście wszystkich ograniczeń, umożliwiając przydzielenie uczestnikowi napadu wartości pomiędzy 0 a 100 procent.
+Please make sure you can play ULP Missions now! = Upewnij się, że misje dla organizacji United Liberty Paper są teraz dostępne.
+Unlock Clothing = Odblokuj Ubrania
+Skip Nightclub Setups = Pomiń Przygotowania Klubu Nocnego
+Skip all of setups when you buy a Nightclub first: Equipment, Staff, and Collect DJ = Powoduje ukończenie wszystkich przygotowań wymaganych do uruchomienia działalności klubu nocnego: pracownicy, sprzęt, odbierz DJ-a.
+Unlock Arcade Awards = Odblokuj Nagrody - Salon Gier
+Trophies, toys, and clothings are included. = Zawarte są trofea, zabawki oraz ubrania.
+500+ unlocks are included, try and see how many clothes would be unlocked. = Zawartych jest ponad 500 odblokowań! Spróbuj i sam zobacz, ile ubrań zostanie odblokowanych.
+Club Work = Zadania Klubowe
+Taze = Wyłącz
+If you have any questions regarding Heist Control? Joining it will help you so much! = Masz jakieś pytania dotyczące Heist Control? Tutaj z pewnością znajdziesz pomoc, której szukasz!
+- Download sharable customized translations and GTAHaXUI stat files. = - Pobierz udostępnione spersonalizowane tłumaczenia oraz pliki statystyk GTAHaX.
+- Post a suggestion or an issue to improve Heist Control. = - Opublikuj sugestię lub błąd, aby usprawnić działanie Heist Control.

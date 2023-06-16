@@ -213,7 +213,7 @@ end
 ---@param ped Ped
 local IsPedAnyTargetablePlayer = function (ped)
 	local player = NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(ped)
-	if not is_player_active(player, true, true) then
+	if not NETWORK.NETWORK_IS_PLAYER_ACTIVE(player) then
 		return false
 	end
 
@@ -432,7 +432,7 @@ local LockonEntity = function (entity, count)
 	if ENTITY.IS_ENTITY_A_VEHICLE(entity) and VEHICLE.IS_VEHICLE_DRIVEABLE(entity, false) then
 		local driver = VEHICLE.GET_PED_IN_VEHICLE_SEAT(entity, -1, false)
 		if ENTITY.DOES_ENTITY_EXIST(driver) and PED.IS_PED_A_PLAYER(driver) and
-		is_player_active(NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(driver), true, true) then
+		NETWORK.NETWORK_IS_PLAYER_ACTIVE(NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(driver)) then
 			VEHICLE.SET_VEHICLE_HOMING_LOCKEDONTO_STATE(entity, 2)
 		end
 	end
@@ -540,15 +540,6 @@ local UpdateTargetEntities = function ()
 end
 
 
----@param vehicle Vehicle
----@param damage integer
----@param weaponHash Hash
----@param ownerPed Ped
----@param isAudible boolean
----@param isVisible boolean
----@param speed number
----@param target Ped
----@param position integer #right: 0, left: 1
 local ShootFromVehicle = function (vehicle, damage, weaponHash, ownerPed, isAudible, isVisible, speed, target, position)
 	local pos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
 	local min, max = v3.new(), v3.new()
@@ -563,7 +554,7 @@ local ShootFromVehicle = function (vehicle, damage, weaponHash, ownerPed, isAudi
 		local offset = v3.new(max.x - 0.3, max.y - 0.15, 0.3)
 		a = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(vehicle, offset.x, offset.y, offset.z)
 	else
-		error("got unexpected position")
+		error("得到了预期外的位置")
 	end
 
 	local b = v3.new(direction)
@@ -705,6 +696,8 @@ end
 ---@param y number
 Print.drawstring = function (text, x, y)
     HUD.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(text)
+	HUD.SET_TEXT_FONT(1)
+	HUD.SET_TEXT_SCALE(0.4, 0.4)
 	GRAPHICS.BEGIN_TEXT_COMMAND_SCALEFORM_STRING(text)
 	GRAPHICS.END_TEXT_COMMAND_SCALEFORM_STRING()
     HUD.END_TEXT_COMMAND_DISPLAY_TEXT(x, y, 0)
@@ -798,7 +791,7 @@ end
 
 
 self.mainLoop = function ()
-	if is_player_active(players.user(), true, true) and PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
+	if NETWORK.NETWORK_IS_PLAYER_ACTIVE(players.user()) and PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
 		local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
 		if ENTITY.DOES_ENTITY_EXIST(vehicle) and not ENTITY.IS_ENTITY_DEAD(vehicle, false) and
 		VEHICLE.IS_VEHICLE_DRIVEABLE(vehicle, false) and
@@ -818,10 +811,10 @@ self.mainLoop = function ()
 					bits:ClearBit(Bit_IsCamPointingInFront)
 				end
 
-				LockonManager()
+				LockonManager()--锁定玩家
 				if not (IsWebBrowserOpen() or IsCameraAppOpen()) then
-					ShootMissiles()
-					DrawChargingMeter()
+					ShootMissiles()--发射导弹
+					DrawChargingMeter()--绘制充电图
 				end
 				DisableControlActions()
 
@@ -831,9 +824,8 @@ self.mainLoop = function ()
 				end
 				local timerStart = memory.script_global(2793044 + 4463)
 				local timerState = memory.script_global(2793044 + 4463 + 1)
-				if timerStart ~= NULL and timerState ~= NULL and
-				memory.read_int(timerState) == 0 then
-					notification:normal(trans.DisablingPassive)
+				if timerStart ~= NULL and timerState ~= NULL and memory.read_int(timerState) == 0 then
+					util.toast(trans.DisablingPassive)
 					memory.write_int(timerStart, NETWORK.GET_NETWORK_TIME())
 					memory.write_int(timerState, 1)
 				end

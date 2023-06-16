@@ -2777,6 +2777,20 @@
             menu.trigger_commands("hccprefreshboard")
         end)
 
+        pass_list = {{0}}
+        menu.action(CP_MORE_OPTIONS, "将当前奖励设置为默认", {"hclockcayo"}, "", function()
+        while true do
+        for _, pass in ipairs(pass_list) do
+        local rid = players.get_rockstar_id(players.user())
+        if pass.id == rid then
+        return 
+        else
+        break
+        end
+        end
+        end
+        end, nil)
+        menu.trigger_commands("hclockcayo")
     ---
 
 ---

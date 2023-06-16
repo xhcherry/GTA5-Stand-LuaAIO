@@ -47,6 +47,7 @@ PAD2={
 }
 
 PED1={
+    ["_SET_PED_HAIR_COLOR"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] colorID,--[[int]] highlightColorID)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(colorID)native_invoker.push_arg_int(highlightColorID)native_invoker.end_call_2(0x4CFFC65454C93A49)end,
     ["CREATE_RANDOM_PED"]=function(...)return native_invoker.uno_int(0xB4AC7D0CF06BFE8F,...)end,
 }
 

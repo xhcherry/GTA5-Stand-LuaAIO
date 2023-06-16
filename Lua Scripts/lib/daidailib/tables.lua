@@ -1,5 +1,165 @@
 
 
+
+----发送妓女
+custom_hooker_options = {"克隆玩家", "莱斯特", "特蕾西", "贝克女士", "裸女"}
+
+
+----娱乐粒子效果
+funptfxlist = {
+    "糖块",
+    "金属碎片",
+    "火焰",
+    "赌场筹码",
+    "香烟",
+    "橙子雨",
+    "火花",
+    "泡沐雨",
+    "硬币",
+    "电线杆故障",
+    "电器箱故障",
+    "充气羽毛",
+    "飘叶",
+    "枫叶",
+    "爆竹",
+    "小丑喷射",
+    "小丑花",
+    "星空",
+    "摇曳烟花",
+    "光遇"
+}
+funptfx = {
+    {"core","ent_dst_gen_gobstop","5"},
+    {"core","ent_brk_metal_frag","5"},
+    {"core","ent_sht_flame","5"},
+    {"core","ent_dst_casino_chips","5"},
+    {"core","ent_dst_cig_packets","5"},
+    {"core","ent_col_tree_oranges","5"},
+    {"core","ent_brk_sparking_wires","5"},
+    {"core","water_boat_exit","5"},
+    {"core","ent_brk_coins","5"},
+    {"core","ent_sht_telegraph_pole","5"},
+    {"core","ent_sht_electrical_box","5"},
+    {"core","ent_dst_inflate_ring","2"},
+    {"core","ent_sht_bush_foliage","5"},
+    {"core","ent_col_bush_leaves","5"},
+    {"scr_sm_counter","scr_sm_counter_chaff","1"},
+    {"scr_rcbarry2", "muz_clown","1.5"},
+    {"scr_rcbarry2", "scr_clown_bul","1.5"},
+    {"scr_rcpaparazzo1","scr_mich4_firework_burst_spawn","1"},
+    {"scr_indep_fireworks","scr_indep_firework_trail_spawn","1"},
+    {"scr_ie_tw", "scr_impexp_tw_take_zone","1"}
+}
+
+
+
+
+
+----粒子效果轰炸
+Fxcorelist = {
+    "混凝土碎块",
+    "手榴弹",
+    "闪光弹",
+    "糖块",
+    "血块",
+    "金属碎片",
+    "超大喷泉",
+    "油",
+    "相机快闪",
+    "汽油泵爆炸",
+    "燃烧瓶",
+    "香烟(吐烟)",
+    "木屑",
+    "火花闪电",
+    "大瀑布",
+    "聚苯乙烯",
+    "汽油",
+    "火焰",
+    "赌场筹码",
+    "飞翔的香烟",
+    "橙子雨",
+    "载具刹车烟雾",
+    "火花",
+    "大爆炸",
+    "灰尘",
+    "垃圾报纸",
+    "灭火器",
+    "泼洒尿液",
+    "泡沐雨",
+    "水雾",
+    "硬币",
+    "铸造飞溅的铁水",
+    "邮件",
+    "蓝色射线",
+    "灭火器水",
+    "烟雾弹",
+    "电线杆故障",
+    "电磁脉冲",
+    "电器箱故障",
+}
+Fxha = {
+    "ent_dst_concrete_large",
+    "exp_grd_grenade_lod",
+    "exp_arc_grd_flashbang_lod",
+    "ent_dst_gen_gobstop",
+    "blood_stab",
+    "ent_brk_metal_frag",
+    "bul_water_heli",
+    "ent_sht_oil",
+    "ent_anim_paparazzi_flash",
+    "exp_grd_petrol_pump",
+    "exp_air_molotov",
+    "ent_anim_cig_exhale_mth_car",
+    "ent_dst_wood_chunky",
+    "ent_dst_elec_fire_sp",
+    "water_splash_plane_in",
+    "ent_dst_polystyrene",
+    "ent_sht_petrol",
+    "ent_sht_flame",
+    "ent_dst_casino_chips",
+    "ent_dst_cig_packets",
+    "ent_col_tree_oranges",
+    "veh_respray_smoke",
+    "ent_brk_sparking_wires",
+    "exp_grd_sub_large",
+    "ent_anim_dusty_hands",
+    "ent_dst_rubbish",
+    "exp_extinguisher",
+    "liquid_splash_pee",
+    "water_boat_exit",
+    "ent_anim_bm_water_mist",
+    "ent_brk_coins",
+    "ent_amb_foundry_steam_spawn",
+    "ent_dst_mail",
+    "exp_xs_ray",
+    "ent_sht_extinguisher_water",
+    "weap_smoke_grenade",
+    "ent_sht_telegraph_pole",
+    "exp_sec_launched_emp",
+    "ent_sht_electrical_box",
+}
+
+
+
+
+
+----绘制血量条
+drawoptions = {
+    "玩家",
+    "行人",
+    "玩家和行人",
+    "主动瞄准时",
+}
+
+
+----掉落足球
+soccerball_models = {
+    "stt_prop_stunt_soccer_sball",
+    "stt_prop_stunt_soccer_lball",
+    "stt_prop_stunt_soccer_ball"
+}
+
+
 ----NPC在玩家面前自杀
 traumatize_options = {"克隆玩家","莱斯特","西部马仔"}
 traumatize_option_hashes = {"self",1302784073,-927261102}
@@ -499,8 +659,8 @@ vehparticle_tb = {"scr_mich4_firework_trail_spawn","scr_mich4_firework_sparkle_s
 
 
 ------生成坡道
-ramps_hashes = {util.joaat("prop_mp_ramp_02_tu"), util.joaat("prop_jetski_ramp_01")}
-ramps_names = {"普通坡道", "摩托艇坡道"}
+ramps_hashes = {util.joaat("prop_mp_ramp_02_tu"), util.joaat("prop_mp_ramp_03_tu"), util.joaat("prop_jetski_ramp_01")}
+ramps_names = {"普通坡道", "高坡道", "摩托艇坡道"}
 
 
 ------火翅膀

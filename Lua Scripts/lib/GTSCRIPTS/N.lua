@@ -252,7 +252,7 @@ util.keep_running()
 
 
 
-local NEAR_PED_CAM = menu.list(entity_options, "管理附近的NPC和镜头", {}, "")
+local NEAR_PED_CAM = menu.list(entity_options, "管理附近的NPC和镜头", {"managecamera"}, "")
 
 menu.divider(NEAR_PED_CAM, "设置")
 
@@ -314,7 +314,7 @@ end)
 -----
 menu.divider(NEAR_PED_CAM, "摄像头选项")
 
-menu.action(NEAR_PED_CAM, "删除摄像头", {}, "几乎可以删除全部摄像头了", function()
+menu.action(NEAR_PED_CAM, "删除摄像头", {}, "删除附近所有监控与摄像头", function()
     -- Credit goes to Leif.Erickson
     for k, ent in pairs(entities.get_all_objects_as_handles()) do
         local EntityModel = ENTITY.GET_ENTITY_MODEL(ent)
@@ -344,7 +344,7 @@ menu.action(NEAR_PED_CAM, "删除摄像头", {}, "几乎可以删除全部摄像
     end
 end)
 
-menu.action(NEAR_PED_CAM, "摄像头上天", {}, "上天了就拍不到你了", function()
+menu.action(NEAR_PED_CAM, "摄像头抬头", {}, "使摄像头无法拍摄到您", function()
     -- Credit goes to Leif.Erickson
     for k, ent in pairs(entities.get_all_objects_as_handles()) do
         local EntityModel = ENTITY.GET_ENTITY_MODEL(ent)
@@ -376,10 +376,10 @@ menu.action(NEAR_PED_CAM, "摄像头上天", {}, "上天了就拍不到你了", 
 end)
 
 -- -- 附近载具
-local NEARBY_VEHICLE = menu.list(entity_options, "管理附近载具", {}, "")
+local NEARBY_VEHICLE = menu.list(entity_options, "管理附近载具", {"managevehicle"}, "")
 
 local radius_nearby_vehicle = 30
-menu.slider(NEARBY_VEHICLE, "范围半径", { "radius_nearby_vehicle" }, "", 0, 1000, 30, 10, function(value)
+menu.slider(NEARBY_VEHICLE, "范围半径", { "radius_nearby_vehicle" }, "设定管理附近载具的范围数值", 0, 1000, 30, 10, function(value)
     radius_nearby_vehicle = value
 end)
 
@@ -392,7 +392,7 @@ end)
 menu.divider(NEARBY_VEHICLE, "载具上天")
 
 local launch_vehicle_height = 20
-menu.slider(NEARBY_VEHICLE, "上天高度", { "launch_vehicle_height" }, "", 0, 1000, 20, 10, function(value)
+menu.slider(NEARBY_VEHICLE, "上天高度", { "launch_vehicle_height" }, "设定载具发射上天的高度数值", 0, 1000, 20, 10, function(value)
     launch_vehicle_height = value
 end)
 
@@ -414,17 +414,17 @@ menu.action(NEARBY_VEHICLE, "发射上天", {}, "", function()
 end)
 
 -- -- 附近NPC
-local NEARBY_PED = menu.list(entity_options, "管理附近NPC", {}, "")
+local NEARBY_PED = menu.list(entity_options, "管理附近NPC", {"managenpc"}, "")
 
 local radius_nearby_ped = 30
-menu.slider(NEARBY_PED, "范围半径", { "radius_nearby_ped" }, "", 0, 1000, 30, 10, function(value)
+menu.slider(NEARBY_PED, "范围半径", { "radius_nearby_ped" }, "设定管理附近NPC的范围数值", 0, 1000, 30, 10, function(value)
     radius_nearby_ped = value
 end)
 
 menu.divider(NEARBY_PED, "NPC上天")
 
 local launch_ped_height = 20
-menu.slider(NEARBY_PED, "上天高度", { "launch_ped_height" }, "", 0, 1000, 20, 10, function(value)
+menu.slider(NEARBY_PED, "上天高度", { "launch_ped_height" }, "设定NPC发射上天的高度数值", 0, 1000, 20, 10, function(value)
     launch_ped_height = value
 end)
 
@@ -449,26 +449,26 @@ end)
 menu.divider(NEARBY_PED, "NPC侦查视野")
 
 local see_range = 0.0
-menu.slider(NEARBY_PED, "视力范围", { "see_range" }, "", 0.0, 20.0, 0.0, 1.0, function(value)
+menu.slider(NEARBY_PED, "视力范围", { "see_range" }, "控制NPC的视野", 0.0, 20.0, 0.0, 1.0, function(value)
     see_range = value
 end)
 
 local hear_range = 0.0
-menu.slider(NEARBY_PED, "听力范围", { "hear_range" }, "", 0.0, 20.0, 0.0, 1.0, function(value)
+menu.slider(NEARBY_PED, "听力范围", { "hear_range" }, "控制NPC的听觉", 0.0, 20.0, 0.0, 1.0, function(value)
     hear_range = value
 end)
 
 local peripheral_range = 0.0
-menu.slider(NEARBY_PED, "锥形视野范围", { "peripheral_range" }, "", 0.0, 20.0, 0.0, 1.0, function(value)
+menu.slider(NEARBY_PED, "锥形视野范围", { "peripheral_range" }, "控制NPC的视野范围", 0.0, 20.0, 0.0, 1.0, function(value)
     peripheral_range = value
 end)
 
 local highly_perceptive = false
-menu.toggle(NEARBY_PED, "高度警觉性", {}, "", function(toggle)
+menu.toggle(NEARBY_PED, "高度警觉性", {}, "修改NPC的警觉度", function(toggle)
     highly_perceptive = toggle
 end)
 
-menu.action(NEARBY_PED, "设置", {}, "直接是全部范围", function()
+menu.action(NEARBY_PED, "设置", {}, "设定全部范围", function()
     for k, ped in ipairs(entities.get_all_peds_as_handles()) do
         if not IS_PED_PLAYER(ped) then
             PED.SET_PED_SEEING_RANGE(ped, see_range)
@@ -480,7 +480,7 @@ menu.action(NEARBY_PED, "设置", {}, "直接是全部范围", function()
 end)
 
 -- -- 任务实体
-local MISSION_ENTITY = menu.list(entity_options, "管理任务实体", {}, "")
+local MISSION_ENTITY = menu.list(entity_options, "管理任务实体", {"manageobject"}, "")
 
 local MISSION_ENTITY_custom = menu.list(MISSION_ENTITY, "自定义 Model Hash", {}, "")
 
@@ -1476,7 +1476,7 @@ local function request_anim_set(set)
 end
 
 
-peds_root = menu.list(entity_options, "控制行人", {"GTpeds"}, "")
+peds_root = menu.list(entity_options, "控制行人", {"controlpeds"}, "")
 
 local all_sex_voicenames = {
     "S_F_Y_HOOKER_01_WHITE_FULL_01",
@@ -1960,7 +1960,7 @@ screamall = on
 mod_uses("ped", if on then 1 else -1)
 end)
 
-vehicles_root = menu.list(entity_options, "控制载具", {"lancescriptvehicles"}, "")
+vehicles_root = menu.list(entity_options, "控制载具", {"controlvehicle"}, "")
 
 -- VEHICLES
 

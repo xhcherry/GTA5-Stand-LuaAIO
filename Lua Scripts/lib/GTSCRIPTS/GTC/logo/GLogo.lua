@@ -40,16 +40,20 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '5.21'
+GT_version = '6.15'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
         return key
     end
 })
-loading_frames = {'欢迎使用GRANDTOURINGVIP~~~', '迎使用GRANDTOURINGVIP~~~欢', '使用GRANDTOURINGVIP~~~欢迎', '用GRANDTOURINGVIP~~~欢迎使', 'GRANDTOURINGVIP~~~欢迎使用', 'RANDTOURINGVIP~~~欢迎使用G', 'ANDTOURINGVIP~~~欢迎使用GR', 'NDTOURINGVIP~~~欢迎使用GRA', 'DTOURINGVIP~~~欢迎使用GRAN', 'TOURINGVIP~~~欢迎使用GRAND', 'OURINGVIP~~~欢迎使用GRANDT', 'URINGVIP~~~欢迎使用GRANDTO', 'RINGVIP~~~欢迎使用GRANDTOU', 'INGVIP~~~欢迎使用GRANDTOUR', 'NGVIP~~~欢迎使用GRANDTOURI', 'GVIP~~~欢迎使用GRANDTOURIN', 'VIP~~~欢迎使用GRANDTOURING', 'IP~~~欢迎使用GRANDTOURINGV', 'P~~~欢迎使用GRANDTOURINGVI', '~~~欢迎使用GRANDTOURINGVIP', '~~欢迎使用GRANDTOURINGVIP~', '~欢迎使用GRANDTOURINGVIP~~', '欢迎使用GRANDTOURINGVIP~~~', '欢迎使用GRANDTOURINGVIP~~~'}
+function updatelogs()
+    notification("不可用(N/A)")
+end
+loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
+coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
 bbtxt = "https://jq.qq.com/?_wv=1027&k=U3XOlyOF"
-bbtct = "[点击此处加入官方群聊中进行询问]\n\n加载脚本显示(请稍等...): 网络问题\n\n加载脚本提示缺少(not found)文件: 请尝试重新安装脚本及脚本依赖文件\n其他疑问与发现请联系开发人员,非常感谢您的支持儿,祝您游戏愉快儿~"
+bbtct = "[点击此处加入官方群聊中进行询问]\n\n*加载脚本显示(请稍等...):#网络问题\n#建议更换您的节点/模式或加速器\n\n*加载脚本提示缺少(not found)文件,\n 或加载脚本提示缺少(no file)文件: #请重新安装脚本及脚本依赖文件\n#建议使用<丢丢原装lua>覆盖lua文件\n其他疑问与发现请联系开发人员,非常感谢您的支持儿,祝您游戏愉快儿~"
 Name_info = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
 gtoast("欢迎使用GRANDTOURINGVIP!\n \n当前版本 " .. GT_version .. " 欢迎 ".. Name_info .."\n" .. "\n" .. "进群获取最新版本...\n" .. "\n" .. "祝您游戏愉快儿 :)")
 util.show_corner_help("~b~~h~GRANDTOURINGVIP " .. GT_version .. "  ~q~ \n~r~我们的脚本完全免费\n~q~转到>其他选项 加入群聊\n~y~免费获得最新版本")
@@ -284,7 +288,7 @@ hb_id = {
     {name = "晴天"},
     {name = "梁小帅"},
     {name = "GT作者们幸苦了"},
-    {name = "船船"},
+    {name = "约德尔肾亏小屁船儿"},
     {name = "绝夜凯撒"},
     {name = "XXSZAA"},
     {name = "闹心"},
@@ -348,6 +352,39 @@ hb_id = {
     {name = "fantianpi"},
     {name = "初晴"},
     {name = "游戏旅行者"},
+    {name = "啵啵的奶茶"},
+    {name = "嗝阁革"},
+    {name = "麦克"},
+    {name = "街角"},
+    {name = "guo666666"},
+    {name = "AGL"},
+    {name = "泰迪熊"},
+    {name = "蓝海"},
+    {name = "箫玖"},
+    {name = "小竹"},
+    {name = "大白"},
+    {name = "年仔"},
+    {name = "奶瓶"},
+    {name = "山海"},
+    {name = "校长爱打扑克"},
+    {name = "白山茶"},
+    {name = "阿米"},
+    {name = "黑大帅"},
+    {name = "TT"},
+    {name = "唱跳Rap篮球丶"},
+    {name = "秋词"},
+    {name = "YIM用户"},
+    {name = "沃德天.威森莫.拉莫帅"},
+    {name = "戰超"},
+    {name = "抑宇"},
+    {name = "零壹大魔王"},
+    {name = "安立"},
+    {name = "年佑"},
+    {name = "黑夜"},
+    {name = "YUGG65"},
+    {name = "MISS"},
+    {name = "Mo_Bei_Sirius"},
+    {name = "我是正义青年"},
 }
 
 srgb = {cus = 100}
@@ -1868,12 +1905,12 @@ b_notifications.new = function ()
     local self = {}
     local active_notifs = {}
     self.notif_padding = 0.005
-    self.notif_text_size = 0.5
+    self.notif_text_size = 0.55
     self.notif_title_size = 0.6
     self.notif_spacing = 0.015
-    self.notif_width = 0.15
+    self.notif_width = 0.16
     self.notif_flash_duration = 1
-    self.notif_anim_speed = 1
+    self.notif_anim_speed = 0.75
     self.notif_banner_colour = {r = 1, g = 0.51, b = 0.61, a = 1}
     self.notif_flash_colour = {r = 1, g = 0.34, b = 0.47, a = 1}
     self.max_notifs = 10
@@ -1995,7 +2032,7 @@ b_notifications.new = function ()
    local new_notification = {
    title = title,
    flashtimer = self.notif_flash_duration,
-   colour = colour or {r = 0.094, g = 0.098, b = 0.101, a = 1},
+   colour = colour or {r = 0.094, g = 0.098, b = 0.101, a = 0.6},
    duration = duration or 3,
    current_y_pos = -10,
    marked_for_deletetion = false,
@@ -2033,28 +2070,28 @@ if not filesystem.exists(scripts_dir) then
 	notification("目录未找到",colors.red)
 end
 --Logo 在脚本开启时弹出
-if not SCRIPT_SILENT_START then
+if SCRIPT_MANUAL_START then
 MISC.FORCE_LIGHTNING_FLASH()
 end
-if not SCRIPT_SILENT_START then
+if SCRIPT_MANUAL_START then
     util.create_thread(function()
         local photo = directx.create_texture(filesystem.scripts_dir() .. "GTLuaScript/GT.png")
         local l = -100
         while l <= 90 do
             for j = 1, 195, 5 do
-                directx.draw_texture(photo, 0.10, 0.10, 0.5, 0.5, l/1000, 0.50, 0, {r = 1, g = 1, b = 1, a = j/255})
+                directx.draw_texture(photo, 0.06, 0.06, 0.5, -1.1, l/1500, 0.50, 0, {r = 1, g = 1, b = 1, a = j/255})
                 wait(0)
                 l = l + 5
             end
         end
-        for i = 1, 220 do
-            directx.draw_texture(photo, 0.10, 0.10, 0.5, 0.5, 0.09, 0.50, 0, {r = 1, g = 1, b = 1, a = 255})
+        for i = 1, 320 do
+            directx.draw_texture(photo, 0.06, 0.06, 0.5, -1.1, 0.06, 0.50, 0, {r = 1, g = 1, b = 1, a = 255})
             wait(0)
         end
         local k = 90
         while k >= -10 do
             for j = 195, 1, -5 do
-                directx.draw_texture(photo, 0.10, 0.10, 0.5, 0.5, k/1000, 0.50, 0, {r = 1, g = 1, b = 1, a = j/255})
+                directx.draw_texture(photo, 0.06, 0.06, 0.5, -1.1, k/1500, 0.50, 0, {r = 1, g = 1, b = 1, a = j/255})
                 wait(0)
                 k = k - 5
             end
@@ -2159,7 +2196,7 @@ TTPos = ENTITY.GET_ENTITY_COORDS(TTPed, true)
 hud_rgb_index = 1
 hud_rgb_colors = {6, 18, 9}
 cTime = util.current_time_millis
-Version = "5.21"
+Version = "6.15"
 
 function give_car_addon(pid, hash, center, ang)
     local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
@@ -4997,32 +5034,6 @@ function CheckLobbyForPlayers()
         end
     end
 end
---将所有人传送到花园银行楼顶
-function TeleportEveryonesVehicleToMazeBank()
-    local oldcoords = getEntityCoords(GetLocalPed())
-    for i = 0, 31 do
-        if NETWORK.NETWORK_IS_PLAYER_CONNECTED(i) then
-            local pped = getPlayerPed(i)
-            local pedCoords = getEntityCoords(pped)
-            for c = 0, VehTeleportLoadIterations do --teleports us to them so we load their veh
-                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(GetLocalPed(), pedCoords.x, pedCoords.y, pedCoords.z + 10, false, false, false)
-                wait(100)
-            end
-            if PED.IS_PED_IN_ANY_VEHICLE(pped, false) then
-                local veh = PED.GET_VEHICLE_PED_IS_IN(pped, false)
-                for a = 0, 10 do
-                    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
-                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, -76, -819, 327, false, false, false)
-                    wait(100)
-                end
-                for b = 0, 10 do
-                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, -76, -819, 327, false, false, false)
-                end
-            end
-        end
-    end
-    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(GetLocalPed(), oldcoords.x, oldcoords.y, oldcoords.z, false, false, false)
-end
 --将所有人传送到海洋
 VehTeleportLoadIterations = 20
 function TeleportEveryonesVehicleToOcean()
@@ -5059,33 +5070,6 @@ function RemoveVehicleGodmodeForAll()
                 local veh = PED.GET_VEHICLE_PED_IS_IN(ped, false)
                 ENTITY.SET_ENTITY_CAN_BE_DAMAGED(veh, true)
                 ENTITY.SET_ENTITY_INVINCIBLE(veh, false)
-            end
-        end
-    end
-end
---自由模式死亡
-function FreemodeDeathAll()
-    for p = 0, 31 do
-        if p ~= players.user() and NETWORK.NETWORK_IS_PLAYER_CONNECTED(p) then
-            for i = -1, 1 do
-                for n = -1, 1 do
-                    util.trigger_script_event(1 << p, {-65587051, 28, i, n})
-                end
-            end
-            for i = -1, 1 do
-                for n = -1, 1 do
-                    util.trigger_script_event(1 << p, {1445703181, 28, i, n})
-                end
-            end
-            wait(100)
-            util.trigger_script_event(1 << p, {-290218924, -32190, -71399, 19031, 85474, 4468, -2112})
-            util.trigger_script_event(1 << p, {-227800145, -1000000, -10000000, -100000000, -100000000, -100000000})
-            util.trigger_script_event(1 << p, {2002459655, -1000000, -10000, -100000000})
-            util.trigger_script_event(1 << p, {911179316, -38, -30, -75, -59, 85, 82})
-        end
-        for i = -1, 1 do
-            for a = -1, 1 do
-                util.trigger_script_event(1 << p, {916721383, i, a, 0, 26})
             end
         end
     end
@@ -5227,109 +5211,7 @@ function AIOKickAll()
     end
     wait(100)
 end
---AIO踢出
-function AIOKickPlayer(PlayerID)
-    if SE_Notifications then
-        util.toast("玩家已连接 " .. tostring(PLAYER.GET_PLAYER_NAME(PlayerID) .. ", 开始AIO."))
-    end
-    util.trigger_script_event(1 << PlayerID, {0x37437C28, 1, 15, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {-1308840134, 1, 15, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {0x4E0350C6, 1, 15, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {-0x114C63AC, 1, 15, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {-0x15F5B1D4, 1, 15, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {-0x249FE11B, 1, 15, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {-0x76B11968, 1, 15, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {0x9C050EC, 1, 15, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {0x3B873479, 1, 15, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {0x23F74138, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {-0x529CD6F2, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {-0x756DBC8A, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {-0x69532BA0, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {0x68C5399F, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {0x7DE8CAC0, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {0x285DDF33, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
-    wait(10) 
-    util.trigger_script_event(1 << PlayerID, {-0x177132B8, math.random(-2147483647, 2147483647), 1, 115, math.random(-2147483647, 2147483647)})
-    wait(10)
-    util.trigger_script_event(1 << PlayerID, {memory.script_global(1893548 + (1 + (PlayerID * 600) + 511)), PlayerID})
-    for a = -1, 1 do
-        for n = -1, 1 do
-            util.trigger_script_event(1 << PlayerID, {-65587051, 28, a, n})
-            wait(10)
-        end
-    end
-    for a = -1, 1 do
-        for n = -1, 1 do
-            util.trigger_script_event(1 << PlayerID, {1445703181, 28, a, n})
-            wait(10)
-        end
-    end
-    if TXC_SLOW then
-        wait(10)
-        util.trigger_script_event(1 << PlayerID, {-290218924, -32190, -71399, 19031, 85474, 4468, -2112})
-        wait(10)
-        util.trigger_script_event(1 << PlayerID, {-227800145, -1000000, -10000000, -100000000, -100000000, -100000000})
-        wait(10)
-        util.trigger_script_event(1 << PlayerID, {2002459655, -1000000, -10000, -100000000})
-        wait(10)
-        util.trigger_script_event(1 << PlayerID, {911179316, -38, -30, -75, -59, 85, 82})
-        wait(10)
-        util.trigger_script_event(1 << PlayerID, {-290218924, -32190, -71399, 19031, 85474, 4468, -2112})
-        wait(10)
-        util.trigger_script_event(1 << PlayerID, {-1386010354, 91645, -99683, 1788, 60877, 55085, 72028})
-        wait(10)
-        util.trigger_script_event(1 << PlayerID, {-227800145, -1000000, -10000000, -100000000, -100000000, -100000000})
-        wait(10)
-        for g = -28, 0 do
-            for n = -1, 1 do
-                for a = -1, 1 do
-                    util.trigger_script_event(1 << PlayerID, {1445703181, g, n, a})
-                end
-            end
-            wait(10)
-        end
-        for a = -11, 11 do
-            util.trigger_script_event(1 << PlayerID, {2002459655, -1000000, a, -100000000})
-        end
-        for a = -10, 10 do
-            for n = 30, -30 do
-                util.trigger_script_event(1 << PlayerID, {911179316, a, n, -75, -59, 85, 82})
-            end
-        end
-        for a = -10, 10 do
-            util.trigger_script_event(1 << PlayerID, {-65587051, a, -1, -1})
-        end
-        util.trigger_script_event(1 << PlayerID, {951147709, PlayerID, 1000000, nil, nil}) 
-        for a = -10, 10 do
-            util.trigger_script_event(1 << PlayerID, {-1949011582, a, 1518380048})
-        end
-        for a = -10, 4 do
-            for n = -10, 5 do
-                util.trigger_script_event(1 << PlayerID, {1445703181, 28, a, n})
-            end
-        end
-    end
-    if SE_Notifications then
-        util.toast("第四块已完成. // AIO")
-        util.toast("循环 " .. PlayerID .. " 完成AIO踢出.")
-        util.toast("玩家 " .. PLAYER.GET_PLAYER_NAME(PlayerID) .. " 已完成.")
-    end
-end
+
 --踢出
 function KickPlayer(PlayerID, method)
     local path = menu.player_root(PlayerID)
@@ -9068,13 +8950,13 @@ function kongzhihk(toggle)
     end
     end
     
-    function hunhuan8(toggle)
-    hongaaaaa()
-    hongbbbbb()
-    hongccccc()
-    hongddddd()
-    hongeeeee()
-    end
+function hunhuan8(toggle)
+hongaaaaa()
+hongbbbbb()
+hongccccc()
+hongddddd()
+hongeeeee()
+end
 --FUCK YOU
 speed = 6
 function do_vehicle_fly() 
@@ -9089,7 +8971,6 @@ function do_vehicle_fly()
         locspeed = locspeed*2
         locspeed2 = locspeed2*2
     end
-
     
     if PAD.IS_CONTROL_PRESSED(2, 71) then
         if dont_stop then
@@ -9142,7 +9023,7 @@ function hengfugt(f)
     starttime = os.time()
     local startX = -0.5
     local endX = 0.5
-    local speed = 0.002
+    local speed = 0.001
     hfgt = f
     while hfgt do
         wait()
@@ -9152,7 +9033,14 @@ function hengfugt(f)
             startX = -0.5
             endX = 0.5
         end
-        GRAPHICS.DRAW_RECT(.5, .5, 1, 0.05, 150, 50, 200, 255)
+        GRAPHICS.DRAW_RECT(.5, .47, 1, 0.01, 255, 0, 0, 200)
+        GRAPHICS.DRAW_RECT(.5, .48, 1, 0.01, 255, 128, 0, 200)
+        GRAPHICS.DRAW_RECT(.5, .49, 1, 0.01, 255, 255, 0, 200)
+        GRAPHICS.DRAW_RECT(.5, .50, 1, 0.01, 0, 255, 0, 200)
+        GRAPHICS.DRAW_RECT(.5, .51, 1, 0.01, 0, 255, 255, 200)
+        GRAPHICS.DRAW_RECT(.5, .52, 1, 0.01, 0, 75, 255, 200)
+        GRAPHICS.DRAW_RECT(.5, .53, 1, 0.01, 128, 0, 255, 200)
+
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.085, 0.10)
         HUD.SET_TEXT_SCALE(0.5, 0.4)
         HUD.SET_TEXT_FONT(0)
@@ -9160,9 +9048,9 @@ function hengfugt(f)
         HUD.SET_TEXT_OUTLINE(0)
         HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
         util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~检测到皇榜会员 " .. playerid .. " 正在该战局")
-        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.485)
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.480)
 
-        if os.time() - starttime >= 8 then
+        if os.time() - starttime >= 7 then
         hfgt = false
         return
         end
@@ -9174,7 +9062,7 @@ function devhengfu(f)
     starttime = os.time()
     local startX = -0.5
     local endX = 0.5
-    local speed = 0.002
+    local speed = 0.001
     devhf = f
     while devhf do
         wait()
@@ -9189,7 +9077,6 @@ function devhengfu(f)
         GRAPHICS.DRAW_RECT(.5, .31, 1, 0.05, 255, 160, 190, 255)
         GRAPHICS.DRAW_RECT(.5, .33, 1, 0.011, 255, 90, 160, 255)
 
-
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.085, 0.10)
         HUD.SET_TEXT_SCALE(0.5, 0.45)
         HUD.SET_TEXT_FONT(0)
@@ -9199,7 +9086,7 @@ function devhengfu(f)
         util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~GTLua开发人员 " .. playerrid .. " 目前在你的战局")
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.285)
         
-        if os.time() - starttime >= 8 then
+        if os.time() - starttime >= 7 then
         devhf = false
         end
         end
@@ -9235,9 +9122,9 @@ function huanyingjiemian(f)
     local rainbowb = 255
     local startX = 0.5     
     local endX = 0.5      
-    local startY = -0.1     
+    local startY = -0.15     
     local endY = 0.01 
-    local speed = 0.001
+    local speed = 0.0005
     hfgt = f
     local timer = os.clock() 
     while hfgt and os.clock() - timer <= 4 do 
@@ -9260,15 +9147,21 @@ function huanyingjiemian(f)
         if rainbowb > 255 then
         rainbowb = rainbowb - 255
         end
-        GRAPHICS.DRAW_RECT(startX, startY + 0.23, 1, 0.2, 150, 50, 200, 150)
+        GRAPHICS.DRAW_RECT(startX, startY + 0.23, 1, 0.03, 255, 0, 0, 200) --红
+        GRAPHICS.DRAW_RECT(startX, startY + 0.26, 1, 0.03, 255, 128, 0, 200) --橙
+        GRAPHICS.DRAW_RECT(startX, startY + 0.29, 1, 0.03, 255, 255, 0, 200) --黄
+        GRAPHICS.DRAW_RECT(startX, startY + 0.32, 1, 0.03, 0, 255, 0, 200) --绿
+        GRAPHICS.DRAW_RECT(startX, startY + 0.35, 1, 0.03, 0, 255, 255, 200) --青
+        GRAPHICS.DRAW_RECT(startX, startY + 0.38, 1, 0.03, 0, 75, 255, 200) --蓝
+        GRAPHICS.DRAW_RECT(startX, startY + 0.41, 1, 0.03, 128, 0, 255, 200) --紫
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.085, 0.10)
-        HUD.SET_TEXT_SCALE(0.5, 2)
+        HUD.SET_TEXT_SCALE(0.5, 2.1)
         HUD.SET_TEXT_FONT(0)
         HUD.SET_TEXT_CENTRE(1)
         HUD.SET_TEXT_OUTLINE(0)
-        HUD.SET_TEXT_COLOUR(rainbowr, rainbowg, rainbowb, 255)
+        HUD.SET_TEXT_COLOUR(rainbowr, rainbowg, rainbowb, 200)
         util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~GRANDTOURINGVIP")
-        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX, startY + 0.15) 
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX, startY + 0.23) 
     end
 end
 --hundouluo
@@ -9571,6 +9464,46 @@ function increase_ped_combat_attributes(ped)
         PED.SET_PED_COMBAT_ATTRIBUTES(ped, 78, true)  --Disable All Randoms Flee
     end
 end
+--
+function GET_INTERIOR_FROM_PLAYER(pid)
+    return memory.read_int(memory.script_global(((2657589 + 1) + (pid * 466)) + 245))
+end
+speed = menu.get_value(menu.ref_by_path("Self>Movement>Levitation>Movement Speed"))
+sprint = menu.get_value(menu.ref_by_path("Self>Movement>Levitation>Sprint Multiplier"))
+--
+function fku()
+if PED.IS_PED_A_PLAYER(players.user_ped()) then
+    pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    local c = players.get_position(players.user())
+    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 1, 1, 1, 255, 0, 0, 255, false, true, 2, 0, 0, 0, false)
+    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 2, 2, 2,  255, 128, 0, 255, false, true, 2, 0, 0, 0, false)
+    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 3, 3, 3, 255, 255, 0, 255, false, true, 2, 0, 0, 0, false)
+    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 5, 5, 5, 0, 255, 0, 255, false, true, 2, 0, 0, 0, false)
+    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 8, 8, 8, 0, 255, 255, 255, false, true, 2, 0, 0, 0, false)
+    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 13, 13, 13, 0, 75, 255, 255, false, true, 2, 0, 0, 0, false)
+    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 21, 21, 21, 128, 0, 255, 255, false, true, 2, 0, 0, 0, false)
+    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 34, 34, 34, 255, 0, 0, 255, false, true, 2, 0, 0, 0, false)
+    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 55, 55, 1, 255, 255, 0, 255, false, true, 2, 0, 0, 0, false)
+    end
+end
+--sb
+function woshishabi(f)
+    if players.user() == pid then
+        gtoast("你难道说自己是傻逼?")
+        return
+    end
+    wait()
+    local pedp  = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    gametag = WIRI_HUD.CREATE_FAKE_MP_GAMER_TAG(pedp,"我是傻逼",false,false,"flakin",0)
+end
+--上岛
+function sendscriptevent_three()--上岛
+    for pid = 0, 31 do
+        if pid ~= players.user() and players.exists(pid) then
+            util.trigger_script_event(1 << pid, {3592101251, 1, 0, -1, 4, 127, 0, 0, 0,PLAYER.GET_PLAYER_INDEX(), pid})
+        end
+    end
+end
 ------------------------------------
 -------------玩家崩溃---------------
 ------------------------------------
@@ -9691,6 +9624,14 @@ for key, value in pairs(ar_vs) do
 entities.delete_by_handle(value)
 end
 end,nil)
+end
+
+function commandsc(PlayerID)
+    menu.trigger_commands("12crash".. PLAYER.GET_PLAYER_NAME(PlayerID))
+    menu.trigger_commands("fragment".. PLAYER.GET_PLAYER_NAME(PlayerID))
+    menu.trigger_commands("loveclick".. PLAYER.GET_PLAYER_NAME(PlayerID))
+    menu.trigger_commands("trollcrash".. PLAYER.GET_PLAYER_NAME(PlayerID))
+    menu.trigger_commands("nsacrash".. PLAYER.GET_PLAYER_NAME(PlayerID))
 end
 --
 function spawn_vehicle(hash,pos,isGodMode,isFreeze)
@@ -12401,30 +12342,10 @@ function godaimkarma()
     end
 end
 
-function sendscriptevent_one()
-    for pid = 0, 32 do
-        if pid ~= players.user() and players.exists(pid) then
-            util.trigger_script_event(1 << pid, {330622597 ,2, 0, 0, 4, 0,PLAYER.GET_PLAYER_INDEX(), pid})
-        end
-    end
-end
 
 
-function sendscriptevent_two()
-   for pid = 0, 31 do
-        if pid ~= players.user() and players.exists(pid) then
-            util.trigger_script_event(1 << pid, {-369672308, pid, 0, 0, 0, 0, 0,PLAYER.GET_PLAYER_INDEX(), pid})
-        end
-    end
-end
 
-function sendscriptevent_three()
-    for pid = 0, 31 do
-        if pid ~= players.user() and players.exists(pid) then
-            util.trigger_script_event(1 << pid, {3592101251, 1, 0, -1, 4, 127, 0, 0, 0,PLAYER.GET_PLAYER_INDEX(), pid})
-        end
-    end
-end
+
 
 function fangkongjingbao()
     local pos, exp_pos = v3(), v3()
@@ -12741,25 +12662,6 @@ function jesus_help_me()
         entities.delete_by_handle(Ruiner2)
         entities.delete_by_handle(SelfPlayerPed)
     end
-end
-
-function CARGO()
-    menu.trigger_commands("anticrashcam on")
-    local cspped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-    local TPpos = ENTITY.GET_ENTITY_COORDS(cspped, true)
-    local cargobob = CreateVehicle(0XFCFCB68B, TPpos, ENTITY.GET_ENTITY_HEADING(SelfPlayerPed), true)
-    local cargobobPos = ENTITY.GET_ENTITY_COORDS(cargobob, true)
-    local veh = CreateVehicle(0X187D938D, TPpos, ENTITY.GET_ENTITY_HEADING(SelfPlayerPed), true)
-    local vehPos = ENTITY.GET_ENTITY_COORDS(veh, true)
-    local newRope = PHYSICS.ADD_ROPE(TPpos.x, TPpos.y, TPpos.z, 0, 0, 10, 1, 1, 0, 1, 1, false, false, false, 1.0, false, 0)
-    PHYSICS.ATTACH_ENTITIES_TO_ROPE(newRope, cargobob, veh, cargobobPos.x, cargobobPos.y, cargobobPos.z, vehPos.x, vehPos.y, vehPos.z, 2, false, false, 0, 0, "Center", "Center")
-    wait(2500)
-    entities.delete_by_handle(cargobob)
-    entities.delete_by_handle(veh)
-    PHYSICS.DELETE_CHILD_ROPE(newRope)
-    menu.trigger_commands("anticrashcam off")
-    notification("Go Fuck Your Self",colors.red)
-    util.toast("Go Fuck Your Self")
 end
 
 function rlengzhan()
@@ -19822,7 +19724,7 @@ else
 mcb=mcb-1
 end
 end
-draw_string(string.format("~italic~              ¦&#8721;\n    ~h~GRANDTOURINGVIP\n         Version : ".. GT_version), jiaoben_x,jiaoben_y, jiaoben_dx,4.5)
+draw_string(string.format("~italic~              ¦&#8721;\n    ~h~GRANDTOURINGVIP\n         Version : " ..GT_version), jiaoben_x,jiaoben_y, jiaoben_dx,4.5)
 wait()
 end
 end    

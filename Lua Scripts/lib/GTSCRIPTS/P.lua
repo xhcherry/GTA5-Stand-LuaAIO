@@ -1747,7 +1747,7 @@ menu.toggle(bodyguard_veh_options, "载具是否无敌", {}, "", function(toggle
     bodyguard_veh.veh_godmode = toggle
 end)
 
-menu.action(bodyguard_veh_options, "现在就召唤马东锡!", {}, "由于Stand的TASK_VEHICLE_FOLLOW这项API十分乐色\n如果生成的保镖没有继续跟随你\n那么就重新生成一个\n我的建议为首先禁用交通", function()
+menu.action(bodyguard_veh_options, "立即召唤马东锡!!!", {}, "若保镖没有跟随您,那么请您重新生成\n\n<建议>: 禁用交通\n\n这是由于Stand的API: [TASK_VEHICLE_FOLLOW]十分乐色:)", function()
     local veh_hash = util.joaat(bodyguard_veh.name)
     local ped_hash = util.joaat("s_m_y_blackops_01")
     local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
@@ -1844,7 +1844,7 @@ menu.action(bodyguard_veh_options, "保镖下车", {}, "让一位保镖从车里
 	end
 end)
 
-menu.action(bodyguard_veh_options, "移除所有护法", {}, "这将移除您当前生成的所有护法载具,包括载具内的NPC\n这项功能同样可以移除迷路的护法", function()
+menu.action(bodyguard_veh_options, "移除所有护法", {}, "#删除所有保镖与保镖载具\n#这项功能同样可以删除迷路的护法", function()
     for k, ent in pairs(veh_ped_list) do
         entities.delete_by_handle(ent)
     end
