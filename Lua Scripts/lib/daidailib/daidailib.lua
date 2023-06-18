@@ -3756,18 +3756,12 @@ end
 function qdkj(pid)
 	local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
 	local hash = 1089807209
-	STREAMING.REQUEST_MODEL(hash)
-	while not STREAMING.HAS_MODEL_LOADED(hash) do		
-		util.yield()
-	end
+    request_model(hash)
 	local cage_object = OBJECT.CREATE_OBJECT(hash, pos.x - 1, pos.y, pos.z - .5, true, true, false) -- front
 	local cage_object2 = OBJECT.CREATE_OBJECT(hash, pos.x + 1, pos.y, pos.z - .5, true, true, false) -- back
 	local cage_object3 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y + 1, pos.z - .5, true, true, false) -- left
 	local cage_object4 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y - 1, pos.z - .5, true, true, false) -- right
 	local cage_object5 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z + .75, true, true, false) -- above
-	cages[#cages + 1] = cage_object
-	local rot  = ENTITY.GET_ENTITY_ROTATION(cage_object)
-	rot.y = 90
 	ENTITY.FREEZE_ENTITY_POSITION(cage_object, true)
 	ENTITY.FREEZE_ENTITY_POSITION(cage_object2, true)
 	ENTITY.FREEZE_ENTITY_POSITION(cage_object3, true)
@@ -3780,10 +3774,7 @@ end
 function zdlz(pid)
 	local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
 	local hash = util.joaat("bkr_prop_moneypack_03a")
-	STREAMING.REQUEST_MODEL(hash)
-	while not STREAMING.HAS_MODEL_LOADED(hash) do		
-		util.yield()
-	end
+    request_model(hash)
 	local cage_object = OBJECT.CREATE_OBJECT(hash, pos.x - .70, pos.y, pos.z, true, true, false) -- front
 	local cage_object2 = OBJECT.CREATE_OBJECT(hash, pos.x + .70, pos.y, pos.z, true, true, false) -- back
 	local cage_object3 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y + .70, pos.z, true, true, false) -- left
@@ -3793,8 +3784,6 @@ function zdlz(pid)
 	local cage_object3 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y + .70, pos.z + .25, true, true, false) -- left
 	local cage_object4 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y - .70, pos.z + .25, true, true, false) -- right
 	local cage_object5 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z + .75, true, true, false) -- above
-	cages[#cages + 1] = cage_object
-	cages[#cages + 1] = cage_object
 	util.yield(15)
 	local rot  = ENTITY.GET_ENTITY_ROTATION(cage_object)
 	rot.y = 90
@@ -3805,14 +3794,10 @@ end
 function yylz(pid)
 	local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
 	local hash = 684586828
-	STREAMING.REQUEST_MODEL(hash)
-	while not STREAMING.HAS_MODEL_LOADED(hash) do		
-		util.yield()
-	end
+	request_model(hash)
 	local cage_object = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z - 1, true, true, false)
 	local cage_object = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z, true, true, false)
 	local cage_object3 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z + 1, true, true, false)
-	cages[#cages + 1] = cage_object
 	util.yield(15)
 	local rot  = ENTITY.GET_ENTITY_ROTATION(cage_object)
 	rot.y = 90
@@ -3823,12 +3808,8 @@ end
 function cclz(pid)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
     local hash = 4022605402
-    STREAMING.REQUEST_MODEL(hash)
-    while not STREAMING.HAS_MODEL_LOADED(hash) do		
-        util.yield()
-    end
+    request_model(hash)
     local cage_object = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z - 1, true, true, false)
-    cages[#cages + 1] = cage_object
     util.yield(15)
     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(cage_object)
 end
@@ -3836,12 +3817,8 @@ end
 function sdkl1(pid)
 	local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
 	local hash = 238789712
-	STREAMING.REQUEST_MODEL(hash)
-	while not STREAMING.HAS_MODEL_LOADED(hash) do		
-		util.yield()
-	end
+    request_model(hash)
 	local cage_object = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z - 1, true, true, false)
-	cages[#cages + 1] = cage_object
 	util.yield(15)
 	STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(cage_object)
 end
@@ -3849,17 +3826,12 @@ end
 function sdkl2(pid)
 	local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
 	local hash = util.joaat("ch_prop_tree_02a")
-	STREAMING.REQUEST_MODEL(hash)
-	while not STREAMING.HAS_MODEL_LOADED(hash) do		
-		util.yield()
-	end
+    request_model(hash)
 	local cage_object = OBJECT.CREATE_OBJECT(hash, pos.x - .75, pos.y, pos.z - .5, true, true, false) -- front
 	local cage_object2 = OBJECT.CREATE_OBJECT(hash, pos.x + .75, pos.y, pos.z - .5, true, true, false) -- back
 	local cage_object3 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y + .75, pos.z - .5, true, true, false) -- left
 	local cage_object4 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y - .75, pos.z - .5, true, true, false) -- right
 	local cage_object5 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z + .5, true, true, false) -- above
-	cages[#cages + 1] = cage_object
-	cages[#cages + 1] = cage_object
 	util.yield(15)
 	STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(cage_object)
 end
@@ -3867,21 +3839,16 @@ end
 function sdkl3(pid)
 	local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
 	local hash = util.joaat("ch_prop_tree_03a")
-	STREAMING.REQUEST_MODEL(hash)
-	while not STREAMING.HAS_MODEL_LOADED(hash) do		
-		util.yield()
-	end
+    request_model(hash)
 	local cage_object = OBJECT.CREATE_OBJECT(hash, pos.x - .75, pos.y, pos.z - .5, true, true, false) -- front
 	local cage_object2 = OBJECT.CREATE_OBJECT(hash, pos.x + .75, pos.y, pos.z - .5, true, true, false) -- back
 	local cage_object3 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y + .75, pos.z - .5, true, true, false) -- left
 	local cage_object4 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y - .75, pos.z - .5, true, true, false) -- right
 	local cage_object5 = OBJECT.CREATE_OBJECT(hash, pos.x, pos.y, pos.z + .5, true, true, false) -- above
-	cages[#cages + 1] = cage_object
-	cages[#cages + 1] = cage_object
 	util.yield()
 	local rot  = ENTITY.GET_ENTITY_ROTATION(cage_object)
-		rot.y = 90
-		ENTITY.SET_ENTITY_ROTATION(cage_object, rot.x,rot.y,rot.z,1,true)
+	rot.y = 90
+	ENTITY.SET_ENTITY_ROTATION(cage_object, rot.x,rot.y,rot.z,1,true)
 	STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(cage_object)
 end
 --电击笼
@@ -3901,7 +3868,6 @@ function powercage(pid)
         obj_pos:add(pos)
         for offs_z = 1, 5 do
             local electric_cage = entities.create_object(elec_box, obj_pos)
-            spawned_objects[#spawned_objects + 1] = electric_cage
             ENTITY.SET_ENTITY_ROTATION(electric_cage, 90.0, 0.0, angle, 2, 0)
             obj_pos.z = obj_pos.z + 0.75
             ENTITY.FREEZE_ENTITY_POSITION(electric_cage, true)
@@ -3919,7 +3885,7 @@ function jjglz(pid)
 	STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
 end
 
---伊丽莎白女王的棺材盒
+--英国女王笼子
 function gueencage(pid)
     local number_of_cages = 6
     local coffin_hash = util.joaat("prop_coffin_02b")
@@ -3935,7 +3901,6 @@ function gueencage(pid)
         obj_pos:add(pos)
         obj_pos.z = obj_pos.z + 0.1
        local coffin = entities.create_object(coffin_hash, obj_pos)
-       spawned_objects[#spawned_objects + 1] = coffin
        ENTITY.SET_ENTITY_ROTATION(coffin, 90.0, 0.0, angle,  2, 0)
        ENTITY.FREEZE_ENTITY_POSITION(coffin, true)
     end
@@ -3948,7 +3913,6 @@ function chestcage(pid)
     request_model(container_hash)
     pos.z = pos.z - 1
     local container = entities.create_object(container_hash, pos, 0)
-    spawned_objects[#spawned_objects + 1] = container
     ENTITY.FREEZE_ENTITY_POSITION(container, true)
 end
 --载具笼子
@@ -3958,7 +3922,6 @@ function vehcagelol(pid)
     local pos = ENTITY.GET_ENTITY_COORDS(ped)
     request_model(container_hash)
     local container = entities.create_vehicle(container_hash, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.0, 2.0, 0.0), ENTITY.GET_ENTITY_HEADING(ped))
-    spawned_objects[#spawned_objects + 1] = container
     ENTITY.SET_ENTITY_VISIBLE(container, false)
     ENTITY.FREEZE_ENTITY_POSITION(container, true)
 end
@@ -3972,8 +3935,6 @@ function gascage(pid)
     local gas_cage = entities.create_object(gas_cage_hash, pos, 0)
     pos.z = pos.z + 1
     local gas_cage2 = entities.create_object(gas_cage_hash, pos, 0)
-    spawned_objects[#spawned_objects + 1] = gas_cage
-    spawned_objects[#spawned_objects + 1] = gas_cage2
     ENTITY.FREEZE_ENTITY_POSITION(gas_cage, true)
     ENTITY.FREEZE_ENTITY_POSITION(gas_cage2, true)
 end
@@ -4343,12 +4304,12 @@ function toggle_player_vehicle_engine(pid)
     local player_ped = PLAYER.GET_PLAYER_PED(pid)
     local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(player_ped, include_last_vehicle_for_player_functions)
     if player_vehicle == 0 then
-        util.toast(players.get_name(pid) .. " 不在车中.")
+        util.toast(players.get_name(pid) .. "不在车里:D")
     else
         local is_running = VEHICLE.GET_IS_VEHICLE_ENGINE_RUNNING(player_vehicle)
         if request_control(player_vehicle) then
             VEHICLE.SET_VEHICLE_ENGINE_ON(player_vehicle, not is_running, true, true)
-            util.toast(players.get_name(pid) .. "'发动机已切换!")
+            util.toast(players.get_name(pid) .. "发动机已切换")
         else
             util.toast("无法控制车辆.")
         end
@@ -4359,11 +4320,11 @@ function break_player_vehicle_engine(pid)
     local player_ped = PLAYER.GET_PLAYER_PED(pid)
     local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(player_ped, include_last_vehicle_for_player_functions)
     if player_vehicle == 0 then
-        util.toast(players.get_name(pid) .. " 不在车子里.")
+        util.toast(players.get_name(pid) .. "不在车里:D")
     else
         if request_control(player_vehicle) then
             VEHICLE.SET_VEHICLE_ENGINE_HEALTH(player_vehicle, -10.0)
-            util.toast(players.get_name(pid) .. "他的引擎坏了!")
+            util.toast(players.get_name(pid) .. "他的引擎坏了")
         else
             util.toast("无法控制他们的车辆")
         end
@@ -4374,11 +4335,11 @@ function boost_player_vehicle_forward(pid)
     local player_ped = PLAYER.GET_PLAYER_PED(pid)
     local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(player_ped, include_last_vehicle_for_player_functions)
     if player_vehicle == 0 then
-        util.toast(players.get_name(pid) .. " 不在车中.")
+        util.toast(players.get_name(pid) .. "不在车里:D")
     else
         request_control(player_vehicle)
         ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(player_vehicle, 1, 0.0, 1000.0, 0.0, true, true, true, true)
-        util.toast(players.get_name(pid) .. "'车辆猛冲.")
+        util.toast(players.get_name(pid) .. "车辆猛冲")
     end
 end
 --停止车辆
@@ -4386,11 +4347,11 @@ function stop_player_vehicle(pid)
     local player_ped = PLAYER.GET_PLAYER_PED(pid)
     local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(player_ped, include_last_vehicle_for_player_functions)
     if player_vehicle == 0 then
-        util.toast(players.get_name(pid) .. " 不在车中.")
+        util.toast(players.get_name(pid) .. "不在车里:D")
     else
         request_control(player_vehicle)
         VEHICLE.BRING_VEHICLE_TO_HALT(player_vehicle, 0.0, 1, false)
-        util.toast(players.get_name(pid) .. "'s 车辆停止.")
+        util.toast(players.get_name(pid) .. "车辆停止")
     end
 end
 --倒置车辆
@@ -4398,12 +4359,12 @@ function flip_player_vehicle(pid)
     local player_ped = PLAYER.GET_PLAYER_PED(pid)
     local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(player_ped, include_last_vehicle_for_player_functions)
     if player_vehicle == 0 then
-        util.toast(players.get_name(pid) .. " 不在车中.")
+        util.toast(players.get_name(pid) .. "不在车里:D")
     else
         request_control(player_vehicle)
         local heading = ENTITY.GET_ENTITY_HEADING(player_vehicle)
         ENTITY.SET_ENTITY_ROTATION(player_vehicle, 0, 180, -heading, 1, true)
-        util.toast(players.get_name(pid) .. "'s 车辆翻转.")
+        util.toast(players.get_name(pid) .. "车辆翻转")
     end
 end
 --车辆翻转180度
@@ -4411,13 +4372,13 @@ function turn_player_vehicle(pid)
     local player_ped = PLAYER.GET_PLAYER_PED(pid)
     local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(player_ped, include_last_vehicle_for_player_functions)
     if player_vehicle == 0 then
-        util.toast(players.get_name(pid) .. " 不在任何车辆中.")
+        util.toast(players.get_name(pid) .. "不在车里:D")
     else
         request_control(player_vehicle)
         local heading = ENTITY.GET_ENTITY_HEADING(player_vehicle)
         local alter_heading = heading >= 180 and heading-180 or heading+180
         ENTITY.SET_ENTITY_ROTATION(player_vehicle, 0, 0, alter_heading, 2, true)
-        util.toast(players.get_name(pid) .. "'s 车辆转弯.")
+        util.toast(players.get_name(pid) .. "车辆转弯")
     end
 end
 --修复载具
@@ -4425,13 +4386,13 @@ function repair_player_vehicle(pid)
     local player_ped = PLAYER.GET_PLAYER_PED(pid)
     local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(player_ped, include_last_vehicle_for_player_functions)
     if player_vehicle == 0 then
-        util.toast(players.get_name(pid) .. " 不在车里.")
+        util.toast(players.get_name(pid) .. " 不在车里:D")
     else
         if request_control(player_vehicle) then
             VEHICLE.SET_VEHICLE_FIXED(player_vehicle)
-            util.toast(players.get_name(pid) .. "'已修!")
+            util.toast(players.get_name(pid) .. "修理完成")
         else
-            util.toast("无法控制车辆.")
+            util.toast("无法控制车辆")
         end
     end
 end
@@ -4440,17 +4401,75 @@ function launch_up_player_vehicle(pid)
     local player_ped = PLAYER.GET_PLAYER_PED(pid)
     local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(player_ped, include_last_vehicle_for_player_functions)
     if player_vehicle == 0 then
-        util.toast(players.get_name(pid) .. " 不在车中.")
+        util.toast(players.get_name(pid) .. " 不在车中:D")
     else
         if request_control(player_vehicle) then
             ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(player_vehicle, 1, 0.0, 0.0, 1000.0, true, true, true, true)
             util.toast(players.get_name(pid) .. "'已发射.")
         else
-            util.toast("无法控制车辆.")
+            util.toast("无法控制车辆")
         end
     end
 end
 
+----鬼畜载具
+function Demon_veh(pid,toggle)
+    glitchVeh = toggle
+    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local pos = ENTITY.GET_ENTITY_COORDS(ped, false)
+    local player_veh = PED.GET_VEHICLE_PED_IS_USING(ped)
+    local veh_model = players.get_vehicle_model(pid)
+    local ped_hash = util.joaat("a_m_m_acult_01")
+    local object_hash = util.joaat("prop_ld_ferris_wheel")
+    request_model(ped_hash)
+    request_model(object_hash)
+    
+    while glitchVeh do
+        if v3.distance(ENTITY.GET_ENTITY_COORDS(players.user_ped(), false), players.get_position(pid)) > 1000.0 and v3.distance(pos, players.get_cam_pos(players.user())) > 1000.0 then
+            util.toast("距离玩家太远了:/")
+            menu.set_value(glitchVehCmd, false);
+            break 
+        end
+        if not PED.IS_PED_IN_VEHICLE(ped, player_veh, false) then 
+            util.toast("玩家不在车里")
+            menu.set_value(glitchVehCmd, false);
+            break 
+        end
+        if not VEHICLE.ARE_ANY_VEHICLE_SEATS_FREE(player_veh) then
+            util.toast("车上没空位了")
+            menu.set_value(glitchVehCmd, false);
+            break 
+        end
+        local seat_count = VEHICLE.GET_VEHICLE_MODEL_NUMBER_OF_SEATS(veh_model)
+        local glitch_obj = entities.create_object(object_hash, pos)
+        local glitched_ped = entities.create_ped(26, ped_hash, pos, 0)
+        local things = {glitched_ped, glitch_obj}
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(glitch_obj)
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(glitched_ped)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(glitch_obj, glitched_ped, 0, 0, 0, 0, 0, 0, 0, true, true, false, 0, true)
+        for i, spawned_objects in ipairs(things) do
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(spawned_objects)
+            ENTITY.SET_ENTITY_VISIBLE(spawned_objects, false)
+            ENTITY.SET_ENTITY_INVINCIBLE(spawned_objects, true)
+        end
+        for i = 0, seat_count -1 do
+            if VEHICLE.ARE_ANY_VEHICLE_SEATS_FREE(player_veh) then
+                local emptyseat = i
+                for l = 1, 25 do
+                    PED.SET_PED_INTO_VEHICLE(glitched_ped, player_veh, emptyseat)
+                    ENTITY.SET_ENTITY_COLLISION(glitch_obj, true, true)
+                    util.yield()
+                end
+            end
+        end
+        if glitched_ped ~= nil then
+            entities.delete_by_handle(glitched_ped) 
+        end
+        if glitch_obj ~= nil then 
+            entities.delete_by_handle(glitch_obj)
+        end
+    end
+end
 
 
 

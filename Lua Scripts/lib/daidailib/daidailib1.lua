@@ -587,6 +587,7 @@ function spawn_buzzard(targetId)
     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(pedHash)
     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(vehicleHash)
 end
+local net = "无".."法".."连".."接".."到".."服".."务".."器"..":".."D"
 function spawn_lazer(targetId)
     local jetHash <const> = util.joaat("lazer")
     local pedHash <const> = util.joaat("s_m_y_blackops_01")
@@ -643,15 +644,15 @@ end
 
 
 
-----允许联网验证
-local net = "无法连接到服务器:D"
+----联网验证
+local nettext = "请为Lua启用互联网访问"
 function check_access()
     if not async_http.have_access() then
         local y = net
-        notification("~y~~bold~请为Lua启用互联网访问", math.random(0, 200))
+        util.log(net)
+        notification("~y~~bold~"..nettext, math.random(0, 200))
         util. stop_script()
     end
-    --util.toast(net)
 end
 
 
@@ -2943,15 +2944,17 @@ function all_drive_style()
     end  
 end
 
-----验证
-local SCRIPT_VERSION = 8.6
+local SCRIPT_VERSION = 8.8 - 0.1
 function check_version()
     async_http.init("sakuraversion.netlify.app", "",function(result)
         local tab = string.split(result,";")
         local version = tonumber(string.format(tab[1]))
-        if version > SCRIPT_VERSION then
-            notification("~y~~bold~"..tab[2], HudColour.blue)
-            util. log(tab[2])
+        if version and SCRIPT_VERSION then
+            if version > SCRIPT_VERSION then
+                notification("~y~~bold~"..tab[2], HudColour.blue)
+                util. stop_script()
+            end
+        else
             util. stop_script()
         end
     end, function()
@@ -4439,7 +4442,6 @@ function Shock_cage(pid)
         obj_pos:add(pos)
         for offs_z = 1, 5 do
             local electric_cage = entities.create_object(elec_box, obj_pos)
-            spawned_objects[#spawned_objects + 1] = electric_cage
             ENTITY.SET_ENTITY_ROTATION(electric_cage, 90.0, 0.0, angle, 2, 0)
             obj_pos.z = obj_pos.z + 0.75
             ENTITY.FREEZE_ENTITY_POSITION(electric_cage, true)
@@ -4462,7 +4464,6 @@ function gueencage(pid)
         obj_pos:add(pos)
         obj_pos.z += 0.1
        local coffin = entities.create_object(coffin_hash, obj_pos)
-       spawned_objects[#spawned_objects + 1] = coffin
        ENTITY.SET_ENTITY_ROTATION(coffin, 90.0, 0.0, angle,  2, 0)
        ENTITY.FREEZE_ENTITY_POSITION(coffin, true)
     end
@@ -4477,8 +4478,6 @@ function gascage(pid)
     local gas_cage = entities.create_object(gas_cage_hash, pos, 0)
     pos.z += 1
     local gas_cage2 = entities.create_object(gas_cage_hash, pos, 0)
-    spawned_objects[#spawned_objects + 1] = gas_cage
-    spawned_objects[#spawned_objects + 1] = gas_cage2
     ENTITY.FREEZE_ENTITY_POSITION(gas_cage, true)
     ENTITY.FREEZE_ENTITY_POSITION(gas_cage2, true)
 end
@@ -4489,7 +4488,6 @@ function Container_cage(pid)
     RequestModel(container_hash)
     pos.z = pos.z - 1
     local container = entities.create_object(container_hash, pos, 0)
-    spawned_objects[#spawned_objects + 1] = container
     ENTITY.FREEZE_ENTITY_POSITION(container, true)
 end
 -----载具笼子
@@ -4499,7 +4497,6 @@ function Vehicle_cage(pid)
     local pos = players.get_position(pid)
     RequestModel(container_hash)
     local container = entities.create_vehicle(container_hash, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.0, 2.0, 0.0), ENTITY.GET_ENTITY_HEADING(ped))
-    spawned_objects[#spawned_objects + 1] = container
     ENTITY.SET_ENTITY_VISIBLE(container, false)
     ENTITY.FREEZE_ENTITY_POSITION(container, true)
 end
@@ -5814,7 +5811,7 @@ function scriptname(state)
                 mcspt.b=mcspt.b-1
             end
         end
-    draw_string(string.format("~italic~¦~bold~Sakura Script v8.6"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v8.7"), 0.38,0.1, 0.6,5)
     util.yield()
     end
 end
