@@ -2,15 +2,22 @@ Finished Tutorial: Yes
 Understands Commands: Yes
 Understands Sliders: Yes
 Understands Profiles: Yes
-Tree Compatibility Version: 45
+Understands Context Menu: Yes
+Tree Compatibility Version: 47
 Self
+	Weapons
+		Infinite Ammo: On
 	Immortality: On
-	Lock Wanted Level: On
 Vehicle
 	Spawner
 		Make Spawned Vehicles Indestructible: On
 		Tune Spawned Vehicles: Fully
 	Indestructible: On
+Online
+	Enhancements
+		Disable Idle/AFK Kick: On
+		Disable Death Barriers: On
+		Bypass Casino Region Lock: On
 Players
 	Settings
 		Tags
@@ -39,3 +46,11 @@ World
 	Places
 		Teleport To...
 			Auto Teleport To Waypoints: On
+Game
+	Edit Labels: HUD_JOINING<正在使用GTMENU加入在线模式>MP_SPINLOADING<GTMENU YYDS>HUD_LBD_FMP<GRANDTOURING 在线模式（公开，~1~）>HUD_LBD_FMI<GRANDTOURING 在线模式（邀请，~1~）>HUD_LBD_FMC<GRANDTOURING 在线模式（帮会，~1~）>HUD_LBD_FMF<GRANDTOURING 在线模式（好友，~1~）>HUD_LBD_FMS<GRANDTOURING 在线模式（单人，~1~）>0X56F3BD49<GRANDTOURING 在线模式>HUD_MAINTIT<GRANDTOURINGVIP>LOADING_SPLAYER_L<正在加载GRANDTOURINGVIP故事模式>PM_QUIT_MP<离开 GRANDTOURING 在线模式>PM_INF_LEAT<离开 GRANDTOURING 在线模式>PM_INF_LEAB<立刻前往GRANDTOURING故事模式，您的所有游戏进度都将自动保存>CMRC_STORE_OPEN<GRANDTOURINGVIP 商店\
+现已开放!>UI_FLOW_OP_CL_M<关于 GRANDTOURINGVIP>UI_FLOW_OP_CL<关于 GRANDTOURINGVIP>UI_FLOW_OP_CL_D<多亏了我们的GT开发团队\
+您才能体验到无与伦比的GRANDTOURINGVIP\
+主创作者:GT 副创开发:瑞思拜\
+致谢人员:12 Super飞 柒月 小马哥 丢丢\
+我们的群聊:238394690(脚本下载群) 716431566(日常聊天群)\
+感谢您使用GRANDTOURINGVIP>
