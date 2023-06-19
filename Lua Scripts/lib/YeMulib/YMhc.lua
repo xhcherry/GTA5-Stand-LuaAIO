@@ -54,7 +54,7 @@
 
     --- Important
 
-        HC_VERSION = "V 3.3.2"
+        HC_VERSION = "V 3.3.1"
         CODED_GTAO_VERSION = 1.67
         SUPPORTED_STAND_VERSION = 101 -- Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
 
@@ -789,21 +789,21 @@
 
     menu.divider(Heist_Control, ("任务功能"),{}, "")
 
-        local makemoneyfast = menu.list(Heist_Control, "快速任务")
-        local autocayosolo = menu.list(makemoneyfast, "半自动单人上岛", {}, "请按顺序依次进行点击")
-        local autocayomult = menu.list(makemoneyfast, "半自动多人上岛", {}, "请按顺序依次进行点击")
-        local autocasinoheist = menu.list(makemoneyfast, "半自动多人赌场", {}, "请按顺序依次进行点击")
-        local autodommsheist = menu.list(makemoneyfast, "半自动多人末日", {}, "请按顺序依次进行点击") 
+        local makemoneyfast = menu.list(Heist_Control, "快速任务", {}, "此选项可帮助您快速完成各种高收益的抢劫任务")
+        local autocayosolo = menu.list(makemoneyfast, "半自动单人上岛", {}, "请按顺序依次进行点击\n注:请慢慢完成,不要心急喔~")
+        local autocayomult = menu.list(makemoneyfast, "半自动多人上岛", {}, "请按顺序依次进行点击\n注:请慢慢完成,不要心急喔~")
+        local autocasinoheist = menu.list(makemoneyfast, "半自动多人赌场", {}, "请按顺序依次进行点击\n注:请慢慢完成,不要心急喔~")
+        local autodommsheist = menu.list(makemoneyfast, "半自动多人末日", {}, "请按顺序依次进行点击\n注:请慢慢完成,不要心急喔~") 
         local auto_cayo_bot = menu.list(makemoneyfast, "全自动上岛机器人", {}, "一键勾选即可全自动完成小岛抢劫") 
-        PERICO_HEIST = menu.list(Heist_Control, TRANSLATE("Cayo Perico Heist"), {"hccp"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run") .. "\n" .. TRANSLATE("- Under $4.100.000 per hour"), function();  end)
-        CASINO_HEIST = menu.list(Heist_Control, TRANSLATE("Diamond Casino Heist"), {"hccah"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $3.650.000 per run"), function(); end)
-        DOOMS_HEIST = menu.list(Heist_Control, TRANSLATE("Doomsday Heist"), {"hcdooms"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run"), function(); end)
-        CLASSIC_HEISTS = menu.list(Heist_Control, TRANSLATE("Classic Heist"), {"hcclassic"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Fleeca Heist: Under $15.000.000 per run"), function(); end)
+        PERICO_HEIST = menu.list(Heist_Control, TRANSLATE("Cayo Perico Heist"), {"hccp"}, "#结算任务上限为255万\n#若超过上限会不到账喔(队友同理)\n#以下内容若麻烦推荐使用[自动预设]\n\n公式: (抢劫金额) 乘 (分红百分比) 减 (帕维尔的30万) = 255万\n举例:如果您选择50%的分红收入,您的抢劫金额最大收益上限应为560万左右,建议使用高级功能修改背包容量\n\n[丢丢小课堂]", function();  end)
+        CASINO_HEIST = menu.list(Heist_Control, TRANSLATE("Diamond Casino Heist"), {"hccah"}, "#结算任务上限为360万\n#若超过上限会不到账喔(队友同理)\n#以下内容若麻烦推荐使用[自动预设]\n#注意:困难模式下,如果您选择100%的分红,最终会得到290万左右的金额\n#切记:请自行叠加分红百分比,若超过上限360万将得到0收入!!!\n\n[丢丢小课堂]", function(); end)
+        DOOMS_HEIST = menu.list(Heist_Control, TRANSLATE("Doomsday Heist"), {"hcdooms"}, "#结算任务上限为255万\n#若超过上限会不到账喔(队友同理)\n#以下内容若麻烦推荐使用[自动预设]\n\n#注意:如果您选择100%的分红\n末日一到账金额: 120万左右\n末日二到账金额: 180万左右\n末日三到账金额: 230万左右\n[以上皆为困难模式]\n#切记:请自行叠加分红百分比,若超过上限255万将得到0收入!!!\n\n[丢丢小课堂]", function(); end)
+        CLASSIC_HEISTS = menu.list(Heist_Control, TRANSLATE("Classic Heist"), {"hcclassic"}, "#全福银行抢劫结算金额为1500万\n#您必须是房主并且仅允许您个人得到1500万!!!", function(); end)
         LS_ROBBERY = menu.list(Heist_Control, TRANSLATE("LS Tuners Robbery"), {"hcls"}, "", function(); end)
         ULP_MISSIONS = menu.list(Heist_Control, TRANSLATE("ULP Missions"), {"hculp"}, "", function(); end)
         TH_CONTRACT = menu.list(Heist_Control, TRANSLATE("The Contract: Agency"), {"hcagc"}, "", function(); end)
-        MASTER_UNLOCKR = menu.list(Heist_Control, TRANSLATE("Master Unlocker"), {"hcmu"}, "", function(); end)
-        TOOLS = menu.list(Heist_Control, TRANSLATE("Tools"), {"hctool"}, "", function(); end)
+        MASTER_UNLOCKR = menu.list(Heist_Control, TRANSLATE("Master Unlocker"), {"hcmu"}, "解锁游戏内容/DLCs/彩蛋/奖品等..", function(); end)
+        TOOLS = menu.list(Heist_Control, TRANSLATE("Tools"), {"hctool"}, "#实用选项(任务)\n包含自动赚钱/快速完成/管理选项等..", function(); end)
         INFOS = menu.list(Heist_Control, TRANSLATE("Settings And About HC"), {"hcinfo"}, "", function(); end)
 
         menu.action(autocayosolo, "完成所有前置任务", {}, "", function()
@@ -830,10 +830,10 @@
         ;  end)
         
         menu.action(autocayosolo, "全员135%分红", {"setallcut135"}, "", function()
-            SET_INT_GLOBAL(1977693 + 823 + 56 + 1, 135)
-            SET_INT_GLOBAL(1977693 + 823 + 56 + 2, 135)
-            SET_INT_GLOBAL(1977693 + 823 + 56 + 3, 135)
-            SET_INT_GLOBAL(1977693 + 823 + 56 + 4, 135)
+            SET_INT_GLOBAL(1978495 + 825 + 56 + 1, 135)
+            SET_INT_GLOBAL(1978495 + 825 + 56 + 2, 135)
+            SET_INT_GLOBAL(1978495 + 825 + 56 + 3, 135)
+            SET_INT_GLOBAL(1978495 + 825 + 56 + 4, 135)
             STAT_SET_INT("H4_PLAYTHROUGH_STATUS", 5)
         ;  end)
         
@@ -874,24 +874,23 @@
         ;  end)
         
         menu.action(autocayomult, "全员135%分红", {"setallcut135"}, "", function()
-            SET_INT_GLOBAL(1977693 + 823 + 56 + 1, 135)
-            SET_INT_GLOBAL(1977693 + 823 + 56 + 2, 135)
-            SET_INT_GLOBAL(1977693 + 823 + 56 + 3, 135)
-            SET_INT_GLOBAL(1977693 + 823 + 56 + 4, 135)
+            SET_INT_GLOBAL(1978495 + 825 + 56 + 1, 135)
+            SET_INT_GLOBAL(1978495 + 825 + 56 + 2, 135)
+            SET_INT_GLOBAL(1978495 + 825 + 56 + 3, 135)
+            SET_INT_GLOBAL(1978495 + 825 + 56 + 4, 135)
             STAT_SET_INT("H4_PLAYTHROUGH_STATUS", 5)
         ;  end)
         
         menu.action(autocayomult, "[频繁上岛保护]全员135%分红 你0%", {}, "", function()
-            SET_INT_GLOBAL(1977693 + 823 + 56 + 1, 0)
-            SET_INT_GLOBAL(1977693 + 823 + 56 + 2, 135)
-            SET_INT_GLOBAL(1977693 + 823 + 56 + 3, 135)
-            SET_INT_GLOBAL(1977693 + 823 + 56 + 4, 135)
+            SET_INT_GLOBAL(1978495 + 825 + 56 + 1, 0)
+            SET_INT_GLOBAL(1978495 + 825 + 56 + 2, 135)
+            SET_INT_GLOBAL(1978495 + 825 + 56 + 3, 135)
+            SET_INT_GLOBAL(1978495 + 825 + 56 + 4, 135)
             STAT_SET_INT("H4_PLAYTHROUGH_STATUS", 5)
         ;  end)
         
         menu.action(autocayomult, "一键完成任务", {""}, "必须为房主", function()
-                menu.trigger_commands("scriptshost")
-                menu.trigger_commands("hcinsfincp")
+                menu.trigger_command(finishcayo)
             end)
         
         menu.action(autocayomult, "杀死队友", {}, "", function()
@@ -908,15 +907,19 @@
         ;  end)
         
         menu.action(autocayomult, "快速切开玻璃", {}, IS_WORKING(false), function()
-            SET_FLOAT_LOCAL("fm_mission_controller_2020", 27985 + 3, 100)
+            SET_FLOAT_LOCAL("fm_mission_controller_2020", 29685 + 3, 100)
         end, function()
-            SET_FLOAT_LOCAL("fm_mission_controller_2020", 27985 + 3, 0)
+            SET_FLOAT_LOCAL("fm_mission_controller_2020", 29685 + 3, 0)
         end)
         
         menu.action(autocayomult, "传送到出口", {}, "", function()
             TELEPORT(4990.0386, -5717.6895, 19.880217)
             SET_HEADING(50)
         ;  end)
+
+        menu.action(autocayomult, "召唤图拉尔多", {}, IS_WORKING(false), function()
+            menu.trigger_commands("toreador");
+        end)
         
         menu.action(autocayomult, "传送到大海", {}, "", function()
             TELEPORT(4771.479, -6165.737, -39.079613)
@@ -924,9 +927,84 @@
         
         
         menu.divider(autocasinoheist, "只有气势汹汹可以一键完成任务")
+
+        AUTO_REMOVENPC = menu.toggle(autocasinoheist, "循环移除NPC武器", { "autoremovenpc1" }, IS_WORKING(true)
+            , function()
+                while menu.get_value(AUTO_REMOVENPC) do
+                    for k, ent in pairs(entities.get_all_peds_as_handles()) do
+                        if not IS_PED_PLAYER(ent) then
+                            -- if HostilePed then
+                            if PED.IS_PED_IN_COMBAT(ent, PLAYER.PLAYER_ID()) then
+                                WEAPON.REMOVE_ALL_PED_WEAPONS(ent, true)
+                            end
+                            -- else
+                            --     WEAPON.REMOVE_ALL_PED_WEAPONS(ent, true)
+                            -- end
+                        end
+                    end
+                    util.yield(1000)
+                end
+            end)
         
         menu.action(autocasinoheist, TRANSLATE("游戏厅车库门口"), {}, "", function()
             TELEPORT(-619.987, 282.960, 81.639)
+        end)
+
+        menu.action(autocasinoheist, "完成气势汹汹前置", {"hccahdiaagg1"}, "", function()
+            STAT_SET_INT("H3_COMPLETEDPOSIX", -1)
+            STAT_SET_INT("H3OPT_MASKS", 4)
+            STAT_SET_INT("H3OPT_WEAPS", 1)
+            STAT_SET_INT("H3OPT_VEHS", 3)
+            STAT_SET_INT("CAS_HEIST_FLOW", -1)
+            STAT_SET_INT("H3_LAST_APPROACH", 0)
+            STAT_SET_INT("H3OPT_APPROACH", 3)
+            STAT_SET_INT("H3_HARD_APPROACH", 0)
+            STAT_SET_INT("H3OPT_TARGET", 3)
+            STAT_SET_INT("H3OPT_POI", 1023)
+            STAT_SET_INT("H3OPT_ACCESSPOINTS", 2047)
+            STAT_SET_INT("H3OPT_CREWWEAP", 4)
+            STAT_SET_INT("H3OPT_CREWDRIVER", 3)
+            STAT_SET_INT("H3OPT_CREWHACKER", 4)
+            STAT_SET_INT("H3OPT_DISRUPTSHIP", 3)
+            STAT_SET_INT("H3OPT_BODYARMORLVL", -1)
+            STAT_SET_INT("H3OPT_KEYLEVELS", 2)
+            STAT_SET_INT("H3OPT_BITSET1", 799)
+            STAT_SET_INT("H3OPT_BITSET0", 3670102)
+
+        ;  end)
+
+        menu.action(autocasinoheist, "全员480%分红", {"setallcut480"}, "", function()
+
+            -- SET_INT_GLOBAL(262145 + 29015, 1410065408)
+            -- menu.trigger_commands("hccahbuyer high"); util.yield_once()
+            -- menu.trigger_commands("hccahentrance Sewers"); util.yield_once()
+            -- menu.trigger_commands("hccahexit stafflobby"); util.yield_once()
+            
+            SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 1, 480) 
+            SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 2, 480) 
+            SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 3, 480) 
+            SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 4, 480) 
+        ;  end)
+
+        menu.action(autocasinoheist, "传送到下水道", {}, "", function()
+            TELEPORT(1034.9442, -271.90024, 50.37195)
+        ;  end)
+
+        menu.action(autocasinoheist, "一键拿取110w", { "hcget110w" }, IS_WORKING(false), function()
+            menu.trigger_commands("scripthost")
+            SET_INT_LOCAL("fm_mission_controller", 19710 + 2686, 1100000)
+        end)
+
+        menu.action(autocasinoheist, "一键完成任务1", { "hcinsfincah1" }, IS_WORKING(false)  .. TRANSLATE("请先设置拿取金额"), function()
+            menu.trigger_commands("scripthost")
+
+            SET_INT_LOCAL("fm_mission_controller", 28329 + 1, 99999) -- 'fm_mission_controller' instant finish variable?
+            -- SET_INT_GLOBAL("fm_mission_controller", 27471 + 859, 99999)
+            SET_INT_LOCAL("fm_mission_controller", 31585 + 69, 99999)
+        end)
+
+        menu.action(autocasinoheist, "召唤骷髅马", {}, IS_WORKING(false), function()
+            menu.trigger_commands("kuruma2");
         end)
         
         menu.toggle(autocasinoheist, "气势汹汹", { "hccahdiaagg" }, IS_WORKING(true) .. TRANSLATE("选择低级买家!请保持开启直至完成")
@@ -982,8 +1060,7 @@
 
         
         menu.action(autocasinoheist, "一键完成任务", { "" }, "必须为房主", function()
-            menu.trigger_commands("scriptshost")
-            menu.trigger_commands("hcinsfincah")
+            menu.trigger_command(finishcasino)
         end)
         
         menu.action(autocasinoheist, TRANSLATE("游戏厅车库门口"), {}, "", function()
@@ -1085,8 +1162,7 @@
         end)
         
         menu.action(autodommsheist, "一键完成任务", { "hcinsfindooms" }, "必须为房主", function()
-            menu.trigger_commands("scriptshost")
-            menu.trigger_commands("hcinsfindooms")
+            menu.trigger_command(finishact)
         end)
     
 
@@ -1099,7 +1175,7 @@
         menu.divider(auto_cayo_bot, TRANSLATE("Settings"))
 
         NumberOfPlayingCP = 100
-        menu.slider(auto_cayo_bot, TRANSLATE("循环时间"), {""}, "设定多久时间进行一次机器人自动上岛", 1, 100, 100, 1, function(Value)
+        menu.slider(auto_cayo_bot, TRANSLATE("循环时间"), {""}, "设定何时再次进行自动辅助上岛", 1, 100, 100, 1, function(Value)
             NumberOfPlayingCP = Value
         end)
 
@@ -1146,7 +1222,7 @@
        menu.divider(auto_cayo_bot, "确保你的生成位置是佩岛,可以按m查看")
 
         local NumberOfPlayedCP = 0
-        AUTO_CAYO_BOT = menu.toggle_loop(auto_cayo_bot, TRANSLATE("Auto Cayo Bot"), {}, IS_WORKING(true) .. TRANSLATE("Heist-Control将以每20分钟/次自动完成Solo-Cayo-Perico-Heist\n可获得209万美元不要按任何键\n以防止出现一些游戏错误"), function()
+        AUTO_CAYO_BOT = menu.toggle_loop(auto_cayo_bot, TRANSLATE("Auto Cayo Bot"), {}, IS_WORKING(true) .. TRANSLATE("-单次收益:200万$以上\n\n-请不要按任何键,防止出现游戏错误\n-Heist-Control将以每20分钟/次自动完成单人小岛抢劫"), function()
 
             if NumberOfPlayingCP >= NumberOfPlayedCP then
                 if not util.is_interaction_menu_open() then
@@ -2246,9 +2322,9 @@
             PERICO_HOST_CUT = menu.list(PERICO_CUTS, TRANSLATE("Your Cut"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_HOST_CUT_LOOP = menu.toggle_loop(PERICO_HOST_CUT, TRANSLATE("Enable"), {"hccphostcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1977693 + 823 + 56 + 1, menu.get_value(CP_HOST_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 1, menu.get_value(CP_HOST_CUT)) -- heist_island_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1977693 + 823 + 56 + 1, menu.get_default_state(CP_HOST_CUT))
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 1, menu.get_default_state(CP_HOST_CUT))
                 end)
 
                 CP_HOST_CUT = menu.slider(PERICO_HOST_CUT, TRANSLATE("Custom Percentage"), {"hccphostcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -2258,9 +2334,9 @@
             PERICO_P2_CUT = menu.list(PERICO_CUTS, TRANSLATE("Player 2"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_2P_CUT_LOOP = menu.toggle_loop(PERICO_P2_CUT, TRANSLATE("Enable"), {"hccp2pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1977693 + 823 + 56 + 2, menu.get_value(CP_2P_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 2, menu.get_value(CP_2P_CUT)) -- heist_island_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1977693 + 823 + 56 + 2, menu.get_default_state(CP_2P_CUT))
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 2, menu.get_default_state(CP_2P_CUT))
                 end)
 
                 CP_2P_CUT = menu.slider(PERICO_P2_CUT, TRANSLATE("Custom Percentage"), {"hccp2pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -2270,9 +2346,9 @@
             PERICO_P3_CUT = menu.list(PERICO_CUTS, TRANSLATE("Player 3"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_3P_CUT_LOOP = menu.toggle_loop(PERICO_P3_CUT, TRANSLATE("Enable"), {"hccp3pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1977693 + 823 + 56 + 3, menu.get_value(CP_3P_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 3, menu.get_value(CP_3P_CUT)) -- heist_island_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1977693 + 823 + 56 + 3, menu.get_default_state(CP_3P_CUT))
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 3, menu.get_default_state(CP_3P_CUT))
                 end)
 
                 CP_3P_CUT = menu.slider(PERICO_P3_CUT, TRANSLATE("Custom Percentage"), {"hccp3pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -2282,9 +2358,9 @@
             PERICO_P4_CUT = menu.list(PERICO_CUTS, TRANSLATE("Player 4"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_4P_CUT_LOOP = menu.toggle_loop(PERICO_P4_CUT, TRANSLATE("Enable"), {"hccp4pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1977693 + 823 + 56 + 4, menu.get_value(CP_4P_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 4, menu.get_value(CP_4P_CUT)) -- heist_island_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1977693 + 823 + 56 + 4, menu.get_default_state(CP_4P_CUT))
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 4, menu.get_default_state(CP_4P_CUT))
                 end)
 
                 CP_4P_CUT = menu.slider(PERICO_P4_CUT, TRANSLATE("Custom Percentage"), {"hccp4pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -3179,9 +3255,9 @@
             CAH_HOST = menu.list(CAH_PLAYER_CUT, TRANSLATE("Your Cut"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CAH_HOST_CUT_LOOP = menu.toggle_loop(CAH_HOST, TRANSLATE("Enable"), {"hccah1pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 1, menu.get_value(CAH_HOST_CUT)) -- gb_casino_heist_planning.c
+                    SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 1, menu.get_value(CAH_HOST_CUT)) -- gb_casino_heist_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 1, menu.get_default_state(CAH_HOST_CUT))
+                    SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 1, menu.get_default_state(CAH_HOST_CUT))
                 end)
 
                 CAH_HOST_CUT = menu.slider(CAH_HOST, TRANSLATE("Custom Percentage"), {"hccah1pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -3191,9 +3267,9 @@
             CAH_2P = menu.list(CAH_PLAYER_CUT, TRANSLATE("Player 2"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CAH_2P_CUT_LOOP = menu.toggle_loop(CAH_2P, TRANSLATE("Enable"), {"hccah2pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 2, menu.get_value(CAH_2P_CUT)) -- gb_casino_heist_planning.c
+                    SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 2, menu.get_value(CAH_2P_CUT)) -- gb_casino_heist_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 2, menu.get_default_state(CAH_2P_CUT))
+                    SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 2, menu.get_default_state(CAH_2P_CUT))
                 end)
 
                 CAH_2P_CUT = menu.slider(CAH_2P, TRANSLATE("Custom Percentage"), {"hccah2pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -3203,9 +3279,9 @@
             CAH_3P = menu.list(CAH_PLAYER_CUT, TRANSLATE("Player 3"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CAH_3P_CUT_LOOP = menu.toggle_loop(CAH_3P, TRANSLATE("Enable"), {"hccah3pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 3, menu.get_value(CAH_3P_CUT)) -- gb_casino_heist_planning.c
+                    SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 3, menu.get_value(CAH_3P_CUT)) -- gb_casino_heist_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 3, menu.get_default_state(CAH_3P_CUT))
+                    SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 3, menu.get_default_state(CAH_3P_CUT))
                 end)
 
                 CAH_3P_CUT = menu.slider(CAH_3P, TRANSLATE("Custom Percentage"), {"hccah3pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -3215,9 +3291,9 @@
             CAH_4P = menu.list(CAH_PLAYER_CUT, TRANSLATE("Player 4"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
                 
                 CAH_4P_CUT_LOOP = menu.toggle_loop(CAH_4P, TRANSLATE("Enable"), {"hccah4pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 4, menu.get_value(CAH_4P_CUT)) -- gb_casino_heist_planning.c
+                    SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 4, menu.get_value(CAH_4P_CUT)) -- gb_casino_heist_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1970895 + 1497 + 736 + 92 + 4, menu.get_default_state(CAH_4P_CUT))
+                    SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 4, menu.get_default_state(CAH_4P_CUT))
                 end)
 
                 CAH_4P_CUT = menu.slider(CAH_4P, TRANSLATE("Custom Percentage"), {"hccah4pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -5737,14 +5813,14 @@
 
         menu.divider(INSTANT_FINISH, TRANSLATE("Heists"))
 
-            menu.action(INSTANT_FINISH, TRANSLATE("Cayo / Tuners / ULP / Agency"), {"hcinsfincp"}, IS_WORKING(true) .. TRANSLATE("Note that may works for some of other preps. Only 'Quick Preset' is compatible with Cayo Perico Heist."), function() -- https://www.unknowncheats.me/forum/3524081-post3.html
+            finishcayo = menu.action(INSTANT_FINISH, TRANSLATE("Cayo / Tuners / ULP / Agency"), {"hcinsfincp"}, IS_WORKING(true) .. TRANSLATE("Note that may works for some of other preps. Only 'Quick Preset' is compatible with Cayo Perico Heist."), function() -- https://www.unknowncheats.me/forum/3524081-post3.html
                 menu.trigger_commands("scripthost")
 
                 SET_INT_LOCAL("fm_mission_controller_2020", 42279 + 1, 51338752) -- 'fm_mission_controller_2020' instant finish variable?
                 SET_INT_LOCAL("fm_mission_controller_2020", 42279 + 1375 + 1, 50) -- 'fm_mission_controller_2020' instant finish variable?
             end)
 
-            menu.action(INSTANT_FINISH, TRANSLATE("Casino Aggressive / Classic"), {"hcinsfincah"}, IS_WORKING(true) .. TRANSLATE("Note that if you don't use Heist Control's automated Casino Heist presets, won't get money."), function()
+            finishcasino = menu.action(INSTANT_FINISH, TRANSLATE("Casino Aggressive / Classic"), {"hcinsfincah"}, IS_WORKING(true) .. TRANSLATE("Note that if you don't use Heist Control's automated Casino Heist presets, won't get money."), function()
                 menu.trigger_commands("scripthost")
                 
                 SET_INT_LOCAL("fm_mission_controller", 19707 + 1741, 80) -- Casino Aggressive Kills & Act 3
@@ -5753,7 +5829,7 @@
                 SET_INT_LOCAL("fm_mission_controller", 31585 + 69, 99999) -- 'fm_mission_controller' instant finish variable?
             end)
 
-            menu.action(INSTANT_FINISH, TRANSLATE("Doomsday"), {"hcinsfindooms"}, IS_WORKING(true) .. TRANSLATE("Note that you may press multiple times to instant finish the heist."), function()
+            finishact = menu.action(INSTANT_FINISH, TRANSLATE("Doomsday"), {"hcinsfindooms"}, IS_WORKING(true) .. TRANSLATE("Note that you may press multiple times to instant finish the heist."), function()
                 menu.trigger_commands("scripthost")
 
                 SET_INT_LOCAL("fm_mission_controller", 19707, 12) -- ???, 'fm_mission_controller' instant finish variable?

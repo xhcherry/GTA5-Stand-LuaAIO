@@ -1,3 +1,4 @@
+Version5 = 5.2
 local aalib = require("aalib")
 local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001
@@ -19,7 +20,7 @@ else
     PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
 end
 util.keep_running()
-util.show_corner_help("~bold~~y~欢迎使用夜幕Lua 此版本号为：~o~5.1~g~‹\n ~b~夜幕LUA祝你玩的开心！")
+util.show_corner_help("~bold~~y~欢迎使用夜幕Lua 此版本号为：~o~" .. Version5 ..  "~g~‹\n ~b~夜幕LUA祝你玩的开心！")
 YM_logo = directx.create_texture(filesystem.resources_dir() ..'/YMIMG/YM.png')
 if SCRIPT_MANUAL_START then
     AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
@@ -236,7 +237,7 @@ function xianshijiaoben1(state)
                 mcb=mcb-1
             end
         end
-    draw_string(string.format("~italic~¦~bold~欢迎使用夜幕-V5.1"), 0.35,0.08, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~欢迎使用夜幕-V" .. Version5 ..  ""), 0.35,0.08, 0.6,5)
     util.yield()
     end
 end

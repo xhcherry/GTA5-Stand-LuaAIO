@@ -40,10 +40,10 @@ local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001
 local SND_FILENAME<const> = 0x00020000
 ----------------------------------
-local TIANXIA = "欢迎使用夜幕-V5.1"
+Version = 5.2
+local TIANXIA = "欢迎使用夜幕-V" .. Version ..  ""
 local JIAOBEN = "夜幕脚本"
-Version = 5.1
-date = "2023.6.17"
+date = "2023.6.19"
 wait = util.yield
 joaat = util.joaat
 alloc = memory.alloc
@@ -183,7 +183,7 @@ local cleanse = { "清除NPC", "清除载具", "清除物体", "清除可拾取�
 local drivingStyles = {786603, 1074528293, 8388614, 1076, 2883621, 786468, 262144, 786469, 512, 5, 6}
 local interior_stuff = {0, 233985, 169473, 169729, 169985, 170241, 177665, 177409, 185089, 184833, 184577, 163585, 167425, 167169}
 menu.action(menu.my_root(), '一键转到菜单', {}, '跳转速度更加方便', function()
-    menu.focus(menu.ref_by_path('Stand>夜幕-V5.1', 37))
+    menu.focus(menu.ref_by_path('Stand>夜幕-V5.2', 37))
 end)
 menu.action(menu.my_root(),"重启夜幕脚本",{},"",function ()
     util.restart_script()
@@ -4339,6 +4339,16 @@ menu.action(online, "玩家栏", {}, "", function()
 end)
 play_info =menu.list(online, "战局玩家信息", {}, "")
     require "lib.YeMulib.YMInfOverlay"
+deathlog_lt = menu.list(online,'死亡日志', {}, '记录谁杀了你')
+        menu.toggle_loop(deathlog_lt,'开启', {}, '', function ()
+            death_log()
+        end)
+        menu.action(deathlog_lt,'打开文件夹', {}, '', function ()
+            open_dea_log()
+        end)
+        menu.action(deathlog_lt,'清除日志', {}, '', function ()
+            clear_dea_log()
+end)
 local onlineplayer = menu.list(online, "战局玩家加入提醒", {}, "")
 joining = false
 menu.toggle(onlineplayer, "玩家加入通知", {}, "玩家加入战局时通知", function(on_toggle)
@@ -4967,6 +4977,8 @@ menu.toggle_loop(jiashi, '贴地/贴墙行驶', {}, '蜘蛛车！', function ()
         VEHICLE.MODIFY_VEHICLE_TOP_SPEED(curcar, 40)
     end
 end)
+gridspawn = menu.list(jiashi, "网格载具生成", {}, "方便，快捷")--oppressor2
+    dofile(filesystem.scripts_dir() .."lib/YeMulib/YMgs.lua")
 util.ensure_package_is_installed("lua/YeMulib/YMScaleformLib")
 local sfchat = require("lib.YeMulib.YMScaleformLib")("multiplayer_chat")
 sfchat:draw_fullscreen()
@@ -5065,7 +5077,7 @@ end
 function decode(text)
 	return string.gsub(text, "%+", " ")
 end
-local zidongfanyi = menu.list(fanyiyuyan, '聊天翻译1', {}, '')
+local zidongfanyi = menu.list(fanyiyuyan, '聊天翻译V1', {}, '')
 settingtrad = menu.list(zidongfanyi, "翻译设置")
 colortradtrad = menu.list(settingtrad, "玩家名称颜色")
 menu.on_focus(colortradtrad, function()
@@ -5228,7 +5240,7 @@ while run<10 do
 	util.yield()
 	run = run+1
 end
-TRANROOT = menu.list(fanyiyuyan, "聊天翻译2", {}, "", function(); end)
+TRANROOT = menu.list(fanyiyuyan, "聊天翻译V2", {}, "", function(); end)
 local language_codes_by_enum = {
     [0]= "en-us",
     [1]= "fr-fr",
@@ -5299,6 +5311,8 @@ chat.on_message(function(sender, reserved, text, team_chat, networked, is_auto)
         end
     end
 end)
+zidongfanyiV3 = menu.list(fanyiyuyan, '聊天翻译V3', {}, '最新翻译系统，支持ChatGPT')
+    require "lib.YeMulib.YMfyV3"
 local weapon_options = menu.list(self, "冲锋选项", {}, "")
 menu.toggle_loop(weapon_options, '无敌冲锋', {}, '使用近战时将附近模型推开', function ()
 	local is_performing_action = PED.IS_PED_PERFORMING_MELEE_ACTION(PLAYER.PLAYER_PED_ID())
@@ -6795,9 +6809,6 @@ menu.toggle_loop(online, "动物制裁者", {}, "连环炸毁所有附近的动�
         util.toast("[夜幕提示]周围没有动物了")
     end
 end)
-menu.action(online, "一键索赔所有车辆", {}, "", function()
-	reclaimVehicles()
-end)
 yinyue = menu.list(misc,"音乐选项", {},"玩累了，听个歌？~")
 menu.action(yinyue, '听我家坤坤的咯', {'music'}, '哎呦~你干嘛~', function(on) 
 util.toast("开始IKUN时刻~ " )
@@ -6953,6 +6964,12 @@ shisubiao = menu.toggle(jiazaixianshi, "游戏时速表", {"speedmeteor"}, "", f
             end
     end,speedm)
 menu.set_value(shisubiao, config_active7)
+haiba = menu.toggle_loop(jiazaixianshi,"海拔高度计", {}, "", function()
+    local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
+    local strg = "~b~海拔: ~w~"..math.ceil(pos.z) / 1000 .."KM"
+    draw_string(strg, 0.9, 0.02, 0.6, 1)
+end)
+menu.set_value(haiba, config_active9)
 menu.action(misc, "保存加载显示配置", {}, "仅支持部分功能", function()
     save_config()
 end)
@@ -7942,6 +7959,13 @@ menu.toggle(funfeatures, "坐如磐石", {""}, "", function(on)
     end
 end)
 -------------------------------------------------------------------------------------------------
+p_eff_fun = menu.list(funfeatures, "娱乐粒子效果", {}, "")
+        menu.toggle_loop(p_eff_fun, '开启', {}, '', function ()
+            ptfx_fun()
+        end)
+        menu.list_select(p_eff_fun, '设置粒子效果', {}, '发送您选择的粒子效果', funptfxlist, 1, function (value)
+            sel_ptfx_fun(value)
+end)
 menu.toggle_loop(self, "神之力", {"YL"}, "", function()local other = menu
 	if state == 0 then
 		notification(notif_format, HudColour.black, "INPUT_ATTACK", "INPUT_AIM")
@@ -8323,6 +8347,15 @@ ls_walkwater = menu.toggle(self, "在水上行走", {}, "",  function(on)
         menu.set_value(ls_driveonair, false)
     end
 end)
+menu.toggle_loop(self, '超级跳', {}, '按下跳跃的时间越长,继续走得更高（也可用于飞行）', function()
+        if PAD.IS_CONTROL_PRESSED(0, 22) or PAD.IS_CONTROL_JUST_PRESSED(0, 21) then
+            PED.SET_PED_CAN_RAGDOLL(players.user_ped(), false)
+            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.0, 0.6, 0.6, 0, 0, 0, 0, true, true, true, true)
+            if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) then
+                ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.0, 0.6, 0.6, 0, 0, 0, 0, true, true, true, true)
+            end
+        end
+end)
 Heist_Control = menu.list(zidongrenwu, "HC(3.3.1)第一任务选项")
  require "lib.YeMulib.YMhc"
 renwu = menu.list(zidongrenwu, "第二任务选项")
@@ -8364,8 +8397,6 @@ function YMversion()
                 notification("~b~~bold~&#8721;"..netnotify, colors.black)
             else
                notification("免费脚本制作不易，请勿破解！",colors.blue)
-               wait (1500)
-               MISC._RESTART_GAME()
             end
         else
                notification("免费脚本制作不易，请勿破解！",colors.blue)

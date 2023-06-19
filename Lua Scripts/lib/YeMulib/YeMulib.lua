@@ -118,7 +118,8 @@ function save_config()
         "\nconfig_active5 = "..menu.get_value(ridicule)..           -----------攻击嘲讽
         "\nconfig_active6 = "..menu.get_value(kongzhitai1)..         -----------绘制控制台
         "\nconfig_active7 = "..menu.get_value(shisubiao)..         -----------游戏时速表
-        "\nconfig_active8 = "..menu.get_value(players_info)         -----------玩家信息栏
+        "\nconfig_active8 = "..menu.get_value(players_info)..         -----------玩家信息栏
+        "\nconfig_active9 = "..menu.get_value(haiba)         -----------海拔高度计
 
     local file = io.open(selected_lang_path, 'w')
     file:write(config_txt)
@@ -751,6 +752,16 @@ end
 function zhujixvlie_y(y_)
     zhujixvlie_posy = y_ / 1000
 end
+--fps帧数
+function fps()
+end
+local fps = 0
+util.create_thread(function()
+    while true do
+        fps = math.ceil(1/SYSTEM.TIMESTEP())
+        util.yield(500)
+    end
+end)
 function scripthost()
     ------下位主机
     for pid = 0, 31 do
@@ -789,24 +800,25 @@ local ente
                 local speedcalce = speede * 3.6
             end
         inviciamountintt = inviciamountint
-            draw_string(string.format("~h~~y~战局玩家: ~h~~g~"..#players.list()), zhujixvlie_posx,zhujixvlie_posy, 0.4,1) 
-            draw_string(string.format("~h~~p~作弊玩家: ~h~~r~"..inviciamountintt), zhujixvlie_posx,zhujixvlie_posy + 0.035, 0.4,1) 
+            draw_string(string.format("~bold~~o~帧数: ~b~"..fps), zhujixvlie_posx, zhujixvlie_posy + 0.005, 0.4,1)
+            draw_string(string.format("~h~~y~战局玩家: ~h~~g~"..#players.list()), zhujixvlie_posx,zhujixvlie_posy + 0.035, 0.4,1) 
+            draw_string(string.format("~h~~p~作弊玩家: ~h~~r~"..inviciamountintt), zhujixvlie_posx,zhujixvlie_posy + 0.07, 0.4,1) 
 			if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-			draw_string(string.format("~h~~f~战局主机: ~h~~w~无"), zhujixvlie_posx,zhujixvlie_posy + 0.07, 0.4,1)
+			draw_string(string.format("~h~~f~战局主机: ~h~~w~无"), zhujixvlie_posx,zhujixvlie_posy + 0.105, 0.4,1)
 			else
-            draw_string(string.format("~h~~f~战局主机: ~h~~w~"..players.get_name(players.get_host())), zhujixvlie_posx,zhujixvlie_posy + 0.07, 0.4,1)
+            draw_string(string.format("~h~~f~战局主机: ~h~~w~"..players.get_name(players.get_host())), zhujixvlie_posx,zhujixvlie_posy + 0.105, 0.4,1)
 			end
 			if PLAYER.GET_PLAYER_NAME(players.get_script_host()) == "**Invalid**" then
-			draw_string(string.format("~h~~q~脚本主机: ~h~~w~无"), zhujixvlie_posx,zhujixvlie_posy + 0.105, 0.4,1)
+			draw_string(string.format("~h~~q~脚本主机: ~h~~w~无"), zhujixvlie_posx,zhujixvlie_posy + 0.14, 0.4,1)
 			else
-            draw_string(string.format("~h~~q~脚本主机: ~h~~w~"..players.get_name(players.get_script_host())), zhujixvlie_posx,zhujixvlie_posy + 0.105, 0.4,1)
+            draw_string(string.format("~h~~q~脚本主机: ~h~~w~"..players.get_name(players.get_script_host())), zhujixvlie_posx,zhujixvlie_posy + 0.14, 0.4,1)
 			end
-            draw_string(string.format("~bold~~g~下位主机: ~p~"..nexthost_name), zhujixvlie_posx,zhujixvlie_posy + 0.14, 0.4,1) 
+            draw_string(string.format("~bold~~g~下位主机: ~p~"..nexthost_name), zhujixvlie_posx,zhujixvlie_posy + 0.175, 0.4,1) 
 						local hostxvlie = players.get_host_queue_position(players.user())
 			if hostxvlie == 0 then
-			draw_string(string.format("~h~~w~你现在是~f~战局主机"), zhujixvlie_posx,zhujixvlie_posy + 0.175, 0.4,1) 
+			draw_string(string.format("~h~~w~你现在是~f~战局主机"), zhujixvlie_posx,zhujixvlie_posy + 0.21, 0.4,1) 
 			else
-			draw_string(string.format("~h~~w~你的主机~f~优先度:~h~~w~ "..hostxvlie), zhujixvlie_posx,zhujixvlie_posy + 0.175, 0.4,1) 
+			draw_string(string.format("~h~~w~你的主机~f~优先度:~h~~w~ "..hostxvlie), zhujixvlie_posx,zhujixvlie_posy + 0.21, 0.4,1) 
 			end
 			
 end
@@ -4337,19 +4349,6 @@ function YMplan3(YM)
         end
         --zanzhu = false
     end
-----一键索赔车辆
-function reclaimVehicles()
-    notification("全部索赔完成", colors.black)
-	for k, v in menu.get_children(menu.ref_by_path("Vehicle>Personal Vehicles")) do
-        for k1, v1 in v.command_names do
-            if v1 ~= "findpv" then
-                if v1 == "pv2" then
-                    menu.trigger_commands(v1.."request")
-                end
-            end
-        end
-	end
-end
 ----叛逆车辆
 function car_crash(state)
     veh = entities.get_user_vehicle_as_handle()
@@ -4606,4 +4605,73 @@ function sitrock(on)
         TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
     end
 end
-
+----使用效果
+function use_fx_asset(asset)
+    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(asset) do
+		STREAMING.REQUEST_NAMED_PTFX_ASSET(asset)
+		util.yield(0)
+	end
+    GRAPHICS.USE_PARTICLE_FX_ASSET(asset)
+end
+----娱乐粒子效果
+local selptfx = {a= "core",b= "ent_dst_gen_gobstop",c ="5"}
+function ptfx_fun()
+    local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
+    local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
+    use_fx_asset(selptfx.a)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(selptfx.b, tar1.x, tar1.y, tar1.z, 0, 0, 0, selptfx.c, true, true, false)
+    util.yield(200)
+end
+function sel_ptfx_fun(value)
+    local ptfx = funptfx[value]
+    selptfx.c = ptfx[3]--size
+    selptfx.b = ptfx[2]--eff
+    selptfx.a = ptfx[1]--ptfx
+end
+----死亡日志
+local Death_Log = filesystem.store_dir() .. 'YMLog\\YM DeathLog\\Death_Log.txt'
+local DeathlogDir = filesystem.store_dir() .. 'YMLog\\YM DeathLog'
+function add_deathlog(time, name, weapon)
+    local file, errmsg = io.open(Death_Log, "a+")
+    if not file then
+        return false, errmsg
+    end
+    file:write(json.stringify(time..' '..name..' 类型: '..weapon, nil, 0, false)..'\n')
+    file:close()
+    return input, true
+end
+function death_log()
+    if PED.IS_PED_DEAD_OR_DYING(players.user_ped()) then
+        killer = PED.GET_PED_SOURCE_OF_DEATH(players.user_ped())
+        if killer == players.user_ped() then return end
+        if STREAMING.IS_MODEL_A_PED(ENTITY.GET_ENTITY_MODEL(killer)) then
+            local pid = NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(killer)
+            local pname = PLAYER.GET_PLAYER_NAME(pid)
+            local ts = os.time()
+            local time = os.date('%Y-%m-%d %H:%M:%S', ts)
+            if pname != nil then
+                add_deathlog("时间：["..time.."]", "玩家: "..pname, '武器')
+            end
+            util.toast('被'..pname..'使用武器击杀')
+            util.yield(12000)
+        elseif STREAMING.IS_MODEL_A_VEHICLE(ENTITY.GET_ENTITY_MODEL(killer)) then
+            local vehowner = entities.get_owner(entities.handle_to_pointer(killer))
+            local pname = PLAYER.GET_PLAYER_NAME(vehowner)
+            local ts = os.time()
+            local time = os.date('%Y-%m-%d %H:%M:%S', ts)
+            if pname != nil then
+                add_deathlog("["..time.."]", "玩家: "..pname, '载具')
+            end
+            util.toast('被'..pname..'使用载具击杀')
+            util.yield(12000)
+        end
+    end
+end
+function open_dea_log()
+    util.open_folder(DeathlogDir)
+end
+function clear_dea_log()
+    io.remove(Death_Log)
+      local notification = b_notifications.new()
+      notification.notify("夜幕死亡日志","清除完成！")
+end

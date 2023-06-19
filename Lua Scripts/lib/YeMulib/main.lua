@@ -658,3 +658,48 @@ attachments_table = {
     --------Heavy-Weapons---------
     ["0x11AE5C97"] = "Default Clip"
 }
+----娱乐粒子效果
+funptfxlist = {
+    "糖块",
+    "金属碎片",
+    "火焰",
+    "赌场筹码",
+    "香烟",
+    "橙子雨",
+    "火花",
+    "泡沐雨",
+    "硬币",
+    "电线杆故障",
+    "电器箱故障",
+    "充气羽毛",
+    "飘叶",
+    "枫叶",
+    "爆竹",
+    "小丑喷射",
+    "小丑花",
+    "星空",
+    "摇曳烟花",
+    "光遇"
+}
+funptfx = {
+    {"core","ent_dst_gen_gobstop","5"},
+    {"core","ent_brk_metal_frag","5"},
+    {"core","ent_sht_flame","5"},
+    {"core","ent_dst_casino_chips","5"},
+    {"core","ent_dst_cig_packets","5"},
+    {"core","ent_col_tree_oranges","5"},
+    {"core","ent_brk_sparking_wires","5"},
+    {"core","water_boat_exit","5"},
+    {"core","ent_brk_coins","5"},
+    {"core","ent_sht_telegraph_pole","5"},
+    {"core","ent_sht_electrical_box","5"},
+    {"core","ent_dst_inflate_ring","2"},
+    {"core","ent_sht_bush_foliage","5"},
+    {"core","ent_col_bush_leaves","5"},
+    {"scr_sm_counter","scr_sm_counter_chaff","1"},
+    {"scr_rcbarry2", "muz_clown","1.5"},
+    {"scr_rcbarry2", "scr_clown_bul","1.5"},
+    {"scr_rcpaparazzo1","scr_mich4_firework_burst_spawn","1"},
+    {"scr_indep_fireworks","scr_indep_firework_trail_spawn","1"},
+    {"scr_ie_tw", "scr_impexp_tw_take_zone","1"}
+}
