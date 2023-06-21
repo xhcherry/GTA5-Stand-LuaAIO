@@ -40,7 +40,7 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '6.15'
+GT_version = '6.21'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -48,7 +48,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("不可用(N/A)")
+    notification("GTLuaVIP现在支持自动记录作弊者\n信息保存位置在GTLuaScript>Players\n精确到保存时间，以及所有的信息\n让你不放过你的每一个对手\n更新>玩家选项>战局玩家\n新增>友好选项>检测状态\n新增>自我选项>增强选项>战局切换\n新增>自我选项>增强选项>自动切换无人战局\n新增>恶搞选项>近期更新>附近车辆撞击\n新增>恶搞选项>近期更新>强制下地狱\n新增>恶搞选项>近期更新>观音坐莲\n新增>恶搞选项>近期更新>持续扫射攻击\n新增>恶搞选项>近期更新>附加附近所有实体\n添加了新的皇榜名单\n我们稍稍适配了天眼黑客面板功能，这会让它按预期正常运行\n目前仍然在等待Heist Control的新版本，当更新后我们会第一时间适配\n其他的一些改进与修复")
 end
 loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
 coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
@@ -385,6 +385,17 @@ hb_id = {
     {name = "MISS"},
     {name = "Mo_Bei_Sirius"},
     {name = "我是正义青年"},
+    {name = "热浪"},
+    {name = "嗜姬如雪"},
+    {name = "龙天"},
+    {name = "super-_-"},
+    {name = "败北"},
+    {name = "CX"},
+    {name = "八月份的柿子"},
+    {name = "老实人小王"},
+    {name = "kuangye11"},
+    {name = "老崔"},
+    {name = "ln"},
 }
 
 srgb = {cus = 100}
@@ -2196,7 +2207,7 @@ TTPos = ENTITY.GET_ENTITY_COORDS(TTPed, true)
 hud_rgb_index = 1
 hud_rgb_colors = {6, 18, 9}
 cTime = util.current_time_millis
-Version = "6.15"
+Version = "6.21"
 
 function give_car_addon(pid, hash, center, ang)
     local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
@@ -9504,6 +9515,165 @@ function sendscriptevent_three()--上岛
         end
     end
 end
+--
+function player_ip(pid)
+    local connectIP = players.get_connect_ip(pid)
+    local ipStringplayer = string.format("%d.%d.%d.%d",
+    math.floor(connectIP / 2^24) % 256,
+    math.floor(connectIP / 2^16) % 256,
+    math.floor(connectIP / 2^8) % 256,
+    connectIP % 256)
+    if ipStringplayer == "255.255.255.255" then
+        return "Connected to Relay"
+    else
+        return ipStringplayer
+    end
+end
+
+local lujing = filesystem.scripts_dir().."GTLuaScript\\"
+if not filesystem.exists(lujing.."Players") then
+	filesystem.mkdir(lujing.."Players")
+end
+
+function save_player_info(pid)
+    local name_with_tags = players.get_name_with_tags(pid)
+    local name = players.get_name(pid)
+    local rockstar_id = players.get_rockstar_id(pid)
+    local is_modder = players.is_marked_as_modder(pid)
+    local rank = players.get_rank(pid)
+    local money = players.get_money(pid)
+    local moneyStr = ""
+    if money >= 1000000000 then
+        moneyStr = string.format("%.1fb", money / 1000000000)
+    elseif money >= 1000000 then
+        moneyStr = string.format("%.1fm", money / 1000000)
+    elseif money >= 1000 then
+        moneyStr = string.format("%.1fk", money / 1000)
+    else
+        moneyStr = tostring(money)
+    end
+    local kd = players.get_kd(pid)
+    local is_using_vpn = players.is_using_vpn(pid)
+    local player_ip = player_ip(pid)
+    local language_int = language_string(players.get_language(pid))
+    local is_attacker = players.is_marked_as_attacker(pid)
+    local host_token = players.get_host_token_hex(pid)
+    local is_using_controller = players.is_using_controller(pid)
+    local clan_motto = players.clan_get_motto(pid)
+    local filename = name .. ".txt"
+    local filepath = lujing .. "Players/" .. filename
+  
+    if filesystem.exists(filepath) then
+        gtoast(string.format("错误:%s's 的信息已被保存到文件中.", name))
+    else
+        if not filesystem.exists(lujing .. "Players") then
+            filesystem.mkdir(lujing .. "Players")
+        end
+  
+        -- Create the file and write the player's information to it
+        -- There is probably a better way to do this, but it works, so I won't re-write it
+        local file = io.open(filepath, "w")
+        file:write(os.date("[保存时间]\n--[%d-%m-%y %I:%M:%S]\n"), "")
+        file:write("姓名与标签: ", name_with_tags, "\n")
+        file:write("RID: ", rockstar_id, "\n")
+        file:write("作弊者: ", is_modder and "是" or "否", "\n")
+        file:write("等级: ", rank, "\n")
+        file:write("金钱: ", moneyStr, "\n")
+        file:write("K/D: ", kd, "\n")
+        file:write("VPN是否使用: ", is_using_vpn and "是" or "否", "\n")
+        file:write("IPv4: ", player_ip, "\n")
+        file:write("语言: ", language_int, "\n")
+        file:write("是否为攻击者: ", is_attacker and "是" or "否", "\n")
+        file:write("主机令牌: ", host_token, "\n")
+        file:write("控制器是否使用: ", is_using_controller and "是" or "否", "\n")
+        file:write("帮会: ", clan_motto, "\n")
+        file:close()
+        gtoast(string.format("%s的信息已保存到文件中.", name))
+    end
+end
+--
+function IS_PLAYER_PED(ped)
+    if PED.GET_PED_TYPE(ped) < 4 then
+        return true
+    else
+        return false
+    end
+end
+--
+function exclude()
+    for _, ped in pairs(entities.get_all_peds_as_handles()) do
+        if ENTITY.IS_ENTITY_DEAD(ped) then goto out end
+        local PedPos = v3.new(players.get_position(pid))
+        local AddPos = v3.new(players.get_position(pid))
+        AddPos:add(v3.new(0, 0, 1))
+        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(AddPos.x, AddPos.y, AddPos.z, PedPos.x, PedPos.y, PedPos.z, 100,
+            true,
+            0x6E7DDDEC, pid, false, true, 1)
+        ::out::
+    end
+end
+function excludea()
+    for _, ped in pairs(entities.get_all_peds_as_handles()) do
+        if ENTITY.IS_ENTITY_DEAD(ped) then goto out end
+        local PedPos = v3.new(players.get_position(pid))
+        local AddPos = v3.new(players.get_position(pid))
+        AddPos:add(v3.new(0, 0, 1))
+        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(AddPos.x, AddPos.y, AddPos.z, PedPos.x, PedPos.y, PedPos.z, 100,
+            true,
+            0x6E7DDDEC, pid, false, true, 1)
+        ::out::
+    end
+end
+function excludeb()
+        for _, pid in pairs(entities.get_all_peds_as_handles()) do
+            if PED.GET_VEHICLE_PED_IS_USING(pid) ~= 0 then goto out end
+
+
+            local PedPos = v3.new(players.get_position(pid))
+            local AddPos = v3.new(players.get_position(pid))
+            AddPos:add(v3.new(0, 0, 1))
+            MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(AddPos.x, AddPos.y, AddPos.z, PedPos.x, PedPos.y, PedPos.z, 100,
+                true,
+                0x6E7DDDEC, pid, false, true, 1)
+            ::out::
+        end
+    end
+function excludec()
+        for _, pid in pairs(entities.get_all_peds_as_handles()) do
+            if IS_PLAYER_PED(pid) then goto out end
+
+            TASK.CLEAR_PED_TASKS_IMMEDIATELY(pid)
+            ::out::
+        end
+    end
+function excluded()
+    for _, pid in pairs(entities.get_all_peds_as_handles()) do
+        if IS_PLAYER_PED(pid) then goto out end
+
+        local PedPos = v3.new(players.get_position(pid))
+        local AddPos = v3.new(players.get_position(pid))
+        AddPos:add(v3.new(0, 0, 1))
+        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(AddPos.x, AddPos.y, AddPos.z, PedPos.x, PedPos.y, PedPos.z, 100,
+            true,
+            0x6E7DDDEC, pid, false, true, 1)
+        ::out::
+    end
+end
+function excludee()
+        for _, pid in pairs(entities.get_all_peds_as_handles()) do
+            if IS_PLAYER_PED(pid) or PED.GET_VEHICLE_PED_IS_USING(pid) ~= 0 then goto out end
+
+
+            local PedPos = v3.new(players.get_position(pid))
+            local AddPos = v3.new(players.get_position(pid))
+            AddPos:add(v3.new(0, 0, 1))
+            MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(AddPos.x, AddPos.y, AddPos.z, PedPos.x, PedPos.y, PedPos.z, 100,
+                true,
+                0x6E7DDDEC, pid, false, true, 1)
+            ::out::
+        end
+    end
+--
 ------------------------------------
 -------------玩家崩溃---------------
 ------------------------------------

@@ -205,8 +205,17 @@ end
 end
 end)
 GTAC = GTluaScript.action
-GTAC(players_root, "战局玩家", {}, "", function(click_type)
-GTLuaScript.trigger_command(GTLuaScript.ref_by_path('Players', 37))
+
+zhanju_in_this_session = {}
+local zhanju_in_session_list = GTLuaScript.list_action(players_root, "战局玩家", {"listofsession"}, "", zhanju_in_this_session, function(pid, name) menu.trigger_commands("p" .. players.get_name(pid)) end)
+util.create_tick_handler(function()
+for _, pid in players.list(true, true, true) do 
+local hdl = pid_to_handle(pid)
+if zhanju_in_this_session[pid] == nil then
+zhanju_in_this_session[pid] = players.get_name(pid) .. ' ' .. players.get_tags_string(pid) .. ''
+GTLuaScript.set_list_action_options(zhanju_in_session_list, zhanju_in_this_session)
+end
+end
 end)
 
 GTD(frendlist, "[好友列表]")
@@ -497,7 +506,7 @@ GTLP(aura_list,("弹射光环"), {}, "", function()
 	end
 end)
 --
-require "lib.GTSCRIPTS.GTA.wd3"
+--require "lib.GTSCRIPTS.GTA.wd3"
 --
 Weapon_Cam_Gun = GT(weapon_options, "视野范围枪")
 require "lib.GTSCRIPTS.GTA.eg"
@@ -2126,6 +2135,43 @@ end)
 GTLuaScript.click_slider(collectibles, "拉机能量高空跳伞", {""}, "", 0, 9, 0, 1, function(i)
     util.trigger_script_event(1 << players.user(), {1839167950, players.user(), 0xA, i, 1, 1, 1})
 end)
+
+zhanju_qiehuan = {"公开单人", "非公开邀请", "单人", "公开战局", "新的公开战局", "退回线下"}
+GTLuaScript.slider_text(helperingame, "战局切换", {}, "", zhanju_qiehuan, function(a, b, c)
+switch a do
+case 1:
+GTLuaScript.trigger_commands("go solopublic")
+break
+case 2:
+GTLuaScript.trigger_commands("go inviteonly")
+break
+ case 3:
+GTLuaScript.trigger_commands("go solo")
+break
+case 4:
+GTLuaScript.trigger_commands("go public")
+break
+case 5:
+GTLuaScript.trigger_commands("go newpublic")
+break
+case 6:
+NETWORK.NETWORK_SESSION_END()
+break
+end
+end)
+
+GTTG(helperingame, "自动切换无人战局", {""}, "", function(f)
+    abc = f
+    while abc do
+     wait()
+        local playerCount = #players.list()
+        if playerCount < 2 then
+        util.toast("此战局已经没有人了,马上为你切换新战局...")
+        wait(500)
+        GTLuaScript.trigger_commands("go public")
+        end
+        end
+    end)    
 
 GTLP(helperingame, "自动领取悬赏", {""}, "", function()
     local bounty = players.get_bounty(players.user())
@@ -23589,9 +23635,9 @@ GTTG(updates, "Rock崩溃", {"rockcrash"}, "", function(loop)
 end)
 
 fireworklove = GTAC(updates, "寂寞烟火", {"coastline"}, coasttext, function()
-    if PlayerID == players.user() then 
+--[[if PlayerID == players.user() then 
     gtoast("[GRANDTOURINGVIP]\n请多爱护自己一点儿,去找坏人惩恶扬善!")
-    else
+    else]]
     menu.trigger_commands("levitate on")
     menu.trigger_commands("tphigh")
     
@@ -23613,7 +23659,7 @@ fireworklove = GTAC(updates, "寂寞烟火", {"coastline"}, coasttext, function(
     menu.trigger_commands("tplsia")
     wait(100)
     menu.trigger_commands("superc")
-    end
+    --end
 end)
 
 GTAC(updates,"Twelve 12", {"12crash"}, "建议长按使用喔~", function()
@@ -25167,6 +25213,79 @@ marking_as_modder = GTTG(GTLuaScript.player_root(pid), "标记为作弊者", {"m
 end)
 
 local updatetroll = GT(playerMain, "近期更新", {}, "")
+
+GTLP(updatetroll, "附加附近所有实体", {}, "", function(on)
+    local tar = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local objects = entities.get_all_objects_as_handles()
+    local vehicles = entities.get_all_vehicles_as_handles()
+    local peds = entities.get_all_peds_as_handles()
+    for i, ent in pairs(peds) do
+        if not is_ped_player(ped) then
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(ent, tar, 0, 0.0, -0.20, 2.00, 1.0, 1.0,1, true, true, true, false, 0, true)
+        end
+    end
+    for i, ent in pairs(vehicles) do
+        if not is_ped_player(VEHICLE.GET_PED_IN_VEHICLE_SEAT(ent, -1)) then
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(ent, tar, 0, 0.0, -0.20, 2.00, 1.0, 1.0,1, true, true, true, false, 0, true)
+        end
+    end
+    for i, ent in pairs(objects) do
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(ent, tar, 0, 0.0, -0.20, 2.00, 1.0, 1.0,1, true, true, true, false, 0, true)
+    end
+end)
+
+GTLP(updatetroll, "持续扫射攻击", {},"", function()
+    excludea()
+    excludeb()
+    excludec()
+    excluded()
+    excludee()
+    end)
+
+GTLP(updatetroll, "观音坐莲", {}, "", function()
+    local pos = players.get_position(pid)
+    for _, ped in entities.get_all_peds_as_handles() do
+        if IS_PLAYER_PED(ped) then goto out end
+        ENTITY.SET_ENTITY_COORDS(ped, pos.x, pos.y, pos.z, false)
+        ::out::
+    end
+end)
+
+GTAC(updatetroll, "强制下地狱", {""}, "", function()
+    for i = 1, 10 do 
+    local pos = players.get_position(pid)
+        local wjped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+          pos.z = pos.z + 10
+          local crash_plane = CreateVehicle(0x2EA68690, pos, 0)
+           PED.SET_PED_INTO_VEHICLE(sb_ped,crash_plane,-1)
+           PED.SET_PED_INTO_VEHICLE(sb_ped, crash_plane, -1)
+        for i = 1, 20 do 
+            pos.z = pos.z - 0.5 
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(crash_plane, pos.x,pos.y,pos.z, true, true, true)
+            wait(30) 
+        end
+        wait(100)
+        entities.delete_by_handle(crash_plane)
+        end
+    end)
+    
+GTLP(updatetroll, "附近车辆撞击", {""}, "附近车辆将变得对玩家有敌意.", function()
+    if not players.exists(pid) then return end
+    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        for get_vehicles_in_player_range(pid, 70.0) as vehicle do
+          if TASK.GET_ACTIVE_VEHICLE_MISSION_TYPE(vehicle) != 6 then
+              local driver = VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, -1, false)
+              if ENTITY.DOES_ENTITY_EXIST(driver) and not PED.IS_PED_A_PLAYER(driver) then
+              request_control(driver)
+              PED.SET_PED_MAX_HEALTH(driver, 300)
+              ENTITY.SET_ENTITY_HEALTH(driver, 300, 0)
+              PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(driver, true)
+              TASK.TASK_VEHICLE_MISSION_PED_TARGET(driver, vehicle, ped, 6, 100.0, 0, 0.0, 0.0, true)
+           end
+       end
+    end
+end)
+
 
 GTAC(updatetroll, "让他滚蛋", {}, "", function ()
     if players.user() then
@@ -27501,57 +27620,6 @@ end)
 
     GTLP(playerOtherTrolling, "敌对交通", {}, "使玩家周围的NPC载具撞击该玩家", function()
         nearcarkill(pid)
-    end)
-
-        GTluaScript.click_slider(playerOtherTrolling,"弹飞载具", {}, "", -200, 200, 200, 10, function(mph)
-            local speed = mph / 0.44704
-            control_vehicle(pid, function(vehicle)
-                VEHICLE.SET_VEHICLE_FORWARD_SPEED(vehicle, speed)
-                local vel = ENTITY.GET_ENTITY_VELOCITY(vehicle)
-                ENTITY.SET_ENTITY_VELOCITY(vehicle, vel.x, vel.y, vel.z + 2.0)
-                VEHICLE.RESET_VEHICLE_WHEELS(vehicle)
-            end)
-        end)
-
-        GTAC(playerOtherTrolling,"载具上升", {}, "", function()
-            control_vehicle(pid, function(vehicle)
-                VEHICLE.SET_VEHICLE_FORWARD_SPEED(vehicle, 100.0)
-                local vel = ENTITY.GET_ENTITY_VELOCITY(vehicle)
-                ENTITY.SET_ENTITY_VELOCITY(vehicle, vel.x, vel.y, vel.z + 100.0)
-                VEHICLE.RESET_VEHICLE_WHEELS(vehicle)
-            end)
-        end)
-
-        GTAC(playerOtherTrolling,"载具降落", {}, "", function()
-            control_vehicle(pid, function(vehicle)
-                VEHICLE._STOP_BRING_VEHICLE_TO_HALT(vehicle)
-                ENTITY.SET_ENTITY_VELOCITY(vehicle, 0.0, 0.0, 0.0)
-            end)
-        end)
-
-        GTAC(playerOtherTrolling,"锁住车门", {}, "", function()
-            control_vehicle(pid, function(vehicle)
-            VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle, i - 1, false, false)
-            end)
-        end)
-
-    GTAC(playerOtherTrolling,"强制锁胎", {}, "", function()
-        control_vehicle(pid, function(vehicle)
-            if open_doors then
-                for door = 0,7 do
-                    VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle, door, false, false)
-                end
-            else
-                VEHICLE.SET_VEHICLE_DOORS_SHUT(vehicle, false)
-            end
-        end)
-    end)
-
-    GTAC(playerOtherTrolling,"爆炸车", {}, "", function()
-        control_vehicle(pid, function(vehicle)
-            local pos = ENTITY.GET_ENTITY_COORDS(vehicle, 1)
-            FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z + 1.0, 26, 60, true, true, 0.0)
-        end)
     end)
 
     GTLP(playerOtherTrolling, "伪造载具延迟", {"vehfakelag"}, "#针对载具内的玩家\n#模拟玩家卡顿现象\n#令该玩家怀疑自己的网络", function ()
@@ -32335,7 +32403,36 @@ end)
     end)
 
     local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    --
+    function language_string(language)
+        local language_table = {
+          [0] = "美国",
+          [1] = "法国",
+          [2] = "德国",
+          [3] = "意大利",
+          [4] = "西班牙",
+          [5] = "巴西",
+          [6] = "波兰",
+          [7] = "俄罗斯",
+          [8] = "韩国",
+          [9] = "中国(香港/台湾)",
+          [10] = "日本",
+          [11] = "墨西哥",
+          [12] = "中国"
+        }
+        return language_table[language] or "Unknown"
+    end
     
+    GTAC(friendly, "检测状态", {"checkstats"}, "", function()
+    local rank = players.get_rank(pid)
+    local money = players.get_money(pid)
+    local kills = players.get_kills(pid)
+    local deaths = players.get_deaths(pid)
+    local kdratio = players.get_kd(pid)
+    local language = language_string(players.get_language(pid))
+    util.show_corner_help("名称 : "..players.get_name(pid).."\n国家: "..language.. "\n等级: "..rank.."\n金钱: "..string.format("%.2f", money/1000000).."M$".."\n杀人/死亡: "..kills.."/"..deaths.."\n比率: "..string.format("%.2f", kdratio))
+    end)
+    --
     GTAC(friendly, "复制名称", {''}, "", function(state)
     local r_id = PLAYER.GET_PLAYER_NAME(pid)
     util.copy_to_clipboard(r_id)
