@@ -298,14 +298,6 @@ end
 --------------------------
 -- TIMER
 --------------------------
-
----@class Timer
----@field elapsed fun(): integer
----@field reset fun()
----@field isEnabled fun(): boolean
----@field disable fun()
-
----@return Timer
 function newTimer()
 	local self = {
 		start = util.current_time_millis(),

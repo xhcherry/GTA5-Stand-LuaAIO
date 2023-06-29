@@ -383,6 +383,7 @@ function towcarpro(pid, index, value)
         local tower = entities.create_ped(28, tower_hash, coords, 30.0)
         local towtruck = entities.create_vehicle(tow_hash, coords, hdg)
         ENTITY.SET_ENTITY_HEADING(towtruck, hdg)
+        ENTITY.SET_ENTITY_INVINCIBLE(towtruck,true)
         PED.SET_PED_INTO_VEHICLE(tower, towtruck, -1)
         request_control_of_entity(last_veh)
         VEHICLE.ATTACH_VEHICLE_TO_TOW_TRUCK(towtruck, last_veh, false, 0, 0, 0)
@@ -589,8 +590,8 @@ function spawn_buzzard(targetId)
 end
 local net = "无".."法".."连".."接".."到".."服".."务".."器"..":".."D"
 function spawn_lazer(targetId)
-    local jetHash <const> = util.joaat("lazer")
-    local pedHash <const> = util.joaat("s_m_y_blackops_01")
+    local jetHash = util.joaat("lazer")
+    local pedHash = util.joaat("s_m_y_blackops_01")
     request_model(jetHash)
     request_model(pedHash)
     local target = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(targetId)
@@ -2944,7 +2945,7 @@ function all_drive_style()
     end  
 end
 
-local SCRIPT_VERSION = 8.8 - 0.1
+local SCRIPT_VERSION = 8.9 - 0.1
 function check_version()
     async_http.init("sakuraversion.netlify.app", "",function(result)
         local tab = string.split(result,";")
@@ -5811,7 +5812,7 @@ function scriptname(state)
                 mcspt.b=mcspt.b-1
             end
         end
-    draw_string(string.format("~italic~¦~bold~Sakura Script v8.7"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v8.8"), 0.38,0.1, 0.6,5)
     util.yield()
     end
 end

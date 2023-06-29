@@ -40,7 +40,7 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '6.21'
+GT_version = '6.28'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -396,6 +396,18 @@ hb_id = {
     {name = "kuangye11"},
     {name = "老崔"},
     {name = "ln"},
+    {name = "左岸"},
+    {name = "爱"},
+    {name = "清风"},
+    {name = "炫彩"},
+    {name = "YMYXYAYSH"},
+    {name = "xXLrvdP_-"},
+    {name = "bstwvb33"},
+    {name = "典范大帅逼"},
+    {name = "玖叁"},
+    {name = "万斯"},
+    {name = "大原批"},
+    {name = "G-LIAN12"},
 }
 
 srgb = {cus = 100}
@@ -2207,7 +2219,7 @@ TTPos = ENTITY.GET_ENTITY_COORDS(TTPed, true)
 hud_rgb_index = 1
 hud_rgb_colors = {6, 18, 9}
 cTime = util.current_time_millis
-Version = "6.21"
+Version = "6.28"
 
 function give_car_addon(pid, hash, center, ang)
     local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)

@@ -364,6 +364,22 @@ function delete_object(model)
         end
     end
 end
+
+----
+function set_entity_face_entity(entity, target, usePitch)
+    local pos1 = ENTITY.GET_ENTITY_COORDS(entity, false)
+    local pos2 = ENTITY.GET_ENTITY_COORDS(target, false)
+    local rel = v3.new(pos2)
+    rel:sub(pos1)
+    local rot = rel:toRot()
+    if not usePitch then
+        ENTITY.SET_ENTITY_HEADING(entity, rot.z)
+    else
+        ENTITY.SET_ENTITY_ROTATION(entity, rot.x, rot.y, rot.z, 2, 0)
+    end
+end
+
+
 ------------------------------------------------------------------------------------------------------
 
 
@@ -397,25 +413,151 @@ end
 
 
 
+----升天电梯
+function biker_lift(on,pid)
+    biker_toggled = on
+    if biker_toggled then
+        local hash = -1342281820
+        request_model(hash)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+        pos.z = pos.z - 15
+        send_biker = OBJECT.CREATE_OBJECT_NO_OFFSET(hash, pos.x, pos.y, pos.z, true, false, true)
+        while biker_toggled do
+            local pos2 = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(send_biker, pos2.x, pos2.y, pos.z, false, false, false, false)
+            pos.z = pos.z + 0.1
+            util.yield(10)
+        end
+    else
+        entities.delete_by_handle(send_biker)
+    end
+end
+
+
+
+----仓鼠球
+function Hamster_Ball(pid)
+    local hash = 1768956181
+    local ped = PLAYER.GET_PLAYER_PED(pid)
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0, 0, -1)
+
+    local OBJ = entities.create_object(hash, pos)
+    local OBJ1 = entities.create_object(hash, pos)
+    local OBJ2 = entities.create_object(hash, pos)
+    local OBJ3 = entities.create_object(hash, pos)
+    local OBJ4 = entities.create_object(hash, pos)
+    local OBJ5 = entities.create_object(hash, pos)
+    local OBJ6 = entities.create_object(hash, pos)
+    local OBJ7 = entities.create_object(hash, pos)
+    local OBJ8 = entities.create_object(hash, pos)
+    local OBJ9 = entities.create_object(hash, pos)
+    local OBJ10 = entities.create_object(hash, pos)
+    local OBJ11 = entities.create_object(hash, pos)
+    local OBJ12 = entities.create_object(hash, pos)
+    local OBJ13 = entities.create_object(hash, pos)
+    local OBJ14 = entities.create_object(hash, pos)
+    local OBJ15 = entities.create_object(hash, pos)
+    local OBJ16 = entities.create_object(hash, pos)
+    local OBJ17 = entities.create_object(hash, pos)
+
+    ENTITY.SET_ENTITY_ROTATION(OBJ, 0, 0, 0)
+    ENTITY.SET_ENTITY_ROTATION(OBJ1, 0, 0, 10)
+    ENTITY.SET_ENTITY_ROTATION(OBJ2, 0, 0, 20)
+    ENTITY.SET_ENTITY_ROTATION(OBJ3, 0, 0, 30)
+    ENTITY.SET_ENTITY_ROTATION(OBJ4, 0, 0, 40)
+    ENTITY.SET_ENTITY_ROTATION(OBJ5, 0, 0, 50)
+    ENTITY.SET_ENTITY_ROTATION(OBJ6, 0, 0, 60)
+    ENTITY.SET_ENTITY_ROTATION(OBJ7, 0, 0, 70)
+    ENTITY.SET_ENTITY_ROTATION(OBJ8, 0, 0, 80)
+    ENTITY.SET_ENTITY_ROTATION(OBJ9, 0, 0, 90)
+    ENTITY.SET_ENTITY_ROTATION(OBJ10, 0, 0, 100)
+    ENTITY.SET_ENTITY_ROTATION(OBJ11, 0, 0, 110)
+    ENTITY.SET_ENTITY_ROTATION(OBJ12, 0, 0, 120)
+    ENTITY.SET_ENTITY_ROTATION(OBJ13, 0, 0, 130)
+    ENTITY.SET_ENTITY_ROTATION(OBJ14, 0, 0, 140)
+    ENTITY.SET_ENTITY_ROTATION(OBJ15, 0, 0, 150)
+    ENTITY.SET_ENTITY_ROTATION(OBJ16, 0, 0, 160)
+    ENTITY.SET_ENTITY_ROTATION(OBJ17, 0, 0, 170)
+end
+
+
+
+
+----极限跳跃
+function extreme_jump(index)
+    if index == 1 then
+        SpawnHeight = 250
+    elseif index == 2 then
+        SpawnHeight = 500
+    elseif index == 3 then
+        SpawnHeight = 1000
+    end
+
+    local pedm = players.user_ped()
+    local PlaneHash = 368211810
+    local CarHash = 1455990255
+    request_model(PlaneHash)
+    request_model(CarHash)
+    local heading = ENTITY.GET_ENTITY_HEADING(pedm)
+    local PlaneSpawnLoc = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(pedm, 0, 0, SpawnHeight)
+    local CarSpawnLoc = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(pedm, 0, 0, SpawnHeight + 4) --104
+    
+    local Plane = entities.create_vehicle(PlaneHash, PlaneSpawnLoc, heading)
+    ENTITY.SET_ENTITY_INVINCIBLE(Plane, true)
+    if PED.IS_PED_IN_ANY_VEHICLE(pedm, true) then
+        Car = entities.get_user_vehicle_as_handle()
+        ENTITY.SET_ENTITY_HEADING(Car, heading + 180)
+        ENTITY.SET_ENTITY_VELOCITY(Car, 0, 100, 0)
+    else 
+        Car = entities.create_vehicle(CarHash, CarSpawnLoc, 0)
+        ENTITY.SET_ENTITY_HEADING(Car, heading + 180)
+        PED.SET_PED_INTO_VEHICLE(pedm, Car, -1)
+    end
+    ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(Plane, 1, 0, 100, 0, true, true, true, true)
+    ENTITY.SET_ENTITY_COORDS(Car, CarSpawnLoc.x, CarSpawnLoc.y, CarSpawnLoc.z, false, false, false, false)
+    ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(Car, 1, 0, -100, 0, true, true, true, true)
+
+    local Timer = 350
+    util.create_tick_handler(function()
+        Timer = Timer - 1
+        util.draw_centred_text("开仓倒计时 : " .. Timer)
+        if Timer < 0 then
+            VEHICLE.SET_VEHICLE_DOOR_OPEN(Plane, 2, false, false)
+            return false
+        end
+    end)
+end
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+----炸弹车
+function bomb_car()
+    local hash = util.joaat("speedo2")
+    request_model(hash)
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 0, 0)
+    local heading = ENTITY.GET_ENTITY_HEADING(players.user_ped())
+    local spawnedCar = entities.create_vehicle(hash, pos, heading)
+    PED.SET_PED_INTO_VEHICLE(players.user_ped(), spawnedCar, -1) 
+    util.toast('~o~按下鼠标右键引爆载具')
+    util.create_tick_handler(function()
+        VEHICLE.START_VEHICLE_HORN(spawnedCar, 300, 1330140418, false)
+        util.yield(500)
+    end)
+    while spawnedCar do
+        ENTITY.SET_ENTITY_INVINCIBLE(spawnedCar, false)
+        if PAD.IS_CONTROL_PRESSED(0, 68) then
+            local Bomboffset = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(spawnedCar, 0, 0, 0)
+            FIRE.ADD_EXPLOSION(Bomboffset.x, Bomboffset.y, Bomboffset.z, 59, 1, true, false, 1.0, false)
+            util.yield(1000)
+            entities.delete_by_handle(spawnedCar)
+            break
+        end
+        util.yield()
+    end
+end
 
 
 
@@ -1277,12 +1419,9 @@ end
 function IPM(targets, tar1, pname, cage_table, pid)
     local tar2 = ENTITY.GET_ENTITY_COORDS(targets)
     local disbet = SYSTEM.VDIST2(tar2.x, tar2.y, tar2.z, tar1.x, tar1.y, tar1.z)
-    if disbet <= 0.5  then
-        util.toast(pname..' 已被笼子困住')
+    if disbet < 0.5  then
         util.yield(800)
     elseif disbet >= 0.5  then
-        util.yield(800)
-        util.toast(pname..' 挣脱了笼子')
         DelEnt(cage_table[pid])
         cage_table[pid] = false
         Stopsound()
@@ -1353,7 +1492,9 @@ function auto_ped_cage(pid)
         ped_cage_table[pid] = peds
     end
     while ped_cage_table[pid] do
-        IPM(targets, tar1, pname, ped_cage_table, pid)
+        if players.exists(pid) then
+            IPM(targets, tar1, pname, ped_cage_table, pid)
+        end
     end
 end
 
@@ -1408,9 +1549,136 @@ function auto_obj_cage(pid)
         end
     end
     while obj_table[pid] do
-        IPM(targets, tar1, pname, obj_table, pid)
+        if players.exists(pid) then
+            IPM(targets, tar1, pname, obj_table, pid)
+        end
     end
 end
+
+
+
+
+
+
+
+----飞机护航
+function escort()
+    local heading = ENTITY.GET_ENTITY_HEADING(players.user_ped())
+    local hashJet = util.joaat("Lazer")
+    local hashTarget = 1082797888 --:1082797888
+    request_model(hashJet)
+    request_model(hashTarget)
+
+--CREATE_PED_INSIDE_VEHICLE
+    local ped = players.user_ped()
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0, 0, 200)
+
+    local aJetpos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, -50, -50, 200) --200
+    local bJetpos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 50, -50, 200)
+    local cJetpos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, -50, -100, 200)
+    local dJetpos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 50, -100, 200)
+    local aJetAimpos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, -20, 0, 0)
+    local bJetAimpos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 20, 0, 0)
+    local cJetAimpos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, -40, -40, 0) --200
+    local dJetAimpos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 40, -40, 0) --200
+
+    if not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) then
+        PlayerJet = entities.create_vehicle(hashJet, pos, heading)
+        
+        aTarget = entities.create_object(hashTarget, aJetAimpos)--obj
+        bTarget = entities.create_object(hashTarget, bJetAimpos)
+        cTarget = entities.create_object(hashTarget, cJetAimpos)
+        dTarget = entities.create_object(hashTarget, dJetAimpos)
+        ENTITY.SET_ENTITY_COLLISION(aTarget, false, false)
+        ENTITY.SET_ENTITY_VISIBLE(aTarget, false, false)
+        ENTITY.SET_ENTITY_COLLISION(bTarget, false, false)
+        ENTITY.SET_ENTITY_VISIBLE(bTarget, false, false)
+        ENTITY.SET_ENTITY_COLLISION(cTarget, false, false)
+        ENTITY.SET_ENTITY_VISIBLE(cTarget, false, false)
+        ENTITY.SET_ENTITY_COLLISION(dTarget, false, false)
+        ENTITY.SET_ENTITY_VISIBLE(dTarget, false, false)
+
+        PED.SET_PED_INTO_VEHICLE(ped, PlayerJet, -1)
+        VEHICLE.CONTROL_LANDING_GEAR(PlayerJet, 3)--控制起落架
+        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(PlayerJet, 1, 0, 100, 0, true, true, true, true)
+
+        JetA = entities.create_vehicle(hashJet, aJetpos, heading)--飞机
+        JetB = entities.create_vehicle(hashJet, bJetpos, heading)
+        JetC = entities.create_vehicle(hashJet, cJetpos, heading)
+        JetD = entities.create_vehicle(hashJet, dJetpos, heading)
+
+        PilotA = PED.CREATE_RANDOM_PED_AS_DRIVER(JetA, 1)--创建驾驶飞机
+        VEHICLE.SET_VEHICLE_ENGINE_ON(JetA, true, true, 0)
+        
+        PilotB = PED.CREATE_RANDOM_PED_AS_DRIVER(JetB, 1)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(JetB, true, true, 0)
+        
+        PilotC = PED.CREATE_RANDOM_PED_AS_DRIVER(JetC, 1)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(JetC, true, true, 0)
+        
+        PilotD = PED.CREATE_RANDOM_PED_AS_DRIVER(JetD, 1)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(JetD, true, true, 0)
+
+        ENTITY.SET_ENTITY_INVINCIBLE(PlayerJet, true)
+        ENTITY.SET_ENTITY_INVINCIBLE(JetA, true)
+        ENTITY.SET_ENTITY_INVINCIBLE(JetB, true)
+        ENTITY.SET_ENTITY_INVINCIBLE(JetC, true)
+        ENTITY.SET_ENTITY_INVINCIBLE(JetD, true)
+    end
+
+    set_entity_face_entity(JetA, aTarget, true)
+    set_entity_face_entity(JetB, bTarget, true)
+    set_entity_face_entity(JetC, cTarget, true)
+    set_entity_face_entity(JetD, dTarget, true)
+
+    local aJetRealLoc = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(JetA, 0, 0, 0)
+    local bJetRealLoc = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(JetB, 0, 0, 0)
+    local cJetRealLoc = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(JetC, 0, 0, 0)
+    local dJetRealLoc = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(JetD, 0, 0, 0)
+
+    local aDistance = MISC.GET_DISTANCE_BETWEEN_COORDS(aJetRealLoc['x'], aJetRealLoc['y'], aJetRealLoc['z'], aJetAimpos['x'], aJetAimpos['y'], aJetAimpos['z'], true)
+    local bDistance = MISC.GET_DISTANCE_BETWEEN_COORDS(bJetRealLoc['x'], bJetRealLoc['y'], bJetRealLoc['z'], bJetAimpos['x'], bJetAimpos['y'], bJetAimpos['z'], true)
+    local cDistance = MISC.GET_DISTANCE_BETWEEN_COORDS(cJetRealLoc['x'], cJetRealLoc['y'], cJetRealLoc['z'], cJetAimpos['x'], cJetAimpos['y'], cJetAimpos['z'], true)
+    local dDistance = MISC.GET_DISTANCE_BETWEEN_COORDS(dJetRealLoc['x'], dJetRealLoc['y'], dJetRealLoc['z'], dJetAimpos['x'], dJetAimpos['y'], dJetAimpos['z'], true)
+    if aDistance < 40 then
+        aJetSpeed = -0.8
+    else
+        aJetSpeed = 0.5
+    end
+    if bDistance < 40 then
+        bJetSpeed = -0.8
+    else
+        bJetSpeed = 0.5
+    end
+    if cDistance < 40 then
+        cJetSpeed = -0.8
+    else
+        cJetSpeed = 0.5
+    end
+    if dDistance < 40 then
+        dJetSpeed = -0.8
+    else
+        dJetSpeed = 0.5
+    end
+
+    if not PED.IS_PED_ON_FOOT(ped) then
+        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(JetA, 1, 0, aJetSpeed, 0, true, true, true, true)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(aTarget, aJetAimpos.x, aJetAimpos.y, aJetAimpos.z, false, false, false)
+
+        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(JetB, 1, 0, bJetSpeed, 0, true, true, true, true)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(bTarget, bJetAimpos.x, bJetAimpos.y, bJetAimpos.z, false, false, false)
+
+        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(JetC, 1, 0, cJetSpeed, 0, true, true, true, true)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(cTarget, cJetAimpos.x, cJetAimpos.y, cJetAimpos.z, false, false, false)
+
+        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(JetD, 1, 0, dJetSpeed, 0, true, true, true, true)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dTarget, dJetAimpos.x, dJetAimpos.y, dJetAimpos.z, false, false, false)
+    end
+end
+
+
+
+
 
 
 
@@ -1607,7 +1875,8 @@ function save_config()
         "\nconfig_active3 = "..menu.get_value(script_name)..           ------------显示脚本名称
         "\nconfig_active4 = "..menu.get_value(numfps)..                -----------显示fps
         "\nconfig_active5 = "..menu.get_value(show_entityinfo)..       -----------实体池信息
-        "\nconfig_active6 = "..menu.get_value(players_info)            -----------绘制玩家信息
+        "\nconfig_active6 = "..menu.get_value(players_info)..          -----------绘制玩家信息
+        "\nconfig_active7 = "..menu.get_value(auto_kick_adBot)         -----------自动踢出广告机
 
     local file = io.open(selected_lang_path, 'w')
     file:write(config_txt)
@@ -2036,6 +2305,48 @@ function oppKarma()
     end
 end
 
+----过渡传送
+function transit_tp()
+    if not HUD.IS_WAYPOINT_ACTIVE() then
+        util.toast("请先在地图上标点")
+        return
+    end
+    local waypoint = HUD.GET_BLIP_INFO_ID_COORD(HUD.GET_FIRST_BLIP_INFO_ID(HUD.GET_WAYPOINT_BLIP_ENUM_ID()))
+    local vehicle = PED.GET_VEHICLE_PED_IS_USING(players.user_ped())
+    local ground = false
+    repeat
+        ground, waypoint.z = util.get_ground_z(waypoint.x, waypoint.y)
+        util.yield()
+    until ground
+    if vehicle != 0 then
+        ENTITY.SET_ENTITY_VISIBLE(vehicle, false)
+    end
+    STREAMING.SWITCH_TO_MULTI_FIRSTPART(players.user_ped(), 8, 1)
+    HUD.BEGIN_TEXT_COMMAND_BUSYSPINNER_ON("PM_WAIT")
+    HUD.END_TEXT_COMMAND_BUSYSPINNER_ON(4)
+    repeat
+        util.yield()
+    until STREAMING.IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED()
+    if vehicle == 0 then
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), waypoint.x, waypoint.y, waypoint.z, false, false, false)
+    else
+        ENTITY.SET_ENTITY_VISIBLE(vehicle, false)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(vehicle, waypoint.x, waypoint.y, waypoint.z, false, false, false)
+    end
+    STREAMING.SWITCH_TO_MULTI_SECONDPART(players.user_ped())
+    STREAMING.ALLOW_PLAYER_SWITCH_OUTRO() 
+    repeat
+        util.yield()
+    until not STREAMING.IS_PLAYER_SWITCH_IN_PROGRESS()
+    if vehicle == 0 then
+        NETWORK.NETWORK_FADE_IN_ENTITY(players.user_ped(), true, true)
+    else
+        NETWORK.NETWORK_FADE_IN_ENTITY(vehicle, true, true)
+        NETWORK.NETWORK_FADE_IN_ENTITY(players.user_ped(), true, true)
+        ENTITY.SET_ENTITY_VISIBLE(vehicle, true)
+    end
+    HUD.BUSYSPINNER_OFF()
+end
 
 
 -----跳过下水道切割
@@ -3351,18 +3662,6 @@ end
 
 
 ----陨落的飞机
-function set_entity_face_entity(entity, target, usePitch)
-    local pos1 = ENTITY.GET_ENTITY_COORDS(entity, false)
-    local pos2 = ENTITY.GET_ENTITY_COORDS(target, false)
-    local rel = v3.new(pos2)
-    rel:sub(pos1)
-    local rot = rel:toRot()
-    if not usePitch then
-        ENTITY.SET_ENTITY_HEADING(entity, rot.z)
-    else
-        ENTITY.SET_ENTITY_ROTATION(entity, rot.x, rot.y, rot.z, 2, 0)
-    end
-end
 function start_angryplanes_thread()
     local v_hashes = {util.joaat('lazer'), util.joaat('jet'), util.joaat('cargoplane'), util.joaat('titan'), util.joaat('luxor'), util.joaat('seabreeze'), util.joaat('vestra'), util.joaat('volatol'), util.joaat('tula'), util.joaat('buzzard'), util.joaat('avenger')}
     local angry_planes_tar = players.user_ped()

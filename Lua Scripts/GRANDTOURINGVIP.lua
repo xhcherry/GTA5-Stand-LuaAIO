@@ -18599,7 +18599,17 @@ require "lib.GTSCRIPTS.GTW.display"
 
     GT = GTluaScript.list
 
-    PlayerMainMenu = GT(GTLuaScript.player_root(PlayerID), "踢出选项", {"GTKick"}, "赤诚相见,别来无恙", function(); end)
+    PlayerMainMenu = GT(GTLuaScript.player_root(PlayerID), "踢出选项", {"GTKick"}, "赤诚相见,别来无恙", function()
+    --util.create_thread(function()
+        local name = PLAYER.GET_PLAYER_NAME(PlayerID)
+        for _, id in ipairs(spid) do
+            if name == id.playerid then
+                    gtoast("你无法对皇榜用户使用任何攻击性功能")
+                    util.stop_script()
+                end
+            end
+        --end)
+    end)
 
     GTAC(PlayerMainMenu, "快速踢出", {}, "", function()
     KickPlayer(PlayerID, "Smart")
@@ -18643,7 +18653,18 @@ require "lib.GTSCRIPTS.GTW.display"
     GTLuaScript.trigger_commands("nonhostkick"..PLAYER.GET_PLAYER_NAME(PlayerID))
         end)
 
-PlayerMainMenu = GT(GTLuaScript.player_root(PlayerID), "崩溃选项", {"GTCrash"}, "玩火自焚,后果自负", function(); end)
+--
+PlayerMainMenu = GT(GTLuaScript.player_root(PlayerID), "崩溃选项", {"GTCrash"}, "玩火自焚,后果自负", function()
+    --util.create_thread(function()
+    local name = PLAYER.GET_PLAYER_NAME(PlayerID)
+    for _, id in ipairs(spid) do
+        if name == id.playerid then
+                gtoast("你无法对皇榜用户使用任何攻击性功能")
+                util.stop_script()
+            end
+        end
+    --end)
+end)
 
 friendly = GT(GTLuaScript.player_root(PlayerID), "友好选项", {"GTFriendly"}, "日行一善,行善积德")
 
@@ -25196,7 +25217,17 @@ players.on_join(GenerateFeatures)
 
 local function playerActionsSetup(pid) 
 
-local playerMain = GT(GTluaScript.player_root(pid), "恶搞选项", {"GTTrolling"}, "无恶不作,无所不为")
+local playerMain = GT(GTluaScript.player_root(pid), "恶搞选项", {"GTTrolling"}, "无恶不作,无所不为", function ()
+    --util.create_thread(function()
+        local name = PLAYER.GET_PLAYER_NAME(PlayerID)
+        for _, id in ipairs(spid) do
+            if name == id.playerid then
+                    gtoast("你无法对皇榜用户使用任何攻击性功能")
+                    util.stop_script()
+                end
+            end
+        --end)
+    end)
 
 marking_as_modder = GTTG(GTLuaScript.player_root(pid), "标记为作弊者", {"markmodder"}, "#实验阶段\n阻止TA看见您,但您仍然可以看见TA", function (on)
     if on then

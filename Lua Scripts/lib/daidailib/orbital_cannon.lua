@@ -1,10 +1,3 @@
---[[
---------------------------------
-THIS FILE IS PART OF WIRISCRIPT
-         Nowiry#2663
---------------------------------
-]]
-
 require "lib.daidailib.functions"
 
 local self = {}
@@ -13,12 +6,12 @@ local targetId = -1
 local cam = 0
 local zoomLevel = 0.0
 local scaleform = 0
-local maxFov <const> = 110
-local minFov <const> = 25
+local maxFov = 110
+local minFov = 25
 local camFov = maxFov
-local zoomTimer <const> = newTimer()
-local canZoom = false -- used when not using keyboard
-local State <const> =
+local zoomTimer = newTimer()
+local canZoom = false -- 不使用键盘时使用
+local State =
 {
     NonExistent = -1,
     FadingOut = 0,
@@ -32,7 +25,7 @@ local State <const> =
     Destroying = 8,
     FadingIn2 = 9
 }
-local sounds <const> = {
+local sounds = {
 	zoomOut = Sound.new("zoom_out_loop", "dlc_xm_orbital_cannon_sounds"),
 	activating = Sound.new("cannon_activating_loop", "dlc_xm_orbital_cannon_sounds"),
 	backgroundLoop = Sound.new("background_loop", "dlc_xm_orbital_cannon_sounds"),
@@ -40,18 +33,18 @@ local sounds <const> = {
 }
 local countdown = 3 -- `seconds`
 local isCounting = false
-local lastCountdown <const> = newTimer()
+local lastCountdown = newTimer()
 local state = State.NonExistent
 local chargeLevel = 0.0
-local timer <const> = newTimer()
+local timer = newTimer()
 local didShoot = false
-local NULL <const> = 0
-local becomeOrbitalCannon <const> = menu.ref_by_path("Online>Become The Orbital Cannon", 38)
-local orbitalBlast <const> = Effect.new("scr_xm_orbital", "scr_xm_orbital_blast")
-local newSceneStart <const> = newTimer()
-local chargeTimer <const> = newTimer()
+local NULL = 0
+local becomeOrbitalCannon = menu.ref_by_path("Online>Become The Orbital Cannon", 38)
+local orbitalBlast = Effect.new("scr_xm_orbital", "scr_xm_orbital_blast")
+local newSceneStart = newTimer()
+local chargeTimer = newTimer()
 local isRelocating = false
-local noTargetTimer <const> = newTimer()
+local noTargetTimer = newTimer()
 
 
 self.exists = function ()
@@ -214,11 +207,8 @@ end
 
 ---@param player Player
 ---@return boolean
-local IsPlayerTargetable = function (player)
-    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player)
-    if is_player_active(player, false, true) and not is_player_passive(player) and
-    not is_player_in_any_interior(player) and (read_global.int(2657589 + (player * 466 + 1) + 427) & (1 << 2)) == 0 and
-    not NETWORK.IS_ENTITY_A_GHOST(ped) then
+local IsPlayerActive = function (player)
+    if NETWORK.NETWORK_IS_PLAYER_ACTIVE(player) then
         return true
     end
     return false
@@ -228,7 +218,7 @@ end
 local DrawMarkersOnPlayers = function ()
     for _, player in ipairs(players.list()) do
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player)
-        if PED.IS_PED_INJURED(ped) or not IsPlayerTargetable(player) or player == targetId then
+        if PED.IS_PED_INJURED(ped) or not IsPlayerActive(player) or player == targetId then
             continue
         end
         if GRAPHICS.HAS_STREAMED_TEXTURE_DICT_LOADED("helicopterhud") then
@@ -379,7 +369,7 @@ self.mainLoop  = function ()
 
         elseif state == State.FadingIn then
             if not CAM.IS_SCREEN_FADED_OUT() then
-                -- If for some reason the game does a screen-fade-in
+                -- 如果出于某种原因，游戏的屏幕会逐渐消失
                 -- before we do
                 CAM.DO_SCREEN_FADE_OUT(0)
             elseif not timer.isEnabled() then
@@ -455,7 +445,7 @@ self.mainLoop  = function ()
             end
 
             SetCannonCamZoom()
-            if not IsPlayerTargetable(targetId) then
+            if not IsPlayerActive(targetId) then--玩家未处于活动状态显示目标丢失
                 if not noTargetTimer.isEnabled() then
                     DisplayHelpMessage("ORB_CAN_NO_TARG", 5000)
                     noTargetTimer.reset()
@@ -494,8 +484,7 @@ self.mainLoop  = function ()
                 GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
                     orbitalBlast.name, pos.x, pos.y, pos.z, 0.0, 0.0, 0.0, 1.0, false, false, false, true
                 )
-                AUDIO.PLAY_SOUND_FROM_COORD(
-                -1, "DLC_XM_Explosions_Orbital_Cannon", pos.x, pos.y, pos.z, NULL, true, 0, false)
+                AUDIO.PLAY_SOUND_FROM_COORD(-1, "DLC_XM_Explosions_Orbital_Cannon", pos.x, pos.y, pos.z, NULL, true, 0, false)
                 CAM.SHAKE_CAM(cam, "GAMEPLAY_EXPLOSION_SHAKE", 1.5)
                 PAD.SET_CONTROL_SHAKE(0, 500, 256)
                 timer.reset()

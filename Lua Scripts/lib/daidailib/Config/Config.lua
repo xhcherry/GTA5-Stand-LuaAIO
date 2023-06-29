@@ -7,3 +7,4 @@ config_active3 = true
 config_active4 = false
 config_active5 = false
 config_active6 = false
+config_active7 = false

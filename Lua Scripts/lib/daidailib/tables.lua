@@ -659,8 +659,12 @@ vehparticle_tb = {"scr_mich4_firework_trail_spawn","scr_mich4_firework_sparkle_s
 
 
 ------生成坡道
-ramps_hashes = {util.joaat("prop_mp_ramp_02_tu"), util.joaat("prop_mp_ramp_03_tu"), util.joaat("prop_jetski_ramp_01")}
-ramps_names = {"普通坡道", "高坡道", "摩托艇坡道"}
+ramps_hashes = {util.joaat("prop_mp_ramp_02_tu"), 
+    util.joaat("prop_mp_ramp_03_tu"), 
+    util.joaat("prop_jetski_ramp_01"),
+    "2108723836",
+}
+ramps_names = {"普通坡道", "高坡道", "摩托艇坡道","竞技场跳板"}
 
 
 ------火翅膀
