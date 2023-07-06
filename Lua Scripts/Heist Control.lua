@@ -54,8 +54,8 @@
 
     --- Important
 
-        HC_VERSION = "V 3.3.1"
-        CODED_GTAO_VERSION = 1.68
+        HC_VERSION = "V 3.3.2"
+        CODED_GTAO_VERSION = 1.67
         SUPPORTED_STAND_VERSION = 101 -- Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
 
     ---
@@ -526,8 +526,8 @@
             local State = "" -- If global and local variables have been changed due to the GTAO update then
             local Version = tonumber(NETWORK.GET_ONLINE_VERSION())
             if util.is_session_started() then -- Because unable to get local variable in story mode
-                if GET_INT_LOCAL("freemode", 3618) ~= util.joaat("lr_prop_carkey_fob") then -- freemode.c, joaat("lr_prop_carkey_fob")
-                    State = TRANSLATE("Everything works because you're so fucking hot just fuck me")
+                if GET_INT_LOCAL("freemode", 3651) ~= util.joaat("lr_prop_carkey_fob") then -- freemode.c, joaat("lr_prop_carkey_fob")
+                    State = TRANSLATE("[NOT WORKING]") .. "\n" .. TRANSLATE("- This feature isn't working due to the latest GTA Online patch:") .. " " .. Version .. ", " .. TRANSLATE("Please download the latest version of Heist Control or wait for Heist Control's developer patching.")
                     if is_add_new_line then
                         State = State .. "\n\n"
                     end
@@ -1767,9 +1767,9 @@
             PERICO_HOST_CUT = menu.list(PERICO_CUTS, TRANSLATE("Your Cut"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_HOST_CUT_LOOP = menu.toggle_loop(PERICO_HOST_CUT, TRANSLATE("Enable"), {"hccphostcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1978495 + 825 + 56 + 1, menu.get_value(CP_HOST_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1978495 + 823 + 56 + 1, menu.get_value(CP_HOST_CUT)) -- heist_island_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1978495 + 825 + 56 + 1, menu.get_default_state(CP_HOST_CUT))
+                    SET_INT_GLOBAL(1978495 + 823 + 56 + 1, menu.get_default_state(CP_HOST_CUT))
                 end)
 
                 CP_HOST_CUT = menu.slider(PERICO_HOST_CUT, TRANSLATE("Custom Percentage"), {"hccphostcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -1779,9 +1779,9 @@
             PERICO_P2_CUT = menu.list(PERICO_CUTS, TRANSLATE("Player 2"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_2P_CUT_LOOP = menu.toggle_loop(PERICO_P2_CUT, TRANSLATE("Enable"), {"hccp2pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1978495 + 825 + 56 + 2, menu.get_value(CP_2P_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1978495 + 823 + 56 + 2, menu.get_value(CP_2P_CUT)) -- heist_island_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1978495 + 825 + 56 + 2, menu.get_default_state(CP_2P_CUT))
+                    SET_INT_GLOBAL(1978495 + 823 + 56 + 2, menu.get_default_state(CP_2P_CUT))
                 end)
 
                 CP_2P_CUT = menu.slider(PERICO_P2_CUT, TRANSLATE("Custom Percentage"), {"hccp2pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -1791,9 +1791,9 @@
             PERICO_P3_CUT = menu.list(PERICO_CUTS, TRANSLATE("Player 3"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_3P_CUT_LOOP = menu.toggle_loop(PERICO_P3_CUT, TRANSLATE("Enable"), {"hccp3pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1978495 + 825 + 56 + 3, menu.get_value(CP_3P_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1978495 + 823 + 56 + 3, menu.get_value(CP_3P_CUT)) -- heist_island_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1978495 + 825 + 56 + 3, menu.get_default_state(CP_3P_CUT))
+                    SET_INT_GLOBAL(1978495 + 823 + 56 + 3, menu.get_default_state(CP_3P_CUT))
                 end)
 
                 CP_3P_CUT = menu.slider(PERICO_P3_CUT, TRANSLATE("Custom Percentage"), {"hccp3pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -1803,9 +1803,9 @@
             PERICO_P4_CUT = menu.list(PERICO_CUTS, TRANSLATE("Player 4"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_4P_CUT_LOOP = menu.toggle_loop(PERICO_P4_CUT, TRANSLATE("Enable"), {"hccp4pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1978495 + 825 + 56 + 4, menu.get_value(CP_4P_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1978495 + 823 + 56 + 4, menu.get_value(CP_4P_CUT)) -- heist_island_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1978495 + 825 + 56 + 4, menu.get_default_state(CP_4P_CUT))
+                    SET_INT_GLOBAL(1978495 + 823 + 56 + 4, menu.get_default_state(CP_4P_CUT))
                 end)
 
                 CP_4P_CUT = menu.slider(PERICO_P4_CUT, TRANSLATE("Custom Percentage"), {"hccp4pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -1829,32 +1829,32 @@
         end)
 
         menu.toggle_loop(PERICO_ADV, TRANSLATE("Skip The Hacking Process"), {}, IS_WORKING(true) .. "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Compound") .. " > " .. TRANSLATE("El Rubio's Office") .. ")", function() 
-            if GET_INT_LOCAL("fm_mission_controller_2020", 22032) == 4 then -- https://www.unknowncheats.me/forum/3418914-post13398.html
-                SET_INT_LOCAL("fm_mission_controller_2020", 22032, 5)
+            if GET_INT_LOCAL("fm_mission_controller_2020", 23669) == 4 then -- https://www.unknowncheats.me/forum/3418914-post13398.html
+                SET_INT_LOCAL("fm_mission_controller_2020", 23669, 5)
             end
         end)
 
         menu.toggle_loop(PERICO_ADV, TRANSLATE("Skip Cutting The Sewer Grill"), {}, IS_WORKING(true) .. "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Island") .. " > " .. TRANSLATE("Drainage Pipe") .. ")", function() 
-            if GET_INT_LOCAL("fm_mission_controller_2020", 26746) == 4 then -- https://www.unknowncheats.me/forum/3389282-post1.html  
-                SET_INT_LOCAL("fm_mission_controller_2020", 26746, 6)
+            if GET_INT_LOCAL("fm_mission_controller_2020", 28446) == 4 then -- https://www.unknowncheats.me/forum/3389282-post1.html  
+                SET_INT_LOCAL("fm_mission_controller_2020", 28446, 6)
             end
         end)
 
         menu.toggle_loop(PERICO_ADV, TRANSLATE("Skip Cutting The Glass"), {}, IS_WORKING(true) .. "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Compound") .. " > " .. TRANSLATE("Primary Target") .. ")", function()
-            SET_FLOAT_LOCAL("fm_mission_controller_2020", 27985 + 3, 100)
+            SET_FLOAT_LOCAL("fm_mission_controller_2020", 29685 + 3, 100)
         end, function()
-            SET_FLOAT_LOCAL("fm_mission_controller_2020", 27985 + 3, 0)
+            SET_FLOAT_LOCAL("fm_mission_controller_2020", 29685 + 3, 0)
         end)
 
         menu.toggle_loop(PERICO_ADV, TRANSLATE("Infinite Plasma Cutter Heat"), {}, IS_WORKING(true) .. "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Compound") .. " > " .. TRANSLATE("Primary Target") .. ")", function()
-            SET_FLOAT_LOCAL("fm_mission_controller_2020", 27985 + 4, 0)
+            SET_FLOAT_LOCAL("fm_mission_controller_2020", 29685 + 4, 0)
         end)
 
         menu.toggle_loop(PERICO_ADV, TRANSLATE("Infinite Voltage Timer"), {}, IS_WORKING(true) .. "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Island") .. " > " .. TRANSLATE("Radio Tower") .. ")", function()
-            local Value = GET_INT_LOCAL("fm_mission_controller_2020", 1718)
-            SET_INT_LOCAL("fm_mission_controller_2020", 1717, Value)
+            local Value = GET_INT_LOCAL("fm_mission_controller_2020", 1719)
+            SET_INT_LOCAL("fm_mission_controller_2020", 1718, Value)
         end, function()
-            SET_INT_LOCAL("fm_mission_controller_2020", 1717, 0)
+            SET_INT_LOCAL("fm_mission_controller_2020", 1718, 0)
         end)
 
         CP_REM_FEE = menu.toggle_loop(PERICO_ADV, TRANSLATE("Remove The Fencing Fee And Pavel's Cut"), {"hccpremfee"}, IS_WORKING(true) .. TRANSLATE("(Local)") .. "\n\n" .. TRANSLATE("You should enable the preset until the end of the heist!"), function()
@@ -1866,18 +1866,9 @@
         end)
 
         menu.action(PERICO_ADV, TRANSLATE("Obtain The Primary Target"), {"hccpfintar"}, IS_WORKING(true) .. "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Compound") .. " > " .. TRANSLATE("Primary Target") .. ")", function() -- https://www.unknowncheats.me/forum/3418914-post13398.html
-            SET_INT_LOCAL("fm_mission_controller_2020", 27984, 5) -- CutterStage
-            SET_INT_LOCAL("fm_mission_controller_2020", 27985, 3) -- BitCheck
+            SET_INT_LOCAL("fm_mission_controller_2020", 29684, 5) -- CutterStage
+            SET_INT_LOCAL("fm_mission_controller_2020", 29685, 3) -- BitCheck
         end)
-		menu.action(PERICO_ADV, TRANSLATE("Nigga"), {"hccpfintar"}, IS_WORKING(true) .. "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Compound") .. " > " .. TRANSLATE("Primary Target") .. ")", function() -- https://www.unknowncheats.me/forum/3418914-post13398.html
-            SET_INT_LOCAL("fm_mission_controller_2020", 45450 + 1, 51338752) -- CutterStage
-            SET_INT_LOCAL("fm_mission_controller_2020", 45450 + 1378 + 1, 50) -- BitCheck
-        end)
-		menu.action(PERICO_ADV, TRANSLATE("Cloud Save"), {"hccpfintar"}, IS_WORKING(true) .. "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Compound") .. " > " .. TRANSLATE("Primary Target") .. ")", function() -- https://www.unknowncheats.me/forum/3418914-post13398.html
-            FORCE_CLOUD_SAVE()
-        end)
-		
-	
 
         menu.action(PERICO_ADV, TRANSLATE("Remove The Drainage Pipe"), {"hccprempipe"}, "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Island") .. " > " .. TRANSLATE("Drainage Pipe") .. ")", function()
             local Object = util.joaat("prop_chem_grill_bit") -- Thanks for letting me know the object, Sapphire#6031
@@ -1885,7 +1876,7 @@
         end)
 
         menu.action(PERICO_ADV, TRANSLATE("Refresh Kosatka Planning Table"), {"hccprefreshboard"}, IS_WORKING(true) .. TRANSLATE("You can update changed cayo perico heist stats in the Kosatka by refreshing it."), function()
-            SET_INT_LOCAL("heist_island_planning", 1525, 2) -- https://github.com/atomikfr/CayoPericoHeistAssistant
+            SET_INT_LOCAL("heist_island_planning", 1526, 2) -- https://github.com/atomikfr/CayoPericoHeistAssistant
         end)
     
     ---
@@ -2498,7 +2489,7 @@
                 end
 
                 while menu.get_value(DIAMOND_AA) do
-                    SET_INT_GLOBAL(262145 + 29015, 1410065408) -- 1410065408
+                    SET_INT_GLOBAL(262145 + 29015, 1410065408)
                     for i = 1, #ForCasinoPresets do
                         menu.set_value(ForCasinoPresets[i][1], ForCasinoPresets[i][2])
                     end
@@ -2757,11 +2748,11 @@
         ---
 
         menu.toggle_loop(CAH_ADVCED, TRANSLATE("Skip The Hacking Process"), {}, IS_WORKING(true) .. TRANSLATE("Works On Both: Fingerprint and Keypad"), function()
-            if GET_INT_LOCAL("fm_mission_controller", 52962) ~= 1 then -- For Fingerprint, https://www.unknowncheats.me/forum/3418914-post13398.html
-                SET_INT_LOCAL("fm_mission_controller", 52962, 5)
+            if GET_INT_LOCAL("fm_mission_controller", 52964) ~= 1 then -- For Fingerprint, https://www.unknowncheats.me/forum/3418914-post13398.html
+                SET_INT_LOCAL("fm_mission_controller", 52964, 5)
             end
-            if GET_INT_LOCAL("fm_mission_controller", 54024) ~= 1 then -- For Keypad, https://www.unknowncheats.me/forum/3455828-post8.html
-                SET_INT_LOCAL("fm_mission_controller", 54024, 5)
+            if GET_INT_LOCAL("fm_mission_controller", 54026) ~= 1 then -- For Keypad, https://www.unknowncheats.me/forum/3455828-post8.html
+                SET_INT_LOCAL("fm_mission_controller", 54026, 5)
             end
         end)
 
@@ -2775,7 +2766,6 @@
             end
             menu.trigger_commands("hccahrefreshboards")
         end)
-		
 
         menu.action(CAH_ADVCED, TRANSLATE("Refresh Arcade Boards"), {"hccahrefreshboards"}, TRANSLATE("You can update casino heist stats while even you in the arcade."), function()
             local Bitset0 = STAT_GET_INT("H3OPT_BITSET0")
@@ -2785,19 +2775,6 @@
             util.yield_once()
             STAT_SET_INT("H3OPT_BITSET0", Bitset0)
             STAT_SET_INT("H3OPT_BITSET1", Bitset1)
-        end) 
-		menu.action(CAH_ADVCED, TRANSLATE("Skip Setups"), {"hccahrefreshboards"}, TRANSLATE("I hate jews"), function()
-           STAT_SET_INT("H3OPT_APPROACH", 3)
-			STAT_SET_INT("H3OPT_TARGET", 2)
-			STAT_SET_INT("H3OPT_BITSET1", -1)
-			STAT_SET_INT("H3OPT_DISRUPTSHIP", 3)
-			STAT_SET_INT("H3OPT_KEYLEVELS", 2)
-			STAT_SET_INT("H3OPT_CREWWEAP", 1)
-			STAT_SET_INT("H3OPT_CREWDRIVER", 1)
-			STAT_SET_INT("H3OPT_CREWHACKER", 1)
-			STAT_SET_INT("H3OPT_VEHS", 1)
-			STAT_SET_INT("H3OPT_WEAPS", 1)
-			STAT_SET_INT("H3OPT_BITSET0 ", -1)
         end)
 
     ---
@@ -3510,13 +3487,13 @@
     ---
 
     menu.toggle_loop(DOOMS_HEIST, TRANSLATE("Skip The Hacking Process"), {}, IS_WORKING(true) .. "(" .. TRANSLATE("The Data Breaches ACT I") .. " - " .. TRANSLATE("Setup: Server Farm (Lester)") .. " & " .. TRANSLATE("The Doomsday Scenario ACT III") .. ")", function()
-        SET_INT_LOCAL("fm_mission_controller", 1508, 3) -- For ACT I, Setup: Server Farm (Lester), https://www.unknowncheats.me/forum/3687245-post112.html
-        SET_INT_LOCAL("fm_mission_controller", 1539, 2)
-        SET_INT_LOCAL("fm_mission_controller", 1265 + 135, 3) -- For ACT III, https://www.unknowncheats.me/forum/3455828-post8.html
+        SET_INT_LOCAL("fm_mission_controller", 1509, 3) -- For ACT I, Setup: Server Farm (Lester), https://www.unknowncheats.me/forum/3687245-post112.html
+        SET_INT_LOCAL("fm_mission_controller", 1540, 2)
+        SET_INT_LOCAL("fm_mission_controller", 1266 + 135, 3) -- For ACT III, https://www.unknowncheats.me/forum/3455828-post8.html
     end)
 
     menu.action(DOOMS_HEIST, TRANSLATE("Refresh Heist Screen On Facility"), {"hcdoomsrefreshscreen"}, IS_WORKING(true) .. TRANSLATE("You can update changed doomsday heist stats in the Facility by refreshing it."), function()
-        SET_INT_LOCAL("gb_gang_ops_planning", 178, 6) -- https://www.unknowncheats.me/forum/3682032-post104.html
+        SET_INT_LOCAL("gb_gang_ops_planning", 179, 6) -- https://www.unknowncheats.me/forum/3682032-post104.html
     end)
 
     menu.action(DOOMS_HEIST, TRANSLATE("Remove EMP Mines"), {}, TRANSLATE("(ACT III, Setup - Air Defense)"), function()
@@ -3556,11 +3533,11 @@
         end)
 
         menu.toggle_loop(FLEECA_HEIST, TRANSLATE("Skip The Hacking Process"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3455828-post8.html
-            SET_INT_LOCAL("fm_mission_controller", 11757 + 24, 7)
+            SET_INT_LOCAL("fm_mission_controller", 11760 + 24, 7)
         end)
 
         menu.toggle_loop(FLEECA_HEIST, TRANSLATE("Skip Drilling"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3485435-post19.html
-            SET_FLOAT_LOCAL("fm_mission_controller", 10058 + 11, 100)
+            SET_FLOAT_LOCAL("fm_mission_controller", 10061 + 11, 100)
         end)
 
     ---
@@ -3573,24 +3550,17 @@
         end)
 
         menu.toggle_loop(PACIFIC_STANDARD_HEIST, TRANSLATE("Skip The Hacking Process"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3694259-post117.html
-            SET_LOCAL_BIT("fm_mission_controller", 9764, 9)
+            SET_LOCAL_BIT("fm_mission_controller", 9767, 9)
         end)
 
     ---
 
     menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Bypass Minimum And Maximum Percentage"), {}, IS_WORKING(true) .. TRANSLATE("Only works if you are host of the heist.") .. "\n\n" .. TRANSLATE("It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts."), function()
         SET_INT_GLOBAL(262145 + 9256, 100) -- MAX_HEIST_CUT_AMOUNT, Default: 70(%), https://www.unknowncheats.me/forum/3664875-post95.html
-        SET_INT_GLOBAL(262145 + 29393, 0) -- MEMBER_MIN_HEIST_FINALE_TAKE_PERCENTAGE, Default: 15(%)
-        SET_INT_GLOBAL(262145 + 29394, 0) -- LEADER_MIN_HEIST_FINALE_TAKE_PERCENTAGE, Default: 15(%)
+        SET_INT_GLOBAL(262145 + 9358, 0) -- MEMBER_MIN_HEIST_FINALE_TAKE_PERCENTAGE, Default: 15(%)
+        SET_INT_GLOBAL(262145 + 9359, 0) -- LEADER_MIN_HEIST_FINALE_TAKE_PERCENTAGE, Default: 15(%)
     end)
 
-   menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Set Max Payout"), {}, IS_WORKING(true) .. TRANSLATE("Only works if you are host of the heist.") .. "\n\n" .. TRANSLATE("It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts."), function()
-           SET_INT_GLOBAL(1938365 + 3008 + 1, 5900)
-            SET_INT_GLOBAL(1938365 + 3008 + 2, 5900)
-			SET_INT_GLOBAL(1938365 + 3008 + 3, 100)
-            SET_INT_GLOBAL(1938365 + 3008 + 4, 100)
-    end)
-	
     menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Complete All Setup"), {}, TRANSLATE("Works on all of the classic heists. You need to activate this until first setup mission is ended."), function()
         STAT_SET_INT("HEIST_PLANNING_STAGE", -1)
     end)
@@ -3703,7 +3673,7 @@
     menu.divider(ULP_MISSIONS, TRANSLATE("Others"))
 
         menu.toggle_loop(ULP_MISSIONS, TRANSLATE("Skip The Hacking Process"), {}, IS_WORKING(true) .. "(" .. TRANSLATE("ULP Missions") .. " - " .. TRANSLATE("Counterintelligence") .. ")", function() -- Thanks for coding this, Pedro9558#3559
-            SET_INT_LOCAL("fm_mission_controller_2020", 974 + 135, 3)
+            SET_INT_LOCAL("fm_mission_controller_2020", 975 + 135, 3)
         end)
         menu.action(ULP_MISSIONS, TRANSLATE("Teleport To IAA Headquarters"), {}, "", function()
             local Blip = HUD.GET_FIRST_BLIP_INFO_ID(838) -- ULP Blip, https://wiki.rage.mp/index.php?title=Blips
@@ -3948,7 +3918,7 @@
             end)
 
             menu.action(ARENA_TOOL, TRANSLATE("Unlock Clothing"), {}, IS_WORKING(false), function()
-                SET_PACKED_INT_GLOBAL(25842, 25909, 1) -- -1782918513, -1597048932
+                SET_PACKED_INT_GLOBAL(26030, 26097, 1) -- ENABLE_LOGIN_ALBANY_LOGO_WHITE_SHIRT, ENABLE_LOGIN_DECLASSE_LADY_BLACK_SHIRT
             end)
 
         ---
@@ -3965,7 +3935,7 @@
             end)
 
             menu.action(SUMMER2020, TRANSLATE("Unlock Clothing"), {}, IS_WORKING(false), function()
-                SET_PACKED_INT_GLOBAL(29685, 29720, 1) -- ENABLE_LOGIN_BCTR_AGED_TEE, ENABLE_LOGIN_LEMON_SPORTS_TRACK_TOP
+                SET_PACKED_INT_GLOBAL(29892, 29927, 1) -- ENABLE_LOGIN_BCTR_AGED_TEE, ENABLE_LOGIN_LEMON_SPORTS_TRACK_TOP
             end)
 
         ---
@@ -4004,10 +3974,10 @@
         CONTRACT_DLC = menu.list(DLC_UNLOCKER, TRANSLATE("The Contract DLC"), {}, "", function(); end)
 
             menu.action(CONTRACT_DLC, TRANSLATE("Unlock Animal Masks"), {}, IS_WORKING(false), function()
-                SET_PACKED_INT_GLOBAL(31859, 31870, 1) -- FIXER_LOGIN_AWARD_FISHMASK_1, FIXER_LOGIN_AWARD_SEALMASK_4
+                SET_PACKED_INT_GLOBAL(32069, 32080, 1) -- FIXER_LOGIN_AWARD_FISHMASK_1, FIXER_LOGIN_AWARD_SEALMASK_4
             end)
             menu.action(CONTRACT_DLC, TRANSLATE("Unlock DJ Pooh Shirts"), {}, IS_WORKING(false), function()
-                SET_PACKED_INT_GLOBAL(31871, 31873, 1) -- FIXER_LOGIN_DJ_POOH_ORANGE, FIXER_LOGIN_DJ_POOH_BLUE
+                SET_PACKED_INT_GLOBAL(32081, 32083, 1) -- FIXER_LOGIN_DJ_POOH_ORANGE, FIXER_LOGIN_DJ_POOH_BLUE
             end)
 
         ---
@@ -4015,27 +3985,27 @@
         CRIMINAL_DLC = menu.list(DLC_UNLOCKER, TRANSLATE("The Criminal Enterprises DLC"), {}, "", function(); end) -- https://www.unknowncheats.me/forum/3492512-post53.html
             
             menu.action(CRIMINAL_DLC, TRANSLATE("Jackets / Sweaters / Hoodies / Shirts"), {}, IS_WORKING(false), function()
-                SET_PACKED_INT_GLOBAL(32907, 32914, 1) -- -1967834023, -1263992372
-                SET_PACKED_INT_GLOBAL(32930, 32935, 1) -- -206691492, -1577621449
+                SET_PACKED_INT_GLOBAL(33126, 33133, 1) -- -1967834023, -1263992372
+                SET_PACKED_INT_GLOBAL(33149, 33154, 1) -- -206691492, -1577621449
             end)
             menu.action(CRIMINAL_DLC, TRANSLATE("Pants / Caps / Hats"), {}, IS_WORKING(false), function()
-                SET_PACKED_INT_GLOBAL(32917, 32919, 1) -- 638571354, 96152168
-                SET_PACKED_INT_GLOBAL(32936, 32937, 1) -- -2120678580, -1003907171
-                SET_PACKED_INT_GLOBAL(32988, 33001, 1) -- 191276118, -1484490421
-                SET_PACKED_INT_GLOBAL(33654, 33662, 1) -- SUM2_CHRISTMAS_BEERHAT_LEMON, Between SUM2_CHRISTMAS_BEERHAT_RED_REINDEER and -1267850277
-                SET_INT_GLOBAL(262145 + 32913, 1) -- -339902614
+                SET_PACKED_INT_GLOBAL(33136, 33138, 1) -- 638571354, 96152168
+                SET_PACKED_INT_GLOBAL(33155, 33156, 1) -- -2120678580, -1003907171
+                SET_PACKED_INT_GLOBAL(33207, 33220, 1) -- 191276118, -1484490421
+                SET_PACKED_INT_GLOBAL(33875, 33883, 1) -- SUM2_CHRISTMAS_BEERHAT_LEMON, Between SUM2_CHRISTMAS_BEERHAT_RED_REINDEER and -1267850277
+                SET_INT_GLOBAL(262145 + 33132, 1) -- -339902614
             end)
             menu.action(CRIMINAL_DLC, TRANSLATE("Earphones / Masks / Tech Demon"), {}, IS_WORKING(false), function()
-                SET_PACKED_INT_GLOBAL(33002, 33013, 1) -- -889497715, -1162924007
-                SET_PACKED_INT_GLOBAL(32922, 32927, 1) -- 1096886904, -359187968
-                SET_PACKED_INT_GLOBAL(32942, 32950, 1) -- 190205845, -171130807
-                SET_PACKED_INT_GLOBAL(32954, 32957, 1) -- 1424509866, -1677619307
-                SET_PACKED_INT_GLOBAL(32958, 32983, 1) -- -1285035231, -1792568167
-                SET_INT_GLOBAL(262145 + 32929, 1) -- 505550305
+                SET_PACKED_INT_GLOBAL(33221, 33232, 1) -- -889497715, -1162924007
+                SET_PACKED_INT_GLOBAL(33141, 33146, 1) -- 1096886904, -359187968
+                SET_PACKED_INT_GLOBAL(33161, 33169, 1) -- 190205845, -171130807
+                SET_PACKED_INT_GLOBAL(33173, 33176, 1) -- 1424509866, -1677619307
+                SET_PACKED_INT_GLOBAL(33177, 33202, 1) -- -1285035231, -1792568167
+                SET_INT_GLOBAL(262145 + 33148, 1) -- 505550305
             end)
             menu.action(CRIMINAL_DLC, TRANSLATE("Shoes (Sliders) / Tiger"), {}, IS_WORKING(false), function()
-                SET_PACKED_INT_GLOBAL(32984, 32987, 1) -- 467678514, 169972145
-                SET_PACKED_INT_GLOBAL(33014, 33037, 1) -- 245491514, -141827484
+                SET_PACKED_INT_GLOBAL(33203, 33206, 1) -- 467678514, 169972145
+                SET_PACKED_INT_GLOBAL(33233, 33256, 1) -- 245491514, -141827484
             end)
             
         ---
@@ -4043,7 +4013,7 @@
         DRUG_WAR = menu.list(DLC_UNLOCKER, TRANSLATE("Drug War DLC"), {}, "", function(); end)
 
             menu.action(DRUG_WAR, TRANSLATE("Unlock Clothing"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3635453-post69.html
-                SET_PACKED_INT_GLOBAL(33973, 34112, 1) -- EVENT_LOGIN_DLC22022_ICE_VINYL_JACKET_3, -711496356
+                SET_PACKED_INT_GLOBAL(34228, 34369, 1) -- EVENT_LOGIN_DLC22022_ICE_VINYL_JACKET_3, PURPLE_SNAKESKIN_MOTOR_HELMET
             end)
 
         ---
@@ -4176,11 +4146,11 @@
             STAT_SET_BOOL("IAP_GOLD_TANK", true)
             STAT_SET_BOOL("SCGW_WON_NO_DEATHS", true)
 
-            SET_PACKED_INT_GLOBAL(28316, 28336, 1) -- STREET_CRIMES_BOXART_TEE, RED_FAME_OR_SHAME_KRONOS, For Clothing
+            SET_PACKED_INT_GLOBAL(28523, 28543, 1) -- STREET_CRIMES_BOXART_TEE, RED_FAME_OR_SHAME_KRONOS, For Clothing
         end)
 
         menu.action(UNLOCKER_BUILDING, TRANSLATE("Casino Store Ace Masks"), {}, IS_WORKING(true) .. TRANSLATE("Make sure click before buying. When you change your session, will be changed to non-unlocked status."), function()
-            SET_PACKED_INT_GLOBAL(27530, 27533, 1) -- VC_ACE_OF_SPADES, VC_ACE_OF_DIAMONDS
+            SET_PACKED_INT_GLOBAL(27716, 27719, 1) -- VC_ACE_OF_SPADES, VC_ACE_OF_DIAMONDS
         end)
 
         menu.action(UNLOCKER_BUILDING, TRANSLATE("Add Cosmetic Decorations To The Office/MC"), {}, TRANSLATE("To apply, sell special crate or vehicle cargo and change your session!"), function()
@@ -4243,11 +4213,11 @@
             STAT_SET_BOOL("COMPLETE_H4_F_USING_ANNIH", true)
             STAT_SET_BOOL("COMPLETE_H4_F_USING_ALKONOS", true)
             STAT_SET_BOOL("COMPLETE_H4_F_USING_PATROLB", true)
-            SET_PACKED_INT_GLOBAL(30209, 30232, 1) -- TOPS_ISLAND_HEIST_EVENT_JACKET_1, PANTS_BIGNESS_TIE_DYE_SWEAT_PANTS
-            SET_PACKED_INT_GLOBAL(30238, 30277, 1) -- ACCESSORIES_GLOW_BRACELET_1, ACCESSORIES_GLOW_NECKLACE_16
-            SET_PACKED_INT_GLOBAL(30282, 30301, 1) -- HEIST4_FESTIVE_MASK_0, HEIST4_FESTIVE_MASK_19
-            SET_PACKED_INT_GLOBAL(30866, 30901, 1) -- ACCESSORIES_SUNGLASSES_1_0, ACCESSORIES_SUNGLASSES_3_11
-            SET_PACKED_INT_GLOBAL(30911, 30916, 1) -- PALMS_TRAX_EVENT_TEE_1, STILL_SLIPPING_EVENT_TEE_2
+            SET_PACKED_INT_GLOBAL(30416, 30439, 1) -- TOPS_ISLAND_HEIST_EVENT_JACKET_1, PANTS_BIGNESS_TIE_DYE_SWEAT_PANTS
+            SET_PACKED_INT_GLOBAL(30445, 30484, 1) -- ACCESSORIES_GLOW_BRACELET_1, ACCESSORIES_GLOW_NECKLACE_16
+            SET_PACKED_INT_GLOBAL(30489, 30508, 1) -- HEIST4_FESTIVE_MASK_0, HEIST4_FESTIVE_MASK_19
+            SET_PACKED_INT_GLOBAL(31073, 31108, 1) -- ACCESSORIES_SUNGLASSES_1_0, ACCESSORIES_SUNGLASSES_3_11
+            SET_PACKED_INT_GLOBAL(31118, 31123, 1) -- PALMS_TRAX_EVENT_TEE_1, STILL_SLIPPING_EVENT_TEE_2
         end)
 
         menu.action(UNLOCKER_HEISTS, TRANSLATE("Diamond Casino Heist"), {}, "", function()
@@ -4495,7 +4465,7 @@
     UNLOCKER_MISSIONS = menu.list(MASTER_UNLOCKR, TRANSLATE("Missions"), {}, "", function(); end)
 
         menu.action(UNLOCKER_MISSIONS, TRANSLATE("Unlock Taxi Missions"), {}, IS_WORKING(false), function() -- https://github.com/ImSapphire/unlock_drug_war_content/blob/main/unlock_drug_war_content.lua
-            SET_INT_GLOBAL(262145 + 33770, 1) -- XM22_TAXI_DRIVER_ENABLE
+            SET_INT_GLOBAL(262145 + 34019, 1) -- XM22_TAXI_DRIVER_ENABLE
         end)
 
         menu.action(UNLOCKER_MISSIONS, TRANSLATE("Unlock Yacht Missions"), {}, "", function()
@@ -4536,8 +4506,8 @@
         XMAS_FEATURES = menu.list(UNLOCKER_ANNIVERSARY, TRANSLATE("Christmas"), {}, "", function(); end)
 
             menu.toggle_loop(XMAS_FEATURES, TRANSLATE("Bypass Christmas Clothing"), {}, IS_WORKING(true) .. TRANSLATE("You must keep this feature enabled in order to wear it!"), function()
-                SET_PACKED_INT_GLOBAL(9393, 9400, 0) -- DISABLE_SNOWBALLS, ENABLE_CLEAR_STRUCT_ON_TRAN_FAIL
-                SET_PACKED_INT_GLOBAL(9401, 9402, 7) -- MAX_NUMBER_OF_SNOWBALLS, PICK_UP_NUMBER_OF_SNOWBALLS
+                SET_PACKED_INT_GLOBAL(9565, 9572, 0) -- DISABLE_SNOWBALLS, ENABLE_CLEAR_STRUCT_ON_TRAN_FAIL
+                SET_PACKED_INT_GLOBAL(9573, 9574, 7) -- MAX_NUMBER_OF_SNOWBALLS, PICK_UP_NUMBER_OF_SNOWBALLS
             end)
             
             menu.action(XMAS_FEATURES, TRANSLATE("Unlock Christmas Liveries"), {}, "", function()
@@ -4547,39 +4517,39 @@
             end)
 
             menu.action(XMAS_FEATURES, TRANSLATE("Unlock Christmas Content"), {}, IS_WORKING(false), function()
-                SET_PACKED_INT_GLOBAL(9393, 9402, 1) -- DISABLE_SNOWBALLS, PICK_UP_NUMBER_OF_SNOWBALLS
-                SET_PACKED_INT_GLOBAL(9449, 9451, 1) -- TOGGLE_CHRISTMAS_EVE_GIFT, TOGGLE_NEW_YEARS_DAY_GIFT
-                SET_PACKED_INT_GLOBAL(12710, 12711, 1) -- XMAS2015_VEHICLE, XMAS2015_MASKS
-                SET_PACKED_INT_GLOBAL(12816, 12819, 1) -- TOGGLE_2015_CHRISTMAS_EVE_GIFT, TOGGLE_2015_CHRISTMAS_DAY_GIFT
-                SET_PACKED_INT_GLOBAL(19115, 19118, 1) -- TOGGLE_2016_CHRISTMAS_EVE_GIFT, TOGGLE_2016_CHRISTMAS_DAY_GIFT
-                SET_PACKED_INT_GLOBAL(23407, 23415, 1) -- 1840129338, -495986083
-                SET_PACKED_INT_GLOBAL(23434, 23437, 1) -- -101086705, TOGGLE_2017_CHRISTMAS_DAY_GIFT
-                SET_PACKED_INT_GLOBAL(25834, 25836, 1) -- XMASDAYGIFT2018_CAR, XMASDAYGIFT2018_CAR2
-                SET_PACKED_INT_GLOBAL(25838, 25841, 1) -- TOGGLE_2018_CHRISTMAS_EVE_GIFT, TOGGLE_2018_CHRISTMAS_DAY_GIFT
-                SET_PACKED_INT_GLOBAL(28690, 28693, 1) -- TOGGLE_2019_CHRISTMAS_EVE_GIFT, TOGGLE_2019_CHRISTMAS_DAY_GIFT
-                SET_PACKED_INT_GLOBAL(31756, 31757, 1) -- TOGGLE_2021_CHRISTMAS_GIFT, TOGGLE_2021_NEW_YEARS_GIFT
-                SET_PACKED_INT_GLOBAL(33915, 33916, 1) -- XMASGIFTS2022, NEWYEARSGIFTS2022, https://www.unknowncheats.me/forum/3630405-post34.html (2022)
+                SET_PACKED_INT_GLOBAL(9565, 9574, 1) -- DISABLE_SNOWBALLS, PICK_UP_NUMBER_OF_SNOWBALLS
+                SET_PACKED_INT_GLOBAL(9621, 9623, 1) -- TOGGLE_CHRISTMAS_EVE_GIFT, TOGGLE_NEW_YEARS_DAY_GIFT
+                SET_PACKED_INT_GLOBAL(12883, 12884, 1) -- XMAS2015_VEHICLE, XMAS2015_MASKS
+                SET_PACKED_INT_GLOBAL(12989, 12992, 1) -- TOGGLE_2015_CHRISTMAS_EVE_GIFT, TOGGLE_2015_CHRISTMAS_DAY_GIFT
+                SET_PACKED_INT_GLOBAL(19295, 19298, 1) -- TOGGLE_2016_CHRISTMAS_EVE_GIFT, TOGGLE_2016_CHRISTMAS_DAY_GIFT
+                SET_PACKED_INT_GLOBAL(23588, 23596, 1) -- 1840129338, -495986083
+                SET_PACKED_INT_GLOBAL(23615, 23618, 1) -- -101086705, TOGGLE_2017_CHRISTMAS_DAY_GIFT
+                SET_PACKED_INT_GLOBAL(26022, 26024, 1) -- XMASDAYGIFT2018_CAR, XMASDAYGIFT2018_CAR2
+                SET_PACKED_INT_GLOBAL(26026, 26029, 1) -- TOGGLE_2018_CHRISTMAS_EVE_GIFT, TOGGLE_2018_CHRISTMAS_DAY_GIFT
+                SET_PACKED_INT_GLOBAL(28897, 28900, 1) -- TOGGLE_2019_CHRISTMAS_EVE_GIFT, TOGGLE_2019_CHRISTMAS_DAY_GIFT
+                SET_PACKED_INT_GLOBAL(31964, 31965, 1) -- TOGGLE_2021_CHRISTMAS_GIFT, TOGGLE_2021_NEW_YEARS_GIFT
+                SET_PACKED_INT_GLOBAL(34170, 34171, 1) -- XMASGIFTS2022, NEWYEARSGIFTS2022, https://www.unknowncheats.me/forum/3630405-post34.html (2022)
                 SET_INT_GLOBAL(262145 + 4763, 1) -- TOGGLE_XMAS_CONTENT
-                SET_INT_GLOBAL(262145 + 9185, 1) -- TOGGLE_GIFT_TO_PLAYER_WHEN_LOGGING_ON
-                SET_INT_GLOBAL(262145 + 12713, 1) -- XMAS2015_PYJAMAS
-                SET_INT_GLOBAL(262145 + 19256, 1) -- CHRISTMAS2016_CLOTHING
-                SET_INT_GLOBAL(262145 + 23056, 1) -- CHRISTMAS2017_CLOTHING
-                SET_INT_GLOBAL(262145 + 24203, 1) -- NEW_BH_VEHICLE_TEXT
-                SET_INT_GLOBAL(262145 + 30902, 1) -- TOGGLE_2020_CHRISTMAS_DAY_GIFT
+                SET_INT_GLOBAL(262145 + 9357, 1) -- TOGGLE_GIFT_TO_PLAYER_WHEN_LOGGING_ON
+                SET_INT_GLOBAL(262145 + 12886, 1) -- XMAS2015_PYJAMAS
+                SET_INT_GLOBAL(262145 + 19436, 1) -- CHRISTMAS2016_CLOTHING
+                SET_INT_GLOBAL(262145 + 23236, 1) -- CHRISTMAS2017_CLOTHING
+                SET_INT_GLOBAL(262145 + 24385, 1) -- NEW_BH_VEHICLE_TEXT
+                SET_INT_GLOBAL(262145 + 31109, 1) -- TOGGLE_2020_CHRISTMAS_DAY_GIFT
             end)
 
         ---
 
         menu.toggle_loop(UNLOCKER_ANNIVERSARY, TRANSLATE("Independence's Day"), {}, IS_WORKING(true) .. TRANSLATE("Note: You may need to keep activating to use some of Independence Day's contents."), function()
-            SET_PACKED_INT_GLOBAL(8268, 8274, 1) -- INDEPENDENCE_DAY_DEACTIVATE_FIREWORKS_LAUNCHER, TOGGLE_ACTIVATE_MONSTER_TRUCK
-            SET_PACKED_INT_GLOBAL(8297, 8303, 1) -- UNLOCKINDEPENDENCE_BEER_HAT_1, UNLOCKINDEPENDENCE_STATUE_HAPPINESS_SHIRT
-            SET_INT_GLOBAL(262145 + 8259, 1) -- TOGGLE_ACTIVATE_INDEPENDENCE_PACK
+            SET_PACKED_INT_GLOBAL(8439, 8445, 1) -- INDEPENDENCE_DAY_DEACTIVATE_FIREWORKS_LAUNCHER, TOGGLE_ACTIVATE_MONSTER_TRUCK
+            SET_PACKED_INT_GLOBAL(8468, 8474, 1) -- UNLOCKINDEPENDENCE_BEER_HAT_1, UNLOCKINDEPENDENCE_STATUE_HAPPINESS_SHIRT
+            SET_INT_GLOBAL(262145 + 8430, 1) -- TOGGLE_ACTIVATE_INDEPENDENCE_PACK
         end)
 
         menu.action(UNLOCKER_ANNIVERSARY, TRANSLATE("Valentine's Day"), {}, IS_WORKING(false), function()
-            SET_PACKED_INT_GLOBAL(12030, 12034, 1) -- TURN_ON_VALENTINE_WEAPON, TURN_ON_VALENTINE_CLOTHING
-            SET_PACKED_INT_GLOBAL(13396, 13397, 1) -- TURN_ON_VALENTINE_2016_CLOTHING, TURN_ON_VALENTINE_2016_VEHICLE
-            SET_INT_GLOBAL(262145 + 7059, 1) -- TURN_ON_VALENTINES_EVENT
+            SET_PACKED_INT_GLOBAL(12202, 12206, 1) -- TURN_ON_VALENTINE_WEAPON, TURN_ON_VALENTINE_CLOTHING
+            SET_PACKED_INT_GLOBAL(13569, 13570, 1) -- TURN_ON_VALENTINE_2016_CLOTHING, TURN_ON_VALENTINE_2016_VEHICLE
+            SET_INT_GLOBAL(262145 + 7142, 1) -- TURN_ON_VALENTINES_EVENT
         end)
 
     ---
@@ -4587,24 +4557,24 @@
     UNLOCKER_SHIRT_HAT = menu.list(MASTER_UNLOCKR, TRANSLATE("Clothes"), {}, "", function(); end)
     
         menu.action(UNLOCKER_SHIRT_HAT, TRANSLATE("Unlock Lots of Hats And Shirts"), {}, IS_WORKING(true) .. TRANSLATE("500+ unlocks are included, try and see how many clothes would be unlocked."), function()
-            SET_PACKED_INT_GLOBAL(11955, 11964, 1) -- DLC_SHIRT_MELTDOWN, DLC_SHIRT_CAPOLAVORO
-            SET_PACKED_INT_GLOBAL(12591, 12613, 1) -- AWARD_LOW_HATS_MAGNETICS_SCRIPT, AWARD_LOW_TSHIRT_VAMPIRES_ON_THE_BEACH
-            SET_PACKED_INT_GLOBAL(15222, 15236, 1) -- ACCOUNTANTSHIRTEVENT, CRESTTSHIRTEVENT
-            SET_PACKED_INT_GLOBAL(16784, 16790, 1) -- AWARD_JUMPSUIT_WHITE, AWARD_JUMPSUIT_SILVER
-            SET_PACKED_INT_GLOBAL(17532, 17553, 1) -- -1422129266, 310744591
-            SET_PACKED_INT_GLOBAL(21109, 21147, 1) -- AWARD_BLACK_AMMUNATION_CAP, AWARD_RSTAR_LOGO_WHITE
-            SET_PACKED_INT_GLOBAL(24204, 24230, 1) -- AWARD_EMOTION_983_TSHIRT, AWARD_FAKE_VAPID_TSHIRT
-            SET_PACKED_INT_GLOBAL(24704, 24712, 1) -- MAISONETTE_LOS_SANTOS_TSHIRT, TONYS_FUN_HOUSE_TSHIRT
-            SET_PACKED_INT_GLOBAL(24744, 24763, 1) -- AWARD_LS_UR, AWARD_BLAINE_COUNTY_RADIO
-            SET_PACKED_INT_GLOBAL(24918, 24941, 1) -- -726113206, -1910486921
-            SET_PACKED_INT_GLOBAL(25910, 25919, 1) -- -1344369866, 1799248495
-            SET_PACKED_INT_GLOBAL(27027, 27033, 1) -- 760292630, 1007326524
-            SET_PACKED_INT_GLOBAL(30233, 30237, 1) -- HATS_ISLAND_HEIST_EVENT_HAT_1, HATS_ISLAND_HEIST_EVENT_HAT_5
-            SET_PACKED_INT_GLOBAL(31871, 31873, 1) -- FIXER_LOGIN_DJ_POOH_ORANGE, FIXER_LOGIN_DJ_POOH_BLUE
-            SET_INT_GLOBAL(262145 + 25706, 1) -- ENABLE_RACE_CREATOR_JUBILEE
+            SET_PACKED_INT_GLOBAL(12127, 12136, 1) -- DLC_SHIRT_MELTDOWN, DLC_SHIRT_CAPOLAVORO
+            SET_PACKED_INT_GLOBAL(12764, 12786, 1) -- AWARD_LOW_HATS_MAGNETICS_SCRIPT, AWARD_LOW_TSHIRT_VAMPIRES_ON_THE_BEACH
+            SET_PACKED_INT_GLOBAL(15397, 15411, 1) -- ACCOUNTANTSHIRTEVENT, CRESTTSHIRTEVENT
+            SET_PACKED_INT_GLOBAL(16964, 16970, 1) -- AWARD_JUMPSUIT_WHITE, AWARD_JUMPSUIT_SILVER
+            SET_PACKED_INT_GLOBAL(17712, 17733, 1) -- TSHIRT_WESTERN_BIG_LOGO_WHITE, 310744591
+            SET_PACKED_INT_GLOBAL(21289, 21327, 1) -- AWARD_BLACK_AMMUNATION_CAP, AWARD_RSTAR_LOGO_WHITE
+            SET_PACKED_INT_GLOBAL(24386, 24412, 1) -- AWARD_EMOTION_983_TSHIRT, AWARD_FAKE_VAPID_TSHIRT
+            SET_PACKED_INT_GLOBAL(24886, 24894, 1) -- MAISONETTE_LOS_SANTOS_TSHIRT, TONYS_FUN_HOUSE_TSHIRT
+            SET_PACKED_INT_GLOBAL(24926, 24945, 1) -- AWARD_LS_UR, AWARD_BLAINE_COUNTY_RADIO
+            SET_PACKED_INT_GLOBAL(25100, 25123, 1) -- -726113206, -1910486921
+            SET_PACKED_INT_GLOBAL(26098, 26107, 1) -- -1344369866, 1799248495
+            SET_PACKED_INT_GLOBAL(27213, 27219, 1) -- 760292630, 1007326524
+            SET_PACKED_INT_GLOBAL(30440, 30444, 1) -- HATS_ISLAND_HEIST_EVENT_HAT_1, HATS_ISLAND_HEIST_EVENT_HAT_5
+            SET_PACKED_INT_GLOBAL(32081, 32083, 1) -- FIXER_LOGIN_DJ_POOH_ORANGE, FIXER_LOGIN_DJ_POOH_BLUE
+            SET_INT_GLOBAL(262145 + 25891, 1) -- ENABLE_RACE_CREATOR_JUBILEE
 
             -- https://www.unknowncheats.me/forum/grand-theft-auto-v/461672-gtahax-1-57-external-thread-3-a-23.html
-            SET_INT_GLOBAL(262145 + 25791, 1) -- Kifflom Tee
+            SET_INT_GLOBAL(262145 + 25979, 1) -- KIFFLOMTEE_LOGINAWARD, Kifflom Tee
 
             for i = 31768, 32273 do
                 SET_PACKED_STAT_BOOL_CODE(i, true) -- Found by me in freemode.c, https://www.unknowncheats.me/forum/3196991-post328.html
@@ -4660,7 +4630,7 @@
         end)
 
         menu.action(UNLOCKER_SHIRT_HAT, TRANSLATE("Unlock Sasquatch Outfit"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3492512-post53.html
-            SET_INT_GLOBAL(262145 + 32938, 1) -- -1966279346
+            SET_INT_GLOBAL(262145 + 33157, 1) -- -1966279346
         end)
 
         menu.action(UNLOCKER_SHIRT_HAT, TRANSLATE("Unlock 'Don't Cross the Line Tee'"), {}, "", function()
@@ -4765,7 +4735,7 @@
     SPECIAL_WEAPON = menu.list(MASTER_UNLOCKR, TRANSLATE("Weapons"), {}, "", function(); end)
 
         menu.action(SPECIAL_WEAPON, TRANSLATE("Service Carbine"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3488328-post27.html
-            SET_INT_GLOBAL(262145 + 32865, 1) -- UNLOCK_SERVICE_CARBINE_FOR_PURCHASE
+            SET_INT_GLOBAL(262145 + 33084, 1) -- UNLOCK_SERVICE_CARBINE_FOR_PURCHASE
         end)
 
         menu.action(SPECIAL_WEAPON, TRANSLATE("Stone Hatchet Challenge"), {}, TRANSLATE("Change your session to apply!"), function()
@@ -4787,7 +4757,7 @@
         end)
 
         menu.action(SPECIAL_WEAPON, TRANSLATE("Up-N-Atomizer"), {}, IS_WORKING(false), function()
-            SET_INT_GLOBAL(103634, 90) -- freemode.c
+            SET_INT_GLOBAL(103795, 90) -- freemode.c
         end)
 
     ---
@@ -4800,8 +4770,8 @@
     end)
 
     menu.action(MASTER_UNLOCKR, TRANSLATE("Returning Player Bonus"), {}, IS_WORKING(false), function()
-        SET_INT_GLOBAL(103635, 1) -- freemode.c
-        SET_INT_GLOBAL(152523, 2) -- freemode.c
+        SET_INT_GLOBAL(103796, 1) -- freemode.c
+        SET_INT_GLOBAL(152686, 2) -- freemode.c
     end)
 
 ---
@@ -4816,15 +4786,15 @@
             menu.divider(TUNABLES_CD, TRANSLATE("Supplies' Delay"))
 
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("MC Business"), {}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(262145 + 18954, 0) -- BIKER_PURCHASE_SUPPLIES_DELAY
+                    SET_INT_GLOBAL(262145 + 19134, 0) -- BIKER_PURCHASE_SUPPLIES_DELAY
                 end, function()
-                    SET_INT_GLOBAL(262145 + 18954, 600)
+                    SET_INT_GLOBAL(262145 + 19134, 600)
                 end)
                 
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Bunker"), {}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(262145 + 21557, 0) -- GR_PURCHASE_SUPPLIES_DELAY
+                    SET_INT_GLOBAL(262145 + 21737, 0) -- GR_PURCHASE_SUPPLIES_DELAY
                 end, function()
-                    SET_INT_GLOBAL(262145 + 21557, 600)
+                    SET_INT_GLOBAL(262145 + 21737, 600)
                 end)
 
             ---
@@ -4832,39 +4802,39 @@
             menu.divider(TUNABLES_CD, TRANSLATE("Buying And Selling"))
 
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Special Cargo"), {}, IS_WORKING(false), function() 
-                    SET_INT_GLOBAL(262145 + 15553, 0) -- EXEC_BUY_COOLDOWN
-                    SET_INT_GLOBAL(262145 + 15554, 0) -- EXEC_SELL_COOLDOWN
+                    SET_INT_GLOBAL(262145 + 15728, 0) -- EXEC_BUY_COOLDOWN
+                    SET_INT_GLOBAL(262145 + 15729, 0) -- EXEC_SELL_COOLDOWN
                 end, function()
-                    SET_INT_GLOBAL(262145 + 15553, 300000)
-                    SET_INT_GLOBAL(262145 + 15554, 1800000)
+                    SET_INT_GLOBAL(262145 + 15728, 300000)
+                    SET_INT_GLOBAL(262145 + 15729, 1800000)
                 end)
 
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Vehicle Cargo"), {}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(262145 + 19314, 0) -- IMPEXP_STEAL_COOLDOWN
-                    SET_INT_GLOBAL(262145 + 19682, 0) -- 1 Vehicle, 1001423248
-                    SET_INT_GLOBAL(262145 + 19683, 0) -- 2 Vehicles, 240134765
-                    SET_INT_GLOBAL(262145 + 19684, 0) -- 3 Vehicles, 1915379148
-                    SET_INT_GLOBAL(262145 + 19685, 0) -- 4 Vehicles, -824005590
+                    SET_INT_GLOBAL(262145 + 19494, 0) -- IMPEXP_STEAL_COOLDOWN
+                    SET_INT_GLOBAL(262145 + 19862, 0) -- 1 Vehicle, 1001423248
+                    SET_INT_GLOBAL(262145 + 19863, 0) -- 2 Vehicles, 240134765
+                    SET_INT_GLOBAL(262145 + 19864, 0) -- 3 Vehicles, 1915379148
+                    SET_INT_GLOBAL(262145 + 19865, 0) -- 4 Vehicles, -824005590
                 end, function()
-                    SET_INT_GLOBAL(262145 + 19314, 180000)
-                    SET_INT_GLOBAL(262145 + 19682, 1200000)
-                    SET_INT_GLOBAL(262145 + 19683, 1680000)
-                    SET_INT_GLOBAL(262145 + 19684, 2340000)
-                    SET_INT_GLOBAL(262145 + 19685, 2880000)
+                    SET_INT_GLOBAL(262145 + 19494, 180000)
+                    SET_INT_GLOBAL(262145 + 19862, 1200000)
+                    SET_INT_GLOBAL(262145 + 19863, 1680000)
+                    SET_INT_GLOBAL(262145 + 19864, 2340000)
+                    SET_INT_GLOBAL(262145 + 19865, 2880000)
                 end)
 
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Air-Freight Cargo"), {}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(262145 + 22751, 0) -- Tobacco, Counterfeit Goods, SMUG_STEAL_EASY_COOLDOWN_TIMER
-                    SET_INT_GLOBAL(262145 + 22752, 0) -- Animal Materials, Art, Jewelry, SMUG_STEAL_MED_COOLDOWN_TIMER
-                    SET_INT_GLOBAL(262145 + 22753, 0) -- Narcotics, Chemicals, Medical Supplies, SMUG_STEAL_HARD_COOLDOWN_TIMER
-                    SET_INT_GLOBAL(262145 + 22754, 0) -- Additional Time per Player, 1722502526
-                    SET_INT_GLOBAL(262145 + 22755, 0) -- Sale, -1091356151
+                    SET_INT_GLOBAL(262145 + 22931, 0) -- Tobacco, Counterfeit Goods, SMUG_STEAL_EASY_COOLDOWN_TIMER
+                    SET_INT_GLOBAL(262145 + 22932, 0) -- Animal Materials, Art, Jewelry, SMUG_STEAL_MED_COOLDOWN_TIMER
+                    SET_INT_GLOBAL(262145 + 22933, 0) -- Narcotics, Chemicals, Medical Supplies, SMUG_STEAL_HARD_COOLDOWN_TIMER
+                    SET_INT_GLOBAL(262145 + 22934, 0) -- Additional Time per Player, 1722502526
+                    SET_INT_GLOBAL(262145 + 22935, 0) -- Sale, -1091356151
                 end, function()
-                    SET_INT_GLOBAL(262145 + 22751, 120000)
-                    SET_INT_GLOBAL(262145 + 22752, 180000)
-                    SET_INT_GLOBAL(262145 + 22753, 240000)
-                    SET_INT_GLOBAL(262145 + 22754, 60000)
-                    SET_INT_GLOBAL(262145 + 22755, 2000)
+                    SET_INT_GLOBAL(262145 + 22931, 120000)
+                    SET_INT_GLOBAL(262145 + 22932, 180000)
+                    SET_INT_GLOBAL(262145 + 22933, 240000)
+                    SET_INT_GLOBAL(262145 + 22934, 60000)
+                    SET_INT_GLOBAL(262145 + 22935, 2000)
                 end)
 
             ---
@@ -4872,47 +4842,43 @@
             menu.divider(TUNABLES_CD, TRANSLATE("Others"))
 
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Client Jobs"), {}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(262145 + 24636, 0) -- Between Jobs, -926426916
-                    SET_INT_GLOBAL(262145 + 24637, 0) -- Robbery in Progress, 1733390598
-                    SET_INT_GLOBAL(262145 + 24638, 0) -- Data Sweep, 724724668
-                    SET_INT_GLOBAL(262145 + 24639, 0) -- Targeted Data, 846317886
-                    SET_INT_GLOBAL(262145 + 24640, 0) -- Diamond Shopping, 443623246
-                    SET_INT_GLOBAL(262145 + 24642, 0) -- Collectors Pieces, -1203647122, https://www.unknowncheats.me/forum/3496393-post32.html
-                    SET_INT_GLOBAL(262145 + 24643, 0) -- Deal Breaker, -1963126951, https://www.unknowncheats.me/forum/3496393-post32.html
+                    SET_INT_GLOBAL(262145 + 24818, 0) -- Between Jobs, -926426916
+                    SET_INT_GLOBAL(262145 + 24819, 0) -- Robbery in Progress, 1733390598
+                    SET_INT_GLOBAL(262145 + 24820, 0) -- Data Sweep, 724724668
+                    SET_INT_GLOBAL(262145 + 24821, 0) -- Targeted Data, 846317886
+                    SET_INT_GLOBAL(262145 + 24822, 0) -- Diamond Shopping, 443623246
+                    SET_INT_GLOBAL(262145 + 24824, 0) -- Collectors Pieces, -1203647122, https://www.unknowncheats.me/forum/3496393-post32.html
+                    SET_INT_GLOBAL(262145 + 24825, 0) -- Deal Breaker, -1963126951, https://www.unknowncheats.me/forum/3496393-post32.html
                 end, function()
-                    SET_INT_GLOBAL(262145 + 24636, 300000)
-                    SET_INT_GLOBAL(262145 + 24637, 1800000)
-                    SET_INT_GLOBAL(262145 + 24638, 1800000)
-                    SET_INT_GLOBAL(262145 + 24639, 1800000)
-                    SET_INT_GLOBAL(262145 + 24640, 1800000)
-                    SET_INT_GLOBAL(262145 + 24642, 600000)
-                    SET_INT_GLOBAL(262145 + 24643, 600000)
+                    SET_INT_GLOBAL(262145 + 24818, 300000)
+                    SET_INT_GLOBAL(262145 + 24819, 1800000)
+                    SET_INT_GLOBAL(262145 + 24820, 1800000)
+                    SET_INT_GLOBAL(262145 + 24821, 1800000)
+                    SET_INT_GLOBAL(262145 + 24822, 1800000)
+                    SET_INT_GLOBAL(262145 + 24824, 600000)
+                    SET_INT_GLOBAL(262145 + 24825, 600000)
                 end)
 
-                menu.toggle_loop(TUNABLES_CD, TRANSLATE("Club Work"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3735173-post133.html
-                    SET_INT_GLOBAL(2765974 + 93 + 1 + 13, 0) -- Deathmatch
-                    SET_INT_GLOBAL(2765974 + 93 + 1 + 25, 0) -- Joust
-                    SET_INT_GLOBAL(2765974 + 93 + 1 + 30, 0) -- Stand Your Ground
-                    SET_INT_GLOBAL(2765974 + 93 + 1 + 31, 0) -- Caged In
-                    SET_INT_GLOBAL(262145 + 13081, 0) -- GB_COOLDOWN_UNTIL_NEXT_BOSS_WORK
-                    SET_INT_GLOBAL(262145 + 18746, 0) -- 1107909355
+                menu.toggle_loop(TUNABLES_CD, TRANSLATE("Club Work"), {}, IS_WORKING(false), function()
+                    SET_INT_GLOBAL(262145 + 13254, 0) -- GB_COOLDOWN_UNTIL_NEXT_BOSS_WORK
+                    SET_INT_GLOBAL(262145 + 18926, 0) -- 1107909355
                 end, function()
-                    SET_INT_GLOBAL(262145 + 13081, 300000)
-                    SET_INT_GLOBAL(262145 + 18746, 180000)
+                    SET_INT_GLOBAL(262145 + 13254, 300000)
+                    SET_INT_GLOBAL(262145 + 18926, 180000)
                 end)
 
                 REMOVE_LUCKY_WHEEL_COOLDOWN = menu.toggle_loop(TUNABLES_CD, TRANSLATE("Spin Lucky Wheel"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3531489-post51.html
                     STAT_SET_INT("LUCKY_WHEEL_NUM_SPIN", 0)
-                    SET_INT_GLOBAL(262145 + 27196, 1) -- 9960150
-                    SET_INT_GLOBAL(262145 + 27197, 1) -- -312420223
+                    SET_INT_GLOBAL(262145 + 27382, 1) -- 9960150
+                    SET_INT_GLOBAL(262145 + 27383, 1) -- -312420223
                 end)
 
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Kosatka Missiles"), {}, IS_WORKING(true) .. TRANSLATE("Also will increase Kosatka missiles distance."), function()
-                    SET_INT_GLOBAL(262145 + 30187, 0) -- IH_SUBMARINE_MISSILES_COOLDOWN
-                    SET_INT_GLOBAL(262145 + 30188, 99999) -- IH_SUBMARINE_MISSILES_DISTANCE
+                    SET_INT_GLOBAL(262145 + 30394, 0) -- IH_SUBMARINE_MISSILES_COOLDOWN
+                    SET_INT_GLOBAL(262145 + 30395, 99999) -- IH_SUBMARINE_MISSILES_DISTANCE
                 end, function()
-                    SET_INT_GLOBAL(262145 + 30187, 60000)
-                    SET_INT_GLOBAL(262145 + 30188, 4000)
+                    SET_INT_GLOBAL(262145 + 30394, 60000)
+                    SET_INT_GLOBAL(262145 + 30395, 4000)
                 end)
 
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Dax Job"), {}, TRANSLATE("Note that Dax Job means from cellphone"), function() -- https://www.unknowncheats.me/forum/3629824-post2716.html
@@ -4920,9 +4886,9 @@
                 end)
 
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("CEO Vehicles"), {}, IS_WORKING(false), function() -- Credit goes to Professor#4478's Kiddions Lua
-                    SET_INT_GLOBAL(262145 + 12832, 0) -- GB_CALL_VEHICLE_COOLDOWN
+                    SET_INT_GLOBAL(262145 + 13005, 0) -- GB_CALL_VEHICLE_COOLDOWN
                 end, function()
-                    SET_INT_GLOBAL(262145 + 12832, 120000)
+                    SET_INT_GLOBAL(262145 + 13005, 120000)
                 end)
 
             ---
@@ -4941,9 +4907,9 @@
                     SET_FLOAT_GLOBAL(262145 + 1, menu.get_default_state(MUT_INPUT))
                 end)
                 menu.toggle_loop(TUNABLES_MUT, "AP", {}, IS_WORKING(false), function()
-                    SET_FLOAT_GLOBAL(262145 + 25926, menu.get_value(MUT_INPUT) / 100) -- AP_MULTIPLIER
+                    SET_FLOAT_GLOBAL(262145 + 26114, menu.get_value(MUT_INPUT) / 100) -- AP_MULTIPLIER
                 end, function()
-                    SET_FLOAT_GLOBAL(262145 + 25926, menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + 26114, menu.get_default_state(MUT_INPUT))
                 end)
 
             ---
@@ -4951,34 +4917,34 @@
             menu.divider(TUNABLES_MUT, TRANSLATE("LS Car Meet"))
 
                 menu.toggle_loop(TUNABLES_MUT, TRANSLATE("Street Race"), {}, IS_WORKING(false), function()
-                    SET_FLOAT_GLOBAL(262145 + 31648, menu.get_value(MUT_INPUT) / 100) -- TUNER_STREET_RACE_PLACE_XP_MULTIPLIER
+                    SET_FLOAT_GLOBAL(262145 + 31855, menu.get_value(MUT_INPUT) / 100) -- TUNER_STREET_RACE_PLACE_XP_MULTIPLIER
                 end, function()
-                    SET_FLOAT_GLOBAL(262145 + 31648, menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + 31855, menu.get_default_state(MUT_INPUT))
                 end)
                 menu.toggle_loop(TUNABLES_MUT, TRANSLATE("Pursuit Race"), {}, IS_WORKING(false), function()
-                    SET_FLOAT_GLOBAL(262145 + 31649, menu.get_value(MUT_INPUT) / 100) -- TUNER_PURSUIT_RACE_PLACE_XP_MULTIPLIER
+                    SET_FLOAT_GLOBAL(262145 + 31856, menu.get_value(MUT_INPUT) / 100) -- TUNER_PURSUIT_RACE_PLACE_XP_MULTIPLIER
                 end, function()
-                    SET_FLOAT_GLOBAL(262145 + 31649, menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + 31856, menu.get_default_state(MUT_INPUT))
                 end)
                 menu.toggle_loop(TUNABLES_MUT, TRANSLATE("Scramble"), {}, IS_WORKING(false), function()
-                    SET_FLOAT_GLOBAL(262145 + 31650, menu.get_value(MUT_INPUT) / 100) -- TUNER_CHECKPOINT_RACE_PLACE_XP_MULTIPLIER
+                    SET_FLOAT_GLOBAL(262145 + 31857, menu.get_value(MUT_INPUT) / 100) -- TUNER_CHECKPOINT_RACE_PLACE_XP_MULTIPLIER
                 end, function()
-                    SET_FLOAT_GLOBAL(262145 + 31650, menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + 31857, menu.get_default_state(MUT_INPUT))
                 end)
                 menu.toggle_loop(TUNABLES_MUT, TRANSLATE("Head 2 Head"), {}, IS_WORKING(false), function()
-                    SET_FLOAT_GLOBAL(262145 + 31651, menu.get_value(MUT_INPUT) / 100) -- TUNER_HEADTOHEAD_RACE_PLACE_XP_MULTIPLIER
+                    SET_FLOAT_GLOBAL(262145 + 31858, menu.get_value(MUT_INPUT) / 100) -- TUNER_HEADTOHEAD_RACE_PLACE_XP_MULTIPLIER
                 end, function()
-                    SET_FLOAT_GLOBAL(262145 + 31651, menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + 31858, menu.get_default_state(MUT_INPUT))
                 end)
                 menu.toggle_loop(TUNABLES_MUT, TRANSLATE("LS Car Meet"), {}, IS_WORKING(false), function()
-                    SET_FLOAT_GLOBAL(262145 + 31652, menu.get_value(MUT_INPUT) / 100) -- TUNER_CARCLUB_VISITS_STREAK_XP_MULTIPLIER
+                    SET_FLOAT_GLOBAL(262145 + 31859, menu.get_value(MUT_INPUT) / 100) -- TUNER_CARCLUB_VISITS_STREAK_XP_MULTIPLIER
                 end, function()
-                    SET_FLOAT_GLOBAL(262145 + 31652, menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + 31859, menu.get_default_state(MUT_INPUT))
                 end)
                 menu.toggle_loop(TUNABLES_MUT, TRANSLATE("LS Car Meet's Track"), {}, IS_WORKING(false), function()
-                    SET_FLOAT_GLOBAL(262145 + 31653, menu.get_value(MUT_INPUT) / 100) -- TUNER_CARCLUB_TIME_XP_MULTIPLIER
+                    SET_FLOAT_GLOBAL(262145 + 31860, menu.get_value(MUT_INPUT) / 100) -- TUNER_CARCLUB_TIME_XP_MULTIPLIER
                 end, function()
-                    SET_FLOAT_GLOBAL(262145 + 31653, menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + 31860, menu.get_default_state(MUT_INPUT))
                 end)
 
             ---
@@ -4992,10 +4958,10 @@
             menu.divider(TUNABLES_CAH, TRANSLATE("Casino Services: Chips") .. " " .. TRANSLATE("(Risky)"))
 
                 menu.action(TUNABLES_CAH, TRANSLATE("Trade in Chips"), {}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(262145 + 26980, menu.get_value(CHIPS_AMOUNT)) -- VC_CASINO_CHIP_MIN_SELL
+                    SET_INT_GLOBAL(262145 + 27166, menu.get_value(CHIPS_AMOUNT)) -- VC_CASINO_CHIP_MIN_SELL
                 end)
                 menu.action(TUNABLES_CAH, TRANSLATE("Max Chips"), {}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(262145 + 26981, menu.get_value(CHIPS_AMOUNT)) -- VC_CASINO_CHIP_MAX_BUY
+                    SET_INT_GLOBAL(262145 + 27167, menu.get_value(CHIPS_AMOUNT)) -- VC_CASINO_CHIP_MAX_BUY
                 end)
 
             ---
@@ -5041,23 +5007,23 @@
             end)
 
             menu.toggle_loop(TUNABLES_OTH, TRANSLATE("Infinite Stone Hatchet's Power"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3484239-post11.html
-                SET_INT_GLOBAL(262145 + 25302, 99999) -- Duration, BB_HATCHET_RAMPAGE_DURATION_MAX
-                SET_INT_GLOBAL(262145 + 25303, 99999) -- Added Duration per Kill, BB_HATCHET_RAMPAGE_DURATION_EXTENSION
-                SET_INT_GLOBAL(262145 + 25304, 0) -- Cooldown, BB_HATCHET_RAMPAGE_COOLDOWN
-                SET_FLOAT_GLOBAL(262145 + 25297, 99999) -- Weapon Defense, BB_HATCHET_RAMPAGE_DAMAGE_RECIEVED
-                SET_FLOAT_GLOBAL(262145 + 25300, 99999) -- Health Recharge Multiplier, BB_HATCHET_RAMPAGE_HEALTH_REGEN_RATE
-                SET_FLOAT_GLOBAL(262145 + 25301, 99999) -- Health Recharge Limit, BB_HATCHET_RAMPAGE_HEALTH_REGEN_MAX
+                SET_INT_GLOBAL(262145 + 25484, 99999) -- Duration, BB_HATCHET_RAMPAGE_DURATION_MAX
+                SET_INT_GLOBAL(262145 + 25485, 99999) -- Added Duration per Kill, BB_HATCHET_RAMPAGE_DURATION_EXTENSION
+                SET_INT_GLOBAL(262145 + 25486, 0) -- Cooldown, BB_HATCHET_RAMPAGE_COOLDOWN
+                SET_FLOAT_GLOBAL(262145 + 25479, 99999) -- Weapon Defense, BB_HATCHET_RAMPAGE_DAMAGE_RECIEVED
+                SET_FLOAT_GLOBAL(262145 + 25482, 99999) -- Health Recharge Multiplier, BB_HATCHET_RAMPAGE_HEALTH_REGEN_RATE
+                SET_FLOAT_GLOBAL(262145 + 25483, 99999) -- Health Recharge Limit, BB_HATCHET_RAMPAGE_HEALTH_REGEN_MAX
             end, function()
-                SET_INT_GLOBAL(262145 + 25302, 12000)
-                SET_INT_GLOBAL(262145 + 25303, 6000)
-                SET_INT_GLOBAL(262145 + 25304, 60000)
-                SET_FLOAT_GLOBAL(262145 + 25297, 0.5)
-                SET_FLOAT_GLOBAL(262145 + 25300, 2)
-                SET_FLOAT_GLOBAL(262145 + 25301, 1)
+                SET_INT_GLOBAL(262145 + 25484, 12000)
+                SET_INT_GLOBAL(262145 + 25485, 6000)
+                SET_INT_GLOBAL(262145 + 25486, 60000)
+                SET_FLOAT_GLOBAL(262145 + 25479, 0.5)
+                SET_FLOAT_GLOBAL(262145 + 25482, 2)
+                SET_FLOAT_GLOBAL(262145 + 25483, 1)
             end)
 
             menu.action(TUNABLES_OTH, TRANSLATE("Single MC Vehicle Sell"), {}, IS_WORKING(true) .. TRANSLATE("Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader."), function()
-                SET_INT_LOCAL("gb_biker_contraband_sell", 698 + 17, 0) -- https://github.com/Tgamer500/YiffWarePWLua/blob/main/YiffWarePW.lua
+                SET_INT_LOCAL("gb_biker_contraband_sell", 699 + 17, 0) -- https://github.com/Tgamer500/YiffWarePWLua/blob/main/YiffWarePW.lua
             end)
         
             menu.action(TUNABLES_OTH, TRANSLATE("7 Years GTA Online Playtime"), {}, TRANSLATE("Make your account look like you've played GTA Online for 7 years."), function()
@@ -5070,13 +5036,13 @@
 
         CUSTOM_MONEY_REMOVER = menu.slider(TUNABLES, TRANSLATE("Custom Money Remover"), {"hcmoneyremove"}, IS_WORKING(true) .. TRANSLATE("The best way to remove GTA Online banked money up to $2B at once!"), 0, 2000000000, 5000, 10000, function(Value)
             menu.show_warning(TUNABLES, CLICK_MENU, TRANSLATE("Do you sure remove your money?"), function()
-                SET_INT_GLOBAL(262145 + 20288, Value) -- -156036296, https://www.unknowncheats.me/forum/3276092-post3.html
+                SET_INT_GLOBAL(262145 + 20468, Value) -- -156036296, https://www.unknowncheats.me/forum/3276092-post3.html
                 SET_PACKED_STAT_BOOL_CODE(15382, true) -- Makes able to buy the Ballistic Armor
                 SET_PACKED_STAT_BOOL_CODE(9461, true) -- Makes you have the Ballistic Armor
     
                 menu.trigger_commands("nopimenugrey on")
                 if util.is_interaction_menu_open() then IA_MENU_OPEN_OR_CLOSE() end
-                SET_INT_GLOBAL(2766487, 85) -- Renders Ballistic Equipment Services screen of the Interaction Menu
+                SET_INT_GLOBAL(2766622, 85) -- Renders Ballistic Equipment Services screen of the Interaction Menu
                 IA_MENU_OPEN_OR_CLOSE()
                 IA_MENU_ENTER(1)
                 NOTIFY(TRANSLATE("Because this feature works via requesting the Ballistic Armor, it'll be dropped nearby soon."))
@@ -5088,202 +5054,6 @@
 
     ---
 
-    AFK_MONEY = menu.list(TOOLS, TRANSLATE("AFK Money") .. " " .. TRANSLATE("(Risky)"), {}, TRANSLATE("All of features use undetected methods but use at own your risk. If you earn too much, you can be banned."), function(); end)
-
-        menu.divider(AFK_MONEY, TRANSLATE("Cooldown Time (Seconds)"))
-
-            COOLDOWN_CAYO_BOT = menu.slider(AFK_MONEY, TRANSLATE("Auto Cayo Bot"), {"hctimecpbot"}, "", 1200, 86400, 1200, 60, function(); end)
-            COOLDOWN_RIG_SLOT = menu.slider(AFK_MONEY, TRANSLATE("Auto Rig Slot Machine"), {"hctimeautorig"}, "", 1, 86400, 1, 1, function(); end)
-
-        ---
-
-        menu.divider(AFK_MONEY, TRANSLATE("Settings"))
-
-            LUCKY_WHEEL_REWARD = menu.list_select(AFK_MONEY, TRANSLATE("Change Reward"), {"hcluckywheelreward"}, "(" ..  TRANSLATE("Tools") .. " > " .. TRANSLATE("AFK Money") .. " " .. TRANSLATE("(Risky)") .. " > " .. TRANSLATE("Auto Lucky Wheel") .. ")", {
-                { TRANSLATE("25K Chips"), {"chips"}, "" },
-                { TRANSLATE("15K RP"), {"rp"}, TRANSLATE("Can be used to increase your crew level.") },
-                { TRANSLATE("Vehicle Discount"), {"discount"}, "" },
-                { TRANSLATE("Clothing"), {"clothing"}, "" },
-            }, 1, function(); end)
-
-            NUM_OF_PLAYING_CAYO_BOT = menu.slider(AFK_MONEY, TRANSLATE("How Many Times To Play"), {"hcnumcayobot"}, "(" .. TRANSLATE("Tools") .. " > " .. TRANSLATE("AFK Money") .. " " .. TRANSLATE("(Risky)") .. " > " .. TRANSLATE("Auto Cayo Bot") .. ")", 1, 100, 100, 1, function(); end)
-            RATIO_JACKPOT_LOSS = menu.slider(AFK_MONEY, TRANSLATE("Ratio of Jackpot and Loss"), {"hcratiojacknloss"}, "(" .. TRANSLATE("Tools") .. " > " .. TRANSLATE("AFK Money") .. " " .. TRANSLATE("(Risky)") .. " > " .. TRANSLATE("Auto Rig Slot Machine") .. ")", 1, 100, 1, 1, function(); end)
-
-        ---
-
-        menu.divider(AFK_MONEY, TRANSLATE("Others"))
-
-            menu.action(AFK_MONEY, TRANSLATE("Teleport to the Lucky Wheel"), {}, TRANSLATE("Works unless you are in the casino.") .. "\n" .. TRANSLATE("If you are in it, not required to use. Just use 'Auto Lucky Wheel'"), function()
-                menu.trigger_commands("casinotp" .. players.get_name(players.user()))
-                repeat util.yield_once() until CAM.IS_SCREEN_FADING_IN()
-                SET_HEADING(5)
-                TELEPORT(1110.877, 228.31776, -49.635803)
-            end)
-
-        ---
-
-        menu.divider(AFK_MONEY, TRANSLATE("AFK Money") .. " " .. TRANSLATE("(Risky)"))
-
-            NumberOfPlayedCP = 0
-            AUTO_CAYO_BOT = menu.toggle_loop(AFK_MONEY, TRANSLATE("Auto Cayo Bot"), {}, IS_WORKING(true) .. TRANSLATE("Solo Cayo Perico Heist will be done by Heist Control automatically per 20 mins to get $2.09M. Don't press any keys to prevent some game bugs."), function()
-                -- The idea and source code from Raid Control for X-Force, but almost tweaked by me.
-                -- Raid Control Auto Cayo Bot Source Code: https://pastebin.com/JKVXcZBz
-
-                if menu.get_value(NUM_OF_PLAYING_CAYO_BOT) >= NumberOfPlayedCP then
-                    if not players.is_using_controller(players.user()) then
-                        if not util.is_interaction_menu_open() then IA_MENU_OPEN_OR_CLOSE() end
-                        if GET_INT_GLOBAL(2774132 + 1 + (0 * 66) + 1 + GET_INT_LOCAL("am_pi_menu", 232)) ~= 37 then -- am_pi_menu.c
-                            NOTIFY(TRANSLATE("Make sure your spawning position is 'Last Location'") .. "\n" .. TRANSLATE("You can set it on Interaction Menu."))
-                            menu.apply_default_state(AUTO_CAYO_BOT)
-                            return
-                        end
-                        util.yield_once()
-                        IA_MENU_OPEN_OR_CLOSE()
-                    end
-
-                    if players.get_boss(players.user()) == -1 then menu.trigger_commands("ceostart") end
-                    repeat util.yield_once() until players.get_boss(players.user()) ~= -1
-                
-                    IsForCayoBot = true
-                    menu.trigger_commands("hctimercp off")
-                    menu.trigger_commands("hctimercustom off")
-                    menu.trigger_commands("hccpquick on")
-                
-                    menu.trigger_commands("hctpsub")
-                    repeat util.yield_once() until HUD.DOES_BLIP_EXIST(SubControlBlip)
-
-                    menu.trigger_commands("hccprefreshboard")
-                    repeat util.yield(2000) until GET_INT_LOCAL("heist_island_planning", 1525) ~= 2
-                
-                    repeat util.yield(2000) until GET_INT_GLOBAL(2646729 + 1869) == 1 -- fmmc_launcher.c, If not ready to set planning board
-
-                    SET_INT_LOCAL("heist_island_planning", 1432, 2) -- Set planning board loading state
-                    repeat util.yield(2000) until GET_INT_LOCAL("heist_island_planning", 1432) == 4 -- If not planning board has been loaded
-
-                    CP_PRESS_E(2)
-                    CP_PRESS_D(1)
-                    CP_PRESS_ENTER(1)
-
-                    repeat util.yield(2000) until GET_INT_LOCAL("fmmc_launcher", 16034 + 763) == 16 -- If "LOB_H_FCP" label not loaded
-
-                    CP_PRESS_ARROW_UP(1)
-                    CP_PRESS_ENTER(1)
-                    util.yield(2000)
-
-                    CP_PRESS_ARROW_UP(1)
-                    CP_PRESS_ENTER(2)
-
-                    repeat util.yield(2000) until HUD.IS_WARNING_MESSAGE_ACTIVE() -- "Are you sure you want to launch this Job on your own?"
-                    PAD.SET_CONTROL_VALUE_NEXT_FRAME(2, 201, 1) -- Enter Key
-                    util.yield(8000)
-                    
-                    CP_PRESS_ENTER(2)
-                    CP_PRESS_BACKSPACE(1)
-                    CP_PRESS_ARROW_DOWN(1)
-                    CP_PRESS_ENTER(1)
-                    CP_PRESS_ARROW_UP(1)
-                    CP_PRESS_ENTER(1)
-                    CP_PRESS_BACKSPACE(1)
-                    CP_PRESS_ARROW_DOWN(1)
-                    CP_PRESS_ENTER(2)
-                    CP_PRESS_BACKSPACE(1)
-                    CP_PRESS_ARROW_DOWN(1)
-                    CP_PRESS_ENTER(2)
-                    CP_PRESS_BACKSPACE(1)
-                    CP_PRESS_ARROW_DOWN(1)
-                    CP_PRESS_ENTER(2)
-                    CP_PRESS_D(1)
-                    CP_PRESS_ENTER(1)
-                    
-                    repeat util.yield(2000) until GET_INT_GLOBAL(1835499) == 1 -- Waiting for the loading screen, fmmc_launcher.c
-                    CP_PRESS_ENTER(1)
-                    util.yield(2000)
-                
-                    repeat util.yield(2000) until GET_INT_LOCAL("fm_mission_controller_2020", 2758) == 1 -- Waiting for the loading screen
-
-                    menu.trigger_commands("skipcutscene")
-                    repeat util.yield(2000) until not CUTSCENE.IS_CUTSCENE_PLAYING()
-
-                    menu.trigger_commands("hcinsfincp")
-                    util.yield(5000)
-                
-                    menu.trigger_commands("go solopublic")
-                    menu.trigger_commands("hccpquick off")
-                    
-                    repeat HUD.CLEAR_ALL_HELP_MESSAGES(); util.yield_once() until IS_HELP_MSG_DISPLAYED("QUIT_RS_ALL")
-                    local Command = menu.ref_by_path("Online>Quick Progress>Bad Sport Status>Relinquish", 44)
-                    menu.trigger_command(Command)
-                    menu.trigger_commands("tpmazehelipad")
-                
-                    NumberOfPlayedCP = NumberOfPlayedCP + 1
-                    NOTIFY(TRANSLATE("Playing one time has been done! Waiting for the cooldown time...") .. "\n\n" .. TRANSLATE("How many times you've played after enabled:") .. " " .. NumberOfPlayedCP)
-                    
-                    menu.trigger_commands("hctimertime " .. menu.get_value(COOLDOWN_CAYO_BOT))
-                    menu.trigger_commands("hctimercustom on")
-                    repeat util.yield_once() until not menu.get_value(TIMER_CUSTOM)
-                end
-            end, function()
-                NumberOfPlayedCP = 0
-                IsForCayoBot = false
-                menu.trigger_commands("hctimertime 1200")
-                menu.trigger_commands("hctimercustom off")
-                menu.trigger_commands("hccpquick off")
-            end)
-
-            NumberOfSpin = 0
-            menu.toggle_loop(AFK_MONEY, TRANSLATE("Auto Rig Slot Machine"), {"hcautorigslot"}, IS_WORKING(true) .. TRANSLATE("Don't earn more than $50M per a day (real-time), otherwise it'll lead you get banned!"), function()
-                if NumberOfSpin == 0 then
-                    PAD.SET_CONTROL_VALUE_NEXT_FRAME(2, 204, 1) -- Press Tab to Bet Max
-                    util.yield(100)
-                end
-
-                local SpinState = 3396 + 1 + players.user() * 11 + 10 -- https://github.com/jonaaa20/RecoverySuite
-                if GET_INT_LOCAL("casino_slots", SpinState) == 0 then -- If not rigging now
-                    if NumberOfSpin >= menu.get_value(RATIO_JACKPOT_LOSS) then
-                        menu.trigger_commands("rigslotmachines jackpot")
-                        NumberOfSpin = 0
-                    else
-                        if NumberOfSpin == 0 then
-                            menu.trigger_commands("rigslotmachines loss")
-                        end
-                        NumberOfSpin = NumberOfSpin + 1
-                    end
-
-                    PAD.SET_CONTROL_VALUE_NEXT_FRAME(2, 208, 1) -- Press Tab to Bet Max
-                    SET_INT_LOCAL("casino_slots", 1633, 8) -- Set as rigging is done
-
-                    repeat util.yield_once() until GET_INT_LOCAL("casino_slots", SpinState) == 3
-                    SET_INT_LOCAL("casino_slots", SpinState, 6) -- Skipping animations
-                   
-                    util.yield(menu.get_value(COOLDOWN_RIG_SLOT) * 1000)
-                end
-            end, function()
-                menu.trigger_commands("rigslotmachines off")
-                NumberOfSpin = 0
-            end)
-
-            menu.toggle_loop(AFK_MONEY, TRANSLATE("Auto Lucky Wheel"), {"hcautoluckywheel"}, IS_WORKING(true) .. TRANSLATE("Let you get the selected lucky wheel reward per 3 seconds automatically.") .. "\n\n" .. TRANSLATE("Please use with 'Teleport to the Lucky Wheel' feature!"), function()
-                menu.trigger_commands("rigluckywheel off")
-                menu.set_value(REMOVE_LUCKY_WHEEL_COOLDOWN, true)
-                util.yield(1500)
-
-                local Rewards = {
-                    { 15 }, -- 25K Chips
-                    { 17 }, -- 15K RP
-                    { 4 }, -- Vehicle Discount
-                    { 0, 8, 12, 16 }, -- Clothing
-                }
-                local Value = menu.get_value(LUCKY_WHEEL_REWARD)
-                local Random = math.random(#Rewards[Value])
-                SET_INT_LOCAL("casino_lucky_wheel", 275 + 14, Rewards[Value][Random]) -- Setting Lucky Wheel Reward
-                SET_INT_LOCAL("casino_lucky_wheel", 275 + 45, 11) -- Rigging state: done
-                util.yield(1500)
-            end)
-
-        ---
-
-    ---
-
     INSTANT_FINISH = menu.list(TOOLS, TRANSLATE("Instant Finish Heists & Others"), {"hcinsfin"}, TRANSLATE("Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you."), function(); end)
 
         menu.divider(INSTANT_FINISH, TRANSLATE("Heists"))
@@ -5291,25 +5061,16 @@
             menu.action(INSTANT_FINISH, TRANSLATE("Cayo / Tuners / ULP / Agency"), {"hcinsfincp"}, IS_WORKING(true) .. TRANSLATE("Note that may works for some of other preps. Only 'Quick Preset' is compatible with Cayo Perico Heist."), function() -- https://www.unknowncheats.me/forum/3524081-post3.html
                 menu.trigger_commands("scripthost")
 
-                SET_INT_LOCAL("fm_mission_controller_2020", 45450 + 1, 51338752) -- 'fm_mission_controller_2020' instant finish variable?
-                SET_INT_LOCAL("fm_mission_controller_2020", 45450 + 1378 + 1, 50) -- 'fm_mission_controller_2020' instant finish variable?
+                SET_INT_LOCAL("fm_mission_controller_2020", 44749 + 1, 51338752) -- 'fm_mission_controller_2020' instant finish variable?
+                SET_INT_LOCAL("fm_mission_controller_2020", 44749 + 1375 + 1, 50) -- 'fm_mission_controller_2020' instant finish variable?
             end)
 
-            menu.action(INSTANT_FINISH, TRANSLATE("Casino Aggressives"), {"hcinsfincah"}, IS_WORKING(true) .. TRANSLATE("Note that if you don't use Heist Control's automated Casino Heist presets, won't get money."), function()
+            menu.action(INSTANT_FINISH, TRANSLATE("Casino Aggressive / Classic"), {"hcinsfincah"}, IS_WORKING(true) .. TRANSLATE("Note that if you don't use Heist Control's automated Casino Heist presets, won't get money."), function()
                 menu.trigger_commands("scripthost")
                 
                 SET_INT_LOCAL("fm_mission_controller", 19710 + 1741, 80) -- Casino Aggressive Kills & Act 3
-                SET_INT_LOCAL("fm_mission_controller", 28331 + 1, 99999) -- 'fm_mission_controller' instant finish variable?
-				SET_INT_LOCAL("fm_mission_controller", 31587 + 69, 99999) -- 'fm_mission_controller' instant finish variable?
-
-            end)
-			
-			menu.action(INSTANT_FINISH, TRANSLATE("Classic"), {"hcinsfincah"}, IS_WORKING(true) .. TRANSLATE("Note that if you don't use Heist Control's automated Casino Heist presets, won't get money."), function()
-                menu.trigger_commands("scripthost")
-                
-                
                 SET_INT_LOCAL("fm_mission_controller", 19710 + 2686, 10000000) -- How much did you take in the casino and pacific standard heist
-				SET_INT_LOCAL("fm_mission_controller", 28331 + 1, 99999) -- 'fm_mission_controller' instant finish variable?
+                SET_INT_LOCAL("fm_mission_controller", 28331 + 1, 99999) -- 'fm_mission_controller' instant finish variable?
                 SET_INT_LOCAL("fm_mission_controller", 31587 + 69, 99999) -- 'fm_mission_controller' instant finish variable?
             end)
 
@@ -5328,17 +5089,17 @@
         menu.divider(INSTANT_FINISH, TRANSLATE("Others"))
 
             menu.action(INSTANT_FINISH, TRANSLATE("Bunker"), {"hcinsfinbk"}, IS_WORKING(true) .. TRANSLATE("(Selling Only)"), function() -- https://www.unknowncheats.me/forum/3521137-post39.html
-                SET_INT_LOCAL("gb_gunrunning", 1205 + 774, 0)
+                SET_INT_LOCAL("gb_gunrunning", 1206 + 774, 0)
             end)
 
             menu.action(INSTANT_FINISH, TRANSLATE("Air Cargo"), {"hcinsfinac"}, IS_WORKING(true) .. TRANSLATE("(Selling Only)"), function() -- https://www.unknowncheats.me/forum/3513482-post37.html
-                SET_INT_LOCAL("gb_smuggler", 1928 + 1035, GET_INT_LOCAL("gb_smuggler", 1928 + 1078))
+                SET_INT_LOCAL("gb_smuggler", 1929 + 1035, GET_INT_LOCAL("gb_smuggler", 1929 + 1078))
             end)
 
             menu.action(INSTANT_FINISH, TRANSLATE("Acid Lab"), {"hcinsfinacid"}, IS_WORKING(true) .. TRANSLATE("(Selling Only)"), function() -- https://www.unknowncheats.me/forum/3641612-post76.html
-                SET_INT_LOCAL("fm_content_acid_lab_sell", 5192 + 1357 + 2, 9)
-                SET_INT_LOCAL("fm_content_acid_lab_sell", 5192 + 1357 + 3, 10)
-                SET_INT_LOCAL("fm_content_acid_lab_sell", 5192 + 1293, 2)
+                SET_INT_LOCAL("fm_content_acid_lab_sell", 5237 + 1357 + 2, 9)
+                SET_INT_LOCAL("fm_content_acid_lab_sell", 5237 + 1357 + 3, 10)
+                SET_INT_LOCAL("fm_content_acid_lab_sell", 5237 + 1293, 2)
             end)
 
             menu.action(INSTANT_FINISH, TRANSLATE("Headhunter"), {"hcinsfinhh"}, "", function() -- Thanks to Sapphire#6031 helping me code this
@@ -5355,7 +5116,7 @@
             end)
 
             menu.action(INSTANT_FINISH, TRANSLATE("Sightseer"), {"hcinsfinss"}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3488056-post24.html
-                SET_INT_LOCAL("gb_sightseer", 249 + 1 + NETWORK.PARTICIPANT_ID_TO_INT() * 6 + 5, 3)
+                SET_INT_LOCAL("gb_sightseer", 250 + 1 + NETWORK.PARTICIPANT_ID_TO_INT() * 6 + 5, 3)
             end)
             
         ---
@@ -5824,23 +5585,23 @@
         { TRANSLATE("RC Tank"), {"rctank"}, "" },
     }, function(index)
         if index == 1 then
-            SET_INT_GLOBAL(2793046 + 925, 1)
+            SET_INT_GLOBAL(2794162 + 930, 1)
         elseif index == 2 then
-            SET_INT_GLOBAL(2793046 + 933, 1)
+            SET_INT_GLOBAL(2794162 + 938, 1)
         elseif index == 3 then
-            SET_INT_GLOBAL(2793046 + 937, 1)
+            SET_INT_GLOBAL(2794162 + 943, 1)
         elseif index == 4 then
-            SET_INT_GLOBAL(2793046 + 954, 1)
+            SET_INT_GLOBAL(2794162 + 960, 1)
         elseif index == 5 then
-            SET_INT_GLOBAL(2793046 + 938, 1)
+            SET_INT_GLOBAL(2794162 + 944, 1)
         elseif index == 6 then
-            SET_INT_GLOBAL(2793046 + 966, 1)
+            SET_INT_GLOBAL(2794162 + 972, 1)
         elseif index == 7 then
-            SET_INT_GLOBAL(2793046 + 896, 1)
+            SET_INT_GLOBAL(2794162 + 901, 1)
         elseif index == 8 then
-            SET_INT_GLOBAL(2793046 + 6874, 1)
+            SET_INT_GLOBAL(2794162 + 6880, 1)
         elseif index == 9 then
-            SET_INT_GLOBAL(2793046 + 6875, 1)
+            SET_INT_GLOBAL(2794162 + 6894, 1)
         end
     end)
 
@@ -6363,9 +6124,9 @@
         INFO_SPOOFING_WALLET_MONEY = menu.list(INFO_SPOOFING, TRANSLATE("Wallet Money"), {}, "", function(); end) -- freemode.c
 
             menu.toggle_loop(INFO_SPOOFING_WALLET_MONEY, TRANSLATE("Enable"), {}, IS_WORKING(false), function()
-                SET_INT_GLOBAL((1853910 + 1 + players.user() * 862) + 205 + 3, menu.get_value(WALLET_MONEY_SPOOFING))
+                SET_INT_GLOBAL((1853988 + 1 + players.user() * 867) + 205 + 3, menu.get_value(WALLET_MONEY_SPOOFING))
             end, function()
-                SET_INT_GLOBAL((1853910 + 1 + players.user() * 862) + 205 + 3, players.get_wallet(players.user()))
+                SET_INT_GLOBAL((1853988 + 1 + players.user() * 867) + 205 + 3, players.get_wallet(players.user()))
             end)
 
             WALLET_MONEY_SPOOFING = menu.slider(INFO_SPOOFING_WALLET_MONEY, TRANSLATE("Value"), {"hcwalletmoneyspoofing"}, "", INT_MIN, INT_MAX, players.get_wallet(players.user()), 10000, function(); end)
@@ -6375,9 +6136,9 @@
         INFO_SPOOFING_MONEY = menu.list(INFO_SPOOFING, TRANSLATE("Total Money"), {}, "", function(); end) -- freemode.c
 
             menu.toggle_loop(INFO_SPOOFING_MONEY, TRANSLATE("Enable"), {}, IS_WORKING(false), function()
-                SET_INT_GLOBAL((1853910 + 1 + players.user() * 862) + 205 + 56, menu.get_value(TOTAL_MONEY_SPOOFING))
+                SET_INT_GLOBAL((1853988 + 1 + players.user() * 867) + 205 + 56, menu.get_value(TOTAL_MONEY_SPOOFING))
             end, function()
-                SET_INT_GLOBAL((1853910 + 1 + players.user() * 862) + 205 + 56, players.get_money(players.user()))
+                SET_INT_GLOBAL((1853988 + 1 + players.user() * 867) + 205 + 56, players.get_money(players.user()))
             end)
 
             TOTAL_MONEY_SPOOFING = menu.slider(INFO_SPOOFING_MONEY, TRANSLATE("Value"), {"hctotalmoneyspoofing"}, "", INT_MIN, INT_MAX, players.get_bank(players.user()), 10000, function(); end)
@@ -6387,9 +6148,9 @@
         INFO_SPOOFING_KILL = menu.list(INFO_SPOOFING, TRANSLATE("Kills"), {}, "", function(); end) -- freemode.c
 
             menu.toggle_loop(INFO_SPOOFING_KILL, TRANSLATE("Enable"), {}, IS_WORKING(false), function()
-                SET_INT_GLOBAL((1853910 + 1 + players.user() * 862) + 205 + 28, menu.get_value(KILL_SPOOFING))
+                SET_INT_GLOBAL((1853988 + 1 + players.user() * 867) + 205 + 28, menu.get_value(KILL_SPOOFING))
             end, function()
-                SET_INT_GLOBAL((1853910 + 1 + players.user() * 862) + 205 + 28, players.get_kills(players.user()))
+                SET_INT_GLOBAL((1853988 + 1 + players.user() * 867) + 205 + 28, players.get_kills(players.user()))
             end)
 
             KILL_SPOOFING = menu.slider(INFO_SPOOFING_KILL, TRANSLATE("Value"), {"hckillspoofing"}, "", INT_MIN, INT_MAX, players.get_kills(players.user()), 1, function(); end)
@@ -6399,9 +6160,9 @@
         INFO_SPOOFING_DEATH = menu.list(INFO_SPOOFING, TRANSLATE("Deaths"), {}, "", function(); end)
 
             menu.toggle_loop(INFO_SPOOFING_DEATH, TRANSLATE("Enable"), {}, IS_WORKING(false), function() -- freemode.c
-                SET_INT_GLOBAL((1853910 + 1 + players.user() * 862) + 205 + 29, menu.get_value(DEATH_SPOOFING))
+                SET_INT_GLOBAL((1853988 + 1 + players.user() * 867) + 205 + 29, menu.get_value(DEATH_SPOOFING))
             end, function()
-                SET_INT_GLOBAL((1853910 + 1 + players.user() * 862) + 205 + 29, players.get_deaths(players.user()))
+                SET_INT_GLOBAL((1853988 + 1 + players.user() * 867) + 205 + 29, players.get_deaths(players.user()))
             end)
 
             DEATH_SPOOFING = menu.slider(INFO_SPOOFING_DEATH, TRANSLATE("Value"), {"hcdeathspoofing"}, "", INT_MIN, INT_MAX, players.get_deaths(players.user()), 1, function(); end)
@@ -6416,8 +6177,8 @@
             if IS_WORKING(false) ~= "" then return end
             if not util.is_session_started() then return end
 
-            if GET_INT_GLOBAL(4536679) == 4 or 20 then
-                SET_INT_GLOBAL(4536673, 0) -- https://github.com/jonaaa20/RecoverySuite
+            if GET_INT_GLOBAL(4536683) == 4 or 20 then
+                SET_INT_GLOBAL(4536677, 0) -- https://github.com/jonaaa20/RecoverySuite
             end
         end)
 
@@ -7044,15 +6805,15 @@
     end)
 
     ForCasinoPresets = { -- { command_ref, value, default_help_text }
-        { CAH_NON_HOST_CUT, 37, "(%)" },
+        { CAH_NON_HOST_CUT, 60, "(%)" },
         { CAH_NON_HOST_CUT_LOOP, false, IS_WORKING(false) },
-        { CAH_HOST_CUT, 37, "(%)" },
+        { CAH_HOST_CUT, 60, "(%)" },
         { CAH_HOST_CUT_LOOP, true, IS_WORKING(false) },
-        { CAH_2P_CUT, 37, "(%)" },
+        { CAH_2P_CUT, 147, "(%)" },
         { CAH_2P_CUT_LOOP, true, IS_WORKING(false) },
-        { CAH_3P_CUT, 37, "(%)" },
+        { CAH_3P_CUT, 147, "(%)" },
         { CAH_3P_CUT_LOOP, true, IS_WORKING(false) },
-        { CAH_4P_CUT, 37, "(%)" },
+        { CAH_4P_CUT, 147, "(%)" },
         { CAH_4P_CUT_LOOP, true, IS_WORKING(false) },
     }
     CasinoPresetLists = { -- { command_ref, is_enabled }
