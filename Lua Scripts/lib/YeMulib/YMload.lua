@@ -1,9 +1,8 @@
-Version5 = 5.2
+Version5 = 5.3
 local aalib = require("aalib")
 local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001
 local SND_FILENAME<const> = 0x00020000
-local net = "夜幕LUA暂时无法连接到服务器！"
 store_dir = filesystem.store_dir() .. '\\YMss\\'
 sound_selection_dir = store_dir .. '\\sound3.txt'
 if not filesystem.is_dir(store_dir) then
@@ -240,12 +239,4 @@ function xianshijiaoben1(state)
     draw_string(string.format("~italic~¦~bold~欢迎使用夜幕-V" .. Version5 ..  ""), 0.35,0.08, 0.6,5)
     util.yield()
     end
-end
-function YMdet()
-    if not async_http.have_access() then
-        local y = net
-        notification("~bold~请为夜幕LUA启用互联网访问&#8721;", math.random(0, 50))
-        util. stop_script()
-    end
-    --util.toast(net)
 end

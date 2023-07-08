@@ -40,7 +40,7 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '6.28'
+GT_version = '7.06'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -48,7 +48,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("GTLuaVIP现在支持自动记录作弊者\n信息保存位置在GTLuaScript>Players\n精确到保存时间，以及所有的信息\n让你不放过你的每一个对手\n更新>玩家选项>战局玩家\n新增>友好选项>检测状态\n新增>自我选项>增强选项>战局切换\n新增>自我选项>增强选项>自动切换无人战局\n新增>恶搞选项>近期更新>附近车辆撞击\n新增>恶搞选项>近期更新>强制下地狱\n新增>恶搞选项>近期更新>观音坐莲\n新增>恶搞选项>近期更新>持续扫射攻击\n新增>恶搞选项>近期更新>附加附近所有实体\n添加了新的皇榜名单\n我们稍稍适配了天眼黑客面板功能，这会让它按预期正常运行\n目前仍然在等待Heist Control的新版本，当更新后我们会第一时间适配\n其他的一些改进与修复")
+    notification("完全适配任务功能\n其他的一切改进与修复")
 end
 loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
 coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
@@ -396,6 +396,8 @@ hb_id = {
     {name = "kuangye11"},
     {name = "老崔"},
     {name = "ln"},
+    {name = "wwkkd666"},
+    {name = "230008861"},
     {name = "左岸"},
     {name = "爱"},
     {name = "清风"},
@@ -408,6 +410,17 @@ hb_id = {
     {name = "万斯"},
     {name = "大原批"},
     {name = "G-LIAN12"},
+    {name = "哈酷呐玛嗒嗒"},
+    {name = "CC"},
+    {name = "我是绿玩"},
+    {name = "七喜"},
+    {name = "YUNkhkl"},
+    {name = "我不是你的盖世英雄"},
+    {name = "矜鶴"},
+    {name = "Eighteen"},
+    {name = "神权"},
+    {name = "罗纳"},
+    {name = "坤坤"},
 }
 
 srgb = {cus = 100}
@@ -2219,7 +2232,7 @@ TTPos = ENTITY.GET_ENTITY_COORDS(TTPed, true)
 hud_rgb_index = 1
 hud_rgb_colors = {6, 18, 9}
 cTime = util.current_time_millis
-Version = "6.28"
+Version = "7.06"
 
 function give_car_addon(pid, hash, center, ang)
     local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
@@ -9639,8 +9652,6 @@ end
 function excludeb()
         for _, pid in pairs(entities.get_all_peds_as_handles()) do
             if PED.GET_VEHICLE_PED_IS_USING(pid) ~= 0 then goto out end
-
-
             local PedPos = v3.new(players.get_position(pid))
             local AddPos = v3.new(players.get_position(pid))
             AddPos:add(v3.new(0, 0, 1))
@@ -9653,7 +9664,6 @@ function excludeb()
 function excludec()
         for _, pid in pairs(entities.get_all_peds_as_handles()) do
             if IS_PLAYER_PED(pid) then goto out end
-
             TASK.CLEAR_PED_TASKS_IMMEDIATELY(pid)
             ::out::
         end
@@ -9661,7 +9671,6 @@ function excludec()
 function excluded()
     for _, pid in pairs(entities.get_all_peds_as_handles()) do
         if IS_PLAYER_PED(pid) then goto out end
-
         local PedPos = v3.new(players.get_position(pid))
         local AddPos = v3.new(players.get_position(pid))
         AddPos:add(v3.new(0, 0, 1))
@@ -9674,8 +9683,6 @@ end
 function excludee()
         for _, pid in pairs(entities.get_all_peds_as_handles()) do
             if IS_PLAYER_PED(pid) or PED.GET_VEHICLE_PED_IS_USING(pid) ~= 0 then goto out end
-
-
             local PedPos = v3.new(players.get_position(pid))
             local AddPos = v3.new(players.get_position(pid))
             AddPos:add(v3.new(0, 0, 1))
@@ -9686,6 +9693,17 @@ function excludee()
         end
     end
 --
+function biaoji(f)
+    if players.user() == pid then
+        gtoast("你难道说自己是傻逼?")
+        return
+    end
+    wait()
+    local pedp  = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    gametag = WIRI_HUD.CREATE_FAKE_MP_GAMER_TAG(pedp,"我是傻逼",false,false,"flakin",0)
+end
+--
+
 ------------------------------------
 -------------玩家崩溃---------------
 ------------------------------------

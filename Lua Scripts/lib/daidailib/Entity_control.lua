@@ -247,7 +247,7 @@ control_ent_list = {}
 -- 所有控制实体的menu.list
 control_ent_menu_list = {}
 --返回瞄准的实体
-GetEntity_PlayerIsAimingAt = function(p)
+function GetEntity_PlayerIsAimingAt(p)
     local ent = NULL
     if PLAYER.IS_PLAYER_FREE_AIMING(p) then
         local ptr = memory.alloc_int()

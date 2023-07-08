@@ -119,6 +119,14 @@ function request_control_of_entity(ent)
     end
 end
 
+----更改模型
+function change_model(ped, name)
+    local hash = util.joaat(name)
+	request_model(hash)
+	PLAYER.SET_PLAYER_MODEL(ped,hash)
+	STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
+end
+
 ----从相机获取偏移量
 function get_offset_from_gameplay_camera(distance)
 	local cam_rot = CAM.GET_GAMEPLAY_CAM_ROT(0)
@@ -379,7 +387,35 @@ function set_entity_face_entity(entity, target, usePitch)
     end
 end
 
+-----获取瞄准实体句柄
+function get_entity_player_is_aiming_at(player)
+	if not PLAYER.IS_PLAYER_FREE_AIMING(player) then
+		return 0
+	end
+	local entity = false
+    local aimed_entity = memory.alloc_int()
+	if PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(player, aimed_entity) then
+		entity = memory.read_int(aimed_entity)
+	end
+	if entity ~= false and ENTITY.IS_ENTITY_A_PED(entity) and PED.IS_PED_IN_ANY_VEHICLE(entity, false) then
+		entity = PED.GET_VEHICLE_PED_IS_IN(entity, false)
+	end
+	return entity
+end
 
+----绘制文字
+function draw_string(s, x, y, scale, font)--font=4无法显示中文
+	HUD.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING")
+	HUD.SET_TEXT_FONT(font or 1)
+	HUD.SET_TEXT_SCALE(scale, scale)
+	HUD.SET_TEXT_DROP_SHADOW()
+	HUD.SET_TEXT_WRAP(0.0, 1.0)
+	HUD.SET_TEXT_DROPSHADOW(1, 0, 0, 0, 0)
+	HUD.SET_TEXT_OUTLINE()
+	HUD.SET_TEXT_EDGE(1, 0, 0, 0, 0)
+	HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(s)
+	HUD.END_TEXT_COMMAND_DISPLAY_TEXT(x, y)
+end
 ------------------------------------------------------------------------------------------------------
 
 
@@ -411,6 +447,104 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
+
+----玩家栏
+function player_bar()
+    local posx = 0.01
+    local posy = 0.005
+
+    for pid = 0, 32 do
+        if PLAYER.GET_PLAYER_PED(pid) ~= 0 then
+            local name = PLAYER.GET_PLAYER_NAME(pid)
+            local infotags = " ["
+            local infocolor = "~w~";local infocolor2 = "~o~"
+            local network = memory.alloc(13*4)
+            NETWORK.NETWORK_HANDLE_FROM_PLAYER(pid,network,13)
+        --标签
+            if players.get_host() == pid then
+                infotags = infotags .. "H"
+                infocolor = "~y~"
+            end
+            if players.get_script_host() == pid then
+                infotags = infotags .. "S"
+                infocolor = "~b~"
+            end
+            if players.is_marked_as_modder(pid) then
+                infotags = infotags .. "M"
+                infocolor = "~r~"
+            end
+            if players.is_godmode(pid) then 
+                infotags = infotags .. "G"
+            end
+            if players.is_in_interior(pid) then
+                infotags = infotags .. "I"
+                infocolor = "~g~"
+            end
+            if NETWORK.NETWORK_IS_FRIEND(network) then
+                infotags = infotags .. "F"
+                infocolor = "~q~"
+            end
+
+            if players.user() == pid then
+                infocolor = "~b~"
+            end
+
+            if infotags == " [" then
+                infotags = ""
+            else
+                infotags = infotags.."]"
+            end
+
+            draw_string(infocolor..name..infocolor2..infotags, posx, posy, 0.4, 4)
+
+            posx = posx + (#name + #infotags)/400 + 0.04
+            
+            if posx > 0.93 then
+                posy = posy + 0.02
+                posx = 0.01
+            end
+        end
+    end
+end
+
+
+
+----删除枪
+function delete_gun()
+    local entity = get_entity_player_is_aiming_at(players.user())
+    request_control(entity)
+    if PED.IS_PED_SHOOTING(PLAYER.PLAYER_PED_ID()) and ENTITY.IS_AN_ENTITY(entity) and not PED.IS_PED_A_PLAYER(entity) and NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) then
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(entity, false, true)
+        entities.delete_by_handle(entity)
+    end
+end
+
+
+----喇叭爆炸
+function horn_bomb()
+    local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(players.user()), false)
+    if AUDIO.IS_HORN_ACTIVE(vehicle) then
+        local coords = ENTITY.GET_ENTITY_COORDS(vehicle)
+        local shootCoords = v3.new(coords)
+        for i = 1, 3 do
+            local rot = ENTITY.GET_ENTITY_ROTATION(vehicle, 2):toDir()
+            local vel = ENTITY.GET_ENTITY_VELOCITY(vehicle)
+            v3.mul(rot, 25 + math.abs(vel.x))
+            v3.add(shootCoords, rot)
+            FIRE.ADD_OWNED_EXPLOSION(VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, -1), shootCoords.x + math.random(-2, 2), shootCoords.y + math.random(-2, 2), shootCoords.z, 10, 100,true, false, 0.1)
+            util.yield()
+        end
+    end
+end
 
 
 ----升天电梯
@@ -646,10 +780,12 @@ function Preset_outfits()
     presetclothes = load_clothes(outfit_folder)
     for _, cloth in pairs(presetclothes) do
         cloth.name = menu.action(my_cloth, cloth.name.."["..cloth.type.."]", {}, "", function()
-            if cloth.type == "女性" then
+            if cloth.type == "女性" then--mp_f_freemode_01
                 menu.trigger_commands("mpfemale")
+                --change_model(players.user(), "mp_f_freemode_01")
             else
                 menu.trigger_commands("mpmale")
+                --change_model(players.user(), "mp_m_freemode_01")
                 --PLAYER.CHANGE_PLAYER_PED(players.user(),"mp_f_freemode_01",true,true)
             end
             PED.SET_PED_COMPONENT_VARIATION(PLAYER.GET_PLAYER_PED(players.user()), 0, cloth.Head, cloth.Head_Variation, 0)--头部
@@ -1876,8 +2012,8 @@ function save_config()
         "\nconfig_active4 = "..menu.get_value(numfps)..                -----------显示fps
         "\nconfig_active5 = "..menu.get_value(show_entityinfo)..       -----------实体池信息
         "\nconfig_active6 = "..menu.get_value(players_info)..          -----------绘制玩家信息
-        "\nconfig_active7 = "..menu.get_value(auto_kick_adBot)         -----------自动踢出广告机
-
+        "\nconfig_active7 = "..menu.get_value(auto_kick_adBot)..       -----------自动踢出广告机
+        "\nconfig_active8 = "..menu.get_value(players_bar)             -----------玩家栏
     local file = io.open(selected_lang_path, 'w')
     file:write(config_txt)
     file:close()
@@ -4043,7 +4179,8 @@ function daidaishijian(state)
     end 
 end
 
-----普通笼子
+
+--普通笼子
 function ptlz(pid)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
     local object_hash = util.joaat("prop_gold_cont_01")
@@ -4051,6 +4188,8 @@ function ptlz(pid)
 	local object1 = OBJECT.CREATE_OBJECT(object_hash, pos.x, pos.y, pos.z, true, true, true)																	
 	ENTITY.FREEZE_ENTITY_POSITION(object1, true)
 end
+--function 
+
 --七度空间
 function qdkj(pid)
 	local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
@@ -4297,7 +4436,7 @@ function orbital(pid)
     end
 end
 
-----火箭雨
+----火箭雨v1
 function rain_rockets(pid)
     local user_ped = PLAYER.PLAYER_PED_ID()
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
@@ -4305,15 +4444,28 @@ function rain_rockets(pid)
     if not WEAPON.HAS_WEAPON_ASSET_LOADED(hash) then
         WEAPON.REQUEST_WEAPON_ASSET(hash, 31, 0)
     end
-    pos.x = pos.x + math.random(-6,6)
-    pos.y = pos.y + math.random(-6,6)
+    pos.x = pos.x + math.random(-10,10)
+    pos.y = pos.y + math.random(-10,10)
     local ground_ptr = memory.alloc(32)
     MISC.GET_GROUND_Z_FOR_3D_COORD(pos.x, pos.y, pos.z, ground_ptr, false, false)
     pos.z = memory.read_float(ground_ptr)
     MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z+50, pos.x, pos.y, pos.z, 200, true, hash, owner, true, false, 2500.0)
-    util.yield(500)
+    util.yield(200)
 end
-
+----子弹雨
+function rain_bullet(pid)
+    local hash = MISC.GET_HASH_KEY("weapon_machinepistol")
+    if not WEAPON.HAS_WEAPON_ASSET_LOADED(hash) then
+        WEAPON.REQUEST_WEAPON_ASSET(hash, 31, 0)
+    end
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+    pos.z = pos.z + 10.0
+    MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z, pos.x, pos.y, pos.z-10, 10000.00, true, hash,0, true, false, 10000.0)
+    pos.y = pos.y + 10.0
+    MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z, pos.x, pos.y-10, pos.z-10, 10000.00, true, hash,0, true, false, 10000.0)
+    pos.x = pos.x + 10.0
+    MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z, pos.x-10, pos.y-10, pos.z-10, 10000.00, true, hash,0, true, false, 10000.0)
+end
 
 
 --------------自定义假R*警告
@@ -5136,19 +5288,6 @@ function request_control(entity, timeOut)
 		util.yield_once()
 	end
 	return timer.elapsed() < timeOut
-end
-function get_entity_player_is_aiming_at(player)
-	if not PLAYER.IS_PLAYER_FREE_AIMING(player) then
-		return NULL
-	end
-	local entity, pEntity = NULL, memory.alloc_int()
-	if PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(player, pEntity) then
-		entity = memory.read_int(pEntity)
-	end
-	if entity ~= NULL and ENTITY.IS_ENTITY_A_PED(entity) and PED.IS_PED_IN_ANY_VEHICLE(entity, false) then
-		entity = PED.GET_VEHICLE_PED_IS_IN(entity, false)
-	end
-	return entity
 end
 
 

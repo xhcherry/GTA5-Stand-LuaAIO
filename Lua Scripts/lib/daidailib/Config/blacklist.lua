@@ -3,5 +3,6 @@ blacklistplayers={
     "jiangling6998",
     "SDFRRTG",
     "lihaibin241",
-    "movingbush12"
+    "movingbush12",
+    "Lhafool"
 }

@@ -2195,27 +2195,6 @@ end
 
 
 
-
-
-
------推进载具
-function get_entity_player_is_aiming_at(player)
-	if not PLAYER.IS_PLAYER_FREE_AIMING(player) then
-		return 0
-	end
-	local entity = false
-    local aimed_entity = memory.alloc_int()
-	if PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(player, aimed_entity) then
-		entity = memory.read_int(aimed_entity)
-	end
-	if entity ~= false and ENTITY.IS_ENTITY_A_PED(entity) and PED.IS_PED_IN_ANY_VEHICLE(entity, false) then
-		entity = PED.GET_VEHICLE_PED_IS_IN(entity, false)
-	end
-	return entity
-end
-
-
-
 ------前滚翻
 function has_anim_dict_loaded(dict)
     while not STREAMING.HAS_ANIM_DICT_LOADED(dict) do
@@ -2945,7 +2924,7 @@ function all_drive_style()
     end  
 end
 
-local SCRIPT_VERSION = 8.9 - 0.1
+local SCRIPT_VERSION = 9.0 - 0.1
 function check_version()
     async_http.init("sakuraversion.netlify.app", "",function(result)
         local tab = string.split(result,";")
@@ -5630,18 +5609,6 @@ end
 
 
 -----主机序列
-function draw_string(s, x, y, scale, font)
-	HUD.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING")
-	HUD.SET_TEXT_FONT(font or 0)
-	HUD.SET_TEXT_SCALE(scale, scale)
-	HUD.SET_TEXT_DROP_SHADOW()
-	HUD.SET_TEXT_WRAP(0.0, 1.0)
-	HUD.SET_TEXT_DROPSHADOW(1, 0, 0, 0, 0)
-	HUD.SET_TEXT_OUTLINE()
-	HUD.SET_TEXT_EDGE(1, 0, 0, 0, 0)
-	HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(s)
-	HUD.END_TEXT_COMMAND_DISPLAY_TEXT(x, y)
-end
 --fps帧数
 local fpstoggle = 0
 function fps(on)
@@ -5723,7 +5690,7 @@ function zhujixvlie()
         draw_string(string.format("~bold~~o~FPS: ~b~"..fps), zhujixvlie_posx, zhujixvlie_posy, 0.3,1)
     end
 
-	draw_string(string.format("~bold~~b~"..myspeed1e.." ~g~KM/H"), zhujixvlie_posx,zhujixvlie_posy + 0.03, 0.3,1)-----速度
+	draw_string(string.format("~bold~~b~"..myspeed1e.." ~g~km/h"), zhujixvlie_posx,zhujixvlie_posy + 0.03, 0.3,1)-----速度
 	draw_string(string.format("~bold~~y~"..os.date("%X")), zhujixvlie_posx, zhujixvlie_posy + 0.06, 0.3,1)    -----------------时间
 	draw_string(string.format("~bold~战局人数: ~g~"..#players.list()), zhujixvlie_posx, zhujixvlie_posy + 0.09, 0.3,1) 
 	draw_string(string.format("~bold~作弊人数: ~r~"..inviciamountint), zhujixvlie_posx, zhujixvlie_posy + 0.12, 0.3,1)
@@ -5812,7 +5779,7 @@ function scriptname(state)
                 mcspt.b=mcspt.b-1
             end
         end
-    draw_string(string.format("~italic~¦~bold~Sakura Script v8.8"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v8.9"), 0.38,0.1, 0.6,5)
     util.yield()
     end
 end
@@ -5834,7 +5801,7 @@ function unicorn(on)
         menu.trigger_commands("rangemultiplier 1")
         entities.delete_by_handle(dachui)
         entities.delete_by_handle(tongzi)
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),2725352035,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
     end
 end
 
@@ -5855,7 +5822,7 @@ function bearhammer(on)
         menu.trigger_commands("rangemultiplier 1")
         entities.delete_by_handle(dachui)
         entities.delete_by_handle(tongzi)
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),2725352035,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
     end
 end
 
@@ -5875,7 +5842,7 @@ function baibaihammer(on)
         menu.trigger_commands("rangemultiplier 1")
         entities.delete_by_handle(dachui)
         entities.delete_by_handle(tongzi)
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),2725352035,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
     end
 end
 ----GT大锤
@@ -5894,7 +5861,7 @@ function gthammer(on)
         menu.trigger_commands("rangemultiplier 1")
         entities.delete_by_handle(dachui)
         entities.delete_by_handle(tongzi)
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),2725352035,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
     end
 end
 
@@ -5908,7 +5875,7 @@ function knife(on)
         ENTITY.ATTACH_ENTITY_TO_ENTITY(saber, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.07, 0, 0, -100, 0.0, 0, true, true, true, true, 0, true)
     else
         entities.delete_by_handle(saber)
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),2725352035,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
     end
 end
 
@@ -5965,7 +5932,7 @@ function hammer(on)
         menu.trigger_commands("rangemultiplier 1")
         entities.delete_by_handle(dachui)
         entities.delete_by_handle(tongzi)
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),2725352035,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
      end
 end
 
@@ -6883,38 +6850,42 @@ function thermalgun()
 end
 
 
---恶灵骑士
-function request_ptfx_asset_firemen(asset)
-    local request_time = os.time()
-    STREAMING.REQUEST_NAMED_PTFX_ASSET(asset)
-    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(asset) do
-        if os.time() - request_time >= 10 then
-            break
-        end
-        util.yield()
-    end
-end
-looped_ptfxs = {}
-burning_man_ptfx_asset = "core"
-burning_man_ptfx_effect = "fire_wrecked_plane_cockpit"
+--幽灵战车
 function elqss(on)
-    if on then 
-        vehicleelqs = CreateVehicle (1491277511,ENTITY.GET_ENTITY_COORDS(players.user_ped(),false),0,true)
-        ENTITY.SET_ENTITY_RENDER_SCORCHED(vehicleelqs,true)
-        VEHICLE.SET_VEHICLE_COLOURS(vehicleelqs,147,147)
-        VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicleelqs,30,15)
-        PED.SET_PED_INTO_VEHICLE(players.user_ped(),vehicleelqs,-1)
-        util.yield(500)
-        request_ptfx_asset_firemen(burning_man_ptfx_asset)
-        for _, boneName in pairs({"wheel_lf", "wheel_lr"}) do
-            GRAPHICS.USE_PARTICLE_FX_ASSET(burning_man_ptfx_asset)
-            local bone_id = ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(vehicleelqs, boneName)
-            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(burning_man_ptfx_effect, vehicleelqs, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, bone_id, 0.9, false, false, false, 0, 0, 0, 0)
-            looped_ptfxs[#looped_ptfxs+1] = fx
-            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 100, 100, 100, false)
+    if on then
+        notification("~bold~~y~按E使用战车技能", HudColour.blue)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+        local vhash = 1491277511
+        local obj = 1793667637
+        request_model(vhash)
+        request_model(obj)
+        ghost_car = entities.create_vehicle(1491277511, pos, 0)
+        ENTITY.SET_ENTITY_INVINCIBLE(ghost_car,true)
+        ghost_nuts = OBJECT.CREATE_OBJECT(1793667637, pos.x, pos.y, pos.z, true, false, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(ghost_nuts, ghost_car, 0, 0, 0, 0, 0, 0, 0, true, false, false, false, 0, true)
+        local titlle = "scr_martin1"
+        local hashid = "scr_sol1_plane_engine_fire"
+        use_fx_asset(titlle)
+        GRAPHICS.START_PARTICLE_FX_LOOPED_ON_ENTITY(hashid, ghost_nuts, 0, 0.1, -0.3, 180, 0, 0, 0.5, 1, 1, 1)
+        SYSTEM.WAIT(500)
+        PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), ghost_car, -1)
+        while ghost_car do
+            if PAD.IS_CONTROL_PRESSED(46,46) then
+                local titlle = "weap_xs_vehicle_weapons"
+                local hashid = "muz_xs_turret_flamethrower_looping"
+                use_fx_asset(titlle)
+                GRAPHICS.START_PARTICLE_FX_LOOPED_ON_ENTITY(hashid, ghost_car, 0, 1, 0.5, 180, 0, 0, 1, 1, 1, 1)
+                util.yield(500)
+            else
+                GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(ghost_car)
+            end
+            util.yield()
         end
     else
-        entities.delete_by_handle(vehicleelqs)
+        if ENTITY.DOES_ENTITY_EXIST(ghost_car) and ENTITY.DOES_ENTITY_EXIST(ghost_nuts) then
+            entities.delete_by_handle(ghost_car)
+            entities.delete_by_handle(ghost_nuts)
+        end
     end
 end
 
@@ -6956,7 +6927,7 @@ function personllight()
         false, false, false)
 end
 
-----拦截劫匪
+----派遣劫匪
 function sendmugger_npc(pid)
     if NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_gang_call", 0, true, 0) then
         util.toast("当前劫匪活动还未结束哦")

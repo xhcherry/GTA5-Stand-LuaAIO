@@ -3837,6 +3837,29 @@ local user = players.user()
             NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x,pos.y,pos.z, 0, false, false, 0)
         end)
     end
+--大自然崩v2
+function naturalv2(PlayerID)
+    local user = players.user()
+    local user_ped = players.user_ped()
+    local pos = players.get_position(user)
+    BlockSyncs(PlayerID, function() 
+        util.yield(100)
+        PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(players.user(), 0xFBF7D21F)
+        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
+        TASK.TASK_PARACHUTE_TO_TARGET(user_ped, pos.x, pos.y, pos.z)
+        util.yield()
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(user_ped)
+        util.yield(250)
+        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
+        PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
+        util.yield(1000)
+        for i = 1, 5 do
+            util.spoof_script("freemode", SYSTEM.WAIT)
+        end
+        ENTITY.SET_ENTITY_HEALTH(user_ped, 0)
+        NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x, pos.y, pos.z, 0, false, false, 0)
+    end)
+end
 --美杜莎崩溃
 function MDS(PlayerID)
     menu.trigger_commands("anticrashcam on")

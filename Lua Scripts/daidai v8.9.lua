@@ -54,10 +54,11 @@ chat_m = menu.list(menu.my_root(), "聊天选项", {})
 vehicle = menu.list(menu.my_root(), "载具选项", {})
 weapons = menu.list(menu.my_root(), "武器选项", {})
 funfeatures = menu.list(menu.my_root(), "娱乐选项", {})
+protection = menu.list(menu.my_root(), "保护选项", {})
 module_list = menu.list(menu.my_root(), "模组选项", {}, "")
 Task_robbery = menu.list(menu.my_root(), "任务选项", {},"")
+tp_world = menu.list(menu.my_root(), "传送选项", {})
 worldlist = menu.list(menu.my_root(), "世界选项", {})
-protection = menu.list(menu.my_root(), "保护选项", {})
 cheater_detection = menu.list(menu.my_root(), "作弊者检测", {})
 otherlist = menu.list(menu.my_root(), "其他选项", {})
 
@@ -86,6 +87,26 @@ health = menu.list(self_option, "恢复", {}, "")
             PED.SET_PED_ARMOUR(players.user_ped(), 100)
         end
     end)
+    menu.toggle_loop(health, "自动复活", {}, "", function ()
+        if ENTITY.GET_ENTITY_HEALTH(PLAYER.PLAYER_PED_ID()) < 1.0 then
+			local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+			PED.RESURRECT_PED(PLAYER.PLAYER_PED_ID())
+			ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos.x, pos.y, pos.z, false, false, false)
+		end
+    end)
+    menu.toggle_loop(health, "在死亡点重生", {}, "", function ()
+        local my_ped = PLAYER.PLAYER_PED_ID()
+        if ENTITY.GET_ENTITY_HEALTH(my_ped) == 0 then
+            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+            while pos do
+                util.yield()
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos.x, pos.y, pos.z, false, false, false)
+                break
+            end
+        end
+    end)
+
+
     supplemental_snacks = menu.list(health, "零食编辑", {}, "")
         menu.action(supplemental_snacks, "补满全部零食", {}, "", function()
             STAT_SET_INT("NO_BOUGHT_YUM_SNACKS", 30)
@@ -503,16 +524,6 @@ menu.slider(self_option, '假通缉等级', {}, '', 0, 6, 0, 1, function(value)
     MISC.SET_FAKE_WANTED_LEVEL(value)
 end)
 
-TP_movement = menu.list(self_option, '向前移动', {}, '')
-    local tpf_units = 1
-    menu.action(TP_movement, "移动", {}, "向前移动~个单位", function()
-        local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, tpf_units, 0)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos['x'], pos['y'], pos['z'], true, false, false)
-    end)
-    menu.slider(TP_movement, "移动距离", {}, "向前传送的距离", 1, 100, 1, 1, function(s)
-        tpf_units = s
-    end)
-
 menu.list_action(self_option, "获取导弹", {}, "选择导弹", opt_pp, function(index, value, click_type)
     dd02(index, value, click_type)
 end)
@@ -541,6 +552,10 @@ menu.toggle_loop(self_option, "假死", {}, "地图上不会出现你", function
         end
     end, function()
         ENTITY.SET_ENTITY_MAX_HEALTH(players.user_ped(), 328)
+end)
+
+menu.action(self_option, "自杀", {}, "", function()
+	ENTITY.SET_ENTITY_HEALTH(PLAYER.PLAYER_PED_ID(), 0)
 end)
 
 
@@ -592,14 +607,14 @@ request_services = menu.list(online, "请求服务", {}, "")
     menu.action(request_services, "RC坦克", {}, "", function()--Update tag(1.67)
         SET_INT_GLOBAL(2794162 + 6880, 1)
     end)
-    menu.action(request_services, "机动作战中心", {}, "", function()--Update tag
-        SET_INT_GLOBAL(2793046 + 925, 1)
+    menu.action(request_services, "机动作战中心", {}, "", function()--Update tag1.67
+        SET_INT_GLOBAL(2794162 + 930, 1)
     end)
-    menu.action(request_services, "复仇者", {}, "", function()--Update tag
-        SET_INT_GLOBAL(2793046 + 933, 1)
+    menu.action(request_services, "复仇者", {}, "", function()--Update tag1.67
+        SET_INT_GLOBAL(2794162 + 938, 1)
     end)
-    menu.action(request_services, "恐霸", {}, "", function()--Update tag
-        SET_INT_GLOBAL(2793046 + 937, 1)
+    menu.action(request_services, "恐霸", {}, "", function()--Update tag1.67
+        SET_INT_GLOBAL(2794162 + 943, 1)
     end)
     menu.action(request_services, "重型防弹装甲", {}, "", function()--Update tag(1.67)
         SET_INT_GLOBAL(2794162 + 901, 1)
@@ -631,6 +646,16 @@ online_services = menu.list(online, "线上服务", {}, "")
         menu.slider(money_remove, "金钱数额", {"hcmoneyremove"}, "", 0, 2000000000, 10000, 10000, function(value)
             set_remove_money_acc(value)
         end)
+
+    menu.toggle_loop(online_services, "五万循环", {}, "", function()
+        memory.write_int(memory.script_global(4536533 + 1), 2147483646)
+        memory.write_int(memory.script_global(4536533 + 7), 2147483647) 
+        memory.write_int(memory.script_global(4536533 + 6), 0) 
+        memory.write_int(memory.script_global(4536533 + 5), 0) 
+        memory.write_int(memory.script_global(4536533 + 3), 0x610F9AB4) 
+        memory.write_int(memory.script_global(4536533 + 2), 50000) 
+        memory.write_int(memory.script_global(4536533), 2) 
+    end)
 
     menu.action(online_services, "从银行取出钱", {}, "", function()
 	    local bankCash = MONEY.NETWORK_GET_VC_BANK_BALANCE()
@@ -742,7 +767,7 @@ menu.action(all_happy, '烟花大战', {}, '新年快乐', function()
         local plyr = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(plist[i])
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(plyr, fireworks, 20, true)
         WEAPON.SET_PED_AMMO(plyr, fireworks, 20)
-        players.send_sms(plist[i], players.user(), '去你妈的美国!你获得了烟花')
+        players.send_sms(plist[i], players.user(), '烟花大战!你获得了烟花')
         util.yield()
     end
 end)
@@ -1012,11 +1037,24 @@ online_other = menu.list(online, "其他选项", {}, "")
     end)
     menu.set_value(script_name, config_active3)
 
+    players_bar = menu.toggle_loop(online_other, "玩家栏", {}, "配置[√]\n请于其他选项使用[保存配置]", function()
+        player_bar()
+    end)
+    menu.set_value(players_bar, config_active8)
+
 
 --翻译
 chat_transl = menu.list(chat_m, "聊天翻译", {}, "")
     require "lib.daidailib.translator"
     
+menu.textslider(chat_m, "便捷聊天", {}, "", {"R星认证已通过", "Rockstar"}, function(idx)
+    local icon = "¦"
+    if idx == 2 then
+        icon = "∑"
+    end
+    chat.ensure_open_with_empty_draft(false)--打开聊天框
+    chat.add_to_draft(icon .. " ")--输入内容
+end)
 
 chatspamtrash = menu.list(chat_m, "聊天刷屏")
     taunt = menu.list(chatspamtrash, "嘲讽")
@@ -1038,6 +1076,26 @@ chatspamtrash = menu.list(chat_m, "聊天刷屏")
     end)
 
 ----载具选项
+menu.toggle_loop(vehicle, "漂移模式", {}, "按住shift键进行漂移", function(on)
+    local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(players.user()), false)
+    if PAD.IS_CONTROL_PRESSED(21, 21) then
+        VEHICLE.SET_VEHICLE_REDUCE_GRIP(vehicle, true)
+        VEHICLE.SET_VEHICLE_REDUCE_GRIP_LEVEL(vehicle, 0.0)
+    else
+        VEHICLE.SET_VEHICLE_REDUCE_GRIP(vehicle, false)
+    end
+end)
+menu.toggle_loop(vehicle, "载具快速开火", {}, "", function()
+    local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(players.user()), false)
+    if vehicle ~= nil then
+        request_control(vehicle)
+    end
+    VEHICLE.SET_VEHICLE_FIXED(vehicle)
+    VEHICLE.SET_VEHICLE_DEFORMATION_FIXED(vehicle)
+end)
+menu.toggle_loop(vehicle, "喇叭爆炸", {}, "", function()
+    horn_bomb()
+end)
 menu.toggle_loop(vehicle, "载具自动无敌", {}, "自动设置驾驶载具无敌,下车关闭无敌", function()
     if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
         local car = entities.get_user_vehicle_as_handle()
@@ -1079,9 +1137,6 @@ menu.action(vehicle, "复制载具", {}, "复制当前载具并驾驶", function
     local myPed = PLAYER.PLAYER_PED_ID()
     local Pos = ENTITY.GET_ENTITY_COORDS(myPed, true)
     local myVehicle = entities.create_vehicle(Hash, Pos, 0)
-
-
-
     PED.SET_PED_INTO_VEHICLE(myPed, myVehicle, -1)
 end)
 menu.slider(vehicle, "设置污垢等级", {}, "", 0, 15, 0, 1, function(num)
@@ -1681,23 +1736,25 @@ end)
 
 -----任务选项
 perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
-    menu.action(perrico_island, "呼叫虎鲸", {}, "", function()--Update tag
-        SET_INT_GLOBAL(2793046 + 954, 1)--Kosatka
+    menu.action(perrico_island, "呼叫虎鲸", {}, "", function()--Update tag1.67
+        SET_INT_GLOBAL(2794162 + 960, 1)--Kosatka
         notification("~y~~bold~呼叫ing~", HudColour.blue)
     end)	
     island_casino_Task_setting = menu.list(perrico_island, "任务设定", {}, "")
-        menu.action(island_casino_Task_setting, "完成所有准备任务", {}, "", function()--Update tag
-            STAT_SET_INT("H4_MISSIONS", 65413)
+        menu.action(island_casino_Task_setting, "跳过准备任务", {}, "", function()--Update tag1.67
+            STAT_SET_INT("H4CNF_TARGET", 5)--主要目标
+            STAT_SET_INT("H4_MISSIONS", 65413)--接近载具
+            STAT_SET_INT("H4_PROGRESS", 126823)--难度:正常
             STAT_SET_INT("H4CNF_APPROACH", -1)
             STAT_SET_INT("H4CNF_BS_ENTR", 63)
             STAT_SET_INT("H4CNF_BS_GEN", 63)
             STAT_SET_INT("H4CNF_WEP_DISRP", 3)
             STAT_SET_INT("H4CNF_ARM_DISRP", 3)
             STAT_SET_INT("H4CNF_HEL_DISRP", 3)
-            STAT_SET_INT("H4CNF_TARGET", 5)
-            SET_INT_LOCAL("heist_island_planning", 1525, 2)-------刷新
+
+            SET_INT_LOCAL("heist_island_planning", 1526, 2)-------刷新
         end)
-        menu.action(island_casino_Task_setting, "重置面板", {}, "", function()--Update tag
+        menu.action(island_casino_Task_setting, "重置面板", {}, "", function()--Update tag1.67
             STAT_SET_INT("H4_MISSIONS", 0)
             STAT_SET_INT("H4_PROGRESS", 0)
             STAT_SET_INT("H4CNF_APPROACH", 0)
@@ -1705,7 +1762,7 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
             STAT_SET_INT("H4CNF_BS_GEN", 0)
             STAT_SET_INT("H4_PLAYTHROUGH_STATUS", 0)
             STAT_SET_INT("H4CNF_TARGET", -1)
-            SET_INT_LOCAL("heist_island_planning", 1525, 2)-------刷新
+            SET_INT_LOCAL("heist_island_planning", 1526, 2)-------刷新
         end)
         
     TELEPORT_island = menu.list(perrico_island, "地点传送", {}, "")    
@@ -1739,38 +1796,39 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
     end)
 
     island_cut = menu.list(perrico_island, "分红调整", {}, "分红界面出现时再修改")--佩里科岛
-        menu.action(island_cut, "全员100%分红", {}, "", function()--Update tag(1.67)
-            SET_INT_GLOBAL(1978495 + 825 + 56 + 1, 100)
-            SET_INT_GLOBAL(1978495 + 825 + 56 + 2, 100)
-            SET_INT_GLOBAL(1978495 + 825 + 56 + 3, 100)
-            SET_INT_GLOBAL(1978495 + 825 + 56 + 4, 100)
-        end)
-        menu.action(island_cut, "全员135%分红", {}, "", function()--Update tag(1.67)
-            SET_INT_GLOBAL(1978495 + 825 + 56 + 1, 135)
-            SET_INT_GLOBAL(1978495 + 825 + 56 + 2, 135)
-            SET_INT_GLOBAL(1978495 + 825 + 56 + 3, 135)
-            SET_INT_GLOBAL(1978495 + 825 + 56 + 4, 135)
-        end)
+        cayo_cut = menu.list(island_cut, "玩家[1-4]", {}, "")
+            menu.slider(cayo_cut, "玩家1", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+                SET_INT_GLOBAL(1978495 + 825 + 56 + 1, value)
+            end)
+            menu.slider(cayo_cut, "玩家2", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+                SET_INT_GLOBAL(1978495 + 825 + 56 + 2, value)
+            end)
+            menu.slider(cayo_cut, "玩家3", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+                SET_INT_GLOBAL(1978495 + 825 + 56 + 3, value)
+            end)
+            menu.slider(cayo_cut, "玩家4", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+                SET_INT_GLOBAL(1978495 + 825 + 56 + 4, value)
+            end)
         menu.action(island_cut, "自保分红", {}, "全员135%,自己60%", function()--Update tag(1.67)
             SET_INT_GLOBAL(1978495 + 825 + 56 + 1, 60)
             SET_INT_GLOBAL(1978495 + 825 + 56 + 2, 135)
             SET_INT_GLOBAL(1978495 + 825 + 56 + 3, 135)
             SET_INT_GLOBAL(1978495 + 825 + 56 + 4, 135)
         end)
-        menu.slider(island_cut, "自定义分红", {"hccphostcut"}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+        menu.slider(island_cut, "全员分红", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
             SET_INT_GLOBAL(1978495 + 825 + 56 + 1, value)
             SET_INT_GLOBAL(1978495 + 825 + 56 + 2, value)
             SET_INT_GLOBAL(1978495 + 825 + 56 + 3, value)
             SET_INT_GLOBAL(1978495 + 825 + 56 + 4, value)
         end)
 
-    menu.list_action(perrico_island, "抢劫难度", {}, "", {"正常","困难"}, function(Index)--Update tag
+    menu.list_action(perrico_island, "抢劫难度", {}, "", {"正常","困难"}, function(Index)--Update tag1.67
         if Index == 1 then
-            STAT_SET_INT("_H4_PROGRESS", "126823")
-            SET_INT_LOCAL("heist_island_planning", 1525, 2)--刷新
+            STAT_SET_INT("H4_PROGRESS", 126823)
+            SET_INT_LOCAL("heist_island_planning", 1526, 2)--刷新
         elseif Index == 2 then
-            STAT_SET_INT("_H4_PROGRESS", "131055")
-            SET_INT_LOCAL("heist_island_planning", 1525, 2)--刷新
+            STAT_SET_INT("H4_PROGRESS", 131055)
+            SET_INT_LOCAL("heist_island_planning", 1526, 2)--刷新
         end
     end)
     menu.toggle_loop(perrico_island, "跳过下水道切割", {}, "", function() 
@@ -1783,18 +1841,18 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
     menu.action(perrico_island, "删除排水管", {}, "", function() 
         DELETE_OBJECT_BY_HASH(-1297635988)
     end)
-    menu.toggle_loop(perrico_island, "跳过指纹锁", {}, "", function() --Update tag
-        if GET_INT_LOCAL("fm_mission_controller_2020", 22032) == 4 then 
-            SET_INT_LOCAL("fm_mission_controller_2020", 22032, 5)
+    menu.toggle_loop(perrico_island, "跳过指纹锁", {}, "", function() --Update tag1.67
+        if GET_INT_LOCAL("fm_mission_controller_2020", 23669) == 4 then
+            SET_INT_LOCAL("fm_mission_controller_2020", 23669, 5)
         end
     end)
-    menu.action(perrico_island, "快速切开玻璃", {}, "切割时使用", function()--Update tag
-            SET_FLOAT_LOCAL("fm_mission_controller_2020", 27985 + 3, 100)
+    menu.action(perrico_island, "快速切开玻璃", {}, "切割时使用", function()--Update tag1.67
+            SET_FLOAT_LOCAL("fm_mission_controller_2020", 29685 + 3, 100)
         end, function()
-            SET_FLOAT_LOCAL("fm_mission_controller_2020", 27985 + 3, 0)
+            SET_FLOAT_LOCAL("fm_mission_controller_2020", 29685 + 3, 0)
     end)
-    menu.toggle_loop(perrico_island, "绕过切割机发热", {}, "切割前开启", function()--Update tag
-        SET_FLOAT_LOCAL("fm_mission_controller_2020", 27985 + 4, 0)
+    menu.toggle_loop(perrico_island, "绕过切割机发热", {}, "切割前开启", function()--Update tag1.67
+        SET_FLOAT_LOCAL("fm_mission_controller_2020", 29685 + 4, 0)
     end)
     menu.action(perrico_island, "杀死队友", {}, "炸死队友,包括自己(无敌可免疫)", function()
         local playerList = getNonWhitelistedPlayers(whitelistListTable, whitelistGroups, whitelistedName)
@@ -1805,10 +1863,13 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
     end)
 
 advanced_options_island = menu.list(perrico_island, "高级选项", {}, "")--佩里科岛
-    menu.action(advanced_options_island, "一键完成任务", {}, "", function()--Update tag
+    menu.click_slider(advanced_options_island, "增加任务生命数", {}, "只有是战局主机时才会生效", 0, 100, 3, 1, function(value)
+        SET_INT_LOCAL("fm_mission_controller_2020", 51905 + 868 + 1, value + 2)
+    end)
+    menu.action(advanced_options_island, "一键完成任务", {}, "", function()--Update tag1.67
         menu.trigger_commands("scripthost")
-        SET_INT_LOCAL("fm_mission_controller_2020", 42279 + 1, 51338752)
-        SET_INT_LOCAL("fm_mission_controller_2020", 42279 + 1375 + 1, 50)
+        SET_INT_LOCAL("fm_mission_controller_2020", 44749 + 1, 51338752)
+        SET_INT_LOCAL("fm_mission_controller_2020", 44749 + 1375 + 1, 50)
     end)
     menu.action(advanced_options_island, "一键结束动画", {}, "仅限单人上岛使用", function()
         menu.trigger_commands("skipcutscene")
@@ -1818,7 +1879,7 @@ advanced_options_island = menu.list(perrico_island, "高级选项", {}, "")--佩
 ------------------赌场选项
 casino = menu.list(Task_robbery, "名钻赌场", {}, "")
     casino_Task_setting = menu.list(casino, "任务设定", {}, "")
-        menu.action(casino_Task_setting, "完成所有准备任务", {}, "目标：钻石\n方式:气势汹汹", function()--Update tag(1.67)
+        menu.action(casino_Task_setting, "跳过准备任务", {}, "目标：钻石\n方式:气势汹汹", function()--Update tag(1.67)
             STAT_SET_INT("CAS_HEIST_FLOW", -1)
             STAT_SET_INT("H3_LAST_APPROACH", 0)
             STAT_SET_INT("H3OPT_APPROACH", 3)
@@ -1890,25 +1951,26 @@ casino = menu.list(Task_robbery, "名钻赌场", {}, "")
         end)
 
     casino_fenhong = menu.list(casino, "分红调整", {}, "")--赌场
-        menu.action(casino_fenhong, "全员100%分红", {}, "分红界面出现时再修改", function()--Update tag(1.67)
-            SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 1, 100)
-            SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 2, 100)
-            SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 3, 100)
-            SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 4, 100)
-        end)
-        menu.action(casino_fenhong, "全员146%分红", {}, "分红界面出现时再修改", function()--Update tag(1.67)
-            SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 1, 146)
-            SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 2, 146)
-            SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 3, 146)
-            SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 4, 146)
-        end)
+        casino_cut = menu.list(casino_fenhong, "玩家[1-4]", {}, "")
+            menu.slider(casino_cut, "玩家1", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+                SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 1, value)
+            end)
+            menu.slider(casino_cut, "玩家2", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+                SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 2, value)
+            end)
+            menu.slider(casino_cut, "玩家3", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+                SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 3, value)
+            end)
+            menu.slider(casino_cut, "玩家4", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+                SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 4, value)
+            end)
         menu.action(casino_fenhong, "自保分红", {}, "全员146%, 自己60%", function()--Update tag(1.67)
             SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 1, 60)
             SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 2, 146)
             SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 3, 146)
             SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 4, 146)
         end)
-        menu.slider(casino_fenhong, "自定义分红", {"hccphostcut"}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+        menu.slider(casino_fenhong, "自定义分红", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
             SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 1, value)
             SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 2, value)
             SET_INT_GLOBAL(1971696 + 1497 + 736 + 92 + 3, value)
@@ -1924,49 +1986,66 @@ casino = menu.list(Task_robbery, "名钻赌场", {}, "")
         end
     end)
     advanced_options_casino = menu.list(casino, "高级选项", {}, "")--赌场
-        menu.action(advanced_options_casino, "一键完成任务", {}, "", function()--Update tag
+        menu.click_slider(advanced_options_casino, "增加任务生命数", {}, "只有是战局主机时才会生效", 0, 100, 0, 1, function(value)
+            SET_INT_LOCAL("fm_mission_controller", 26136 + 1325 + 1, value)
+        end)
+        menu.action(advanced_options_casino, "一键完成任务", {}, "", function()--Update tag1.67
             menu.trigger_commands("scripthost")
-            SET_INT_LOCAL("fm_mission_controller", 19707 + 1741, 80)
-            SET_INT_LOCAL("fm_mission_controller", 19707 + 2686, 10000000)
-            SET_INT_LOCAL("fm_mission_controller", 28329 + 1, 99999)
-            SET_INT_LOCAL("fm_mission_controller", 31585 + 69, 99999)
+            SET_INT_LOCAL("fm_mission_controller", 19710 + 1741, 80)
+            SET_INT_LOCAL("fm_mission_controller", 19710 + 2686, 10000000)
+            SET_INT_LOCAL("fm_mission_controller", 28331 + 1, 99999)
+            SET_INT_LOCAL("fm_mission_controller", 31587 + 69, 99999)
         end)
 
 doomsday = menu.list(Task_robbery, "末日豪杰", {}, "")
     doomsday_Task_setting = menu.list(doomsday, "任务设定", {}, "")
-        menu.action(doomsday_Task_setting, "数据泄露 I", {}, "", function()--Update tag
+        menu.action(doomsday_Task_setting, "数据泄露 I", {}, "", function()--Update tag1.67
             STAT_SET_INT("GANGOPS_FLOW_MISSION_PROG", 503)
             STAT_SET_INT("GANGOPS_HEIST_STATUS", -229383)
             STAT_SET_INT("GANGOPS_FLOW_NOTIFICATIONS", 1557)
-            SET_INT_LOCAL("gb_gang_ops_planning", 178, 6)------刷新
+            SET_INT_LOCAL("gb_gang_ops_planning", 179, 6)------刷新
         end)
-        menu.action(doomsday_Task_setting, "波格丹危机 II", {}, "", function()--Update tag
+        menu.action(doomsday_Task_setting, "波格丹危机 II", {}, "", function()--Update tag1.67
             STAT_SET_INT("GANGOPS_FLOW_MISSION_PROG", 240)
             STAT_SET_INT("GANGOPS_HEIST_STATUS", -229378)
             STAT_SET_INT("GANGOPS_FLOW_NOTIFICATIONS", 1557)
-            SET_INT_LOCAL("gb_gang_ops_planning", 178, 6)------刷新
+            SET_INT_LOCAL("gb_gang_ops_planning", 179, 6)------刷新
         end)
-        menu.action(doomsday_Task_setting, "末日降临 III", {}, "", function()--Update tag
+        menu.action(doomsday_Task_setting, "末日降临 III", {}, "", function()--Update tag1.67
             STAT_SET_INT("GANGOPS_FLOW_MISSION_PROG", 16368)
             STAT_SET_INT("GANGOPS_HEIST_STATUS", -229380)
             STAT_SET_INT("GANGOPS_FLOW_NOTIFICATIONS", 1557)
-            SET_INT_LOCAL("gb_gang_ops_planning", 178, 6)------刷新
+            SET_INT_LOCAL("gb_gang_ops_planning", 179, 6)------刷新
         end)
-        menu.action(doomsday_Task_setting, "重置任务面板", {}, "", function()--Update tag
+        menu.action(doomsday_Task_setting, "重置任务面板", {}, "", function()--Update tag1.67
             STAT_SET_INT("GANGOPS_FLOW_MISSION_PROG", 240)
             STAT_SET_INT("GANGOPS_HEIST_STATUS", 0)
             STAT_SET_INT("GANGOPS_FLOW_NOTIFICATIONS", 1557)
-            SET_INT_LOCAL("gb_gang_ops_planning", 178, 6)------刷新
+            SET_INT_LOCAL("gb_gang_ops_planning", 179, 6)------刷新
         end)
+        
     doomsday_Task_tp = menu.list(doomsday, "地点传送", {}, "")
         menu.action(doomsday_Task_tp, "抢劫屏幕", {}, "", function()
             TELEPORT(350.69284, 4872.308, -60.794243)
             ENTITY.SET_ENTITY_HEADING(players.user_ped(), -50)
         end)
 
-    doomsday_Task_fenhong = menu.list(doomsday, "分红设置", {}, "")--末日
-        doomsday_cut = menu.list(doomsday, "末日分红", {}, "")
-            menu.slider(doomsday_Task_fenhong, "自定义分红", {"hcdoomsdaycut"}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+    doomsday_cut = menu.list(doomsday, "分红设置", {}, "")--末日
+        doomsday_cut1 = menu.list(doomsday_cut, "末日分红", {}, "")
+            doomsday_cut_p = menu.list(doomsday_cut1, "玩家[1-4]", {}, "")
+                menu.slider(doomsday_cut_p, "玩家1", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+                    SET_INT_GLOBAL(1967630 + 812 + 50 + 1, value)
+                end)
+                menu.slider(doomsday_cut_p, "玩家2", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+                    SET_INT_GLOBAL(1967630 + 812 + 50 + 2, value)
+                end)
+                menu.slider(doomsday_cut_p, "玩家3", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+                    SET_INT_GLOBAL(1967630 + 812 + 50 + 3, value)
+                end)
+                menu.slider(doomsday_cut_p, "玩家4", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
+                    SET_INT_GLOBAL(1967630 + 812 + 50 + 4, value)
+                end)
+            menu.slider(doomsday_cut1, "全员分红", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.67)
                 SET_INT_GLOBAL(1967630 + 812 + 50 + 1, value)
                 SET_INT_GLOBAL(1967630 + 812 + 50 + 2, value)
                 SET_INT_GLOBAL(1967630 + 812 + 50 + 3, value)
@@ -1974,13 +2053,13 @@ doomsday = menu.list(Task_robbery, "末日豪杰", {}, "")
             end)
 
     advanced_options_doomsday = menu.list(doomsday, "高级选项", {}, "")--末日
-        menu.action(advanced_options_doomsday, "一键完成任务", {}, "末日降临", function()--Update tag
+        menu.action(advanced_options_doomsday, "一键完成任务", {}, "末日降临", function()--Update tag1.67
             menu.trigger_commands("scripthost")
-            SET_INT_LOCAL("fm_mission_controller", 19707, 12)
-            SET_INT_LOCAL("fm_mission_controller", 19707 + 1741, 150)
-            SET_INT_LOCAL("fm_mission_controller", 28329 + 1, 99999)
-            SET_INT_LOCAL("fm_mission_controller", 31585 + 69, 99999)
-            SET_INT_LOCAL("fm_mission_controller", 31585 + 97, 80)
+            SET_INT_LOCAL("fm_mission_controller", 19710, 12)
+            SET_INT_LOCAL("fm_mission_controller", 19710 + 1741, 150)
+            SET_INT_LOCAL("fm_mission_controller", 28331 + 1, 99999)
+            SET_INT_LOCAL("fm_mission_controller", 31587 + 69, 99999)
+            SET_INT_LOCAL("fm_mission_controller", 31587 + 97, 80)
         end)
 -----------
 
@@ -2070,15 +2149,6 @@ menu.toggle_loop(Task_robbery, "自动CEO/首领", {},"", function()
         end
     end
 end)
-menu.click_slider(Task_robbery, "增加任务生命数", {}, "只有是战局主机时才会生效", -1, 30000, 0, 1, function(value)
-    if IS_SCRIPT_RUNNING("fm_mission_controller") then
-        SET_INT_LOCAL("fm_mission_controller", 26136 + 1325 + 1, value)
-    elseif IS_SCRIPT_RUNNING("fm_mission_controller_2020") then
-        SET_INT_LOCAL("fm_mission_controller_2020", 51905 + 868 + 1, value)
-    else
-        util.toast("未进行相应任务")
-    end
-end)
 
 
 
@@ -2087,6 +2157,12 @@ end)
 weapon_save = menu.list(weapons, '武器保存', {}, '')
     dofile(filesystem.scripts_dir() .."lib/daidailib/CustomWeapon/customweapon.lua")
 
+menu.toggle_loop(weapons, "近战爆炸", {}, "", function()
+    local pos = v3.new()
+    if WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped()) == -1569615261 and WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pos) then
+        FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 18, 100, true, false, 0, false)
+    end
+end)
 
 menu.toggle_loop(weapons, "瞄准信息", {}, "显示您瞄准的实体的信息", function()
     local info = get_aim_info()
@@ -2532,6 +2608,9 @@ magnetic_gun = menu.list(weapons, "磁力枪", {}, "")
 menu.toggle_loop(weapons, "传送枪", {}, "", function()
     csq()
 end)
+menu.toggle_loop(weapons, "删除枪", {}, "", function()
+    delete_gun()
+end)
 menu.toggle_loop(weapons, '翻滚换弹', {}, '', function()
     fghd()
 end)
@@ -2861,9 +2940,10 @@ appearance = menu.list(funfeatures, "伪装")
     end)
 
 
-menu.toggle(funfeatures,"恶灵骑士" ,{}, "", function(on)
+menu.toggle(funfeatures,"幽灵战车" ,{}, "", function(on)
     elqss(on)
 end)
+
 menu.toggle(funfeatures, "飞天扫帚", {}, "", function(on)
     flying_broom(on)
 end)
@@ -3486,7 +3566,7 @@ players.on_join(function(pid)
             local playerpos = players.get_position(pid)
             local mypos = players.get_position(players.user())
             local distance = math.ceil(MISC.GET_DISTANCE_BETWEEN_COORDS(playerpos.x, playerpos.y, playerpos.z, mypos.x, mypos.y, mypos.z))
-            if distance > 3 then
+            if distance > 3 and PLAYER.GET_PLAYER_PED(pid) ~= 0 then
                 TELEPORT(playerpos.x, playerpos.y, playerpos.z)
             end
         end)
@@ -3997,6 +4077,80 @@ players.on_join(function(pid)
     menu.action(lz, "栅栏", {}, "", function()
         fence_lz(pid)
     end)
+    menu.action(lz, "地狱笼子", {}, "", function()
+        local objHash = util.joaat("hei_prop_station_gate")
+        request_model(objHash)
+        local entityCoords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+        entityCoords.z = entityCoords.z - 1.0
+
+        local object1 = entities.create_object(objHash, v3.new(entityCoords.x + 2.75, entityCoords.y + 2.75, entityCoords.z))
+        local object2 = entities.create_object(objHash, v3.new(entityCoords.x + 2.75, entityCoords.y + 2.75, entityCoords.z + 2))
+        local object3 = entities.create_object(objHash, v3.new(entityCoords.x + 2.75, entityCoords.y - 2.75, entityCoords.z))
+        local object4 = entities.create_object(objHash, v3.new(entityCoords.x + 2.75, entityCoords.y - 2.75, entityCoords.z + 2))
+        local object5 = entities.create_object(objHash, v3.new(entityCoords.x + 2.75, entityCoords.y - 2.75, entityCoords.z))
+        local object6 = entities.create_object(objHash, v3.new(entityCoords.x + 2.75, entityCoords.y - 2.75, entityCoords.z + 2))
+
+        local rot5 = ENTITY.GET_ENTITY_ROTATION(object5, 2)
+        rot5.z = -90.0
+        ENTITY.SET_ENTITY_ROTATION(object5, rot5.x, rot5.y, rot5.z, 2, true)
+        ENTITY.SET_ENTITY_ROTATION(object6, rot5.x, rot5.y, rot5.z, 2, true)
+
+        local object7 = entities.create_object(objHash, v3.new(entityCoords.x - 2.75, entityCoords.y - 2.75, entityCoords.z))
+        local object8 = entities.create_object(objHash, v3.new(entityCoords.x - 2.75, entityCoords.y - 2.75, entityCoords.z + 2))
+
+        local rot7 = ENTITY.GET_ENTITY_ROTATION(object7, 2)
+        rot7.z = -90.0
+        ENTITY.SET_ENTITY_ROTATION(object7, rot7.x, rot7.y, rot7.z, 2, true)
+        ENTITY.SET_ENTITY_ROTATION(object8, rot7.x, rot7.y, rot7.z, 2, true)
+        local object9 = entities.create_object(objHash, v3.new(entityCoords.x, entityCoords.y + 2.75, entityCoords.z + 5))
+        local rot9 = ENTITY.GET_ENTITY_ROTATION(object9, 2)
+        rot9.x = 90
+        rot9.y = 90
+        ENTITY.SET_ENTITY_ROTATION(object9, rot9.x, rot9.y, rot9.z, 2, true)
+        local object10 = entities.create_object(objHash, v3.new(entityCoords.x, entityCoords.y + 2.75, entityCoords.z + 5))
+        local rot10 = ENTITY.GET_ENTITY_ROTATION(object9, 2)
+        rot10.x = -90
+        rot10.y = -90
+        ENTITY.SET_ENTITY_ROTATION(object10, rot10.x, rot10.y, rot10.z, 2, true)
+        local object11 = entities.create_object(objHash, v3.new(entityCoords.x, entityCoords.y + 2.75, entityCoords.z))
+        ENTITY.SET_ENTITY_ROTATION(object11, rot9.x, rot9.y, rot9.z, 2, true)
+        local object12 = entities.create_object(objHash, v3.new(entityCoords.x, entityCoords.y + 2.75, entityCoords.z))
+        ENTITY.SET_ENTITY_ROTATION(object12, rot10.x, rot10.y, rot10.z, 2, true)
+
+
+        --[[ for i = 1, 12 do
+            local kk = object..i
+            ENTITY.FREEZE_ENTITY_POSITION(kk, true)
+	        ENTITY.SET_ENTITY_VISIBLE(kk, true)
+        end ]]
+
+            ENTITY.FREEZE_ENTITY_POSITION(object1, true)
+            ENTITY.FREEZE_ENTITY_POSITION(object2, true)
+            ENTITY.FREEZE_ENTITY_POSITION(object3, true)
+            ENTITY.FREEZE_ENTITY_POSITION(object4, true)
+            ENTITY.FREEZE_ENTITY_POSITION(object5, true)
+            ENTITY.FREEZE_ENTITY_POSITION(object6, true)
+            ENTITY.FREEZE_ENTITY_POSITION(object7, true)
+            ENTITY.FREEZE_ENTITY_POSITION(object8, true)
+            ENTITY.FREEZE_ENTITY_POSITION(object9, true)
+            ENTITY.FREEZE_ENTITY_POSITION(object10, true)
+            ENTITY.FREEZE_ENTITY_POSITION(object11, true)
+            ENTITY.FREEZE_ENTITY_POSITION(object12, true)
+
+            ENTITY.SET_ENTITY_VISIBLE(object1, true)
+            ENTITY.SET_ENTITY_VISIBLE(object2, true)
+            ENTITY.SET_ENTITY_VISIBLE(object3, true)
+            ENTITY.SET_ENTITY_VISIBLE(object4, true)
+            ENTITY.SET_ENTITY_VISIBLE(object5, true)
+            ENTITY.SET_ENTITY_VISIBLE(object6, true)
+            ENTITY.SET_ENTITY_VISIBLE(object7, true)
+            ENTITY.SET_ENTITY_VISIBLE(object8, true)
+            ENTITY.SET_ENTITY_VISIBLE(object9, true)
+            ENTITY.SET_ENTITY_VISIBLE(object10, true)
+            ENTITY.SET_ENTITY_VISIBLE(object11, true)
+            ENTITY.SET_ENTITY_VISIBLE(object12, true)
+    end)
+
     menu.list_action(lz, "移动笼子", {}, "", kidnap_types, function(index, value)
         kidnapplayer(pid, index, value)
     end)
@@ -4559,8 +4713,11 @@ players.on_join(function(pid)
     menu.toggle_loop(trolling, "原子弹轰炸", {}, "", function()
         orbital(pid)
     end)         
-    menu.toggle_loop(trolling,"火箭雨", {'rockets'}, '', function()
-        rain_rockets(pid, false)
+    menu.toggle_loop(trolling,"火箭雨", {}, '', function()
+        rain_rockets(pid)
+    end)
+    menu.toggle_loop(trolling,"子弹雨", {}, '', function()
+        rain_bullet(pid)
     end)
     menu.toggle_loop(trolling, "火箭撞击", {}, "", function()
         local coords = players.get_position(pid)
@@ -4791,7 +4948,7 @@ players.on_join(function(pid)
             util.trigger_script_event(1 << pid, {1742713914, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
         end)
 
-    menu.action(trolling, "无限加载屏幕", {}, "", function()--Update tag
+    menu.action(trolling, "无限加载屏幕", {}, "", function()--Update tag1.67
         util.trigger_script_event(1 << pid, {891653640, players.user(), 0, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
     end)--MCTeleport
 
@@ -4860,7 +5017,7 @@ players.on_join(function(pid)
     menu.action(tp_player_trolling, "任务邀请", {}, "", function()--Update tag
         util.trigger_script_event(1 << pid, {36077543, players.user(), pid, 1, 7}) 
     end)
-    menu.action(tp_player_trolling, "强制传送到佩里科岛", {}, "", function()--Update tag
+    menu.action(tp_player_trolling, "强制传送到佩里科岛", {}, "", function()--Update tag1.67
         util.trigger_script_event(1 << pid, {373376135, players.user(), 1})
     end)
     menu.action(tp_player_trolling, "驾驶摩托车", {}, "", function()--Update tag
@@ -5046,6 +5203,9 @@ players.on_join(function(pid)
         menu.trigger_commands("historyblock " .. players.get_name(pid))
         menu.trigger_commands("kick" .. players.get_name(pid))
     end)
+    menu.action(kickplayer, "主机踢", {}, "", function()
+        NETWORK.NETWORK_SESSION_KICK_PLAYER(pid)
+    end)
 
     -----崩溃玩家
     menu.action(crashplayer, "新鬼崩", {}, "", function()
@@ -5183,6 +5343,166 @@ end)
         chat.send_message(cussing10,false,true,true)
     end)
 end)
+
+
+
+----传送选项
+    menu.action(tp_world, "过渡传送", {}, "", function()
+        transit_tp()
+    end)
+    menu.toggle_loop(tp_world, "自动传送到任务点", {}, "", function()
+        if HUD.DOES_BLIP_EXIST(HUD.GET_FIRST_BLIP_INFO_ID(1)) then
+            local waypoint = HUD.GET_BLIP_COORDS(HUD.GET_FIRST_BLIP_INFO_ID(1))
+            TELEPORT(waypoint.x,waypoint.y,waypoint.z)
+        end
+    end)
+
+    save_pos = menu.list(tp_world, '保存坐标传送', {}, '')
+        local savepos = {}
+        local poslist = {}
+        menu.action(save_pos, "保存当前坐标", {}, "仅供临时使用", function()
+	        local mypos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+            savepos[#savepos + 1] = mypos
+            local saveposlong = #savepos
+
+            poslist[saveposlong] = menu.textslider(save_pos, "坐标 " .. saveposlong, {}, "", {"传送","删除"}, function(val)
+                if val == 1 then
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), savepos[saveposlong]["x"],savepos[saveposlong]["y"],savepos[saveposlong]["z"], true, false, false)
+                elseif val == 2 then
+                    menu.delete(poslist[saveposlong])
+                    savepos[saveposlong] = nil
+                end
+            end)
+        end)
+
+        menu.action(tp_world, "传送个人载具到我", {}, "", function()
+            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+            local vehicle = entities.get_user_personal_vehicle_as_handle()
+            request_control(vehicle)
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(vehicle, pos.x, pos.y, pos.z, true, false, false)
+        end)
+        menu.action(tp_world, "传送我到个人载具", {}, "", function()
+            local vehicle = entities.get_user_personal_vehicle_as_handle()
+            local pos = ENTITY.GET_ENTITY_COORDS(vehicle)
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos.x, pos.y, pos.z, true, false, false)
+        end)
+
+
+    TP_movement = menu.list(tp_world, '方向移动', {}, '')
+        local tpf_units = 1
+        menu.action(TP_movement, "向前移动", {}, "向前移动~个单位", function()
+            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+            local head = ENTITY.GET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID())
+			head = math.rad((head - 180) * -1)
+			pos.x = pos.x + math.sin(head) * -tpf_units
+			pos.y = pos.y + math.cos(head) * -tpf_units
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos['x'], pos['y'], pos['z'], true, false, false)
+        end)
+        menu.action(TP_movement, "向后移动", {}, "向前移动~个单位", function()
+            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+            local head = ENTITY.GET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID())
+			head = math.rad((head - 360) * -1)
+			pos.x = pos.x + math.sin(head) * -tpf_units
+			pos.y = pos.y + math.cos(head) * -tpf_units
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos['x'], pos['y'], pos['z'], true, false, false)
+        end)
+        menu.action(TP_movement, "向左移动", {}, "向前移动~个单位", function()
+            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+            local head = ENTITY.GET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID())
+			head = math.rad((head - 90) * -1)
+			pos.x = pos.x + math.sin(head) * -tpf_units
+			pos.y = pos.y + math.cos(head) * -tpf_units
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos['x'], pos['y'], pos['z'], true, false, false)
+        end)
+        menu.action(TP_movement, "向右移动", {}, "向前移动~个单位", function()
+            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+            local head = ENTITY.GET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID())
+			head = math.rad((head + 90) * -1)
+			pos.x = pos.x + math.sin(head) * -tpf_units
+			pos.y = pos.y + math.cos(head) * -tpf_units
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos['x'], pos['y'], pos['z'], true, false, false)
+        end)
+        menu.action(TP_movement, "向上移动", {}, "向前移动~个单位", function()
+            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+			pos.z = pos.z + tpf_units
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos['x'], pos['y'], pos['z'], true, false, false)
+        end)
+        menu.action(TP_movement, "向下移动", {}, "向前移动~个单位", function()
+            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+			pos.z = pos.z - tpf_units
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos['x'], pos['y'], pos['z'], true, false, false)
+        end)
+        menu.slider(TP_movement, "移动距离", {}, "向前传送的距离", 1, 100, 1, 1, function(s)
+            tpf_units = s
+        end)
+
+    tp_address = menu.list(tp_world, "地址传送", {}, "")
+        for i = 1 , #address_pos do
+            menu.action(tp_address, address_pos[i]["Name"], {}, "", function()
+                TELEPORT(address_pos[i]["x"],address_pos[i]["y"],address_pos[i]["z"])
+            end)
+        end
+
+    scene_place = menu.list(tp_world, "场景地点", {}, "")
+        scene_tp = menu.list(scene_place, "场景", {}, "故事模式场景区域")
+            for index, data in pairs(interiors) do
+                local location_name = data[1]
+                local location_coords = data[2]
+                menu.action(scene_tp, location_name, {}, "", function()
+                    menu.trigger_commands("doors on")
+                    menu.trigger_commands("nodeathbarriers on")
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), location_coords.x, location_coords.y, location_coords.z, false, false, false)
+                end)
+            end
+        pump_list = menu.list(scene_place, "南瓜", {}, "万圣节南瓜头")
+            for idx, coords in pumps_from_gtaweb_eu do
+                pump_list:action("南瓜头 " .. idx, {}, "传送到南瓜", function()
+                    util.teleport_2d(coords[1], coords[2])
+                end)
+            end
+        snow_loca = menu.list(scene_place, "雪人", {}, "")
+            for idx, coords in snowmens do
+                snow_loca:action("雪人 " .. idx, {}, "传送到圣诞节", function()
+                    util.teleport_2d(coords[1], coords[2])
+                end)
+            end
+        snow_loca = menu.list(scene_place, "武器厢型车购买", {}, "")
+            for idx, coords in weaponvan do
+                snow_loca:action("厢型车 " .. idx, {}, "传送到厢型车", function()
+                    util.teleport_2d(coords[1], coords[2])
+                end)
+            end
+        figures_loca = menu.list(scene_place, "手办", {}, "")
+            for idx, coords in figures do
+                figures_loca:action("手办 " .. idx, {}, "传送到手办", function()
+                    util.teleport_2d(coords[1], coords[2])
+                end)
+            end
+        jammers_loca = menu.list(scene_place, "信号干扰器", {}, "")
+            for idx, coords in jammers do
+                jammers_loca:action("信号干扰器 " .. idx, {}, "传送到信号干扰器", function()
+                    util.teleport_2d(coords[1], coords[2])
+                end)
+            end
+        movie_props = menu.list(scene_place, "电影道具", {}, "")
+            for idx, coords in movie_prop1 do
+                movie_props:action("电影道具 " .. idx, {}, "传送到电影道具", function()
+                    util.teleport_2d(coords[1], coords[2])
+                end)
+            end
+        workshop_products = menu.list(scene_place, "拉玛有机作坊产品", {}, "")
+            for idx, coords in ld_product do
+                workshop_products:action("产品 " .. idx, {}, "传送到产品", function()
+                    util.teleport_2d(coords[1], coords[2])
+                end)
+            end
+        tp_card = menu.list(scene_place, "纸牌", {}, "")
+            for idx, coords in cards1 do
+                tp_card:action("纸牌 " .. idx, {}, "传送到纸牌", function()
+                    util.teleport_2d(coords[1], coords[2])
+                end)
+            end
+
 
 
 ------世界选项
@@ -5738,74 +6058,6 @@ visuallist = menu.list(worldlist, "视觉效果", {})
             end)
         end
 
-tp_world = menu.list(worldlist, "传送选项", {})
-    menu.action(tp_world, "过渡传送", {}, "", function()
-        transit_tp()
-    end)
-    menu.toggle_loop(tp_world, "自动传送到任务点", {}, "", function()
-        if HUD.DOES_BLIP_EXIST(HUD.GET_FIRST_BLIP_INFO_ID(1)) then
-            local waypoint = HUD.GET_BLIP_COORDS(HUD.GET_FIRST_BLIP_INFO_ID(1))
-            TELEPORT(waypoint.x,waypoint.y,waypoint.z)
-        end
-    end)
-    pump_list = menu.list(tp_world, "场景", {}, "故事模式场景区域")
-        for index, data in pairs(interiors) do
-            local location_name = data[1]
-            local location_coords = data[2]
-            menu.action(pump_list, location_name, {}, "", function()
-                menu.trigger_commands("doors on")
-                menu.trigger_commands("nodeathbarriers on")
-                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), location_coords.x, location_coords.y, location_coords.z, false, false, false)
-            end)
-        end
-    pump_list = menu.list(tp_world, "南瓜", {}, "万圣节南瓜头")
-        for idx, coords in pumps_from_gtaweb_eu do
-            pump_list:action("南瓜头 " .. idx, {}, "传送到南瓜", function()
-                util.teleport_2d(coords[1], coords[2])
-            end)
-        end
-    snow_loca = menu.list(tp_world, "雪人", {}, "")
-        for idx, coords in snowmens do
-            snow_loca:action("雪人 " .. idx, {}, "传送到圣诞节", function()
-                util.teleport_2d(coords[1], coords[2])
-            end)
-        end
-    snow_loca = menu.list(tp_world, "武器厢型车购买", {}, "")
-        for idx, coords in weaponvan do
-            snow_loca:action("厢型车 " .. idx, {}, "传送到厢型车", function()
-                util.teleport_2d(coords[1], coords[2])
-            end)
-        end
-    figures_loca = menu.list(tp_world, "手办", {}, "")
-        for idx, coords in figures do
-            figures_loca:action("手办 " .. idx, {}, "传送到手办", function()
-                util.teleport_2d(coords[1], coords[2])
-            end)
-        end
-    jammers_loca = menu.list(tp_world, "信号干扰器", {}, "")
-        for idx, coords in jammers do
-            jammers_loca:action("信号干扰器 " .. idx, {}, "传送到信号干扰器", function()
-                util.teleport_2d(coords[1], coords[2])
-            end)
-        end
-    movie_props = menu.list(tp_world, "电影道具", {}, "")
-    for idx, coords in movie_prop1 do
-        movie_props:action("电影道具 " .. idx, {}, "传送到电影道具", function()
-            util.teleport_2d(coords[1], coords[2])
-        end)
-    end
-    workshop_products = menu.list(tp_world, "拉玛有机作坊产品", {}, "")
-    for idx, coords in ld_product do
-        workshop_products:action("产品 " .. idx, {}, "传送到产品", function()
-            util.teleport_2d(coords[1], coords[2])
-        end)
-    end
-    tp_card = menu.list(tp_world, "纸牌", {}, "")
-    for idx, coords in cards1 do
-        tp_card:action("纸牌 " .. idx, {}, "传送到纸牌", function()
-            util.teleport_2d(coords[1], coords[2])
-        end)
-    end
 
 
 -----保护选项(防护选项)
@@ -6347,9 +6599,11 @@ menu.action(otherlist, "保存配置", {}, "仅支持部分功能(即帮助文�
 end)
 
 
-
 --在线玩家
 players.dispatch_on_join()
+
+--创建的命令加载状态和热键
+menu.apply_command_states()
 
 ----结束
 util.on_stop(function()

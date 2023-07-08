@@ -2961,11 +2961,6 @@ end
 ------------------------------------
 -------------玩家踢出---------------
 ------------------------------------
---阻止加入踢
-function blockjoinkick(PlayerID)
-    menu.trigger_commands("historyblock " .. players.get_name(PlayerID))
-    menu.trigger_commands("breakup" .. players.get_name(PlayerID))
-end
 --智能踢
 function autokickv1(PlayerID)
         util.trigger_script_event(1 << PlayerID, {0xB9BA4D30, PlayerID, 0x4, -1, 1, 1, 1})
