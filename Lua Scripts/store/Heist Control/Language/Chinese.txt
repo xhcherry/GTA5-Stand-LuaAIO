@@ -1,15 +1,13 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 03/22/2023 09:45:33 PM
-# Heist Control Version: V 3.2.4
+# Generated Date: 05/08/2023 10:08:57 PM
+# Heist Control Version: V 3.3.0
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
 # You can use all characters except '=' character.
 # Using '#' character means the line will be ignored.
-# If you want to release your own translation officially, please contact to the developer of Heist Control in its Discord server.
-# Learn more: https://icedoomfist.com/Stand_Heist_Control/How_To_Translate/
-
+# Please join the Discord Server for Heist Control if you don't know how to translate.
 
 Heist Control = 抢劫控制
 Announcement = 公告
@@ -736,3 +734,16 @@ Clearing a black box with white help texts where are left, above of the screen. 
 Can be used for getting targets slightly more fast. = 可以用于更快的索敌
 Please make sure you can play ULP Missions now! = 请确认您现在可以游玩ULP任务哦！
 Unlock Clothing = 解锁服装
+Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist. = Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist.
+If the Heist Planning (Board 3) is empty, then please re-enable the preset that you enabled! = If the Heist Planning (Board 3) is empty, then please re-enable the preset that you enabled!
+It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts. = 你可以在策划版上无视限制的分配分红
+Skip Nightclub Setups = 跳过夜总会设置
+Skip all of setups when you buy a Nightclub first: Equipment, Staff, and Collect DJ = 跳过所有夜总会前置
+Unlock Arcade Awards = 解锁Arcade奖项
+Trophies, toys, and clothings are included. = 包含了奖章、玩具和衣服
+500+ unlocks are included, try and see how many clothes would be unlocked. = 点一下然后看看会有多少服装解锁
+Club Work = 夜总会差事
+Taze = Taze
+If you have any questions regarding Heist Control? Joining it will help you so much! = If you have any questions regarding Heist Control? Joining it will help you so much!
+- Download sharable customized translations and GTAHaXUI stat files. = - Download sharable customized translations and GTAHaXUI stat files.
+- Post a suggestion or an issue to improve Heist Control. = - Post a suggestion or an issue to improve Heist Control.

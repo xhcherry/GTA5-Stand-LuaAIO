@@ -38,23 +38,12 @@
 
 ]]--
 
---[[   LICENSING
-
-    1. You can use my code if your project is *open-source and specify credit this Github page: https://github.com/IceDoomfist/Stand-Heist-Control
-    2. Prohibited to use my code in ANY *mod menus. (Especially, Rebound mod menu)
-    2-1. If you want to use my code, please contact on Discord: IceDoomfist#0001
-
-    *open-source: Not used ANY encryption methods except .luac
-    *mod menus: A project that almost of codes are consisted with C or C++ or C#
-
-]]--
-
 
 --- Lua Script Settings
 
     --- Important
 
-        HC_VERSION = "V 3.3.2"
+        HC_VERSION = "V 3.3.3"
         CODED_GTAO_VERSION = 1.67
         SUPPORTED_STAND_VERSION = 101 -- Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
 
@@ -821,7 +810,6 @@
 
         menu.divider(CAYO_PRESETS, TRANSLATE("Recommended"))
 
-            IsForCayoBot = false
             QUICK_PRESET = menu.toggle(CAYO_PRESETS, TRANSLATE("Quick Preset (1 - 4P)"), {"hccpquick"}, IS_WORKING(true) .. TRANSLATE("There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.55M) by only getting it."), function()
                 if menu.get_value(QUICK_PRESET) then
                     menu.trigger_commands("hccprefreshboard")
@@ -899,22 +887,18 @@
                         { 0, 262145 + 30189 }, -- H4CNF_TARGET, IH_PRIMARY_TARGET_VALUE_TEQUILA
                     }
                     STAT_SET_INT("H4CNF_TARGET", CPTargets[Value][1])
-                    if IsForCayoBot then
-                        SET_INT_GLOBAL(CPTargets[Value][2], 2090000)
-                    else
-                        SET_INT_GLOBAL(CPTargets[Value][2], 2455000)
-                    end
+                    SET_INT_GLOBAL(CPTargets[Value][2], 2455000)
                     
-                    menu.set_value(CP_REM_FEE, true)
+                    menu.set_value(CP_REM_FEE, false)
                     menu.set_value(CP_NON_HOST_CUT, 100)
                     menu.set_value(CP_NON_HOST_CUT_LOOP, false)
                     menu.set_value(CP_HOST_CUT, 100)
                     menu.set_value(CP_HOST_CUT_LOOP, true)
-                    menu.set_value(CP_2P_CUT, 145)
+                    menu.set_value(CP_2P_CUT, 100)
                     menu.set_value(CP_2P_CUT_LOOP, true)
-                    menu.set_value(CP_3P_CUT, 145)
+                    menu.set_value(CP_3P_CUT, 100)
                     menu.set_value(CP_3P_CUT_LOOP, true)
-                    menu.set_value(CP_4P_CUT, 145)
+                    menu.set_value(CP_4P_CUT, 100)
                     menu.set_value(CP_4P_CUT_LOOP, true)
 
                     util.yield_once()
@@ -5061,8 +5045,8 @@
             menu.action(INSTANT_FINISH, TRANSLATE("Cayo / Tuners / ULP / Agency"), {"hcinsfincp"}, IS_WORKING(true) .. TRANSLATE("Note that may works for some of other preps. Only 'Quick Preset' is compatible with Cayo Perico Heist."), function() -- https://www.unknowncheats.me/forum/3524081-post3.html
                 menu.trigger_commands("scripthost")
 
-                SET_INT_LOCAL("fm_mission_controller_2020", 44749 + 1, 51338752) -- 'fm_mission_controller_2020' instant finish variable?
-                SET_INT_LOCAL("fm_mission_controller_2020", 44749 + 1375 + 1, 50) -- 'fm_mission_controller_2020' instant finish variable?
+                SET_INT_LOCAL("fm_mission_controller_2020", 45450 + 1, 51338752) -- 'fm_mission_controller_2020' instant finish variable?
+                SET_INT_LOCAL("fm_mission_controller_2020", 45450 + 1378 + 1, 50) -- 'fm_mission_controller_2020' instant finish variable?
             end)
 
             menu.action(INSTANT_FINISH, TRANSLATE("Casino Aggressive / Classic"), {"hcinsfincah"}, IS_WORKING(true) .. TRANSLATE("Note that if you don't use Heist Control's automated Casino Heist presets, won't get money."), function()
@@ -5070,7 +5054,7 @@
                 
                 SET_INT_LOCAL("fm_mission_controller", 19710 + 1741, 80) -- Casino Aggressive Kills & Act 3
                 SET_INT_LOCAL("fm_mission_controller", 19710 + 2686, 10000000) -- How much did you take in the casino and pacific standard heist
-                SET_INT_LOCAL("fm_mission_controller", 28331 + 1, 99999) -- 'fm_mission_controller' instant finish variable?
+                SET_INT_LOCAL("fm_mission_controller", 27473 + 859, 99999) -- 'fm_mission_controller' instant finish variable?
                 SET_INT_LOCAL("fm_mission_controller", 31587 + 69, 99999) -- 'fm_mission_controller' instant finish variable?
             end)
 
@@ -5079,7 +5063,7 @@
 
                 SET_INT_LOCAL("fm_mission_controller", 19710, 12) -- ???, 'fm_mission_controller' instant finish variable?
                 SET_INT_LOCAL("fm_mission_controller", 19710 + 1741, 150) -- Casino Aggressive Kills & Act 3
-                SET_INT_LOCAL("fm_mission_controller", 28331 + 1, 99999) -- 'fm_mission_controller' instant finish variable?
+                SET_INT_LOCAL("fm_mission_controller", 27473 + 859, 99999) -- 'fm_mission_controller' instant finish variable?
                 SET_INT_LOCAL("fm_mission_controller", 31587 + 69, 99999) -- 'fm_mission_controller' instant finish variable?
                 SET_INT_LOCAL("fm_mission_controller", 31587 + 97, 80) -- Act 1 Kills? Seem not to work
             end)
@@ -6727,7 +6711,6 @@
         ---
 
         menu.hyperlink(INFOS, TRANSLATE("Join Discord Server!"), "https://discord.gg/KTFAYQn5Xz", TRANSLATE("If you have any questions regarding Heist Control? Joining it will help you so much!") .. "\n\n" .. TRANSLATE("- Download sharable customized translations and GTAHaXUI stat files.") .. "\n" .. TRANSLATE("- Post a suggestion or an issue to improve Heist Control."))
-        menu.hyperlink(INFOS, TRANSLATE("Youtube"), "https://www.youtube.com/@standheistcontrol", TRANSLATE("Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D"))
         menu.hyperlink(INFOS, TRANSLATE("Changelog"), "https://github.com/IceDoomfist/Stand-Heist-Control/releases", TRANSLATE("If you want to know what was changed in the latest version, click me!"))
 
     ---
