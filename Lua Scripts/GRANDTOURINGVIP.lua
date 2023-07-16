@@ -17216,7 +17216,7 @@ end)
 Heist_Control_Load = menu.action(Heist_Control, "加载任务选项", {""}, "", function()
 notification("正在加载任务功能", colors.pink)
 wait(2000)
-require "lib.GTSCRIPTS.GTW.C3"
+require "lib.GTSCRIPTS.GTW.C4"
 GTLuaScript.delete(Heist_Control_Load)
 end)
 
@@ -17643,23 +17643,27 @@ end)
 
 function xianshishijian(state)
     timeos = state
-        if timeos then
-            while timeos do
-                wait(0)
-                draw_string(string.format(os.date('~bold~~italic~~b~%Y-%m-%d ~b~%H:%M:%S', os.time())), 0.83,0.1, 0.5,5)
-                end
-            end 
-    end
-    
---adroot = GT(other_options, "广告合作伙伴")
+    if timeos then
+        while timeos do
+            wait(0)
+            draw_string(string.format(os.date('~bold~~italic~~b~%Y-%m-%d ~b~%H:%M:%S', os.time())), 0.83,0.1, 0.5,5)
+        end
+    end 
+end
 
+blackweb = GT(other_options, "疑似欺诈售卖商", {}, "此列表为各路玩家提供,提供了疑似恶意欺诈消费者的卡网或者任何类型的售卖业务,您可以在此查看\n若你了解,或者经历过某个售卖商欺骗,请联系开发者")
+GTD(blackweb,"疑似欺诈业务列表")
+GTAC(blackweb, "极致科技[欺诈行为]", {}, "欺诈消费者售卖行为\n售卖Stand激活码而非注册ID\n目前已被多个玩家乃至群组举报", function ();end)
+GTAC(blackweb, "零龙Shop[拉黑欺诈]", {}, "严重欺诈行为\n多数玩家购买后被拉黑\n请留意此信息", function ();end)
+
+--
 zhujixianshi = GT(other_options, "显示选项")
 zanzhuzx = GT(other_options, "致谢人员")
 minimap = GT(other_options, "小地图")
 misclightmenu = GT(other_options, "追光灯")
 
 displayfolder = filesystem.stand_dir().."\\Lua Scripts\\lib\\GTSCRIPTS\\GTW"
-GTAC(zhujixianshi, "更改显示选项配置",{""}, "点击这个选项即可前往更改\n打开文件夹中的display文件\n请您编辑on(开启)与off(关闭)\n请勿编辑除on与off以外任何文字\n最后关闭文件时记得保存喔~", function()
+GTAC(zhujixianshi, "更改显示选项配置",{""}, "#点击这个选项即可前往更改\n#打开文件夹中的display文件\n#请您编辑on(开启)与off(关闭)\n#请勿编辑除on与off以外任何文字\n#最后关闭文件时记得保存喔~", function()
 util.open_folder(displayfolder)
 end)
 
@@ -17750,12 +17754,12 @@ draw_string(string.format("~h~~p~时间:~h~~w~"..os.date("%X")), zhuji_x,zhuji_y
 draw_string(string.format("~h~~y~战局玩家: ~h~~w~"..#players.list()), zhuji_x,zhuji_y+0.085, zhuji_dx,zhuji_dx) 
 draw_string(string.format("~h~~p~作弊玩家: ~h~~r~"..inviciamountintt), zhuji_x,zhuji_y+0.113, zhuji_dx,zhuji_dx) 
 if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-draw_string(string.format("~h~~f~战局主机: ~h~~w~没有人"), zhuji_x,zhuji_y+0.14, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~f~处于故事模式"), zhuji_x,zhuji_y+0.14, zhuji_dx,zhuji_dx)
 else
 draw_string(string.format("~h~~f~战局主机: ~h~~w~"..players.get_name(players.get_host())), zhuji_x,zhuji_y+0.14, zhuji_dx,zhuji_dx)
 end
 if PLAYER.GET_PLAYER_NAME(players.get_script_host()) == "**Invalid**" then
-draw_string(string.format("~h~~q~脚本主机: ~h~~w~没有人"), zhuji_x,zhuji_y+0.17, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~q~处于故事模式"), zhuji_x,zhuji_y+0.17, zhuji_dx,zhuji_dx)
 else
 draw_string(string.format("~h~~q~脚本主机: ~h~~w~"..players.get_name(players.get_script_host())), zhuji_x,zhuji_y+0.17, zhuji_dx,zhuji_dx)
 end
@@ -17763,7 +17767,7 @@ local hostxvlie = players.get_host_queue_position(players.user())
 if hostxvlie == 0 then
 draw_string(string.format("~h~~p~你现在是~f~战局主机"), zhuji_x,zhuji_y+0.20, zhuji_dx,zhuji_dx) 
 else
-draw_string(string.format("~h~~p~你的主机~f~优先度:~h~~w~ "..hostxvlie), zhuji_x,zhuji_y+0.20, zhuji_dx,zhuji_dx) 
+draw_string(string.format("~h~~p~主机~f~优先度:~h~~w~ "..hostxvlie), zhuji_x,zhuji_y+0.20, zhuji_dx,zhuji_dx) 
 end	
 end)
 util.create_thread(function()
@@ -17822,15 +17826,15 @@ GTTG(scriptname, "显示脚本名称", {"scriptname"}, "", function(state)
     xianshijiaoben(state)
 end)
 
-GTluaScript.slider(scriptname, '脚本名称 X轴', {''}, '',1, 900, 380, 5, function(jb_x)
+GTluaScript.slider(scriptname, '脚本名称 X轴', {''}, '',1, 900, 11, 5, function(jb_x)
 jiaoben_x = jb_x / 900
 end)  
 
-GTluaScript.slider(scriptname, '脚本名称 Y轴', {''}, '',1, 900, 0, 5, function(jb_y)
+GTluaScript.slider(scriptname, '脚本名称 Y轴', {''}, '',1, 900, 141, 5, function(jb_y)
 jiaoben_y = jb_y / 900
 end)
 
-GTluaScript.slider(scriptname, '脚本名称 大小', {''}, '',1, 900, 420, 5, function(jb_dx)
+GTluaScript.slider(scriptname, '脚本名称 大小', {''}, '',1, 900, 720, 5, function(jb_dx)
 jiaoben_dx = jb_dx / 900
 end)
 
@@ -18724,19 +18728,16 @@ GTROOT = GTD(GTluaScript.player_root(PlayerID), "GRANDTOURINGVIP")
 
 GT = GTluaScript.list
 
-PlayerMainMenu2 = GT(GTLuaScript.player_root(PlayerID), "踢出选项", {"GTKick"}, "赤诚相见,别来无恙", function();end)
-menu.set_visible(PlayerMainMenu2, false)
-
-blockscid3 = GTAC(GTLuaScript.player_root(PlayerID), "踢出选项", {""}, "赤诚相见,别来无恙", function()
+PlayerMainMenu2 = GT(GTLuaScript.player_root(PlayerID), "踢出选项", {"GTKick"}, "赤诚相见,别来无恙", function()
+    --util.create_thread(function()
     local name = PLAYER.GET_PLAYER_NAME(PlayerID)
     for _, id in ipairs(spid) do
         if name == id.playerid then
-            gtoast("你无法对皇榜用户使用任何攻击性功能")
-            return
-        else
-            menu.trigger_commands("GTKick"..PLAYER.GET_PLAYER_NAME(PlayerID))
+                gtoast("你无法对皇榜用户使用任何攻击性功能")
+                menu.trigger_commands("GTProt"..name)
+            end
         end
-    end
+    --end)
 end)
 
 GTAC(PlayerMainMenu2, "快速踢出", {}, "", function()
@@ -18782,27 +18783,23 @@ GTAC(PlayerMainMenu2, "非主机", {"kicknonhost"}, "", function()
 end)
 
 --
-PlayerMainMenu = GT(GTLuaScript.player_root(PlayerID), "崩溃选项", {"GTCrash"}, "玩火自焚,后果自负", function();end)
-menu.set_visible(PlayerMainMenu, false)
+playerpro = GT(GTLuaScript.player_root(PlayerID), "皇榜保护系统", {"GTProt"}, "")
+GTD(playerpro, "!!!你无法攻击皇榜用户!!!", {"GTProt"}, "")
+menu.set_visible(playerpro,false)
 
-blockscid = GTAC(GTLuaScript.player_root(PlayerID), "崩溃选项", {""}, "玩火自焚,后果自负", function()
+PlayerMainMenu = GT(GTLuaScript.player_root(PlayerID), "崩溃选项", {"GTCrash"}, "玩火自焚,后果自负", function()
+    --util.create_thread(function()
     local name = PLAYER.GET_PLAYER_NAME(PlayerID)
     for _, id in ipairs(spid) do
         if name == id.playerid then
-            gtoast("GRANDTOURINGVIP WARNING!\n你无法对皇榜用户使用任何攻击性功能")
-            return
-        else
-            menu.trigger_commands("GTCrash"..PLAYER.GET_PLAYER_NAME(PlayerID))
+                gtoast("你无法对皇榜用户使用任何攻击性功能")
+                menu.trigger_commands("GTProt"..name)
+            end
         end
-    end
+    --end)
 end)
 
 friendly = GT(GTLuaScript.player_root(PlayerID), "友好选项", {"GTFriendly"}, "日行一善,行善积德")
-menu.set_visible(friendly, false)
-
-friendlyscid = GTAC(GTLuaScript.player_root(PlayerID), "友好选项", {""}, "日行一善,行善积德", function()
-    menu.trigger_commands("GTFriendly"..PLAYER.GET_PLAYER_NAME(PlayerID))
-end)
 
 updates = GT(PlayerMainMenu, "近期更新", {}, "#此选项的崩溃为中等强度及以上\n#请您不要观看并且远离崩溃对象\n#切记:请不要无脑使用,否则玩火自焚\n#注意:崩溃需要您自行研究,切莫魔怔\n\n<建议1> #偷偷告诉您,附加黑洞效果更佳喔~\n<建议2> #针对主流菜单的情况下,其实踢出是最优选择喔~")
 
@@ -25319,19 +25316,16 @@ players.on_join(GenerateFeatures)
 
 local function playerActionsSetup(pid) 
 
-local playerMain = GT(GTluaScript.player_root(pid), "恶搞选项", {"GTTrolling"}, "无恶不作,无所不为", function ();end)
-menu.set_visible(playerMain, false)
-
-blockscid2 = GTAC(GTLuaScript.player_root(pid), "恶搞选项", {""}, "无恶不作,无所不为", function()
+local playerMain = GT(GTluaScript.player_root(pid), "恶搞选项", {"GTTrolling"}, "无恶不作,无所不为", function ()
+    --util.create_thread(function()
     local name = PLAYER.GET_PLAYER_NAME(pid)
     for _, id in ipairs(spid) do
         if name == id.playerid then
-            gtoast("你无法对皇榜用户使用任何攻击性功能")
-            return
-        else
-            menu.trigger_commands("GTTrolling"..PLAYER.GET_PLAYER_NAME(pid))
+                gtoast("你无法对皇榜用户使用任何攻击性功能")
+                menu.trigger_commands("GTProt"..name)
+            end
         end
-    end
+    --end)
 end)
 
 marking_as_modder = GTTG(GTLuaScript.player_root(pid), "标记为作弊者", {"markmodder"}, "#实验阶段\n阻止TA看见您,但您仍然可以看见TA", function (on)
@@ -33414,7 +33408,7 @@ end)
         end
     end)
 
-    local fake_pickup = 0
+    --[[local fake_pickup = 0
     local fake_pickup_names = {
         [0] = "钱袋",
         [1] = "人偶",
@@ -33480,7 +33474,7 @@ end)
         end
 
         fake_pickup = GTluaScript.get_value(fake_pickup_slider)
-    end)
+    end)]]
 
 
 

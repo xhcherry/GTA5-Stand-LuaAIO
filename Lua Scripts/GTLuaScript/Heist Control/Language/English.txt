@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 05/08/2023 10:09:15 PM
-# Heist Control Version: V 3.3.0
+# Generated Date: 07/08/2023 10:39:18 PM
+# Heist Control Version: V 3.3.3
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -175,9 +175,6 @@ Single MC Vehicle Sell = Single MC Vehicle Sell
 Make One Snack Full Health = Make One Snack Full Health
 Whatever you use a snack, will make you full health. = Whatever you use a snack, will make you full health.
 Custom Money Remover = Custom Money Remover
-AFK Money = AFK Money
-Auto Rig Slot Machine = Auto Rig Slot Machine
-Ratio of Jackpot and Loss = Ratio of Jackpots to Losses
 Heist Cooldown Timer = Heist Cooldown Timers
 Use Stand's Overlay = Use Stand's Overlay
 Disabled: Use Heist Control's Overlay & Settings = Disabled: Use Heist Control's Overlay & Settings
@@ -259,7 +256,6 @@ Translators = Translators
 Maintains HC's translation = Maintains HC's translation
 [NOT WORKING] = [NOT WORKING]
 - This feature isn't working due to the latest GTA Online patch: = - This feature isn't working due to the latest GTA Online patch:
-Please download the lastest version of Heist Control or wait for Heist Control's developer patching. = Please download the lastest version of Heist Control or wait for Heist Control's developer patching.
 Please re-enable 'Stand > Lua Scripts > Repository > Heist Control' to fix! = Please re-enable 'Stand > Lua Scripts > Repository > Heist Control' to fix!
 Except [NOT WORKING] features should work! = Except [NOT WORKING] features should work!
 But, all features of HC should work! = But, all features of HC should work!
@@ -359,7 +355,6 @@ Modify Finale's Payout (2 Million) = Modify Finale's Payout (2 Million)
 Make sure it's enabled before starting any contracts or hits. = Make sure it's enabled before starting any contracts or hits.
 Complete All Missions = Complete All Missions
 Unlock all Arena Wars Trophies and Toys = Unlock all Arena Wars Trophies and Toys
-Clothing = Clothing
 The Criminal Enterprises DLC = The Criminal Enterprises DLC
 Jackets / Sweaters / Hoodies / Shirts = Jackets / Sweaters / Hoodies / Shirts
 Pants / Caps / Hats = Pants / Caps / Hats
@@ -409,19 +404,6 @@ Infinite Stone Hatchet's Power = Infinite Stone Hatchet's Power
 Make your account look like you've played GTA Online for 7 years. = Make your account look like you've played GTA Online for 7 years.
 Do you sure remove your money? = Do you sure remove your money?
 Because this feature works via requesting the Ballistic Armor, it'll be dropped nearby soon. = Because this feature works via requesting the Ballistic Armor, it'll be dropped nearby soon.
-Cooldown Time (Seconds) = Cooldown Time (Seconds)
-Auto Cayo Bot = Auto Cayo Bot
-25K Chips = 25K Chips
-15K RP = 15K RP
-Vehicle Discount = Vehicle Discount
-Teleport to the Lucky Wheel = Teleport to the Lucky Wheel
-Make sure your spawning position is 'Last Location' = Make sure your spawning position is 'Last Location'
-You can set it on Interaction Menu. = You can set it on Interaction Menu.
-Playing one time has been done! Waiting for the cooldown time... = Playing one time has been done! Waiting for the cooldown time...
-How many times you've played after enabled: = How many times you've played after enabled:
-Auto Lucky Wheel = Auto Lucky Wheel
-Let you get the selected lucky wheel reward per 3 seconds automatically. = Let you get the selected lucky wheel reward per 3 seconds automatically.
-Please use with 'Teleport to the Lucky Wheel' feature! = Please use with 'Teleport to the Lucky Wheel' feature!
 Instant Finish Heists & Others = Instant Finish Heists & Others
 Heists = Heists
 Cayo / Tuners / ULP / Agency = Cayo / Tuners / ULP / Agency
@@ -487,10 +469,6 @@ Note: You may need to keep activating to use some of Independence Day's contents
 Tattoos = Tattoos
 Unlock Some Tattoos = Unlock Some Tattoos
 Ceramic Pistol = Ceramic Pistol
-You try removing banked money amount that more than currently you have. = You try removing banked money amount that more than currently you have.
-All of features use undetected methods but use at own your risk. If you earn too much, you can be banned. = All of features use undetected methods but use at own your risk. If you earn too much, you can be banned.
-Solo Cayo Perico Heist will be done by Heist Control automatically per 20 mins to get $2.09M. Don't press any keys to prevent some game bugs. = Solo Cayo Perico Heist will be done by Heist Control automatically per 20 mins to get $2.09M. Don't press any keys to prevent some game bugs.
-Don't earn more than $50M per a day (real-time), otherwise it'll lead you get banned! = Don't earn more than $50M per a day (real-time), otherwise it'll lead you get banned!
 Cooldown time has passed, you can play the heist again! = Cooldown time has passed, you can play the heist again!
 Wallet Money = Wallet Money
 Mins = Mins
@@ -540,8 +518,6 @@ High = High
 Bypass Minimum And Maximum Percentage = Bypass Minimum And Maximum Percentage
 Only works if you are host of the heist. = Only works if you are host of the heist.
 Successfully cancelled! = Successfully cancelled!
-Works unless you are in the casino. = Works unless you are in the casino.
-If you are in it, not required to use. Just use 'Auto Lucky Wheel' = If you are in it, not required to use. Just use 'Auto Lucky Wheel'
 Terrorbyte = Terrorbyte
 Acid Lab = Acid Lab
 RC Bandito = RC Bandito
@@ -556,7 +532,6 @@ If you changed the Stand's setting while HC is still running, need to restart HC
 Please close your opened pause menu to open any apps remotely. = Please close your opened pause menu to open any apps remotely.
 Seems like you need to be a MC President. So, Heist Control made you become MC President. = Seems like you need to be a MC President. So, Heist Control made you become MC President.
 Seems like you need to be a CEO. So, Heist Control made you become CEO. = Seems like you need to be a CEO. So, Heist Control made you become CEO.
-Please re-enable 'Stand > Lua Scripts > Repository > natives-1676318796' or please join HC DC server to get support! = Please re-enable 'Stand > Lua Scripts > Repository > natives-1676318796' or please join HC DC server to get support!
 Max payout for this heist = Max payout for this heist
 - Under $2.550.000 per run = - Under $2.550.000 per run
 - Under $4.100.000 per hour = - Under $4.100.000 per hour
@@ -693,9 +668,6 @@ Independence's Day = Independence's Day
 Unlock Lots of Hats And Shirts = Unlock Lots of Hats And Shirts
 Also will increase Kosatka missiles distance. = Also will increase Kosatka missiles distance.
 Auto Refill Snacks & Armours = Auto Refill Snacks & Armours
-Change Reward = Change Reward
-Can be used to increase your crew level. = Can be used to increase your crew level.
-How Many Times To Play = How Many Times To Play
 Delete This File = Delete This File
 Do you sure delete this file? It cannot be recovered! = Do you sure delete this file? It cannot be recovered!
 Successfully deleted! = Successfully deleted!
@@ -721,3 +693,5 @@ Taze = Taze
 If you have any questions regarding Heist Control? Joining it will help you so much! = If you have any questions regarding Heist Control? Joining it will help you so much!
 - Download sharable customized translations and GTAHaXUI stat files. = - Download sharable customized translations and GTAHaXUI stat files.
 - Post a suggestion or an issue to improve Heist Control. = - Post a suggestion or an issue to improve Heist Control.
+Please download the latest version of Heist Control or wait for Heist Control's developer patching. = Please download the latest version of Heist Control or wait for Heist Control's developer patching.
+Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support! = Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support!

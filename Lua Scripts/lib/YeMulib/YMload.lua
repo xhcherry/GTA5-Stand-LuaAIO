@@ -1,4 +1,4 @@
-Version5 = 5.3
+Version5 = 5.4
 local aalib = require("aalib")
 local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001

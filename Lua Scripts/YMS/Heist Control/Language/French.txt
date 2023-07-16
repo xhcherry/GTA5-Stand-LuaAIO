@@ -1,18 +1,15 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 03/22/2023 06:13:26 PM
-# Heist Control Version: V 3.2.4
+# Generated Date: 05/15/2023 11:50:41 PM
+# Heist Control Version: V 3.3.0
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
 # You can use all characters except '=' character.
 # Using '#' character means the line will be ignored.
-# If you want to release your own translation officially, please contact to the developer of Heist Control in its Discord server.
-# Learn more: https://icedoomfist.com/Stand_Heist_Control/How_To_Translate/
-
+# Please join the Discord Server for Heist Control if you don't know how to translate.
 
 Heist Control = Heist Control
-Announcement = Annonce
 Hard = Difficile
 Normal = Normal
 Notification = Notification
@@ -145,7 +142,6 @@ Unlock Awards = Débloquer les récompenses
 Unlock Animal Masks = Débloquez les masques d'animaux 
 Unlock DJ Pooh Shirts = Débloquer les T-shirts DJ Pooh 
 Buildings = Bâtiments 
-Arcade Unlockers = Débloqueurs Arcade 
 Casino Store Ace Masks = Magasin Casino Masques Ace 
 Missions = Missions 
 Unlock Yacht Missions = Déverrouillez les missions des yachts 
@@ -186,7 +182,6 @@ Heist Cooldown Timer = Temporisation braquage
 Use Stand's Overlay = Utiliser la superposition de Stand 
 Enabled: Use Stand's Overlay & Settings: Game > Info Overlay = Utiliser la superposition de Stand & Paramètres : Jeu > Info Overlay Activé
 Disabled: Use Heist Control's Overlay & Settings = Désactivé : Utilisez la superposition et les paramètres de Heist Control. 
-Work only to hostile peds = Uniquement pour les PNJ hostiles 
 Peds = PNJs
 Remove Weapons = Retirer les armes 
 Delete = Supprimer 
@@ -234,7 +229,6 @@ Note: MP0_ or MP1_ will be selected by HC automatically, therefore don't write i
 Custom Stat Reader = Lecteur de stats personnalisé 
 Copy Stat Value = Copie de la valeur de Stat 
 Read Stat = Lire Stat 
-How To Translate = Comment traduire 
 Language = Langue 
 Settings = Paramètres 
 In-Game = En jeu 
@@ -260,10 +254,8 @@ Text Color = Couleur du texte
 About HC = À propos de HC 
 Join Discord Server! = Rejoignez le serveur Discord ! 
 Youtube = Youtube 
-Tutorial = Tutoriel 
 Changelog = Changelog 
 Credits = Crédits 
-Let me know about stats info. = Tenez-moi au courant des informations sur les stats. 
 Translators = Traducteurs 
 Maintains HC's translation = Mantiennent la traduction de HC
 [NOT WORKING] = [DESACTIVE]
@@ -375,13 +367,11 @@ Pants / Caps / Hats = Pantalons / Casquettes / Chapeaux
 Earphones / Masks / Tech Demon = Écouteurs / Masques / Démon techno
 Shoes (Sliders) / Tiger = Chaussures (Sliders) / Tiger
 Drug War DLC = DLC Drug Wars
-Unlock Arcade Trophies and Toys = Débloquez les trophées et les jouets de l'arcade
 Acid Lab Equipment Upgrade = Amélioration Equipement Laboratoire d'Acide
 Unlock Nightclub Awards = Débloquer récompenses Discothèque
 Make sure click before buying. When you change your session, will be changed to non-unlocked status. = Assurez-vous de cliquer avant d'acheter. Lorsque vous changez de session, le statut de l'objet deviendra déverrouillé.
 Add Cosmetic Decorations To The Office/MC = Ajouter des décorations au Bureau/MC
 To apply, sell special crate or vehicle cargo and change your session! = Pour en faire la demande, vendez une caisse spéciale ou une cargaison de véhicule et changez de session !
-Cayo Perico Unlockables = Déblocages Cayo Perico
 Unlock Taxi Missions = Débloquer Missions de Taxi
 Unlock All Contacts = Débloquer tous les contacts
 Skip Lamar Missions To The Last One = Passer les missions de Lamar jusqu'à la dernière
@@ -446,8 +436,6 @@ Heist Cooldown Timers = Temporisation entre Braquages
 Set Custom Time (Seconds) = Réglage de la durée personnalisée (secondes)
 Custom Timer = Temporisateur personnalisé
 Manage Nearby Peds And Cams = Gérer PNJ et Caméras à proximité
-Enabled: Ped options will only affect hostile peds = Si Activé : Les options pour les PNJ n'affecteront que les PNJ hostiles
-Disabled: Ped options will affect all peds = Si Désactivé : Les options pour les PNJ affectent tous les PNJ
 Shoot = Tirer
 Cameras = Caméras
 Stat Spoofing = Usurpation de Stats
@@ -485,17 +473,10 @@ This action will take a few seconds. Please wait for it patiently, don't press m
 - Total number of translations: = - Nombre total de lignes traduites:
 - Number of not modified translations: = - Nombre total de lignes inchangées:
 - Number of modified (updated) translations: = - Nombre de lignes modifiées:
-Always looking for translators for non-existing languages. If you're interested in translating HC, click! = Toujours à la recherche de traducteurs pour des langues non traduites. Si vous êtes intéressé par la traduction de HC, cliquez !
 Notification's Style = Style de notification
 Type = Type
 Heist Control for 2Take1 Developer. He allowed me to use his code. HC wouldn't exist without his help. Serious thanks to him! = Développeur du Heist Control pour 2Take1. Il m'a permis d'utiliser son code. HC n'existerait pas sans son aide. Un grand merci à lui !
-Creator of WiriScript which helped me code HC! = Créateur de WiriScript qui m'a aidé à coder HC !
-Helped me with a lot of things for HC website's maintenance. = Il m'a aidé avec beaucoup de choses pour la maintenance du site web de HC.
-Helped me code the website's design. = Il m'a aidé à coder le design du site.
-Made the logo, banner and other images for HC. = Réalisation du logo, de la bannière et d'autres images pour HC.
-Get Support, Report Bugs and Enjoy Other Stuffs! = Obtenez de l'aide, signalez les Bugs et profitez d'autres choses !
 Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D = Les vidéos liées au tutoriel de HC sont téléchargées ici, abonnez-vous à la chaîne pour montrer votre soutien :D
-If you don't know how to use HC, click me! = Si vous ne savez pas comment utiliser HC, cliquez ici !
 If you want to know what was changed in the latest version, click me! = Si vous voulez savoir ce qui a été modifié dans la dernière version, cliquez ici !
 When using this method, the percentage and final payment will be random! = En utilisant cette méthode, le pourcentage et le paiement final seront aléatoires !
 Works On Both: Fingerprint and Keypad = Fonctionne sur les deux : empreinte digitale et clavier.
@@ -569,7 +550,6 @@ Mid = Moyen
 High = Professionnel
 Bypass Minimum And Maximum Percentage = Ignore Pourcentage minimal et maximal
 Only works if you are host of the heist. = Ca ne fonctionne que si vous êtes l'hôte du Braquage.
-Bypass minimum percentage 15(%) and maximum percentage 70(%). This feature will allow you set 0 ~ 100(%). = Contournement pourcentage minimum 15(%) et pourcentage maximum 70(%). Cette fonction vous permettra de régler le pourcentage entre 0 et 100(%).
 Terrorbyte = Terrorbyte
 Auto Paste To Stat Name = Coller Auto Nom Stat
 If your clipboard contains stat name, the strings will be pasted into 'Stat Name' automatically. = Si votre presse-papiers contient des noms de Stats, les chaînes de caractères seront collées dans 'Nom Stat' automatiquement.
@@ -588,7 +568,6 @@ This feature has been controlled by another feature. = Cette fonctionnalité est
 Select Primary Target = Sélectionner la cible principale
 Teleport Places = Lieux de Téléportation
 Kosatka: Heist Board = Kosatka : Ecran de braquage
-$3.5 Millions For All Players = 3,5 millions $ pour tous les joueurs
 When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout. = Lorsque vous êtes sur le tableau où vous choisissez la part de chaque joueur, cette option vous permettra de forcer le démarrage même si les autres joueurs ne sont pas prêts. Il y a un bug visuel lié au paiement.
 Entrance Of Your Arcade = Entrée de votre Arcade
 You should in your arcade to use this teleport! = Vous devez être dans votre Arcade pour utiliser cette téléportation !
@@ -675,7 +654,6 @@ Keep Cash $1.85M Take = Garder Part de 1,85 Millions
 This makes you won't lose money by getting shot to the cash bags from polices = Ainsi, vous ne perdrez pas d'argent en vous faisant tirer dessus par la police.
 Note that you don't have the app, some of functions won't work. = Notez que si vous n'avez pas l'application, certaines options ne fonctionneront pas.
 The Contract DLC = DLC Le Contrat
-Keep Full Nightclub Population = Garde vos Boites de Nuit pleines
 Waiting for requesting Kosatka... = Attente de demande du Kosatka...
 (Submarine) = (Sous-marin)
 Alkonost = Alkonost
@@ -730,3 +708,21 @@ Clearing a black box with white help texts where are left, above of the screen. 
 Can be used for getting targets slightly more fast. = Peut être utilisé pour obtenir les cibles légèrement plus rapidement.
 Please make sure you can play ULP Missions now! = Assurez-vous de pouvoir jouer aux Missions ULP maintenant !
 Unlock Clothing = Débloquer les vêtements
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist. = Notez que modifier cela ne s'appliquera pas au tableau du braquage. Vous pouvez vérifier la part appliquée à la fin du braquage.
+If the Heist Planning (Board 3) is empty, then please re-enable the preset that you enabled! = Si le Plan de Braquage (Tableau 3) est vide, alors veuillez réactiver le présélection que vous avez activée !
+It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts. = Cela vous permet de définir 0 ~ 100 (%) en modifiant le tableau du braquage, et ignore toutes les restrictions de modification des parts des joueurs
+Skip Nightclub Setups = Passer les Préparations de Boite de Nuit
+Skip all of setups when you buy a Nightclub first: Equipment, Staff, and Collect DJ = Passer toutes les Préparatons  lorsque vous achètez d'abord une boîte de nuit : L'équipement, le personnel et la récupération du DJ  
+Trophies, toys, and clothings are included. = Les trophées, les jouets et les vêtements sont inclus.
+500+ unlocks are included, try and see how many clothes would be unlocked. = Plus de 500 déverrouillages sont inclus, essaie de voir combien de vêtements seront déverrouillés.
+Work Club = Employ du club
+Taze = Tazer
+If you have any questions regarding Heist Control? Joining it will help you so much! = Si tu as des questions concernant Heist Control ? Rejoins ce discord, cela t'aidera beaucoup !
+- Download sharable customized translations and GTAHaXUI stat files. = - Télécharge des traductions personnalisées partageables et des fichiers de statistiques GTAHaXUI.
+- Post a suggestion or an issue to improve Heist Control. = -Poste une suggestion ou décrit un problème pour améliorer Heist Control.

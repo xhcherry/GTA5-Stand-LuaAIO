@@ -1,4 +1,3 @@
---------无效载具崩溃v3
 function clone(vehicle)
     local vehicleHeading<const> = ENTITY.GET_ENTITY_HEADING(vehicle)
     local vehicleHash<const> = ENTITY.GET_ENTITY_MODEL(vehicle)
@@ -80,45 +79,7 @@ function copyVehicleData(vehicle, cloneVehicle)
     end
     VEHICLE.SET_VEHICLE_ENGINE_ON(cloneVehicle, VEHICLE.GET_IS_VEHICLE_ENGINE_RUNNING(vehicle), true, true)
 end
-function Invalid_vehicle_crashes(PlayerID)
-    local pCoords<const> = players.get_position(PlayerID)
-    local trafficLights = {}
-    util.request_model(-655644382) -- traffic lights
-    for i = 1, 20 do
-        local object<const> = entities.create_object(-655644382, v3.new(pCoords.x + math.random(-5, 5), pCoords.y + math.random(-5, 5), pCoords.z + math.random(-1, 0)))
-        ENTITY.SET_ENTITY_ROTATION(object, 0, 0, math.random(0, 360), 1, true)
-        trafficLights[#trafficLights + 1] = object
-    end
-    local stopLights = false
-    util.create_tick_handler(function()
-        if stopLights then
-            return false
-        end
-        ENTITY.SET_ENTITY_TRAFFICLIGHT_OVERRIDE(trafficLights[math.random(1, #trafficLights)], math.random(0, 3))
-    end)
-    util.request_model(3253274834) -- buffalo
-    local vehicles = {}
-    local crashVehicle<const> = entities.create_vehicle(3253274834, pCoords, 0)
-    vehicles[#vehicles + 1] = crashVehicle
-    VEHICLE.SET_VEHICLE_MOD_KIT(crashVehicle, 0)
-    VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(crashVehicle, "ICRASHU")
-    VEHICLE.SET_VEHICLE_MOD(crashVehicle, 34, 3)
-    for i = 1, 10 do
-        vehicles[#vehicles + 1] = clone(crashVehicle)
-    end
-    util.yield(500)
-    for i = 1, #vehicles do
-        entities.delete_by_handle(vehicles[i])
-    end
-    util.yield(500)
-    stopLights = true
-    util.yield(500)
-    for i = 1, #trafficLights do
-        entities.delete_by_handle(trafficLights[i])
-    end
-    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(3253274834)
-    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(-655644382)
-end
+
 
 ----黑名单表
 blacklist={"1111",-----测试黑名单,发布时删除

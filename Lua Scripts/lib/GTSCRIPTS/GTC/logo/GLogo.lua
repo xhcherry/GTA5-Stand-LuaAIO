@@ -40,7 +40,7 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '7.14'
+GT_version = '7.16'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -48,7 +48,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("完全适配任务功能\n其他的一切改进与修复")
+    notification("又搞一遍任务功能\n新增>模组选项1>加载构造体>GTVIP独家\n大约三百个构造体已被添加,资源来自[大白]\n修复了在切换战局,开启任务,卡在云上,\n退到线下等情况出现的Commandref Not Valid的报错提示\n全新的脚本名称,为了与其他脚本看起来不相同\n其他的一些改进与修复")
 end
 loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
 coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
@@ -139,7 +139,7 @@ if SCRIPT_MANUAL_START then
     if util.current_time_millis() - sTime >= 3000 and state == 2 then
     SETUP_SINGLE_LINE(scaleform)
     ADD_TEXT_TO_SINGLE_LINE(scaleform, "GRANDTOURINGVIP", "$font5", "HUD_COLOUR_FREEMODE")
-    ADD_TEXT_TO_SINGLE_LINE(scaleform, 'v' .. Version, "$font5", "HUD_COLOUR_RED")
+    ADD_TEXT_TO_SINGLE_LINE(scaleform, 'v' .. GT_version, "$font5", "HUD_COLOUR_RED")
     GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_SINGLE_LINE")
     GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
     GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
@@ -417,7 +417,7 @@ hb_id = {
     {name = "YUNkhkl"},
     {name = "我不是你的盖世英雄"},
     {name = "矜鶴"},
-    {name = "Eighteen"},
+    {name = "18"},
     {name = "神权"},
     {name = "罗纳"},
     {name = "坤坤"},
@@ -433,6 +433,9 @@ hb_id = {
     {name = "You2uo"},
     {name = "小嗨"},
     {name = "愛言葉"},
+    {name = "圈圈圈"},
+    {name = "逍遥子"},
+    {name = "蒹葭"},
 }
 
 srgb = {cus = 100}
@@ -2244,7 +2247,7 @@ TTPos = ENTITY.GET_ENTITY_COORDS(TTPed, true)
 hud_rgb_index = 1
 hud_rgb_colors = {6, 18, 9}
 cTime = util.current_time_millis
-Version = "7.14"
+--Version = "7.14"
 
 function give_car_addon(pid, hash, center, ang)
     local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
@@ -19888,9 +19891,9 @@ util.create_thread(function()
 end)
 
 function xianshijiaoben(state)
-jiaoben_x = 0.42
-jiaoben_y = 0
-jiaoben_dx = 0.45
+jiaoben_x = 0.01
+jiaoben_y = 0.160
+jiaoben_dx = 0.800
 sname = state
 while sname do
 if mcxh==1 and mcg<256 then
@@ -19936,7 +19939,8 @@ else
 mcb=mcb-1
 end
 end
-draw_string(string.format("~italic~              ¦&#8721;\n    ~h~GRANDTOURINGVIP\n         Version : " ..GT_version), jiaoben_x,jiaoben_y, jiaoben_dx,4.5)
+draw_string(string.format("~italic~~h~\nGRANDTOURINGVIP\n Version 7;16"), jiaoben_x,jiaoben_y, jiaoben_dx,2)
+--draw_string(string.format("~italic~~y~~h~&#8721;"), jiaoben_x,jiaoben_y, jiaoben_dx,1)
 wait()
 end
 end    

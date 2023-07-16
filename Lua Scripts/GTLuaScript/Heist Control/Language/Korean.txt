@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 04/03/2023 10:26:37 PM
-# Heist Control Version: V 3.2.6
+# Generated Date: 07/08/2023 10:32:24 PM
+# Heist Control Version: V 3.3.3
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -142,7 +142,6 @@ Unlock Awards = 보상 잠금 해제
 Unlock Animal Masks = 동물 마스크
 Unlock DJ Pooh Shirts = DJ 푸 티셔츠
 Buildings = 건물
-Arcade Unlockers = 아케이드
 Casino Store Ace Masks = 카지노 상점의 에이스 마스크
 Missions = 미션
 Unlock Yacht Missions = 요트 미션
@@ -176,14 +175,10 @@ Single MC Vehicle Sell = 한 차량 MC 비즈니스 판매
 Make One Snack Full Health = 한 스낵 최대 체력
 Whatever you use a snack, will make you full health. = 어떠한 한 스낵을 사용하면, 최대 체력으로 만들어줍니다.
 Custom Money Remover = 커스텀 돈 제거기
-AFK Money = 잠수 머니
-Auto Rig Slot Machine = 자동 리그 슬롯 머신
-Ratio of Jackpot and Loss = 잭팟 및 패배 비
 Heist Cooldown Timer = 습격 쿨타임 시간
 Use Stand's Overlay = Stand의 오버레이 사용
 Enabled: Use Stand's Overlay & Settings: Game > Info Overlay = 활성화: Stand 오버레이 및 설정 값 사용: 게임 > 정보 오버레이
 Disabled: Use Heist Control's Overlay & Settings = 비활성화: 헤이스트 컨트롤의 오버레이 및 설정 값 사용
-Work only to hostile peds = 적대적인 NPC에게만 작동
 Peds = NPC
 Remove Weapons = 무기 제거
 Delete = 삭제
@@ -258,12 +253,10 @@ Join Discord Server! = 디스코드 서버 가입!
 Youtube = 유튜브
 Changelog = 업데이트 로그
 Credits = 크레딧
-Let me know about stats info. = Stat 정보에 대해 알려주었습니다.
 Translators = 번역가
 Maintains HC's translation = 헤이스트 컨트롤 번역 유지
 [NOT WORKING] = [작동 안함]
 - This feature isn't working due to the latest GTA Online patch: = - 이 기능은 최근 GTA 온라인 패치로 인해 작동하지 않습니다:
-Please download the lastest version of Heist Control or wait for Heist Control's developer patching. = 헤이스트 컨트롤의 최신 버전을 다운로드 해주시거나 헤이스트 컨트롤의 패치를 기다려주세요.
 Please re-enable 'Stand > Lua Scripts > Repository > Heist Control' to fix! = 고치기 위해서 'Stand > Lua 스크립트 > 저장소 > Heist Control'을 다시 활성화해주세요!
 Except [NOT WORKING] features should work! = [작동 안함] 기능을 제외하고는 작동해야 합니다!
 But, all features of HC should work! = 그렇지만, 헤이스트 컨트롤의 모든 기능이 작동해야 합니다!
@@ -363,20 +356,17 @@ Modify Finale's Payout (2 Million) = 피날레 % 수정 ($200만)
 Make sure it's enabled before starting any contracts or hits. = 계약을 시작하기 전에 활성화 했는지 다시 한 번 더 확인하세요.
 Complete All Missions = 모든 미션 끝내기
 Unlock all Arena Wars Trophies and Toys = 모든 아레나워 트로피 및 차량 잠금 해제
-Clothing = 의상
 The Criminal Enterprises DLC = 범죄 조직 DLC
 Jackets / Sweaters / Hoodies / Shirts = 자켓 / 스웨터 / 후디 / 셔츠
 Pants / Caps / Hats = 바지 / 캡 / 모자
 Earphones / Masks / Tech Demon = 이어폰 / 마스크 / 테크 데몬
 Shoes (Sliders) / Tiger = 신발 (슬라이더) / 타이거
 Drug War DLC = 마약 전쟁 DLC
-Unlock Arcade Trophies and Toys = 아케이드 트로피 및 장난감 잠금 해제
 Acid Lab Equipment Upgrade = LSD 제조실 장비 업그레이드
 Unlock Nightclub Awards = 나이트클럽 보상 잠금 해제
 Make sure click before buying. When you change your session, will be changed to non-unlocked status. = 구매 전 클릭해주세요. 세션을 바꾸면, 잠금 해제되지 않은 상태로 바뀔 것입니다.
 Add Cosmetic Decorations To The Office/MC = 오피스 및 MC에 돈다발 추가
 To apply, sell special crate or vehicle cargo and change your session! = 적용하기 위해서는, 스패셜 패키지나 반입 반출 차량을 판매하고 세션을 변경하세요!
-Cayo Perico Unlockables = 카요 페리코 습격 관련
 Unlock Taxi Missions = 택시 미션 잠금 해제
 Unlock All Contacts = 모든 계약 잠금 해제
 Skip Lamar Missions To The Last One = 마지막 라마 미션으로 건너뛰기
@@ -415,19 +405,6 @@ Infinite Stone Hatchet's Power = 무한 돌 도끼 파워
 Make your account look like you've played GTA Online for 7 years. = 자신의 계정이 GTA 온라인을 7년 동안 플레이한 것 같이 만듭니다.
 Do you sure remove your money? = 정말 자신의 돈을 지우실 건가요?
 Because this feature works via requesting the Ballistic Armor, it'll be dropped nearby soon. = 이 기능이 중무장 장비를 요청해 돈을 제거하는 방식이기에, 요청된 중무장 장비가 곧 근처에 떨어질 것입니다.
-Cooldown Time (Seconds) = 쿨타임 시간 (초)
-Auto Cayo Bot = 자동 카요 봇
-25K Chips = 2.5만 개 칩
-15K RP = 1.5만 RP
-Vehicle Discount = 차량 가격 할인
-Teleport to the Lucky Wheel = 럭키 휠로 순간 이동
-Make sure your spawning position is 'Last Location' = 자신의 소환 위치가 '마지막 위치' 인지 다시 한 번 더 확인해주세요.
-You can set it on Interaction Menu. = 상호 작용 메뉴에서 설정할 수 있습니다.
-Playing one time has been done! Waiting for the cooldown time... = 한 번 플레이 하는 것이 끝났습니다! 쿨타임을 기다리는 중입니다...
-How many times you've played after enabled: = 자동 카요 봇을 활성화 후 플레이한 횟수:
-Auto Lucky Wheel = 자동 럭키 휠
-Let you get the selected lucky wheel reward per 3 seconds automatically. = 3초 마다 자동으로 선택된 럭키 휠 보상을 얻을 수 있도록 해줍니다.
-Please use with 'Teleport to the Lucky Wheel' feature! = '럭키 휠로 순간 이동' 기능과 함께 사용해주세요!
 Instant Finish Heists & Others = 즉시 습격 끝내기 & 기타
 Heists = 습격
 Cayo / Tuners / ULP / Agency = 카요 / 튜너 / ULP / 에이전시
@@ -441,8 +418,6 @@ Heist Cooldown Timers = 습격 쿨타임 타이머
 Set Custom Time (Seconds) = 커스텀 시간 설정 (초)
 Custom Timer = 커스텀 타이머
 Manage Nearby Peds And Cams = 근처 NPC 및 카메라 관리
-Enabled: Ped options will only affect hostile peds = 활성화: NPC 옵션이 적대적인 NPC에게만 작용합니다.
-Disabled: Ped options will affect all peds = 비활성화: NPC 옵션이 모든 NPC에게 작용합니다.
 Shoot = 총 발사
 Cameras = 카메라
 Stat Spoofing = Stat 스푸핑
@@ -494,10 +469,6 @@ Note: You may need to keep activating to use some of Independence Day's contents
 Tattoos = 타투
 Unlock Some Tattoos = 몇몇 타투 잠금 해제
 Ceramic Pistol = 세라믹 피스톨
-You try removing banked money amount that more than currently you have. = 자신이 가지고 있는 예금보다 더 많은 돈을 제거하는 것을 시도하고 있습니다.
-All of features use undetected methods but use at own your risk. If you earn too much, you can be banned. = 모든 기능들은 감지되지 않은 방식을 사용하지만, 조심해서 사용하세요. 너무 많은 돈을 벌면 밴될 수도 있습니다.
-Solo Cayo Perico Heist will be done by Heist Control automatically per 20 mins to get $2.09M. Don't press any keys to prevent some game bugs. = 솔로 카요 페리코 습격이 헤이스트 컨트롤에 의해 자동으로 끝날 것이며, 20분마다 $209만를 벌어줄 것입니다. 게임 버그가 발생하는 것을 막기 위해, 어떠한 키도 누르지 마세요.
-Don't earn more than $50M per a day (real-time), otherwise it'll lead you get banned! = 현실 시간으로 24시간 안에 $5000만 이상 벌지 마세요, 그렇지 않으면 밴될 것입니다!
 Cooldown time has passed, you can play the heist again! = 쿨타임이 지나갔습니다, 다시 해당 습격을 플레이할 수 있습니다!
 Wallet Money = 예금
 Mins = 분
@@ -518,8 +489,6 @@ You should enable the preset until the end of the heist! = 습격이 끝날 때�
 Refresh Kosatka Planning Table = 코사트카 준비 작업 테이블 새로 고침
 You can update changed cayo perico heist stats in the Kosatka by refreshing it. = 새로 고침하면 카요 페리코 습격 stat들을 코사트카 안에서도 업데이트할 수 있습니다.
 Successfully cancelled! = 성공적으로 취소되었습니다!
-Works unless you are in the casino. = 카지노 안에 있지 않으면 작동합니다.
-If you are in it, not required to use. Just use 'Auto Lucky Wheel' = 만약에 카지노 안에 있다면 사용할 필요가 없습니다. 그냥 '자동 럭키 휠' 을 사용하세요.
 Acid Lab = 마약 실험실
 RC Bandito = RC 밴디토
 RC Tank = RC 탱크
@@ -557,14 +526,12 @@ Mid = 중
 High = 상
 Bypass Minimum And Maximum Percentage = 최소, 최대 % 우회
 Only works if you are host of the heist. = 자신이 호스트여야만 작동합니다.
-Bypass minimum percentage 15(%) and maximum percentage 70(%). This feature will allow you set 0 ~ 100(%). = 최소 %인 15(%)와 최대 %인 70(%)를 우회합니다. 이 기능은 0 ~ 100 (%)로 설정 가능하도록 해줍니다.
 Terrorbyte = 테러바이트
 Auto Paste To Stat Name = Stat 이름에 자동 붙여넣기
 If your clipboard contains stat name, the strings will be pasted into 'Stat Name' automatically. = 만약 클립보드에 Stat 이름이 있다면, 해당 클립보드 내용이 'Stat 이름' 기능에 자동으로 붙여 넣어질 것입니다.
 Please close your opened pause menu to open any apps remotely. = 열려 있는 일시 중지 메뉴를 닫아주셔야 원격으로 앱을 사용할 수 있게 됩니다.
 Seems like you need to be a MC President. So, Heist Control made you become MC President. = MC 두목이 될 필요가 있어 보입니다. 그래서, 헤이스트 컨트롤이 MC 두목이 되도록 만들어주었습니다.
 Seems like you need to be a CEO. So, Heist Control made you become CEO. = CEO가 될 필요가 있어 보입니다. 그래서, 헤이스트 컨트롤이 CEO가 되도록 만들어주었습니다.
-Please re-enable 'Stand > Lua Scripts > Repository > natives-1676318796' or please join HC DC server to get support! = 'Stand > Lua 스크립트 > 저장소 > natives-1676318796' 기능을 재 활성화 하시거나 헤이스트 컨트롤 디스코드에 가입하여 도움을 받으세요!
 Max payout for this heist = 이 습격의 최대 돈 양
 - Under $2.550.000 per run = - 1회 당 $255만 이하
 - Under $4.100.000 per hour = - 1시간 당 $410만 이하
@@ -577,7 +544,6 @@ This feature has been controlled by another feature. = 이 기능은 다른 기�
 Select Primary Target = 주요 목표물 선택
 Teleport Places = 순간 이동 장소
 Kosatka: Heist Board = 코사트카: 습격 보드
-$3.5 Millions For All Players = 모든 플레이어에게 $350만 지급
 When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout. = 플레이어 %를 선택하는 보드에 있을 때, 이 기능은 심지어 다른 플레이어가 시작할 준비가 되지 않았음에도 강제로 습격을 시작하도록 해줍니다. 참고로 돈과 관련된 시각적 버그가 있을 수 있습니다.
 Entrance Of Your Arcade = 아케이드 입구
 Note that works perfectly when no other players are in your session. = 참고로 자신의 세션에 다른 플레이어가 없을 때 완벽하게 작동합니다.
@@ -615,7 +581,6 @@ Note that you don't have the app, some of functions won't work. = 참고로 이 
 Open = 열기
 Close = 닫기
 The Contract DLC = 청부 계약 DLC
-Keep Full Nightclub Population = 나이트클럽 최대 인기도 유지
 Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader. = MC 비즈니스 판매 차량을 한 대로 강제로 변경합니다. 판매 미션을 시작하기 전에 한 번 눌러주세요. 자신이 두목일 때만 작동합니다.
 The best way to remove GTA Online banked money up to $2B at once! = 한 번에 GTA 온라인 은행 돈 최대 $20억을 없애기에 최고의 방식입니다!
 Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you. = 즉시 끝내기는 새로운 방식의 기능입니다. 그것 때문에, 대부분의 즉시 끝내기가 왜 작동하지 않는지에 대해 알려지지 않은 상태입니다. 만약에 몇몇 기능이 작동하지 않아도 개발자에게 따지지 말아주세요.
@@ -664,12 +629,6 @@ All Stats List = 모든 Stat 목록
 Some Useful Stats List = 몇몇 유용한 Stat 목록
 Open Folder for Translations = 번역을 위한 폴더 열기
 Don't enable both of automated presets at once = 두 개의 자동화된 습격을 한 번에 활성화하지 마세요
-
-
-# Start of newly updated translations.
-# Translate them!
-
-
 Waiting for requesting Kosatka... = 코사트카를 요청하는 것을 기다리는 중입니다.
 (Submarine) = (잠수함)
 Alkonost = 알코노스트
@@ -712,9 +671,6 @@ Unlock Lots of Hats And Shirts = 수 많은 모자 및 셔츠 잠금 해제
 500+ unlocks are included, try and see how many clothes would be unlocked. = 500개가 넘는 잠금 해제들이 포함되어 있으며, 시도해보고 얼마나 많은 의상들이 잠금 해제 되는지 확인해보세요.
 Also will increase Kosatka missiles distance. = 또한 코사트카 미사일 사거리도 증가시킬 것입니다.
 Auto Refill Snacks & Armours = 스낵 및 방탄복 자동 채우기
-Change Reward = 보상 변경
-Can be used to increase your crew level. = 자신의 조직 레벨을 올리기 위해서 쓰일 수도 있습니다.
-How Many Times To Play = 얼마나 많은 시간을 플레이할지
 Delete This File = 이 파일 삭제
 Do you sure delete this file? It cannot be recovered! = 정말로 이 파일을 삭제하실 건가요? 삭제된 파일은 복구될 수 없습니다!
 Successfully deleted! = 성공적으로 삭제되었습니다!
@@ -728,3 +684,20 @@ Can be used for getting targets slightly more fast. = 목표물들을 조금 더
 If you have any questions regarding Heist Control? Joining it will help you so much! = 헤이스트 컨트롤에 대해 질문할 것이 있나요? 디스코드 서버에 들어오는 것이 많은 것을 도와줄 것입니다!
 - Download sharable customized translations and GTAHaXUI stat files. = - 공유 가능한 커스텀된 번역 파일과 GTAHAxUI용 Stat 파일들을 다운로드 받으세요.
 - Post a suggestion or an issue to improve Heist Control. = - 제안하거나 버그를 제보하여 헤이스트 컨트롤을 향상 시켜 주세요.
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+Please download the latest version of Heist Control or wait for Heist Control's developer patching. = 헤이스트 컨트롤의 최신 버전을 다운로드하시거나 헤이스트 컨트롤 개발자의 패치를 기다려주세요.
+Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support! = 'Stand > Lua 스크립트 > 저장소 > natives-1681379138' 을 재 활성화시키거나 헤이스트 컨트롤 디스코드 서버에 오셔서 도움을 받으세요!
+Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist. = 이것을 수정하는 것은 습격 보드에 적용되지는 않을 것입니다. 습격이 끝난 후에 적용된 %를 확인 가능합니다.
+If the Heist Planning (Board 3) is empty, then please re-enable the preset that you enabled! = 만약 습격 준비 (보드 3) 가 비어있으면, 그렇다면 자신이 활성화시킨 설정된 습격을 재 활성화시키세요!
+It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts. = 0 ~ 100(%) 를 습격 보드를 설정하여 가능하게 해주며, % 제한을 모두 무시합니다.
+Skip Nightclub Setups = 나이트클럽 준비 작업 건너뛰기
+Skip all of setups when you buy a Nightclub first: Equipment, Staff, and Collect DJ = 처음 나이트클럽을 구매할 때의 모든 준비 작업을 건너뜁니다: 장비, 직원, DJ 모으기
+Unlock Arcade Awards = 아케이드 보상 잠금 해제
+Trophies, toys, and clothings are included. = 트로피, 장난감, 의상이 포함됩니다.
+Club Work = 클럽 작업
+Taze = 테이저
