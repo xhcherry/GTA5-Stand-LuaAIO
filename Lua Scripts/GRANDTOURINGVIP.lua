@@ -252,6 +252,10 @@ end)
 kdr = GT(players_root, "设置KD值", {}, "请注意，这不是虚假KD")
 require "lib.GTSCRIPTS.GTA.kd"
 
+GTAC(players_root,"Freemode自救", {}, "如果卡freemode提示就点这个\n把你送到云上几秒在下来,如果你是主机,请放心你下来以后还是主机", function ()
+    menu.trigger_commands("restartfm")
+end)
+
 GTAC(players_root, "卡云自救", {}, "当您加载卡云时无法卡单\n又不想强制退到故事模式\n可以试试点击它...", function()
 if NETWORK.NETWORK_CAN_BAIL() then
 NETWORK.NETWORK_BAIL(0, 0, 0)
@@ -17212,7 +17216,7 @@ end)
 Heist_Control_Load = menu.action(Heist_Control, "加载任务选项", {""}, "", function()
 notification("正在加载任务功能", colors.pink)
 wait(2000)
-require "lib.GTSCRIPTS.GTW.C2"
+require "lib.GTSCRIPTS.GTW.C3"
 GTLuaScript.delete(Heist_Control_Load)
 end)
 
@@ -17647,6 +17651,8 @@ function xianshishijian(state)
             end 
     end
     
+--adroot = GT(other_options, "广告合作伙伴")
+
 zhujixianshi = GT(other_options, "显示选项")
 zanzhuzx = GT(other_options, "致谢人员")
 minimap = GT(other_options, "小地图")

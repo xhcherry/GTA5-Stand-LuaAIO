@@ -43,7 +43,7 @@
 
     --- Important
 
-        HC_VERSION = "V 3.3.5"
+        HC_VERSION = "V 3.3.4"
         CODED_GTAO_VERSION = 1.67
         SUPPORTED_STAND_VERSION = 101  --  Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
 
@@ -51,7 +51,7 @@
 
     --- Directory Settings
 
-        HC_DIR = filesystem.store_dir() .. "Heist Control\\"
+    HC_DIR = filesystem.scripts_dir() .. "/GTLuaScript/" .. '/Heist Control/'
         
         FolderDirs = {
             Img = HC_DIR .. "Image\\",
@@ -61,7 +61,6 @@
         }
 
         FileDirs = {
-            Native = filesystem.scripts_dir() .. "lib\\natives-1681379138\\g.lua",
             Setting = FolderDirs.Setting .. "Setting.txt",
             Log = FolderDirs.Setting .. "Log.txt",
         }
@@ -230,8 +229,6 @@
     ---
     
     --- Folders and Log Functions
-
-        util.require_natives(1681379138)
 
         for _, folder in pairs(FolderDirs) do
             if not filesystem.exists(folder) then
@@ -739,9 +736,6 @@
         if READ_SETTING("Timer Color") == "Stand" then
             WRITE_SETTING("Timer Color Code", GET_STAND_STATE("AR Colour"))
         end
-        if not filesystem.exists(FileDirs.Native) then
-            ERROR_LOG(TRANSLATE("Native file for HC doesn't exist.") .. "\n\n" .. TRANSLATE("Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support!"))
-        end
 
         FULL_STAND_VERSION = menu.get_version().version_target
         CURRENT_STAND_VERSION = tonumber(string.format("%.3f", FULL_STAND_VERSION))
@@ -758,7 +752,7 @@
         end
 
         if SCRIPT_MANUAL_START and not SCRIPT_SILENT_START then
-            SHOW_IMG("HC Banner.png", 2.5)
+            --SHOW_IMG("HC Banner.png", 2.5)
 
             local LatestGTAO = tonumber(NETWORK.GET_ONLINE_VERSION())
             if CODED_GTAO_VERSION ~= LatestGTAO then
@@ -783,18 +777,18 @@
 
 --- Main Lists
 
-    menu.divider(menu.my_root(), TRANSLATE("Heist Control") .. " " .. HC_VERSION)
+    menu.divider(Heist_Control, "任务功能" .. " " .. HC_VERSION)
 
-        PERICO_HEIST = menu.list(menu.my_root(), TRANSLATE("Cayo Perico Heist"), {"hccp"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run") .. "\n" .. TRANSLATE("- Under $4.100.000 per hour"), function();  end)
-        CASINO_HEIST = menu.list(menu.my_root(), TRANSLATE("Diamond Casino Heist"), {"hccah"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $3.650.000 per run"), function(); end)
-        DOOMS_HEIST = menu.list(menu.my_root(), TRANSLATE("Doomsday Heist"), {"hcdooms"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run"), function(); end)
-        CLASSIC_HEISTS = menu.list(menu.my_root(), TRANSLATE("Classic Heist"), {"hcclassic"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Fleeca Heist: Under $15.000.000 per run"), function(); end)
-        LS_ROBBERY = menu.list(menu.my_root(), TRANSLATE("LS Tuners Robbery"), {"hcls"}, "", function(); end)
-        ULP_MISSIONS = menu.list(menu.my_root(), TRANSLATE("ULP Missions"), {"hculp"}, "", function(); end)
-        TH_CONTRACT = menu.list(menu.my_root(), TRANSLATE("The Contract: Agency"), {"hcagc"}, "", function(); end)
-        MASTER_UNLOCKR = menu.list(menu.my_root(), TRANSLATE("Master Unlocker"), {"hcmu"}, "", function(); end)
-        TOOLS = menu.list(menu.my_root(), TRANSLATE("Tools"), {"hctool"}, "", function(); end)
-        INFOS = menu.list(menu.my_root(), TRANSLATE("Settings And About HC"), {"hcinfo"}, "", function(); end)
+        PERICO_HEIST = menu.list(Heist_Control, TRANSLATE("Cayo Perico Heist"), {"hccp"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run") .. "\n" .. TRANSLATE("- Under $4.100.000 per hour"), function();  end)
+        CASINO_HEIST = menu.list(Heist_Control, TRANSLATE("Diamond Casino Heist"), {"hccah"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $3.650.000 per run"), function(); end)
+        DOOMS_HEIST = menu.list(Heist_Control, TRANSLATE("Doomsday Heist"), {"hcdooms"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run"), function(); end)
+        CLASSIC_HEISTS = menu.list(Heist_Control, TRANSLATE("Classic Heist"), {"hcclassic"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Fleeca Heist: Under $15.000.000 per run"), function(); end)
+        LS_ROBBERY = menu.list(Heist_Control, TRANSLATE("LS Tuners Robbery"), {"hcls"}, "", function(); end)
+        ULP_MISSIONS = menu.list(Heist_Control, TRANSLATE("ULP Missions"), {"hculp"}, "", function(); end)
+        TH_CONTRACT = menu.list(Heist_Control, TRANSLATE("The Contract: Agency"), {"hcagc"}, "", function(); end)
+        MASTER_UNLOCKR = menu.list(Heist_Control, TRANSLATE("Master Unlocker"), {"hcmu"}, "", function(); end)
+        TOOLS = menu.list(Heist_Control, TRANSLATE("Tools"), {"hctool"}, "", function(); end)
+        INFOS = menu.list(Heist_Control, TRANSLATE("Settings And About HC"), {"hcinfo"}, "", function(); end)
 
     ---
 
@@ -807,7 +801,7 @@
 
         menu.divider(CAYO_PRESETS, TRANSLATE("Recommended"))
 
-            QUICK_PRESET = menu.toggle(CAYO_PRESETS, TRANSLATE("Quick Preset (1 - 4P)"), {"hccpquick"}, IS_WORKING(true) .. TRANSLATE("There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.45M) by only getting it."), function()
+            QUICK_PRESET = menu.toggle(CAYO_PRESETS, TRANSLATE("Quick Preset (1 - 4P)"), {"hccpquick"}, IS_WORKING(true) .. TRANSLATE("There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.55M) by only getting it."), function()
                 if menu.get_value(QUICK_PRESET) then
                     menu.trigger_commands("hccprefreshboard")
 
@@ -887,9 +881,9 @@
                     SET_INT_GLOBAL(CPTargets[Value][2], 2455000)
                     
                     menu.set_value(CP_REM_FEE, true)
-                    menu.set_value(CP_NON_HOST_CUT, 100)
+                    menu.set_value(CP_NON_HOST_CUT, 145)
                     menu.set_value(CP_NON_HOST_CUT_LOOP, false)
-                    menu.set_value(CP_HOST_CUT, 100)
+                    menu.set_value(CP_HOST_CUT, 145)
                     menu.set_value(CP_HOST_CUT_LOOP, true)
                     menu.set_value(CP_2P_CUT, 145)
                     menu.set_value(CP_2P_CUT_LOOP, true)
@@ -1705,7 +1699,7 @@
 
         ---
 
-        TELEPORT_CP_KOSATKA = menu.action(TELEPORT_CP, TRANSLATE("Kosatka: Heist Board"), {"hctpsub"}, TRANSLATE("Note that works on best when you are alone in your session."), function()
+        TELEPORT_CP_KOSATKA = menu.action(TELEPORT_CP, TRANSLATE("Kosatka: Heist Board"), {"hctpsub"}, "", function()
             if STAT_GET_INT("IH_SUB_OWNED") ~= 0 then
                 if not HUD.DOES_BLIP_EXIST(SubBlip) and not HUD.DOES_BLIP_EXIST(SubControlBlip) then
                     local PlayerPos = players.get_position(players.user())
