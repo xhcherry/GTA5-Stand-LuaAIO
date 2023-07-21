@@ -12,9 +12,8 @@ XPxujia={"xiproNB",
                 for i = 1, #XPxujia do
                     if XPxujia[i] == XP_name then
                         util.toast("[夜幕 提示] \n检测到XP魔怔人: "..XP_name.."\n开始进行崩溃")
-                        menu.trigger_commands("zhinengti " .. XP_name)
-                        menu.trigger_commands("crashXPV3 " .. XP_name)
-                        menu.trigger_commands("kuaisutichu " .. XP_name)
+                        menu.trigger_commands("kick " .. XP_name)
+                        menu.trigger_commands("luotuobuju " .. XP_name)
                     end
                 end
         end

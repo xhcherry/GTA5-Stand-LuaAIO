@@ -1,4 +1,4 @@
-Version5 = 5.4
+Version5 = 5.5
 local aalib = require("aalib")
 local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001
@@ -82,7 +82,7 @@ if not SCRIPT_SILENT_START then
            -- directx.draw_rect_with_rounded_corner(0.4, 0.8, 0.2, 0.06, darkBlue)
             directx.draw_texture(YM_logo, ym_size, ym_size, 0.5, 0.5, 0.4, 0.80, i / 360, white)
             if i < 160 then
-                directx.draw_text(0.5, 0.81 + ((i - 150) / 25000), '正在加载夜幕Lua~~', ALIGN_TOP_CENTRE, 0.6, white, false)
+                directx.draw_text(0.5, 0.81 + ((i - 150) / 25000), '正在加载夜幕LUA~~', ALIGN_TOP_CENTRE, 0.6, white, false)
             elseif i > 190 then
             directx.draw_text(0.5, 0.83 + ((i - 150) / 2500), " 已检测到用户".. PLAYER.GET_PLAYER_NAME(players.user()).. "", ALIGN_TOP_CENTRE, 0.65, white, false)
             end
