@@ -14,7 +14,7 @@ GTA5 Mod Stand Lua All in One；含综合、任务、崩溃、模组、娱乐等
 
 ### 提问
 
-如果你有任何关于stand本体或者lua在使用上的问题均可以在issues中询问(上方菜单栏code旁边就是issues)，我都会帮忙解决
+如果你有任何关于stand本体或者lua在使用上的问题均可以在issues中询问(上方菜单栏code旁边就是issues)，我都会帮忙解决，要是有好的lua就提交pull request
 
 ### 目录结构
 
