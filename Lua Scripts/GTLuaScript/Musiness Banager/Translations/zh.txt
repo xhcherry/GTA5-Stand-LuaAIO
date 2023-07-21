@@ -114,13 +114,13 @@ TRIGGERPRODUCTION_TOAST=每日收入已触发.
 ENFORCEEASIESTMISSION=执行最简单的任务
 ENFORCEEASIESTMISSION_DESC=这将确保您始终获得最快和最简单的出售任务. 虽然,如果您太快,您可能不会得到报酬?
 
-SPECIALCARGOLIST_DESC=注意: 出售价格的上限是 $1000万.
+SPECIALCARGOLIST_DESC=注意: 出售价格的上限是 $600万.
 
 SPECIALCARGOWAREHOUSE_DESC=选择要显示和修改的仓库,因为您最多可以拥有5个仓库.
 SPECIALCARGOMONITOR_DESC=显示您在所选的仓库中有多少特种货物板条箱.
 SPECIALCARGONOWAREHOUSE=未购买仓库
 SPECIALCARGONOWAREHOUSE_DESC=您在此槽位中没有仓库!
-SPECIALCARGOMAXSELLPRICE_DESC=将您的特种货物板条箱的出售价格更改为$1000万.\n保持启用以确保对未来出售的正确计算.
+SPECIALCARGOMAXSELLPRICE_DESC=将您的特种货物板条箱的出售价格更改为$600万.\n保持启用以确保对未来出售的正确计算.
 OPENSCREEN=打开 {1} 屏幕
 OPENSCREEN_DESC=打开 {1} 屏幕.
 ! {1} could be [TERRORBYTE] or [WAREHOUSE]

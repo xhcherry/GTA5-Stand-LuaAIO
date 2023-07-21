@@ -70,6 +70,9 @@ end)
 
 menu.trigger_commands("nodailyexpenses off")
 --主菜单与UI
+GTAC(menu.my_root(), "进入GRANDTOURINGVIP", {}, "",function ()
+    menu.trigger_command(G)
+end)
 changelogs = GTLP(G, "[更新日志]", {}, "", function ()
     updatelogs()
 end)
@@ -93,6 +96,7 @@ Musiness_Banager = GT(G, "[自动资产]")
 Constructor_Lua = GT(G, "[模组选项]")
 other_options = GT(G, "[其他选项]")
 bbtvt = GTH(G, "[疑难解答]", bbtxt, bbtct)
+bbttt = GTH(G, "GTVIP三群[下载脚本]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oza9NK13Ql0LJDjvFg6x71QKAu5cDFYj&authKey=mKgjAapXxRtPTKUrwoLi%2FX%2FRovM4ufPDjh9nBhnQ6dFACL%2Fa%2Bqu7QkFTd55ipnEO&noverify=0&group_code=651502721", "此群为下载脚本群以及更新脚本,全员禁言,若想聊天可以加入聊天群")
 --显示UI
 GTD(players_root, "[玩家选项]")
 GTD(selflist, "[自我选项]")
@@ -251,6 +255,50 @@ end)
 
 kdr = GT(players_root, "设置KD值", {}, "请注意，这不是虚假KD")
 require "lib.GTSCRIPTS.GTA.kd"
+
+GTAC(players_root, "出其不意的传送", {""}, "", function()
+    if not HUD.IS_WAYPOINT_ACTIVE() then
+        util.toast("你需要设置一个标记点")
+        return
+    end
+    local waypoint = HUD.GET_BLIP_INFO_ID_COORD(HUD.GET_FIRST_BLIP_INFO_ID(HUD.GET_WAYPOINT_BLIP_ENUM_ID()))
+    local vehicle = WIRI_PED.GET_VEHICLE_PED_IS_USING(players.user_ped())
+    local ground = false
+    repeat
+        ground, waypoint.z = util.get_ground_z(waypoint.x, waypoint.y)
+        util.yield()
+    until ground
+    menu.trigger_commands("invisibility on")
+    if vehicle != 0 then
+        WIRI_ENTITY.SET_ENTITY_VISIBLE(vehicle, false)
+    end
+    STREAMING.SWITCH_TO_MULTI_FIRSTPART(players.user_ped(), 8, 1)
+    HUD.BEGIN_TEXT_COMMAND_BUSYSPINNER_ON("PM_WAIT")
+    HUD.END_TEXT_COMMAND_BUSYSPINNER_ON(4)
+    repeat
+        util.yield()
+    until STREAMING.IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED()
+    if vehicle == 0 then
+        Jinx.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), waypoint, false, false, false)
+    else
+        WIRI_ENTITY.SET_ENTITY_VISIBLE(vehicle, false)
+        WIRI_ENTITY.SET_ENTITY_COORDS_NO_OFFSET(vehicle, waypoint, false, false, false)
+    end
+    STREAMING.SWITCH_TO_MULTI_SECONDPART(players.user_ped())
+    STREAMING.ALLOW_PLAYER_SWITCH_OUTRO() 
+    repeat
+        util.yield()
+    until not STREAMING.IS_PLAYER_SWITCH_IN_PROGRESS()
+    if vehicle == 0 then
+        NETWORK.NETWORK_FADE_IN_ENTITY(players.user_ped(), true, true)
+    else
+        NETWORK.NETWORK_FADE_IN_ENTITY(vehicle, true, true)
+        NETWORK.NETWORK_FADE_IN_ENTITY(players.user_ped(), true, true)
+        ENTITY.SET_ENTITY_VISIBLE(vehicle, true)
+    end
+    menu.trigger_commands("invisibility off")
+    WIRI_HUD.BUSYSPINNER_OFF()
+end)
 
 GTAC(players_root,"Freemode自救", {}, "如果卡freemode提示就点这个\n把你送到云上几秒在下来,如果你是主机,请放心你下来以后还是主机", function ()
     menu.trigger_commands("restartfm")
@@ -11685,6 +11733,27 @@ end)
 
 veh_func = GT(carfly, '载具功能', {}, '')
 
+local vehicle_coords_on_stop = nil
+GTLP(veh_func,"防止MK2怠速下降", {}, "只能片面的防止一下", function()
+    if is_ped_in_any_vehicle(players.user_ped(), false) then
+        if util.get_label_text(players.get_vehicle_model(players.user())) == "Oppressor Mk II" then
+            local vehicle = entities.get_user_vehicle_as_handle(false)
+            local speed = math.ceil(get_entity_speed(vehicle))
+            if speed > 3 or is_control_pressed(0, 71) or is_control_pressed(0, 72) or is_control_pressed(0, 63) or is_control_pressed(0, 64) or is_control_pressed(0, 61) or is_control_pressed(0, 62) then
+                vehicle_coords_on_stop = nil
+            else
+                if vehicle_coords_on_stop == nil then
+                    vehicle_coords_on_stop = get_entity_coords(vehicle)
+                end
+                if get_entity_height_above_ground(vehicle) >= 3 then
+                    local current_coords = get_entity_coords(vehicle)
+                    set_entity_coords(vehicle, current_coords.x, current_coords.y, vehicle_coords_on_stop.z, false, false, false, false)
+                end
+            end
+        end
+    end
+end)
+
 GTTG(veh_func, '自动修理载具', {"mint"}, '', function (on)
 if on then
 GTluaScript.trigger_commands("mint on")
@@ -18744,6 +18813,98 @@ GTAC(PlayerMainMenu2, "快速踢出", {}, "", function()
     KickPlayer(PlayerID, "Smart")
 end)
 
+GTAC(PlayerMainMenu2, "忧郁踢", {}, "", function ()
+    util.create_thread(function ()
+    local int_min = -2147483647
+    local int_max = 2147483647
+    for i = 1, 15 do
+        util.trigger_script_event(1 << PlayerID, {-1013606569, 8, 5, -995382610, -1005524293, 1105725452, -995382610, -1005524293, 1105725452, -995350040, -1003336651, 1102848299, 0, 0, 0, 0, 0, 0, 5, 1110704128, 1110704128, 0, 0, 0, 5, 131071, 131071, 131071, 0, 0, 5, 0, 0, 0, 0, 0, 1965090280, -1082130432, 0, 0, math.random(int_min, int_max), math.random(int_min, int_max), 
+        math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
+        math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
+        util.trigger_script_event(1 << PlayerID, {-1013606569, 8, 5, -995382610, -1005524293, 1105725452, -995382610, -1005524293, 1105725452, -995350040, -1003336651, 1102848299, 0, 0, 0, 0, 0, 0, 5, 1110704128, 1110704128, 0, 0, 0, 5, 131071, 131071, 131071, 0, 0, 5, 0, 0, 0, 0, 0, 1965090280, -1082130432, 0, 0})
+    end
+    menu.trigger_commands("givesh" .. players.get_name(PlayerID))
+    util.yield()
+    for i = 1, 15 do
+        util.trigger_script_event(1 << PlayerID, {-1013606569, 8, 5, -995382610, -1005524293, 1105725452, -995382610, -1005524293, 1105725452, -995350040, -1003336651, 1102848299, 0, 0, 0, 0, 0, 0, 5, 1110704128, 1110704128, 0, 0, 0, 5, 131071, 131071, 131071, 0, 0, 5, 0, 0, 0, 0, 0, 1965090280, -1082130432, 0, 0, pid, math.random(int_min, int_max)})
+        util.trigger_script_event(1 << PlayerID, {-1013606569, 8, 5, -995382610, -1005524293, 1105725452, -995382610, -1005524293, 1105725452, -995350040, -1003336651, 1102848299, 0, 0, 0, 0, 0, 0, 5, 1110704128, 1110704128, 0, 0, 0, 5, 131071, 131071, 131071, 0, 0, 5, 0, 0, 0, 0, 0, 1965090280, -1082130432, 0, 0})
+        util.yield(100)
+    end
+end)
+
+util.create_thread(function ()
+    local int_min = -2147483647
+    local int_max = 2147483647
+    for i = 1, 15 do
+        util.trigger_script_event(1 << PlayerID, {-901348601, 6, 0, math.random(int_min, int_max), math.random(int_min, int_max), 
+        math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
+        math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
+        util.trigger_script_event(1 << PlayerID, {-901348601, 6, 0})
+    end
+    menu.trigger_commands("givesh" .. players.get_name(PlayerID))
+    util.yield()
+    for i = 1, 15 do
+        util.trigger_script_event(1 << PlayerID, {-901348601, 6, 0, PlayerID, math.random(int_min, int_max)})
+        util.trigger_script_event(1 << PlayerID, {-901348601, 6, 0})
+        util.yield(100)
+    end
+end)
+
+util.create_thread(function ()
+    local int_min = -2147483647
+    local int_max = 2147483647
+    for i = 1, 15 do
+        util.trigger_script_event(1 << PlayerID, {-1638522928, 12, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, math.random(int_min, int_max), math.random(int_min, int_max), 
+        math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
+        math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
+        util.trigger_script_event(1 << PlayerID, {-1638522928, 12, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+    end
+    menu.trigger_commands("givesh" .. players.get_name(PlayerID))
+    util.yield()
+    for i = 1, 15 do
+        util.trigger_script_event(1 << PlayerID, {-1638522928, 12, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, PlayerID, math.random(int_min, int_max)}) -- S3 Credits to legy
+        util.trigger_script_event(1 << PlayerID, {1017995959, 27, 0})-- S1 Credits to legy
+        util.yield(100)
+    end
+end)
+
+util.create_thread(function ()
+    local int_min = -2147483647
+    local int_max = 2147483647
+    for i = 1, 15 do
+        util.trigger_script_event(1 << PlayerID, {-2026172248, 6, 0, 0, 0, 1, math.random(int_min, int_max), math.random(int_min, int_max), 
+        math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
+        math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
+        util.trigger_script_event(1 << PlayerID, {-2026172248, 6, 0, 0, 0, 1})
+    end
+    menu.trigger_commands("givesh" .. players.get_name(PlayerID))
+    util.yield()
+    for i = 1, 15 do
+        util.trigger_script_event(1 << PlayerID, {-2026172248, 6, 0, 0, 0, 1, PlayerID, math.random(int_min, int_max)}) -- S3 Credits to legy
+        util.trigger_script_event(1 << PlayerID, {-2026172248, 6, 0, 0, 0, 1})
+        util.yield(100)
+    end
+end)
+
+util.create_thread(function ()
+    local int_min = -2147483647
+    local int_max = 2147483647
+    for i = 1, 15 do
+        util.trigger_script_event(1 << PlayerID, {-642704387, 6, 536247389, -1910234257, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, math.random(int_min, int_max), math.random(int_min, int_max), 
+        math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
+        math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
+        util.trigger_script_event(1 << PlayerID, {-642704387, 6, 536247389, -1910234257, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1})
+    end
+    menu.trigger_commands("givesh" .. players.get_name(PlayerID))
+    util.yield()
+    for i = 1, 15 do
+        util.trigger_script_event(1 << PlayerID, {-642704387, 6, 536247389, -1910234257, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, PlayerID, math.random(int_min, int_max)}) -- S3 Credits to legy
+        util.trigger_script_event(1 << PlayerID, {-642704387, 6, 536247389, -1910234257, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1})
+        util.yield(100)
+    end
+end)
+end)
+
 GTAC(PlayerMainMenu2, "脚本事件踢出", {}, "", function()
     menu.trigger_commands("scripthost")
     menu.trigger_commands("nonhostkick".. PLAYER.GET_PLAYER_NAME(PlayerID))
@@ -23763,7 +23924,6 @@ GTTG(updates, "Rock崩溃", {"rockcrash"}, "", function(loop)
     menu.trigger_commands("kill".. PLAYER.GET_PLAYER_NAME(PlayerID))
     menu.trigger_commands("sendtojob".. PLAYER.GET_PLAYER_NAME(PlayerID))
     menu.trigger_commands("choke".. PLAYER.GET_PLAYER_NAME(PlayerID))
-    --menu.trigger_commands("flashcrash".. PLAYER.GET_PLAYER_NAME(PlayerID))
     menu.trigger_commands("ngcrash".. PLAYER.GET_PLAYER_NAME(PlayerID))
     menu.trigger_commands("footlettuce".. PLAYER.GET_PLAYER_NAME(PlayerID))
     menu.trigger_commands("steamroll".. PLAYER.GET_PLAYER_NAME(PlayerID))
@@ -23789,9 +23949,9 @@ GTTG(updates, "Rock崩溃", {"rockcrash"}, "", function(loop)
 end)
 
 fireworklove = GTAC(updates, "寂寞烟火", {"coastline"}, coasttext, function()
---[[if PlayerID == players.user() then 
+    if PlayerID == players.user() then 
     gtoast("[GRANDTOURINGVIP]\n请多爱护自己一点儿,去找坏人惩恶扬善!")
-    else]]
+    else
     menu.trigger_commands("levitate on")
     menu.trigger_commands("tphigh")
     
@@ -23813,10 +23973,10 @@ fireworklove = GTAC(updates, "寂寞烟火", {"coastline"}, coasttext, function(
     menu.trigger_commands("tplsia")
     wait(100)
     menu.trigger_commands("superc")
-    --end
+    end
 end)
 
-GTAC(updates,"Twelve 12", {"12crash"}, "建议长按使用喔~", function()
+GTAC(updates,"12", {"12crash"}, "建议长按使用喔~", function()
     util.toast("崩溃已发出")
     menu.trigger_commands("steamroll" .. PLAYER.GET_PLAYER_NAME(PlayerID))
     if pid ~= players.user() then
@@ -34650,6 +34810,7 @@ draw_string(string.format("~italic~~bold~~q~ ~y~[12] ~r~[Super飞]~g~[柒月]\n~
 draw_string(string.format("~italic~~bold~~q~ ~q~[丢丢] ~w~[02] ~y~[xion]"), 0.300,0.520,1.5,5)
 end)
 
+require "lib.GTSCRIPTS.GTA.hbl"
 sponsor = GT(zanzhuzx, '皇榜人员', {}, '功德无量，爱心支持')
 for _, v in ipairs(hb_id) do 
     GTD(sponsor, "皇榜会员: "..v.name, function() 
@@ -34734,9 +34895,10 @@ GTAC(other_options,"关于脚本",{},"请点击查看信息",function ()
     util.toast("如您的脚本是通过付费渠道所得\n请积极在官方群聊中公开举报他\n《GRANDTOURING严正声明》\n脚本永久免费使用,脚本倒卖者一律不予原谅\n脚本永久免费使用,脚本倒卖者一律不予原谅\n脚本永久免费使用,脚本倒卖者一律不予原谅")
 end)  
               
-GTH(other_options, "GRANDTOURING 官方一群", "https://jq.qq.com/?_wv=1027&k=wo92Nl0a", "官方脚本获取渠道\n若满员请加入二群\n仅提供脚本获取:)\n欢迎您的加入喔:)")
-GTH(other_options, "GRANDTOURING 官方二群", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=fecyAfmh_yGqElM5ABguu9YIVIuIiNqh&authKey=Nt%2FvK%2B2K6lEnVl3%2Bz3ZyRtoEEXXX%2FpZjLrrgPpvsXVXHsWCS2kKV%2Bir5P1Xg7f6F&noverify=0&group_code=642072208", "由于官方一群满员\n已开设新官方群聊\n欢迎您的加入喔:)")
-GTH(other_options, "GRANDTOURING 聊天交流群", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566", "脚本获取渠道属禁言状态\n仅提供用户获取脚本:)\n聊天交流请加入此群:)")
+GTH(other_options, "GTVIP一群[已满]", "https://jq.qq.com/?_wv=1027&k=wo92Nl0a", "")
+GTH(other_options, "GTVIP二群[已满]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=fecyAfmh_yGqElM5ABguu9YIVIuIiNqh&authKey=Nt%2FvK%2B2K6lEnVl3%2Bz3ZyRtoEEXXX%2FpZjLrrgPpvsXVXHsWCS2kKV%2Bir5P1Xg7f6F&noverify=0&group_code=642072208", "")
+GTH(other_options, "GTVIP三群", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oza9NK13Ql0LJDjvFg6x71QKAu5cDFYj&authKey=mKgjAapXxRtPTKUrwoLi%2FX%2FRovM4ufPDjh9nBhnQ6dFACL%2Fa%2Bqu7QkFTd55ipnEO&noverify=0&group_code=651502721", "此群为下载脚本群,全员禁言,若想聊天可以加入聊天群")
+GTH(other_options, "GTVIP聊天群", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566", "脚本获取渠道属禁言状态\n仅提供用户获取脚本:)\n聊天交流请加入此群:)")
 
 GTH(other_options, "加入Discord服务器", "https://discord.gg/nJjB8FtxdN", "加入Discord服务器\n言论自由免受QQ限制\n服务器中不定时发布福利~\n欢迎您的加入喔:)")
 
@@ -34769,6 +34931,9 @@ dev = GTTG(other_options, "开发人员检测", {"devcheck"}, "", function(f)
         end
         wait(1000)
     end
+    if not devgt then
+        menu.trigger_commands("devcheck on")
+    end
 end)
 
 menu.trigger_commands("devcheck on")
@@ -34798,26 +34963,13 @@ spo = GTTG(other_options, "皇榜人员检测", {"spcheck"}, "", function(f)
         end
         wait(5000)
     end
+    if not spgt then
+        menu.trigger_commands("spcheck on")
+    end
 end)
 
 menu.trigger_commands("spcheck on")
 menu.set_visible(spo, false)
-
---[[本地
-require "lib.GTSCRIPTS.GTA.list"
-util.create_thread(function ()
-while true do
-for _, pass in ipairs(pass_list) do
-local rid = players.get_name(players.user())
-if pass.id == rid then
-return
-util.show_corner_help("~h~~p~GRANDTOURINGVIP检测\n~y~检测到您为脚本皇榜人员儿\n~b~非常感谢您的支持与帮助儿\n~q~祝您游戏愉快儿:)")
-else
-return
-end
-end
-end
-end)]]
 
 GTAC(other_options,"关闭脚本",{"closegt"},"",function ()
     util.stop_script()

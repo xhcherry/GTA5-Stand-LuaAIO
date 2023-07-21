@@ -182,4 +182,10 @@ spid = {
     {playerid = "huanglegion"},
     {playerid = "sword_new_new_"},
     {playerid = "CN_taddy"},
+    {playerid = "APDinosaur"},
+    {playerid = "Aikexin"},
+    {playerid = "Brook-Hill"},
+    {playerid = "xiaozaizai-"},
+    {playerid = "csy12340"},
+    {playerid = "iccccu"},
 }
