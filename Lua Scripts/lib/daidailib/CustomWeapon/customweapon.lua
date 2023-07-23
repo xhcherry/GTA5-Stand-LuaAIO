@@ -149,7 +149,8 @@ function load_weapon()
             end
         end
         regen_menu()
-        menu.trigger_commands("fillammo")--补充所有弹药
+        --补充所有弹药
+        menu.trigger_commands("fillammo")
         util.toast(selected_loadout .. "配置已加载")
     else
         util.toast("这个配置似乎不存在*_*")

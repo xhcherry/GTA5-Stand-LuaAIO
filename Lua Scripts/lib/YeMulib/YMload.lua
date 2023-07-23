@@ -1,25 +1,8 @@
-Version5 = 5.5
-local aalib = require("aalib")
-local PlaySound = aalib.play_sound
-local SND_ASYNC<const> = 0x0001
-local SND_FILENAME<const> = 0x00020000
-store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound3.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-util.show_corner_help("~bold~~y~欢迎使用夜幕Lua 此版本号为：~o~" .. Version5 ..  "~g~‹\n ~b~夜幕LUA祝你玩的开心！")
+------------------------------------夜幕LUA------------------------------
+require "lib.YeMulib.YeMulib"
+Version5 = 5.6
+local net = "夜幕LUA暂时无法连接到服务器！"
+util.show_corner_help("~bold~~y~欢迎使用夜幕LUA 此版本号为：~o~" .. Version5 ..  "~g~‹\n ~b~祝你玩的开心！")
 YM_logo = directx.create_texture(filesystem.resources_dir() ..'/YMIMG/YM.png')
 if SCRIPT_MANUAL_START then
     AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
@@ -236,7 +219,15 @@ function xianshijiaoben1(state)
                 mcb=mcb-1
             end
         end
-    draw_string(string.format("~italic~¦~bold~欢迎使用夜幕-V" .. Version5 ..  ""), 0.35,0.08, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~欢迎使用夜幕-V" .. Version5 ..  ""), 0.38,0.05, 0.57,5)
     util.yield()
     end
+end
+function YMdet()
+    if not async_http.have_access() then
+        local y = net
+        notification("~bold~请为夜幕LUA启用互联网访问&#8721;", math.random(0, 50))
+        util. stop_script()
+    end
+    --util.toast(net)
 end

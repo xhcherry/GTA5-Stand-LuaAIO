@@ -1,7 +1,85 @@
 -- Constructor Constants
 
-local SCRIPT_VERSION = "0.37"
+local SCRIPT_VERSION = "0.38"
 local constants = {}
+
+constants.landing_gear_states = {
+    "Deployed",
+    "Closing",
+    "Opening",
+    "Retracted",
+}
+
+constants.ped_max_hair_tint = 63
+constants.ped_max_makeup_tint = 63
+constants.ped_head_overlays = {
+    {
+        overlay_id=0,
+        name="Blemishes",
+        max_index=23,
+    },
+    {
+        overlay_id=1,
+        name="Facial Hair",
+        max_index=28,
+    },
+    {
+        overlay_id=2,
+        name="Eyebrows",
+        max_index=33,
+    },
+    {
+        overlay_id=3,
+        name="Ageing",
+        max_index=14,
+    },
+    {
+        overlay_id=4,
+        name="Makeup",
+        max_index=74,
+    },
+    {
+        overlay_id=5,
+        name="Blush",
+        max_index=6,
+    },
+    {
+        overlay_id=6,
+        name="Complexion",
+        max_index=11,
+    },
+    {
+        overlay_id=7,
+        name="Sun Damage",
+        max_index=10,
+    },
+    {
+        overlay_id=8,
+        name="Lipstick",
+        max_index=9,
+    },
+    {
+        overlay_id=9,
+        name="Moles/Freckles",
+        max_index=17,
+    },
+    {
+        overlay_id=10,
+        name="Chest Hair",
+        max_index=16,
+    },
+    {
+        overlay_id=11,
+        name="Body Blemishes",
+        max_index=11,
+    },
+    {
+        overlay_id=12,
+        name="Add Body Blemishes",
+        max_index=1,
+    },
+}
+
 
 constants.radio_station_map= {
     ["RADIO_11_TALK_02"] = "Blaine County Radio",

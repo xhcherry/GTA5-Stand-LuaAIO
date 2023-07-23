@@ -1,19 +1,18 @@
 -- Construct Convertors
 -- Transforms various file formats into Construct format
 
-local SCRIPT_VERSION = "0.37.1"
+local SCRIPT_VERSION = "0.39.1"
 local convertor = {
     SCRIPT_VERSION = SCRIPT_VERSION
 }
 
----
+
 --- Dependencies
----
 local inspect = require "lib.daidailib.constructor.inspect"
 local xml2lua = require "lib.daidailib.constructor.xml2lua"
-local constructor_lib = require "lib.daidailib.constructor.constructor_lib"
 local iniparser = require "lib.daidailib.constructor.iniparser"
 local json = require "lib.daidailib.constructor.json"
+local constructor_lib = require "lib.daidailib.constructor.constructor_lib"
 
 ---
 --- Utils
@@ -964,18 +963,21 @@ end
 local function map_mapobject_vehicle(attachment, placement)
     if placement.Type ~= "Vehicle" then return end
     if attachment.vehicle_attributes == nil then attachment.vehicle_attributes = {} end
+    if attachment.vehicle_attributes.primary == nil then attachment.vehicle_attributes.primary = {} end
+    if attachment.vehicle_attributes.secondary == nil then attachment.vehicle_attributes.secondary = {} end
 
     if placement.PrimaryColor ~= nil then
-        attachment.vehicle_options.primary.vehicle_standard_color = placement.PrimaryColor
+        attachment.vehicle_attributes.primary.vehicle_standard_color = placement.PrimaryColor
     end
     if placement.SecondaryColor ~= nil then
-        attachment.vehicle_options.secondary.vehicle_standard_color = placement.SecondaryColor
+        attachment.vehicle_attributes.secondary.vehicle_standard_color = placement.SecondaryColor
     end
 end
 
 local function map_mapobject_placement(attachment, placement)
     --util.log("Processing "..inspect(placement))
     if attachment == nil then attachment = {} end
+    if attachment.options == nil then attachment.options = {} end
 
     attachment.hash = tonumber(placement.Hash)
     if attachment.model == nil and attachment.hash ~= nil then
@@ -1017,6 +1019,9 @@ convertor.convert_xml_to_construct_plan = function(xmldata)
         end
     elseif vehicle_handler.root.SpoonerPlacements ~= nil then
         local placements = vehicle_handler.root.SpoonerPlacements.Placement
+        if placements == nil then
+            placements = vehicle_handler.root.SpoonerPlacements.Attachment
+        end
         if placements[1] == nil then placements = {placements} end -- Single prop maps need to be forced into a list
         for _, placement in pairs(placements) do
             if construct_plan.model == nil then
@@ -1483,7 +1488,14 @@ local function map_ini_attachment_flavor_4(attachment, data)
     if data["Visible"] ~= nil then attachment.options.is_visible = toboolean(data["Visible"]) end
     if data["Gravity"] ~= nil then attachment.options.has_gravity = toboolean(data["Gravity"]) end
     if data["Invincible"] ~= nil then attachment.options.is_invincible = toboolean(data["Invincible"]) end
-    if data["Freeze"] ~= nil then attachment.options.is_frozen = toboolean(data["Freeze"]) end
+    if data["Freeze"] ~= nil then
+        attachment.options.is_frozen = toboolean(data["Freeze"])
+    else
+        if attachment.type == "OBJECT" then
+            attachment.options.is_frozen = true
+        end
+    end
+
     if data["Lights"] ~= nil then attachment.options.lights = toboolean(data["Lights"]) end
     if data["Dynamic"] ~= nil then attachment.options.is_dynamic = toboolean(data["Dynamic"]) end
     if data["Health"] ~= nil then attachment.options.health = tonumber(data["Health"]) end
@@ -1894,7 +1906,7 @@ local function map_ini_vehicle_flavor_7(attachment, data)
     if data.neon_b ~= nil then attachment.vehicle_attributes.neon.color.b = tonumber(data.neon_b) end
     if data.windowTint ~= nil then attachment.vehicle_attributes.options.window_tint = tonumber(data.windowTint) end
     if data.headlightColor ~= nil then attachment.vehicle_attributes.headlights.headlights_color = tonumber(data.headlightColor) end
-    if data.hasTireSmoke ~= nil then 
+    if data.hasTireSmoke ~= nil then
         attachment.vehicle_attributes.wheels.tire_smoke_color.r = tonumber(data.tyressmoke_r)
         attachment.vehicle_attributes.wheels.tire_smoke_color.g = tonumber(data.tyressmoke_g)
         attachment.vehicle_attributes.wheels.tire_smoke_color.b = tonumber(data.tyressmoke_b)
@@ -1961,6 +1973,7 @@ local function map_ini_attachment_flavor_8(attachment, data)
     if attachment.name == nil then attachment.name = attachment.model end
     constructor_lib.default_attachment_attributes(attachment)
     attachment.type = "OBJECT"
+    attachment.options.is_frozen = true
     attachment.options.is_attached = false
     attachment.always_spawn_at_position = true
 
@@ -2064,7 +2077,7 @@ end
 convertor.convert_ini_to_construct_plan = function(construct_plan_file)
     local construct_plan = constructor_lib.table_copy(constructor_lib.construct_base)
 
-    local status_ini_parse, data = pcall(iniparser.parse, construct_plan_file.filepath, "")
+    local status_ini_parse, data = pcall(iniparser.parse, construct_plan_file.filepath, {commaCompat=true})
     if not status_ini_parse then
         util.toast("Error parsing INI file. "..construct_plan_file.filepath.." "..data)
         return

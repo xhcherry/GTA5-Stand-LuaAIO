@@ -93,6 +93,15 @@ function requestModels(...)--模型表
 	end
 end
 
+----请求效果
+function request_ptfx_asset(asset)
+    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(asset) do
+		STREAMING.REQUEST_NAMED_PTFX_ASSET(asset)
+		util.yield()
+	end
+    GRAPHICS.USE_PARTICLE_FX_ASSET(asset)
+end
+
 --请求控制
 function request_control(entity, timeout)
     local end_time = os.time() + (timeout or 5)
@@ -140,15 +149,16 @@ function get_offset_from_gameplay_camera(distance)
 	return destination
 end
 
-----使用效果
-function use_fx_asset(asset)
-    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(asset) do
-		STREAMING.REQUEST_NAMED_PTFX_ASSET(asset)
-		util.yield(0)
-	end
-    GRAPHICS.USE_PARTICLE_FX_ASSET(asset)
+----个人传送
+function teleport(x, y, z)
+    --[[ if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID()) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(vehicle, x, y, z, true, false, false)
+    else
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), x, y, z, true, false, false)
+    end ]]
+    PED.SET_PED_COORDS_KEEP_VEHICLE(PLAYER.PLAYER_PED_ID(), x, y, z)
 end
-
 
 ----显示按键
 function show_button()--函数位于首部
@@ -259,14 +269,6 @@ function mod_uses(type, incr)
     end
 end
 
-----创建PED(鲨鱼枪,黑人抬棺,)
-function Cped(type, hash, pos, dir)
-    request_model(hash, 300)
-    local ped = entities.create_ped(type, hash, pos, dir, true, false)
-    STREAMING.REQUEST_MODEL(hash)
-    return ped
-end
-
 
 ----文件写入
 function filewrite(filepath, method, content)
@@ -274,6 +276,7 @@ function filewrite(filepath, method, content)
     file:write(content)
     file:close()
 end
+
 ----读取文件
 function fileread(filepath, method, rtype)
     if filesystem.exists(filepath) then
@@ -404,7 +407,7 @@ function get_entity_player_is_aiming_at(player)
 end
 
 ----绘制文字
-function draw_string(s, x, y, scale, font)--font=4无法显示中文
+function draw_string(s, x, y, scale, font)--font=4无法显示中文,系统英语可现实斜体云字体
 	HUD.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING")
 	HUD.SET_TEXT_FONT(font or 1)
 	HUD.SET_TEXT_SCALE(scale, scale)
@@ -415,6 +418,65 @@ function draw_string(s, x, y, scale, font)--font=4无法显示中文
 	HUD.SET_TEXT_EDGE(1, 0, 0, 0, 0)
 	HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(s)
 	HUD.END_TEXT_COMMAND_DISPLAY_TEXT(x, y)
+end
+
+----附加
+function attach_to_player(hash, bone, x, y, z, xrot, yrot, zrot)           
+    local user_ped = PLAYER.PLAYER_PED_ID()
+    hash = util.joaat(hash)
+    STREAMING.REQUEST_MODEL(hash)
+    while not STREAMING.HAS_MODEL_LOADED(hash) do		
+        util.yield()
+    end
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
+    local object = OBJECT.CREATE_OBJECT(hash, 0.0,0.0,0, true, true, false)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(object, user_ped, PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), bone), x, y, z, xrot, yrot, zrot, false, false, false, false, 2, true) 
+end
+
+
+----字符串转变为 table表
+function StrToTable(str)
+    if str == nil or type(str) ~= "string" then
+        return
+    end
+    return loadstring("return " .. str)()
+end
+----table表转字符串
+function ToStringEx(value)
+    if type(value)=='table' then
+        return TableToStr(value)
+    elseif type(value)=='string' then
+        return "\'"..value.."\'"
+    else
+        return tostring(value)
+    end
+end
+function TableToStr(t)
+    if t == nil then return "" end
+    local retstr= "{"
+    local i = 1
+    for key,value in pairs(t) do
+        local signal = ","
+        if i==1 then
+            signal = ""
+        end
+        if key == i then
+            retstr = retstr..signal..ToStringEx(value)
+        else
+            if type(key)=='number' or type(key) == 'string' then
+                retstr = retstr..signal..'['..ToStringEx(key).."]="..ToStringEx(value)
+            else
+                if type(key)=='userdata' then
+                    retstr = retstr..signal.."*s"..TableToStr(getmetatable(key)).."*e".."="..ToStringEx(value)
+                else
+                    retstr = retstr..signal..key.."="..ToStringEx(value)
+                end
+            end
+        end
+        i = i+1
+    end
+    retstr = retstr.."}"
+    return retstr
 end
 ------------------------------------------------------------------------------------------------------
 
@@ -455,6 +517,157 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----驾驶超级游艇
+function super_yacht()
+    local CoreSpawnPoint = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 0, 0)
+    local CoreSpawnHeading = ENTITY.GET_ENTITY_HEADING(players.user_ped())
+    local CoreHash = util.joaat("kosatka")
+    request_model(CoreHash)
+    local Core = entities.create_vehicle(CoreHash, CoreSpawnPoint, CoreSpawnHeading)
+    PED.SET_PED_INTO_VEHICLE(players.user_ped(), Core, -1)
+    ENTITY.SET_ENTITY_VISIBLE(Core, false, false)
+    local YachtHash = util.joaat("prop_cj_big_boat")
+    request_model(YachtHash)
+    local Yacht = entities.create_object(YachtHash, CoreSpawnPoint, CoreSpawnHeading)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(Yacht, Core, 0, 0, 0, 0, 0, 0, 0, true, false, false, true, 0, true, 0)
+    ENTITY.SET_ENTITY_COLLISION(Yacht, true, false)
+    ENTITY.SET_ENTITY_COLLISION(Core, false, false)
+end
+
+
+----神风炮
+local JetSquadronRealNames = {"Lazer","raiju", "molotok", "pyro", "strikeforce", "seabreeze" , "howard", "besra", "starling", "rogue", "Stunt", "alphaz1", "nimbus", "luxor2", "mogul", "streamer216", "vestra", "cuban800", "dodo", "velum", "mammatus", "duster", "microlight"}
+function Kamikaze_Gun()
+    local pos = v3.new()
+    if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pos) and not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) then
+        request_model(1267718013)
+        local PH = entities.create_object(1267718013, pos, 0)--创建光标
+        ENTITY.SET_ENTITY_VISIBLE(PH, false, false)
+        ENTITY.SET_ENTITY_COLLISION(PH, false)
+        ENTITY.SET_ENTITY_COORDS(PH, pos.x, pos.y, pos.z, false, false, false, false)
+
+        local Ppedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user_ped())
+        local randomPlane = util.joaat(JetSquadronRealNames[math.random(1, #JetSquadronRealNames)])
+        request_model(randomPlane)
+        local Offset = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PH, math.random(-200, 200), math.random(-200, 200), math.random(100, 500))
+        local Kamikaze = entities.create_vehicle(randomPlane, Offset, math.random(-180, 180))--创建飞机
+        local KamikazeCam = CAM.CREATE_CAMERA(26379945, true)
+
+        util.create_tick_handler(function()
+            if ENTITY.DOES_ENTITY_EXIST(Kamikaze) then--禁止执行中重复生成模型
+                PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), true)
+            else
+                PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), false)
+            end
+            set_entity_face_entity(Kamikaze, PH, true)
+            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(Kamikaze, 1, 0, 1.5, 0.0, true, true, true, true)
+            CAM.RENDER_SCRIPT_CAMS(true, false, 3000, 1, 0, 0)
+            CAM.SHAKE_CAM(KamikazeCam, "DRUNK_SHAKE", 1)
+            GRAPHICS.ANIMPOSTFX_PLAY("MP_corona_switch_supermod", 0, true)
+            GRAPHICS.ANIMPOSTFX_PLAY("MP_OrbitalCannon", 0, true)
+
+            if ENTITY.HAS_ENTITY_COLLIDED_WITH_ANYTHING(Kamikaze) then--判断实体是否与任何物体碰撞
+                local KamikazeOffset = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Kamikaze,  math.random(-5, 5),  math.random(-5, 5),  math.random(-5, 5))
+                FIRE.ADD_EXPLOSION(KamikazeOffset.x, KamikazeOffset.y, KamikazeOffset.z, 59, 1, true, false, 1.0, false)
+                AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "DLC_XM_Explosions_Orbital_Cannon", Kamikaze, 0, true, false)
+
+                util.yield(1500)
+                CAM.RENDER_SCRIPT_CAMS(false, false, 3000, 1, 0, 0);
+                CAM.DESTROY_CAM(KamikazeCam, true)
+                GRAPHICS.ANIMPOSTFX_STOP("MP_OrbitalCannon", 0, true)
+                GRAPHICS.ANIMPOSTFX_STOP("MP_OrbitalCannon", 0, true)
+                GRAPHICS.ANIMPOSTFX_STOP("MP_corona_switch_supermod", 0, true)
+                GRAPHICS.ANIMPOSTFX_STOP("MP_corona_switch_supermod", 0, true)
+                entities.delete(Kamikaze)
+                entities.delete(PH)
+                return false
+            else
+                ENTITY.SET_ENTITY_COORDS(PH, pos.x, pos.y, pos.z, false, false, false, false)
+            end
+        end)
+        CAM.HARD_ATTACH_CAM_TO_ENTITY(KamikazeCam, Kamikaze, -10, 0, 0, 0, -10, 6, true)
+        local cause = VEHICLE.GET_VEHICLE_CAUSE_OF_DESTRUCTION(Kamikaze)
+        VEHICLE.SET_ALLOW_VEHICLE_EXPLODES_ON_CONTACT(Kamikaze, true)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(Kamikaze, true, true, 0)
+        KamikazePilot = PED.CREATE_RANDOM_PED_AS_DRIVER(Kamikaze, 1)
+        VEHICLE.CONTROL_LANDING_GEAR(Kamikaze, 3)
+    end
+end
+
+--发送神风炮
+function Send_Kamikaze_Gun(pid)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+    local randomPlane = util.joaat(JetSquadronRealNames[math.random(1, #JetSquadronRealNames)])
+    request_model(randomPlane)
+    local Offset = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED(pid), math.random(-200, 200), math.random(-200, 200), math.random(100, 500))
+    local Kamikaze = entities.create_vehicle(randomPlane, Offset, math.random(-180, 180))--创建飞机
+    local KamikazeCam = CAM.CREATE_CAMERA(26379945, true)
+
+    util.create_tick_handler(function()
+        set_entity_face_entity(Kamikaze, PLAYER.GET_PLAYER_PED(pid), true)
+        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(Kamikaze, 1, 0, 1.5, 0.0, true, true, true, true)
+        CAM.RENDER_SCRIPT_CAMS(true, false, 3000, 1, 0, 0)
+        CAM.SHAKE_CAM(KamikazeCam, "DRUNK_SHAKE", 1)
+        GRAPHICS.ANIMPOSTFX_PLAY("MP_corona_switch_supermod", 0, true)
+        GRAPHICS.ANIMPOSTFX_PLAY("MP_OrbitalCannon", 0, true)
+
+        if ENTITY.HAS_ENTITY_COLLIDED_WITH_ANYTHING(Kamikaze) then--判断实体是否与任何物体碰撞
+            local KamikazeOffset = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Kamikaze,  math.random(-5, 5),  math.random(-5, 5),  math.random(-5, 5))
+            FIRE.ADD_EXPLOSION(KamikazeOffset.x, KamikazeOffset.y, KamikazeOffset.z, 59, 1, true, false, 1.0, false)
+            AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "DLC_XM_Explosions_Orbital_Cannon", Kamikaze, 0, true, false)
+
+            util.yield(1500)
+            CAM.RENDER_SCRIPT_CAMS(false, false, 3000, 1, 0, 0);
+            CAM.DESTROY_CAM(KamikazeCam, true)
+            GRAPHICS.ANIMPOSTFX_STOP("MP_OrbitalCannon", 0, true)
+            GRAPHICS.ANIMPOSTFX_STOP("MP_OrbitalCannon", 0, true)
+            GRAPHICS.ANIMPOSTFX_STOP("MP_corona_switch_supermod", 0, true)
+            GRAPHICS.ANIMPOSTFX_STOP("MP_corona_switch_supermod", 0, true)
+            entities.delete(Kamikaze)
+            return false
+        end
+    end)
+    CAM.HARD_ATTACH_CAM_TO_ENTITY(KamikazeCam, Kamikaze, -10, 0, 0, 0, -10, 6, true)
+    local cause = VEHICLE.GET_VEHICLE_CAUSE_OF_DESTRUCTION(Kamikaze)
+    VEHICLE.SET_ALLOW_VEHICLE_EXPLODES_ON_CONTACT(Kamikaze, true)
+    VEHICLE.SET_VEHICLE_ENGINE_ON(Kamikaze, true, true, 0)
+    KamikazePilot = PED.CREATE_RANDOM_PED_AS_DRIVER(Kamikaze, 1)
+    VEHICLE.CONTROL_LANDING_GEAR(Kamikaze, 3)
+end
 
 
 ----玩家栏
@@ -720,7 +933,8 @@ local selptfx = {a= "core",b= "ent_dst_gen_gobstop",c ="5"}
 function ptfx_fun()
     local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
     local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
-    use_fx_asset(selptfx.a)
+    request_ptfx_asset(selptfx.a)
+    GRAPHICS.USE_PARTICLE_FX_ASSET(selptfx.a)
     GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(selptfx.b, tar1.x, tar1.y, tar1.z, 0, 0, 0, selptfx.c, true, true, false)
     util.yield(200)
 end
@@ -736,7 +950,8 @@ local ptfxx = {lib = 'scr_rcbarry2', sel = 'scr_clown_appears'}
 function p_eff_bomb(pid)
     local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
-    use_fx_asset(ptfxx.lib)
+    request_ptfx_asset(ptfxx.lib)
+    GRAPHICS.USE_PARTICLE_FX_ASSET(ptfxx.lib)
     GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(ptfxx.sel, tar1.x, tar1.y, tar1.z + 1, 0, 0, 0, 5, true, true, true)
 end
 function sel_p_eff_bomb(value)
@@ -997,7 +1212,8 @@ function Firework_Gun()
             ENTITY.SET_ENTITY_ROTATION(firework, cam_rot.x, cam_rot.y, cam_rot.z, 0, true)
             ENTITY.SET_ENTITY_HAS_GRAVITY(firework, false)
 
-            use_fx_asset("scr_rcpaparazzo1")
+            request_ptfx_asset("scr_rcpaparazzo1")
+            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_rcpaparazzo1")
             local effect = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY("scr_mich4_firework_trail_spawn", firework, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, false, false, false, 0, 0, 0, 0)
             GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(effect, 255, 255, 255, false)
             local timer = 150
@@ -1612,7 +1828,8 @@ function auto_ped_cage(pid)
             if pedhash == util.joaat('player_two') then
                 Runanim(Pedanim, 'misscarsteal2peeing','peeing_loop')
                 local tre = PED.GET_PED_BONE_INDEX(Pedanim, 0x2e28)
-                use_fx_asset('core')
+                request_ptfx_asset('core')
+                GRAPHICS.USE_PARTICLE_FX_ASSET('core')
                 GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("ent_amb_peeing", Pedanim, 0, 0, 0, -90, 0, 0, tre, 2, false, false, false)
             elseif pedhash == util.joaat('u_m_m_jesus_01') then
                 Runanim(peds[1], 'mp_player_int_upperpeace_sign', 'mp_player_int_peace_sign')
@@ -1861,7 +2078,10 @@ end
 function Shark_gun()
     local pos = v3.new()
 	if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pos) then
-        local NPC = Cped(26, 0x06C3F072, pos , 0)
+        local hash = 0x06C3F072
+        request_model(hash, 300)
+        local NPC = entities.create_ped(26, hash, pos, 0, true, false)
+        --local NPC = Cped(26, 0x06C3F072, pos , 0)
         ENTITY.FREEZE_ENTITY_POSITION(NPC, true)
         ENTITY.SET_ENTITY_ROTATION(NPC, 90, 0, 0, true)
         FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 4, 100, true, false, 1, false)
@@ -2213,6 +2433,27 @@ end
 
 
 --命中效果
+local HitEffect = {colorCanChange = false}
+HitEffect.__index = HitEffect
+setmetatable(HitEffect, Effect)
+function HitEffect.new(asset, name, colorCanChange)
+	local inst = setmetatable({}, HitEffect)
+	inst.name = name
+	inst.asset = asset
+	inst.colorCanChange = colorCanChange or false
+	return inst
+end
+hitEffects = {
+	HitEffect.new("scr_rcbarry2", "scr_exp_clown"),
+	HitEffect.new("scr_rcbarry2", "scr_clown_appears"),
+	HitEffect.new("scr_rcpaparazzo1", "scr_mich4_firework_trailburst_spawn", true),
+	HitEffect.new("scr_indep_fireworks", "scr_indep_firework_starburst", true),
+	HitEffect.new("scr_indep_fireworks", "scr_indep_firework_fountain", true),
+	HitEffect.new("scr_rcbarry1", "scr_alien_disintegrate"),
+	HitEffect.new("scr_rcbarry2", "scr_clown_bul"),
+	HitEffect.new("proj_indep_firework", "scr_indep_firework_grd_burst"),
+	HitEffect.new("scr_rcbarry2", "muz_clown"),
+}
 local selectedhitOpt = 1
 function set_effectColour(colour)
     hiteffectColour = colour
@@ -2329,6 +2570,8 @@ end
 function unknown()
     local spped = PLAYER.PLAYER_PED_ID()
     local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
+    local TTPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local TTPos = ENTITY.GET_ENTITY_COORDS(TTPed, true)
     SelfPlayerPos.x = SelfPlayerPos.x + 10
     TTPos.x = TTPos.x + 10
     local carc = CreateObject(util.joaat("apa_prop_flag_china"), TTPos, ENTITY.GET_ENTITY_HEADING(spped), true)
@@ -3077,21 +3320,6 @@ function creep(pid)
 		end)
 end
 
-
-
-
-
-----火人
-function request_ptfx_asset(asset)
-    local request_time = os.time()
-    STREAMING.REQUEST_NAMED_PTFX_ASSET(asset)
-    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(asset) do
-        if os.time() - request_time >= 10 then
-            break
-        end
-        util.yield()
-    end
-end
 
 ------------------载具枪
 Preview = {handle = 0, modelHash = 0}
@@ -4032,25 +4260,23 @@ function direction()
     return c2, c1
 end
 function nukegunmode()
-    if WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped()) == -1312131151 then --if holding homing launcher
-        if PED.IS_PED_SHOOTING(players.user_ped()) then
-            WEAPON.REMOVE_ALL_PROJECTILES_OF_TYPE(-1312131151, false)
-            util.create_thread(function()
-                local hash = util.joaat('w_arena_airmissile_01a')
-                request_model(hash)
-                local cam_rot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
-                local dir, pos = direction()
-                local bomb = entities.create_object(hash, pos)
-                ENTITY.APPLY_FORCE_TO_ENTITY(bomb, 0, dir.x, dir.y, dir.z, 0.0, 0.0, 0.0, 0, true, false, true, false, true)
-                ENTITY.SET_ENTITY_ROTATION(bomb, cam_rot.x, cam_rot.y, cam_rot.z, 1, true)
-                while not ENTITY.HAS_ENTITY_COLLIDED_WITH_ANYTHING(bomb) do
-                    util.yield()
-                end
-                local nukePos = ENTITY.GET_ENTITY_COORDS(bomb, true)
-                entities.delete_by_handle(bomb)
-                executeNuke(nukePos)
-            end)
-        end
+    if PED.IS_PED_SHOOTING(players.user_ped()) then
+        WEAPON.REMOVE_ALL_PROJECTILES_OF_TYPE(-1312131151, false)
+        util.create_thread(function()
+            local hash = util.joaat('w_arena_airmissile_01a')
+            request_model(hash)
+            local cam_rot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
+            local dir, pos = direction()
+            local bomb = entities.create_object(hash, pos)
+            ENTITY.APPLY_FORCE_TO_ENTITY(bomb, 0, dir.x, dir.y, dir.z, 0.0, 0.0, 0.0, 0, true, false, true, false, true)
+            ENTITY.SET_ENTITY_ROTATION(bomb, cam_rot.x, cam_rot.y, cam_rot.z, 1, true)
+            while not ENTITY.HAS_ENTITY_COLLIDED_WITH_ANYTHING(bomb) do
+                util.yield()
+            end
+            local nukePos = ENTITY.GET_ENTITY_COORDS(bomb, true)
+            entities.delete_by_handle(bomb)
+            executeNuke(nukePos)
+        end)
     end
 end
 
@@ -4533,9 +4759,13 @@ end
 function nanodrone()
     local p_bits = memory.script_global(1962996)
     local bits = memory.read_int(p_bits)
+    util.toast(p_bits)
+    util.toast(bits)
     TASK.CLEAR_PED_TASKS(players.user_ped())
     memory.write_int(p_bits, SetBit(bits, 24))
-    if not CanSpawnNanoDrone() then memory.write_int(p_bits, SetBit(bits, 23)) end
+    if not CanSpawnNanoDrone() then 
+        memory.write_int(p_bits, SetBit(bits, 23)) 
+    end
 end
 --请求豪华直升机
 function Luxury_Helicopter()
@@ -5380,17 +5610,6 @@ end
 
 
 ------导弹
-function attach_to_player(hash, bone, x, y, z, xrot, yrot, zrot)           
-    local user_ped = PLAYER.PLAYER_PED_ID()
-    hash = util.joaat(hash)
-    STREAMING.REQUEST_MODEL(hash)
-    while not STREAMING.HAS_MODEL_LOADED(hash) do		
-        util.yield()
-    end
-    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
-    local object = OBJECT.CREATE_OBJECT(hash, 0.0,0.0,0, true, true, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(object, user_ped, PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), bone), x, y, z, xrot, yrot, zrot, false, false, false, false, 2, true) 
-end
 obj_pp = {"prop_cs_dildo_01", "prop_ld_bomb_01", "prop_sam_01"}
 opt_pp = {"小导弹", "中导弹", "大导弹", "移除导弹"}
 function dd02(index, value, click_type)
@@ -6260,7 +6479,8 @@ function Rocket_Man()
     for i = 1, #forces do
         ENTITY.APPLY_FORCE_TO_ENTITY(players.user_ped(), 3, 0.0, 0.0, forces[i], 0.0, 0.0, 0.0, 0, false, false, true, false, false)
         local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
-        use_fx_asset("cut_xm3")
+        request_ptfx_asset("cut_xm3")
+        GRAPHICS.USE_PARTICLE_FX_ASSET("cut_xm3")
         GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("cut_xm3_rpg_explosion", pos.x, pos.y, pos.z-0.5, 0, 0, 0, 1.0, true, true, true)
         AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Bomb_Countdown_Beep", players.user_ped(), "DLC_MPSUM2_ULP2_Rogue_Drones", true, false)
         util.yield(delays[i])
@@ -6270,7 +6490,8 @@ function Rocket_Man()
         repeat
             ENTITY.APPLY_FORCE_TO_ENTITY(players.user_ped(), 3, 0.0, 0.0, 10, 0.0, 0.0, 0.0, 0, false, false, true, false, false)
             pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
-            use_fx_asset("cut_xm3")
+            request_ptfx_asset("cut_xm3")
+            GRAPHICS.USE_PARTICLE_FX_ASSET("cut_xm3")
             GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("cut_xm3_rpg_explosion", pos.x, pos.y, pos.z-0.5, 0, 0, 0, 1.0, true, true, true)
             AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Bomb_Countdown_Beep", players.user_ped(), "DLC_MPSUM2_ULP2_Rogue_Drones", true, false)
             util.yield(i == 1 and 100 or 10)
@@ -6278,7 +6499,8 @@ function Rocket_Man()
     end
     AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Bomb_Detonate", players.user_ped(), "DLC_MPSUM2_ULP2_Rogue_Drones", true, false)
     pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
-    use_fx_asset("scr_xm_orbital")
+    request_ptfx_asset("scr_xm_orbital")
+    GRAPHICS.USE_PARTICLE_FX_ASSET("scr_xm_orbital")
     GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("scr_xm_orbital_blast", pos.x, pos.y, pos.z, 0, 180, 0, 1.0, true, true, true)
     STREAMING.REMOVE_NAMED_PTFX_ASSET("cut_xm3")
     STREAMING.REMOVE_NAMED_PTFX_ASSET("scr_xm_orbital")

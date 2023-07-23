@@ -43,16 +43,16 @@
 
     --- Important
 
-        HC_VERSION = "V 3.3.3"
+        HC_VERSION = "V 3.3.5"
         CODED_GTAO_VERSION = 1.67
-        SUPPORTED_STAND_VERSION = 101 -- Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
+        SUPPORTED_STAND_VERSION = 101  --  Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
 
     ---
 
     --- Directory Settings
 
-        HC_DIR = filesystem.scripts_dir() .. "/PIELIB/" .. '/Heist Control/'
-
+    HC_DIR = filesystem.scripts_dir() .. "/PIELIB/" .. '/Heist Control/'
+        
         FolderDirs = {
             Img = HC_DIR .. "Image\\",
             Setting = HC_DIR .. "Setting\\",
@@ -108,9 +108,6 @@
 
         function STAT_SET_INT(stat, value)
             STATS.STAT_SET_INT(util.joaat(ADD_MP_INDEX(stat)), value, true)
-        end
-        function STAT_SET_FLOAT(stat, value)
-            STATS.STAT_SET_FLOAT(util.joaat(ADD_MP_INDEX(stat)), value, true)
         end
         function STAT_SET_BOOL(stat, value)
             STATS.STAT_SET_BOOL(util.joaat(ADD_MP_INDEX(stat)), value, true)
@@ -785,22 +782,22 @@
 
 
 --- Main Lists
-local HeistControl_features = menu.list(task_options, "任务选项", {}, "")
-menu.divider(HeistControl_features, TRANSLATE("Heist Control") .. " " .. HC_VERSION)
 
-        PERICO_HEIST = menu.list(HeistControl_features, TRANSLATE("Cayo Perico Heist"), {"hccp"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run") .. "\n" .. TRANSLATE("- Under $4.100.000 per hour"), function();  end)
-        CASINO_HEIST = menu.list(HeistControl_features, TRANSLATE("Diamond Casino Heist"), {"hccah"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $3.650.000 per run"), function(); end)
-        DOOMS_HEIST = menu.list(HeistControl_features, TRANSLATE("Doomsday Heist"), {"hcdooms"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run"), function(); end)
-        CLASSIC_HEISTS = menu.list(HeistControl_features, TRANSLATE("Classic Heist"), {"hcclassic"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Fleeca Heist: Under $15.000.000 per run"), function(); end)
-        LS_ROBBERY = menu.list(HeistControl_features, TRANSLATE("LS Tuners Robbery"), {"hcls"}, "", function(); end)
-        ULP_MISSIONS = menu.list(HeistControl_features, TRANSLATE("ULP Missions"), {"hculp"}, "", function(); end)
-        TH_CONTRACT = menu.list(HeistControl_features, TRANSLATE("The Contract: Agency"), {"hcagc"}, "", function(); end)
-        MASTER_UNLOCKR = menu.list(HeistControl_features, TRANSLATE("Master Unlocker"), {"hcmu"}, "", function(); end)
-        TOOLS = menu.list(HeistControl_features, TRANSLATE("Tools"), {"hctool"}, "", function(); end)
-        INFOS = menu.list(HeistControl_features, TRANSLATE("Settings And About HC"), {"hcinfo"}, "", function(); end)
 
     ---
-
+    local HeistControl_features = menu.list(task_options, "任务选项", {}, "")
+    menu.divider(HeistControl_features, TRANSLATE("Heist Control") .. " " .. HC_VERSION)
+    
+            PERICO_HEIST = menu.list(HeistControl_features, TRANSLATE("Cayo Perico Heist"), {"hccp"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run") .. "\n" .. TRANSLATE("- Under $4.100.000 per hour"), function();  end)
+            CASINO_HEIST = menu.list(HeistControl_features, TRANSLATE("Diamond Casino Heist"), {"hccah"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $3.650.000 per run"), function(); end)
+            DOOMS_HEIST = menu.list(HeistControl_features, TRANSLATE("Doomsday Heist"), {"hcdooms"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run"), function(); end)
+            CLASSIC_HEISTS = menu.list(HeistControl_features, TRANSLATE("Classic Heist"), {"hcclassic"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Fleeca Heist: Under $15.000.000 per run"), function(); end)
+            LS_ROBBERY = menu.list(HeistControl_features, TRANSLATE("LS Tuners Robbery"), {"hcls"}, "", function(); end)
+            ULP_MISSIONS = menu.list(HeistControl_features, TRANSLATE("ULP Missions"), {"hculp"}, "", function(); end)
+            TH_CONTRACT = menu.list(HeistControl_features, TRANSLATE("The Contract: Agency"), {"hcagc"}, "", function(); end)
+            MASTER_UNLOCKR = menu.list(HeistControl_features, TRANSLATE("Master Unlocker"), {"hcmu"}, "", function(); end)
+            TOOLS = menu.list(HeistControl_features, TRANSLATE("Tools"), {"hctool"}, "", function(); end)
+            INFOS = menu.list(HeistControl_features, TRANSLATE("Settings And About HC"), {"hcinfo"}, "", function(); end)
 ---
 
 
@@ -810,7 +807,7 @@ menu.divider(HeistControl_features, TRANSLATE("Heist Control") .. " " .. HC_VERS
 
         menu.divider(CAYO_PRESETS, TRANSLATE("Recommended"))
 
-            QUICK_PRESET = menu.toggle(CAYO_PRESETS, TRANSLATE("Quick Preset (1 - 4P)"), {"hccpquick"}, IS_WORKING(true) .. TRANSLATE("There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.55M) by only getting it."), function()
+            QUICK_PRESET = menu.toggle(CAYO_PRESETS, TRANSLATE("Quick Preset (1 - 4P)"), {"hccpquick"}, IS_WORKING(true) .. TRANSLATE("There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.45M) by only getting it."), function()
                 if menu.get_value(QUICK_PRESET) then
                     menu.trigger_commands("hccprefreshboard")
 
@@ -889,16 +886,16 @@ menu.divider(HeistControl_features, TRANSLATE("Heist Control") .. " " .. HC_VERS
                     STAT_SET_INT("H4CNF_TARGET", CPTargets[Value][1])
                     SET_INT_GLOBAL(CPTargets[Value][2], 2455000)
                     
-                    menu.set_value(CP_REM_FEE, false)
+                    menu.set_value(CP_REM_FEE, true)
                     menu.set_value(CP_NON_HOST_CUT, 100)
                     menu.set_value(CP_NON_HOST_CUT_LOOP, false)
                     menu.set_value(CP_HOST_CUT, 100)
                     menu.set_value(CP_HOST_CUT_LOOP, true)
-                    menu.set_value(CP_2P_CUT, 100)
+                    menu.set_value(CP_2P_CUT, 145)
                     menu.set_value(CP_2P_CUT_LOOP, true)
-                    menu.set_value(CP_3P_CUT, 100)
+                    menu.set_value(CP_3P_CUT, 145)
                     menu.set_value(CP_3P_CUT_LOOP, true)
-                    menu.set_value(CP_4P_CUT, 100)
+                    menu.set_value(CP_4P_CUT, 145)
                     menu.set_value(CP_4P_CUT_LOOP, true)
 
                     util.yield_once()
@@ -1708,7 +1705,7 @@ menu.divider(HeistControl_features, TRANSLATE("Heist Control") .. " " .. HC_VERS
 
         ---
 
-        TELEPORT_CP_KOSATKA = menu.action(TELEPORT_CP, TRANSLATE("Kosatka: Heist Board"), {"hctpsub"}, "", function()
+        TELEPORT_CP_KOSATKA = menu.action(TELEPORT_CP, TRANSLATE("Kosatka: Heist Board"), {"hctpsub"}, TRANSLATE("Note that works on best when you are alone in your session."), function()
             if STAT_GET_INT("IH_SUB_OWNED") ~= 0 then
                 if not HUD.DOES_BLIP_EXIST(SubBlip) and not HUD.DOES_BLIP_EXIST(SubControlBlip) then
                     local PlayerPos = players.get_position(players.user())
@@ -1751,9 +1748,9 @@ menu.divider(HeistControl_features, TRANSLATE("Heist Control") .. " " .. HC_VERS
             PERICO_HOST_CUT = menu.list(PERICO_CUTS, TRANSLATE("Your Cut"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_HOST_CUT_LOOP = menu.toggle_loop(PERICO_HOST_CUT, TRANSLATE("Enable"), {"hccphostcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1978495 + 823 + 56 + 1, menu.get_value(CP_HOST_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 1, menu.get_value(CP_HOST_CUT)) -- heist_island_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1978495 + 823 + 56 + 1, menu.get_default_state(CP_HOST_CUT))
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 1, menu.get_default_state(CP_HOST_CUT))
                 end)
 
                 CP_HOST_CUT = menu.slider(PERICO_HOST_CUT, TRANSLATE("Custom Percentage"), {"hccphostcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -1763,9 +1760,9 @@ menu.divider(HeistControl_features, TRANSLATE("Heist Control") .. " " .. HC_VERS
             PERICO_P2_CUT = menu.list(PERICO_CUTS, TRANSLATE("Player 2"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_2P_CUT_LOOP = menu.toggle_loop(PERICO_P2_CUT, TRANSLATE("Enable"), {"hccp2pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1978495 + 823 + 56 + 2, menu.get_value(CP_2P_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 2, menu.get_value(CP_2P_CUT)) -- heist_island_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1978495 + 823 + 56 + 2, menu.get_default_state(CP_2P_CUT))
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 2, menu.get_default_state(CP_2P_CUT))
                 end)
 
                 CP_2P_CUT = menu.slider(PERICO_P2_CUT, TRANSLATE("Custom Percentage"), {"hccp2pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -1775,9 +1772,9 @@ menu.divider(HeistControl_features, TRANSLATE("Heist Control") .. " " .. HC_VERS
             PERICO_P3_CUT = menu.list(PERICO_CUTS, TRANSLATE("Player 3"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_3P_CUT_LOOP = menu.toggle_loop(PERICO_P3_CUT, TRANSLATE("Enable"), {"hccp3pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1978495 + 823 + 56 + 3, menu.get_value(CP_3P_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 3, menu.get_value(CP_3P_CUT)) -- heist_island_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1978495 + 823 + 56 + 3, menu.get_default_state(CP_3P_CUT))
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 3, menu.get_default_state(CP_3P_CUT))
                 end)
 
                 CP_3P_CUT = menu.slider(PERICO_P3_CUT, TRANSLATE("Custom Percentage"), {"hccp3pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -1787,9 +1784,9 @@ menu.divider(HeistControl_features, TRANSLATE("Heist Control") .. " " .. HC_VERS
             PERICO_P4_CUT = menu.list(PERICO_CUTS, TRANSLATE("Player 4"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_4P_CUT_LOOP = menu.toggle_loop(PERICO_P4_CUT, TRANSLATE("Enable"), {"hccp4pcutloop"}, IS_WORKING(false), function()
-                    SET_INT_GLOBAL(1978495 + 823 + 56 + 4, menu.get_value(CP_4P_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 4, menu.get_value(CP_4P_CUT)) -- heist_island_planning.c
                 end, function()
-                    SET_INT_GLOBAL(1978495 + 823 + 56 + 4, menu.get_default_state(CP_4P_CUT))
+                    SET_INT_GLOBAL(1978495 + 825 + 56 + 4, menu.get_default_state(CP_4P_CUT))
                 end)
 
                 CP_4P_CUT = menu.slider(PERICO_P4_CUT, TRANSLATE("Custom Percentage"), {"hccp4pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -2741,7 +2738,7 @@ menu.divider(HeistControl_features, TRANSLATE("Heist Control") .. " " .. HC_VERS
         end)
 
         menu.action(CAH_ADVCED, TRANSLATE("Skip Drilling The Vault Door"), {"hccahinsvault"}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3418914-post13398.html
-            SET_INT_LOCAL("fm_mission_controller", 10098 + 7, GET_INT_LOCAL("fm_mission_controller", 10098 + 37))
+            SET_INT_LOCAL("fm_mission_controller", 10101 + 7, GET_INT_LOCAL("fm_mission_controller", 10101 + 37))
         end)
 
         menu.action(CAH_ADVCED, TRANSLATE("Makes Forced Able To Launch"), {"hccahforcedlaunch"}, IS_WORKING(true) .. TRANSLATE("When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout."), function()
@@ -4851,7 +4848,7 @@ menu.divider(HeistControl_features, TRANSLATE("Heist Control") .. " " .. HC_VERS
                     SET_INT_GLOBAL(262145 + 18926, 180000)
                 end)
 
-                REMOVE_LUCKY_WHEEL_COOLDOWN = menu.toggle_loop(TUNABLES_CD, TRANSLATE("Spin Lucky Wheel"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3531489-post51.html
+                menu.toggle_loop(TUNABLES_CD, TRANSLATE("Spin Lucky Wheel"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3531489-post51.html
                     STAT_SET_INT("LUCKY_WHEEL_NUM_SPIN", 0)
                     SET_INT_GLOBAL(262145 + 27382, 1) -- 9960150
                     SET_INT_GLOBAL(262145 + 27383, 1) -- -312420223
@@ -5744,18 +5741,6 @@ menu.divider(HeistControl_features, TRANSLATE("Heist Control") .. " " .. HC_VERS
                         NOTIFY(TRANSLATE("You didn't specify the value. Please specify it!"))
                     else
                         STAT_SET_INT(menu.get_value(STAT_EDITOR_NAME), menu.get_value(STAT_EDITOR_VALUE))
-                        NOTIFY(TRANSLATE("Successfully set!") .. "\n\n" .. TRANSLATE("Stat Name") .. ": " .. ADD_MP_INDEX(menu.get_value(STAT_EDITOR_NAME)) .. "\n" .. TRANSLATE("Stat Value") .. ": " .. menu.get_value(STAT_EDITOR_VALUE))
-                        FORCE_CLOUD_SAVE()
-                    end
-                end)
-
-                menu.action(STAT_EDITOR, "Float", {}, TRANSLATE("Example Stat") .. "\n\n" .. TRANSLATE("Stat Name") .. ": " .. "PLAYER_MENTAL_STATE\n" .. TRANSLATE("Stat Value") .. ": " .. "100.0", function()
-                    if menu.get_value(STAT_EDITOR_NAME) == "" or menu.get_value(STAT_EDITOR_VALUE) == "" then
-                        menu.focus(STAT_EDITOR_NAME)
-                        NOTIFY(TRANSLATE("You didn't specify the value. Please specify it!"))
-                    else
-                        -- STAT_SET_FLOAT(menu.get_value(STAT_EDITOR_NAME), menu.get_value(STAT_EDITOR_VALUE))
-                        STATS.STAT_SET_FLOAT(util.joaat(ADD_MP_INDEX(stat)), value, true)
                         NOTIFY(TRANSLATE("Successfully set!") .. "\n\n" .. TRANSLATE("Stat Name") .. ": " .. ADD_MP_INDEX(menu.get_value(STAT_EDITOR_NAME)) .. "\n" .. TRANSLATE("Stat Value") .. ": " .. menu.get_value(STAT_EDITOR_VALUE))
                         FORCE_CLOUD_SAVE()
                     end

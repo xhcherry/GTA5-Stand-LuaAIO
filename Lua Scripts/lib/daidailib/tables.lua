@@ -1,5 +1,42 @@
 
 
+--游戏语言
+localisations = {
+    [0] = {"English"},
+    [1] = {"French"},
+    [2] = {"German"},
+    [3] = {"Italian"},
+    [4] = {"Spanish"},
+    [5] = {"Brasilian"},
+    [6] = {"Polish"},
+    [7] = {"Russian"},
+    [8] = {"Korean"},
+    [9] = {"Chinese (traditional)"},
+    [10] = {"Japanese"},
+    [11] = {"Mexican"},
+    [12] = {"Chinese (Simplified)"},
+}
+
+
+----资产传送
+ownedprops = {
+    {name = '事务所', blid = 826},
+    {name = '游戏厅', blid = 740},
+    {name = '改车铺', blid = 779},
+    {name = '地堡', blid = 557},
+    {name = '货物仓库', blid = 473},
+    {name = 'CEO办公室', blid = 475},
+    {name = '设施', blid = 590},
+    {name = '机库', blid = 569},
+    {name = '摩托帮会所', blid = 92},
+    {name = '可卡因制造厂', blid = 497 },
+    {name = '假钞伪造厂', blid = 500 },
+    {name = '证件伪造厂', blid = 498 },
+    {name = '冰毒实验室', blid = 499 },
+    {name = '大麻种植场', blid = 496 },
+    {name = '夜总会', blid = 614},
+    {name = '载具仓库', blid = 524}
+}
 
 ----发送妓女
 custom_hooker_options = {"克隆玩家", "莱斯特", "特蕾西", "贝克女士", "裸女"}

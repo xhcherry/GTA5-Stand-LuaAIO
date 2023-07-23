@@ -1,7 +1,47 @@
+-- DONT RENAME THIS FILE
+-- This should be natives-1663599433.lua wherein 1663599433 represents the version.
+-- Any given version may not be compatible with any given script using this library.
+-- Additionally, you should bundle the version of this library that you are developing against with your script, so "installing" your script is a simple drag & drop operation.
+
 SYSTEM={
 	-- Pauses execution of the current script, please note this behavior is only seen when called from one of the game script files(ysc). In order to wait an asi script use "static void WAIT(DWORD time);" found in main.h
 	["WAIT"]=--[[void]] function(--[[int]] ms)native_invoker.begin_call()native_invoker.push_arg_int(ms)native_invoker.end_call_2(0x4EDE34FBADD967A6)end,
+	-- Examples:
+	--  g_384A = SYSTEM::START_NEW_SCRIPT("cellphone_flashhand", 1424);
+	--  l_10D = SYSTEM::START_NEW_SCRIPT("taxiService", 1828);
+	--  SYSTEM::START_NEW_SCRIPT("AM_MP_YACHT", 5000);
+	--  SYSTEM::START_NEW_SCRIPT("emergencycall", 512);
+	--  SYSTEM::START_NEW_SCRIPT("emergencycall", 512); 
+	--  SYSTEM::START_NEW_SCRIPT("FM_maintain_cloud_header_data", 1424);
+	--  SYSTEM::START_NEW_SCRIPT("FM_Mission_Controller", 31000);
+	--  SYSTEM::START_NEW_SCRIPT("tennis_family", 3650);
+	--  SYSTEM::START_NEW_SCRIPT("Celebrations", 3650);
+	-- 
+	-- Decompiled examples of usage when starting a script:
+	--  
+	--     SCRIPT::REQUEST_SCRIPT(a_0);
+	--     if (SCRIPT::HAS_SCRIPT_LOADED(a_0)) {
+	--         SYSTEM::START_NEW_SCRIPT(a_0, v_3);
+	--         SCRIPT::SET_SCRIPT_AS_NO_LONGER_NEEDED(a_0);
+	--         return 1;
+	--     }
+	--  
+	-- or:
+	-- 
+	--     v_2 = "MrsPhilips2";
+	--     SCRIPT::REQUEST_SCRIPT(v_2);
+	--     while (!SCRIPT::HAS_SCRIPT_LOADED(v_2)) {
+	--     SCRIPT::REQUEST_SCRIPT(v_2);
+	--     SYSTEM::WAIT(0);
+	--     }
+	--     sub_8792(36);
+	--     SYSTEM::START_NEW_SCRIPT(v_2, 17000);
+	--     SCRIPT::SET_SCRIPT_AS_NO_LONGER_NEEDED(v_2);
+	-- 
+	-- All native script names: pastebin.com/K9adDsu4 and pastebin.com/yLNWicUi
 	["START_NEW_SCRIPT"]=--[[int]] function(--[[string]] scriptName,--[[int]] stackSize)native_invoker.begin_call()native_invoker.push_arg_string(scriptName)native_invoker.push_arg_int(stackSize)native_invoker.end_call_2(0xE81651AD79516E48)return native_invoker.get_return_value_int()end,
+	-- return : script thread id, 0 if failed
+	-- Pass pointer to struct of args in p1, size of struct goes into p2
 	["START_NEW_SCRIPT_WITH_ARGS"]=--[[int]] function(--[[string]] scriptName,--[[Any* (pointer)]] args,--[[int]] argCount,--[[int]] stackSize)native_invoker.begin_call()native_invoker.push_arg_string(scriptName)native_invoker.push_arg_pointer(args)native_invoker.push_arg_int(argCount)native_invoker.push_arg_int(stackSize)native_invoker.end_call_2(0xB8BA7F44DF1575E1)return native_invoker.get_return_value_int()end,
 	["START_NEW_SCRIPT_WITH_NAME_HASH"]=--[[int]] function(--[[Hash (int)]] scriptHash,--[[int]] stackSize)native_invoker.begin_call()native_invoker.push_arg_int(scriptHash)native_invoker.push_arg_int(stackSize)native_invoker.end_call_2(0xEB1C67C3A5333A92)return native_invoker.get_return_value_int()end,
 	["START_NEW_SCRIPT_WITH_NAME_HASH_AND_ARGS"]=--[[int]] function(--[[Hash (int)]] scriptHash,--[[Any* (pointer)]] args,--[[int]] argCount,--[[int]] stackSize)native_invoker.begin_call()native_invoker.push_arg_int(scriptHash)native_invoker.push_arg_pointer(args)native_invoker.push_arg_int(argCount)native_invoker.push_arg_int(stackSize)native_invoker.end_call_2(0xC4BB298BD441BE78)return native_invoker.get_return_value_int()end,
@@ -71,7 +111,29 @@ AUDIO={
 	["IS_MOBILE_PHONE_CALL_ONGOING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x7497D2CE2C30D24C)return native_invoker.get_return_value_bool()end,
 	["IS_MOBILE_INTERFERENCE_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC8B1B2425604CDD0)return native_invoker.get_return_value_bool()end,
 	["CREATE_NEW_SCRIPTED_CONVERSATION"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD2C91A0B572AAE56)end,
+	-- NOTE: ones that are -1, 0 - 35 are determined by a function where it gets a TextLabel from a global then runs,
+	-- _GET_TEXT_SUBSTRING and depending on what the result is it goes in check order of 0 - 9 then A - Z then z (lowercase). So it will then return 0 - 35 or -1 if it's 'z'. The func to handle that ^^ is func_67 in dialog_handler.c atleast in TU27 Xbox360 scripts.
+	-- 
+	-- p0 is -1, 0 - 35
+	-- p1 is a char or string (whatever you wanna call it)
+	-- p2 is Global 10597 + i * 6. 'i' is a while(i < 70) loop
+	-- p3 is again -1, 0 - 35 
+	-- p4 is again -1, 0 - 35 
+	-- p5 is either 0 or 1 (bool ?)
+	-- p6 is either 0 or 1 (The func to determine this is bool)
+	-- p7 is either 0 or 1 (The func to determine this is bool)
+	-- p8 is either 0 or 1 (The func to determine this is bool)
+	-- p9 is 0 - 3 (Determined by func_60 in dialogue_handler.c)
+	-- p10 is either 0 or 1 (The func to determine this is bool)
+	-- p11 is either 0 or 1 (The func to determine this is bool)
+	-- p12 is unknown as in TU27 X360 scripts it only goes to p11.
 	["ADD_LINE_TO_CONVERSATION"]=--[[void]] function(--[[int]] index,--[[string]] p1,--[[string]] p2,--[[int]] p3,--[[int]] p4,--[[BOOL (bool)]] p5,--[[BOOL (bool)]] p6,--[[BOOL (bool)]] p7,--[[BOOL (bool)]] p8,--[[int]] p9,--[[BOOL (bool)]] p10,--[[BOOL (bool)]] p11,--[[BOOL (bool)]] p12)native_invoker.begin_call()native_invoker.push_arg_int(index)native_invoker.push_arg_string(p1)native_invoker.push_arg_string(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.push_arg_bool(p5)native_invoker.push_arg_bool(p6)native_invoker.push_arg_bool(p7)native_invoker.push_arg_bool(p8)native_invoker.push_arg_int(p9)native_invoker.push_arg_bool(p10)native_invoker.push_arg_bool(p11)native_invoker.push_arg_bool(p12)native_invoker.end_call_2(0xC5EF963405593646)end,
+	-- 4 calls in the b617d scripts. The only one with p0 and p2 in clear text:
+	-- 
+	-- AUDIO::ADD_PED_TO_CONVERSATION(5, l_AF, "DINAPOLI");
+	-- 
+	-- =================================================
+	-- One of the 2 calls in dialogue_handler.c p0 is in a while-loop, and so is determined to also possibly be 0 - 15.
 	["ADD_PED_TO_CONVERSATION"]=--[[void]] function(--[[int]] index,--[[Ped (int)]] ped,--[[string]] p2)native_invoker.begin_call()native_invoker.push_arg_int(index)native_invoker.push_arg_int(ped)native_invoker.push_arg_string(p2)native_invoker.end_call_2(0x95D9F4BC443956E7)end,
 	["SET_POSITION_FOR_NULL_CONV_PED"]=--[[void]] function(--[[Any (int)]] p0,--[[float]] p1,--[[float]] p2,--[[float]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.end_call_2(0x33E3C6C6F2F0B506)end,
 	["SET_ENTITY_FOR_NULL_CONV_PED"]=--[[void]] function(--[[int]] p0,--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x892B6AB8F33606F5)end,
@@ -2058,6 +2120,14 @@ ENTITY={
 	["ATTACH_ENTITY_TO_ENTITY"]=--[[void]] function(--[[Entity (int)]] entity1,--[[Entity (int)]] entity2,--[[int]] boneIndex,--[[float]] xPos,--[[float]] yPos,--[[float]] zPos,--[[float]] xRot,--[[float]] yRot,--[[float]] zRot,--[[BOOL (bool)]] p9,--[[BOOL (bool)]] useSoftPinning,--[[BOOL (bool)]] collision,--[[BOOL (bool)]] isPed,--[[int]] vertexIndex,--[[BOOL (bool)]] fixedRot,--[[Any (int)]] p15)native_invoker.begin_call()native_invoker.push_arg_int(entity1)native_invoker.push_arg_int(entity2)native_invoker.push_arg_int(boneIndex)native_invoker.push_arg_float(xPos)native_invoker.push_arg_float(yPos)native_invoker.push_arg_float(zPos)native_invoker.push_arg_float(xRot)native_invoker.push_arg_float(yRot)native_invoker.push_arg_float(zRot)native_invoker.push_arg_bool(p9)native_invoker.push_arg_bool(useSoftPinning)native_invoker.push_arg_bool(collision)native_invoker.push_arg_bool(isPed)native_invoker.push_arg_int(vertexIndex)native_invoker.push_arg_bool(fixedRot)native_invoker.push_arg_int(p15)native_invoker.end_call_2(0x6B9BBD38AB0796DF)end,
 	["ATTACH_ENTITY_BONE_TO_ENTITY_BONE"]=--[[void]] function(--[[Entity (int)]] entity1,--[[Entity (int)]] entity2,--[[int]] boneIndex1,--[[int]] boneIndex2,--[[BOOL (bool)]] p4,--[[BOOL (bool)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(entity1)native_invoker.push_arg_int(entity2)native_invoker.push_arg_int(boneIndex1)native_invoker.push_arg_int(boneIndex2)native_invoker.push_arg_bool(p4)native_invoker.push_arg_bool(p5)native_invoker.end_call_2(0x5C48B75732C8456C)end,
 	["ATTACH_ENTITY_BONE_TO_ENTITY_BONE_Y_FORWARD"]=--[[void]] function(--[[Entity (int)]] entity1,--[[Entity (int)]] entity2,--[[int]] boneIndex1,--[[int]] boneIndex2,--[[BOOL (bool)]] p4,--[[BOOL (bool)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(entity1)native_invoker.push_arg_int(entity2)native_invoker.push_arg_int(boneIndex1)native_invoker.push_arg_int(boneIndex2)native_invoker.push_arg_bool(p4)native_invoker.push_arg_bool(p5)native_invoker.end_call_2(0xFD1695C5D3B05439)end,
+	-- breakForce is the amount of force required to break the bond.
+	-- p14 - is always 1 in scripts
+	-- p15 - is 1 or 0 in scripts - unknoun what it does
+	-- p16 - controls collision between the two entities (FALSE disables collision).
+	-- p17 - do not teleport entity to be attached to the position of the bone Index of the target entity (if 1, entity will not be teleported to target bone)
+	-- p18 - is always 2 in scripts.
+	-- 
+	-- 
 	["ATTACH_ENTITY_TO_ENTITY_PHYSICALLY"]=--[[void]] function(--[[Entity (int)]] entity1,--[[Entity (int)]] entity2,--[[int]] boneIndex1,--[[int]] boneIndex2,--[[float]] xPos1,--[[float]] yPos1,--[[float]] zPos1,--[[float]] xPos2,--[[float]] yPos2,--[[float]] zPos2,--[[float]] xRot,--[[float]] yRot,--[[float]] zRot,--[[float]] breakForce,--[[BOOL (bool)]] fixedRot,--[[BOOL (bool)]] p15,--[[BOOL (bool)]] collision,--[[BOOL (bool)]] p17,--[[int]] p18)native_invoker.begin_call()native_invoker.push_arg_int(entity1)native_invoker.push_arg_int(entity2)native_invoker.push_arg_int(boneIndex1)native_invoker.push_arg_int(boneIndex2)native_invoker.push_arg_float(xPos1)native_invoker.push_arg_float(yPos1)native_invoker.push_arg_float(zPos1)native_invoker.push_arg_float(xPos2)native_invoker.push_arg_float(yPos2)native_invoker.push_arg_float(zPos2)native_invoker.push_arg_float(xRot)native_invoker.push_arg_float(yRot)native_invoker.push_arg_float(zRot)native_invoker.push_arg_float(breakForce)native_invoker.push_arg_bool(fixedRot)native_invoker.push_arg_bool(p15)native_invoker.push_arg_bool(collision)native_invoker.push_arg_bool(p17)native_invoker.push_arg_int(p18)native_invoker.end_call_2(0xC3675780C92F90F9)end,
 	-- Called to update entity attachments.
 	["PROCESS_ENTITY_ATTACHMENTS"]=--[[void]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0xF4080490ADC51C6F)end,
@@ -2766,7 +2836,65 @@ GRAPHICS={
 	["UPDATE_LIGHTS_ON_ENTITY"]=--[[void]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0xDEADC0DEDEADC0DE)end,
 	["SET_LIGHT_OVERRIDE_MAX_INTENSITY_SCALE"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x9641588DAB93B4B5)end,
 	["GET_LIGHT_OVERRIDE_MAX_INTENSITY_SCALE"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x393BD2275CEB7793)return native_invoker.get_return_value_int()end,
-
+	-- enum MarkerTypes
+	-- {
+	--     MarkerTypeUpsideDownCone = 0,
+	--  MarkerTypeVerticalCylinder = 1,
+	--    MarkerTypeThickChevronUp = 2,
+	--  MarkerTypeThinChevronUp = 3,
+	--   MarkerTypeCheckeredFlagRect = 4,
+	--   MarkerTypeCheckeredFlagCircle = 5,
+	--     MarkerTypeVerticleCircle = 6,
+	--  MarkerTypePlaneModel = 7,
+	--  MarkerTypeLostMCDark = 8,
+	--  MarkerTypeLostMCLight = 9,
+	--     MarkerTypeNumber0 = 10,
+	--    MarkerTypeNumber1 = 11,
+	--    MarkerTypeNumber2 = 12,
+	--    MarkerTypeNumber3 = 13,
+	--    MarkerTypeNumber4 = 14,
+	--    MarkerTypeNumber5 = 15,
+	--    MarkerTypeNumber6 = 16,
+	--    MarkerTypeNumber7 = 17,
+	--    MarkerTypeNumber8 = 18,
+	--    MarkerTypeNumber9 = 19,
+	--    MarkerTypeChevronUpx1 = 20,
+	--    MarkerTypeChevronUpx2 = 21,
+	--    MarkerTypeChevronUpx3 = 22,
+	--    MarkerTypeHorizontalCircleFat = 23,
+	--    MarkerTypeReplayIcon = 24,
+	--     MarkerTypeHorizontalCircleSkinny = 25,
+	--     MarkerTypeHorizontalCircleSkinny_Arrow = 26,
+	--   MarkerTypeHorizontalSplitArrowCircle = 27,
+	--     MarkerTypeDebugSphere = 28,
+	--    MarkerTypeDallorSign = 29,
+	--     MarkerTypeHorizontalBars = 30,
+	--     MarkerTypeWolfHead = 31
+	-- };
+	-- 
+	-- dirX/Y/Z represent a heading on each axis in which the marker should face, alternatively you can rotate each axis independently with rotX/Y/Z (and set dirX/Y/Z all to 0).
+	-- 
+	-- faceCamera - Rotates only the y-axis (the heading) towards the camera
+	-- 
+	-- p19 - no effect, default value in script is 2
+	-- 
+	-- rotate - Rotates only on the y-axis (the heading)
+	-- 
+	-- textureDict - Name of texture dictionary to load texture from (e.g. "GolfPutting")
+	-- 
+	-- textureName - Name of texture inside dictionary to load (e.g. "PuttingMarker")
+	-- 
+	-- drawOnEnts - Draws the marker onto any entities that intersect it
+	-- 
+	-- basically what he said, except textureDict and textureName are totally not const char*, or if so, then they are always set to 0/NULL/nullptr in every script I checked, eg:
+	-- 
+	-- bj.c: graphics::draw_marker(6, vParam0, 0f, 0f, 1f, 0f, 0f, 0f, 4f, 4f, 4f, 240, 200, 80, iVar1, 0, 0, 2, 0, 0, 0, false);
+	-- 
+	-- his is what I used to draw an amber downward pointing chevron "V", has to be redrawn every frame.  The 180 is for 180 degrees rotation around the Y axis, the 50 is alpha, assuming max is 100, but it will accept 255.
+	-- 
+	-- GRAPHICS::DRAW_MARKER(2, v.x, v.y, v.z + 2, 0, 0, 0, 0, 180, 0, 2, 2, 2, 255, 128, 0, 50, 0, 1, 1, 0, 0, 0, 0);
+	-- 
+	-- 
 	["DRAW_MARKER"]=--[[void]] function(--[[int]] type,--[[float]] posX,--[[float]] posY,--[[float]] posZ,--[[float]] dirX,--[[float]] dirY,--[[float]] dirZ,--[[float]] rotX,--[[float]] rotY,--[[float]] rotZ,--[[float]] scaleX,--[[float]] scaleY,--[[float]] scaleZ,--[[int]] red,--[[int]] green,--[[int]] blue,--[[int]] alpha,--[[BOOL (bool)]] bobUpAndDown,--[[BOOL (bool)]] faceCamera,--[[int]] p19,--[[BOOL (bool)]] rotate,--[[string]] textureDict,--[[string]] textureName,--[[BOOL (bool)]] drawOnEnts)native_invoker.begin_call()native_invoker.push_arg_int(type)native_invoker.push_arg_float(posX)native_invoker.push_arg_float(posY)native_invoker.push_arg_float(posZ)native_invoker.push_arg_float(dirX)native_invoker.push_arg_float(dirY)native_invoker.push_arg_float(dirZ)native_invoker.push_arg_float(rotX)native_invoker.push_arg_float(rotY)native_invoker.push_arg_float(rotZ)native_invoker.push_arg_float(scaleX)native_invoker.push_arg_float(scaleY)native_invoker.push_arg_float(scaleZ)native_invoker.push_arg_int(red)native_invoker.push_arg_int(green)native_invoker.push_arg_int(blue)native_invoker.push_arg_int(alpha)native_invoker.push_arg_bool(bobUpAndDown)native_invoker.push_arg_bool(faceCamera)native_invoker.push_arg_int(p19)native_invoker.push_arg_bool(rotate)native_invoker.push_arg_string(textureDict)native_invoker.push_arg_string(textureName)native_invoker.push_arg_bool(drawOnEnts)native_invoker.end_call_2(0x28477EC23D892089)end,
 	["DRAW_MARKER_EX"]=--[[void]] function(--[[int]] type,--[[float]] posX,--[[float]] posY,--[[float]] posZ,--[[float]] dirX,--[[float]] dirY,--[[float]] dirZ,--[[float]] rotX,--[[float]] rotY,--[[float]] rotZ,--[[float]] scaleX,--[[float]] scaleY,--[[float]] scaleZ,--[[int]] red,--[[int]] green,--[[int]] blue,--[[int]] alpha,--[[BOOL (bool)]] bobUpAndDown,--[[BOOL (bool)]] faceCamera,--[[Any (int)]] p19,--[[BOOL (bool)]] rotate,--[[string]] textureDict,--[[string]] textureName,--[[BOOL (bool)]] drawOnEnts,--[[BOOL (bool)]] p24,--[[BOOL (bool)]] p25)native_invoker.begin_call()native_invoker.push_arg_int(type)native_invoker.push_arg_float(posX)native_invoker.push_arg_float(posY)native_invoker.push_arg_float(posZ)native_invoker.push_arg_float(dirX)native_invoker.push_arg_float(dirY)native_invoker.push_arg_float(dirZ)native_invoker.push_arg_float(rotX)native_invoker.push_arg_float(rotY)native_invoker.push_arg_float(rotZ)native_invoker.push_arg_float(scaleX)native_invoker.push_arg_float(scaleY)native_invoker.push_arg_float(scaleZ)native_invoker.push_arg_int(red)native_invoker.push_arg_int(green)native_invoker.push_arg_int(blue)native_invoker.push_arg_int(alpha)native_invoker.push_arg_bool(bobUpAndDown)native_invoker.push_arg_bool(faceCamera)native_invoker.push_arg_int(p19)native_invoker.push_arg_bool(rotate)native_invoker.push_arg_string(textureDict)native_invoker.push_arg_string(textureName)native_invoker.push_arg_bool(drawOnEnts)native_invoker.push_arg_bool(p24)native_invoker.push_arg_bool(p25)native_invoker.end_call_2(0xE82728F0DE75D13A)end,
 	-- Draws a 3D sphere, typically seen in the GTA:O freemode event "Penned In".
@@ -16672,25 +16800,126 @@ WEAPON={
 	["GET_WEAPON_OBJECT_TINT_INDEX"]=--[[int]] function(--[[Object (int)]] weapon)native_invoker.begin_call()native_invoker.push_arg_int(weapon)native_invoker.end_call_2(0xCD183314F7CD2E57)return native_invoker.get_return_value_int()end,
 	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
 	["GET_WEAPON_TINT_COUNT"]=--[[int]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x5DCF6C5CAB2E9BF7)return native_invoker.get_return_value_int()end,
-
+	-- Colors:
+	-- 0 = Gray
+	-- 1 = Dark Gray
+	-- 2 = Black
+	-- 3 = White
+	-- 4 = Blue
+	-- 5 = Cyan
+	-- 6 = Aqua
+	-- 7 = Cool Blue
+	-- 8 = Dark Blue
+	-- 9 = Royal Blue
+	-- 10 = Plum
+	-- 11 = Dark Purple
+	-- 12 = Purple
+	-- 13 = Red
+	-- 14 = Wine Red
+	-- 15 = Magenta
+	-- 16 = Pink
+	-- 17 = Salmon
+	-- 18 = Hot Pink
+	-- 19 = Rust Orange
+	-- 20 = Brown
+	-- 21 = Earth
+	-- 22 = Orange
+	-- 23 = Light Orange
+	-- 24 = Dark Yellow
+	-- 25 = Yellow
+	-- 26 = Light Brown
+	-- 27 = Lime Green
+	-- 28 = Olive
+	-- 29 = Moss
+	-- 30 = Turquoise
+	-- 31 = Dark Green
+	-- Full list of weapons, components, tint indexes & weapon liveries by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
 	["SET_PED_WEAPON_COMPONENT_TINT_INDEX"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[Hash (int)]] camoComponentHash,--[[int]] colorIndex)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(camoComponentHash)native_invoker.push_arg_int(colorIndex)native_invoker.end_call_2(0x9FE5633880ECD8ED)end,
 	-- Returns -1 if camoComponentHash is invalid/not attached to the weapon.
 	-- Full list of weapons, components, tint indexes & weapon liveries by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
 	["GET_PED_WEAPON_COMPONENT_TINT_INDEX"]=--[[int]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[Hash (int)]] camoComponentHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(camoComponentHash)native_invoker.end_call_2(0xF0A60040BE558F2D)return native_invoker.get_return_value_int()end,
-
+	-- Colors:
+	-- 0 = Gray
+	-- 1 = Dark Gray
+	-- 2 = Black
+	-- 3 = White
+	-- 4 = Blue
+	-- 5 = Cyan
+	-- 6 = Aqua
+	-- 7 = Cool Blue
+	-- 8 = Dark Blue
+	-- 9 = Royal Blue
+	-- 10 = Plum
+	-- 11 = Dark Purple
+	-- 12 = Purple
+	-- 13 = Red
+	-- 14 = Wine Red
+	-- 15 = Magenta
+	-- 16 = Pink
+	-- 17 = Salmon
+	-- 18 = Hot Pink
+	-- 19 = Rust Orange
+	-- 20 = Brown
+	-- 21 = Earth
+	-- 22 = Orange
+	-- 23 = Light Orange
+	-- 24 = Dark Yellow
+	-- 25 = Yellow
+	-- 26 = Light Brown
+	-- 27 = Lime Green
+	-- 28 = Olive
+	-- 29 = Moss
+	-- 30 = Turquoise
+	-- 31 = Dark Green
+	-- Full list of weapons, components, tint indexes & weapon liveries by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
 	["SET_WEAPON_OBJECT_COMPONENT_TINT_INDEX"]=--[[void]] function(--[[Object (int)]] weaponObject,--[[Hash (int)]] camoComponentHash,--[[int]] colorIndex)native_invoker.begin_call()native_invoker.push_arg_int(weaponObject)native_invoker.push_arg_int(camoComponentHash)native_invoker.push_arg_int(colorIndex)native_invoker.end_call_2(0x5DA825A85D0EA6E6)end,
 	-- Returns -1 if camoComponentHash is invalid/not attached to the weapon object.
 	-- Full list of weapons, components, tint indexes & weapon liveries by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
 	["GET_WEAPON_OBJECT_COMPONENT_TINT_INDEX"]=--[[int]] function(--[[Object (int)]] weaponObject,--[[Hash (int)]] camoComponentHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponObject)native_invoker.push_arg_int(camoComponentHash)native_invoker.end_call_2(0xB3EA4FEABF41464B)return native_invoker.get_return_value_int()end,
 	["GET_PED_WEAPON_CAMO_INDEX"]=--[[int]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0xA2C9AC24B4061285)return native_invoker.get_return_value_int()end,
 	["SET_WEAPON_OBJECT_CAMO_INDEX"]=--[[void]] function(--[[Object (int)]] weaponObject,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(weaponObject)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x977CA98939E82E4B)end,
-
+	-- struct WeaponHudStatsData
+	-- {
+	--     BYTE hudDamage; // 0x0000
+	--     char _0x0001[0x7]; // 0x0001
+	--     BYTE hudSpeed; // 0x0008
+	--     char _0x0009[0x7]; // 0x0009
+	--     BYTE hudCapacity; // 0x0010
+	--     char _0x0011[0x7]; // 0x0011
+	--     BYTE hudAccuracy; // 0x0018
+	--     char _0x0019[0x7]; // 0x0019
+	--     BYTE hudRange; // 0x0020
+	-- };
+	-- 
+	-- Usage:
+	-- 
+	-- WeaponHudStatsData data;
+	-- if (GET_WEAPON_HUD_STATS(weaponHash, (int *)&data))
+	-- {
+	--     // BYTE damagePercentage = data.hudDamage and so on
+	-- }
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
 	["GET_WEAPON_HUD_STATS"]=--[[BOOL (bool)]] function(--[[Hash (int)]] weaponHash,--[[Any* (pointer)]] outData)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_pointer(outData)native_invoker.end_call_2(0xD92C739EE34C9EBA)return native_invoker.get_return_value_bool()end,
 	["GET_WEAPON_COMPONENT_HUD_STATS"]=--[[BOOL (bool)]] function(--[[Hash (int)]] componentHash,--[[Any* (pointer)]] outData)native_invoker.begin_call()native_invoker.push_arg_int(componentHash)native_invoker.push_arg_pointer(outData)native_invoker.end_call_2(0xB3CAF387AE12E9F8)return native_invoker.get_return_value_bool()end,
 	-- This native does not return damages of weapons from the melee and explosive group.
 	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
 	["GET_WEAPON_DAMAGE"]=--[[float]] function(--[[Hash (int)]] weaponHash,--[[Hash (int)]] componentHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(componentHash)native_invoker.end_call_2(0x3133B907D8B32053)return native_invoker.get_return_value_float()end,
-
+	-- // Returns the size of the default weapon component clip.
+	-- 
+	-- Use it like this:
+	-- 
+	-- char cClipSize[32];
+	-- Hash cur;
+	-- if (WEAPON::GET_CURRENT_PED_WEAPON(playerPed, &cur, 1))
+	-- {
+	--     if (WEAPON::IS_WEAPON_VALID(cur))
+	--     {
+	--         int iClipSize = WEAPON::GET_WEAPON_CLIP_SIZE(cur);
+	--         sprintf_s(cClipSize, "ClipSize: %.d", iClipSize);
+	--         vDrawString(cClipSize, 0.5f, 0.5f);
+	--     }
+	-- }
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
 	["GET_WEAPON_CLIP_SIZE"]=--[[int]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x583BE370B1EC6EB4)return native_invoker.get_return_value_int()end,
 	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
 	["GET_WEAPON_TIME_BETWEEN_SHOTS"]=--[[float]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x065D2AACAD8CF7A4)return native_invoker.get_return_value_float()end,
@@ -16711,9 +16940,63 @@ WEAPON={
 	["SET_FLASH_LIGHT_FADE_DISTANCE"]=--[[Any (int)]] function(--[[float]] distance)native_invoker.begin_call()native_invoker.push_arg_float(distance)native_invoker.end_call_2(0xCEA66DAD478CD39B)return native_invoker.get_return_value_int()end,
 	-- Enables/disables flashlight on ped's weapon.
 	["SET_FLASH_LIGHT_ACTIVE_HISTORY"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x988DB6FE9B3AC000)end,
-
+	-- Changes the selected ped aiming animation style. 
+	-- Note : You must use GET_HASH_KEY!
+	-- 
+	-- Strings to use with GET_HASH_KEY :
+	-- 
+	--     "Ballistic",
+	--     "Default",
+	--   "Fat",
+	--   "Female",
+	--    "FirstPerson",
+	--   "FirstPersonAiming",
+	--     "FirstPersonFranklin",
+	--   "FirstPersonFranklinAiming",
+	--     "FirstPersonFranklinRNG",
+	--    "FirstPersonFranklinScope",
+	--  "FirstPersonMPFemale",
+	--   "FirstPersonMichael",
+	--    "FirstPersonMichaelAiming",
+	--  "FirstPersonMichaelRNG",
+	--     "FirstPersonMichaelScope",
+	--   "FirstPersonRNG",
+	--    "FirstPersonScope",
+	--  "FirstPersonTrevor",
+	--     "FirstPersonTrevorAiming",
+	--   "FirstPersonTrevorRNG",
+	--  "FirstPersonTrevorScope",
+	--    "Franklin",
+	--  "Gang",
+	--  "Gang1H",
+	--    "GangFemale",
+	--    "Hillbilly",
+	--     "MP_F_Freemode",
+	--     "Michael",
+	--   "SuperFat",
+	--  "Trevor"
 	["SET_WEAPON_ANIMATION_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] animStyle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(animStyle)native_invoker.end_call_2(0x1055AC3A667F09D9)end,
-
+	-- enum class eDamageType
+	-- {
+	-- 	UNKNOWN = 0,
+	-- 	NONE = 1,
+	-- 	MELEE = 2,
+	-- 	BULLET = 3,
+	-- 	BULLET_RUBBER = 4,
+	-- 	EXPLOSIVE = 5,
+	-- 	FIRE = 6,
+	-- 	COLLISION = 7,
+	-- 	FALL = 8,
+	-- 	DROWN = 9,
+	-- 	ELECTRIC = 10,
+	-- 	BARBED_WIRE = 11,
+	-- 	FIRE_EXTINGUISHER = 12,
+	-- 	SMOKE = 13,
+	-- 	WATER_CANNON = 14,
+	-- 	TRANQUILIZER = 15,
+	-- };
+	-- 
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
 	["GET_WEAPON_DAMAGE_TYPE"]=--[[int]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x3BE0BB12D25FB305)return native_invoker.get_return_value_int()end,
 	["SET_EQIPPED_WEAPON_START_SPINNING_AT_FULL_SPEED"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xE4DCEC7FD5B739A5)end,
 	-- this returns if you can use the weapon while using a parachute
@@ -16737,10 +17020,192 @@ WEAPON={
 }
 ZONE={
 	["GET_ZONE_AT_COORDS"]=--[[int]] function(--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.end_call_2(0x27040C25DE6CB2F4)return native_invoker.get_return_value_int()end,
-
+	-- 'zoneName' corresponds to an entry in 'popzone.ipl'.
+	-- 
+	-- AIRP = Los Santos International Airport
+	-- ALAMO = Alamo Sea
+	-- ALTA = Alta
+	-- ARMYB = Fort Zancudo
+	-- BANHAMC = Banham Canyon Dr
+	-- BANNING = Banning
+	-- BEACH = Vespucci Beach
+	-- BHAMCA = Banham Canyon
+	-- BRADP = Braddock Pass
+	-- BRADT = Braddock Tunnel
+	-- BURTON = Burton
+	-- CALAFB = Calafia Bridge
+	-- CANNY = Raton Canyon
+	-- CCREAK = Cassidy Creek
+	-- CHAMH = Chamberlain Hills
+	-- CHIL = Vinewood Hills
+	-- CHU = Chumash
+	-- CMSW = Chiliad Mountain State Wilderness
+	-- CYPRE = Cypress Flats
+	-- DAVIS = Davis
+	-- DELBE = Del Perro Beach
+	-- DELPE = Del Perro
+	-- DELSOL = La Puerta
+	-- DESRT = Grand Senora Desert
+	-- DOWNT = Downtown
+	-- DTVINE = Downtown Vinewood
+	-- EAST_V = East Vinewood
+	-- EBURO = El Burro Heights
+	-- ELGORL = El Gordo Lighthouse
+	-- ELYSIAN = Elysian Island
+	-- GALFISH = Galilee
+	-- GOLF = GWC and Golfing Society
+	-- GRAPES = Grapeseed
+	-- GREATC = Great Chaparral
+	-- HARMO = Harmony
+	-- HAWICK = Hawick
+	-- HORS = Vinewood Racetrack
+	-- HUMLAB = Humane Labs and Research
+	-- JAIL = Bolingbroke Penitentiary
+	-- KOREAT = Little Seoul
+	-- LACT = Land Act Reservoir
+	-- LAGO = Lago Zancudo
+	-- LDAM = Land Act Dam
+	-- LEGSQU = Legion Square
+	-- LMESA = La Mesa
+	-- LOSPUER = La Puerta
+	-- MIRR = Mirror Park
+	-- MORN = Morningwood
+	-- MOVIE = Richards Majestic
+	-- MTCHIL = Mount Chiliad
+	-- MTGORDO = Mount Gordo
+	-- MTJOSE = Mount Josiah
+	-- MURRI = Murrieta Heights
+	-- NCHU = North Chumash
+	-- NOOSE = N.O.O.S.E
+	-- OCEANA = Pacific Ocean
+	-- PALCOV = Paleto Cove
+	-- PALETO = Paleto Bay
+	-- PALFOR = Paleto Forest
+	-- PALHIGH = Palomino Highlands
+	-- PALMPOW = Palmer-Taylor Power Station
+	-- PBLUFF = Pacific Bluffs
+	-- PBOX = Pillbox Hill
+	-- PROCOB = Procopio Beach
+	-- RANCHO = Rancho
+	-- RGLEN = Richman Glen
+	-- RICHM = Richman
+	-- ROCKF = Rockford Hills
+	-- RTRAK = Redwood Lights Track
+	-- SANAND = San Andreas
+	-- SANCHIA = San Chianski Mountain Range
+	-- SANDY = Sandy Shores
+	-- SKID = Mission Row
+	-- SLAB = Stab City
+	-- STAD = Maze Bank Arena
+	-- STRAW = Strawberry
+	-- TATAMO = Tataviam Mountains
+	-- TERMINA = Terminal
+	-- TEXTI = Textile City
+	-- TONGVAH = Tongva Hills
+	-- TONGVAV = Tongva Valley
+	-- VCANA = Vespucci Canals
+	-- VESP = Vespucci
+	-- VINE = Vinewood
+	-- WINDF = Ron Alternates Wind Farm
+	-- WVINE = West Vinewood
+	-- ZANCUDO = Zancudo River
+	-- ZP_ORT = Port of South Los Santos
+	-- ZQ_UAR = Davis Quartz
+	-- 
+	-- Full list of zones by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/zones.json
 	["GET_ZONE_FROM_NAME_ID"]=--[[int]] function(--[[string]] zoneName)native_invoker.begin_call()native_invoker.push_arg_string(zoneName)native_invoker.end_call_2(0x98CD1D2934B76CC1)return native_invoker.get_return_value_int()end,
 	["GET_ZONE_POPSCHEDULE"]=--[[int]] function(--[[int]] zoneId)native_invoker.begin_call()native_invoker.push_arg_int(zoneId)native_invoker.end_call_2(0x4334BC40AA0CB4BB)return native_invoker.get_return_value_int()end,
-
+	-- AIRP = Los Santos International Airport
+	-- ALAMO = Alamo Sea
+	-- ALTA = Alta
+	-- ARMYB = Fort Zancudo
+	-- BANHAMC = Banham Canyon Dr
+	-- BANNING = Banning
+	-- BEACH = Vespucci Beach
+	-- BHAMCA = Banham Canyon
+	-- BRADP = Braddock Pass
+	-- BRADT = Braddock Tunnel
+	-- BURTON = Burton
+	-- CALAFB = Calafia Bridge
+	-- CANNY = Raton Canyon
+	-- CCREAK = Cassidy Creek
+	-- CHAMH = Chamberlain Hills
+	-- CHIL = Vinewood Hills
+	-- CHU = Chumash
+	-- CMSW = Chiliad Mountain State Wilderness
+	-- CYPRE = Cypress Flats
+	-- DAVIS = Davis
+	-- DELBE = Del Perro Beach
+	-- DELPE = Del Perro
+	-- DELSOL = La Puerta
+	-- DESRT = Grand Senora Desert
+	-- DOWNT = Downtown
+	-- DTVINE = Downtown Vinewood
+	-- EAST_V = East Vinewood
+	-- EBURO = El Burro Heights
+	-- ELGORL = El Gordo Lighthouse
+	-- ELYSIAN = Elysian Island
+	-- GALFISH = Galilee
+	-- GOLF = GWC and Golfing Society
+	-- GRAPES = Grapeseed
+	-- GREATC = Great Chaparral
+	-- HARMO = Harmony
+	-- HAWICK = Hawick
+	-- HORS = Vinewood Racetrack
+	-- HUMLAB = Humane Labs and Research
+	-- JAIL = Bolingbroke Penitentiary
+	-- KOREAT = Little Seoul
+	-- LACT = Land Act Reservoir
+	-- LAGO = Lago Zancudo
+	-- LDAM = Land Act Dam
+	-- LEGSQU = Legion Square
+	-- LMESA = La Mesa
+	-- LOSPUER = La Puerta
+	-- MIRR = Mirror Park
+	-- MORN = Morningwood
+	-- MOVIE = Richards Majestic
+	-- MTCHIL = Mount Chiliad
+	-- MTGORDO = Mount Gordo
+	-- MTJOSE = Mount Josiah
+	-- MURRI = Murrieta Heights
+	-- NCHU = North Chumash
+	-- NOOSE = N.O.O.S.E
+	-- OCEANA = Pacific Ocean
+	-- PALCOV = Paleto Cove
+	-- PALETO = Paleto Bay
+	-- PALFOR = Paleto Forest
+	-- PALHIGH = Palomino Highlands
+	-- PALMPOW = Palmer-Taylor Power Station
+	-- PBLUFF = Pacific Bluffs
+	-- PBOX = Pillbox Hill
+	-- PROCOB = Procopio Beach
+	-- RANCHO = Rancho
+	-- RGLEN = Richman Glen
+	-- RICHM = Richman
+	-- ROCKF = Rockford Hills
+	-- RTRAK = Redwood Lights Track
+	-- SANAND = San Andreas
+	-- SANCHIA = San Chianski Mountain Range
+	-- SANDY = Sandy Shores
+	-- SKID = Mission Row
+	-- SLAB = Stab City
+	-- STAD = Maze Bank Arena
+	-- STRAW = Strawberry
+	-- TATAMO = Tataviam Mountains
+	-- TERMINA = Terminal
+	-- TEXTI = Textile City
+	-- TONGVAH = Tongva Hills
+	-- TONGVAV = Tongva Valley
+	-- VCANA = Vespucci Canals
+	-- VESP = Vespucci
+	-- VINE = Vinewood
+	-- WINDF = Ron Alternates Wind Farm
+	-- WVINE = West Vinewood
+	-- ZANCUDO = Zancudo River
+	-- ZP_ORT = Port of South Los Santos
+	-- ZQ_UAR = Davis Quartz
+	-- 
+	-- Full list of zones by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/zones.json
 	["GET_NAME_OF_ZONE"]=--[[string]] function(--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.end_call_2(0xCD90657D4C30E1CA)return native_invoker.get_return_value_string()end,
 	["SET_ZONE_ENABLED"]=--[[void]] function(--[[int]] zoneId,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(zoneId)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xBA5ECEEA120E5611)end,
 	-- cellphone range 1- 5 used for signal bar in iFruit phone

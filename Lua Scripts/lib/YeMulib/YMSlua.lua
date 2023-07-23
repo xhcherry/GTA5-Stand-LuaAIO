@@ -47983,6 +47983,7 @@ zanzhu = menu.list(script_meta_menu,"夜幕赞助人员", {},"Thanks")
     menu.readonly(zanzhu, "Thanks", "今天嗨了吗？") 
     menu.readonly(zanzhu, "Thanks", "graies") 
     menu.readonly(zanzhu, "Thanks", "彭于晏") 
+    menu.readonly(zanzhu, "Thanks", "东北散打王") 
 end
 
 return Scaleform

@@ -6,7 +6,7 @@ local translations = {}
 ---
 --- Debug Log
 ---
-local inspect = require "lib.daidailib.constructor.inspect"
+
 local function debug_log(message, additional_details)
     if CONSTRUCTOR_CONFIG.debug_mode then
         if CONSTRUCTOR_CONFIG.debug_mode == 2 and additional_details ~= nil then

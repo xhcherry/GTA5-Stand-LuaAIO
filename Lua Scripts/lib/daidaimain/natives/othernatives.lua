@@ -95,3 +95,9 @@ NETSHOPPING1={
     ["_NET_GAMESERVER_TRANSFER_WALLET_TO_BANK"]=--[[BOOL (bool)]] function(--[[int]] charSlot,--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(charSlot)native_invoker.push_arg_int(amount)native_invoker.end_call_2(0xC2F7FE5309181C7D)return native_invoker.get_return_value_bool()end,
     ["_NET_GAMESERVER_TRANSFER_BANK_TO_WALLET"]=--[[BOOL (bool)]] function(--[[int]] charSlot,--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(charSlot)native_invoker.push_arg_int(amount)native_invoker.end_call_2(0xD47A2C1BA117471D)return native_invoker.get_return_value_bool()end,
 }
+
+SCRIPT1={
+    ["REQUEST_SCRIPT"]=function(...)return native_invoker.uno_void(0x6EB5F71AA68F2E8E,...)end,
+    ["SET_SCRIPT_AS_NO_LONGER_NEEDED"]=function(...)return native_invoker.uno_void(0xC90D2DCACD56184C,...)end,
+    ["HAS_SCRIPT_LOADED"]=function(...)return native_invoker.uno_bool(0xE6CC9F3BA0FB9EF1,...)end,
+}

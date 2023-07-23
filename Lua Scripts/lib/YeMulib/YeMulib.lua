@@ -4168,3 +4168,103 @@ function GIF_keli(on)
         showlogo1 = 0
     end
 end
+function meowbmob(pid)
+    local target_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local coords = ENTITY.GET_ENTITY_COORDS(target_ped, false)
+    coords.x = coords['x']
+    coords.y = coords['y']
+    coords.z = coords['z']
+    hash = util.joaat("A_C_chop")
+    request_model_load(hash)
+    for i=1, 30 do
+        local Chopdog = entities.create_ped(28, hash, coords, math.random(0, 270))
+        local rand_x = math.random(-10, 10)*8
+        local rand_y = math.random(-10, 10)*8
+        local rand_z = math.random(-10, 10)*8
+        ENTITY.SET_ENTITY_INVINCIBLE(Chopdog, true)
+        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(Chopdog, 1, rand_x, rand_y, rand_z, true, false, true, true)
+        AUDIO.PLAY_PAIN(Chopdog, 7, 0)
+    end
+end
+function get_random_offset_from_entity(entity, minDistance, maxDistance)
+	local pos = ENTITY.GET_ENTITY_COORDS(entity, false)
+	return get_random_offset_in_range(pos, minDistance, maxDistance)
+end
+function get_random_offset_in_range(coords, minDistance, maxDistance)
+	local radius = random_float(minDistance, maxDistance)
+	local angle = random_float(0, 2 * math.pi)
+	local delta = v3.new(math.cos(angle), math.sin(angle), 0.0)
+	delta:mul(radius)
+	coords:add(delta)
+	return coords
+end
+function random_float(min, max)
+	return min + math.random() * (max - min)
+end
+function set_entity_face_entity(entity, target, usePitch)
+    local pos1 = ENTITY.GET_ENTITY_COORDS(entity, false)
+    local pos2 = ENTITY.GET_ENTITY_COORDS(target, false)
+    local rel = v3.new(pos2)
+    rel:sub(pos1)
+    local rot = rel:toRot()
+    if not usePitch then
+        ENTITY.SET_ENTITY_HEADING(entity, rot.z)
+    else
+        ENTITY.SET_ENTITY_ROTATION(entity, rot.x, rot.y, rot.z, 2, 0)
+    end
+end
+function creep(pid)
+    local hash <const> = util.joaat("s_m_y_clown_01")
+		local explosion <const> = Effect.new("scr_rcbarry2", "scr_exp_clown")
+		local appears <const> = Effect.new("scr_rcbarry2",  "scr_clown_appears")
+		request_model(hash)
+		local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+		local pos = ENTITY.GET_ENTITY_COORDS(player, false)
+		local coord = get_random_offset_from_entity(player, 5.0, 8.0)
+		coord.z = coord.z - 1.0
+		local ped = entities.create_ped(0, hash, coord, 0.0)
+
+		request_fx_asset(appears.asset)
+		GRAPHICS.USE_PARTICLE_FX_ASSET(appears.asset)
+		WIRI_GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+			appears.name,
+			ped,
+			0.0, 0.0, -1.0,
+			0.0, 0.0, 0.0,
+			0.5, false, false, false
+		)
+		set_entity_face_entity(ped, player, false)
+		PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, true)
+		TASK.TASK_GO_TO_COORD_ANY_MEANS(ped, pos.x, pos.y, pos.z, 5.0, 0, false, 0, 0.0)
+		local dest = pos
+		PED.SET_PED_KEEP_TASK(ped, true)
+		AUDIO.STOP_PED_SPEAKING(ped, true)
+		util.create_tick_handler(function()
+			local pos = ENTITY.GET_ENTITY_COORDS(ped, true)
+			local targetPos = players.get_position(pid)
+			if not ENTITY.DOES_ENTITY_EXIST(ped) or PED.IS_PED_FATALLY_INJURED(ped) then
+				return false
+			elseif pos:distance(targetPos) > 150 and
+			request_control(ped) then
+				entities.delete_by_handle(ped)
+				return false
+			elseif pos:distance(targetPos) < 3.0 and request_control(ped) then
+				request_fx_asset(explosion.asset)
+				GRAPHICS.USE_PARTICLE_FX_ASSET(explosion.asset)
+				WIRI_GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
+					explosion.name,
+					pos.x, pos.y, pos.z,
+					0.0, 0.0, 0.0,
+					1.0,
+					false, false, false, false
+				)
+				FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 0, 1.0, true, true, 1.0, false)
+				ENTITY.SET_ENTITY_VISIBLE(ped, false, false)
+				entities.delete_by_handle(ped)
+				return false
+			elseif targetPos:distance(dest) > 3.0 and request_control_once(ped) then
+				dest = targetPos
+				TASK.TASK_GO_TO_COORD_ANY_MEANS(ped, targetPos.x, targetPos.y, targetPos.z, 5.0, 0, false, 0, 0.0)
+			end
+		end)
+    end

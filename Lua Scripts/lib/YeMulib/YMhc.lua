@@ -43,7 +43,7 @@
 
     --- Important
 
-        HC_VERSION = "V 3.3.4"
+        HC_VERSION = "V 3.3.5"
         CODED_GTAO_VERSION = 1.67
         SUPPORTED_STAND_VERSION = 101  --  Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
 
@@ -777,18 +777,18 @@
 
 --- Main Lists
 
-    menu.divider(Heist_Control, "任务功能" .. " " .. HC_VERSION)
+            menu.divider(Heist_Control, "任务功能" .. " " .. HC_VERSION)
 
-        PERICO_HEIST = menu.list(Heist_Control, TRANSLATE("Cayo Perico Heist"), {"hccp"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run") .. "\n" .. TRANSLATE("- Under $4.100.000 per hour"), function();  end)
-        CASINO_HEIST = menu.list(Heist_Control, TRANSLATE("Diamond Casino Heist"), {"hccah"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $3.650.000 per run"), function(); end)
-        DOOMS_HEIST = menu.list(Heist_Control, TRANSLATE("Doomsday Heist"), {"hcdooms"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run"), function(); end)
-        CLASSIC_HEISTS = menu.list(Heist_Control, TRANSLATE("Classic Heist"), {"hcclassic"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Fleeca Heist: Under $15.000.000 per run"), function(); end)
-        LS_ROBBERY = menu.list(Heist_Control, TRANSLATE("LS Tuners Robbery"), {"hcls"}, "", function(); end)
-        ULP_MISSIONS = menu.list(Heist_Control, TRANSLATE("ULP Missions"), {"hculp"}, "", function(); end)
-        TH_CONTRACT = menu.list(Heist_Control, TRANSLATE("The Contract: Agency"), {"hcagc"}, "", function(); end)
-        MASTER_UNLOCKR = menu.list(Heist_Control, TRANSLATE("Master Unlocker"), {"hcmu"}, "", function(); end)
-        TOOLS = menu.list(Heist_Control, TRANSLATE("Tools"), {"hctool"}, "", function(); end)
-        INFOS = menu.list(Heist_Control, TRANSLATE("Settings And About HC"), {"hcinfo"}, "", function(); end)
+            PERICO_HEIST = menu.list(Heist_Control, TRANSLATE("Cayo Perico Heist"), {"hccp"}, "#结算任务上限为255万\n#若超过上限会不到账喔(队友同理)\n#以下内容若麻烦推荐使用[自动预设]\n\n公式: (抢劫金额) 乘 (分红百分比) 减 (帕维尔的30万) = 255万\n举例:如果您选择50%的分红收入,您的抢劫金额最大收益上限应为560万左右,建议使用高级功能修改背包容量\n\n[丢丢小课堂]", function();  end)
+            CASINO_HEIST = menu.list(Heist_Control, TRANSLATE("Diamond Casino Heist"), {"hccah"}, "#结算任务上限为360万\n#若超过上限会不到账喔(队友同理)\n#以下内容若麻烦推荐使用[自动预设]\n#注意:困难模式下,如果您选择100%的分红,最终会得到290万左右的金额\n#切记:请自行叠加分红百分比,若超过上限360万将得到0收入!!!\n\n[丢丢小课堂]", function(); end)
+            DOOMS_HEIST = menu.list(Heist_Control, TRANSLATE("Doomsday Heist"), {"hcdooms"}, "#结算任务上限为255万\n#若超过上限会不到账喔(队友同理)\n#以下内容若麻烦推荐使用[自动预设]\n\n#注意:如果您选择100%的分红\n末日一到账金额: 120万左右\n末日二到账金额: 180万左右\n末日三到账金额: 230万左右\n[以上皆为困难模式]\n#切记:请自行叠加分红百分比,若超过上限255万将得到0收入!!!\n\n[丢丢小课堂]", function(); end)
+            CLASSIC_HEISTS = menu.list(Heist_Control, TRANSLATE("Classic Heist"), {"hcclassic"}, "#全福银行抢劫结算金额为1500万\n#您必须是房主并且仅允许您个人得到1500万!!!", function(); end)
+            LS_ROBBERY = menu.list(Heist_Control, TRANSLATE("LS Tuners Robbery"), {"hcls"}, "", function(); end)
+            ULP_MISSIONS = menu.list(Heist_Control, TRANSLATE("ULP Missions"), {"hculp"}, "", function(); end)
+            TH_CONTRACT = menu.list(Heist_Control, TRANSLATE("The Contract: Agency"), {"hcagc"}, "", function(); end)
+            MASTER_UNLOCKR = menu.list(Heist_Control, TRANSLATE("Master Unlocker"), {"hcmu"}, "解锁游戏内容/DLCs/彩蛋/奖品等..", function(); end)
+            TOOLS = menu.list(Heist_Control, TRANSLATE("Tools"), {"hctool"}, "#实用选项(任务)\n包含自动赚钱/快速完成/管理选项等..", function(); end)
+            INFOS = menu.list(Heist_Control, TRANSLATE("Settings And About HC"), {"hcinfo"}, "", function(); end)
 
     ---
 
@@ -801,7 +801,7 @@
 
         menu.divider(CAYO_PRESETS, TRANSLATE("Recommended"))
 
-            QUICK_PRESET = menu.toggle(CAYO_PRESETS, TRANSLATE("Quick Preset (1 - 4P)"), {"hccpquick"}, IS_WORKING(true) .. TRANSLATE("There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.55M) by only getting it."), function()
+            QUICK_PRESET = menu.toggle(CAYO_PRESETS, TRANSLATE("Quick Preset (1 - 4P)"), {"hccpquick"}, IS_WORKING(true) .. TRANSLATE("There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.45M) by only getting it."), function()
                 if menu.get_value(QUICK_PRESET) then
                     menu.trigger_commands("hccprefreshboard")
 
@@ -881,9 +881,9 @@
                     SET_INT_GLOBAL(CPTargets[Value][2], 2455000)
                     
                     menu.set_value(CP_REM_FEE, true)
-                    menu.set_value(CP_NON_HOST_CUT, 145)
+                    menu.set_value(CP_NON_HOST_CUT, 100)
                     menu.set_value(CP_NON_HOST_CUT_LOOP, false)
-                    menu.set_value(CP_HOST_CUT, 145)
+                    menu.set_value(CP_HOST_CUT, 100)
                     menu.set_value(CP_HOST_CUT_LOOP, true)
                     menu.set_value(CP_2P_CUT, 145)
                     menu.set_value(CP_2P_CUT_LOOP, true)
@@ -1699,7 +1699,7 @@
 
         ---
 
-        TELEPORT_CP_KOSATKA = menu.action(TELEPORT_CP, TRANSLATE("Kosatka: Heist Board"), {"hctpsub"}, "", function()
+        TELEPORT_CP_KOSATKA = menu.action(TELEPORT_CP, TRANSLATE("Kosatka: Heist Board"), {"hctpsub"}, TRANSLATE("Note that works on best when you are alone in your session."), function()
             if STAT_GET_INT("IH_SUB_OWNED") ~= 0 then
                 if not HUD.DOES_BLIP_EXIST(SubBlip) and not HUD.DOES_BLIP_EXIST(SubControlBlip) then
                     local PlayerPos = players.get_position(players.user())
@@ -5029,7 +5029,7 @@
 
     ---
 
-    INSTANT_FINISH = menu.list(TOOLS, TRANSLATE("Instant Finish Heists & Others"), {"hcinsfin"}, TRANSLATE("Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you."), function(); end)
+    INSTANT_FINISH = menu.list(TOOLS, "快速完成", {"hcinsfin"}, TRANSLATE("Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you."), function(); end)
 
         menu.divider(INSTANT_FINISH, TRANSLATE("Heists"))
 
@@ -5892,25 +5892,25 @@
 
         ---
 
-        GTAHAXUI_STAT_EDITOR = menu.list(STAT_EDITOR_READER, TRANSLATE("YMUI Stat Editor"), {}, TRANSLATE("YMUI is a free mod menu for editing stats, globals, and locals from UnknownCheats. Heist Control can help you using customizable YMUI's stat txt files. Note that you can download the files by googling easily."), function(); end)
+        YMUI_STAT_EDITOR = menu.list(STAT_EDITOR_READER, TRANSLATE("YMUI Stat Editor"), {}, TRANSLATE("YMUI is a free mod menu for editing stats, globals, and locals from UnknownCheats. Heist Control can help you using customizable YMUI's stat txt files. Note that you can download the files by googling easily."), function(); end)
 
-            GTAHAXUI_STAT_EDITOR_LIST = menu.list(GTAHAXUI_STAT_EDITOR, TRANSLATE("Load Custom Stat Files"), {"hchaxui"}, TRANSLATE("Supported Stat Types") .. "\n\n" .. "- 'INT32': " .. TRANSLATE("For normal numbers, generally called 'Int(eger)'") .. "\n" .. "- 'INT64': " .. TRANSLATE("For more big numbers") .. "\n" .. "- 'BOOL': " ..  TRANSLATE("'true' or 'false'"), function(); end)
+            YMUI_STAT_EDITOR_LIST = menu.list(YMUI_STAT_EDITOR, TRANSLATE("Load Custom Stat Files"), {"hchaxui"}, TRANSLATE("Supported Stat Types") .. "\n\n" .. "- 'INT32': " .. TRANSLATE("For normal numbers, generally called 'Int(eger)'") .. "\n" .. "- 'INT64': " .. TRANSLATE("For more big numbers") .. "\n" .. "- 'BOOL': " ..  TRANSLATE("'true' or 'false'"), function(); end)
 
-                menu.divider(GTAHAXUI_STAT_EDITOR_LIST, TRANSLATE("Tools"))
+                menu.divider(YMUI_STAT_EDITOR_LIST, TRANSLATE("Tools"))
 
-                    menu.action(GTAHAXUI_STAT_EDITOR_LIST, TRANSLATE("Refresh"), {}, TRANSLATE("Refresh the list via restarting Heist Control."), function()
+                    menu.action(YMUI_STAT_EDITOR_LIST, TRANSLATE("Refresh"), {}, TRANSLATE("Refresh the list via restarting Heist Control."), function()
                         WRITE_SETTING("Saved Command Name", "hchaxui")
                         util.restart_script()
                     end)
 
                 ---
 
-                menu.divider(GTAHAXUI_STAT_EDITOR_LIST, TRANSLATE("Load Custom Stat Files"))
+                menu.divider(YMUI_STAT_EDITOR_LIST, TRANSLATE("Load Custom Stat Files"))
 
                     local HaxUIFiles = {} -- { file_name }
                     for idx, file_dir in pairs(filesystem.list_files(FolderDirs.HaxUI)) do
                         if string.contains(file_dir, ".txt") then 
-                            menu.list(GTAHAXUI_STAT_EDITOR_LIST, DIR_TO_FILE_NAME("YMUI", file_dir), { "hchaxui" .. idx }, "", function(); end)
+                            menu.list(YMUI_STAT_EDITOR_LIST, DIR_TO_FILE_NAME("YMUI", file_dir), { "hchaxui" .. idx }, "", function(); end)
                             table.insert(HaxUIFiles, DIR_TO_FILE_NAME("YMUI", file_dir))
                         end
                     end
@@ -6069,11 +6069,11 @@
 
             ---
 
-            menu.action(GTAHAXUI_STAT_EDITOR, TRANSLATE("Open Folder for Custom Stat Files"), {}, FolderDirs.HaxUI, function()
+            menu.action(YMUI_STAT_EDITOR, TRANSLATE("Open Folder for Custom Stat Files"), {}, FolderDirs.HaxUI, function()
                 util.open_folder(FolderDirs.HaxUI)
             end)
             
-            menu.hyperlink(GTAHAXUI_STAT_EDITOR, TRANSLATE("Visit YMUI"), "https://www.unknowncheats.me/forum/grand-theft-auto-v/461672-gtahax-1-58-external-thread-3-a.html", "")
+            menu.hyperlink(YMUI_STAT_EDITOR, TRANSLATE("Visit YMUI"), "https://www.unknowncheats.me/forum/grand-theft-auto-v/461672-gtahax-1-58-external-thread-3-a.html", "")
 
         ---
 

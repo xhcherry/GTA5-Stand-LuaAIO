@@ -1,6 +1,8 @@
 -----------------------------------------------------------------------------夜幕团队制作，CV请鸣谢夜幕！----------------------------------------------------------------------------------------------
 
-
+local function teleport(x, y, z)
+  PED.SET_PED_COORDS_KEEP_VEHICLE(players.user_ped(), x, y, z - 1.0)
+end
 
 local AFS = {
 {-928.59015, -2938.39, 13.941446},
@@ -104,11 +106,10 @@ local AFS = {
 {2399.5, 3062.74, 54.47027},
 {2394.65, 3062.66, 52.20178},
 }
-
 local AF = menu.list(Transport, "手办位置", {}, "请确保没有修改过收集数据")
 for idx, coords in AFS do
     AF:action("手办 " .. idx, {}, "传送到手办位置", function()
-        util.teleport_2d(coords[1], coords[2])
+        teleport(coords[1], coords[2], coords[3])
     end)
 end
 
@@ -173,7 +174,7 @@ local CardA = {
 local Card = menu.list(Transport, "纸牌位置", {}, "请确保没有修改过收集数据")
 for idx, coords in CardA do
     Card:action("纸牌 " .. idx, {}, "传送到纸牌位置", function()
-        util.teleport_2d(coords[1], coords[2])
+        teleport(coords[1], coords[2], coords[3])
     end)
 end
 
@@ -234,7 +235,7 @@ local StuntA = {
 local Stunt = menu.list(Transport, "飞车特技传送", {}, "请确保没有修改过收集数据")
 for idx, coords in StuntA do
     Stunt:action("飞车特技地点 " .. idx, {}, "传送到飞车特技位置", function()
-        util.teleport_2d(coords[1], coords[2])
+        teleport(coords[1], coords[2], coords[3])
     end)
 end
 
@@ -295,7 +296,7 @@ local SJA = {
 local SJ = menu.list(Transport, "信号干扰器", {}, "请确保没有修改过收集数据")
 for idx, coords in SJA do
     SJ:action("信号干扰器 " .. idx, {}, "传送到信号干扰器位置", function()
-        util.teleport_2d(coords[1], coords[2])
+        teleport(coords[1], coords[2], coords[3])
     end)
 end
 
@@ -406,9 +407,41 @@ local OrganicsA = {
 local Organics = menu.list(Transport, "拉玛有机坊产品", {}, "请确保没有修改过收集数据")
 for idx, coords in OrganicsA do
     Organics:action("拉玛有机坊产品地点 " .. idx, {}, "传送到拉玛有机坊产品位置", function()
-        util.teleport_2d(coords[1], coords[2])
+        teleport(coords[1], coords[2], coords[3])
+    end)
+end
+
+util.keep_running()
+
+local MusicA = {
+  [1] = {-860.574, -230.1728, 61.01559},
+  [2] = {25.336607, 521.18884, 170.2274},
+  [3] = {-2172.3152, 1159.7124, -24.372173},
+  [4] = {955.44995, 49.56825, 112.552666},
+  [5] = {-1618.7194, -3010.5107, -75.20507},
+  [6] = {2726.8262, -387.4905, -48.992954},
+  [7] = {374.6021, -63.281624, 107.16329},
+  [8] = {-2162.222, 1099.4281, -24.364271},
+}
+local Music = menu.list(Transport, "媒体记忆棒", {}, "请确保没有修改过收集数据")
+for idx, coords in MusicA do
+    Music:action("媒体记忆棒地点 " .. idx, {}, "传送到媒体记忆棒位置", function()
+        teleport(coords[1], coords[2], coords[3])
+    end)
+end
+
+util.keep_running()
+
+local SecretBaseA = {
+  [9999] = {-1922.2694, 3749.8381, -99.64577}
+}
+local SecretBase = menu.list(Transport, "外星人的秘密基地", {}, "请确保没有修改过收集数据")
+for idx, coords in SecretBaseA do
+    SecretBase:action("外星人秘密基地 " .. idx, {}, "传送到外星人秘密基地", function()
+        teleport(coords[1], coords[2], coords[3])
     end)
 end
 
 util.keep_running()
 menu.readonly(Transport, "感谢坐标提供者", "坤坤子")
+

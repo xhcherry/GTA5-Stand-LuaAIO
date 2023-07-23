@@ -11,6 +11,7 @@ util.require_natives("natives-1640181023")
 util.require_natives("natives-1660775568")
 require "lib.YeMulib.YMSlua"
 require "lib.YeMulib.YMload"
+require "lib.YeMulib.YMload2"
 require "lib.YeMulib.YMsr"
 require "lib.YeMulib.YMspo"
 require "lib.YeMulib.main"
@@ -34,16 +35,52 @@ if online_v > ocoded_for then
     util.toast("此GTA夜幕版本已过期 (" .. online_v .. ", 该脚本开发于 " .. ocoded_for .. ").请加入夜幕官方群更新！")
 util.stop_script()
 end
+YMdet()
 local aalib = require("aalib")
 local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001
 local SND_FILENAME<const> = 0x00020000
+if randomizer(array) == "1" then
+store_dir = filesystem.store_dir() .. '\\YMss\\'
+sound_selection_dir = store_dir .. '\\sound3.txt'
+if not filesystem.is_dir(store_dir) then
+    util.toast("夜幕音频没有正确安装！.")
+    util.stop_script()
+end
+fp = io.open(sound_selection_dir, 'r')
+local file_selection = fp:read('*a')
+fp:close()
+local sound_location = store_dir .. '\\' .. file_selection
+if not filesystem.exists(sound_location) then
+    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
+else
+    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
+end
+util.keep_running()
+else
+store_dir = filesystem.store_dir() .. '\\YMss\\'
+sound_selection_dir = store_dir .. '\\sound6.txt'
+if not filesystem.is_dir(store_dir) then
+    util.toast("夜幕音频没有正确安装！.")
+    util.stop_script()
+end
+fp = io.open(sound_selection_dir, 'r')
+local file_selection = fp:read('*a')
+fp:close()
+local sound_location = store_dir .. '\\' .. file_selection
+if not filesystem.exists(sound_location) then
+    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
+else
+    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
+end
+util.keep_running()
+end
 ----------------------------------
-Version = 5.5
+Version = 5.6
 local TIANXIA = "欢迎使用夜幕-V" .. Version ..  ""
 local JIAOBEN = "夜幕脚本"
-local net = "夜幕LUA暂时无法连接到服务器！"
-date = "2023.7.18"
+local introduce = "欢迎使用夜幕LUA"
+date = "2023.7.21"
 wait = util.yield
 joaat = util.joaat
 alloc = memory.alloc
@@ -124,11 +161,6 @@ local colors = {
         HUD.END_TEXT_COMMAND_THEFEED_POST_TICKER(true, false)
         util.log(message)
     end
-    notification("你好，尊贵的夜幕用户!\n&#8721;已连接！", colors.green)
-    util.toast("请前往夜幕脚本支持选项加入新夜幕官方一群！")
-    util.on_stop(function()
-        notification("下次遇见会更好!", colors.blue)
-    end)
 local function player_toggle_loop(root, PlayerID, menu_name, command_names, help_text, callback)
     return menu.toggle_loop(root, menu_name, command_names, help_text, function()
         if not players.exists(PlayerID) then util.stop_thread() end
@@ -174,7 +206,7 @@ local interior_stuff = {0, 233985, 169473, 169729, 169985, 170241, 177665, 17740
 HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
 HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
 menu.action(menu.my_root(), '一键转到菜单', {"tiaozhuan"}, '跳转速度更加方便', function()
-    menu.focus(menu.ref_by_path('Stand>夜幕-V5.5', 37))
+   menu.trigger_commands("YMscript")
 end)
 menu.action(menu.my_root(),"重启夜幕脚本",{},"",function ()
     util.restart_script()
@@ -182,7 +214,7 @@ menu.action(menu.my_root(),"重启夜幕脚本",{},"",function ()
 	scaleForm = GRAPHICS.REQUEST_SCALEFORM_MOVIE("MP_BIG_MESSAGE_FREEMODE")
     local scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE("mp_big_message_freemode")
 	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleForm, "SHOW_SHARD_WASTED_MP_MESSAGE")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("&#8721; ~bold~夜幕 Lua &#8721;")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("&#8721; ~bold~夜幕 LUA &#8721;")
     GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("&#8721;欢迎回来！尊贵的夜幕Lua用户&#8721;\n\n""~bold~~b~版本号:" .. Version ..  "~bold~~b~更新于" .. date ..  "")
 	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
     AUDIO.PLAY_SOUND_FRONTEND(55, "FocusIn", "HintCamSounds", true)
@@ -205,7 +237,7 @@ end)
     menu.action(menu.my_root(), "夜幕第二制作:呆呆", {}, "大美女一枚~~~", function()
 end)
 menu.divider(menu.my_root(), "版本号:" .. Version ..  "更新于" .. date ..  "")
-local YM_root = menu.attach_before(menu.ref_by_path('Stand>Settings'),menu.list(menu.shadow_root(), "夜幕-V" .. Version ..  "" , {"YMscript"}, '', 
+local YM_root = menu.attach_before(menu.ref_by_path('Stand>Settings'),menu.list(menu.shadow_root(), "夜幕LUA-V" .. Version ..  "" , {"YMscript"}, "" .. introduce .. "" , 
 function()end))
 menu.trigger_commands("YMscript")
 menu.action(YM_root,"关闭夜幕脚本",{},"",function ()
@@ -219,14 +251,6 @@ local festive_div = menu.divider(YM_root, "运行夜幕Lua", {}, "")
             util.yield(100)
         end
 end)
-function YMdet()
-    if not async_http.have_access() then
-        local y = net
-        notification("~bold~请为夜幕LUA启用互联网访问&#8721;", math.random(0, 50))
-        util. stop_script()
-    end
-    --util.toast(net)
-end
 local self = menu.list(YM_root, "自我选项", {}, "")
 local jiashi = menu.list(YM_root, "载具选项", {}, "")
 local zidongrenwu = menu.list(YM_root, "任务选项（含恢复选项）", {}, "")
@@ -784,6 +808,21 @@ end)
     menu.action(trolling, "强制进入自由模式任务", {}, "强制玩家进入自由模式任务", function()
         menu.trigger_commands("mission".. players.get_name(PlayerID))
     end)
+menu.toggle_loop(trolling, "起伏不平", {}, "", function() 
+  local ramp_hash = util.joaat("stt_prop_ramp_jump_s")
+  local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+  local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0, 10, -2)
+  local rot = ENTITY.GET_ENTITY_ROTATION(ped, 2)
+  STREAMING.REQUEST_MODEL(ramp_hash)
+while not STREAMING.HAS_MODEL_LOADED(ramp_hash) do
+   wait(10)
+ end
+local ramp = OBJECT.CREATE_OBJECT(ramp_hash, pos.x, pos.y, pos.z, true, false, true)
+    ENTITY.SET_ENTITY_VISIBLE(ramp, true)
+    ENTITY.SET_ENTITY_ROTATION(ramp, rot.x, rot.y, rot.z + 90, 0, true)
+    wait(2000)
+    entities.delete_by_handle(ramp)
+end)
     menu.action(trolling2, "大圆球", {}, "", function()
         Hamster_Ball(PlayerID)
     end)
@@ -974,6 +1013,39 @@ menu.toggle(trolling2, "闪他(会使他掉帧)", {"shanta"}, "远离!!!", funct
         end
     end
 end)
+	menu.action(trolling2, "苦力怕小丑", {"creeper"}, "生成一个自曝小丑跑向玩家并自爆!", function()
+		creep(PlayerID)
+	end, nil, nil, COMMANDPERM_RUDE)
+Aes = menu.list(trolling2, "动物娱乐", {}, "")
+    menu.action(Aes, "汪汪队", {"wowo"}, "汪汪~", function(on_click)
+        meowbmob(PlayerID)
+    end)
+    local player_jinx_army = {}
+    local army_player = menu.list(Aes, "汪汪队出动！", {}, "")
+    menu.click_slider(army_player, "生成汪汪队", {}, "跟随玩家", 1, 50, 10, 1, function(val)
+        local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+        local pos = ENTITY.GET_ENTITY_COORDS(ped, false)
+        pos.y = pos.y - 5
+        pos.z = pos.z + 1
+        local jinx = util.joaat("A_C_chop")
+        request_model(jinx)
+        for i = 1, val do
+            player_jinx_army[i] = entities.create_ped(28, jinx, pos, 0)
+            ENTITY.SET_ENTITY_INVINCIBLE(player_jinx_army[i], true)
+            PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(player_jinx_army[i], true)
+            PED.SET_PED_COMPONENT_VARIATION(player_jinx_army[i], 0, 0, 1, 0)
+            TASK.TASK_FOLLOW_TO_OFFSET_OF_ENTITY(player_jinx_army[i], ped, 0, -0.3, 0, 7.0, -1, 10, true)
+            wait()
+        end 
+    end)
+
+    menu.action(army_player, "清除汪汪队", {}, "", function()
+        for i, ped in ipairs(entities.get_all_peds_as_handles()) do
+            if PED.IS_PED_MODEL(ped, util.joaat("A_C_chop")) then
+                entities.delete_by_handle(ped)
+            end
+        end
+    end)
    menu.action(trolling2,"垃圾车的工作时间", {}, "", function()
         veh_to_attach = 1
 		V3 = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
@@ -6457,15 +6529,7 @@ end)
 menu.action(flyxuanxiang, "打开降落伞", {}, "滑翔的乐趣", function()
 	PED.FORCE_PED_TO_OPEN_PARACHUTE(PLAYER.GET_PLAYER_PED(players.user()))
 end)
-walkonwater = false
-ls_walkwater = menu.toggle(self, "在水上行走", {}, "",  function(on)
-    walkonwater = on
-    if on then
-        menu.set_value(ls_driveonwater, false)
-        menu.set_value(ls_driveonair, false)
-    end
-end)
-Heist_Control = menu.list(zidongrenwu, "第一任务选项HC(3.3.4)")
+Heist_Control = menu.list(zidongrenwu, "第一任务选项HC(3.3.5)")
  require "lib.YeMulib.YMhc"
 renwu = menu.list(zidongrenwu, "第二任务选项")
  require "lib.YeMulib.YMhc2"
@@ -6488,6 +6552,8 @@ util.yield(2000)
 end)
 Transport = menu.list(zidongrenwu, "夜幕LUA传送点拓展", {}, "")
  require "lib.YeMulib.YMTp"
+Transfer = menu.list(zidongrenwu, "夜幕拾取传送选项", {}, "")
+ require "lib.YeMulib.YMTf"
 cash = menu.list(zidongrenwu,"刷钱选项(如果你的账号因此功能被封禁，夜幕将不负任何责任！)", {},"谨慎！谨慎！谨慎！")
 menu.divider(cash, "警告：此选项中的所有功能都被视为有风险！")
 menu.divider(cash, "您有可能在未知的天数内被禁止")
@@ -6518,8 +6584,6 @@ function YMversion()
             end
         else
                notification("网络连接失败，请重试！",colors.blue)
-               wait (1500)
-               MISC._RESTART_GAME()
         end
         util. stop_script()
     end)

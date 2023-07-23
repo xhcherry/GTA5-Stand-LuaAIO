@@ -72,12 +72,6 @@ local allentities = {lastupdate = 0}
 local allpeds2 = {lastupdate = 0}
 local allvehicles2 = {lastupdate = 0}
 
-local function notification(body, ...)
-    util.toast(body, ...)
-    if debugmode then
-        util.log(body)
-    end
-end
 local function does_entity_from_pointer_exist(addr)
     if allentities.lastupdate < util.current_time_millis() then
         allentities = {lastupdate = util.current_time_millis()}
@@ -226,7 +220,7 @@ for i = 0, 31 do
                         util.draw_debug_text(players.get_name(pid).." - "..#whitelist.auto[i].owner.."/"..owned)
                     end
                     if exists ~= #allents then
-                        notification(exists.."/"..#allents)
+                        util.toast(exists.."/"..#allents)
                     end
                 end
                 if pid ~= players.user() and synctimer[pid] > util.current_time_millis() then
@@ -235,7 +229,7 @@ for i = 0, 31 do
                     while synctimer[pid] > util.current_time_millis() and players.exists(pid) do
                         util.yield()
                     end
-                    util.toast(players.get_name(pid).." 不再处于超时状态", TOAST_ALL)
+                    util.toast(players.get_name(pid).." 不再处于超时状态")
                     menu.trigger_command(Sync, "off")
                 end
             end
@@ -296,7 +290,7 @@ menu.toggle_loop(autothrottler, "开启", {}, "", function()
             whitelist.auto[i].current = existing
             whitelist.auto[i].owner = existing2
             if #whitelist.auto[i].current > settings.auto.totallimit then
-                notification("[T] 限制来自的实体 "..players.get_name(i), TOAST_ALL)
+                util.toast("[T] 限制来自的实体 "..players.get_name(i))
                 if util.current_time_millis() + settings.auto.timeout > synctimer[i] then
                     synctimer[i] = util.current_time_millis() + settings.auto.timeout
                 end
@@ -311,7 +305,7 @@ menu.toggle_loop(autothrottler, "开启", {}, "", function()
             end
             for Model, Num in pairs(whitelist.auto[i].models) do
                 if Num > settings.auto.modellimit then
-                    notification("[M] 限制来自的实体 "..players.get_name(i), TOAST_ALL)
+                    util.toast("[M] 限制来自的实体 "..players.get_name(i))
                     if util.current_time_millis() + settings.auto.timeout > synctimer[i] then
                         synctimer[i] = util.current_time_millis() + settings.auto.timeout
                     end
@@ -325,7 +319,7 @@ menu.toggle_loop(autothrottler, "开启", {}, "", function()
                 end
             end
             if whitelist.auto[i].highpriority.total > settings.auto.highlimit then
-                notification("[H] 限制来自的实体 "..players.get_name(i), TOAST_ALL)
+                util.toast("[H] 限制来自的实体 "..players.get_name(i))
                 if util.current_time_millis() + settings.auto.timeout > synctimer[i] then
                     synctimer[i] = util.current_time_millis() + settings.auto.timeout
                 end
@@ -398,12 +392,12 @@ menu.toggle_loop(bigthrottler, "开启", {}, "", function()
         end
         local owner = get_highest_count(owners)
         if players.exists(owner) then
-            notification("限制来自"..players.get_name(owner), TOAST_ALL)
+            util.toast("限制来自"..players.get_name(owner))
             if util.current_time_millis() + settings.bigvehicle.timeout > synctimer[owner] then
                 synctimer[owner] = util.current_time_millis() + settings.bigvehicle.timeout
             end
         elseif settings.bigvehicle.cleanup then
-            notification("节流大型车辆", TOAST_ALL)
+            util.toast("节流大型车辆")
         end
         if settings.bigvehicle.cleanup then
             if players.exists(owner) then
@@ -469,12 +463,12 @@ menu.toggle_loop(vehiclethrottler, "开启", {}, "", function()
         end
         local owner = get_highest_count(owners)
         if players.exists(owner) then
-            notification("限制来自 "..players.get_name(owner), TOAST_ALL)
+            util.toast("限制来自 "..players.get_name(owner))
             if util.current_time_millis() + settings.vehicle.timeout > synctimer[owner] then
                 synctimer[owner] = util.current_time_millis() + settings.vehicle.timeout
             end
         elseif settings.vehicle.cleanup then
-            notification("节流车辆", TOAST_ALL)
+            util.toast("节流车辆")
         end
         if settings.vehicle.cleanup then
             if players.exists(owner) then
@@ -548,12 +542,12 @@ menu.toggle_loop(objectthrottler, "开启", {}, "", function()
         end
         local owner = get_highest_count(owners)
         if players.exists(owner) then
-            notification("限制来自的对象 "..players.get_name(owner), TOAST_ALL)
+            util.toast("限制来自的对象 "..players.get_name(owner))
             if util.current_time_millis() + settings.object.timeout > synctimer[owner] then
                 synctimer[owner] = util.current_time_millis() + settings.object.timeout
             end
         elseif settings.object.cleanup then
-            notification("限制对象", TOAST_ALL)
+            util.toast("限制对象")
         end
         if settings.object.cleanup then
             if players.exists(owner) then
@@ -622,12 +616,12 @@ menu.toggle_loop(pedthrottler, "开启", {}, "", function()
         end
         local owner = get_highest_count(owners)
         if players.exists(owner) then
-            notification("限制来自 "..players.get_name(owner), TOAST_ALL)
+            util.toast("限制来自 "..players.get_name(owner))
             if util.current_time_millis() + settings.ped.timeout > synctimer[owner] then
                 synctimer[owner] = util.current_time_millis() + settings.ped.timeout
             end
         elseif settings.ped.cleanup then
-            notification("节流Peds", TOAST_ALL)
+            util.toast("节流Peds")
         end
         if settings.ped.cleanup then
             if players.exists(owner) then
@@ -669,5 +663,3 @@ end)
 menu.slider(pedthrottler, "半径", {}, "指定要考虑实体的周围距离.", 0, 1000, settings.ped.radius, 5, function(value)
     settings.ped.radius = value
 end)
-
-util.keep_running()

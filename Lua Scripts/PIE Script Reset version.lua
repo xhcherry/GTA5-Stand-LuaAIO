@@ -10,9 +10,9 @@ JSkey = require 'lib.pielib.JSkeyLib'
 local scaleForm = require'lib.pielib.ScaleformLib'
 local SFasd = scaleForm('instructional_buttons')
 
-util.show_corner_help("<font size='16'>~o~欢迎使用~b~PIE Lua Script" .."\n ~r~‹ ~y~ ‹ ~g~ ‹ ~g~\n~r~       Version ~y~1.4" )
 
 
+GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
 local spawned_objects = {}
 local ladder_objects = {}
 local remove_projectiles = false
@@ -247,9 +247,12 @@ scaleform_thread = util.create_thread(function (thr)
 
 	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleForm, "SHOW_SHARD_WASTED_MP_MESSAGE")
 
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_PLAYER_NAME_STRING(" ~bold~~blue~  欢迎帅气的PIE Lua Script用户".. PLAYER.GET_PLAYER_NAME(PLAYER.PLAYER_ID()))
 
-	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+    local scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE("mp_big_message_freemode")
+    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleForm, "SHOW_SHARD_WASTED_MP_MESSAGE")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(" ~bold~&#8721;PIE Lua Script&#8721;")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("~b~‹~g~ ‹~y~ ‹ ~r~‹ ~p~‹\n\n~r~&#8721;=====欢迎使用=====&#8721;\n\n~s~ Version 1.5 ~b~文件群：772361223\n\n~b~‹~g~ ‹~y~ ‹ ~r~‹ ~p~‹")
+    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
     AUDIO.PLAY_SOUND_FRONTEND(55, "FocusIn", "HintCamSounds", true)
 
 	starttime = os.time()
