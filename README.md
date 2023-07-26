@@ -1,4 +1,7 @@
 # GTA5-Stand-LuaAIO
+
+[![Page Views Count](https://badges.toozhao.com/badges/01H69JD1N3ZWV3EDK36V3F5DJK/green.svg)](https://badges.toozhao.com/stats/01H69JD1N3ZWV3EDK36V3F5DJK "Get your own page views count badge on badges.toozhao.com")
+
 GTA5 Mod Stand Lua All in One；含综合、任务、崩溃、模组、娱乐等多种lua于一体的存储库
 
 ### 简易教程
