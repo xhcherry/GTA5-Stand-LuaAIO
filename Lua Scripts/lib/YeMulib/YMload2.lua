@@ -75,7 +75,7 @@ local colors = {
         HUD.END_TEXT_COMMAND_THEFEED_POST_TICKER(true, false)
         util.log(message)
     end
-    notification("你好，尊贵的夜幕用户!\n&#8721;已连接！\n""[" .. YMencouragement[random_notify] .. "]", colors.black)
+     notification("你好，尊贵的夜幕用户!\n&#8721;已连接！\n""[" .. YMencouragement[random_notify] .. "]", colors.black)
     util.on_stop(function()
-        notification("下次遇见会更好!", colors.gray)
+     notification("下次遇见会更好!", colors.gray)
     end)

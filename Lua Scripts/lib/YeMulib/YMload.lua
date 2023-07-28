@@ -1,6 +1,6 @@
 ------------------------------------夜幕LUA------------------------------
 require "lib.YeMulib.YeMulib"
-Version5 = 5.6
+Version5 = 5.7
 local net = "夜幕LUA暂时无法连接到服务器！"
 util.show_corner_help("~bold~~y~欢迎使用夜幕LUA 此版本号为：~o~" .. Version5 ..  "~g~‹\n ~b~祝你玩的开心！")
 YM_logo = directx.create_texture(filesystem.resources_dir() ..'/YMIMG/YM.png')

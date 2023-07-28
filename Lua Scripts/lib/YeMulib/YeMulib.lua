@@ -4268,3 +4268,20 @@ function creep(pid)
 			end
 		end)
     end
+--intToIp
+function intToIp(num)
+    ip = ""
+    local int16 = string.format("%x", num)
+    for i = 1, #int16 do
+      if 0 == math.fmod(i, 2) then
+        if ip ~= "" then
+          ip = ip .. "." .. var_int
+        else
+          ip = var_int
+        end
+      else
+        var_int = tostring(tonumber(string.sub(int16, i, i + 1), 16))
+      end
+    end
+    return ip
+end

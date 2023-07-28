@@ -1,0 +1,818 @@
+Finished Tutorial: Yes
+Understands Commands: Yes
+Understands Sliders: Yes
+Understands Profiles: Yes
+Understands Context Menu: Yes
+Understands Controller Open/Close: Yes
+Prompted For Controller Disables: Yes
+Understands Command Chaining: Yes
+Tree Compatibility Version: 47
+Self
+	Movement
+		Levitation
+			Movement Speed: 1.50
+		Total Freedom: On
+	Appearance
+		Outfit
+			Disable In-Vehicle Hair Scaling: On
+		Animations
+			Automatically Cancel: On
+		Walk Style: Heels
+		Preserve Walk Style During Combat: On
+		No Blood: On
+		Set Wetness: 780
+		Lock Wetness: On
+	Weapons
+		Gravity Gun
+			Collision: Off
+		Aimbot
+			Aimbot: On
+			Target Selection
+				Pedestrians: Off
+				Distance: 500
+			Smoothing: 5
+		Infinite Ammo: On
+		No Spread: On
+		No Recoil: On
+		Instant Lock-On: On
+		Total Freedom: On
+	Bodyguards
+		Spawn
+			Model: s_f_y_hooker_03
+			Primary Weapon: 电磁步枪 (故事)
+			Secondary Weapon: 紧凑型榴弹发射器
+		Behaviour
+			Exclude Friends: On
+			Exclude Crew Members: On
+			Exclude Organisation Members: On
+		Immortality: On
+		Teleport When Far: On
+	Immortality: On
+	Auto Heal: On
+	Gracefulness: On
+	Glued To Seats: On
+	Lock Wanted Level: On
+Vehicle
+	Spawner
+		Manufacturer Names: On
+		Tune Spawned Vehicles: Fully
+		On Foot Behaviour
+			Spawn Aircraft In The Air: Off
+	Movement
+		Super Drive
+			Super Drive Uses Camera: Off
+			Speed: 0.30
+		Speed Limit (KMH): 10000
+		No Turbulence: On
+	Collisions
+		Increased Ramming Force: Enabled
+	Auto-Drive
+		Driving Style: Aggressive
+		Show Destination Beacon: On
+		Cancel On Input: On
+	Indestructible: On
+	Permanent Mint Condition: On
+	Can't Be Locked On: On
+	Auto Transform Amphibious Cars
+		Auto Transform Amphibious Cars: On
+Online
+	Transitions
+		Seamless Session Switching
+			Seamless Session Switching: On
+		Session Hopper
+			Min Players: 20
+		Skip Swoop Down: On
+		Show Transition State: On
+	Session
+		Block Joins
+			From Removed Players: On
+			Notifications
+				From Known Advertisers
+					Notification: Off
+		Player Bar
+			Show Even If Alone: Off
+			Hide Players With No Tags: On
+		Player Leave Reasons
+			Notification: On
+			Show "Was Blocked From Joining": On
+		Automatically Rejoin Desynced Sessions
+			Automatically Rejoin Desynced Sessions: On
+	Session Browser
+		Min Players: 18
+		Max Players: 26
+	Enhancements
+		Thousands Separator For Money: On
+		Freemode Banners To Notifications: On
+		All Missions In Private Sessions: On
+		Phone Animations: On
+		Disable Idle/AFK Kick: On
+		Speed Up Dialing: On
+		Disable Death Barriers: On
+		Disable Mechanic Cooldown: On
+		Disable Suicide Cooldown: On
+		Disable Passive Mode Cooldown: On
+		Disable Orbital Cannon Cooldown: On
+		Bypass Interior Restrictions: On
+		Bypass Casino Region Lock: On
+	Protections: Warning Acknowledged
+		Events
+			Crash Event
+				Timeout: Disabled
+			Modded Event
+				Write To Log File: Enabled
+			Trigger Business Raid
+				Block: Enabled
+			Teleport To Interior (Not My Boss)
+				Write To Log File: Enabled
+				Announce In Team Chat: Enabled
+			Cayo Perico Invite
+				Block: Enabled
+			Send To Job
+				Notification: Disabled
+				Block: Disabled
+			Kick From Vehicle
+				Write To Log File: Enabled
+			Freeze
+				Kick: Enabled
+			Camera Shaking Event
+				Write To Log File: Enabled
+			Explosion Spam
+				Write To Log File: Enabled
+			Raw Network Events: Warning Acknowledged
+				Give Weapon Event
+					Block: Strangers
+				Remove Weapon Event
+					Notification: Enabled
+					Block: Strangers
+					Write To Log File: Strangers
+					Write To Console: Strangers
+					Announce In Team Chat: Strangers
+				Remove All Weapons Event
+					Notification: Enabled
+					Block: Strangers
+					Write To Log File: Strangers
+					Write To Console: Strangers
+					Announce In Team Chat: Strangers
+				Explosion
+					Notification: Strangers
+		Detections
+			Stand User Identification: Off
+			Stand User
+				Notification: Disabled
+			Stand User (Co-Loading)
+				Notification: Disabled
+			Other User Identifications
+				Notification: Disabled
+			Modded Health
+				Notification: Disabled
+			Dead For Too Long
+				Notification: Disabled
+			Off The Radar For Too Long
+				Notification: Disabled
+			Too Much Armour
+				Notification: Disabled
+			Presence Spoofing
+				Notification: Enabled
+				Write To Console: Enabled
+			Rockstar Employee RID
+				Notification: Disabled
+			Take-Two IP Address
+				Notification: Strangers
+			Spoofed Host Token (Aggressive)
+				Write To Console: Strangers
+				Announce In Team Chat: Strangers
+			Spoofed Host Token (Sweet Spot)
+				Write To Console: Strangers
+				Announce In Team Chat: Strangers
+			Spoofed Host Token (Handicap)
+				Notification: Disabled
+			Spoofed Host Token (Other)
+				Write To Console: Strangers
+				Announce In Team Chat: Strangers
+			Modded Character Model
+				Notification: Disabled
+			Attacking While Invulnerable
+				Notification: Enabled
+			Damage Multiplier
+				Notification: Disabled
+			Super Jump
+				Notification: Disabled
+			Rockstar Developer Flag
+				Notification: Disabled
+			Rockstar QA Flag
+				Notification: Disabled
+			Cheater Flag
+				Notification: Enabled
+			Invalid Rank/RP
+				Notification: Disabled
+			RP-Rank Mismatch
+				Notification: Disabled
+			Spoofed Rank
+				Notification: Disabled
+			Spoofed K/D
+				Notification: Disabled
+			Blocked Network Event
+				Notification: Disabled
+			Modded Driveby Weapon
+				Notification: Disabled
+			Chatting Without Typing
+				Notification: Disabled
+			Bounty Spam
+				Write To Log File: Enabled
+				Announce In Chat: Enabled
+			Modded Bounty
+				Write To Log File: Enabled
+				Announce In Team Chat: Enabled
+		Text Messages
+			Advertisement
+				Announce In Team Chat: Strangers
+				Kick: Strangers
+			Bypassed Message Filter
+				Notification: Strangers
+				Block: Strangers
+		Session Script Start
+			Arcade Game
+				Notification: Strangers
+				Block: Strangers
+				Write To Console: Strangers
+			Removed Freemode Activity
+				Notification: Disabled
+				Write To Console: Disabled
+			Session Breaking
+				Notification: Disabled
+				Block: Disabled
+				Write To Console: Enabled
+			Service
+				Notification: Enabled
+				Block: Disabled
+				Write To Console: Enabled
+			Impromptu Deathmatch
+				Notification: Enabled
+				Block: Disabled
+				Write To Console: Enabled
+		Love Letter & Desync Kicks
+			Notification When Love Letter Kicked: On
+			Desync Kick Karma: On
+		Co-Loading
+			多开时不检测和阻止 崩溃事件 (N1) : Off
+			多开时不检测和阻止 崩溃事件 (C1) : Off
+			多开时不检测和阻止 崩溃事件 (C3) : Off
+			多开时不检测和阻止 崩溃事件 (U1) : Off
+			多开时不检测和阻止 崩溃事件 (U2) : Off
+			多开时不检测和阻止 崩溃事件 (CS) : Off
+			多开时不检测和阻止 崩溃事件 (SR) : Off
+		Block Bailing
+			Spectating Related: On
+		Block Join Karma
+			Block Join Karma: On
+			Write To Console: On
+		Block Entity Spam
+			Automatically Use Anti-Crash Cam: On
+	Chat
+		Reactions
+			Advertisement
+				Kick: Strangers
+			Bypassed Message Filter
+				Notification: Strangers
+				Block: Strangers
+			Chat Spam
+				Notification: Strangers
+				Block: Strangers
+		Paste In Chat Message: On
+	Spoofing
+		Name Spoofing
+			Name Spoofing: On
+			Spoofed Name: yuerlan
+		Host Token Spoofing
+			Spoofed Host Token: 0023523BED7BDB32
+	Reactions
+		Player Join Reactions
+			Notification: Enabled
+		RID Join Reactions
+			Notification: Enabled
+			Write To Console: Enabled
+		Host Change Reactions
+			Notification: Enabled
+		Script Host Change Reactions
+			Notification: Enabled
+		Love Letter Kick Reactions
+			Notification: Enabled
+			Block: Enabled
+			Write To Console: Enabled
+		Report Reactions
+			Kick: Enabled
+	Mental State
+		Lock Mental State: On
+	Reveal Off The Radar Players: On
+	Reveal Invisible Players: On
+	Rockstar Admin DLC: On
+	Player Tags On Blips: On
+Players
+	Settings
+		Tags
+			Classification Tags On Self: Off
+			Self: 
+			Friend: 
+			Crew Member: 
+			In Timeout: 
+			Modder: 
+			Admin: 
+			Likely Modder: 
+			Attacked You: 
+			Host: 
+			Next Host: 
+			Script Host: 
+			Invulnerable: 
+			Indestructible Vehicle: 
+			RC Vehicle: 
+			Off The Radar: 
+			In An Interior: 
+			Spectating: 
+			Typing: 
+			Dead: 
+			Invisible: 
+			VPN: Hidden
+		AR Beacon On Focused Players
+			In Player List: On
+		When Entering Player's List...
+			Spectate Them: Nuts Method
+		When Leaving Player's List...
+			Stop Spectating Them: On
+		Hoisted Tags
+			Self: On
+			Attacked You: On
+			Host: On
+World
+	Inhabitants
+		Clear Area
+			Vehicles: Off
+			Objects: Off
+			Cages: Off
+			Pickups: Off
+		NPC Hostility Punishments
+			Die: On
+		Player Aim Punishments
+			Exclude Crew Members: On
+			Exclude Stand Users: On
+			Exclude Organisation Members: On
+			Disarm: On
+		Player ESP
+			Name ESP
+				Name ESP: Legacy Rendering
+				Min Text Scale: 15
+				Max Text Scale: 70
+			Box ESP
+				Box ESP: Low Latency Rendering
+				Max Distance: 500
+			Line ESP
+				Line ESP: On
+				Max Distance: 500
+	Atmosphere
+		Clock
+			Smooth Transition: Off
+	Watch_Dogs-Like World Hacking
+		Watch_Dogs-Like World Hacking: On
+		Sticky Selection: 500
+		When No Target Selected...
+			Show Line: Off
+		When Target Selected...
+			Show Box: On
+		Colour: E2B5C7B4
+		Phone Open Deadline: 1000
+		Hacks
+			Vehicle Actions
+				Ignite: On
+			Player Actions
+				Kill: On
+				Cage: On
+	Aesthetic Light
+		Range: 10000.00
+		Intensity: 30.00
+Game
+	Disables
+		Disable Game Inputs
+			Invert: On while Stand is open
+			ENTER_CHEAT_CODE: On while Stand is open
+			REPLAY_START_STOP_RECORDING: On while Stand is open
+			REPLAY_START_STOP_RECORDING_SECONDARY: On while Stand is open
+			NEXT_CAMERA: On while Stand is open
+			CINEMATIC_SLOWMO: On while Stand is open
+			SCRIPTED_FLY_UD: On while Stand is open
+			SCRIPTED_FLY_LR: On while Stand is open
+			SCRIPTED_FLY_ZUP: On while Stand is open
+			SCRIPTED_FLY_ZDOWN: On while Stand is open
+			CHARACTER_WHEEL: On while Stand is open
+			MULTIPLAYER_INFO: On while Stand is open
+			SPRINT: On while Stand is open
+			JUMP: On while Stand is open
+			ENTER: On while Stand is open
+			LOOK_BEHIND: On while Stand is open
+			SPECIAL_ABILITY: On while Stand is open
+			SPECIAL_ABILITY_SECONDARY: On while Stand is open
+			MOVE_LR: On while Stand is open
+			MOVE_UD: On while Stand is open
+			MOVE_UP_ONLY: On while Stand is open
+			MOVE_DOWN_ONLY: On while Stand is open
+			MOVE_LEFT_ONLY: On while Stand is open
+			MOVE_RIGHT_ONLY: On while Stand is open
+			DUCK: On while Stand is open
+			PICKUP: On while Stand is open
+			COVER: On while Stand is open
+			RELOAD: On while Stand is open
+			TALK: On while Stand is open
+			DETONATE: On while Stand is open
+			HUD_SPECIAL: On while Stand is open
+			ARREST: On while Stand is open
+			CONTEXT: On while Stand is open
+			CONTEXT_SECONDARY: On while Stand is open
+			WEAPON_SPECIAL: On while Stand is open
+			WEAPON_SPECIAL_TWO: On while Stand is open
+			DIVE: On while Stand is open
+			DROP_WEAPON: On while Stand is open
+			DROP_AMMO: On while Stand is open
+			THROW_GRENADE: On while Stand is open
+			VEH_MOVE_LR: On while Stand is open
+			VEH_MOVE_UD: On while Stand is open
+			VEH_MOVE_UP_ONLY: On while Stand is open
+			VEH_MOVE_DOWN_ONLY: On while Stand is open
+			VEH_MOVE_LEFT_ONLY: On while Stand is open
+			VEH_MOVE_RIGHT_ONLY: On while Stand is open
+			VEH_SPECIAL: On while Stand is open
+			VEH_ACCELERATE: On while Stand is open
+			VEH_BRAKE: On while Stand is open
+			VEH_DUCK: On while Stand is open
+			VEH_HEADLIGHT: On while Stand is open
+			VEH_EXIT: On while Stand is open
+			VEH_HANDBRAKE: On while Stand is open
+			VEH_HOTWIRE_LEFT: On while Stand is open
+			VEH_HOTWIRE_RIGHT: On while Stand is open
+			VEH_LOOK_BEHIND: On while Stand is open
+			VEH_CIN_CAM: On while Stand is open
+			VEH_HORN: On while Stand is open
+			VEH_FLY_THROTTLE_UP: On while Stand is open
+			VEH_FLY_THROTTLE_DOWN: On while Stand is open
+			VEH_FLY_YAW_LEFT: On while Stand is open
+			VEH_FLY_YAW_RIGHT: On while Stand is open
+			VEH_SPECIAL_ABILITY_FRANKLIN: On while Stand is open
+			VEH_STUNT_UD: On while Stand is open
+			VEH_ROOF: On while Stand is open
+			VEH_JUMP: On while Stand is open
+			VEH_GRAPPLING_HOOK: On while Stand is open
+			VEH_SHUFFLE: On while Stand is open
+			VEH_DROP_PROJECTILE: On while Stand is open
+			VEH_FLY_ROLL_LR: On while Stand is open
+			VEH_FLY_ROLL_LEFT_ONLY: On while Stand is open
+			VEH_FLY_ROLL_RIGHT_ONLY: On while Stand is open
+			VEH_FLY_PITCH_UD: On while Stand is open
+			VEH_FLY_PITCH_UP_ONLY: On while Stand is open
+			VEH_FLY_PITCH_DOWN_ONLY: On while Stand is open
+			VEH_FLY_UNDERCARRIAGE: On while Stand is open
+			VEH_FLY_SELECT_TARGET_LEFT: On while Stand is open
+			VEH_FLY_SELECT_TARGET_RIGHT: On while Stand is open
+			VEH_FLY_VERTICAL_FLIGHT_MODE: On while Stand is open
+			VEH_FLY_DUCK: On while Stand is open
+			VEH_SUB_TURN_LR: On while Stand is open
+			VEH_SUB_TURN_LEFT_ONLY: On while Stand is open
+			VEH_SUB_TURN_RIGHT_ONLY: On while Stand is open
+			VEH_SUB_PITCH_UD: On while Stand is open
+			VEH_SUB_PITCH_UP_ONLY: On while Stand is open
+			VEH_SUB_PITCH_DOWN_ONLY: On while Stand is open
+			VEH_SUB_THROTTLE_UP: On while Stand is open
+			VEH_SUB_THROTTLE_DOWN: On while Stand is open
+			VEH_SUB_ASCEND: On while Stand is open
+			VEH_SUB_DESCEND: On while Stand is open
+			VEH_SUB_TURN_HARD_LEFT: On while Stand is open
+			VEH_SUB_TURN_HARD_RIGHT: On while Stand is open
+			VEH_PUSHBIKE_PEDAL: On while Stand is open
+			VEH_PUSHBIKE_SPRINT: On while Stand is open
+			VEH_PUSHBIKE_FRONT_BRAKE: On while Stand is open
+			VEH_PUSHBIKE_REAR_BRAKE: On while Stand is open
+			MELEE_ATTACK_LIGHT: On while Stand is open
+			MELEE_ATTACK_HEAVY: On while Stand is open
+			MELEE_BLOCK: On while Stand is open
+			PARACHUTE_DETACH: On while Stand is open
+			PARACHUTE_TURN_LR: On while Stand is open
+			PARACHUTE_TURN_LEFT_ONLY: On while Stand is open
+			PARACHUTE_TURN_RIGHT_ONLY: On while Stand is open
+			PARACHUTE_PITCH_UD: On while Stand is open
+			PARACHUTE_PITCH_UP_ONLY: On while Stand is open
+			PARACHUTE_PITCH_DOWN_ONLY: On while Stand is open
+			PARACHUTE_BRAKE_LEFT: On while Stand is open
+			PARACHUTE_BRAKE_RIGHT: On while Stand is open
+			PARACHUTE_SMOKE: On while Stand is open
+			PARACHUTE_PRECISION_LANDING: On while Stand is open
+			MAP: On while Stand is open
+			SAVE_REPLAY_CLIP: On while Stand is open
+			SPECIAL_ABILITY_PC: On while Stand is open
+			CELLPHONE_UP: On while Stand is open
+			CELLPHONE_DOWN: On while Stand is open
+			CELLPHONE_LEFT: On while Stand is open
+			CELLPHONE_RIGHT: On while Stand is open
+			CELLPHONE_SELECT: On while Stand is open
+			CELLPHONE_CANCEL: On while Stand is open
+			CELLPHONE_OPTION: On while Stand is open
+			CELLPHONE_EXTRA_OPTION: On while Stand is open
+			CELLPHONE_SCROLL_FORWARD: On while Stand is open
+			CELLPHONE_SCROLL_BACKWARD: On while Stand is open
+			CELLPHONE_CAMERA_FOCUS_LOCK: On while Stand is open
+			CELLPHONE_CAMERA_GRID: On while Stand is open
+			CELLPHONE_CAMERA_SELFIE: On while Stand is open
+			CELLPHONE_CAMERA_DOF: On while Stand is open
+			CELLPHONE_CAMERA_EXPRESSION: On while Stand is open
+			FRONTEND_DOWN: On while Stand is open
+			FRONTEND_UP: On while Stand is open
+			FRONTEND_LEFT: On while Stand is open
+			FRONTEND_RIGHT: On while Stand is open
+			FRONTEND_RDOWN: On while Stand is open
+			FRONTEND_RUP: On while Stand is open
+			FRONTEND_RLEFT: On while Stand is open
+			FRONTEND_RRIGHT: On while Stand is open
+			FRONTEND_AXIS_X: On while Stand is open
+			FRONTEND_AXIS_Y: On while Stand is open
+			FRONTEND_RIGHT_AXIS_X: On while Stand is open
+			FRONTEND_RIGHT_AXIS_Y: On while Stand is open
+			FRONTEND_PAUSE: On while Stand is open
+			FRONTEND_PAUSE_ALTERNATE: On while Stand is open
+			FRONTEND_ACCEPT: On while Stand is open
+			FRONTEND_CANCEL: On while Stand is open
+			FRONTEND_X: On while Stand is open
+			FRONTEND_Y: On while Stand is open
+			FRONTEND_LB: On while Stand is open
+			FRONTEND_RB: On while Stand is open
+			FRONTEND_LT: On while Stand is open
+			FRONTEND_RT: On while Stand is open
+			FRONTEND_LS: On while Stand is open
+			FRONTEND_RS: On while Stand is open
+			FRONTEND_LEADERBOARD: On while Stand is open
+			FRONTEND_SOCIAL_CLUB: On while Stand is open
+			FRONTEND_SOCIAL_CLUB_SECONDARY: On while Stand is open
+			FRONTEND_DELETE: On while Stand is open
+			FRONTEND_ENDSCREEN_ACCEPT: On while Stand is open
+			FRONTEND_ENDSCREEN_EXPAND: On while Stand is open
+			FRONTEND_SELECT: On while Stand is open
+			SCRIPT_LEFT_AXIS_X: On while Stand is open
+			SCRIPT_LEFT_AXIS_Y: On while Stand is open
+			SCRIPT_RIGHT_AXIS_X: On while Stand is open
+			SCRIPT_RIGHT_AXIS_Y: On while Stand is open
+			SCRIPT_RUP: On while Stand is open
+			SCRIPT_RDOWN: On while Stand is open
+			SCRIPT_RLEFT: On while Stand is open
+			SCRIPT_RRIGHT: On while Stand is open
+			SCRIPT_LB: On while Stand is open
+			SCRIPT_RB: On while Stand is open
+			SCRIPT_LT: On while Stand is open
+			SCRIPT_RT: On while Stand is open
+			SCRIPT_LS: On while Stand is open
+			SCRIPT_RS: On while Stand is open
+			SCRIPT_PAD_UP: On while Stand is open
+			SCRIPT_PAD_DOWN: On while Stand is open
+			SCRIPT_PAD_LEFT: On while Stand is open
+			SCRIPT_PAD_RIGHT: On while Stand is open
+			SCRIPT_SELECT: On while Stand is open
+			CURSOR_X: On while Stand is open
+			CURSOR_Y: On while Stand is open
+			INTERACTION_MENU: On while Stand is open
+			MP_TEXT_CHAT_ALL: On while Stand is open
+			MP_TEXT_CHAT_TEAM: On while Stand is open
+			MP_TEXT_CHAT_FRIENDS: On while Stand is open
+			MP_TEXT_CHAT_CREW: On while Stand is open
+			PUSH_TO_TALK: On while Stand is open
+			CREATOR_LS: On while Stand is open
+			CREATOR_RS: On while Stand is open
+			CREATOR_LT: On while Stand is open
+			CREATOR_RT: On while Stand is open
+			CREATOR_MENU_TOGGLE: On while Stand is open
+			CREATOR_ACCEPT: On while Stand is open
+			CREATOR_DELETE: On while Stand is open
+			RAPPEL_JUMP: On while Stand is open
+			RAPPEL_LONG_JUMP: On while Stand is open
+			RAPPEL_SMASH_WINDOW: On while Stand is open
+			MELEE_ATTACK1: On while Stand is open
+			MELEE_ATTACK2: On while Stand is open
+			WHISTLE: On while Stand is open
+			MOVE_LEFT: On while Stand is open
+			MOVE_RIGHT: On while Stand is open
+			MOVE_UP: On while Stand is open
+			MOVE_DOWN: On while Stand is open
+			SNIPER_ZOOM_IN: On while Stand is open
+			SNIPER_ZOOM_OUT: On while Stand is open
+			SNIPER_ZOOM_IN_ALTERNATE: On while Stand is open
+			SNIPER_ZOOM_OUT_ALTERNATE: On while Stand is open
+			VEH_MOVE_LEFT: On while Stand is open
+			VEH_MOVE_RIGHT: On while Stand is open
+			VEH_MOVE_UP: On while Stand is open
+			VEH_MOVE_DOWN: On while Stand is open
+			REPLAY_MARKER_DELETE: On while Stand is open
+			REPLAY_CLIP_DELETE: On while Stand is open
+			REPLAY_PAUSE: On while Stand is open
+			REPLAY_REWIND: On while Stand is open
+			REPLAY_FFWD: On while Stand is open
+			REPLAY_NEWMARKER: On while Stand is open
+			REPLAY_RECORD: On while Stand is open
+			REPLAY_SCREENSHOT: On while Stand is open
+			REPLAY_HIDEHUD: On while Stand is open
+			REPLAY_STARTPOINT: On while Stand is open
+			REPLAY_ENDPOINT: On while Stand is open
+			REPLAY_ADVANCE: On while Stand is open
+			REPLAY_BACK: On while Stand is open
+			REPLAY_TOOLS: On while Stand is open
+			REPLAY_RESTART: On while Stand is open
+			REPLAY_SHOWHOTKEY: On while Stand is open
+			REPLAY_CYCLEMARKERLEFT: On while Stand is open
+			REPLAY_CYCLEMARKERRIGHT: On while Stand is open
+			REPLAY_FOVINCREASE: On while Stand is open
+			REPLAY_FOVDECREASE: On while Stand is open
+			REPLAY_SAVE: On while Stand is open
+			REPLAY_TOGGLETIME: On while Stand is open
+			REPLAY_TOGGLETIPS: On while Stand is open
+			REPLAY_PREVIEW: On while Stand is open
+			REPLAY_TOGGLE_TIMELINE: On while Stand is open
+			REPLAY_TIMELINE_PICKUP_CLIP: On while Stand is open
+			REPLAY_TIMELINE_DUPLICATE_CLIP: On while Stand is open
+			REPLAY_TIMELINE_PLACE_CLIP: On while Stand is open
+			REPLAY_CTRL: On while Stand is open
+			REPLAY_TIMELINE_SAVE: On while Stand is open
+			REPLAY_PREVIEW_AUDIO: On while Stand is open
+			VEH_HYDRAULICS_CONTROL_TOGGLE: On while Stand is open
+			VEH_HYDRAULICS_CONTROL_LEFT: On while Stand is open
+			VEH_HYDRAULICS_CONTROL_RIGHT: On while Stand is open
+			VEH_HYDRAULICS_CONTROL_UP: On while Stand is open
+			VEH_HYDRAULICS_CONTROL_DOWN: On while Stand is open
+			VEH_HYDRAULICS_CONTROL_UD: On while Stand is open
+			VEH_HYDRAULICS_CONTROL_LR: On while Stand is open
+			SWITCH_VISOR: On while Stand is open
+			VEH_MELEE_HOLD: On while Stand is open
+			REPLAY_SNAPMATIC_PHOTO: On while Stand is open
+			VEH_CAR_JUMP: On while Stand is open
+			VEH_ROCKET_BOOST: On while Stand is open
+			VEH_FLY_BOOST: On while Stand is open
+			VEH_PARACHUTE: On while Stand is open
+			VEH_BIKE_WINGS: On while Stand is open
+			VEH_FLY_BOMB_BAY: On while Stand is open
+			VEH_FLY_COUNTER: On while Stand is open
+			VEH_TRANSFORM: On while Stand is open
+			INPUT_QUAD_LOCO_REVERSE: On while Stand is open
+		Disable Idle Camera: On
+		Disable Recordings: On
+		Disable Flight Music: On
+		Prevent Numpad 7 Opening Social Club: On
+	Camera
+		Unrestrict Gameplay Camera: On
+	Info Overlay
+		In-Game Time: On
+		Real-World Time: On
+		Speedometer: Off while you're on foot
+		Players: On
+		Country Breakdown: Sort By Country Name
+	Edit Labels: HUD_JOINING<正在使用GTMENU加入在线模式>MP_SPINLOADING<GTMENU YYDS>HUD_LBD_FMP<GRANDTOURING 在线模式（公开，~1~）>HUD_LBD_FMI<GRANDTOURING 在线模式（邀请，~1~）>HUD_LBD_FMC<GRANDTOURING 在线模式（帮会，~1~）>HUD_LBD_FMF<GRANDTOURING 在线模式（好友，~1~）>HUD_LBD_FMS<GRANDTOURING 在线模式（单人，~1~）>0X56F3BD49<GRANDTOURING 在线模式>HUD_MAINTIT<GRANDTOURINGVIP>LOADING_SPLAYER_L<正在加载GRANDTOURINGVIP故事模式>PM_QUIT_MP<离开 GRANDTOURING 在线模式>PM_INF_LEAT<离开 GRANDTOURING 在线模式>PM_INF_LEAB<立刻前往GRANDTOURING故事模式，您的所有游戏进度都将自动保存>CMRC_STORE_OPEN<GRANDTOURINGVIP 商店\
+现已开放!>UI_FLOW_OP_CL_M<关于 GRANDTOURINGVIP>UI_FLOW_OP_CL<关于 GRANDTOURINGVIP>UI_FLOW_OP_CL_D<多亏了我们的GT开发团队\
+您才能体验到无与伦比的GRANDTOURINGVIP\
+主创作者:GT 副创开发:瑞思拜\
+致谢人员:12 Super飞 柒月 小马哥 丢丢\
+我们的群聊:238394690(脚本下载群) 716431566(日常聊天群)\
+感谢您使用GRANDTOURINGVIP>PM_WAIT<正在引导>
+	Custom DLCs
+		Spoof Models: Off
+	Radio
+		Mobile Radio: On
+		Lock Radio Station: 255
+	Disable Keyboard Hook: On
+	Early Inject Enhancements
+		Memory Pool Size (MB): 2147
+		Set Game To High Priority: On
+Stand
+	GRANDTOURINGVIP
+		[自我选项]
+			增强选项
+				战局切换: 公开战局
+			自我娱乐
+				启动界面: On
+		[武器选项]
+			武器特效
+				开启: On
+				切换射击特效: 小丑花
+				击打特效
+					切换子弹特效: 小丑花
+		[自瞄选项]
+			隐秘的爆炸: On
+		[载具选项]
+			解锁载具
+				解锁正在进入的载具: On
+			载具功能
+				隐藏载具无敌: On
+		[线上恢复]
+			娱乐选项
+				增加虎鲸导向导弹射程: On
+		[管理选项]
+			控制行人
+				妓女透视: On
+		[保护选项]
+			拦截劫匪
+				拦截劫匪(自我): On
+			崩溃保护
+				攻击反弹V1: On
+				攻击反弹V2: On
+			其他保护
+				管理员退出: On
+				阻止观看同步: On
+				自动移除赏金: On
+		[聊天选项]
+			聊天翻译
+				翻译: Off
+		[任务选项]
+			工具
+				其他
+					禁用交易错误: On
+					自动成为ceo/摩托帮首领: On
+		[其他选项]
+			皇榜人员检测: On
+			开发人员检测: On
+	Settings
+		Appearance
+			Colours
+				Primary Colour: E2B5C7FF
+				Focused Text Colour: 2F2F2FFF
+				Focused Right-Bound Text Colour: 2F2F2FFF
+				Focused Texture Colour: 2F2F2FFF
+				Unfocused Text Colour: D7D7D7FF
+				Unfocused Right-Bound Text Colour: D7D7D7FF
+				Unfocused Texture Colour: D7D7D7FF
+				HUD Colour: E2B5C7FF
+				AR Colour: E2B5C7FF
+				Minigame Colour: E2B5C7FF
+			Position: 1416, 477
+			Header
+				Header: Custom
+				Frame Interval: 35
+			Address Bar
+				Height: 30
+				Text
+					Scale: 14
+				Show Cursor Position: On
+			Cursor
+				Width: 2
+				Colour: E2B5C7FF
+			Tabs
+				Width: 46
+				Text
+					Scale: 14
+				Show Icon Left: On
+				Show Name: Off
+				Icons Use Text Colour: Off
+			Scrollbar
+				Scrollbar: Enabled
+				Width: 4
+			Command Info Text
+				Padding: 3
+			Notifications
+				Width: 410
+				Border Colour: E0B5C6FF
+				Flash Colour: D800B164
+				Background Colour: 0000002B
+			Border
+				Width: 3
+				Colour: E2B5C75E
+			Max Visible Commands: 14
+			List Width: 430
+			Spacer Size: 4
+			Smooth Scrolling: 100
+			Font & Text
+				Small Text
+					Scale: 13
+			Stream-Proof Rendering: On
+		Input
+			Mouse Support
+				Mouse Support: On
+			Back Closes Menu: On
+		Warnings
+			Automatically Proceed On Warnings
+				Hotkey: On
+		Hide Information
+			Hide Rockstar ID: Me
+			Hide IP Address: Me
+			Hide GeoIP: Me
+		Open After Injection: On
+	Lua Scripts
+		daidai v9.0: On
+			自我选项
+				翅膀
+					彩色翅膀
+						颜色: FF0C0000
+						颜色\: 彩虹模式: 60
+			武器选项
+				背藏武器: On
+			其他选项
+				游戏水印
+					昵称: Off
+					玩家人数: Off
+					时间: Off
+		GKv14.5: On
+			按键显示
+				切换叠加: Off
+			战局聊天翻译
+				发送传输的消息
+					伪装为: yuerlan
+		GRANDTOURINGVIP: On
+		KinkScriptCNcq: On
+			护送服务
+				定制护送模型: s_f_y_hooker_01

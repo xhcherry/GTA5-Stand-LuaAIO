@@ -1,0 +1,477 @@
+Finished Tutorial: Yes
+Understands Commands: Yes
+Understands Sliders: Yes
+Understands Profiles: Yes
+Understands Context Menu: Yes
+Understands Controller Open/Close: Yes
+Prompted For Controller Disables: Yes
+Understands Command Chaining: Yes
+Tree Compatibility Version: 45
+Self
+	Movement
+		Levitation
+			Movement Speed: 1.50
+			Show Button Instructions: Off
+	Appearance
+		Outfit
+			Disable Outfit Restrictions: On
+			Disable In-Vehicle Hair Scaling: On
+		Preserve Walk Style During Combat: On
+	Weapons
+		Gravity Gun
+			Contrived Physics: On
+			Force Multiplier: 10.00
+			Collision: Off
+		Triggerbot
+			Triggerbot: On
+			Exclude Friends: On
+		Infinite Ammo: On
+		Skip Reloading: On
+		Instant Lock-On: On
+		Increased Sticky Limit: On
+		Increased Flare Limit: On
+	Bodyguards
+		Spawn
+			Model: Cat
+		Immortality: On
+	Immortality: On
+	Gracefulness: On
+	Glued To Seats: On
+	Lock Wanted Level: On
+	Lock Parachutes: Full
+Vehicle
+	Spawner
+		Manufacturer Names: On
+		Tune Spawned Vehicles: Fully
+		On Foot Behaviour
+			Spawn Aircraft In The Air: Off
+	Movement
+		Super Drive
+			Super Drive Uses Camera: Off
+			Speed: 0.10
+		Speed Limit (KMH): 1000
+		No Turbulence: On
+	Weapon Wheel In Vehicles: On
+Online
+	Transitions
+		Matchmaking
+			Asset Hashes
+				Fix Asset Hashes: On
+		Speed Up
+			Don't Wait For Data Broadcast: On
+			Don't Wait For Mission Launcher: On
+			Don't Ask For Permission To Spawn: On
+		Session Hopper
+			Min Players: 18
+		Join Group Override: Spectator
+	Session
+		Block Joins
+			Message: You Are A Cheater
+			Notifications
+				From Anyone
+					Notification: Off
+				From Strangers
+					Notification: Off
+				From Known Advertisers
+					Notification: Off
+				From Kicked Players
+					Write To Console: On
+					Announce In Team Chat: On
+		Player Bar
+			Hide Players With No Tags: On
+	Session Browser
+		Min Players: 18
+		Max Players: 26
+		Region: Hong Kong
+	Enhancements
+		Freemode Banners To Notifications: On
+		Disable Idle/AFK Kick: On
+		Disable Death Barriers: On
+		Remote Control Any Vehicle: On
+		Disable Forced RC Perspective: On
+		Bypass Interior Restrictions: On
+		Bypass Casino Region Lock: On
+		Disable Empty Notifications: Off
+		Disable Daily Expenses: On
+	Protections: Warning Acknowledged
+		Events
+			Crash Event
+				Write To Log File: Enabled
+				Write To Console: Enabled
+				Timeout: Strangers
+			Kick Event
+				Write To Log File: Enabled
+				Write To Console: Enabled
+				Announce In Team Chat: Enabled
+			Modded Event
+				Write To Log File: Enabled
+			Apartment Invite
+				Block: Enabled
+			Force Camera Forward
+				Write To Log File: Enabled
+			Trigger Business Raid
+				Block: Enabled
+			Teleport To Interior (Not My Boss)
+				Write To Log File: Enabled
+			Give Collectible (Not My Boss)
+				Write To Log File: Enabled
+			Teleport To Cayo Perico
+				Write To Log File: Enabled
+				Announce In Chat: Enabled
+			Cayo Perico Invite
+				Block: Enabled
+				Write To Log File: Enabled
+				Announce In Chat: Enabled
+			Kick From Vehicle
+				Block: Enabled
+			Freeze
+				Write To Log File: Enabled
+			Love Letter Kick Blocking Event
+				Block: Enabled
+			Camera Shaking Event
+				Write To Log File: Enabled
+			Explosion Spam
+				Write To Log File: Enabled
+			Ragdoll Event
+				Block: Enabled
+			Raw Network Events: Warning Acknowledged
+				Give Weapon Event
+					Block: Strangers
+				Remove Weapon Event
+					Notification: Enabled
+					Block: Enabled
+					Write To Log File: Strangers
+					Write To Console: Strangers
+					Announce In Team Chat: Strangers
+				Remove All Weapons Event
+					Notification: Enabled
+					Block: Enabled
+					Write To Log File: Strangers
+					Write To Console: Strangers
+					Announce In Team Chat: Strangers
+				Explosion
+					Notification: Strangers
+				REPORT_CASH_SPAWN_EVENT
+					Block: Disabled
+		Detections
+			Stand User Identification: Off
+			Stand User
+				Notification: Disabled
+			Stand User (Co-Loading)
+				Notification: Disabled
+			Other User Identifications
+				Notification: Disabled
+			Rockstar Anti Cheat
+				Notification: Disabled
+			Modded Health
+				Notification: Disabled
+			Dead For Too Long
+				Notification: Disabled
+			Off The Radar For Too Long
+				Notification: Disabled
+			Too Much Armour
+				Notification: Disabled
+			Presence Spoofing
+				Notification: Strangers
+				Write To Console: Strangers
+			Rockstar Employee RID
+				Notification: Disabled
+			Take-Two IP Address
+				Notification: Strangers
+				Block Join: Strangers
+			Spoofed Host Token (Aggressive)
+				Write To Console: Strangers
+				Announce In Team Chat: Strangers
+			Spoofed Host Token (Sweet Spot)
+				Write To Console: Strangers
+				Announce In Team Chat: Strangers
+			Spoofed Host Token (Handicap)
+				Notification: Disabled
+			Spoofed Host Token (Other)
+				Write To Console: Strangers
+				Announce In Team Chat: Strangers
+			Modded Character Model
+				Notification: Disabled
+			Attacking While Invulnerable
+				Notification: Disabled
+			Damage Multiplier
+				Notification: Disabled
+			Super Jump
+				Notification: Disabled
+			Rockstar Developer Flag
+				Notification: Disabled
+			Rockstar QA Flag
+				Notification: Disabled
+			Cheater Flag
+				Notification: Disabled
+			Invalid Rank/RP
+				Notification: Disabled
+			RP-Rank Mismatch
+				Notification: Disabled
+			Spoofed Rank
+				Notification: Disabled
+			Spoofed K/D
+				Notification: Disabled
+			Blocked Network Event
+				Notification: Disabled
+			Modded Driveby Weapon
+				Notification: Disabled
+			Chatting Without Typing
+				Notification: Disabled
+			Bounty Spam
+				Notification: Disabled
+				Announce In Chat: Enabled
+			Modded Bounty
+				Notification: Disabled
+				Announce In Team Chat: Enabled
+			Explosion Blaming
+				Block: Enabled
+				Announce In Chat: Strangers
+			Modded Explosion
+				Notification: Strangers
+				Block: Strangers
+		Syncs
+			World Object Sync
+				Notification: Strangers
+			Incoming: Warning Acknowledged
+		Text Messages
+			Advertisement
+				Announce In Team Chat: Enabled
+				Kick: Strangers
+			Bypassed Message Filter
+				Notification: Disabled
+				Block: Strangers
+		Host Kicks
+			Host Kick Karma: On
+		Breakup Kick Reactions
+			Write To Log File: On
+			Write To Console: On
+			Announce In Team Chat: On
+			Block: Enabled
+			Karma: Strangers
+		Knockoff Breakup Kick Reactions
+			Myself
+				Write To Log File: On
+				Write To Console: On
+				Announce In Team Chat: On
+			Someone Else
+				Notification: On
+				Write To Log File: On
+				Write To Console: On
+				Announce In Team Chat: On
+		Love Letter & Desync Kicks
+			Notification When Love Letter Kicked: On
+			Desync Kick Karma: On
+			Block Love Letter Kicks: Off
+		Pickups
+			Cash Pickup Collected
+				Block: On
+			RP Pickup Collected
+				Block: On
+			Invalid Pickup Collected
+				Notification: Off
+		Co-Loading
+			多开时不检测和阻止 崩溃事件 (N1) : Off
+			多开时不检测和阻止 崩溃事件 (C1) : Off
+			多开时不检测和阻止 崩溃事件 (C3) : Off
+			多开时不检测和阻止 崩溃事件 (U1) : Off
+			多开时不检测和阻止 崩溃事件 (U2) : Off
+			多开时不检测和阻止 崩溃事件 (CS) : Off
+			多开时不检测和阻止 崩溃事件 (SR) : Off
+		Block Bailing
+			Spectating Related: On
+		Lessen Breakup Kicks As Host: On
+		Block Join Karma: On
+	Chat
+		Reactions
+			Advertisement
+				Announce In Team Chat: Enabled
+				Kick: Strangers
+			Bypassed Message Filter
+				Notification: Disabled
+				Block: Strangers
+			Chat Spam
+				Notification: Strangers
+				Block: Strangers
+		Log Chat Messages
+			Chat.txt: On
+		Type Out Player Names: On
+		Paste In Chat Message: On
+		Show All Chat Messages: On
+	Spoofing
+		Name Spoofing
+			Spoofed Name: SmallGodGirl
+		Host Token Spoofing
+			Spoofed Host Token: 0000000000001929
+			Kick Host When Joining As Next In Queue
+				Exclude Friends: Off
+				Exclude Crew Members: Off
+				Exclude Stand Users: Off
+	Reactions
+		Vote Kick Reactions
+			Voting To Kick Me
+				Announce In Team Chat: Enabled
+				Kick: Enabled
+		Bounty Reactions
+			Notification: Disabled
+		Particle Spam Reactions
+			Write To Log File: Enabled
+			Write To Console: Enabled
+	Mental State
+		Pulsating Mental State: On
+	Reveal Off The Radar Players: On
+	Reveal Invisible Players: On
+Players
+	Settings
+		Tags
+			Self: 
+			Friend: 
+			Crew Member: 
+			In Timeout: 
+			Modder: 
+			Admin: 
+			Likely Modder: 
+			Attacked You: 
+			Host: 
+			Next Host: 
+			Script Host: 
+			Invulnerable: 
+			Indestructible Vehicle: 
+			RC Vehicle: 
+			Off The Radar: 
+			In An Interior: 
+			Spectating: 
+			Typing: 
+			Dead: 
+			Invisible: 
+			VPN: Hidden
+		AR Beacon On Focused Players
+			In Player List: On
+			Within A Player's List: On
+	All Players
+		Excludes
+			Exclude Friends: On
+World
+	Inhabitants
+		NPC Aim Punishments
+			Delete: On
+		Player ESP
+			Name ESP
+				Name ESP: Legacy Rendering
+				Min Text Scale: 15
+				Max Text Scale: 70
+	Enhanced Open World
+		Enhanced Open World: On
+	Watch_Dogs-Like World Hacking
+		Watch_Dogs-Like World Hacking: On
+		When No Target Selected...
+			Show Line: Off
+		When Target Selected...
+			Show Line: Off
+		Colour: E2B5C7B4
+		Hacks
+			Vehicle Actions
+				Ignite: On
+				In Stand: Off
+			Player Actions
+				Kill: On
+				Cage: On
+Game
+	Disables
+		Disable Game Inputs
+			CHARACTER_WHEEL: On while Stand is open
+			MULTIPLAYER_INFO: On while Stand is open
+			ENTER: On while Stand is open
+			PHONE: On while Stand is open
+			COVER: On while Stand is open
+			VEH_HEADLIGHT: On while Stand is open
+			VEH_CIN_CAM: On while Stand is open
+			VEH_NEXT_RADIO: On while Stand is open
+			VEH_PREV_RADIO: On while Stand is open
+			VEH_RADIO_WHEEL: On while Stand is open
+			MELEE_ATTACK_LIGHT: On while Stand is open
+			MELEE_ATTACK_ALTERNATE: On while Stand is open
+			SELECT_CHARACTER_MICHAEL: On while Stand is open
+			SELECT_CHARACTER_FRANKLIN: On while Stand is open
+			SELECT_CHARACTER_TREVOR: On while Stand is open
+			SELECT_CHARACTER_MULTIPLAYER: On while Stand is open
+			MELEE_ATTACK1: On while Stand is open
+			MELEE_ATTACK2: On while Stand is open
+			MAP_POI: On while Stand is open
+		Disable Camera Shake: On
+		Disable Idle Camera: On
+		Disable Recordings: On
+		Prevent Numpad 7 Opening Social Club: On
+	Camera
+		Freecam
+			Movement Speed: 0.50
+	Info Overlay
+		Ticks Per Second: On
+		Who's Spectating Who: On
+		Pedestrians: On
+		Vehicles: On
+		Objects: On
+	Custom DLCs
+		Spoof Models: Off
+	Radio
+		Mobile Radio: On
+		Lock Radio Station: 255
+	Disable Keyboard Hook: On
+	Early Inject Enhancements
+		Memory Pool Size (MB): 2147
+		Set Game To High Priority: On
+Stand
+	Settings
+		Appearance
+			Colours
+				Primary Colour: E2B5C7FF
+				Focused Text Colour: 2F2F2FFF
+				Focused Right-Bound Text Colour: 2F2F2FFF
+				Focused Texture Colour: 2F2F2FFF
+				Unfocused Text Colour: D7D7D7FF
+				Unfocused Right-Bound Text Colour: D7D7D7FF
+				Unfocused Texture Colour: D7D7D7FF
+				HUD Colour: E2B5C7FF
+				AR Colour: E2B5C7FF
+				Minigame Colour: E2B5C7FF
+			Position: 1440, 450
+			Header
+				Header: Custom
+				Frame Interval: 60
+			Address Bar
+				Height: 30
+				Text
+					Scale: 14
+				Show Cursor Position: On
+			Cursor
+				Width: 2
+				Colour: E2B5C7FF
+			Tabs
+				Width: 46
+				Text
+					Scale: 14
+				Show Icon Left: On
+				Show Name: Off
+				Icons Use Text Colour: Off
+			Scrollbar
+				Scrollbar: Disabled
+			Command Info Text
+				Padding: 3
+			Notifications
+				Width: 410
+				Border Colour: E0B5C6FF
+				Flash Colour: D800B164
+				Background Colour: 0000002B
+			Border
+				Width: 3
+				Colour: E2B5C764
+			Max Visible Commands: 14
+			List Width: 430
+			Spacer Size: 4
+			Smooth Scrolling: 100
+			Font & Text
+				Small Text
+					Scale: 13
+			Stream-Proof Rendering: On
+		Info Text
+			Position: 1910, 100
