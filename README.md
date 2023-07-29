@@ -29,6 +29,8 @@ GTA5 Mod Stand Lua All in One；含综合、任务、崩溃、模组、娱乐等
 在此wiki中收录了关于stand的方方面面，以及各种典型问题都会在这里
 [https://github.com/xhcherry/GTA5-Stand-LuaAIO/wiki](https://github.com/xhcherry/GTA5-Stand-LuaAIO/wiki)
 
+如果你想与每个lua的官方取得联系，在上面的wiki中已添加所有lua的官方群或邀请链接
+
 ### 仓库目录结构
 
 Lua Scripts：脚本目录(已包含daidai，GT，heezy二代目，HC，jinx，夜幕，pie，聊天翻译)
