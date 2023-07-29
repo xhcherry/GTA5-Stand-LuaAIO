@@ -9,3 +9,5 @@ GitHub源仓库及永久下载地址：https://github.com/xhcherry/GTA5-Stand-Lu
 stand全方面介绍以及问题收录链接：https://github.com/xhcherry/GTA5-Stand-LuaAIO/wiki
 
 如果你也有问题就在仓库页面提交issues，这些问题会被解答并且收录到wiki中
+
+记得关注仓库哦，不定时更新
