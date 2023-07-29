@@ -2556,7 +2556,47 @@ function fanglangbuju_crashes(pid)
         util.yield(10)
     end
 end
-
+function IPHONE12(PlayerID)
+    for i = 1, 10 do
+        local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+		local cord = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
+        STREAMING.REQUEST_MODEL(1663218586)
+        wait(10)
+        STREAMING.REQUEST_MODEL(-891462355)
+        wait(10)
+        STREAMING.REQUEST_MODEL(-891462355)
+        wait(10)
+        STREAMING.REQUEST_MODEL(1663218586)
+        wait(10)
+        while not STREAMING.HAS_MODEL_LOADED(1663218586) do wait() end
+        while not STREAMING.HAS_MODEL_LOADED(-891462355) do wait() end
+        while not STREAMING.HAS_MODEL_LOADED(-891462355) do wait() end
+        while not STREAMING.HAS_MODEL_LOADED(1663218586) do wait() end
+        local a1 = entities.create_object(1663218586, cord)
+        wait(10)
+        local a2 = entities.create_object(-891462355, cord)
+        wait(10)
+        local b1 = entities.create_object(1663218586, cord)
+        wait(10)
+        local b2 = entities.create_object(1663218586, cord)
+        wait(10)
+        local b3 = entities.create_object(-891462355, cord)
+        wait(300)
+        entities.delete_by_handle(a1)
+        entities.delete_by_handle(a2)
+        entities.delete_by_handle(b1)
+        entities.delete_by_handle(b2)
+        entities.delete_by_handle(b3)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(1663218586)
+        wait(10)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(-891462355)
+        wait(10)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(-891462355)
+        wait(10)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(1663218586)
+        wait(10)
+        end
+    end
 
 
 
@@ -3745,6 +3785,23 @@ function YMplan3(YM)
         end
         --zanzhu = false
     end
+-------------------自崩
+function exit_game()
+    local pedhash = -67533719
+    STREAMING.REQUEST_MODEL(pedhash)
+    local tesla_ped = entities.create_ped(32, pedhash, players.get_position(players.user()), 0)
+    ENTITY.DELETE_ENTITY(entities.handle_to_pointer(tesla_ped))
+end
+function YMblack(YM3)
+    start1time2 = os.time()
+    local startX = 0
+    heiming = YM3
+    while heiming do     
+     util.toast("SB玩什么GTA?")
+     wait(3000)
+     exit_game()
+        end
+    end
 ----叛逆车辆
 function car_crash(state)
     veh = entities.get_user_vehicle_as_handle()
@@ -4284,4 +4341,106 @@ function intToIp(num)
       end
     end
     return ip
+end
+-------------势不可挡
+function horn_bomb()
+    local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(players.user()), false)
+    if AUDIO.IS_HORN_ACTIVE(vehicle) then
+        local coords = ENTITY.GET_ENTITY_COORDS(vehicle)
+        local shootCoords = v3.new(coords)
+        for i = 1, 3 do
+            local rot = ENTITY.GET_ENTITY_ROTATION(vehicle, 2):toDir()
+            local vel = ENTITY.GET_ENTITY_VELOCITY(vehicle)
+            v3.mul(rot, 25 + math.abs(vel.x))
+            v3.add(shootCoords, rot)
+            FIRE.ADD_OWNED_EXPLOSION(VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, -1), shootCoords.x + math.random(-2, 2), shootCoords.y + math.random(-2, 2), shootCoords.z, 10, 100,true, false, 0.1)
+            util.yield()
+        end
+    end
+end
+function selectparticle(index)
+    vehparticle = vehparticle_tb[index]
+end
+function particle_tail()
+    local vehicle = entities.get_user_vehicle_as_handle(false)
+    local height = get_model_dimensions(ENTITY.GET_ENTITY_MODEL(vehicle))
+    local posX1 = -height.x/3 --left--
+    local posX2 = height.x/3 --right--
+    local posY = -height.y/3
+    for i, posX in {posX1, posX2} do
+        request_ptfx_asset("scr_rcpaparazzo1")
+        GRAPHICS.USE_PARTICLE_FX_ASSET("scr_rcpaparazzo1")
+        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(vehparticle, vehicle, posX, posY, 0.0, 0.0, 0.0, 0.0, 1.0, false, false, false)
+    end
+end
+----极限跳跃
+function extreme_jump(index)
+    if index == 1 then
+        SpawnHeight = 250
+    elseif index == 2 then
+        SpawnHeight = 500
+    elseif index == 3 then
+        SpawnHeight = 1000
+    elseif index == 4 then
+        SpawnHeight = 1500
+    end
+
+    local pedm = players.user_ped()
+    local PlaneHash = 368211810
+    local CarHash = 1483171323
+    request_model(PlaneHash)
+    request_model(CarHash)
+    local heading = ENTITY.GET_ENTITY_HEADING(pedm)
+    local PlaneSpawnLoc = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(pedm, 0, 0, SpawnHeight)
+    local CarSpawnLoc = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(pedm, 0, 0, SpawnHeight + 4) --104
+    
+    local Plane = entities.create_vehicle(PlaneHash, PlaneSpawnLoc, heading)
+    ENTITY.SET_ENTITY_INVINCIBLE(Plane, true)
+    if PED.IS_PED_IN_ANY_VEHICLE(pedm, true) then
+        Car = entities.get_user_vehicle_as_handle()
+        ENTITY.SET_ENTITY_HEADING(Car, heading + 180)
+        ENTITY.SET_ENTITY_VELOCITY(Car, 0, 100, 0)
+    else 
+        Car = entities.create_vehicle(CarHash, CarSpawnLoc, 0)
+        ENTITY.SET_ENTITY_HEADING(Car, heading + 180)
+        PED.SET_PED_INTO_VEHICLE(pedm, Car, -1)
+    end
+    ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(Plane, 1, 0, 100, 0, true, true, true, true)
+    ENTITY.SET_ENTITY_COORDS(Car, CarSpawnLoc.x, CarSpawnLoc.y, CarSpawnLoc.z, false, false, false, false)
+    ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(Car, 1, 0, -100, 0, true, true, true, true)
+
+    local Timer = 370
+    util.create_tick_handler(function()
+        Timer = Timer - 1
+        util.draw_centred_text("[夜幕提示]开仓倒计时 : " .. Timer)
+        if Timer < 0 then
+            VEHICLE.SET_VEHICLE_DOOR_OPEN(Plane, 2, false, false)
+            return false
+        end
+    end)
+end
+------小丑炸弹车
+function bomb_car()
+    local hash = util.joaat("speedo2")
+    request_model(hash)
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 0, 0)
+    local heading = ENTITY.GET_ENTITY_HEADING(players.user_ped())
+    local spawnedCar = entities.create_vehicle(hash, pos, heading)
+    PED.SET_PED_INTO_VEHICLE(players.user_ped(), spawnedCar, -1) 
+       notification( "[夜幕提示]按下鼠标右键引爆载具", colors.black)
+    util.create_tick_handler(function()
+        VEHICLE.START_VEHICLE_HORN(spawnedCar, 300, 1330140418, false)
+        util.yield(500)
+    end)
+    while spawnedCar do
+        ENTITY.SET_ENTITY_INVINCIBLE(spawnedCar, false)
+        if PAD.IS_CONTROL_PRESSED(0, 68) then
+            local Bomboffset = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(spawnedCar, 0, 0, 0)
+            FIRE.ADD_EXPLOSION(Bomboffset.x, Bomboffset.y, Bomboffset.z, 59, 1, true, false, 1.0, false)
+            util.yield(1000)
+            entities.delete_by_handle(spawnedCar)
+            break
+        end
+        util.yield()
+    end
 end

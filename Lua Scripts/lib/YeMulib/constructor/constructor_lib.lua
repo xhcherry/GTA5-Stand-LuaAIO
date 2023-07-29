@@ -1920,11 +1920,9 @@ constructor_lib.serialize_ped_attributes = function(attachment)
     end
     for _, ped_head_overlays in pairs(constants.ped_head_overlays) do
         local index = ped_head_overlays.overlay_id
-        local value = PED.GET_PED_HEAD_OVERLAY(attachment.handle, index)
         if value == 255 then value = -1 end
         attachment.ped_attributes.head_overlays["_"..index] = value
     end
-    attachment.ped_attributes.eye_color = PED.GET_HEAD_BLEND_EYE_COLOR(attachment.handle)
 end
 
 constructor_lib.deserialize_ped_weapon = function(attachment)

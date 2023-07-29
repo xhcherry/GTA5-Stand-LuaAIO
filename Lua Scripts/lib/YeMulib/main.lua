@@ -86,6 +86,7 @@ blacklist={"1111",-----测试黑名单,发布时删除
     "jiangling6998",------江陵,盗版lua作者(jiangling lua),呼吁大家抵制盗版,因为正版也不收费
     "SDFRRTG",----恶意玩家
     "xdjzswd",----恶意玩家
+    "Angel00512",----STAND魔怔玩家（动不动恶搞其他STAND玩家）
 }
 function Black_list()
     -----检测到战局有黑名单直接踢
@@ -664,3 +665,6 @@ funptfx = {
     {"scr_indep_fireworks","scr_indep_firework_trail_spawn","1"},
     {"scr_ie_tw", "scr_impexp_tw_take_zone","1"}
 }
+----粒子拖尾
+vehparticle_name = {"烟花拖尾1","烟花拖尾2"}
+vehparticle_tb = {"scr_mich4_firework_trail_spawn","scr_mich4_firework_sparkle_spawn"}

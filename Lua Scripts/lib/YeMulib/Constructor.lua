@@ -38,7 +38,7 @@ local constants = require "lib.YeMulib.constructor.constants"
 local convertors = require "lib.YeMulib.constructor.convertors"
 local curated_attachments = require "lib.YeMulib.constructor.curated_attachments"
 local translations = require "lib.YeMulib.constructor.translations"
-local scaleform = require('YeMulib.constructor.ScaleformLib')
+local scaleform = require('YeMulib.ScaleformLib')
 
 ---
 --- Debug Log
@@ -49,7 +49,7 @@ local function debug_log(message, additional_details)
         if CONSTRUCTOR_CONFIG.debug_mode == 2 and additional_details ~= nil then
             message = message .. "\n" .. inspect(additional_details)
         end
-        util.log("[夜幕模组提示] "..message)
+        util.log("[Constructor] "..message)
     end
 end
 
@@ -71,7 +71,7 @@ end
 
 local constructor = {}
 local PROPS_PATH = filesystem.scripts_dir().."lib/YeMulib/constructor/objects_complete.txt"
-local CONSTRUCTS_DIR = filesystem.scripts_dir() .. "/YMS/" .. 'Constructs\\'
+local CONSTRUCTS_DIR = filesystem.scripts_dir() .. "/daidaiScript/" .. 'Constructs\\'
 filesystem.mkdirs(CONSTRUCTS_DIR)
 
 local spawned_constructs = {}

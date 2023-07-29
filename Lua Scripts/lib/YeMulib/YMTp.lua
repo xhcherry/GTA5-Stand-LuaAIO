@@ -443,5 +443,59 @@ for idx, coords in SecretBaseA do
 end
 
 util.keep_running()
+
+local ArmoredCarA = {
+  [1] = {-804.3735, -2519.6353, 13.75187},
+  [2] = {36.262615, -708.28467, 44.196266},
+  [3] = {-350.10312, -20.467531, 47.43696},
+  [4] = {-1376.861, -437.85635, 35.814156},
+  [5] = {-3127.372, 1061.794, 20.29873},
+  [6] = {-121.66279, 6451.1143, 31.468433},
+  [7] = {1683.2516, 4934.8604, 42.08421},
+  [8] = {1161.4642, 2695.2383, 37.932007},
+  [9] = {882.5721, 24.321222, 78.75734},
+  [10] = {1194.2698, -1419.0015, 35.197727},
+}
+local ArmoredCar = menu.list(Transport, "装甲运钞车", {}, "请确保没有修改过收集数据")
+for idx, coords in ArmoredCarA do
+    ArmoredCar:action("装甲运钞车 " .. idx, {}, "传送到装甲运钞车", function()
+        teleport(coords[1], coords[2], coords[3])
+    end)
+end
+
+util.keep_running()
+
+local RecordAStudiosA = {
+  [1] = {-1021.7915, -90.67421, -99.40314}
+}
+local RecordAStudios = menu.list(Transport, "录音A工作室", {}, "请确保没有修改过收集数据")
+for idx, coords in RecordAStudiosA do
+    RecordAStudios:action("录音A工作室 " .. idx, {}, "传送到录音A工作室", function()
+        teleport(coords[1], coords[2], coords[3])
+    end)
+end
+
+util.keep_running()
+
+local HintA = {
+  [10001] = {1903.4403, 4911.296, 48.785362},
+  [10002] = {-680.453, 5799.1, 17.330982},
+  [10003] = {-134.71492, 1912.4852, 197.32706},
+  [10004] = {1112.0443, 3143.0513, 38.34046},
+  [10005] = {-1569.0293, 4430.25, 7.9280486},
+  [10006] = {-1713.651, 2614.714, 3.0079188},
+  [10007] = {2434.802, 5838.719, 59.09808},
+  [10008] = {2587.395, 1250.671, 44.401325},
+  [10009] = {2919.049, 3673.325, 45.497673},
+}
+local Hint = menu.list(Transport, "洛圣都杀人狂-线索", {}, "请确保没有修改过收集数据")
+for idx, coords in HintA do
+    Hint:action("洛圣都杀人狂-线索 " .. idx, {}, "传送到洛圣都杀人狂-线索", function()
+        teleport(coords[1], coords[2], coords[3])
+    end)
+end
+
+util.keep_running()
+
 menu.readonly(Transport, "感谢坐标提供者", "坤坤子")
 

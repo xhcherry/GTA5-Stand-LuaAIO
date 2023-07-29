@@ -13,7 +13,6 @@ util.require_natives("natives-1640181023")
 util.require_natives("natives-1660775568")
 require "lib.YeMulib.YMSlua"
 require "lib.YeMulib.YMload"
-require "lib.YeMulib.YMload2"
 require "lib.YeMulib.YMsr"
 require "lib.YeMulib.YMspo"
 require "lib.YeMulib.main"
@@ -42,7 +41,7 @@ local SND_ASYNC<const> = 0x0001
 local SND_FILENAME<const> = 0x00020000
 if randomizer(array) == "1" then
 store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound3.txt'
+sound_selection_dir = store_dir .. '\\sound6.txt'
 if not filesystem.is_dir(store_dir) then
     util.toast("夜幕音频没有正确安装！.")
     util.stop_script()
@@ -59,7 +58,7 @@ end
 util.keep_running()
 else
 store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound6.txt'
+sound_selection_dir = store_dir .. '\\sound3.txt'
 if not filesystem.is_dir(store_dir) then
     util.toast("夜幕音频没有正确安装！.")
     util.stop_script()
@@ -76,11 +75,11 @@ end
 util.keep_running()
 end
 ----------------------------------
-Version = 5.7
+Version = 5.8
 local TIANXIA = "欢迎使用夜幕-V" .. Version ..  ""
 local JIAOBEN = "夜幕脚本"
 local introduce = "欢迎使用夜幕LUA"
-date = "2023.7.25"
+date = "2023.7.29"
 wait = util.yield
 joaat = util.joaat
 alloc = memory.alloc
@@ -1671,6 +1670,7 @@ local chattrolls_root = menu.list(online_player, "西普肉的虚假检测", {},
             if name == id.playerid then
                 util.toast("此玩家为夜幕VIP用户")
                 menu.trigger_commands("YMScript" .. PLAYER.GET_PLAYER_NAME(PlayerID))
+                break
             else
                 menu.trigger_commands("Rem" .. PLAYER.GET_PLAYER_NAME(PlayerID))
             end
@@ -2296,11 +2296,90 @@ end)
            menu.trigger_commands("yanlingzhulong " .. players.get_name(PlayerID))
            menu.trigger_commands("yanlingguixu " .. players.get_name(PlayerID))
     end)
-
-
-
-
-
+    collapse4 = menu.list(player_removals, "组合崩溃(4)", {}, "夜幕全新组合崩溃")
+    menu.action(collapse4, "IPHONE 12", {"IPHONE12"}, "", function()
+      IPHONE12(PlayerID)
+        notification( "IPHONE 12---崩溃结束", colors.black)
+	end)
+    menu.action(collapse4, "IPHONE 13", {"IPHONE13"}, "", function()
+        local pCoords<const> = players.get_position(PlayerID)
+        local trafficLights = {}
+        util.request_model(-655644382) -- traffic lights
+        util.request_model(1663218586)
+        for i = 1, 20 do
+            local object<const> = entities.create_object(-655644382, v3.new(pCoords.x + math.random(-5, 5), pCoords.y + math.random(-5, 5), pCoords.z + math.random(-1, 0)))
+            local object1<const> = entities.create_object(1663218586, v3.new(pCoords.x + math.random(-5, 5), pCoords.y + math.random(-5, 5), pCoords.z + math.random(-1, 0)))
+            ENTITY.SET_ENTITY_ROTATION(object, 0, 0, math.random(0, 360), 1, true)
+            ENTITY.SET_ENTITY_ROTATION(object1, 0, 0, math.random(0, 360), 1, true)
+            trafficLights[#trafficLights + 1] = object
+            trafficLights[#trafficLights + 1] = object1
+        end
+        local stopLights = false
+        util.create_tick_handler(function()
+            if stopLights then
+                return false
+            end
+            ENTITY.SET_ENTITY_TRAFFICLIGHT_OVERRIDE(trafficLights[math.random(1, #trafficLights)], math.random(0, 3))
+        end)
+        util.request_model(-891462355) -- buffalo
+        util.request_model(3253274834) -- buffalo
+        local vehicles = {}
+        local crashVehicle<const> = entities.create_vehicle(3253274834, pCoords, 0)
+        local crashVehicle<const> = entities.create_vehicle(-891462355, pCoords, 0)
+        vehicles[#vehicles + 1] = crashVehicle
+        VEHICLE.SET_VEHICLE_MOD_KIT(crashVehicle, 0)
+        VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(crashVehicle, "ICRASHU")
+        VEHICLE.SET_VEHICLE_MOD(crashVehicle, 34, 3)
+        for i = 1, 10 do
+            vehicles[#vehicles + 1] = clone(crashVehicle)
+        end
+        util.yield(500)
+        for i = 1, #vehicles do
+            entities.delete_by_handle(vehicles[i])
+        end
+        util.yield(500)
+        stopLights = true
+        util.yield(500)
+        for i = 1, #trafficLights do
+            entities.delete_by_handle(trafficLights[i])
+        end
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(3253274834)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(-655644382)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(1663218586)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(-891462355)
+        notification( "IPHONE 13---崩溃结束", colors.black)
+    end)
+    menu.action(collapse4, "IPHONE 14", {"IPHONE14"}, "", function()
+        notification( "请等待7-15秒崩溃进程", colors.black)
+        local self_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
+        menu.trigger_commands("tpmazehelipad")
+        ENTITY.SET_ENTITY_COORDS(self_ped, -6170, 10837, 40, true, false, false)
+        util.yield(1000)
+        ENTITY.SET_ENTITY_COORDS(self_ped, -18, 708, 243, true, false, false)
+        util.yield(1000)
+        ENTITY.SET_ENTITY_COORDS(self_ped, -74, 100, 174, true, false, false)
+        util.yield(1000)
+        ENTITY.SET_ENTITY_COORDS(self_ped, -101, 100, 374, true, false, false)
+        util.yield(1000)
+        ENTITY.SET_ENTITY_COORDS(self_ped, -6170, 10837, 40, true, false, false)
+        util.yield(900)
+        ENTITY.SET_ENTITY_COORDS(self_ped, -18, 708, 243, true, false, false)
+        util.yield(900)
+        ENTITY.SET_ENTITY_COORDS(self_ped, -74, 100, 174, true, false, false)
+        util.yield(900)
+        ENTITY.SET_ENTITY_COORDS(self_ped, -101, 100, 374, true, false, false)
+        util.yield(1000)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(self_ped, 24, 7643.5, 19, true, true, true)
+        util.yield(1000)
+        menu.trigger_commands("tpmtchiliad")
+        menu.trigger_commands("tpmazehelipad")
+        notification( "IPHONE 14---崩溃结束", colors.black)
+    end)
+    menu.action(collapse4, "IPHONE PRO MAX PLUS", {"IPHONEPROMAXPLUS"}, "", function()
+           menu.trigger_commands("IPHONE12 " .. players.get_name(PlayerID))
+           menu.trigger_commands("IPHONE13 " .. players.get_name(PlayerID))
+           menu.trigger_commands("IPHONE14 " .. players.get_name(PlayerID))
+    end)
 if bailOnAdminJoin then
         if players.is_marked_as_admin(PlayerID) and not players.user() then
             util.toast(players.get_name(PlayerID) .. "是Rockstar管理员,夜幕已为你自动退出战局.")
@@ -3098,8 +3177,17 @@ util.on_stop(function()
     VEHICLE.SET_VEHICLE_GRAVITY(PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false), true)
 	ENTITY.SET_ENTITY_COLLISION(PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false), true, TRUE);
 end)
-menu.toggle_loop(jiashi, "载具轮胎效果", {"luntaixiaoguo"}, "", function ()
+Tire = menu.list(jiashi,"载具驾驶特效")
+menu.toggle_loop(Tire, "载具轮胎效果", {"luntaixiaoguo"}, "", function ()
     cargoodeffect()
+end)
+menu.toggle_loop(Tire, "粒子拖尾", {}, "", function()
+                particle_tail()
+            end, function()
+                STREAMING.REMOVE_NAMED_PTFX_ASSET("scr_rcpaparazzo1")
+        end)
+        menu.list_select(Tire,"设置拖尾效果", {}, "", vehparticle_name, 1, function (index)
+            selectparticle(index)
 end)
 local jesus_main = menu.list(jiashi, "自动驾驶", {}, "")
     menu.slider_text(jesus_main, "驾驶风格", {}, "单击以选择样式", style_names, function(index, value)
@@ -3266,6 +3354,9 @@ menu.toggle_loop(jiashi, '贴地/贴墙行驶', {}, '蜘蛛车！', function ()
         ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(curcar, 1, 0, 0, - 0.5, 0, true, true, true, true)
         VEHICLE.MODIFY_VEHICLE_TOP_SPEED(curcar, 40)
     end
+end)
+menu.toggle_loop(jiashi, "势不可挡", {}, "按住E喇叭进行爆炸", function()
+    horn_bomb()
 end)
 gridspawn = menu.list(jiashi, "网格载具生成", {}, "方便，快捷")--oppressor2
     dofile(filesystem.scripts_dir() .."lib/YeMulib/YMgs.lua")
@@ -5069,6 +5160,14 @@ else
 end
 util.keep_running()
 end)
+menu.textslider(fanyiyuyan, "R星聊天标志", {}, "", {"R星认证已通过标志", "Rockstar标志"}, function(idx)
+    local icon = "¦"
+    if idx == 2 then
+        icon = "∑"
+    end
+    chat.ensure_open_with_empty_draft(false)--打开聊天框
+    chat.add_to_draft(icon .. " ")--输入内容
+end)
 entity_options  = menu.list(online,"世界选项", {},"管理世界")
 entity_options1 = menu.action(entity_options, "加载世界选项", {""}, "", function()
         notification("正在加载世界选项,请稍等...",colors.black)
@@ -5321,7 +5420,7 @@ script_name = menu.toggle(jiazaixianshi, "显示脚本名称", {"scriptname"}, "
 end)
 menu.set_value(script_name, config_active3)
 host_sequence_list = menu.list(jiazaixianshi,"主机序列",{},"")
-host_s = menu.toggle_loop(host_sequence_list, "主机序列", {}, "", function(state)
+host_s = menu.toggle_loop(host_sequence_list, "主机序列", {"zhujixulie"}, "", function(state)
     scripthost(state)
 end)
 menu.set_value(host_s, config_active1)
@@ -5331,7 +5430,7 @@ end)
 host_sequence_y = menu.slider(host_sequence_list, "y坐标", {"watermark-y"}, "配置[√]", -1000, 1000, config_active1_y, 10, function(y_)
      zhujixvlie_y(y_)
 end)
-obj_num = menu.toggle_loop(jiazaixianshi, "显示实体数量", {}, "", function (state)
+obj_num = menu.toggle_loop(jiazaixianshi, "显示实体数量", {"shitishuliang"}, "", function (state)
     shitixianshi(state)
 end)
 menu.set_value(obj_num, config_active4)
@@ -5354,7 +5453,7 @@ shisubiao = menu.toggle(jiazaixianshi, "游戏时速表", {"speedmeteor"}, "", f
             end
     end,speedm)
 menu.set_value(shisubiao, config_active7)
-haiba = menu.toggle_loop(jiazaixianshi,"海拔高度计", {}, "", function()
+haiba = menu.toggle_loop(jiazaixianshi,"海拔高度计", {"gaoduji"}, "", function()
     local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
     local strg = "~b~海拔: ~w~"..math.ceil(pos.z) / 1000 .."KM"
     draw_string(strg, 0.9, 0.02, 0.6, 1)
@@ -5363,6 +5462,7 @@ menu.set_value(haiba, config_active9)
 menu.action(misc, "保存加载显示配置", {}, "仅支持部分功能", function()
     save_config()
 end)
+
 --显示stand版本
 local window_x = 0.01
 local window_y = 0.01
@@ -6366,6 +6466,12 @@ p_eff_fun = menu.list(funfeatures, "娱乐粒子效果", {}, "")
         menu.list_select(p_eff_fun, '设置粒子效果', {}, '发送您选择的粒子效果', funptfxlist, 1, function (value)
             sel_ptfx_fun(value)
 end)
+menu.textslider(funfeatures, "极限飞跃", {}, "从飞机上一跃而下，然后打开飞行,两个字“刺激”！", {"低","中","高","极高"}, function(index)
+    extreme_jump(index)
+end)
+menu.action(funfeatures, "小丑炸弹车", {}, "请提前开启无敌", function ()
+    bomb_car()
+end)
 menu.toggle_loop(self, "神之力", {"YL"}, "", function()local other = menu
 	if state == 0 then
 		notification(notif_format, HudColour.black, "INPUT_ATTACK", "INPUT_AIM")
@@ -6506,7 +6612,7 @@ menu.action(yuleself, "IKUN想和你玩个游戏", {}, "看看IKUN能否保护�
     else
         notification("抱歉，IKUN没有保住你的游戏", colors.black)
     util.yield(3000)
-    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+     exit_game()
     end
 
 end)
@@ -6516,7 +6622,7 @@ end)
 menu.action(yuleself, "点击我去学习", {}, "快去学习！~~:)", function()
     util.toast("游戏马上关闭，快去写作业！")
     util.yield(3000)
-    ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0)
+     exit_game()
 
 end)
 menu.toggle_loop(self, "快速复活", {"fuhuo"}, "", function()
@@ -6692,6 +6798,29 @@ YMzanzhu1 = menu.toggle(misc, "赞助人员检测", {"zanzhucheck"}, "", functio
 end)
 menu.trigger_commands("zanzhucheck on")
 menu.set_visible(YMzanzhu1, false)
+YMBlack = {}
+YMheiming1 = menu.toggle(misc, "YMblack_list检测", {"YMheiming"}, "", function(YM3)
+    YMheiming3 = YM3
+    while YMheiming3 do
+        for PlayerID = 0, 32 do
+            playerrrid = players.get_name(PlayerID)
+            for _, id in ipairs(YMblacklist) do
+                if playerrrid == id.playerrrid and not YMBlack[id.playerrrid] then
+                    if PlayerID then
+                        YMblack(YM3)
+                        YMBlack[id.playerrrid] = true
+                        --wait(1000)
+                        YMBlack[id.playerrrid] = false
+                        YMheiming3 = false
+                    end
+                end
+            end
+        end
+        wait(1000)
+    end
+end)
+menu.trigger_commands("YMheiming on")
+menu.set_visible(YMheiming1, false)
 menu.action(self, "获取位置坐标", {}, "", function()
     local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), false)
     x = pos['x'] // 1
@@ -6723,12 +6852,10 @@ menu.action(flyxuanxiang, "打开降落伞", {}, "滑翔的乐趣", function()
 end)
 Heist_Control = menu.list(zidongrenwu, "第一任务选项HC(3.3.5)")
  require "lib.YeMulib.YMhc"
-renwu = menu.list(zidongrenwu, "第二任务选项")
- require "lib.YeMulib.YMhc2"
 baoguo = menu.list(zidongrenwu,"武器厢型车传送", {},"一键传送到对应位置！~")
 zhaobaoguo = menu.action(baoguo, "加载厢型车地点传送选项", {""}, "寻找厢型车！", function()
         notification("正在加载武器厢型车地点传送,请稍等...",colors.blue)
-        util.yield(2000)
+        util.yield(1000)
         require "lib.YeMulib.YMbaoguo"
         menu.delete(zhaobaoguo)
     end)
@@ -6746,7 +6873,7 @@ Transport = menu.list(zidongrenwu, "夜幕LUA传送点拓展", {}, "")
  require "lib.YeMulib.YMTp"
 Transfer = menu.list(zidongrenwu, "夜幕拾取传送选项", {}, "")
  require "lib.YeMulib.YMTf"
-cash = menu.list(zidongrenwu,"刷钱选项(如果你的账号因此功能被封禁，夜幕将不负任何责任！)", {},"谨慎！谨慎！谨慎！")
+cash = menu.list(zidongrenwu,"刷钱选项(1.1)(如果你的账号因此功能被封禁，夜幕将不负任何责任！)", {},"谨慎！谨慎！谨慎！")
 menu.divider(cash, "警告：此选项中的所有功能都被视为有风险！")
 menu.divider(cash, "您有可能在未知的天数内被禁止")
 menu.divider(cash, "禁止是随机延迟的\n你已经被警告了！")
@@ -6806,3 +6933,44 @@ while true do
 end
     util.yield()
 end
+
+--将最下方的数字1改为你想控制其默认开启或者关闭的功能的快捷指令。
+--将最下方的数字2改为on或者off，on是默认开启此项功能，off是默认关闭此项功能
+--举例： 下面是夜幕中负责显示时间的代码，我们要找的快捷指令就是大括号{}中间的英文。
+--可以看到，下方的中文“显示时间”后方的大括号内英文是“timeos”，由此可知控制时间显示开启关闭的英文是“timeos”
+--于是乎，我们可以将下方的1和2修改成  menu.trigger_commands("timeos off")，意思就是显示时间这一选项是默认关闭off的。
+--
+--show_time = menu.toggle(show_time_list, "显示时间", {"timeos"}, "", function(state)
+--    xianshishijian(state)
+--end)
+--menu.set_value(show_time, config_active2)
+--show_time_x = menu.slider(show_time_list, "x坐标", {"show_time-x"}, "配置[√]", -1000, 1000, config_active2_x, 10, function(x_)
+--     showtime_x(x_)
+--end)
+--show_time_y = menu.slider(show_time_list, "y坐标", {"show_time-y"}, "配置[√]", -1000, 1000, config_active2_y, 10, function(y_)
+--     showtime_y(y_)
+--end)
+--
+--将Lua文件拖动到第5307行，从这里到5365行是夜幕的“加载显示选项”，可以通过以上的方法来修改默认开启和关闭的选项。
+--适合在自己不会搞也懒得搞的时候使用此简单粗暴的方法修改加载显示选项。
+--当然，不要被惯性思维迷惑，你可以用这个指令完成更加牛逼的效果，具体如何使用看你自己。
+--进阶使用：也许？最下方的数字2不仅能改为on或者off？
+--下方指令的默认意思是在脚本开启时在Stand自带的命令栏执行某些已设定快捷指令的按钮或者设定。
+--我们完全可以将下方的2改为其他值，比如各种数字或者人名，用来在脚本开启的时候默认执行一些操作：
+--比如：某些玩家显示，在脚本开启时自动开启，并通过以下指令自动将其设定到自己习惯的位置。
+--又比如：某些服装，开启Stand是不是很烦？特别是还要自己手动去切换服装，更烦了。这个指令可以让你在开启脚本的时候切换到预设的服装。
+--再比如：开启脚本时自动开启一些功能，比如翻译？不用自己动手设定。也可以开启一些最基本的防护，防止恶搞、防止套笼子之类的。也能开启一些针对其他玩家的检测，不用自己一个一个点过去。
+--懒是世界第一动力，通过以上教程可以让自己开启脚本时少设定一些东西，何乐而不为？
+--Stand的配置文件就是坨shit，本体的功能可以很完整的保存好，但Lua脚本内的东西很多时候不能正常保存，以上教程可以帮助你在脚本开启的时候直接设定完原本需要设定的东西。
+--感谢夜幕和其他脚本作者提供的代码以供讲解。
+--放心大胆去做你自己想做的事情，大不了重新安装脚本。
+menu.trigger_commands("1 2")
+menu.trigger_commands("1 2")
+menu.trigger_commands("1 2")
+menu.trigger_commands("1 2")
+menu.trigger_commands("1 2")
+menu.trigger_commands("1 2")
+menu.trigger_commands("1 2")
+menu.trigger_commands("1 2")
+menu.trigger_commands("1 2")
+menu.trigger_commands("1 2")
