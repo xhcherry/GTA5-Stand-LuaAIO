@@ -43,7 +43,6 @@ random_notify = math.random(1,#textnotify)
 
 welcomet1 = menu.toggle_loop(players_root, "你看不到", {"ucantseeit"}, "", function ()
     notification(textnotify[random_notify] .. "\n欢迎回到GRANDTOURINGVIP!")
-    notification("7y:有钱你就冠")
 end)
 
 welcomet2 = menu.toggle_loop(players_root, "你看不到", {"youcantseeit"}, "", function ()

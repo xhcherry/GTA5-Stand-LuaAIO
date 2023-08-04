@@ -2,7 +2,7 @@ local regioncrash = {
     [10] = {crash = false, lang = "Japanese"},
 }
 for k, v in pairs(regioncrash) do
-    menu.toggle(fuckjp, "自动崩溃 ".. regioncrash[k].lang, { "crash".. regioncrash[k].lang }, "自动崩溃你战局的 ".. regioncrash[k].lang .. "\n当检测到小日本时，自动执行Twelve12崩溃", function(toggle)
+    menu.toggle(fuckjp, "自动崩溃 ".. regioncrash[k].lang, { "crash".. regioncrash[k].lang }, "自动崩溃你战局的 ".. regioncrash[k].lang .. "", function(toggle)
         regioncrash[k].crash = toggle
     end)
 end
@@ -16,7 +16,7 @@ players.on_join(function(pid)
     if pid ~= players.user() then
         local language = players.get_language(pid)
         if regioncrash[language] and regioncrash[language].crash then
-            menu.trigger_commands("12crash" .. players.get_name(pid))
+            menu.trigger_commands("crash" .. players.get_name(pid))
         end
     end
 end)

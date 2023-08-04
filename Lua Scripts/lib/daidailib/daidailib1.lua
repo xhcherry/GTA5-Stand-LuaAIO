@@ -185,8 +185,9 @@ function save_custom_respawn()
     respawnRot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
     local pos = 'X: '.. respawnPos.x ..'\nY: '.. respawnPos.y ..'\nZ: '.. respawnPos.z
     local placename = util.get_label_text(ZONE.GET_NAME_OF_ZONE(v3.get(respawnPos)))
-    menu.set_menu_name(custom_respawn_location, '当前位置: ' .. placename)
+    menu.set_menu_name(custom_respawn_location, '更新位置(' .. placename..")")
     menu.set_help_text(custom_respawn_location,  '当前坐标:\n' .. pos)
+    notification("~bold~~y~位置已更新", HudColour.blue)
 end
 
 
@@ -2847,19 +2848,6 @@ function on_user_change_vehicle(vehicle)
     if vehicle ~= 0 then
     end
 end
-function request_model(hash)
-    request_time = os.time()
-    if not STREAMING.IS_MODEL_VALID(hash) then
-        return
-    end
-    STREAMING.REQUEST_MODEL(hash)
-    while not STREAMING.HAS_MODEL_LOADED(hash) do
-        if os.time() - request_time >= 10 then
-            break
-        end
-        util.yield()
-    end
-end
 local last_car = 0
 function all_drive_style()
     local player_cur_car = entities.get_user_vehicle_as_handle()
@@ -2935,18 +2923,17 @@ function all_drive_style()
     end  
 end
 
-local SCRIPT_VERSION = 9.1 - 0.1
+
+local SCRIPT_VERSION = 9.2 - 0.1
 function check_version()
-    async_http.init("sakuraversion.netlify.app", "",function(result)
-        local tab = string.split(result,";")
-        local version = tonumber(string.format(tab[1]))
-        if version and SCRIPT_VERSION then
-            if version > SCRIPT_VERSION then
-                notification("~y~~bold~"..tab[2], HudColour.blue)
+    async_http.init("http://cnsakura.top", "/other/verification.json",function(info,header,response)
+        local tab = StrToTable(info)
+        if response == 200 and tab ~= nil then
+            if tab.version > SCRIPT_VERSION then
+                notification("~y~~bold~"..tab.notify, HudColour.blue)
                 util. stop_script()
             end
-        else
-            util. stop_script()
+            notification("~y~~bold~"..tab.successed, HudColour.blue)
         end
     end, function()
         local netnotify = net
@@ -5112,7 +5099,7 @@ function big_fireworks()
     MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x-90-math.random(0, 40), pos.y-90, pos.z, pos.x-90-math.random(0, 40), pos.y-90, pos.z+20, 200, false, hash, 0, true, false, 150)
     util.yield(500)
 end
---新烟花
+--炫彩烟花
 function new_firework()
     local effect = "scr_indep_fireworks"
     local effect_name = "scr_indep_firework_starburst"
@@ -5126,7 +5113,7 @@ function new_firework()
     GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(indep_fireworks_r, indep_fireworks_g, indep_fireworks_b)
     util.yield(1500)
 end
---新烟花v2
+--礼花桶
 function new_firework2()
     local effect = "scr_indep_fireworks"
     local effect_name = "scr_indep_firework_fountain"
@@ -5795,7 +5782,7 @@ function scriptname(state)
                 mcspt.b=mcspt.b-1
             end
         end
-    draw_string(string.format("~italic~¦~bold~Sakura Script v9.0"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v9.1"), 0.38,0.1, 0.6,5)
     util.yield()
     end
 end

@@ -3,6 +3,7 @@ AUDIO1={
 }
 
 VEHICLE1={
+    ["_SET_VEHICLE_CAN_BE_LOCKED_ON"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] canBeLockedOn,--[[BOOL (bool)]] unk)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(canBeLockedOn)native_invoker.push_arg_bool(unk)native_invoker.end_call_2(0x1DDA078D12879EEE)end,
     ["_SET_VEHICLE_REDUCE_TRACTION"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[int]] val)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_int(val)native_invoker.end_call_2(0x6DEE944E1EE90CFB)end,
     ["_SET_VEHICLE_CONTROLS_INVERTED"]=function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] state)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_bool(state);native_invoker.end_call("5B91B229243351A8");end,
     ["SET_VEHICLE_SHOOT_AT_TARGET"]=function(...)return native_invoker.uno_void(0x74CD9A9327A282EA,...)end,
@@ -97,6 +98,7 @@ NETSHOPPING1={
 }
 
 SCRIPT1={
+    ["TERMINATE_THIS_THREAD"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x1090044AD1DA76FA)end,
     ["REQUEST_SCRIPT"]=function(...)return native_invoker.uno_void(0x6EB5F71AA68F2E8E,...)end,
     ["SET_SCRIPT_AS_NO_LONGER_NEEDED"]=function(...)return native_invoker.uno_void(0xC90D2DCACD56184C,...)end,
     ["HAS_SCRIPT_LOADED"]=function(...)return native_invoker.uno_bool(0xE6CC9F3BA0FB9EF1,...)end,

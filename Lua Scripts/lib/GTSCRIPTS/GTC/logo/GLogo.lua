@@ -40,7 +40,7 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '7.20'
+GT_version = '8.04'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -48,7 +48,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("Version: 7.20\n更新了自动产业(e94d676)\n新增>踢出选项>忧郁踢\n新增>载具选项>载具功能>防止MK2怠速下降\n新增>玩家选项>出其不意的传送\nLua脚本>GRANDTOURINGVIP 添加了快捷进入\n因为很多人习惯从Lua脚本入口打开脚本选项\n对现有功能进行优化\n感谢7y对GTVIP的大力支持")
+    notification("版本:8.04\n脚本现在可以正常使用\n修复了激光眼功能反向的问题\n修复了QJ公猪无法QJ玩家\n优化了运行效率")
 end
 loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
 coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
@@ -197,8 +197,8 @@ function do_label_preset(label, text)
     end
     function GTNB()
     do_label_preset("PM_WAIT", "正在引导")
-    do_label_preset("HUD_JOINING", "正在使用GTMENU加入在线模式")
-    do_label_preset("MP_SPINLOADING", "GTMENU YYDS")
+    do_label_preset("HUD_JOINING", "GRANDTOURINGVIP")
+    do_label_preset("MP_SPINLOADING", "GTVIP YYDS")
     do_label_preset("HUD_LBD_FMP", "GRANDTOURING 在线模式（公开，~1~）")
     do_label_preset("HUD_LBD_FMI", "GRANDTOURING 在线模式（邀请，~1~）")
     do_label_preset("HUD_LBD_FMC", "GRANDTOURING 在线模式（帮会，~1~）")
@@ -213,7 +213,6 @@ function do_label_preset(label, text)
     do_label_preset("CMRC_STORE_OPEN", "GRANDTOURINGVIP 商店\n现已开放!")
     do_label_preset("UI_FLOW_OP_CL_M", "关于 GRANDTOURINGVIP")
     do_label_preset("UI_FLOW_OP_CL", "关于 GRANDTOURINGVIP")
-    do_label_preset("UI_FLOW_OP_CL_d", "多亏了我们的GT开发团队\n您才能体验到无与伦比的GRANDTOURINGVIP\n主创作者:GT 副创开发:瑞思拜\n致谢人员:12 Super飞 柒月 小马哥 丢丢\n我们的群聊:238394690(脚本下载群) 716431566(日常聊天群)\n感谢您使用GRANDTOURINGVIP")
 end
 
 srgb = {cus = 100}
@@ -3978,7 +3977,7 @@ function laser_eyes()
             boneCoord_L.z += 0.02
             boneCoord_R.z += 0.02
         end
-        camRot.x += 90
+        camRot.x += -90
         request_ptfx_asset_lasereyes(dictionary)
         GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
         GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(ptfx_name, boneCoord_L.x, boneCoord_L.y, boneCoord_L.z, camRot.x, camRot.y, camRot.z, 2, 0, 0, 0, false)
@@ -6074,54 +6073,6 @@ local function request_ptfx_asset_lasereyes(asset)
     end
 end
 
-function laser_eyes()
-    local weaponHash = util.joaat("weapon_heavysniper_mk2")
-    local dictionary = "weap_xs_weapons"
-    local ptfx_name = "bullet_tracer_xs_sr"
-    local camRot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
-    if PAD.IS_CONTROL_PRESSED(51, 51) then
-        -- credits to jinxscript
-        local inst = v3.new()
-        v3.set(inst,CAM.GET_FINAL_RENDERED_CAM_ROT(2))
-        local tmp = v3.toDir(inst)
-        v3.set(inst, v3.get(tmp))
-        v3.mul(inst, 1000)
-        v3.set(tmp, CAM.GET_FINAL_RENDERED_CAM_COORD())
-        v3.add(inst, tmp)
-        camAim_x, camAim_y, camAim_z = v3.get(inst)
-        local ped_model = ENTITY.GET_ENTITY_MODEL(players.user_ped())
-        local left_eye_id = 0
-        local right_eye_id = 0
-        pluto_switch ped_model do 
-            case 1885233650:
-            case -1667301416:
-                left_eye_id = 25260
-                right_eye_id = 27474
-                break
-            -- michael / story mode character
-            case 225514697:
-            -- imply they're using a story mode ped i guess. i dont know what else to do unless i have data on every single ped
-            default:
-                left_eye_id = 5956
-                right_eye_id = 6468
-        end
-        local boneCoord_L = ENTITY.GET_WORLD_POSITION_OF_ENTITY_BONE(players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), left_eye_id))
-        local boneCoord_R = ENTITY.GET_WORLD_POSITION_OF_ENTITY_BONE(players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), right_eye_id))
-        if ped_model == util.joaat("mp_f_freemode_01") then 
-            boneCoord_L.z += 0.02
-            boneCoord_R.z += 0.02
-        end
-        camRot.x += 90
-        request_ptfx_asset_lasereyes(dictionary)
-        GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(ptfx_name, boneCoord_L.x, boneCoord_L.y, boneCoord_L.z, camRot.x, camRot.y, camRot.z, 2, 0, 0, 0, false)
-        GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(ptfx_name, boneCoord_R.x, boneCoord_R.y, boneCoord_R.z, camRot.x, camRot.y, camRot.z, 2, 0, 0, 0, false)
-        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(boneCoord_L.x, boneCoord_L.y, boneCoord_L.z, camAim_x, camAim_y, camAim_z, 100, true, weaponHash, players.user_ped(), false, true, 100, players.user_ped(), 0)
-        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(boneCoord_R.x, boneCoord_R.y, boneCoord_R.z, camAim_x, camAim_y, camAim_z, 100, true, weaponHash, players.user_ped(), false, true, 100, players.user_ped(), 0)
-    end
-end
-
 maxHealth_cantseeyouinmap = 328
 function undead()
     if  ENTITY.GET_ENTITY_MAX_HEALTH(players.user_ped()) ~= 0 then
@@ -7171,51 +7122,6 @@ function veh_spawn_see()
           update_preview_tick()
         end
     end)
-end
-
-function laser_eyes()
-    local weaponHash = util.joaat("weapon_heavysniper_mk2")
-    local dictionary = "weap_xs_weapons"
-    local ptfx_name = "bullet_tracer_xs_sr"
-    local camRot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
-    if PAD.IS_CONTROL_PRESSED(51, 51) then
-        local inst = v3.new()
-        v3.set(inst,CAM.GET_FINAL_RENDERED_CAM_ROT(2))
-        local tmp = v3.toDir(inst)
-        v3.set(inst, v3.get(tmp))
-        v3.mul(inst, 1000)
-        v3.set(tmp, CAM.GET_FINAL_RENDERED_CAM_COORD())
-        v3.add(inst, tmp)
-        camAim_x, camAim_y, camAim_z = v3.get(inst)
-        local ped_model = ENTITY.GET_ENTITY_MODEL(players.user_ped())
-        local left_eye_id = 0
-        local right_eye_id = 0
-        pluto_switch ped_model do 
-            case 1885233650:
-            case -1667301416:
-                left_eye_id = 25260
-                right_eye_id = 27474
-                break
-            case 225514697:
-            default:
-                left_eye_id = 5956
-                right_eye_id = 6468
-        end
-        local boneCoord_L = ENTITY.GET_WORLD_POSITION_OF_ENTITY_BONE(players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), left_eye_id))
-        local boneCoord_R = ENTITY.GET_WORLD_POSITION_OF_ENTITY_BONE(players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), right_eye_id))
-        if ped_model == util.joaat("mp_f_freemode_01") then 
-            boneCoord_L.z += 0.02
-            boneCoord_R.z += 0.02
-        end
-        camRot.x += 90
-        request_ptfx_asset_lasereyes(dictionary)
-        GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(ptfx_name, boneCoord_L.x, boneCoord_L.y, boneCoord_L.z, camRot.x, camRot.y, camRot.z, 2, 0, 0, 0, false)
-        GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(ptfx_name, boneCoord_R.x, boneCoord_R.y, boneCoord_R.z, camRot.x, camRot.y, camRot.z, 2, 0, 0, 0, false)
-        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(boneCoord_L.x, boneCoord_L.y, boneCoord_L.z, camAim_x, camAim_y, camAim_z, 100, true, weaponHash, players.user_ped(), false, true, 100, players.user_ped(), 0)
-        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(boneCoord_R.x, boneCoord_R.y, boneCoord_R.z, camAim_x, camAim_y, camAim_z, 100, true, weaponHash, players.user_ped(), false, true, 100, players.user_ped(), 0)
-    end
 end
 
 function is_player_in_any_interior(player)
@@ -8989,7 +8895,7 @@ function huanyingjiemian(f)
         HUD.SET_TEXT_CENTRE(1)
         HUD.SET_TEXT_OUTLINE(0)
         HUD.SET_TEXT_COLOUR(rainbowr, rainbowg, rainbowb, 200)
-        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~GTVIP 7y YYDS")
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~GRANDTOURINGVIP")
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX, startY + 0.23) 
     end
 end
@@ -9502,7 +9408,195 @@ function is_control_pressed(--[[int]] control,--[[int]] action)native_invoker.be
 function get_entity_coords(--[[Entity (int)]] entity,--[[BOOL (bool)]] alive)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(alive)native_invoker.end_call_2(0x3FEF770D40960D5A)return native_invoker.get_return_value_vector3()end
 function get_entity_height_above_ground(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x1DD55701034110E5)return native_invoker.get_return_value_float()end
 function set_entity_coords(--[[Entity (int)]] entity,--[[float]] xPos,--[[float]] yPos,--[[float]] zPos,--[[BOOL (bool)]] xAxis,--[[BOOL (bool)]] yAxis,--[[BOOL (bool)]] zAxis,--[[BOOL (bool)]] clearArea)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_float(xPos)native_invoker.push_arg_float(yPos)native_invoker.push_arg_float(zPos)native_invoker.push_arg_bool(xAxis)native_invoker.push_arg_bool(yAxis)native_invoker.push_arg_bool(zAxis)native_invoker.push_arg_bool(clearArea)native_invoker.end_call_2(0x06843DA7060A026B)end
+--
+---颜色 [0 - 1]格式
+Colors = {
+    white = { r = 1.0, g = 1.0, b = 1.0, a = 1.0 },
+    black = { r = 0.0, g = 0.0, b = 0.0, a = 1.0 },
 
+    red = { r = 1.0, g = 0.0, b = 0.0, a = 1.0 },
+    green = { r = 0.0, g = 1.0, b = 0.0, a = 1.0 },
+    blue = { r = 0.0, g = 0.0, b = 1.0, a = 1.0 },
+
+    purple = { r = 1.0, g = 0.0, b = 1.0, a = 1.0 },
+}
+player_damage = {
+    eventData = memory.alloc(13 * 8),
+    screenX = memory.alloc(8),
+    screenY = memory.alloc(8),
+    bonePtr = memory.alloc(4),
+
+    number = {
+        enable = false,
+
+
+        duration = 3000, -- ms
+        text_scale = 0.8,
+        text_colour = Colors.red,
+        -- 显示位置
+        pos_select = 1,
+        text_x = 0.5,
+        text_y = 0.5,
+    },
+
+    attacker = {
+        enable = false,
+
+        toggle = {
+            exclude_player = true,
+            dead = false,
+            explosion = false,
+            owned_explosion = false,
+            shoot_head = false,
+            fire = false,
+            remove_weapon = false,
+        },
+    },
+}
+
+function IS_IN_SESSION()
+    return util.is_session_started() and not util.is_session_transition_active()
+end
+
+function player_damage.to_screen_coords(coords)
+    local x, y = 0, 0
+    if GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(coords.x, coords.y, coords.z,
+            player_damage.screenX, player_damage.screenY) then
+        x = memory.read_float(player_damage.screenX)
+        y = memory.read_float(player_damage.screenY)
+    end
+    return x, y
+end
+
+function player_damage.draw_damage_number(text, eventData)
+    local duration = player_damage.number.duration / 1000
+    local text_colour = player_damage.number.text_colour
+    local scale = player_damage.number.text_scale
+
+    local x, y = player_damage.number.text_x, player_damage.number.text_y
+    if player_damage.number.pos_select == 2 then
+        if PED.GET_PED_LAST_DAMAGE_BONE(players.user_ped(), player_damage.bonePtr) then
+            local boneId = memory.read_byte(player_damage.bonePtr)
+            local bone_coords = PED.GET_PED_BONE_COORDS(players.user_ped(), boneId, 0.0, 0.0, 0.0)
+            x, y = player_damage.to_screen_coords(bone_coords)
+        else
+            x, y = player_damage.to_screen_coords(ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+        end
+    end
+
+    util.create_tick_handler(function()
+        local delta_time = MISC.GET_FRAME_TIME()
+
+        local alpha = math.min(1, duration)
+        directx.draw_text(x, y, text, ALIGN_CENTRE, scale,
+            { r = text_colour.r, g = text_colour.g, b = text_colour.b, a = text_colour.a * alpha }, false)
+
+        y = y - 0.002
+        duration = duration - delta_time * 2
+        if duration <= 0 then
+            return false
+        end
+    end)
+end
+
+function player_damage.attacker_reaction(attacker, eventData)
+    local toggle = player_damage.attacker.toggle
+
+    -- 排除玩家
+    if toggle.exclude_player and IS_PED_PLAYER(attacker) then
+    else
+        -- 死亡
+        if toggle.dead then
+            ENTITY.SET_ENTITY_HEALTH(attacker, 0)
+        end
+        -- 匿名爆炸
+        if toggle.explosion then
+            local pos = ENTITY.GET_ENTITY_COORDS(attacker)
+            add_explosion(pos, 4)
+        end
+        -- 署名爆炸
+        if toggle.owned_explosion then
+            local pos = ENTITY.GET_ENTITY_COORDS(attacker)
+            add_owned_explosion(players.user_ped(), pos, 4)
+        end
+        -- 爆头击杀
+        if toggle.shoot_head then
+            shoot_ped_head(attacker, util.joaat("WEAPON_PISTOL"))
+        end
+        -- 燃烧
+        if toggle.fire then
+            FIRE.START_ENTITY_FIRE(attacker)
+        end
+        -- 移除武器
+        if toggle.remove_weapon then
+            WEAPON.REMOVE_ALL_PED_WEAPONS(attacker)
+        end
+    end
+end
+--
+cargobob_model_list = {
+    util.joaat("cargobob"),
+    util.joaat("cargobob2"),
+    util.joaat("cargobob3"),
+    util.joaat("cargobob4")
+}
+
+function get_player_cargobob()
+    local ped = players.user_ped()
+    if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
+        local veh = PED.GET_VEHICLE_PED_IS_IN(ped, false)
+        local hash = ENTITY.GET_ENTITY_MODEL(veh)
+        if isInTable(cargobob_model_list, hash) then
+            return veh
+        end
+    end
+    return 0
+end
+
+-- get the closest vehicle to the player (exclude player current vehicle)
+function get_closest_vehicle_to_player(radius)
+    local ped = players.user_ped()
+    local current_veh = GET_VEHICLE_PED_IS_IN(ped)
+    local coords = ENTITY.GET_ENTITY_COORDS(ped)
+
+    radius = radius or 999999.0
+    local closest_disance = 999999.0
+    local entity = 0
+    for k, veh in pairs(entities.get_all_vehicles_as_handles()) do
+        if veh ~= current_veh then
+            local pos = ENTITY.GET_ENTITY_COORDS(veh)
+            local distance = v3.distance(coords, pos)
+            if distance <= radius then
+                if distance < closest_disance then
+                    closest_disance = distance
+                    entity = veh
+                end
+            end
+        end
+    end
+    return entity
+end
+
+cargobob_pickup_setting = {
+    draw_line = true,
+    radius = 30,
+    bone = -1,
+    x = 0.0,
+    y = 0.0,
+    z = -1.0,
+}
+--
+function player_active(pid, Playing, inTransition)
+	if pid == -1 or
+	not NETWORK.NETWORK_IS_PLAYER_ACTIVE(pid) then
+		return false
+	end
+	if Playing and not PLAYER.IS_PLAYER_PLAYING(pid) then
+		return false
+	end
+	return true
+end
+--
 ------------------------------------
 -------------玩家崩溃---------------
 ------------------------------------
@@ -19723,8 +19817,7 @@ else
 mcb=mcb-1
 end
 end
-draw_string(string.format("~italic~~h~\nGRANDTOURINGVIP\n Version 7;20"), jiaoben_x,jiaoben_y, jiaoben_dx,2)
---draw_string(string.format("~italic~~y~~h~&#8721;"), jiaoben_x,jiaoben_y, jiaoben_dx,1)
+draw_string(string.format("~italic~~h~\nGRANDTOURINGVIP\n Version 8;04"), jiaoben_x,jiaoben_y, jiaoben_dx,2)
 wait()
 end
 end    
@@ -19969,54 +20062,6 @@ function request_model_load(hash)
             break
         end
         wait()
-    end
-end
-
-function laser_eyes()
-    local weaponHash = util.joaat("weapon_heavysniper_mk2")
-    local dictionary = "weap_xs_weapons"
-    local ptfx_name = "bullet_tracer_xs_sr"
-    local camRot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
-    if PAD.IS_CONTROL_PRESSED(51, 51) then
-        -- credits to jinxscript
-        local inst = v3.new()
-        v3.set(inst,CAM.GET_FINAL_RENDERED_CAM_ROT(2))
-        local tmp = v3.toDir(inst)
-        v3.set(inst, v3.get(tmp))
-        v3.mul(inst, 1000)
-        v3.set(tmp, CAM.GET_FINAL_RENDERED_CAM_COORD())
-        v3.add(inst, tmp)
-        camAim_x, camAim_y, camAim_z = v3.get(inst)
-        local ped_model = ENTITY.GET_ENTITY_MODEL(players.user_ped())
-        local left_eye_id = 0
-        local right_eye_id = 0
-        pluto_switch ped_model do 
-            case 1885233650:
-            case -1667301416:
-                left_eye_id = 25260
-                right_eye_id = 27474
-                break
-            -- michael / story mode character
-            case 225514697:
-            -- imply they're using a story mode ped i guess. i dont know what else to do unless i have data on every single ped
-            default:
-                left_eye_id = 5956
-                right_eye_id = 6468
-        end
-        local boneCoord_L = ENTITY.GET_WORLD_POSITION_OF_ENTITY_BONE(players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), left_eye_id))
-        local boneCoord_R = ENTITY.GET_WORLD_POSITION_OF_ENTITY_BONE(players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), right_eye_id))
-        if ped_model == util.joaat("mp_f_freemode_01") then 
-            boneCoord_L.z += 0.02
-            boneCoord_R.z += 0.02
-        end
-        camRot.x += 90
-        request_ptfx_asset_lasereyes(dictionary)
-        GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(ptfx_name, boneCoord_L.x, boneCoord_L.y, boneCoord_L.z, camRot.x, camRot.y, camRot.z, 2, 0, 0, 0, false)
-        GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(ptfx_name, boneCoord_R.x, boneCoord_R.y, boneCoord_R.z, camRot.x, camRot.y, camRot.z, 2, 0, 0, 0, false)
-        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(boneCoord_L.x, boneCoord_L.y, boneCoord_L.z, camAim_x, camAim_y, camAim_z, 100, true, weaponHash, players.user_ped(), false, true, 100, players.user_ped(), 0)
-        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(boneCoord_R.x, boneCoord_R.y, boneCoord_R.z, camAim_x, camAim_y, camAim_z, 100, true, weaponHash, players.user_ped(), false, true, 100, players.user_ped(), 0)
     end
 end
 

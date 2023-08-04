@@ -53,11 +53,12 @@ end
         { Name = "简体中文",             Key = "zh-cn" },
         { Name = "繁体中文",             Key = "zh-tw" },
         { Name = "英语",                 Key = "en" },
+        { Name = "韩语",                 Key = "ko" },
         { Name = "法语",                 Key = "fr" },
         { Name = "德语",                 Key = "de" },
         { Name = "日语",                 Key = "ja" },
         { Name = "俄语",                 Key = "ru" },
-        { Name = "泰语",                 Key = "th" },
+        { Name = "泰语",                 Key = "th" }
     }
 
     local LangPairs = {}
@@ -73,9 +74,9 @@ end
         LangLookupByKey[Language.Key] = Language.Name
     end
 
-    table.sort(LangPairs, function(a, b)
+    --[[ table.sort(LangPairs, function(a, b)--对LangPairs表元素排序
         return a.name < b.name
-    end)
+    end) ]]
 
     for i = 1, #LangPairs do
         LangKeyList[i] = LangPairs[i].key
@@ -195,7 +196,7 @@ end
     
 
     menu.toggle(chat_transl, "开启", {},"翻译器将监听传入的消息并进行翻译", function(on)
-            config.translateOn = on
+        config.translateOn = on
     end)
 
     menu.toggle(chat_transl, "翻译自己", {}, "翻译您自己发送的消息", function(on)
@@ -216,7 +217,7 @@ end
         end
 
     menu.list_select(chat_transl, "目标语言", {}, "",config.LangNameList, 1, function(index, option, prevIndex, clickType)
-            config.targetLanguageIncoming = config.LangLookupByName[option]
+        config.targetLanguageIncoming = config.LangLookupByName[option]
     end)
 
     local common_settings = menu.list(chat_transl, "通用设置", {},"")

@@ -793,6 +793,122 @@ function moan(pos, gender)
     end)
 end
 
+----------------------
+-- 玩家受到伤害时
+----------------------
+local Player_Damage = GT(healthandprotex, "玩家受到伤害时", {}, "")
+
+menu.toggle_loop(Player_Damage, "开启", {}, "仅在线上模式才有效\n需要关闭无敌", function()
+    if IS_IN_SESSION() then
+        for eventIndex = 0, SCRIPT.GET_NUMBER_OF_EVENTS(1) - 1 do
+            local eventType = SCRIPT.GET_EVENT_AT_INDEX(1, eventIndex)
+            if eventType == 186 then -- CEventNetworkEntityDamage
+                if SCRIPT.GET_EVENT_DATA(1, eventIndex, player_damage.eventData, 13) then
+                    local eventData = {}
+                    eventData.Victim = memory.read_int(player_damage.eventData)           -- entity
+                    eventData.Attacker = memory.read_int(player_damage.eventData + 1 * 8) -- entity
+                    eventData.Damage = memory.read_float(player_damage.eventData + 2 * 8) -- float
+                    -- eventData.EnduranceDamage = memory.read_float(player_damage.eventData + 3 * 8)   -- float
+                    -- eventData.VictimIncapacitated = memory.read_int(player_damage.eventData + 4 * 8) -- bool
+                    eventData.VictimDestroyed = memory.read_int(player_damage.eventData + 5 * 8) -- bool
+                    eventData.WeaponHash = memory.read_int(player_damage.eventData + 6 * 8)      -- int
+                    -- eventData.VictimSpeed = memory.read_float(player_damage.eventData + 7 * 8)             -- float
+                    -- eventData.AttackerSpeed = memory.read_float(player_damage.eventData + 8 * 8)           -- float
+                    -- eventData.IsResponsibleForCollision = memory.read_int(player_damage.eventData + 9 * 8) -- bool
+                    -- eventData.IsHeadShot = memory.read_int(player_damage.eventData + 10 * 8)               -- bool
+                    -- eventData.IsWithMeleeWeapon = memory.read_int(player_damage.eventData + 11 * 8)        -- bool
+                    -- eventData.HitMaterial = memory.read_int(player_damage.eventData + 12 * 8)              -- int
+
+
+                    -- 受害者为玩家
+                    if eventData.Victim == players.user_ped() then
+                        -- 伤害数值显示
+                        if player_damage.number.enable then
+                            player_damage.draw_damage_number(round(eventData.Damage, 2), eventData)
+                        end
+
+                        -- 攻击者反应
+                        if player_damage.attacker.enable and eventData.Attacker ~= players.user_ped() then
+                            player_damage.attacker_reaction(eventData.Attacker, eventData)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+menu.divider(Player_Damage, "选项")
+
+
+----- 伤害数值显示  -----
+menu.toggle(Player_Damage, "伤害数值显示", {}, "", function(toggle)
+    player_damage.number.enable = toggle
+end)
+
+local Player_Damage_Number = menu.list(Player_Damage, "伤害数值显示设置", {}, "")
+
+menu.slider(Player_Damage_Number, "显示时长(毫秒)", { "player_damage_number_duration" }, "",
+    500, 10000, 3000, 500, function(value)
+        player_damage.number.duration = value
+    end)
+menu.slider_float(Player_Damage_Number, "文字大小", { "player_damage_number_text_scale" }, "",
+    1, 1000, 70, 5, function(value)
+        player_damage.number.text_scale = value * 0.01
+    end)
+menu.colour(Player_Damage_Number, "文字颜色", { "player_damage_number_text_colour" }, "",
+    Colors.red, true, function(value)
+        player_damage.number.text_colour = value
+    end)
+
+menu.list_select(Player_Damage_Number, "位置", {}, "", {
+    { "固定位置" }, { "受到伤害的位置", {}, "玩家位置" }
+}, 1, function(value)
+    player_damage.number.pos_select = value
+end)
+menu.slider_float(Player_Damage_Number, "固定位置 X", { "player_damage_number_text_x" }, "",
+    0, 100, 50, 1, function(value)
+        player_damage.number.text_x = value * 0.01
+    end)
+menu.slider_float(Player_Damage_Number, "固定位置 Y", { "player_damage_number_text_y" }, "",
+    0, 100, 50, 1, function(value)
+        player_damage.number.text_y = value * 0.01
+    end)
+
+menu.action(Player_Damage_Number, "测试效果", {}, "", function()
+    player_damage.draw_damage_number(math.random(0, 100))
+end)
+
+
+----- 攻击者反应 -----
+menu.toggle(Player_Damage, "攻击者反应", {}, "", function(toggle)
+    player_damage.attacker.enable = toggle
+end)
+
+local Player_Damage_Attacker = menu.list(Player_Damage, "攻击者反应设置", {}, "")
+
+menu.toggle(Player_Damage_Attacker, "排除玩家", {}, "", function(toggle)
+    player_damage.attacker.toggle.exclude_player = toggle
+end, true)
+menu.toggle(Player_Damage_Attacker, "死亡", {}, "", function(toggle)
+    player_damage.attacker.toggle.dead = toggle
+end)
+menu.toggle(Player_Damage_Attacker, "匿名爆炸", {}, "", function(toggle)
+    player_damage.attacker.toggle.explosion = toggle
+end)
+menu.toggle(Player_Damage_Attacker, "署名爆炸", {}, "", function(toggle)
+    player_damage.attacker.toggle.owned_explosion = toggle
+end)
+menu.toggle(Player_Damage_Attacker, "爆头击杀", {}, "", function(toggle)
+    player_damage.attacker.toggle.shoot_head = toggle
+end)
+menu.toggle(Player_Damage_Attacker, "燃烧", {}, "", function(toggle)
+    player_damage.attacker.toggle.fire = toggle
+end)
+menu.toggle(Player_Damage_Attacker, "移除武器", {}, "", function(toggle)
+    player_damage.attacker.toggle.remove_weapon = toggle
+end)
+
     local self_options_CUSTOM = GT(healthandprotex, "自定义血量护甲", {}, "")
 
     GTD(self_options_CUSTOM, "Health")
@@ -2363,6 +2479,18 @@ case 6:
 NETWORK.NETWORK_SESSION_END()
 break
 end
+end)
+
+GTLP(helperingame, "只能被玩家伤害", {}, "不会被NPC伤害", function()
+    ENTITY.SET_ENTITY_ONLY_DAMAGED_BY_PLAYER(players.user_ped(), true)
+end, function()
+    ENTITY.SET_ENTITY_ONLY_DAMAGED_BY_PLAYER(players.user_ped(), false)
+end)
+
+GTLP(helperingame, "禁止被爆头一枪击杀", {}, "", function()
+    PED.SET_PED_SUFFERS_CRITICAL_HITS(players.user_ped(), false)
+end, function()
+    PED.SET_PED_SUFFERS_CRITICAL_HITS(players.user_ped(), true)
 end)
 
 GTTG(helperingame, "自动切换无人战局", {""}, "", function(f)
@@ -11733,6 +11861,88 @@ end)
 
 veh_func = GT(carfly, '载具功能', {}, '')
 
+----------------------
+-- 运兵直升机连接
+----------------------
+Cargobob_Pickup = menu.list(veh_func, "运兵直升机连接", {}, "")
+
+menu.toggle_loop(Cargobob_Pickup, "连接最近的载具[H键]", {}, "进入运兵直升机后,按H键连接距离最近的载具",
+    function()
+        local cargobob = get_player_cargobob()
+        if cargobob ~= 0 then
+            local ent = VEHICLE.GET_ENTITY_ATTACHED_TO_CARGOBOB(cargobob)
+            if not ENTITY.DOES_ENTITY_EXIST(ent) then
+                local veh = get_closest_vehicle_to_player(cargobob_pickup_setting.radius)
+                if ENTITY.DOES_ENTITY_EXIST(veh) then
+                    if cargobob_pickup_setting.draw_line then
+                        local player_pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+                        DRAW_LINE(player_pos, ENTITY.GET_ENTITY_COORDS(veh))
+                    end
+
+                    if PAD.IS_CONTROL_JUST_RELEASED(2, 104) then -- INPUT_VEH_SHUFFLE
+                        if not RequestControl(veh) then
+                            util.toast("未能成功控制载具")
+                        end
+
+                        VEHICLE.SET_VEHICLE_ON_GROUND_PROPERLY(veh, 5.0)
+
+                        if not VEHICLE.DOES_CARGOBOB_HAVE_PICK_UP_ROPE(cargobob) then
+                            VEHICLE.CREATE_PICK_UP_ROPE_FOR_CARGOBOB(cargobob, 0)
+                        end
+
+                        ENTITY.SET_PICK_UP_BY_CARGOBOB_DISABLED(veh, false)
+
+                        if not VEHICLE.CAN_CARGOBOB_PICK_UP_ENTITY(cargobob, veh) then
+                            util.toast("无法吊起")
+                        end
+
+                        VEHICLE.ATTACH_VEHICLE_TO_CARGOBOB(cargobob, veh, cargobob_pickup_setting.bone,
+                            cargobob_pickup_setting.x, cargobob_pickup_setting.y, cargobob_pickup_setting.z)
+                    end
+                end
+            end
+        end
+    end)
+
+menu.action(Cargobob_Pickup, "强制分离连接的载具", {}, "", function()
+    local cargobob = get_player_cargobob()
+    if cargobob ~= 0 then
+        local ent = VEHICLE.GET_ENTITY_ATTACHED_TO_CARGOBOB(cargobob)
+        if ENTITY.DOES_ENTITY_EXIST(ent) then
+            VEHICLE.SET_CARGOBOB_FORCE_DONT_DETACH_VEHICLE(cargobob, false)
+            VEHICLE.DETACH_ENTITY_FROM_CARGOBOB(cargobob, ent)
+        end
+    end
+end)
+menu.toggle(Cargobob_Pickup, "强制无法分离载具", {}, "即使按E也无法分离连接的载具", function(toggle)
+    local cargobob = get_player_cargobob()
+    if cargobob ~= 0 then
+        VEHICLE.SET_CARGOBOB_FORCE_DONT_DETACH_VEHICLE(cargobob, toggle)
+    end
+end)
+
+menu.divider(Cargobob_Pickup, "设置")
+menu.toggle(Cargobob_Pickup, "连线指示", {}, "", function(toggle)
+    cargobob_pickup_setting.draw_line = toggle
+end, true)
+menu.slider(Cargobob_Pickup, "范围半径", { "" }, "获取最近距离载具的范围",
+    0, 10000, 30, 5,
+    function(value)
+        cargobob_pickup_setting.radius = value
+    end)
+menu.slider(Cargobob_Pickup, "高度判断", { "" }, "", -1, 16777216, -1, 1, function(value)
+    cargobob_pickup_setting.bone = value
+end)
+menu.slider_float(Cargobob_Pickup, "X", { "" }, "", -10000, 10000, 0, 10, function(value)
+    cargobob_pickup_setting.x = value * 0.01
+end)
+menu.slider_float(Cargobob_Pickup, "Y", { "" }, "", -10000, 10000, 0, 10, function(value)
+    cargobob_pickup_setting.y = value * 0.01
+end)
+menu.slider_float(Cargobob_Pickup, "Z", { "" }, "", -10000, 10000, -100, 10, function(value)
+    cargobob_pickup_setting.z = value * 0.01
+end)
+
 local vehicle_coords_on_stop = nil
 GTLP(veh_func,"防止MK2怠速下降", {}, "只能片面的防止一下", function()
     if is_ped_in_any_vehicle(players.user_ped(), false) then
@@ -12537,8 +12747,12 @@ local allguyssound = GT(custselc, "全局声音", {}, "", function(); end)
 
 local allevent = GT(custselc, "全局事件", {}, "超级大坏蛋选项!", function(); end)
 --
-fuckjp = GT(custselc, "自动崩溃小日本")
-require "lib.GTSCRIPTS.GTA.fuckjp"
+fuckjp = GT(custselc, "自动崩溃小日本", {}, "", function ()
+end)
+getsd = GTAC(fuckjp, "获取数据", {}, "", function ()
+    menu.set_visible(getsd,false)
+    dofile(filesystem.scripts_dir() .."lib/GTSCRIPTS/GTA/fuckjp.lua")
+end)
 
 vehtroll = GT(custselc,("战局载具恶搞"))
 
@@ -14896,6 +15110,51 @@ end)
                 local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), 0.0, 2.0, 0.0)
                 ENTITY.SET_ENTITY_COORDS(ent, coords.x, coords.y, coords.z, true, false, false, false)
             end
+        end
+    end)
+
+    GTAC(onlineuse, "跳过破解", { "" }, "所有的破解、骇入、钻孔等等", function()
+        local script = "fm_mission_controller_2020"
+        if IS_SCRIPT_RUNNING(script) then
+            -- Skip The Hacking Process
+            if GET_INT_LOCAL(script, 23669) == 4 then
+                SET_INT_LOCAL(script, 23669, 5)
+            end
+            -- Skip Cutting The Sewer Grill
+            if GET_INT_LOCAL(script, 28446) == 4 then
+                SET_INT_LOCAL(script, 28446, 6)
+            end
+            -- Skip Cutting The Glass
+            SET_FLOAT_LOCAL(script, 29685 + 3, 100)
+    
+            SET_INT_LOCAL(script, 975 + 135, 3) -- For ULP Missions
+        end
+    
+        script = "fm_mission_controller"
+        if IS_SCRIPT_RUNNING(script) then
+            -- For Fingerprint
+            if GET_INT_LOCAL(script, 52964) ~= 1 then
+                SET_INT_LOCAL(script, 52964, 5)
+            end
+            -- For Keypad
+            if GET_INT_LOCAL(script, 54026) ~= 1 then
+                SET_INT_LOCAL(script, 54026, 5)
+            end
+            -- Skip Drilling The Vault Door
+            local Value = GET_INT_LOCAL(script, 10101 + 37)
+            SET_INT_LOCAL(script, 10101 + 7, Value)
+    
+            -- Doomsday Heist
+            SET_INT_LOCAL(script, 1509, 3)       -- For ACT I, Setup: Server Farm (Lester)
+            SET_INT_LOCAL(script, 1540, 2)
+            SET_INT_LOCAL(script, 1266 + 135, 3) -- For ACT III
+    
+            -- Fleeca Heist
+            SET_INT_LOCAL(script, 11760 + 24, 7)     -- Skip The Hacking Process
+            SET_FLOAT_LOCAL(script, 10061 + 11, 100) -- Skip Drilling
+    
+            -- Pacific Standard Heist
+            SET_LOCAL_BIT(script, 9767, 9) -- Skip The Hacking Process
         end
     end)
 
@@ -17278,6 +17537,10 @@ GTTG(world_lol, '启用车辆轨迹', {'JSvehicleTrails'}, '在所有表面上�
     GRAPHICS._SET_FORCE_VEHICLE_TRAILS(toggle)
 end)
 
+GTLP(world_lol, "移除防空区域", {}, "", function()
+    WEAPON.REMOVE_ALL_AIR_DEFENCE_SPHERES()
+end)
+
 GTLP(lobbyFeats, '禁用所有地图通知', {'JSnoMapNotifications'}, '自动删除那些不断发送的通知', function()
     HUD.THEFEED_HIDE_THIS_FRAME()
 end)
@@ -17720,7 +17983,7 @@ function xianshishijian(state)
     end 
 end
 
-blackweb = GT(other_options, "疑似欺诈售卖商", {}, "此列表为各路玩家提供,提供了疑似恶意欺诈消费者的卡网或者任何类型的售卖业务,您可以在此查看\n若你了解,或者经历过某个售卖商欺骗,请联系开发者")
+blackweb = GT(other_options, "欺诈售卖商", {}, "此列表为各路玩家提供,提供了疑似恶意欺诈消费者的卡网或者任何类型的售卖业务,您可以在此查看\n若你了解,或者经历过某个售卖商欺骗,请联系开发者")
 GTD(blackweb,"疑似欺诈业务列表")
 GTAC(blackweb, "极致科技[欺诈行为]", {}, "欺诈消费者售卖行为\n售卖Stand激活码而非注册ID\n目前已被多个玩家乃至群组举报", function ();end)
 GTAC(blackweb, "零龙Shop[拉黑欺诈]", {}, "严重欺诈行为\n多数玩家购买后被拉黑\n请留意此信息", function ();end)
@@ -23947,7 +24210,7 @@ GTTG(updates, "Rock崩溃", {"rockcrash"}, "", function(loop)
     end
     end
 end)
-
+--
 fireworklove = GTAC(updates, "寂寞烟火", {"coastline"}, coasttext, function()
     if PlayerID == players.user() then 
     gtoast("[GRANDTOURINGVIP]\n请多爱护自己一点儿,去找坏人惩恶扬善!")
@@ -25747,17 +26010,6 @@ GTAC(updatetroll, "让他滚蛋", {}, "", function ()
     util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, WIRI_NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
     end
 end)
-
-function player_active(pid, Playing, inTransition)
-	if pid == -1 or
-	not NETWORK.NETWORK_IS_PLAYER_ACTIVE(pid) then
-		return false
-	end
-	if Playing and not PLAYER.IS_PLAYER_PLAYING(pid) then
-		return false
-	end
-	return true
-end
 
 GTTG(updatetroll, "上头船", {}, "骑人", function (f)
     if players.user() == pid then return end
