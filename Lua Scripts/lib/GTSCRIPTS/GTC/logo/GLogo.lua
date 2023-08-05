@@ -19,7 +19,7 @@ require "lib.GTSCRIPTS.W"
 require "lib.GTSCRIPTS.O" 
 require "lib.GTSCRIPTS.T"
 scaleform = require('lib.GTSCRIPTS.Z')
-sf = scaleform('instructional_buttons')
+--sf = scaleform('instructional_buttons')
 translations = {}
 Lang = {}
 Lang.Version = ""
@@ -40,7 +40,7 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '8.04'
+GT_version = '8.05'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -48,7 +48,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("版本:8.04\n脚本现在可以正常使用\n修复了激光眼功能反向的问题\n修复了QJ公猪无法QJ玩家\n优化了运行效率")
+    notification("版本:8.05\n修复了每次启动Stand或者脚本时出现的<attempt to yield across a C-call boundary>信息\n解决了部分用户无法自启脚本或者每次打开脚本时出现的线程阻隔，并加快了脚本启动速度\n修复了激光眼V1不能使用的问题\n其他的一些改进与修复")
 end
 loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
 coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
@@ -6062,7 +6062,7 @@ function getOffsetFromCam(dist)
     return offset
 end
 
-local function request_ptfx_asset_lasereyes(asset)
+function request_ptfx_asset_lasereyes(asset)
     local request_time = os.time()
     STREAMING.REQUEST_NAMED_PTFX_ASSET(asset)
     while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(asset) do
@@ -19817,7 +19817,7 @@ else
 mcb=mcb-1
 end
 end
-draw_string(string.format("~italic~~h~\nGRANDTOURINGVIP\n Version 8;04"), jiaoben_x,jiaoben_y, jiaoben_dx,2)
+draw_string(string.format("~italic~~h~\nGRANDTOURINGVIP\n Version 8;05"), jiaoben_x,jiaoben_y, jiaoben_dx,2)
 wait()
 end
 end    

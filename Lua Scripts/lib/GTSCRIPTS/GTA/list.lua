@@ -224,4 +224,6 @@ spid = {
     {playerid = "ww-1997"},
     {playerid = "wwasddasfas"},
     {playerid = "tiantian_qwq"},
+    {playerid = "wangzxi"},
+    {playerid = "Handy_Chen"},
 }
