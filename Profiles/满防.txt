@@ -3,154 +3,134 @@ Understands Commands: Yes
 Understands Sliders: Yes
 Understands Profiles: Yes
 Understands Context Menu: Yes
-Understands Command Chaining: Yes
 Tree Compatibility Version: 48
 Self
-	Movement
-		Levitation
-			Movement Ignores Pitch: Off
-			Max Distance From Ground: 0.00
-			Speed: 10
-			Upward Force: 0.00
-			Downward Force: 0.00
-			Downward Deadzone: 20
-			Snapping: 1.00
-	Appearance
-		No Blood: On
 	Weapons
 		Infinite Ammo: On
-		Skip Reloading: On
-		No Spread: On
-		No Recoil: On
-		No Spooling: On
 	Immortality: On
 	Lock Wanted Level: On
-	Infinite Stamina: On
 Vehicle
 	Spawner
+		Make Spawned Vehicles Indestructible: On
 		Tune Spawned Vehicles: Fully
-		On Foot Behaviour
-			Delete Previous Vehicle: On
-		In Vehicle Behaviour
-			Drive Spawned Vehicles: On
-			Spawn Aircraft In The Air: On
-			Delete Previous Vehicle: On
-	Permanent Mint Condition: On
-	Can't Be Locked On: On
-	Driveby With All Weapons: On
+	Indestructible: On
 Online
-	Transitions
-		Session Hopper
-			Min Players: 30
-		Join Group Override: Spectator
-		Show Transition State: On
 	Enhancements
-		Thousands Separator For Money: On
-		All Missions In Private Sessions: On
-		Phone Animations: On
 		Disable Idle/AFK Kick: On
 		Disable Death Barriers: On
-		Disable Mechanic Cooldown: On
-		Disable Oppressor Mk II Cooldown: On
-		Disable VIP Work Cooldown: On
-		Disable Suicide Cooldown: On
-		Disable Passive Mode Cooldown: On
-		Disable Orbital Cannon Cooldown: On
-		Disable Event End Countdown Audio: On
-		Toggleable Big Map: On
-		Allow Weaponised Vehicles In Passive Mode: On
-		Remote Control Any Vehicle: On
-		Disable Forced RC Perspective: On
-		Bypass Interior Restrictions: On
-		Bypass Interaction Menu Barriers: On
 		Bypass Casino Region Lock: On
-		Bypass Time Trial Vehicle Suitability: On
-		Disable Daily Expenses: On
-		Block Background Script: On
-	Protections: Warning Acknowledged
+	Protections
 		Events
 			Crash Event
-				Write To Log File: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
 			Kick Event
-				Write To Log File: Enabled
-			Apartment Invite
-				Block: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Force Camera Forward
+				Kick: Enabled
+				Love Letter Kick: Enabled
 			Trigger Business Raid
 				Block: Enabled
+				Timeout: Enabled
+			Start Freemode Mission (Not My Boss)
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Teleport To Interior
+				Block: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Teleport To Interior (Not My Boss)
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Give Collectible (Not My Boss)
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Infinite Loading Screen
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Infinite Phone Ringing
+				Kick: Enabled
+				Love Letter Kick: Enabled
 			Cayo Perico Invite
 				Block: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Send To Job
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Vehicle Takeover
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Disable Driving Vehicles
+				Kick: Enabled
+				Love Letter Kick: Enabled
 			Kick From Vehicle
 				Block: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Kick From Interior
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Freeze
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Camera Shaking Event
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Explosion Spam
+				Kick: Enabled
+				Love Letter Kick: Enabled
 			Ragdoll Event
 				Block: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Modded Damage Event
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Remove Weapon Event
+				Kick: Enabled
+				Love Letter Kick: Enabled
 			Raw Network Events: Warning Acknowledged
-				Give Weapon Event
-					Notification: Enabled
-				Remove Weapon Event
-					Notification: Enabled
-					Block: Enabled
-				Remove All Weapons Event
-					Notification: Enabled
-					Block: Enabled
-				Fire
-					Notification: Strangers
-					Block: Enabled
-				Explosion
-					Notification: Strangers
-					Block: Enabled
 		Detections
 			Stand User Identification: Off
+		Syncs
+			Cage
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			World Object Sync
+				Block: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Invalid Model Sync
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Attachment Spam
+				Kick: Enabled
+				Love Letter Kick: Enabled
 		Love Letter & Desync Kicks
 			Notification When Love Letter Kicked: On
-		Co-Loading
-			多开时不检测和阻止 崩溃事件 (N1) : Off
-			多开时不检测和阻止 崩溃事件 (C1) : Off
-			多开时不检测和阻止 崩溃事件 (C3) : Off
-			多开时不检测和阻止 崩溃事件 (U1) : Off
-			多开时不检测和阻止 崩溃事件 (U2) : Off
-			多开时不检测和阻止 崩溃事件 (CS) : Off
-			多开时不检测和阻止 崩溃事件 (SR) : Off
-		Block Bailing
-			Spectating Related: On
-		Block Vote Kicks: SCTV / Spectator Mode
+			Desync Kick Karma: On
+		Presence Events
+			Block Job Invites: On
+		Pickups
+			Cash Pickup Collected
+				Notification: On
+				Block: On
+			RP Pickup Collected
+				Notification: On
+				Block: On
+		Block Join Karma
+			Block Join Karma: On
 		Block Entity Spam
 			Automatically Use Anti-Crash Cam: On
-		Force Relay Connections: On
-	Chat
-		Reactions
-			Chat Spam
-				Notification: Enabled
-				Block: Enabled
-		Log Chat Messages
-			Chat.txt: On
-		Bypass Profanity Filter: Enabled
-		Bypass Character Filter: Enabled
-		Open Chat When Scrolling: On
-		Suppress Typing Indicator: On
-	Spoofing
-		Host Token Spoofing
-			Host Token Spoofing: On
-			Spoofed Host Token: 0000000000003EFE
-	Reactions
-		RID Join Reactions
-			Notification: Enabled
-		Host Change Reactions
-			Notification: Enabled
-		Script Host Change Reactions
-			Notification: Enabled
-		Vote Kick Reactions
-			Voting To Kick Anyone
-				Notification: Enabled
-		Love Letter Kick Reactions
-			Block: Enabled
-	Reveal Off The Radar Players: On
-	Reveal Invisible Players: On
+		Block Player Model Swaps
+			Block Player Model Swaps: On
 Players
 	Settings
 		Tags
-			Brackets: STD
-			Self: 
-			Friend: 
+			Self: 
+			Friend: 
 			Crew Member: 
 			In Timeout: 
 			Modder: 
@@ -167,94 +147,22 @@ Players
 			In An Interior: 
 			Spectating: 
 			Typing: 
-			Dead: 
-			Invisible: 
+			Dead: 
+			Invisible: 
 			VPN: 
-		Sort By: Host Queue Position
-		Hoisted Tags
-			Host: On
 World
-	Watch_Dogs-Like World Hacking
-		Watch_Dogs-Like World Hacking: On
+	Places
+		Teleport To...
+			Auto Teleport To Waypoints: On
 Game
-	Disables
-		Disable Cinematic Camera: On
-		Disable Idle Camera: On
-		Disable Recordings: On
-		Disable Restricted Areas: On
-		Prevent Numpad 7 Opening Social Club: On
-	Camera
-		Unrestrict Gameplay Camera: On
-	Info Overlay
-		Ticks Per Second: On
-		Who's Spectating Who: On
-		Pedestrians: On
-		Vehicles: On
-		Objects: On
-		Pickups: On
-	Edit Labels: HUD_JOINING<正在加入 GTA 在线模式>MP_SPINLOADING<正在初始化>HUD_LBD_FMP<GTA 在线模式（公开，~1~）>HUD_LBD_FMI<GTA 在线模式（邀请，~1~）>HUD_LBD_FMC<GTA 在线模式（帮会，~1~）>HUD_LBD_FMF<GTA 在线模式（好友，~1~）>HUD_LBD_FMS<GTA 在线模式（单人，~1~）>0X56F3BD49<Grand Theft Auto 在线模式>HUD_MAINTIT<GTA 在线模式>LOADING_SPLAYER_L<正在进入故事模式>PM_QUIT_MP<离开 GTA 在线模式>PM_INF_LEAT<离开>PM_INF_LEAB<前往 Grand Theft Auto V？您的 GTA 在线模式进度在您退出时会自动保存。~n~~n~请前往：~HUD_COLOUR_SOCIAL_CLUB~www.rockstargames.com/socialclub~s~ 了解如何与好友和其他玩家比较您的 GTA 在线模式生涯。>CMRC_STORE_OPEN<现已开放！>UI_FLOW_OP_CL_M<制作人员名单和法律声明>UI_FLOW_OP_CL<制作人员名单和法律声明>UI_FLOW_OP_CL_D<多亏了许多人的努力，才有了鲜活的洛圣都。如要查看完整游戏制作人员名单，请前往：~n~~HUD_COLOUR_SOCIAL_CLUB~www.rockstargames.com/gtav/thankyou~s~~n~~n~如要查看我们的完整服务条款，请前往：~n~~HUD_COLOUR_SOCIAL_CLUB~www.rockstargames.com/legal~s~>
+	Edit Labels: HUD_JOINING<正在使用GTMENU加入在线模式>MP_SPINLOADING<GTMENU YYDS>HUD_LBD_FMP<GRANDTOURING 在线模式（公开，~1~）>HUD_LBD_FMI<GRANDTOURING 在线模式（邀请，~1~）>HUD_LBD_FMC<GRANDTOURING 在线模式（帮会，~1~）>HUD_LBD_FMF<GRANDTOURING 在线模式（好友，~1~）>HUD_LBD_FMS<GRANDTOURING 在线模式（单人，~1~）>0X56F3BD49<GRANDTOURING 在线模式>HUD_MAINTIT<GRANDTOURINGVIP>LOADING_SPLAYER_L<正在加载GRANDTOURINGVIP故事模式>PM_QUIT_MP<离开 GRANDTOURING 在线模式>PM_INF_LEAT<离开 GRANDTOURING 在线模式>PM_INF_LEAB<立刻前往GRANDTOURING故事模式，您的所有游戏进度都将自动保存>CMRC_STORE_OPEN<GRANDTOURINGVIP 商店\
+现已开放!>UI_FLOW_OP_CL_M<关于 GRANDTOURINGVIP>UI_FLOW_OP_CL<关于 GRANDTOURINGVIP>UI_FLOW_OP_CL_D<多亏了我们的GT开发团队\
+您才能体验到无与伦比的GRANDTOURINGVIP\
+主创作者:GT 副创开发:瑞思拜\
+致谢人员:12 Super飞 柒月 小马哥 丢丢\
+我们的群聊:238394690(脚本下载群) 716431566(日常聊天群)\
+感谢您使用GRANDTOURINGVIP>
 Stand
 	Settings
 		Appearance
-			Colours
-				Primary Colour: 00FFFF9B
-				Focused Text Colour: 000000FF
-				Focused Right-Bound Text Colour: 000000FF
-				Focused Texture Colour: 000000FF
-				HUD Colour: 00FFFFFF
-				AR Colour: FF00EEC7
-					Rainbow Mode: 50
-				Minigame Colour: FF00EEFF
-					Rainbow Mode: 50
-			Position: 1338, 400
-			Header
-				Header: Quantum by Denzy
-			Address Bar
-				Root Name: Hidden
-				Show Cursor Position: On
-			Cursor
-				Width: 2
-				Rounded: On
-				Colour: FFFFFFFF
-			Tabs
-				Width: 64
-				Height: 28
-				Position: Top
-				Text Alignment: Centre
-			Command Info Text
-				Position: Bottom
-			Notifications
-				Type: Stand, Custom Position
-				Custom Position: 387, 1053
-				Border Colour: 00FFBFFF
-					Rainbow Mode: 40
-				Flash Colour: 009972FF
-					Rainbow Mode: 40
-			Border
-				Width: 1
-				Colour: 00FFBFFF
-					Rainbow Mode: 40
-			Background Blur: 10
 			Stream-Proof Rendering: On
-		Notifications
-			Suppress Generic Responses
-				Command Box: On
-				Hotkey: On
-		Session Joining
-			Automatically Change Targeting Mode: On
-		Open After Injection: On
-		Discord Rich Presence: On
-	Lua Scripts
-		Settings
-			Warn Me Before Running Dangerous Scripts: Off
-			Warn Me Before Running Money Scripts: Off
-			Enforce Silent Start: Yes + Notify
-			Enforce Silent Stop: Yes + Notify
-			enable_warnings: On
-			notify_deprecated: On
-			notify_bad_practice: On
-			notify_missed_cleanup_blurrect: On
-			notify_missed_cleanup_arspinner: On
-			notify_ref_by_path_upgrade: On
-			notify_get_value_fail: On
-		mingchu233: On

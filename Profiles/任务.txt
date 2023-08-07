@@ -3,7 +3,7 @@ Understands Commands: Yes
 Understands Sliders: Yes
 Understands Profiles: Yes
 Understands Context Menu: Yes
-Tree Compatibility Version: 47
+Tree Compatibility Version: 48
 Self
 	Weapons
 		Infinite Ammo: On
@@ -18,6 +18,16 @@ Online
 		Disable Idle/AFK Kick: On
 		Disable Death Barriers: On
 		Bypass Casino Region Lock: On
+	Protections
+		Events
+			Explosion Spam
+				Block: Disabled
+			Modded Damage Event
+				Block: Disabled
+			Raw Network Events: Warning Acknowledged
+		Pickups
+			Invalid Pickup Collected
+				Block: Off
 Players
 	Settings
 		Tags
