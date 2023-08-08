@@ -2,7 +2,14 @@
 
 [![Page Views Count](https://badges.toozhao.com/badges/01H69JD1N3ZWV3EDK36V3F5DJK/green.svg)](https://badges.toozhao.com/stats/01H69JD1N3ZWV3EDK36V3F5DJK "Get your own page views count badge on badges.toozhao.com")
 
-GTA5 Mod Stand Lua All in One；含综合、任务、崩溃、模组、娱乐等多种lua于一体的存储库
+GTA5 Mod Stand Lua All in One；含综合、任务、crash、模组、娱乐，恶搞等多种standlua于一体的存储库
+
+### 合集优势
+1.免去单独下载每个lua的繁琐步骤，所有lua都已经拖入整个压缩包，解压即可使用
+
+2.已提前下载了stand的所有native库文件，在选择lua Scripts时将不会再弹出"请稍后"通知，并且可以打开任何lua无需等待
+
+3.包含stand各大国内外lua，免去一个一个找群或找人寻找，极大缩小了体验不同lua的时间
 
 ### 简易教程
 
@@ -35,7 +42,7 @@ GTA5 Mod Stand Lua All in One；含综合、任务、崩溃、模组、娱乐等
 
 Lua Scripts：脚本目录(已包含daidai，GT，heezy二代目，HC，jinx，夜幕，pie，聊天翻译)
 
-profiles：stand配置文件(极简任务配置)
+profiles：stand配置文件
 
 Theme：中文标签文件
 
