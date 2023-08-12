@@ -12,3 +12,6 @@ config_active6 = false
 config_active7 = true
 config_active8 = false
 config_active9 = true
+config_active10 = true
+config_active11 = true
+config_active12 = false

@@ -1,19 +1,12 @@
--------------------------------------------------------██             ██      ████                    ████----------------------------------------------------By岼                                            
--------------------------------------------------------██             ██      ██   ██              ██   ██                                                  
-------------------------------------------------------- ██           ██       ██       ██       ██      ██
---------------------------------------------------------  ██        ██        ██          ██ ██         ██
--------------------------------------------------------         ██              ██             ██            ██
--------------------------------------------------------         ██              ██             ██            ██
--------------------------------------------------------         ██              ██             ██            ██
--------------------------------------------------------         ██              ██             ██            ██
 ---------------------------------------------------CV请鸣谢夜幕，除非你没有家人-----------------------------------------------------------
 -----------------------------------------------------------制作脚本不易，CV请私信夜幕团队-----------------------------------------------------
 util.require_natives("natives-1651208000")
 util.require_natives("natives-1640181023")
 util.require_natives("natives-1660775568")
-require "lib.YeMulib.YMSlua"
+util.require_natives("natives-1660775568-g")
 require "lib.YeMulib.YMload"
 require "lib.YeMulib.YMsr"
+require "lib.YeMulib.YMnatives"
 require "lib.YeMulib.YMspo"
 require "lib.YeMulib.main"
 require "lib.YeMulib.YMchaofeng"
@@ -25,9 +18,14 @@ JSkey = require 'lib.JSkeyLib'
 resources_dir = filesystem.scripts_dir() .. '/YMS/'
 if not filesystem.is_dir(resources_dir) then
     util.toast("资源目录丢失,请确保已正确安装YMS")
+    util.stop_script()
+end
+resources_dir = filesystem.scripts_dir() .. '/lib/' .. '/YeMulib/'
+if not filesystem.is_dir(resources_dir) then
+    util.toast("资源目录丢失,请确保已正确安装YeMulib")
+    util.stop_script()
 end
 ocoded_for = 1.67
-is_loading = true
 verbose = false
 online_v = tonumber(NETWORK._GET_ONLINE_VERSION())
 if online_v > ocoded_for then
@@ -39,53 +37,17 @@ local aalib = require("aalib")
 local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001
 local SND_FILENAME<const> = 0x00020000
-if randomizer(array) == "1" then
-store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound6.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-else
-store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound3.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-end
 ----------------------------------
-Version = 5.8
+Version = 6.0
 local TIANXIA = "欢迎使用夜幕-V" .. Version ..  ""
 local JIAOBEN = "夜幕脚本"
 local introduce = "欢迎使用夜幕LUA"
-date = "2023.7.29"
+date = "2023.8.8"
 wait = util.yield
 joaat = util.joaat
 alloc = memory.alloc
-getTime = util.current_time_millis
 create_tick_handler = util.create_tick_handler
-if SCRIPT_MANUAL_START and not SCRIPT_SILENT_START and gConfig.general.showintro then
+if SCRIPT_MANUAL_START and not SCRIPT_SILENT_START then
 	gShowingIntro = true
 	local state = 0
 	local timer <const> = newTimer()
@@ -119,13 +81,8 @@ if SCRIPT_MANUAL_START and not SCRIPT_SILENT_START and gConfig.general.showintro
 		GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scaleform, 255, 255, 255, 255, 0)
 	end)
 end
-
-CONFIG_DIR = filesystem.resources_dir() .. 'Dclog\\'
-filesystem.mkdirs(CONFIG_DIR)
-LEGACY_SPIN_LOG_FILE = CONFIG_DIR .. "spin_log.json"
-SPIN_LOG_FILE = CONFIG_DIR .. "spin_log_".. players.get_rockstar_id(players.user()) .. ".json"
-local notification = b_notifications.new()
-local colors = {
+notification = b_notifications.new()
+colors = {
     green = 184,
     red = 6,
     yellow = 190,
@@ -135,13 +92,8 @@ local colors = {
     pink = 190,
     purple = 49, 
     blue = 11
-    }
-    function notification(message, color)
-        HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
-        HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
-        HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
-        HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
-        HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
+}
+function notification(message, color)
         local picture = "CHAR_SOCIAL_CLUB"
         GRAPHICS.REQUEST_STREAMED_TEXTURE_DICT(picture, 0)
         while not GRAPHICS.HAS_STREAMED_TEXTURE_DICT_LOADED(picture) do
@@ -159,8 +111,8 @@ local colors = {
         HUD.END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT(picture, picture, true, 5, title, subtitle)
         HUD.END_TEXT_COMMAND_THEFEED_POST_TICKER(true, false)
         util.log(message)
-    end
-local function player_toggle_loop(root, PlayerID, menu_name, command_names, help_text, callback)
+end
+function player_toggle_loop(root, PlayerID, menu_name, command_names, help_text, callback)
     return menu.toggle_loop(root, menu_name, command_names, help_text, function()
         if not players.exists(PlayerID) then util.stop_thread() end
         callback()
@@ -178,43 +130,25 @@ end
 if SCRIPT_MANUAL_START then
     YMlabel()
 end
-local function get_blip_coords(bliPlayerID)
-    local blip = HUD.GET_FIRST_BLIP_INFO_ID(bliPlayerID)
-    if blip ~= 0 then return HUD.GET_BLIP_COORDS(blip) end
-    return v3(0, 0, 0)
-end
 local function request_model(hash)
     STREAMING.REQUEST_MODEL(hash)
     while not STREAMING.HAS_MODEL_LOADED(hash) do
         util.yield()
     end
 end
-local values = {
-    [0] = 0,
-    [1] = 50,
-    [2] = 88,
-    [3] = 160,
-    [4] = 208,
-}
 local launch_vehicle = {"向上", "向前", "向后", "向下", "翻滚"}
 local invites = {"游艇", "办公室", "会所", "办公室车库", "载具改装铺", "公寓"}
-local unwanted_vehicles = {"cargoplane", "tug", "jet", "skylift", "towtruck", "towtruck2", "dump"}
-local cleanse = { "清除NPC", "清除载具", "清除物体", "清除可拾取物体", "清除绳索", "清除投掷物"}
-local drivingStyles = {786603, 1074528293, 8388614, 1076, 2883621, 786468, 262144, 786469, 512, 5, 6}
-local interior_stuff = {0, 233985, 169473, 169729, 169985, 170241, 177665, 177409, 185089, 184833, 184577, 163585, 167425, 167169}
-HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
-HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
 menu.action(menu.my_root(), '一键转到菜单', {"tiaozhuan"}, '跳转速度更加方便', function()
    menu.trigger_commands("YMscript")
 end)
 menu.action(menu.my_root(),"重启夜幕脚本",{},"",function ()
     util.restart_script()
-     scaleform_thread = util.create_thread(function (thr)
+    scaleform_thread = util.create_thread(function (thr)
 	scaleForm = GRAPHICS.REQUEST_SCALEFORM_MOVIE("MP_BIG_MESSAGE_FREEMODE")
     local scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE("mp_big_message_freemode")
 	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleForm, "SHOW_SHARD_WASTED_MP_MESSAGE")
     GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("&#8721; ~bold~夜幕 LUA &#8721;")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("&#8721;欢迎回来！尊贵的夜幕Lua用户&#8721;\n\n""~bold~~b~版本号:" .. Version ..  "~bold~~b~更新于" .. date ..  "")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("&#8721;欢迎回来！尊贵的夜幕LUA用户&#8721;\n\n""~bold~~b~版本号:" .. Version ..  "~bold~~b~更新于" .. date ..  "")
 	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
     AUDIO.PLAY_SOUND_FRONTEND(55, "FocusIn", "HintCamSounds", true)
 	starttime = os.time()
@@ -242,7 +176,7 @@ menu.trigger_commands("YMscript")
 menu.action(YM_root,"关闭夜幕脚本",{},"",function ()
     util.stop_script()
 end)
-local festive_div = menu.divider(YM_root, "运行夜幕Lua", {}, "")
+local festive_div = menu.divider(YM_root, "运行夜幕LUA", {}, "")
     local loading_frames = {'!~', '~~', '~~~', '~~~~', '~~~~~', '~~~~', '~~~', '~~','~!'}
     util.create_tick_handler(function()
         for _, frame in pairs(loading_frames) do
@@ -250,21 +184,17 @@ local festive_div = menu.divider(YM_root, "运行夜幕Lua", {}, "")
             util.yield(100)
         end
 end)
-local self = menu.list(YM_root, "自我选项", {}, "")
-local jiashi = menu.list(YM_root, "载具选项", {}, "")
-local zidongrenwu = menu.list(YM_root, "任务选项（含恢复选项）", {}, "")
-local funfeatures = menu.list(YM_root, "娱乐选项", {}, "")
-local weapon = menu.list(YM_root, "武器选项", {}, "")
-local fanyiyuyan = menu.list(YM_root, "聊天选项", {}, "")
-local quanju = menu.list(YM_root, "全局选项", {}, "")
-local sc = menu.list(YM_root, "模组选项", {""}, "")
-local bailOnAdminJoin = false
-local protections = menu.list(YM_root, "保护选项", {}, "")
-local online = menu.list(YM_root, "线上选项", {}, "")
-menu.toggle(protections, "R*开发人员加入反应", {}, "", function(on)
-    bailOnAdminJoin = on
-end)
-local function player(PlayerID)   
+self = menu.list(YM_root, "自我选项", {}, "")
+jiashi = menu.list(YM_root, "载具选项", {}, "")
+zidongrenwu = menu.list(YM_root, "任务选项（含恢复选项）", {}, "")
+funfeatures = menu.list(YM_root, "娱乐选项", {}, "")
+weapon = menu.list(YM_root, "武器选项", {}, "")
+fanyiyuyan = menu.list(YM_root, "聊天选项", {}, "")
+quanju = menu.list(YM_root, "全局选项", {}, "")
+sc = menu.list(YM_root, "模组选项", {""}, "")
+protections = menu.list(YM_root, "保护选项", {}, "")
+online = menu.list(YM_root, "线上选项", {}, "")
+function player(PlayerID)   
     if players.get_rockstar_id(PlayerID) == 183122956 then
         util.show_corner_help("~h~~p~夜幕LUA提示你\n~h~~w~夜幕主策划在此战局，请注意您的游戏行为！~b~‹\n")
         store_dir = filesystem.store_dir() .. '\\YMss\\'
@@ -285,9 +215,9 @@ end
 util.keep_running()
 end
 menu.divider(menu.player_root(PlayerID), "---夜幕LUA---", {}, "")
-    local bozo = menu.list(menu.player_root(PlayerID), "夜幕脚本", {"YMScript"}, "")
-    local friendly = menu.list(bozo, "友好选项", {}, "")
-    local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+    bozo = menu.list(menu.player_root(PlayerID), "夜幕脚本", {"YMScript"}, "")
+    friendly = menu.list(bozo, "友好选项", {}, "")
+    player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
     armsfriendly = menu.list(friendly, "武器友好", {}, "")
     menu.action(armsfriendly, "给予武器", {""}, "", function()
            menu.trigger_commands("arm " .. players.get_name(PlayerID))
@@ -337,8 +267,8 @@ menu.divider(menu.player_root(PlayerID), "---夜幕LUA---", {}, "")
     GRAPHICS.REMOVE_PARTICLE_FX_IN_RANGE(pos.x, pos.y, pos.z, 15) --清除目标实体位置周围所有粒子特效
     GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(PlayerID) --清除目标实体所有粒子特效
     end)
-    local trolling = menu.list(bozo, "恶搞选项", {}, "")
-    local trolling2 = menu.list(bozo, "恶搞选项2", {}, "恶搞种类太多，后续恶搞会在此选项里")
+    trolling = menu.list(bozo, "恶搞选项", {}, "")
+    trolling2 = menu.list(bozo, "恶搞选项2", {}, "恶搞种类太多，后续恶搞会在此选项里")
     player_toggle_loop(trolling, PlayerID, "将玩家推向前方", {}, "", function()
         local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
         local pos = ENTITY.GET_ENTITY_COORDS(player, false)
@@ -509,7 +439,7 @@ menu.action(trolling, "驱逐玩家", {"evict"}, "强制将玩家踢出室内\n�
             notification("玩家不在室内", colors.black)
         end
 end)
-local cage = menu.list(trolling, "笼子选项", {}, "")
+    cage = menu.list(trolling, "笼子选项", {}, "")
     menu.action(cage, "删除所有生成的笼子", {"clearcages"}, "删除非自动套笼", function()
         local entitycount = 0
         for i, object in ipairs(spawned_objects) do
@@ -1306,6 +1236,19 @@ control_veh = player_toggle_loop(zaijuegao, PlayerID, "他的载具由你控制"
         entities.delete_by_handle(veh2)
     end
     end)
+    menu.toggle_loop(zaijuegao, "载具吸附",{""}, "将附近载具吸到他身上", function()
+        local p_c = players.get_position(PlayerID)
+        for _, v in pairs(entities.get_all_vehicles_as_handles()) do 
+            if not PED.IS_PED_A_PLAYER(VEHICLE.GET_PED_IN_VEHICLE_SEAT(v, -1, false)) then 
+                local v_c = ENTITY.GET_ENTITY_COORDS(v)
+                local c = {}
+                c.x = (p_c.x - v_c.x)*2
+                c.y = (p_c.y - v_c.y )*2
+                c.z = (p_c.z - v_c.z)*2
+                ENTITY.APPLY_FORCE_TO_ENTITY(v, 1, c.x, c.y, c.z, 0, 0, 0, 0, false, false, true, false, false)
+            end
+        end
+    end) 
 local online_player = menu.list(bozo, "线上选项", {}, "")
     local cherter = menu.list(online_player, "反无敌(被动)选项", {}, "使用魔法打败魔法~")
     menu.action(cherter, "杀死无敌玩家V1", {"stun"}, "", function()
@@ -1519,8 +1462,29 @@ local chattrolls_root = menu.list(online_player, "西普肉的虚假检测", {},
         menu.trigger_commands("infiniteloading".. PLAYER.GET_PLAYER_NAME(PlayerID))
     end)
     Pifn = menu.list(online_player, "玩家信息", {}, "IP查询~")
-    menu.action(Pifn, "本地查询玩家信息", {}, "本地查询玩家信息", function()
-       notification("玩家"..PLAYER.GET_PLAYER_NAME(PlayerID)..": ".."\nRID: "..players.get_rockstar_id(PlayerID).."\nIP:"..intToIp(players.get_ip(PlayerID)).."""\n端口:"..(players.get_port(PlayerID)).."", colors.black)
+    menu.action(Pifn, "本地查询玩家信息", {}, "本地查询玩家信息", function(IP)
+    notification("[夜幕提示]查询中...不要着急啦", colors.black)
+    local IP = intToIp(players.get_connect_ip(PlayerID))
+    async_http.init("http://ip-api.com","/json/"..IP .. "?lang=zh-CN",function(info,header,response)
+        if response == 200  then
+            local IPtable = StrToTable(info)
+            if IPtable.status == "success" then
+                local str = "~y~玩家:~w~"..PLAYER.GET_PLAYER_NAME(PlayerID)..
+                            "\n~y~RID: ~w~"..players.get_rockstar_id(PlayerID)..
+                            "\n~y~IP:~w~"..intToIp(players.get_ip(PlayerID))..
+                            "\n~y~国家: ~w~" .. IPtable.country .. 
+                            "\n~y~国家代码: ~w~" .. IPtable.countryCode .. 
+                            "\n~y~区域: ~w~" .. IPtable.region .. 
+                            "\n~y~区域名称: ~w~" .. IPtable.regionName ..
+                            "\n~y~城市: ~w~" .. IPtable.city .. 
+                            "\n~y~邮政编码: ~w~" .. IPtable.zip .. 
+                            "\n~y~ISP: ~w~" .. IPtable.isp .. 
+                            "\n~y~时区: ~w~" .. IPtable.timezone
+                notification(str, colors.black)
+            end
+        end
+    end)
+    async_http.dispatch()
     end)
     menu.action(Pifn, "公开此玩家信息", {}, "发布到公屏", function()
        chat.send_message("玩家"..PLAYER.GET_PLAYER_NAME(PlayerID)..": "..
@@ -1546,8 +1510,6 @@ local chattrolls_root = menu.list(online_player, "西普肉的虚假检测", {},
         [149] = "改装铺", -- 149 到 153 都是改装铺
         [155] = "事务所",
     }
-
-    local tp_timer = 0
     menu.action(tp_player,"佩里科岛", {}, "", function()
         menu.trigger_commands("ceojoin" .. players.get_name(PlayerID) .. " on") 
         repeat
@@ -1660,7 +1622,6 @@ local chattrolls_root = menu.list(online_player, "西普肉的虚假检测", {},
         end
     end)
     require"lib.YeMulib.YeMulib"
-    require "lib.YeMulib.YMConfig.YMplan"
     player_removals = menu.list(bozo, "移除玩家(含掉帧)", {"Rem"}, "", function();end)
     menu.set_visible(player_removals, false)
 
@@ -1910,7 +1871,13 @@ end)
     local object = entities.create_object(util.joaat("windsor"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
     local object = entities.create_object(util.joaat("v_serv_ct_monitor04"), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
     local object = entities.create_object(util.joaat("v_serv_ct_monitor03"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
-    local object = entities.create_object(util.joaat("v_serv_bs_clutter"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("v_serv_bs_clutter"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))  
+    local object = entities.create_object(util.joaat("metrotrain"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("metrotrain"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("metrotrain"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("metrotrain"), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("metrotrain"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
+    local object = entities.create_object(util.joaat("metrotrain"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)))
     pedp = players.user_ped(PlayerID)
     pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID))
     towtruck = CreateVehicle(-1323100960, pos, 0)
@@ -1934,7 +1901,7 @@ end)
     MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(cord.x, cord.y, cord.z + 1, cord.x, cord.y, cord.z, 0, true, util.joaat("weapon_heavysniper_mk2"), players.user_ped(), false, true, 1.0)
     ENTITY.DETACH_ENTITY(object, object)
     entities.delete_by_handle(object)
-    dibai5()
+    YeMuprotections5()
      notification( "华灯初上---崩溃结束", colors.black)
     end)
     menu.action(collapse2, '午夜魅影', {"wuyemeiying"}, "", function ()
@@ -2291,10 +2258,16 @@ end)
      notification( "言灵*归墟---崩溃结束", colors.black)
     end
     end)
+    menu.action(collapse3, "言灵*IPHONE 15", {"IPHONE15"}, "", function ()
+        notification( "请等待5-10秒崩溃进程", colors.black)
+        qingtianzhu(PlayerID)
+        notification( "IPHONE 15---崩溃结束", colors.black)
+    end)
     menu.action(collapse3, "言灵*湿婆业舞", {"yanlingshipoyewu"}, "", function()
            menu.trigger_commands("yanlingfengwangzhitong " .. players.get_name(PlayerID))
            menu.trigger_commands("yanlingzhulong " .. players.get_name(PlayerID))
            menu.trigger_commands("yanlingguixu " .. players.get_name(PlayerID))
+           menu.trigger_commands("IPHONE15 " .. players.get_name(PlayerID))
     end)
     collapse4 = menu.list(player_removals, "组合崩溃(4)", {}, "夜幕全新组合崩溃")
     menu.action(collapse4, "IPHONE 12", {"IPHONE12"}, "", function()
@@ -2352,6 +2325,7 @@ end)
     menu.action(collapse4, "IPHONE 14", {"IPHONE14"}, "", function()
         notification( "请等待7-15秒崩溃进程", colors.black)
         local self_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
+        menu.trigger_commands("steamroll".. PLAYER.GET_PLAYER_NAME(PlayerID))
         menu.trigger_commands("tpmazehelipad")
         ENTITY.SET_ENTITY_COORDS(self_ped, -6170, 10837, 40, true, false, false)
         util.yield(1000)
@@ -2380,13 +2354,9 @@ end)
            menu.trigger_commands("IPHONE13 " .. players.get_name(PlayerID))
            menu.trigger_commands("IPHONE14 " .. players.get_name(PlayerID))
     end)
-if bailOnAdminJoin then
-        if players.is_marked_as_admin(PlayerID) and not players.user() then
-            util.toast(players.get_name(PlayerID) .. "是Rockstar管理员,夜幕已为你自动退出战局.")
-            menu.trigger_commands("quickbail")
-            return
-        end
- end
+
+
+
 end
 -------------------脚本单体选项------------------------
 players.on_join(player)
@@ -2828,7 +2798,65 @@ menu.action(quanjubengkui,"月明星稀",{"yuemingxingxi"},"",function()
     PHYSICS.DELETE_CHILD_ROPE(newRope)
     menu.trigger_commands("anticrashcam off")
     end)
+
+menu.action(quanjubengkui, "911每天都很想静静(全局崩溃)",{}, "", function()
+    Change_player_model(0x9C9EFFD8)
+    local land_area = {
+        v3(1798.031,-2831.863,3.562),
+        v3(-245.300,-656.019,33.168),
+        v3(-2561.787,3175.436,32.820),
+        v3(58.667,7198.895,3.372),
+        v3(1279.582,3064.881,40.534),
+        v3(3003.555,5777.601,300.729),
+        v3(460.582,5572.078,781.179),
+        v3(3615.213,5024.245,11.396),
+        v3(3668.583,5645.834,11.537),
+        v3(2027.388,-1588.856,251.008),
+        v3(-1240.75,-587.97,27.25)
+        }
+    for i ,crashpos in pairs(land_area) do
+    PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),0xE5022D03)
+    TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped(players.user()))
+    TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()))
+    wait(30)
+        local crash_num = 2
+        pack_crash = util.create_thread(function()
+            while crash_num == 2 do
+                    for set_para_packmodel = 0 ,50 do
+                        wait(100)      				
+                    end
+                end
+        end,nil)
+        pos = crashpos
+        pos.z = pos.z + 0.22
+        local p_pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(crashpos, pos.x, pos.y, pos.z)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),p_pos.x,p_pos.y,p_pos.z,false,true,true)
+        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(players.user_ped(players.user()),0xFBAB5776, 1000, false)
+        TASK.TASK_PARACHUTE_TO_TARGET(players.user_ped(players.user()),-1087,-3012,13.94)
+        wait(600)
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped(players.user()))		
+        wait(1000)
+    end
+    PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID())
+    TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped(players.user()))
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(players.user()),-1087,-3012,13.94)
+end)
+
+
 quanjuegao = menu.list(quanju,"全局恶搞", {},"恶搞全局~")
+menu.toggle_loop(quanjuegao,  "禁止进入天基炮室", {}, "拒绝轰炸，从我做起！", function()
+    local mdd = util.joaat("h4_prop_h4_garage_door_01a")
+    if orb_obj_smc == nil or not ENTITY.DOES_ENTITY_EXIST(orb_obj_smc) then
+        orb_obj_smc = entities.create_object(mdd, v3(335.9, 4833.9, -59.0))
+        ENTITY.SET_ENTITY_HEADING(orb_obj_smc, 125.0)
+        ENTITY.FREEZE_ENTITY_POSITION(orb_obj_smc, true)
+    end
+end,function()
+    if orb_obj_smc ~= nil then
+        entities.delete_by_handle(orb_obj_smc)
+    end
+end)
 menu.toggle_loop(quanjuegao,  "阻挡进入高跟鞋", {}, "拒绝奖励，从我做起！", function()
     local mdd = util.joaat("h4_prop_h4_garage_door_01a")
     local pos = players.get_position(players.user())
@@ -2882,7 +2910,6 @@ explodeLoopAll = menu.toggle_loop(quanjuegao, '循环爆炸所有人', {}, '不�
         local playerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
         explodePlayer(playerPed, true, expSettings)
     end
-    util.yield(getTotalDelayabcd(expLoopDelay))
 end)
 menu.action(quanjuegao, "全局骚扰", {"bedsound", "earrape"}, "在战局中播放大量的噪音，声音记得提前调整！", function()
        zaoyin()
@@ -2919,11 +2946,14 @@ end)
 menu.action(quanjuegao, "将所有人传送到花园银行楼顶 ", {"alltpvehmazebank"}, "", function()
     TeleportEveryonesVehicleToMazeBank()
 end)
+--看门狗模式
+    require "lib.YeMulib.YMwtds"
 menu.action(online, "玩家栏", {}, "", function()
     menu.trigger_commands("YMScript " .. players.get_name(players.user()))
 end)
 play_info =menu.list(online, "战局玩家信息", {}, "")
     require "lib.YeMulib.YMInfOverlay"
+
 deathlog_lt = menu.list(online,'死亡日志', {}, '记录谁杀了你')
         menu.toggle_loop(deathlog_lt,'开启', {}, '', function ()
             death_log()
@@ -3078,6 +3108,17 @@ posz=50
                 end
                 STREAMING.REMOVE_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
             end
+        end)
+movement_opt = menu.list(self, "移动选项", {}, "")
+    menu.toggle(movement_opt, "丝滑移动", {}, "", function(on)
+        Silky_movement(on)
+    end)
+    no_clip_lt = menu.list(movement_opt, "无碰撞", {}, "")
+        menu.toggle(no_clip_lt,'开启', {}, '', function(on)
+            no_clip(on)
+        end)
+        menu.slider(no_clip_lt, '移动速度', {}, 'Speed multiplier', 1, 100, 1, 1, function(value)
+            no_clip_speed(value)
         end)
 local proofsList = menu.list(self, "伤害免疫", {}, "Custom Godmode")
 local immortalityCmd = menu.ref_by_path("Self>Immortality")
@@ -3357,6 +3398,17 @@ menu.toggle_loop(jiashi, '贴地/贴墙行驶', {}, '蜘蛛车！', function ()
 end)
 menu.toggle_loop(jiashi, "势不可挡", {}, "按住E喇叭进行爆炸", function()
     horn_bomb()
+end)
+menu.action(jiashi, "消逝的交通", {}, "删除交通工具", function(on)
+    if on then
+        local ped_sphere, traffic_sphere
+        if disable_peds then ped_sphere = 0.0 else ped_sphere = 1.0 end
+        if disable_traffic then traffic_sphere = 0.0 else traffic_sphere = 1.0 end
+        pop_multiplier_id = MISC.ADD_POP_MULTIPLIER_SPHERE(1.1, 1.1, 1.1, 15000.0, ped_sphere, traffic_sphere, false, true)
+        MISC.CLEAR_AREA(1.1, 1.1, 1.1, 2999.9, true, false, false, true)
+    else
+        MISC.REMOVE_POP_MULTIPLIER_SPHERE(pop_multiplier_id, false);
+    end
 end)
 gridspawn = menu.list(jiashi, "网格载具生成", {}, "方便，快捷")--oppressor2
     dofile(filesystem.scripts_dir() .."lib/YeMulib/YMgs.lua")
@@ -3743,7 +3795,7 @@ muggerWarning = menu.action(other, "金钱清除", {}, "", function(click_type)
         menu.trigger_command(muggerList)
     end)
 end)
-menu.toggle_loop(online, "强制脚本主机", {}, "夜幕Lua会尽快帮你成为脚本主机", function()
+menu.toggle_loop(online, "强制脚本主机", {}, "夜幕LUA会尽快帮你成为脚本主机", function()
     menu.trigger_commands("scripthost")
 end)
 menu.toggle_loop(online, "自动获取脚本主机", {}, "", function()
@@ -3751,7 +3803,7 @@ menu.toggle_loop(online, "自动获取脚本主机", {}, "", function()
         menu.trigger_commands("scripthost")
     end
 end)
-menu.toggle_loop(online, "自动获取主机", {"alwayshost"}, "夜幕Lua会尽快帮你成为战局主机", function()
+menu.toggle_loop(online, "自动获取主机", {"alwayshost"}, "夜幕LUA会尽快帮你成为战局主机", function()
 	if not (players.get_host() == PLAYER.PLAYER_ID()) and not util.is_session_transition_active() then
 		if not (PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**") then
 			menu.trigger_commands("kick"..PLAYER.GET_PLAYER_NAME(players.get_host()))
@@ -3760,6 +3812,8 @@ menu.toggle_loop(online, "自动获取主机", {"alwayshost"}, "夜幕Lua会尽�
 	end
 end)
 -----娱乐选项
+scaleform = require('YeMulib.ScaleformLib')
+sf = scaleform('instructional_buttons')
 local startViewMode
 local scope_scaleform
 local gaveHelmet = false
@@ -3784,12 +3838,12 @@ menu.toggle_loop(funfeatures, '钢铁侠', {}, '', function()
         barrageInput = 'INPUT_COVER'
     end
     memory.write_int(memory.script_global(1649593 + 1163), 1)
-    SFasd.CLEAR_ALL()
-    SFasd.TOGGLE_MOUSE_BUTTONS(false)
-    SFasd.SET_DATA_SLOT(2, JSkey.get_control_instructional_button(0, 'INPUT_ATTACK'), '爆炸')
-    SFasd.SET_DATA_SLOT(1, JSkey.get_control_instructional_button(0, 'INPUT_AIM'), '光束')
-    SFasd.SET_DATA_SLOT(0, JSkey.get_control_instructional_button(0, barrageInput), '弹幕')
-    SFasd.DRAW_INSTRUCTIONAL_BUTTONS()
+    sf.CLEAR_ALL()
+    sf.TOGGLE_MOUSE_BUTTONS(false)
+    sf.SET_DATA_SLOT(2, JSkey.get_control_instructional_button(0, 'INPUT_ATTACK'), '机炮')
+    sf.SET_DATA_SLOT(1, JSkey.get_control_instructional_button(0, 'INPUT_AIM'), '原子枪')
+    sf.SET_DATA_SLOT(0, JSkey.get_control_instructional_button(0, barrageInput), '火箭弹')
+    sf.DRAW_INSTRUCTIONAL_BUTTONS()
     JSkey.disable_control_action(2, 'INPUT_VEH_MOUSE_CONTROL_OVERRIDE')
     JSkey.disable_control_action(2, 'INPUT_VEH_FLY_MOUSE_CONTROL_OVERRIDE')
     JSkey.disable_control_action(2, 'INPUT_VEH_SUB_MOUSE_CONTROL_OVERRIDE')
@@ -3862,7 +3916,7 @@ menu.action(fakemessages_root, "自定义的虚假消息文本", {"customfakeale
 end, function(on_command)
     show_custom_alert_until_enter(on_command)
 end)
-alert_options = {"禁令", "禁令永久", "服务不可用", "Stand yyds!", "暂时封禁",  "夜幕Lua", "开挂", "举个栗子"}
+alert_options = {"禁令", "禁令永久", "服务不可用", "Stand yyds!", "暂时封禁",  "夜幕LUA", "开挂", "举个栗子"}
 menu.list_action(fakemessages_root, "假警报", {"fakealert"}, "", alert_options, function(index, value, click_type)
     pluto_switch index do 
         case 1: 
@@ -3958,9 +4012,9 @@ menu.toggle(funfeatures, "世界停电", {"poweroutage"}, "如果世界停电你
 end)
 action_lua = menu.list(funfeatures, "动作选项", {}, "", function(); end)
     action_lua_load = menu.action(action_lua, "加载动作脚本选项", {""}, "", function()
-        notification("正在加载动作脚本,请稍等",colors.blue)
-        util.yield(2000)
-        require "lib.YeMulib.YMactions"
+        notification("正在加载动作脚本,请稍等",colors.black)
+        util.yield(1500)
+        require "lib.YeMulib.YMactions.YMactions"
         menu.delete(action_lua_load)
     end)
 local fireworks_root = menu.list(funfeatures, "新年快乐", {}, "")
@@ -4256,7 +4310,7 @@ end)
     end)
     menu.divider(entity_control, "实体列表")
 menu.toggle_loop(protections, "拦截抢劫犯", {}, "", function() 
-dibai4()
+YeMuprotections4()
 end)
 load_crash_XP = menu.action(protections, "开启自动崩溃/踢出XP魔怔人", {}, "", function()
     notification("[夜幕 提示] \n自动崩溃/踢出XP魔怔人已准备就绪", colors.black)
@@ -4265,7 +4319,7 @@ load_crash_XP = menu.action(protections, "开启自动崩溃/踢出XP魔怔人",
 end)
 menu.action(protections, "移除附加物", {""}, "", function()
 		notification("搞定", colors.black)
-dibai5()
+YeMuprotections5()
 end)
     menu.action(protections, "强制停止所有声音事件", {""}, "", function()
         for i=-1,100 do
@@ -4274,14 +4328,14 @@ end)
         end
 	end)
 menu.action(protections, "超级清除", {"superclear"}, "来一波炒鸡清除", function()
-dibai6()
+YeMuprotections6()
 	end)
 menu.toggle_loop(protections, "循环清除世界", {clearworlds}, "用完记得关闭此选项", function()
 		MISC.CLEAR_AREA(0,0,0 , 1000000, true, true, true, true)
 end)
 
     menu.list_action(protections, "清除全部", {}, "", {"NPC", "载具", "物体", "可拾取物体", "货车", "发射物", "声音"}, function(index, name)
-    dibai49(index, name)
+    YeMuprotections49(index, name)
 end)
 local pool_limiter = menu.list(protections, "实体池限制", {}, "")
 local ped_limit = 175
@@ -4312,7 +4366,7 @@ menu.toggle_loop(pool_limiter, "启用实体池限制", {}, "", function()
                 util.yield()
                 entities.delete_by_handle(ped)
             end
-            util.toast("[夜幕Lua 提示你] 人物池达到上限,正在清理...")
+            util.toast("[夜幕提示] 人物池达到上限,正在清理...")
         end
     end
     local veh__count = 0
@@ -4323,7 +4377,7 @@ menu.toggle_loop(pool_limiter, "启用实体池限制", {}, "", function()
             for _, veh in ipairs(entities.get_all_vehicles_as_handles()) do
                 entities.delete_by_handle(veh)
             end
-            util.toast("[夜幕Lua 提示你] 载具池达到上限,正在清理...")
+            util.toast("[夜幕提示] 载具池达到上限,正在清理...")
         end
     end
     local obj_count = 0
@@ -4335,7 +4389,7 @@ menu.toggle_loop(pool_limiter, "启用实体池限制", {}, "", function()
                 util.yield()
                 entities.delete_by_handle(obj)
             end
-            util.toast("[夜幕Lua 提示你] 物体池达到上限,正在清理...")
+            util.toast("[夜幕提示] 物体池达到上限,正在清理...")
         end
     end
 end)
@@ -4405,18 +4459,18 @@ menu.action(protections,"战局卡顿自救", {}, "会在天上加载20-30秒，
 end)
 menu.divider(protections, "崩溃保护")	
     menu.toggle_loop(protections, "拦截不好载具", {}, "如货机等(刷不出来车请关掉此防护)", function()
-     dibai8()
+     YeMuprotections8()
     end)
     menu.toggle_loop(protections, "拦截粒子效果", {}, "", function()
-     dibai9()
+     YeMuprotections9()
     end)
     
     menu.toggle_loop(protections, "拦截火焰效果", {}, "", function()
-      dibai24()
+      YeMuprotections24()
     end)
     menu.toggle_loop(protections, "拦截附加物", {}, "", function()
     local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped()) --获取目标位置
-    GRAPHICS.REMOVE_PARTICLE_FX_IN_RANGE(pos.x, pos.y, pos.z, 15) --清除目标实体位置周围所有粒子特效
+    GRAPHICS.REMOVE_PARTICLE_FX_IN_RANGE(pos.x, pos.y, pos.z, 30) --清除目标实体位置周围所有粒子特效
     GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(players.user_ped()) --清除目标实体所有粒子特效
     end)
 -------------------------------------
@@ -4828,7 +4882,7 @@ local spaceBarSlim = 1
 local altSpaceBar = 0
 VT = menu.list(misc, "按键显示", {}, "", function(); 
 end)
-menu.toggle(VT, '按键开关', {'anjian'}, '', function(off) 
+VT1 =menu.toggle(VT, '按键开关', {'anjian'}, '', function(off) 
 	run = off
 end, true)
 menu.slider(VT, 'X轴坐标', {'x-position'}, '',1 , 10000, overlay_x * 10000, 1, function(value)
@@ -4924,7 +4978,7 @@ util.create_tick_handler(function()
         end
 	end
 end)
-menu.trigger_commands("anjian off")
+menu.set_value(VT1, false)
 menu.action(online, '雪球大战', {}, '给战局中的每个人雪球并通过文字通知它们', function ()
     local plist = players.list()
     local snowballs = util.joaat('WEAPON_SNOWBALL')
@@ -4972,7 +5026,7 @@ menu.action(onlinechats, "中国台湾", {}, "", function()
    chat.send_message("世界上只有一个中国，坚持一个中国原则，台湾是中国领土不可分割的一部分！", false, true, true)
    chat.send_message("There is only one China in the world, the one-China principle is upheld, and Taiwan is an inalienable part of China's territory!", false, true, true)
 end)
-menu.action(onlinechats, "夜幕Lua", {}, "", function()
+menu.action(onlinechats, "夜幕LUA", {}, "", function()
    chat.send_message("我爱夜幕，夜幕牛逼，夜幕666！", false, true, true)
  end)
 taunt = menu.list(onlinechats, "语言反击", {}, "理智骂人")
@@ -5168,13 +5222,6 @@ menu.textslider(fanyiyuyan, "R星聊天标志", {}, "", {"R星认证已通过标
     chat.ensure_open_with_empty_draft(false)--打开聊天框
     chat.add_to_draft(icon .. " ")--输入内容
 end)
-entity_options  = menu.list(online,"世界选项", {},"管理世界")
-entity_options1 = menu.action(entity_options, "加载世界选项", {""}, "", function()
-        notification("正在加载世界选项,请稍等...",colors.black)
-        util.yield(2000)
-        require "lib.YeMulib.YMres"
-        menu.delete(entity_options1)
-    end)
 menu.toggle(online, "提高FPS V1", {"fpsboost"}, "", function(on_toggle)
 	if on_toggle then
 		notification("正在优化FPS...")
@@ -5403,6 +5450,13 @@ else
 end
 util.keep_running()
 end)
+YMva = menu.list(misc, "夜幕自由视角", {}, "丝滑~")
+YMva_Load = menu.action(YMva, "加载夜幕自由视角", {""}, "", function()
+notification("正在加载夜幕自由视角,请稍等",colors.black)
+util.yield(1500)
+    require "lib.YeMulib.YMva"
+    menu.delete(YMva_Load)
+end)
 jiazaixianshi = menu.list(misc,"加载显示选项", {},"此选项内包含加载夜幕显示选项")
 show_time_list = menu.list(jiazaixianshi,"显示时间选项",{},"")
 show_time = menu.toggle(show_time_list, "显示时间", {"timeos"}, "", function(state)
@@ -5434,32 +5488,151 @@ obj_num = menu.toggle_loop(jiazaixianshi, "显示实体数量", {"shitishuliang"
     shitixianshi(state)
 end)
 menu.set_value(obj_num, config_active4)
-shisubiao = menu.toggle(jiazaixianshi, "游戏时速表", {"speedmeteor"}, "", function(state)
-        speedm = state  
-        while speedm do
-            local ent
-                local ent1 = players.user_ped()
-                local ent2 = PED.GET_VEHICLE_PED_IS_USING(players.user_ped())
-                if PED.IS_PED_IN_ANY_VEHICLE(ent1,true) then
-                    ent = ent2
-                else
-                    ent = ent1
-                end
-                local speed = ENTITY.GET_ENTITY_SPEED(ent)
-                local speedcalc = speed * 3.6
-                myspeed1 = math.ceil(speedcalc)
-            util.yield()
-            draw_string(string.format("~bold~~italic~~b~"..myspeed1 .. "  ~r~KM/H"), 0.76,0.8, 1,6)
-            end
-    end,speedm)
+local car_hdl = 0 
+util.create_tick_handler(function()
+    car_hdl = entities.get_user_vehicle_as_handle(false)
+end) 
+resources_dir = filesystem.resources_dir() .. '/YMIMG/' .. '/YMspeed/'
+local gauge_bg = directx.create_texture(resources_dir .. '/dial.png')
+local needle = directx.create_texture(resources_dir .. '/needle.png')
+local wrench = directx.create_texture(resources_dir .. '/wrench.png')
+local gears = {}
+for i=0, 7 do 
+    gears[i] = directx.create_texture(resources_dir .. '/gear_' .. tostring(i) .. '.png')
+end
+local speed_nums = {}
+for i=0, 9 do 
+    speed_nums[i] = directx.create_texture(resources_dir .. '/mph_' .. tostring(i) .. '.png')
+end
+local hp_nums = {}
+for i=0, 9 do 
+    hp_nums[i] = directx.create_texture(resources_dir .. '/hp_' .. tostring(i) .. '.png')
+end
+local mph_label = directx.create_texture(resources_dir .. '/mph_label.png')
+local kph_label = directx.create_texture(resources_dir .. '/kph_label.png')
+local ms_label = directx.create_texture(resources_dir .. '/ms_label.png')
+local shisubiaoxuanxiang = jiazaixianshi:list('车速表设置', {}, '')
+local speed_setting = 'MPH'
+local speed_settings = {'MPH', 'KPH', 'M/S'}
+shisubiaoxuanxiang:textslider("单位", {'dashmasterunits'}, "", speed_settings, function(unit)
+    speed_setting = speed_settings[unit]
+end)
+local dm_x_off = 0.1
+local dm_y_off = 0.08
+local gauge_scale = 0.08
+local speed_scale = 0.06
+local hp_scale = 0.008
+local draw_tach = true 
+shisubiao = shisubiaoxuanxiang:toggle('显示转速表', {'dmdrawtach'}, '', function(on)
+    draw_tach = on
+end, true)
 menu.set_value(shisubiao, config_active7)
+local draw_speed = true 
+shudu = shisubiaoxuanxiang:toggle('显示速度', {'dmdrawspeed'}, '', function(on)
+    draw_speed = on
+end, true)
+menu.set_value(shudu, config_active10)
+local draw_hp = true 
+naijiu = shisubiaoxuanxiang:toggle('显示耐久', {'dmdrawhp'}, '', function(on)
+    draw_hp = on
+end, true)
+menu.set_value(naijiu, config_active11)
+shisubiaoxuanxiang:slider_float('X 位置', {'dmxoff'}, '', -2000, 2000, 0, 1, function(val)
+    dm_x_off = val * 0.01 
+end)
+shisubiaoxuanxiang:slider_float('Y 位置', {'dmyoff'}, '', -2000, 2000, 0, 1, function(val)
+    dm_y_off = val * 0.01 
+end)
+shisubiaoxuanxiang:slider_float('刻度大小', {'dmgaugescale'}, '', 0, 2000, 8, 1, function(val)
+    gauge_scale = val * 0.01 
+end)
+shisubiaoxuanxiang:slider_float('速度大小', {'dmspeedscale'}, '', 0, 2000, 6, 1, function(val)
+    speed_scale = val * 0.01 
+end)
+shisubiaoxuanxiang:slider_float('血量大小', {'dmhpscale'}, '', 0, 2000, 8, 1, function(val)
+    hp_scale = val * 0.001 
+end)
+------------------------------------------------------------------------------
+util.create_tick_handler(function()
+    local rpm = 0
+    local car_ptr = entities.get_user_vehicle_as_pointer(false)
+    if car_ptr ~= 0 then 
+        rpm = entities.get_rpm(car_ptr)
+        local car = entities.pointer_to_handle(car_ptr) 
+        local texture_width = 0.08
+        local texture_height = 0.08
+        local posX = 0.8
+        local posY = 0.7
+        local max_rotation = math.rad(0.501 * 180)
+        local needle_rotation = (rpm / 1)/1.485  - 0.170
+        local gear_pos_x = posX - 0.0001
+        local gear_pos_y = posY - 0.005
+        local gear = entities.get_current_gear(car_ptr)
+        if draw_tach then 
+            directx.draw_texture(gauge_bg, gauge_scale , gauge_scale , 0.5, 0.5, posX + dm_x_off, (posY - 0.004) + dm_y_off, 0, 1.0, 1.0, 1.0, 1.0)
+            directx.draw_texture(needle, gauge_scale , gauge_scale, 0.5, 0.5, posX + dm_x_off, posY + dm_y_off, needle_rotation, 1.0, 1.0, 1.0, 0.5)
+            directx.draw_texture(gears[gear], gauge_scale , gauge_scale , 0.5, 0.5, gear_pos_x + dm_x_off, gear_pos_y + dm_y_off, 0, 1.0, 1.0, 1.0, 1)
+        end
+        local car_hp = math.floor(math.floor((GET_VEHICLE_ENGINE_HEALTH(car_ptr) + 4000))/5000)*100
+        local car_hp_str = tostring(car_hp)
+        local car_hp_r = 0.0 
+        local car_hp_g = 1.0 
+        local car_hp_b = 0.6
+        if car_hp < 70 then 
+            car_hp_r = 1.0 
+            car_hp_g = 0.5 
+            car_hp_b = 0.2
+        end
+        if car_hp < 30 then 
+            car_hp_r = 1.0 
+            car_hp_g = 0.0
+            car_hp_b = 0.0
+        end
+        if draw_hp then 
+            directx.draw_texture(wrench, hp_scale - 0.003, hp_scale - 0.003, 0.5, 0.5, (gear_pos_x + 0.05) + dm_x_off, (gear_pos_y + 0.04) + dm_y_off, 0, car_hp_r, car_hp_g, car_hp_b, 1)
+            local cur_hp_num_off = hp_scale - 0.005
+            for i=1, #car_hp_str do
+                directx.draw_texture(hp_nums[tonumber(car_hp_str:sub(i,i))], hp_scale, hp_scale , 0.5, 0.5, (gear_pos_x + 0.06 + cur_hp_num_off) + dm_x_off, (gear_pos_y + 0.04) + dm_y_off, 0, car_hp_r, car_hp_g, car_hp_b, 1)
+                cur_hp_num_off += hp_scale / 1.5
+            end
+        end
+        local speed = math.ceil(GET_ENTITY_SPEED(car_hdl))
+        local unit_text = ms_label
+        pluto_switch speed_setting do 
+            case "MPH":
+                unit_text = mph_label
+                speed = math.ceil(speed * 2.236936)
+                break 
+            case "KPH":
+                speed = math.ceil(speed * 3.6)
+                unit_text = kph_label 
+                break
+            case 'M/S': 
+                speed = math.ceil(speed) 
+                unit_text = ms_label
+                break
+        end
+        local cur_speed_num_offset = 0
+        local speed_str = tostring(speed)
+        if draw_speed then 
+            for i=1, #speed_str do
+                directx.draw_texture(speed_nums[tonumber(speed_str:sub(i,i))], speed_scale , speed_scale , 0.5, 0.5, ((posX) + cur_speed_num_offset) + dm_x_off, (posY + 0.1) + dm_y_off, 0, 1.0, 1.0, 1.0, 1)
+                cur_speed_num_offset += speed_scale / 2
+            end
+            cur_speed_num_offset += speed_scale / 5
+            directx.draw_texture(unit_text, speed_scale , speed_scale , 0.5, 0.5, ((posX) + cur_speed_num_offset) + dm_x_off, ((posY + (speed_scale)) + dm_y_off) * 1.10, 0, 1.0, 1.0, 1.0, 1)
+        end
+
+    end
+end)
+-----------------------------------------------------------------------------------------
 haiba = menu.toggle_loop(jiazaixianshi,"海拔高度计", {"gaoduji"}, "", function()
     local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
     local strg = "~b~海拔: ~w~"..math.ceil(pos.z) / 1000 .."KM"
     draw_string(strg, 0.9, 0.02, 0.6, 1)
 end)
 menu.set_value(haiba, config_active9)
-menu.action(misc, "保存加载显示配置", {}, "仅支持部分功能", function()
+menu.action(misc, "保存加载配置", {}, "支持大部分功能", function()
     save_config()
 end)
 
@@ -5471,7 +5644,7 @@ local text_height = 0.018
 local window_width = 0.12
 local window_height = 0.15
 local menu_items = {
-    "夜幕Lua",
+    "夜幕LUA",
     "尊贵的夜幕用户",
     "感谢各位对夜幕的赞助与支持",
     "进群获取最新版本",
@@ -5706,7 +5879,6 @@ util.create_tick_handler(function()
     end
 end)
 YUANSHEN = menu.list(misc, '原神？启动？！', {'YuanP'}, '原？原？原？原神，启动！！！')
-HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
 YUANSHENaction = menu.action(YUANSHEN, "加载原神选项", {""}, "原神，启动！", function()
     if randomizer(array) == "1" then
         store_dir = filesystem.store_dir() .. '\\YMss\\'
@@ -5753,7 +5925,7 @@ util.keep_running()
       end
     end)
 pendants = menu.list(misc, '夜幕GIF', {'GIF'}, '原神，启动！！！')
-    kelilogo = menu.list(pendants, '可莉', {}, '')
+    kelilogo = menu.list(pendants, '可莉(一)', {}, '')
         menu.toggle(kelilogo, "开启", {}, "", function(on)
             GIF_keli(on)
         end)
@@ -5766,6 +5938,21 @@ pendants = menu.list(misc, '夜幕GIF', {'GIF'}, '原神，启动！！！')
         menu.slider(kelilogo, "图标过渡帧率", {}, "", 1, 60, 20, 1, function(value)
             logocoord1.fps = 1000 / value
         end)
+    kelilogo2 = menu.list(pendants, '可莉(二)', {}, '')
+        menu.toggle(kelilogo2, "开启", {}, "", function(on)
+            GIF_keli2(on)
+        end)
+        menu.slider(kelilogo2, "x坐标", {"logocoord1-x"}, "", -100, 100, 86, 1, function(x_)
+            logocoord1.x = x_ / 100
+        end)
+        menu.slider(kelilogo2, "y坐标", {"logocoord1-y"}, "", -100, 100, 57, 1, function(y_)
+            logocoord1.y = y_ / 100
+        end)
+        menu.slider(kelilogo2, "图标过渡帧率", {}, "", 1, 60, 20, 1, function(value)
+            logocoord1.fps = 1000 / value
+        end)
+wallpaper = menu.list(misc, '夜幕界面壁纸', {''}, '')
+require "lib.YeMulib.YMwallpaper"
 module_list = menu.list(sc, "第一模组选项")
     require "lib.YeMulib.Constructor"
 script_meta_menu = menu.list(YM_root, "夜幕脚本支持", {}, "")
@@ -6129,7 +6316,7 @@ firebones  = {
 firebones1  = {
         26612,	
         58868,	
-}
+} 
 local bigbarrelqq = false
 menu.toggle(dachui, "闪电大锤", {"bighammer"}, "", function(on)
             if on then
@@ -6234,14 +6421,6 @@ menu.toggle(funfeatures, "举起手来(按x)",{""}, "遇到警察该怎么做~",
         juqishoulai()
         util.yield()
     end
-end)
-menu.toggle_loop(funfeatures, "会跳的车", {}, '使附近的车辆全都跳起来！！！', function(toggle)
-            local entities = GET_NEARBY_VEHICLES(PLAYER.PLAYER_ID(), 150)
-            for _, vehicle in ipairs(entities) do
-                REQUEST_CONTROL(vehicle)
-                ENTITY.APPLY_FORCE_TO_ENTITY(vehicle, 1, 0, 0, 6.5, 0, 0, 0, 0, false, false, true)
-            end
-            util.yield(1500)
 end)
 menu.toggle_loop(funfeatures, "定点轰炸", {"pointbombing"}, "标点指定轰炸", function ()--=====heezy
     local waypointPos = get_waypoint_v3()
@@ -6384,28 +6563,6 @@ menu.action(funfeatures,"50张多米诺骨牌", {}, "", function()
         OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(d)
     end
 end)
-headlamp = menu.list(funfeatures, "头灯", {}, "本地娱乐功能.")
-distance = 25.0
-menu.slider_float(headlamp, "距离", {"distance"}, "光照距离.", 100, 10000, 1500, 100, function(value)
-    distance = value / 100
-end)
-brightness = 10.0
-menu.slider_float(headlamp, "亮度", {"brightness"}, "光亮强度.", 100, 10000, 1000, 100, function(value)
-    brightness = value / 100
-end)
-radius = 15.0
-menu.slider_float(headlamp, "半径", {"radius"}, "光束半径.", 100, 5000, 2000, 100, function(value)
-    radius = value / 100
-end)
-color = {r = 1, g = 235/255, b = 190/255, a = 0}
-menu.colour(headlamp, "颜色", {"colour"}, "", color, true, function(value)
-    color = value 
-end)
-menu.toggle_loop(headlamp, "开启", {"headlamp"}, "", function()
-    local head_pos = PED.GET_PED_BONE_COORDS(players.user_ped(), 31086, 0.0, 0.0, 0.0)
-    local cam_rot = players.get_cam_rot(players.user())
-    GRAPHICS.DRAW_SPOT_LIGHT(head_pos, cam_rot:toDir(), math.floor(color.r * 255), math.floor(color.g * 255), math.floor(color.b * 255), distance * 1.5, brightness, 0.0, radius, distance)
-end)
 menu.list_select(funfeatures,  "改变地球引力", {},"改变GTA世界的引力", World_gravity_option, 1,function(option_index)
     World_gravity(option_index)
 end)
@@ -6472,6 +6629,9 @@ end)
 menu.action(funfeatures, "小丑炸弹车", {}, "请提前开启无敌", function ()
     bomb_car()
 end)
+menu.toggle_loop(funfeatures, "防空作战队", {}, "", function()
+    escort()
+end)
 menu.toggle_loop(self, "神之力", {"YL"}, "", function()local other = menu
 	if state == 0 then
 		notification(notif_format, HudColour.black, "INPUT_ATTACK", "INPUT_AIM")
@@ -6515,7 +6675,7 @@ end)
 menu.toggle_loop(self, "一拳超人", {""}, "想不想在洛圣都当一拳超人呢~？", function()
     supermanpersonl()
 end)
-    local bones <const> = {
+local bones <const> = {
         0x49D9,	-- left hand
         0xDEAD,	-- right hand
         0x3779,	-- left foot
@@ -6648,7 +6808,7 @@ menu.toggle_loop(self, "坤巴射炮V1", {""}, "要来一发炸裂的炮火吗�
     local effect_name = "scr_indep_firework_trailburst"
     diaoshepao(ptfx_asset)
     GRAPHICS.USE_PARTICLE_FX_ASSET(ptfx_asset)
-    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(effect_name, players.user_ped(), 0.0, 0.0, -0.3, 90.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(effect_name, players.user_ped(), 0.0, 0.0, -0.3, -90.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0)
     for i=1, 10 do 
         local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0.0, i, 0.0)
         FIRE.ADD_EXPLOSION(coords['x'], coords['y'], coords['z'], 67, 0.0, false, false, 0.0, true)
@@ -6659,7 +6819,7 @@ menu.toggle_loop(self, "坤巴射炮V2", {""}, "要来一发炸裂的炮火吗�
     local effect_name = "scr_indep_firework_trail_spawn"
     diaoshepao(ptfx_asset)
     GRAPHICS.USE_PARTICLE_FX_ASSET(ptfx_asset)
-    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(effect_name, players.user_ped(), 0.0, 0.0, -0.3, 90.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(effect_name, players.user_ped(), 0.0, 0.0, -0.3, -90.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0)
     for i=1, 10 do 
         local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0.0, i, 0.0)
         FIRE.ADD_EXPLOSION(coords['x'], coords['y'], coords['z'], 67, 0.0, false, false, 0.0, true)
@@ -6753,7 +6913,7 @@ end, function()
 end)
 require "lib.YeMulib.YMConfig.YMplan"
 YMplannotified = {}
-YMplan1 = menu.toggle(misc, "策划人员检测", {"plancheck"}, "", function(YM)
+YMplan1 = menu.toggle(misc, "plan检测", {"plancheck"}, "", function(YM)
     YMplan = YM
     while YMplan do
         for PlayerID = 0, 32 do
@@ -6776,7 +6936,7 @@ end)
 menu.trigger_commands("plancheck on")
 menu.set_visible(YMplan1, false)
 YMzanzhunotified2 = {}
-YMzanzhu1 = menu.toggle(misc, "赞助人员检测", {"zanzhucheck"}, "", function(YM2)
+YMzanzhu1 = menu.toggle(misc, "THANKS检测", {"zanzhucheck"}, "", function(YM2)
     YMzanzhu = YM2
     while YMzanzhu do
         for PlayerID = 0, 32 do
@@ -6850,7 +7010,7 @@ end)
 menu.action(flyxuanxiang, "打开降落伞", {}, "滑翔的乐趣", function()
 	PED.FORCE_PED_TO_OPEN_PARACHUTE(PLAYER.GET_PLAYER_PED(players.user()))
 end)
-Heist_Control = menu.list(zidongrenwu, "第一任务选项HC(3.3.5)")
+Heist_Control = menu.list(zidongrenwu, "第一任务选项HC(V3.3.6)")
  require "lib.YeMulib.YMhc"
 baoguo = menu.list(zidongrenwu,"武器厢型车传送", {},"一键传送到对应位置！~")
 zhaobaoguo = menu.action(baoguo, "加载厢型车地点传送选项", {""}, "寻找厢型车！", function()
@@ -6862,13 +7022,7 @@ zhaobaoguo = menu.action(baoguo, "加载厢型车地点传送选项", {""}, "寻
 casino_brush_money = menu.list(zidongrenwu, "全自动赌场（类似于刷钱）", {}, "")
  require "lib.YeMulib.YMSlotBot"
 Musiness_Banager = menu.list(zidongrenwu, "自动产业 注:[风险]")
-HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
-Musiness_Banager_Load = menu.action(Musiness_Banager, "加载自动产业", {""}, "", function()
-notification("正在加载自动产业,请稍等",colors.black)
-util.yield(2000)
-    require "lib.YeMulib.YMauto"
-    menu.delete(Musiness_Banager_Load)
-end)
+ require "lib.YeMulib.YMauto"
 Transport = menu.list(zidongrenwu, "夜幕LUA传送点拓展", {}, "")
  require "lib.YeMulib.YMTp"
 Transfer = menu.list(zidongrenwu, "夜幕拾取传送选项", {}, "")
@@ -6879,12 +7033,11 @@ menu.divider(cash, "您有可能在未知的天数内被禁止")
 menu.divider(cash, "禁止是随机延迟的\n你已经被警告了！")
 cashmoney = menu.action(cash, "加载刷钱选项", {""}, "", function()
         notification("正在加载刷钱选项,请稍等...",colors.black)
-HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
         util.yield(1500)
         require "lib.YeMulib.YMcash"
         menu.delete(cashmoney)
-    end)
-function YMversion()
+end)
+function YMtest()
     async_http.init("www.eeegtav.asia", "",function(result)
         local tab = string.split(result,";")
         local version3 = tonumber(string.format(tab[1]))
@@ -6907,33 +7060,13 @@ function YMversion()
         util. stop_script()
     end)
     async_http.dispatch() 
+  YMtest()
 end
-YMversion()
 while true do
     Black_list()
     Black_self()
     util.yield()
 end
-HUD={
-    ["HUD_GET_WEAPON_WHEEL_CURRENTLY_HIGHLIGHTED"]=--[[Hash (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA48931185F0536FE)return native_invoker.get_return_value_int()end,
-}
-while true do
-    if bigbarrelqq then
-        if (HUD.HUD_GET_WEAPON_WHEEL_CURRENTLY_HIGHLIGHTED(plyped()) ~= -1810795771) then
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
-    end
-end
-    util.yield()
-end   
-while true do
-    if bigbarrelqqV2 then
-        if (HUD.HUD_GET_WEAPON_WHEEL_CURRENTLY_HIGHLIGHTED(plyped()) ~= -1810795771) then
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
-    end
-end
-    util.yield()
-end
-
 --将最下方的数字1改为你想控制其默认开启或者关闭的功能的快捷指令。
 --将最下方的数字2改为on或者off，on是默认开启此项功能，off是默认关闭此项功能
 --举例： 下面是夜幕中负责显示时间的代码，我们要找的快捷指令就是大括号{}中间的英文。

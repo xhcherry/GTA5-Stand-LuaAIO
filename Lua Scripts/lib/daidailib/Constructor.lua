@@ -1110,7 +1110,6 @@ end
 local function set_save_defaults(construct)
     if construct.author == nil then construct.author = players.get_name(players.user()) end
     if construct.created == nil then construct.created = os.date("!%Y-%m-%dT%H:%M:%SZ") end
-    if construct.version == nil then construct.version = "Constructor "..VERSION_STRING end
 end
 
 local function save_vehicle(construct)
@@ -2873,13 +2872,13 @@ constructor.add_attachment_clone_attachments_options = function(attachment)
 end
 
 constructor.add_attachment_teleport_options = function(attachment)
-    attachment.menus.teleport = menu.list(attachment.menus.main, t("Teleport"), {}, t("Move your player to the construct, or vice versa."), function()
+    attachment.menus.teleport = menu.list(attachment.menus.main, "传送", {}, "将玩家移动到结构中，反之亦然.", function()
         if attachment.menus.teleport_to_construct ~= nil then return end
         if attachment.type == "VEHICLE" then
-            attachment.menus.enter_drivers_seat = menu.action(attachment.menus.teleport, t("Drive Vehicle"), {}, t("Move your player into the vehicle driver seat"), function()
+            attachment.menus.enter_drivers_seat = menu.action(attachment.menus.teleport, "驾驶车辆", {}, "将玩家移到车辆驾驶员座椅上", function()
                 PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), attachment.handle, -1)
             end)
-            attachment.menus.enter_drivers_seat = menu.action(attachment.menus.teleport, t("Ride In Vehicle"), {}, t("Move your player into the first available passenger seat"), function()
+            attachment.menus.enter_drivers_seat = menu.action(attachment.menus.teleport, "乘坐车辆", {}, "将你移到第一个可用的乘客座椅", function()
                 PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), attachment.handle, -2)
             end)
         end

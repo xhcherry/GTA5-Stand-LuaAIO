@@ -137,11 +137,13 @@ function load_weapon()
         --require("store.SakuraConfig.loadouts." .. selected_loadout)
         for w_hash, attach_dict in loadout do
             WEAPON.GIVE_WEAPON_TO_PED(player, w_hash, 10, false, false)
+            WEAPON.SET_PED_AMMO(PLAYER.PLAYER_PED_ID(), w_hash, 9999, false)--补充弹药不完全(MK2卡宾步枪,)
             if attach_dict.attachments ~= nil then
                 for _, hash in attach_dict.attachments do
                     WEAPON.GIVE_WEAPON_COMPONENT_TO_PED(player, w_hash, hash)
                 end
             end
+
             WEAPON.SET_PED_WEAPON_TINT_INDEX(player, w_hash, attach_dict.tint)
             if attach_dict.livery ~= nil then
                 WEAPON.GIVE_WEAPON_COMPONENT_TO_PED(player, w_hash, attach_dict.livery.hash)
@@ -150,7 +152,7 @@ function load_weapon()
         end
         regen_menu()
         --补充所有弹药
-        menu.trigger_commands("fillammo")
+        --menu.trigger_commands("fillammo")
         util.toast(selected_loadout .. "配置已加载")
     else
         util.toast("这个配置似乎不存在*_*")

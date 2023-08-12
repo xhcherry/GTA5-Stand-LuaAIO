@@ -59,7 +59,6 @@ colors = {
     }
 
 function notification(message, color)
-	HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(color)
 	local picture
 	if not filesystem.exists(resource_dir) then
 		picture = "CHAR_SOCIAL_CLUB"

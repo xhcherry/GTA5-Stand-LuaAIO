@@ -33,7 +33,6 @@ require "lib.daidailib.daidailib"
 require "lib.daidailib.daidailib1"
 require "lib.daidailib.damage_numbers"
 require "lib.daidailib.Entity_control"
-require "lib.daidailib.flightredux"
 require "lib.daidailib.bodyguards.bodyguard"
 
 sfchat = require("lib.daidailib.ScaleformLib")("multiplayer_chat")
@@ -225,11 +224,11 @@ action_list = menu.list(self_option, "人物行为", {}, "")
     end)
 
 menu.toggle_loop(self_option, '超级飞行', {}, '按下跳跃的时间越长,继续走得更高（也可用于飞行）', function()
-    if PAD.IS_CONTROL_PRESSED(0, 22) or PAD.IS_CONTROL_JUST_PRESSED(0, 21) then
-        PED.SET_PED_CAN_RAGDOLL(players.user_ped(), false)
-        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.0, 0.6, 0.6, 0, 0, 0, 0, true, true, true, true)
-        if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) then
-            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.0, 0.6, 0.6, 0, 0, 0, 0, true, true, true, true)
+    if PAD.IS_CONTROL_PRESSED(0, 22) and PAD.IS_CONTROL_PRESSED(0, 32) then
+        PED.SET_PED_CAN_RAGDOLL(PLAYER.PLAYER_PED_ID(), false)
+        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(PLAYER.PLAYER_PED_ID(), 1, 0, 0.6, 0.6, 0, true, true, true, true)
+        if ENTITY.IS_ENTITY_IN_AIR(PLAYER.PLAYER_PED_ID()) then
+            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(PLAYER.PLAYER_PED_ID(), 1, 0, 0, 0.6, 0, true, true, true, true)
         end
     end
 end)
@@ -249,7 +248,6 @@ end)
 
 
 ----火人
-getentityinfo()
 local burning_man_ptfx_asset = "core"
 local burning_man_ptfx_effect = "fire_wrecked_plane_cockpit"
 request_ptfx_asset(burning_man_ptfx_asset)
@@ -453,7 +451,7 @@ attach_self = menu.list(self_option, "附加", {})
     menu.toggle(attach_self, "献花", {}, "", function(on)
         offer_flower(on)
     end)
-    menu.list_action(attach_self, "附加国旗", {}, "", flags_fmt, function(index, val)
+    menu.list_action(attach_self, "附加国旗", {}, "附加到载具", flags_fmt, function(index, val)
         local player_cur_car = entities.get_user_vehicle_as_handle()
         if player_cur_car ~= 0 then 
             local hash = util.joaat(country_flags[index])
@@ -1185,10 +1183,156 @@ chatspamtrash = menu.list(chat_msg, "聊天刷屏")
         chat.send_message("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",false,true,true)
     end)
 
+----载具选项列表
+veh_movement = menu.list(vehicle, '移动选项', {}, '')
+    menu.toggle(veh_movement, "失控驾驶",{},"", function(on)
+        local last_vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), true)
+        if on then
+            VEHICLE.SET_VEHICLE_REDUCE_GRIP(last_vehicle, true)
+            VEHICLE1._SET_VEHICLE_REDUCE_TRACTION(last_vehicle, 50)
+        else
+            VEHICLE.SET_VEHICLE_REDUCE_GRIP(last_vehicle, false)
+            VEHICLE1._SET_VEHICLE_REDUCE_TRACTION(last_vehicle, 100)
+        end
+    end)
+
+    cruise_control = menu.list(veh_movement, "定速巡航", {}, "")
+        local cruise_speed_value = 30
+        menu.toggle_loop(cruise_control, "开启", {}, "",function()
+            VEHICLE.SET_VEHICLE_FORWARD_SPEED(entities.get_user_vehicle_as_handle(), cruise_speed_value / 3.6)
+        end)
+        menu.slider(cruise_control, "速度设置", {}, "", 0, 300, 30, 10, function (s)
+            cruise_speed_value = s
+        end)
+
+    veh_max_speed = menu.list(veh_movement, "最大速度限制", {}, "")
+        local max_speed_value = 200
+        menu.toggle_loop(veh_max_speed, "开启", {}, "",function()
+            ENTITY.SET_ENTITY_MAX_SPEED(entities.get_user_vehicle_as_handle(), max_speed_value / 3.6)
+        end)
+        menu.slider(veh_max_speed, "速度设置", {}, "", 0, 300, 200, 10, function (s)
+            max_speed_value = s
+        end)
+
+    Torque_switching = menu.list(veh_movement, '扭矩切换', {}, '')
+        local num_for_torque = 51
+        menu.slider(Torque_switching, "扭矩速度", {"torquespeed"}, "", 1, 500, 51, 1, function(s)
+            num_for_torque = s
+        end)
+        menu.toggle_loop(Torque_switching, "开启", {}, "", function()
+            local veh = entities.get_user_vehicle_as_handle()
+            if veh ~= nil then
+                if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(veh) then
+                    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+                end
+                VEHICLE.MODIFY_VEHICLE_TOP_SPEED(veh, num_for_torque)
+                ENTITY.SET_ENTITY_MAX_SPEED(veh, num_for_torque)
+            end
+        end)
+
+    nitrogen_acceleration = menu.list(veh_movement, '氮气加速', {}, '')
+        menu.toggle_loop(nitrogen_acceleration, "氮气加速", {}, "按X使用", function()
+            nnitrogen_acceleration()
+        end)
+        menu.slider(nitrogen_acceleration, "氮气时间", {"nitroduration"}, "", 1, 20, 2, 1, function(val)
+            nnitro_duration(val)
+        end)
+        menu.slider(nitrogen_acceleration, "氮气速度", {"nitropower"}, "", 1, 10000, 2000, 50, function(val)
+            nnitro_power(val)
+        end)
+        menu.toggle_loop(nitrogen_acceleration,"排气管喷火", {}, "", function()
+            local car = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+            if car ~= 0 then
+                local user_vehicle_pointer = entities.handle_to_pointer(car)
+                entities.set_rpm(user_vehicle_pointer, 2.0)
+            end
+            util.yield(100)
+        end)
+    
+    menu.toggle(veh_movement, "反向控制", {}, "", function(state)
+        car_crash(state)
+    end)
+    
+    dow_block = 0
+    driveonwater = false
+    ls_driveonwater = menu.toggle(veh_movement, "水上驾驶", {"driveonwater"}, "", function(on)
+        driveonwater = on
+        if on then
+            menu.set_value(ls_driveonair, false)
+            menu.set_value(ls_walkwater, false)
+        else
+            if not driveonair and not walkonwater then
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, 0, 0, 0, false, false, false)
+            end
+        end
+    end)
+    
+    doa_ht = 0
+    driveonair = false
+    ls_driveonair = menu.toggle(veh_movement, "空中驾驶", {"driveonair"}, "", function(on)
+        driveonair = on
+        if on then
+            local pos = players.get_position(players.user())
+            doa_ht = pos['z']
+            notification("~y~~bold~使用空格键和ctrl键微调驾驶高度!", HudColour.blue)
+            if driveonwater or walkonwater then
+                menu.set_value(ls_driveonwater, false)
+                menu.set_value(ls_walkwater, false)
+            end
+        end
+    end)
+    
+    menu.toggle_loop(veh_movement, "水下驾驶", {}, "", function ()
+        menu.trigger_commands("waterwheels")
+    end)
+    
+    menu.toggle_loop(veh_movement, "载具平移", {}, "使用左右箭头键使车辆水平移动", function(toggle)
+        local player_cur_car = entities.get_user_vehicle_as_handle()
+        if player_cur_car ~= 0 then
+            local rot = ENTITY.GET_ENTITY_ROTATION(player_cur_car, 0)
+            if PAD.IS_CONTROL_PRESSED(175, 175) then
+                ENTITY.APPLY_FORCE_TO_ENTITY(player_cur_car, 1, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, true, true, true, false, true)
+                ENTITY.SET_ENTITY_ROTATION(player_cur_car, rot['x'], rot['y'], rot['z'], 0, true)
+            end
+            if PAD.IS_CONTROL_PRESSED(174, 174) then
+                ENTITY.APPLY_FORCE_TO_ENTITY(player_cur_car, 1, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, true, true, true, false, true)
+                ENTITY.SET_ENTITY_ROTATION(player_cur_car, rot['x'], rot['y'], rot['z'], 0, true)
+            end
+        end
+    end)
+    
+    menu.toggle_loop(veh_movement, "车辆下降", {}, "按ctrl", function(toggle)
+        local player_cur_car = entities.get_user_vehicle_as_handle()
+        if player_cur_car ~= 0 then
+            if PAD.IS_CONTROL_JUST_PRESSED(36,36) then
+                ENTITY.APPLY_FORCE_TO_ENTITY(player_cur_car, 1, 0.0, 0.0, -20, 0.0, 0.0, 0.0, 0, true, true, true, false, true)
+            end
+        end
+    end)
+
+    menu.toggle_loop(veh_movement, "喇叭加速", {}, "", function()
+        horn_boost(players.user())
+    end)
+    menu.toggle_loop(veh_movement, "喇叭跳跳车", {}, "", function()
+        car_jump(players.user())
+    end)
+
 ----载具选项
-menu.action(vehicle, "更改载具降落伞", {}, "雨伞", function()
+menu.toggle_loop(vehicle, "载具识别", {}, "", function(on)
+    Vehicle_identify()
+end)
+menu.toggle_loop(vehicle, "禁用碰撞", {}, "", function()
+    local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
+    if vehicle ~= 0 then 
+        for _, v in pairs(entities.get_all_vehicles_as_handles()) do 
+            ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(v, vehicle, true)
+        end 
+    end
+end)
+
+menu.textslider(vehicle, "载具降落伞", {}, "",Vparachute_name, function(index)
     local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(players.user()), false)
-    local hash = util.joaat("prop_beach_parasol_03")
+    local hash = util.joaat(Vparachute_list[index])
     request_model(hash)
     VEHICLE.VEHICLE_SET_PARACHUTE_MODEL_OVERRIDE(vehicle,hash)
 end)
@@ -1305,33 +1449,6 @@ menu.slider(vehicle, "设置污垢等级", {}, "", 0, 15, 0, 1, function(num)
     local last_vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), true)
     VEHICLE.SET_VEHICLE_DIRT_LEVEL(last_vehicle, num)
 end)
-menu.toggle(vehicle, "失控驾驶",{},"", function(on)
-	local last_vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), true)
-    if on then
-        VEHICLE.SET_VEHICLE_REDUCE_GRIP(last_vehicle, true)
-		VEHICLE1._SET_VEHICLE_REDUCE_TRACTION(last_vehicle, 50)
-	else
-        VEHICLE.SET_VEHICLE_REDUCE_GRIP(last_vehicle, false)
-		VEHICLE1._SET_VEHICLE_REDUCE_TRACTION(last_vehicle, 100)
-	end
-end)
-
-cruise_control = menu.list(vehicle, "定速巡航", {}, "")
-    local cruise_speed_value = 30
-    menu.toggle_loop(cruise_control, "开启", {}, "",function()
-        VEHICLE.SET_VEHICLE_FORWARD_SPEED(entities.get_user_vehicle_as_handle(), cruise_speed_value / 3.6)
-    end)
-    menu.slider(cruise_control, "速度设置", {}, "", 0, 300, 30, 10, function (s)
-        cruise_speed_value = s
-    end)
-veh_max_speed = menu.list(vehicle, "最大速度限制", {}, "")
-    local max_speed_value = 200
-    menu.toggle_loop(veh_max_speed, "开启", {}, "",function()
-        ENTITY.SET_ENTITY_MAX_SPEED(entities.get_user_vehicle_as_handle(), max_speed_value / 3.6)
-    end)
-    menu.slider(veh_max_speed, "速度设置", {}, "", 0, 300, 200, 10, function (s)
-        max_speed_value = s
-    end)
 
 menu.slider(vehicle, "载具透明度", {}, "", 0, 255, 255, 51, function (s)
     ENTITY.SET_ENTITY_ALPHA(entities.get_user_vehicle_as_handle(), s, false)
@@ -1452,21 +1569,6 @@ menu.toggle_loop(vehicle, "Mk2自瞄玩家", {}, "当玩家在可视范围内发
         end
     end
 end)
-Torque_switching = menu.list(vehicle, '扭矩切换', {}, '')
-    local num_for_torque = 51
-    menu.slider(Torque_switching, "扭矩速度", {"torquespeed"}, "", 1, 500, 51, 1, function(s)
-        num_for_torque = s
-    end)
-    menu.toggle_loop(Torque_switching, "开启", {}, "", function()
-        local veh = entities.get_user_vehicle_as_handle()
-        if veh ~= nil then
-            if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(veh) then
-                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
-            end
-            VEHICLE.MODIFY_VEHICLE_TOP_SPEED(veh, num_for_torque)
-            ENTITY.SET_ENTITY_MAX_SPEED(veh, num_for_torque)
-        end
-    end)
 
 menu.toggle(vehicle, '启用车辆轨迹', {}, '在所有表面上留下车辆的轨迹', function(toggle)
     GRAPHICS1._SET_FORCE_VEHICLE_TRAILS(toggle)
@@ -1475,85 +1577,6 @@ menu.action(vehicle,"允许当前车辆进入车库", {}, "允许您将任何车
     carinto()
 end)
 
-nitrogen_acceleration = menu.list(vehicle, '氮气加速', {}, '')
-    menu.toggle_loop(nitrogen_acceleration, "氮气加速", {}, "按X使用", function()
-        nnitrogen_acceleration()
-    end)
-    menu.slider(nitrogen_acceleration, "氮气时间", {"nitroduration"}, "", 1, 20, 2, 1, function(val)
-        nnitro_duration(val)
-    end)
-    menu.slider(nitrogen_acceleration, "氮气速度", {"nitropower"}, "", 1, 10000, 2000, 50, function(val)
-        nnitro_power(val)
-    end)
-    menu.toggle_loop(nitrogen_acceleration,"排气管喷火", {}, "", function()
-        local car = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-        if car ~= 0 then
-            local user_vehicle_pointer = entities.handle_to_pointer(car)
-            entities.set_rpm(user_vehicle_pointer, 2.0)
-        end
-        util.yield(100)
-    end)
-
-menu.toggle(vehicle, "反向控制", {}, "", function(state)
-    car_crash(state)
-end)
-
-dow_block = 0
-driveonwater = false
-ls_driveonwater = menu.toggle(vehicle, "水上驾驶", {"driveonwater"}, "", function(on)
-    driveonwater = on
-    if on then
-        menu.set_value(ls_driveonair, false)
-        menu.set_value(ls_walkwater, false)
-    else
-        if not driveonair and not walkonwater then
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, 0, 0, 0, false, false, false)
-        end
-    end
-end)
-
-doa_ht = 0
-driveonair = false
-ls_driveonair = menu.toggle(vehicle, "空中驾驶", {"driveonair"}, "", function(on)
-    driveonair = on
-    if on then
-        local pos = players.get_position(players.user())
-        doa_ht = pos['z']
-        notification("~y~~bold~使用空格键和ctrl键微调驾驶高度!", HudColour.blue)
-        if driveonwater or walkonwater then
-            menu.set_value(ls_driveonwater, false)
-            menu.set_value(ls_walkwater, false)
-        end
-    end
-end)
-
-menu.toggle_loop(vehicle, "水下驾驶", {}, "", function ()
-    menu.trigger_commands("waterwheels")
-end)
-
-menu.toggle_loop(vehicle, "载具平移", {}, "使用左右箭头键使车辆水平移动", function(toggle)
-    local player_cur_car = entities.get_user_vehicle_as_handle()
-    if player_cur_car ~= 0 then
-        local rot = ENTITY.GET_ENTITY_ROTATION(player_cur_car, 0)
-        if PAD.IS_CONTROL_PRESSED(175, 175) then
-            ENTITY.APPLY_FORCE_TO_ENTITY(player_cur_car, 1, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, true, true, true, false, true)
-            ENTITY.SET_ENTITY_ROTATION(player_cur_car, rot['x'], rot['y'], rot['z'], 0, true)
-        end
-        if PAD.IS_CONTROL_PRESSED(174, 174) then
-            ENTITY.APPLY_FORCE_TO_ENTITY(player_cur_car, 1, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, true, true, true, false, true)
-            ENTITY.SET_ENTITY_ROTATION(player_cur_car, rot['x'], rot['y'], rot['z'], 0, true)
-        end
-    end
-end)
-
-menu.toggle_loop(vehicle, "车辆下降", {}, "按ctrl", function(toggle)
-    local player_cur_car = entities.get_user_vehicle_as_handle()
-    if player_cur_car ~= 0 then
-        if PAD.IS_CONTROL_JUST_PRESSED(36,36) then
-            ENTITY.APPLY_FORCE_TO_ENTITY(player_cur_car, 1, 0.0, 0.0, -20, 0.0, 0.0, 0.0, 0, true, true, true, false, true)
-        end
-    end
-end)
 menu.toggle_loop(vehicle, "显示车辆角度", {}, "", function()
     local player_cur_car = entities.get_user_vehicle_as_handle()
     if player_cur_car ~= 0 and PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
@@ -1620,24 +1643,22 @@ menu.toggle_loop(veh_jump, "启动", {}, "按空格键跳跃.", function()
     end
 end)
 
-speedometer_car = menu.list(vehicle, "可视化速度表", {}, "")
-    menu.toggle_loop(speedometer_car,"开启", {}, "",function()
-        Visual_speedometer()
+menu.toggle(vehicle, "绘制时速", {}, "", function(state)
+    vehicle_speedometer(state)
+end)
+
+speedometer_car = menu.list(vehicle, "速度表", {}, "")
+    menu.toggle_loop(speedometer_car, '开启', {}, "", function()
+        speedometer()
     end)
-	menu.divider(speedometer_car, "车速表选项")
-        menu.colour(speedometer_car, "更改强调色", {"spcc"}, "", sp_colour, true, function(colour)
-            spp_colour(colour)
-        end)
-        menu.colour(speedometer_car, "更改文本颜色", {"sptxtc"}, "", cartxt_colour, true, function(colour)
-            txtt_colour(colour)
-        end)
-    menu.divider(speedometer_car, "车速表位置")
-        menu.slider(speedometer_car, "车速表位置X", {"spX"}, "", 1, 1000, 865, 1, function(x)
-            spp_posX(x)
-        end)
-        menu.slider(speedometer_car, "车速表位置Y", {"spY"}, "", 1, 1000, 860, 1, function(y)
-            spp_posY(y)
-        end)
+    menu.divider(speedometer_car, "位置")
+    menu.slider(speedometer_car, "位置X", {"spX"}, "", 1, 100, 84, 1, function(x)
+        speedometer_X(x)
+    end)
+    menu.slider(speedometer_car, "位置Y", {"spY"}, "", 1, 100, 75, 1, function(y)
+        speedometer_Y(y)
+    end)
+
 
 
 ff9car = menu.list(vehicle, "道奇战马", {}, "")
@@ -1659,10 +1680,6 @@ sdroot = menu.list(vehicle, '魔幻激光战马', {}, '')
     menu.list_select(sdroot, '魔幻战马武器', {},'更改魔幻激光战马的武器', lsdweap, 1, function(vweap)
         Magic_Warhorse_W(vweap)
     end)
-
-menu.toggle(vehicle, "载具时速表", {}, "", function(state)
-    vehicle_speedometer(state)
-end)
 
 menu.slider(vehicle, "换座位", {}, "", 1, 6, 1, 1, function(value)
     local ourped = PLAYER.PLAYER_PED_ID()
@@ -1770,12 +1787,6 @@ menu.action(vehicle, "强制离开载具", {}, "", function()
     TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
     TASK.TASK_LEAVE_ANY_VEHICLE(players.user_ped(), 0, 16)
 end)
-menu.toggle_loop(vehicle, "喇叭加速", {}, "", function()
-    horn_boost(players.user())
-end)
-menu.toggle_loop(vehicle, "喇叭跳跳车", {}, "", function()
-    car_jump(players.user())
-end)
 
 acceleration_pads = menu.list(vehicle, "加(减)速带", {}, "")
     menu.action(acceleration_pads, "单个加速带", {}, "", function() 
@@ -1789,15 +1800,8 @@ acceleration_pads = menu.list(vehicle, "加(减)速带", {}, "")
     end)
 
 planehud = menu.list(vehicle, "飞机HUD", {})
-    menu.toggle(planehud, "警报", {}, "", function(on)
-        gpws = on
-    end)
-    menu.toggle(planehud , "导弹雷达", {}, "", function(state)
-        Missile_radar(state)
-    end)
-    menu.toggle(planehud , "飞机HUD显示", {}, "", function(state)
-        phaneHUD(state)
-    end)
+    require "lib.daidailib.flightredux"
+    getentityinfo()
 
 vehicle_effect = menu.list(vehicle, "载具效果", {}, "")
     menu.toggle_loop(vehicle_effect, "开关", {}, "", function ()
@@ -2014,10 +2018,10 @@ advanced_options_island = menu.list(perrico_island, "高级选项", {}, "")--佩
     menu.click_slider(advanced_options_island, "增加任务生命数", {}, "只有是战局主机时才会生效", 0, 100, 3, 1, function(value)
         SET_INT_LOCAL("fm_mission_controller_2020", 51905 + 868 + 1, value + 2)
     end)
-    menu.action(advanced_options_island, "一键完成任务", {}, "", function()--Update tag1.67
+    menu.action(advanced_options_island, "快速完成", {}, "", function()--Update tag1.67
         menu.trigger_commands("scripthost")
-        SET_INT_LOCAL("fm_mission_controller_2020", 44749 + 1, 51338752)
-        SET_INT_LOCAL("fm_mission_controller_2020", 44749 + 1375 + 1, 50)
+        SET_INT_LOCAL("fm_mission_controller_2020", 45450 + 1, 51338752)
+        SET_INT_LOCAL("fm_mission_controller_2020", 45450 + 1378 + 1, 50)
     end)
     menu.action(advanced_options_island, "一键结束动画", {}, "仅限单人上岛使用", function()
         menu.trigger_commands("skipcutscene")
@@ -2137,11 +2141,11 @@ casino = menu.list(Task_robbery, "名钻赌场", {}, "")
         menu.click_slider(advanced_options_casino, "增加任务生命数", {}, "只有是战局主机时才会生效", 0, 100, 0, 1, function(value)
             SET_INT_LOCAL("fm_mission_controller", 26136 + 1325 + 1, value)
         end)
-        menu.action(advanced_options_casino, "一键完成任务", {}, "", function()--Update tag1.67
+        menu.action(advanced_options_casino, "快速完成", {}, "", function()--Update tag1.67
             menu.trigger_commands("scripthost")
             SET_INT_LOCAL("fm_mission_controller", 19710 + 1741, 80)
             SET_INT_LOCAL("fm_mission_controller", 19710 + 2686, 10000000)
-            SET_INT_LOCAL("fm_mission_controller", 28331 + 1, 99999)
+            SET_INT_LOCAL("fm_mission_controller", 27473 + 859, 99999)
             SET_INT_LOCAL("fm_mission_controller", 31587 + 69, 99999)
         end)
 
@@ -2201,11 +2205,11 @@ doomsday = menu.list(Task_robbery, "末日豪杰", {}, "")
             end)
 
     advanced_options_doomsday = menu.list(doomsday, "高级选项", {}, "")--末日
-        menu.action(advanced_options_doomsday, "一键完成任务", {}, "末日降临", function()--Update tag1.67
+        menu.action(advanced_options_doomsday, "快速完成", {}, "末日降临", function()--Update tag1.67
             menu.trigger_commands("scripthost")
             SET_INT_LOCAL("fm_mission_controller", 19710, 12)
             SET_INT_LOCAL("fm_mission_controller", 19710 + 1741, 150)
-            SET_INT_LOCAL("fm_mission_controller", 28331 + 1, 99999)
+            SET_INT_LOCAL("fm_mission_controller", 27473 + 859, 99999)
             SET_INT_LOCAL("fm_mission_controller", 31587 + 69, 99999)
             SET_INT_LOCAL("fm_mission_controller", 31587 + 97, 80)
         end)
@@ -2303,6 +2307,18 @@ end)
 
 ----武器选项
 weaponsetting = menu.list(weapons, '武器设置', {}, '')
+    menu.action(weaponsetting, "补充弹夹弹药",{}, "",function()
+        WEAPON.REFILL_AMMO_INSTANTLY(PLAYER.PLAYER_PED_ID())
+    end)
+    menu.action(weaponsetting, "补充所有弹药",{}, "",function()
+        for _, weapon in ipairs(util.get_weapons()) do
+            WEAPON.SET_PED_AMMO(PLAYER.PLAYER_PED_ID(), weapon.hash, 9999,false)
+        end
+    end)
+    menu.click_slider(weaponsetting, "添加弹药", {}, "添加指定武器弹药", 1, 9999, 1, 20, function(value)
+        local hash = WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.PLAYER_PED_ID())
+        WEAPON.ADD_AMMO_TO_PED(PLAYER.PLAYER_PED_ID(), hash, value)
+    end)
     menu.toggle_loop(weaponsetting, '无后坐力', {}, '使用武器射击时不会抖动游戏画面.', function()
             gunpro()
         end, function()
@@ -2349,90 +2365,155 @@ weaponsetting = menu.list(weapons, '武器设置', {}, '')
 weapon_save = menu.list(weapons, '武器保存', {}, '')
     dofile(filesystem.scripts_dir() .."lib/daidailib/CustomWeapon/customweapon.lua")
 
-menu.toggle_loop(weapons, "目标靶", {}, "", function() 
-    local pos = v3.new()
-    if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pos) and not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) then
-        create_shooting_target(pos.x, pos.y, pos.z)
-    end
-end)
+special_weapons = menu.list(weapons, "特殊武器", {}, "")
+    menu.toggle(special_weapons, "大锤", {}, "", function(on)
+        hammer(on)
+    end)
+    menu.toggle(special_weapons, "雷神锤", {}, "", function(on)
+        thunder_hammer(on)
+    end)
+    menu.toggle(special_weapons, "流星锤", {}, "", function(on)
+        meteorhammer(on)
+    end)
+    menu.toggle(special_weapons, "原子锤", {}, "", function(on)
+        atomhammer(on)
+    end)
+    menu.toggle(special_weapons, "小熊", {}, "", function(on)
+        bearhammer(on)
+    end)
+    menu.toggle(special_weapons, "独角兽", {}, "", function(on)
+        unicorn(on)
+    end)
+    menu.toggle(special_weapons, "太刀",{}, "",function(on)
+        knife(on)
+    end)
 
-menu.toggle_loop(weapons, "神风炮", {}, "", function()
-    Kamikaze_Gun()
-end)
+entity_control = menu.list(weapons, "实体控制枪", {}, "控制你所瞄准的实体")
+    menu.toggle_loop(entity_control, "开启", {}, "", function()
+        entitycontrol()
+        menu.set_value(crosshair1, true)
+    end,function()
+        menu.set_value(crosshair1, false)
+    end)
+    menu.action(entity_control, "清除记录的实体", {}, "", function()
+        clearcontrollog()
+    end)
+    menu.divider(entity_control, "实体列表")
 
+weapon_fun = menu.list(weapons, "武器娱乐", {}, "")
+    menu.toggle_loop(weapon_fun, "目标靶", {}, "", function() 
+        local pos = v3.new()
+        if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pos) and not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) then
+            create_shooting_target(pos.x, pos.y, pos.z)
+        end
+    end)
+    menu.toggle_loop(weapon_fun, "神风炮", {}, "", function()
+        Kamikaze_Gun()
+    end)
+    menu.toggle_loop(weapon_fun,"烟花枪", {}, "拿着烟花发射器时将发射自定义载具烟花", function()
+        Firework_Gun()
+    end)
+    menu.toggle_loop(weapon_fun,"抓钩枪", {}, "", function()
+        grappling_gun()
+    end)
+    menu.toggle_loop(weapon_fun,"鲨鱼枪", {}, "", function()
+        Shark_gun()
+    end)
+    menu.toggle_loop(weapon_fun,"陨石枪", {}, "", function()
+        local pos = v3.new()
+        if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pos) then
+            entities.create_object(3751297495, pos)
+        end
+    end)
+    menu.toggle_loop(weapon_fun, "实体引力", {}, "射击两个实体以让它们互相吸引", function()
+        ctst()
+    end, function ()
+        ctst_stop()
+    end)
+    menu.toggle(weapon_fun, "RPG自动瞄准器", {}, "发射后自动追踪视野内玩家", function (on)
+        RPG_Automatic_sight(on)
+    end)
+    nuclear_weapon = menu.list(weapon_fun, "核武器", {}, "")
+        menu.toggle_loop(nuclear_weapon,"天基炮", {}, "", function()
+            nuclear_weapon1()
+        end)
+        menu.toggle_loop(nuclear_weapon, '核弹枪', {}, "", function()
+            nukegunmode()
+        end)
+        menu.toggle_loop(nuclear_weapon,"超级核弹", {}, "", function()
+            nuclear_weapon2()
+        end)
+    menu.toggle_loop(weapon_fun,"推进载具", {}, "", function()
+        if PED.IS_PED_SHOOTING(players.user_ped()) then
+            local entity = get_entity_player_is_aiming_at(players.user())
+            if entity ~= 0 then
+                if ENTITY.IS_ENTITY_A_VEHICLE(entity) then
+                    VEHICLE.SET_VEHICLE_FORWARD_SPEED(entity, 100)
+                end
+            end
+        end
+    end)
+    menu.toggle_loop(weapon_fun,"冻结实体", {}, "", function()
+        if PED.IS_PED_SHOOTING(players.user_ped()) then
+            local entity = get_entity_player_is_aiming_at(players.user())
+            if entity ~= 0 then
+                ENTITY.FREEZE_ENTITY_POSITION(entity, true)
+            end
+        end
+    end)
+    menu.toggle_loop(weapon_fun, "转魂枪", {}, "", function()
+        Soul_Gun()
+    end)
+    entity_gun = menu.list(weapon_fun, "实体枪", {}, "")
+        menu.toggle_loop(entity_gun, "实体枪1", {}, "", function()
+            eentity_gun()
+        end)
+        menu.list_select(entity_gun, "选择实体", {}, "选择实体枪1的模型", entity_options, 1,function(index)
+            shootent = entity_hashes[index]
+        end)
+        menu.toggle_loop(entity_gun, '实体枪2', {}, '', function()
+            xxxminecraftgun()
+        end)
+    menu.action(weapon_fun, "发射引导导弹", {}, "", function()
+        if not UFO.exists() then 
+            GuidedMissile.create()
+        end
+    end)
+    menu.toggle(weapon_fun, "背藏武器", {}, "按Tab键", function(on)
+        Back_weapons(on)
+    end)
+    vehicleGun = menu.list(weapon_fun,"载具枪", {}, "")
+        menu.toggle_loop(vehicleGun,"开启", {}, "", function ()
+                Vehicle_gun()
+            end, function()
+                Vehicle_gun_stop()
+        end)
+        menu.list_select(vehicleGun,"选择载具", {}, "", Objoptions_all, 1, function (opt)
+            Vehicle_gun_opt(opt)
+        end)
+        menu.toggle(vehicleGun,"进入车辆", {}, "", function(toggle)
+            Vehicle_gun_into(toggle)
+        end)
+    menu.toggle(weapon_fun, "女武神导弹",  {}, "", function(toggle)
+        nvwushen(toggle)
+    end)
+
+
+menu.toggle_loop(weapons, "导弹雷达", {}, "", function()
+    Missile_radar()
+end)
 menu.toggle_loop(weapons, "近战爆炸", {}, "", function()
     local pos = v3.new()
     if WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped()) == -1569615261 and WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pos) then
         FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 18, 100, true, false, 0, false)
     end
 end)
-
 menu.toggle_loop(weapons, "瞄准信息", {}, "显示您瞄准的实体的信息", function()
     local info = get_aim_info()
     if info['ent'] ~= 0 then
         local text = "哈希: " .. info['hash'] .. "\n实体: " .. info['ent'] .. "\n生命值: " .. info['health'] .. "\n类型: " .. info['type'] .. "\n速度: " .. info['speed']
         directx.draw_text(0.5, 0.3, text, 5, 0.5, {r=1, g=1, b=1, a=1}, true)
     end
-end)
-
-menu.toggle_loop(weapons,"烟花枪", {}, "拿着烟花发射器时将发射自定义载具烟花", function()
-    Firework_Gun()
-end)
-menu.toggle_loop(weapons,"抓钩枪", {}, "", function()
-    grappling_gun()
-end)
-menu.toggle_loop(weapons,"鲨鱼枪", {}, "", function()
-    Shark_gun()
-end)
-menu.toggle_loop(weapons,"陨石枪", {}, "", function()
-    local pos = v3.new()
-    if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pos) then
-        entities.create_object(3751297495, pos)
-    end
-end)
-menu.toggle_loop(weapons, "实体引力", {}, "射击两个实体以让它们互相吸引", function()
-	ctst()
-end, function ()
-    ctst_stop()
-end)
-
-menu.toggle(weapons, "RPG自动瞄准器", {}, "发射后自动追踪视野内玩家", function (on)
-    RPG_Automatic_sight(on)
-end)
-
-
-nuclear_weapon = menu.list(weapons, "核武器", {}, "")
-    menu.toggle_loop(nuclear_weapon,"天基炮", {}, "", function()
-        nuclear_weapon1()
-    end)
-    menu.toggle_loop(nuclear_weapon, '核弹枪', {}, "", function()
-        nukegunmode()
-    end)
-    menu.toggle_loop(nuclear_weapon,"超级核弹", {}, "", function()
-        nuclear_weapon2()
-    end)
-
-menu.toggle_loop(weapons,"推进载具", {}, "", function()
-    if PED.IS_PED_SHOOTING(players.user_ped()) then
-        local entity = get_entity_player_is_aiming_at(players.user())
-        if entity ~= 0 then
-            if ENTITY.IS_ENTITY_A_VEHICLE(entity) then
-                VEHICLE.SET_VEHICLE_FORWARD_SPEED(entity, 100)
-            end
-        end
-    end
-end)
-menu.toggle_loop(weapons,"冻结实体", {}, "", function()
-    if PED.IS_PED_SHOOTING(players.user_ped()) then
-        local entity = get_entity_player_is_aiming_at(players.user())
-        if entity ~= 0 then
-            ENTITY.FREEZE_ENTITY_POSITION(entity, true)
-        end
-    end
-end)
-
-menu.toggle_loop(weapons, "转魂枪", {}, "", function()
-    Soul_Gun()
 end)
 
 crosshair = menu.list(weapons, "准星", {}, "")
@@ -2473,18 +2554,6 @@ crosshair = menu.list(weapons, "准星", {}, "")
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.49997,0.478,0)
     end)
 
-entity_gun = menu.list(weapons, "实体枪", {}, "")
-    menu.toggle_loop(entity_gun, "实体枪1", {}, "", function()
-        eentity_gun()
-    end)
-    menu.list_select(entity_gun, "选择实体", {}, "选择实体枪1的模型", entity_options, 1,function(index)
-        shootent = entity_hashes[index]
-    end)
-    menu.toggle_loop(entity_gun, '实体枪2', {}, '', function()
-        xxxminecraftgun()
-    end)
-
-
 menu.toggle_loop(weapons, "自动扳机", {}, "", function()
     local wpn = WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped())
     local dmg = SYSTEM.ROUND(WEAPON.GET_WEAPON_DAMAGE(wpn, 0))
@@ -2509,18 +2578,6 @@ menu.slider_float(weapons, "近战伤害修改", {"meleedamage"}, "", 100, 1000,
     PLAYER.SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER(players.user(), modifier)
 end)
 
-entity_control = menu.list(weapons, "实体控制枪", {}, "控制你所瞄准的实体")
-    menu.toggle_loop(entity_control, "开启", {}, "", function()
-        entitycontrol()
-        menu.set_value(crosshair1, true)
-    end,function()
-        menu.set_value(crosshair1, false)
-    end)
-    menu.action(entity_control, "清除记录的实体", {}, "", function()
-        clearcontrollog()
-    end)
-    menu.divider(entity_control, "实体列表")
-
 menu.toggle_loop(weapons, "无爆炸物", {}, "移除玩家所有爆炸性弹药,甚至是火箭弹", function(on)
         WEAPON.REMOVE_ALL_PROJECTILES_OF_TYPE(741814745, false)
         WEAPON.REMOVE_ALL_PROJECTILES_OF_TYPE(-1312131151, false)
@@ -2534,21 +2591,9 @@ menu.toggle_loop(weapons, "无爆炸物", {}, "移除玩家所有爆炸性弹药
         WEAPON.REMOVE_ALL_PROJECTILES_OF_TYPE(1169823560, false)
 end)
 
-tint_thread = util.create_thread(function (thr)
-    cur_tint = 0
-    while true do
-        if cur_tint < 7 then
-            cur_tint = cur_tint + 1
-        else
-            cur_tint = 0
-        end
-        util.yield(200)
-    end
-end)
-menu.toggle_loop(weapons, "彩虹武器色调", {}, "", function(on)
-    plyr = PLAYER.PLAYER_PED_ID()
-        local last_tint = WEAPON.GET_PED_WEAPON_TINT_INDEX(PLAYER.PLAYER_PED_ID(), WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.PLAYER_PED_ID()))
-        WEAPON.SET_PED_WEAPON_TINT_INDEX(PLAYER.PLAYER_PED_ID(),WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.PLAYER_PED_ID()), cur_tint)
+menu.toggle_loop(weapons, "随机武器色调", {}, "", function(on)
+    local last_tint = WEAPON.GET_PED_WEAPON_TINT_INDEX(PLAYER.PLAYER_PED_ID(), WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.PLAYER_PED_ID()))
+    WEAPON.SET_PED_WEAPON_TINT_INDEX(PLAYER.PLAYER_PED_ID(),WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.PLAYER_PED_ID()), math.random(0, 7))
 end)
 
 damage_numbers_list = menu.list(weapons, "伤害数字")
@@ -2561,20 +2606,19 @@ damage_numbers_list = menu.list(weapons, "伤害数字")
     menu.slider(damage_numbers_list, "数字尺寸", {}, "", 1, 100, 7, 1, function (value)
         damage_numbers_text_size = value * 0.1
     end)
-    
-damage_numbers_colours_list = menu.list(damage_numbers_list, "颜色设置")
-    menu.rainbow(menu.colour(damage_numbers_colours_list, "射击默认颜色", {"damagenumcolour"}, "默认命中的颜色", damage_numbers_health_colour, true, function (value)
-        damage_numbers_health_colour = value
-    end))
-    menu.rainbow(menu.colour(damage_numbers_colours_list, "射击暴击颜色", {"damagenumcritcolour"}, "暴击颜色", damage_numbers_crit_colour, true, function (value)
-        damage_numbers_crit_colour = value
-    end))
-    menu.rainbow(menu.colour(damage_numbers_colours_list, "射击盔甲颜色", {"damagenumarmourcolour"}, "盔甲颜色", damage_numbers_armour_colour, true, function (value)
-        damage_numbers_armour_colour = value
-    end))
-    menu.rainbow(menu.colour(damage_numbers_colours_list, "射击载具颜色", {"damagenumvehiclecolour"}, "载具颜色", damage_numbers_vehicle_colour, true, function (value)
-        damage_numbers_vehicle_colour = value
-    end))
+    damage_numbers_colours_list = menu.list(damage_numbers_list, "颜色设置")
+        menu.rainbow(menu.colour(damage_numbers_colours_list, "射击默认颜色", {"damagenumcolour"}, "默认命中的颜色", damage_numbers_health_colour, true, function (value)
+            damage_numbers_health_colour = value
+        end))
+        menu.rainbow(menu.colour(damage_numbers_colours_list, "射击暴击颜色", {"damagenumcritcolour"}, "暴击颜色", damage_numbers_crit_colour, true, function (value)
+            damage_numbers_crit_colour = value
+        end))
+        menu.rainbow(menu.colour(damage_numbers_colours_list, "射击盔甲颜色", {"damagenumarmourcolour"}, "盔甲颜色", damage_numbers_armour_colour, true, function (value)
+            damage_numbers_armour_colour = value
+        end))
+        menu.rainbow(menu.colour(damage_numbers_colours_list, "射击载具颜色", {"damagenumvehiclecolour"}, "载具颜色", damage_numbers_vehicle_colour, true, function (value)
+            damage_numbers_vehicle_colour = value
+        end))
 
 menu.toggle_loop(weapons, "踢出枪", {}, "", function()
     local ent = get_aim_info()['ent']
@@ -2603,12 +2647,6 @@ menu.toggle_loop(weapons, "崩溃枪", {}, "", function()
     end
 end)
 
-menu.action(weapons, "发射引导导弹", {}, "", function()
-	if not UFO.exists() then 
-        GuidedMissile.create()
-    end
-end)
-
 sticky_bomb_explosion = menu.list(weapons, '粘弹自动爆炸', {}, '')
     menu.toggle_loop(sticky_bomb_explosion, '粘弹自动爆炸', {}, '使您的粘弹在玩家或NPC附近时自动引爆.', function()
         proxyStickys()
@@ -2627,33 +2665,6 @@ sticky_bomb_explosion = menu.list(weapons, '粘弹自动爆炸', {}, '')
         WEAPON.REMOVE_ALL_PROJECTILES_OF_TYPE(util.joaat('weapon_stickybomb'))
     end)
 
-
-
-menu.toggle(weapons, "背藏武器", {}, "按Tab键", function(on)
-    Back_weapons(on)
-end)
-
-
----------载具枪
-vehicleGun = menu.list(weapons,"载具枪", {}, "")
-    menu.toggle_loop(vehicleGun,"开启", {}, "", function ()
-            Vehicle_gun()
-        end, function()
-            Vehicle_gun_stop()
-    end)
-    menu.list_select(vehicleGun,"选择载具", {}, "", Objoptions_all, 1, function (opt)
-        Vehicle_gun_opt(opt)
-    end)
-    menu.toggle(vehicleGun,"进入车辆", {}, "", function(toggle)
-        Vehicle_gun_into(toggle)
-    end)
-
-
-menu.toggle(weapons, "女武神导弹",  {}, "", function(toggle)
-    nvwushen(toggle)
-end)
-
-
 silent_aimbotroot = menu.list(weapons, "武器自瞄", {}, "")
     require "lib.daidailib.Aimbot"
 
@@ -2669,26 +2680,6 @@ menu.toggle(weapons, "偷车枪", {}, "", function(on)
         menu.trigger_commands("drivegun off")
     end
 end)
-
-special_weapons = menu.list(weapons, "特殊武器", {}, "")
-    menu.toggle(special_weapons, "大锤", {}, "", function(on)
-        hammer(on)
-    end)
-    menu.toggle(special_weapons, "流星锤", {}, "", function(on)
-        meteorhammer(on)
-    end)
-    menu.toggle(special_weapons, "原子锤", {}, "", function(on)
-        atomhammer(on)
-    end)
-    menu.toggle(special_weapons, "小熊", {}, "", function(on)
-        bearhammer(on)
-    end)
-    menu.toggle(special_weapons, "独角兽", {}, "", function(on)
-        unicorn(on)
-    end)
-    menu.toggle(special_weapons, "太刀",{}, "",function(on)
-        knife(on)
-    end)
 
 weapon_thing = menu.list(weapons, "更改子弹", {}, "")
     zidanleixing()
@@ -2742,21 +2733,6 @@ hitEffectRoot = menu.list(weapons, "命中效果", {}, "")
     end)
     menu.rainbow(hit_menuColour)
 
-menu.toggle_loop(weapons, "彩弹枪", {}, "射击更改载具颜色", function()
-	if PED.IS_PED_SHOOTING(players.user_ped()) then
-		local entity = get_entity_player_is_aiming_at(players.user())
-		if entity ~= NULL and ENTITY.IS_ENTITY_A_VEHICLE(entity) and request_control(entity, 1000) then
-			local primary, secundary = get_random_colour(), get_random_colour()
-			VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(entity, primary.r, primary.g, primary.b)
-			VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(entity, secundary.r, secundary.g, secundary.b)
-		end
-	end
-end)
-
-menu.toggle_loop(weapons, "空袭枪", {}, "", function()
-    kxq()
-end)
-
 magnetic_gun = menu.list(weapons, "磁力枪", {}, "")
     menu.toggle_loop(magnetic_gun, "磁力枪", {}, "具有磁力的枪,可控制车辆去向", function ()
         ciliqiang()
@@ -2765,6 +2741,12 @@ magnetic_gun = menu.list(weapons, "磁力枪", {}, "")
         szclq(index)
     end)
 
+menu.toggle_loop(weapons, "彩弹枪", {}, "射击更改载具颜色", function()
+    Paintball_gun()
+end)
+menu.toggle_loop(weapons, "空袭枪", {}, "", function()
+    kxq()
+end)
 menu.toggle_loop(weapons, "传送枪", {}, "", function()
     csq()
 end)
@@ -2783,15 +2765,7 @@ menu.action(funfeatures, "冲浪", {}, "", function()
     surf()
 end)
 menu.action(funfeatures, "猴王", {}, "", function()
-    local monkey = 0xA8683715 --猴子
-    request_model(monkey)
-    local monkeyKING = 0xC2D06F53 --猴王
-    change_model(players.user(), monkeyKING)
-    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), 0, -2, 0)
-    for i = 1, 5 do
-        local ped = PED.CREATE_PED(28, monkey, pos.x, pos.y, pos.z, 72, true, false)
-        join_group(ped)
-    end
+    monkey_king()
 end)
 menu.action(funfeatures, "驾驶超级游艇", {}, "在水面上生成", function ()
     super_yacht()
@@ -2845,27 +2819,15 @@ tpnearcar_list = menu.list(funfeatures, "传送到最近载具", {}, "")
     end)
 
 menu.action(funfeatures, "召回载具", {}, "让你的载具自动驶向你", function()
-    local lastcar = PLAYER.GET_PLAYERS_LAST_VEHICLE()
-    if lastcar ~= 0 then
-        local plyr = PLAYER.PLAYER_PED_ID()
-        local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(plyr, 0.0, 5.0, 0.0)
-        local pedhash = -67533719
-        request_model(pedhash)
-        local tesla_ped = entities.create_ped(32, pedhash, coords, ENTITY.GET_ENTITY_HEADING(plyr))
-        local tesla_blip = HUD.ADD_BLIP_FOR_ENTITY(lastcar)
-        HUD.SET_BLIP_COLOUR(tesla_blip, 7)
-        PED.SET_PED_INTO_VEHICLE(tesla_ped, lastcar, -1)
-        TASK.TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE(tesla_ped, lastcar, coords['x'], coords['y'], coords['z'], 300.0, 786996, 5)
-    end
+    recall_vehicle()
 end)
 
-gridspawn = menu.list(funfeatures, "网格载具生成", {}, "")--oppressor2
+gridspawn = menu.list(funfeatures, "批量载具生成", {}, "")--oppressor2
     dofile(filesystem.scripts_dir() .."lib/daidailib/GridSpawn.lua")
 
 menu.action(funfeatures, "火箭人", {}, "", function()
     Rocket_Man()
 end)
-
 menu.action(funfeatures, "黑人抬棺", {}, "", function ()
     blacks_coffins()
 end)
@@ -3096,10 +3058,9 @@ headlamp = menu.list(funfeatures, "头灯", {}, "仅本地可见")
         radius = value / 100
     end)
     headlamp_color = {r = 0, g = 1, b = 1, a = 0}
-    local head_lamp_color = menu.colour(headlamp, "颜色", {"colour"}, "", headlamp_color, true, function(value)
+    menu.rainbow(menu.colour(headlamp, "颜色", {"colour"}, "", headlamp_color, true, function(value)
         headlamp_color = value 
-    end)
-    menu.rainbow(head_lamp_color)
+    end))
 
 
 menu.toggle(funfeatures, "移除交通", {}, "对其它玩家生效", function(on)
@@ -3320,11 +3281,11 @@ menu.toggle(funfeatures, "举起手来",{}, "长按x",function(state)
     end
 end)
 
-menu.action(funfeatures, "自定义假R*警告", {"banner"}, "", function()
-    notification("~bold~~y~请输入自定义内容(汉字可通过cv)", HudColour.blue)
-    menu.show_command_box("banner ") 
-end, function(text)
-    custom_alert(text)
+menu.action(funfeatures, "自定义假R*警告", {}, "", function()
+    local label = util.register_label("输入自定义文本")
+	local input = get_input_from_screen_keyboard(label, 254, "")
+    if input == "" then return end 
+    custom_alert(input)
 end)
 
 local explosion_circle_angle = 0
@@ -3402,8 +3363,6 @@ ped_cats = menu.list(funfeatures, "宠物猫", {}, "")
 menu.toggle_loop(funfeatures, "激光眼", {}, "按住E键", function(on)
     laser_eyes()
 end)
-
-
 menu.toggle_loop(funfeatures, "镭射炮", {}, "", function()
     Laser_cannon()
 end)
@@ -3411,11 +3370,9 @@ end)
 finger_thing = menu.list(funfeatures, "手指枪", {}, "按B键")
     shouzhiqiang()
 
-
 menu.toggle(funfeatures, "力场", {}, "", function(on)
     force_Field(on)
 end)
-
 
 force_field = menu.list(funfeatures, "力场Pro", {}, "")
     menu.toggle_loop(force_field, "开启", {}, "", function()
@@ -3880,7 +3837,7 @@ players.on_join(function(pid)
             util.yield(cardDropDelay)
         end)
 
-    --------玩家恶搞选项
+----玩家恶搞选项
     kill_godmode = menu.list(trolling, "击杀玩家", {}, "")
     classic_trolling = menu.list(trolling, "经典恶搞", {}, "")
     lz = menu.list(trolling, "套笼子", {}, "")
@@ -3890,7 +3847,7 @@ players.on_join(function(pid)
     tp_player_trolling = menu.list(trolling, "发送玩家", {}, "")
 
 
-    ------击杀玩家
+    ----击杀玩家
     menu.action(kill_godmode, "用天基炮杀死玩家", {}, "", function()
         if not OrbitalCannon.exists() and PLAYER.IS_PLAYER_PLAYING(pid) then
             OrbitalCannon.create(pid)
@@ -5403,6 +5360,9 @@ players.on_join(function(pid)
     end)
 
     -----崩溃玩家
+    menu.action(crashplayer, "无效绳索崩溃", {}, "", function()
+        Invalid_rope(pid)
+    end)
     menu.action(crashplayer, "新鬼崩", {}, "", function()
         new_guibeng(pid)
     end)
@@ -6815,19 +6775,13 @@ menu.action(otherlist, "退回故事模式", {}, "", function()
     menu.trigger_commands("quittosp")
 end)
 menu.action(otherlist, "快速重启GTAV", {}, "不会退出游戏", function()
-    menu.show_warning(otherlist, 2, "现在还能后悔", function()
-        NETWORK1._SHUTDOWN_AND_LOAD_MOST_RECENT_SAVE()
-    end)
+    NETWORK1._SHUTDOWN_AND_LOAD_MOST_RECENT_SAVE()
 end)
 menu.action(otherlist, "重启GTAV", {}, "正常重启游戏", function()
-    menu.show_warning(otherlist, 2, "现在还能后悔", function()
-        MISC1._RESTART_GAME()
-    end)
+    MISC1._RESTART_GAME()
 end)
 menu.action(otherlist, "快速关闭GTAV", {}, "正如你所见,秒关GTA5", function()
-    menu.show_warning(otherlist, 2, "现在还能后悔", function()
-        exit_game()
-    end)
+    exit_game()
 end)
 menu.toggle_loop(otherlist,"绘制坐标", {}, "", function()
     local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)

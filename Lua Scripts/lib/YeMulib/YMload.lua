@@ -1,9 +1,28 @@
 ------------------------------------夜幕LUA------------------------------
 require "lib.YeMulib.YeMulib"
-Version5 = 5.8
+Version5 = 6.0
 local net = "夜幕LUA暂时无法连接到服务器！"
+local aalib = require("aalib")
+local PlaySound = aalib.play_sound
+local SND_ASYNC<const> = 0x0001
+local SND_FILENAME<const> = 0x00020000
+store_dir = filesystem.store_dir() .. '\\YMss\\'
+sound_selection_dir = store_dir .. '\\sound3.txt'
+if not filesystem.is_dir(store_dir) then
+    util.toast("夜幕音频没有正确安装！.")
+    util.stop_script()
+end
+fp = io.open(sound_selection_dir, 'r')
+local file_selection = fp:read('*a')
+fp:close()
+local sound_location = store_dir .. '\\' .. file_selection
+if not filesystem.exists(sound_location) then
+    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
+else
+    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
+end
+util.keep_running()
 util.show_corner_help("~bold~~y~欢迎使用夜幕LUA 此版本号为：~o~" .. Version5 ..  "~g~‹\n ~b~祝你玩的开心！")
-YM_logo = directx.create_texture(filesystem.resources_dir() ..'/YMIMG/YM.png')
 if SCRIPT_MANUAL_START then
     AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
     logo_alpha = 0
@@ -40,6 +59,11 @@ function directx.draw_circle(center, diameter, colour)
         directx.draw_triangle_from_center_point(center, diameter, i, colour)
     end
 end
+local new = {}
+function new.colour(R, G, B, A)
+   return {r = R / 255, g = G / 255, b = B / 255, a = A or 1}
+end
+white = new.colour( 255, 255, 255 )
 function directx.draw_rect_with_rounded_corner(x, y, width, height, colour)
     directx.draw_circle({ x = x + width, y = y + height / 2 }, (height / 2.35), colour)
     directx.draw_rect(x, y, width, height, colour)
@@ -49,44 +73,38 @@ if not SCRIPT_SILENT_START then
         local ym_size = 0.017
         local l = 1
         while l < 50 do
-            directx.draw_texture(YM_logo, ym_size, ym_size, 0.8, 0.8, 0.8, (1 - l / 250) + 0.03, 0, {r = 1, g = 1, b = 1, a = l / 50})
             util.yield()
             l += 5 - math.abs(math.floor(l / 10))
         end
         l = 1
         while l < 50 do
             --directx.draw_rect_with_rounded_corner(0.5 - l / 500, 0.8, l / 250, 0.06, darkBlue)
-            directx.draw_texture(YM_logo, ym_size, ym_size, 0.8, 0.8, 0.8 - l / 500, 0.80, 0, white)
             util.yield()
             l += 5 - math.abs(math.floor(l / 10))
         end
         AUDIO.PLAY_SOUND(-1, "signal_on", "DLC_GR_Ambushed_Sounds", 0, 0, 1)
         for i = 1, 360 do
            -- directx.draw_rect_with_rounded_corner(0.4, 0.8, 0.2, 0.06, darkBlue)
-            directx.draw_texture(YM_logo, ym_size, ym_size, 0.5, 0.5, 0.4, 0.80, i / 360, white)
             if i < 160 then
-                directx.draw_text(0.5, 0.81 + ((i - 150) / 25000), '正在加载夜幕LUA~~', ALIGN_TOP_CENTRE, 0.6, white, false)
+                directx.draw_text(0.47, 0.76 + ((i - 150) / 15000), '正在加载夜幕LUA~~', ALIGN_TOP_CENTRE, 0.65, white, false)
             elseif i > 190 then
-            directx.draw_text(0.5, 0.83 + ((i - 150) / 2500), " 已检测到用户".. PLAYER.GET_PLAYER_NAME(players.user()).. "", ALIGN_TOP_CENTRE, 0.65, white, false)
+            directx.draw_text(0.47, 0.80 + ((i - 150) / 7000), " 已检测到用户".. PLAYER.GET_PLAYER_NAME(players.user()).. "", ALIGN_TOP_CENTRE, 0.65, white, false)
             end
             util.yield()
         end
         l = 50
         while l >= 0 do
            -- directx.draw_rect_with_rounded_corner(0.5 - l / 500, 0.8, l / 250, 0.06, darkBlue)
-            directx.draw_texture(YM_logo, ym_size, ym_size, 0.5, 0.5, 0.5 - l / 500, 0.80, 0, white)
             util.yield()
             l -= 6 - math.abs(math.floor(l / 10))
         end
         l = 50
         while l >= 0 do
-            directx.draw_texture(YM_logo, ym_size, ym_size, 0.5, 0.5, 0.5, (1 - l / 250) + 0.03, 0, {r = 1, g = 1, b = 1, a = l / 80})
             util.yield()
             l -= 6 - math.abs(math.floor(l / 10))
         end
     end)
 end
-
 YMscript_logo = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'startpic.png')
 if SCRIPT_MANUAL_START then
     AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
@@ -295,6 +313,7 @@ local colors = {
         util.log(message)
     end
      notification("你好，尊贵的夜幕用户!\n&#8721;已连接！\n""[" .. YMencouragement[random_notify] .. "]", colors.black)
+     util.toast("欢迎来到V6.0时代！")
     util.on_stop(function()
      notification("下次遇见会更好!", colors.gray)
     end)
@@ -306,3 +325,34 @@ function YMdet()
     end
     --util.toast(net)
 end
+function ADD_TEXT_TO_SINGLE_LINE(scaleform, text, font, colour)
+	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "ADD_TEXT_TO_SINGLE_LINE")
+	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(text)
+	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(font)
+	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(colour)
+	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_BOOL(true)
+	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+end
+function HIDE(scaleform)
+	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "HIDE")
+	GRAPHICS.BEGIN_TEXT_COMMAND_SCALEFORM_STRING("STRING")
+	HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME("presents")
+	GRAPHICS.END_TEXT_COMMAND_SCALEFORM_STRING()
+	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.16)
+	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+end
+ function SETUP_SINGLE_LINE(scaleform)
+	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SETUP_SINGLE_LINE")
+	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
+	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
+	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(70.0)
+	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(125.0)
+	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("left")
+	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+end
+
+YMplanid = {{playerrid = "Hilovewould"}}
+YMth = {{playerid = "muyusd"},{playerid = "Dust-wine"},{playerid = "Maple_1999"},{playerid = "Xzzz_polar"},{playerid = "Hf19172798591"},{playerid = "dabaixiong0415"},{playerid = "sshiwga"},{playerid = "jasmine7294"},{playerid = "XiProNB"},{playerid = "hujkilsr"},{playerid = "Lyccchi"},{playerid = "dandanshinimenba"},{playerid = "Bronya_15644"},{playerid = "Royston7294"},{playerid = "liangzihui0522"},{playerid = "xx-bai"},{playerid = "--KZboy-SSR--"},{playerid = "RESERVEDBOSS"},{playerid = "HHX0808"},{playerid = "tiantian_qwq"},{playerid = "PowerByAndroid"},{playerid = "HeezyLua"}}
+YMblacklist = {{playerrrid = "Angel00512"}}

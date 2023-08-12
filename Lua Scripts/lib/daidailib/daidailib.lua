@@ -24,7 +24,6 @@ local SND_FILENAME<const> = 0x00020000
     local sound_location = store_dir .. '\\' .. file_selection
         PlaySound(sound_location, SND_FILENAME | SND_ASYNC) ]]
 
-
 --播放音频
 function playsound(sound_dir)
     local aalib = require("aalib")
@@ -160,6 +159,27 @@ function request_control_of_entity(ent)
         end
     end
 end
+
+
+----创建PED
+function create_ped(pedtype, hash, x, y, z, head)
+    request_model(hash)
+    local ped =  PED.CREATE_PED(pedtype, hash, x, y, z, head, true, false)
+    return ped
+end
+----创建载具
+function create_vehicle(hash, x, y, z, head)
+    request_model(hash)
+    local veh =  VEHICLE.CREATE_VEHICLE(hash, x, y, z, head, true, true, false)
+    return veh
+end
+----创建物体
+function create_object(hash, x, y, z)
+    request_model(hash)
+    local obj =  OBJECT.CREATE_OBJECT(hash, x, y, z, true, false, true)
+    return obj
+end
+
 
 
 ----更改模型
@@ -420,23 +440,169 @@ end
 
 
 
+----猴王
+function monkey_king()
+    local monkey = 0xA8683715 --猴子
+    local monkeyKING = 0xC2D06F53 --猴王
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), 0, -2, 0)
+    change_model(players.user(), monkeyKING)
+    for i = 1, 5 do
+        local ped = create_ped(28, monkey, pos.x, pos.y, pos.z, 72)
+        join_group(ped)
+    end
+end
 
 
+----彩弹枪
+function Paintball_gun()
+    if PED.IS_PED_SHOOTING(players.user_ped()) then
+        local entity = get_entity_player_is_aiming_at(players.user())
+        if entity ~= NULL and ENTITY.IS_ENTITY_A_VEHICLE(entity) and request_control(entity) then
+            local primary, secundary = random_colour(), random_colour()
+            VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(entity, primary.r, primary.g, primary.b)
+            VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(entity, secundary.r, secundary.g, secundary.b)
+        end
+    end
+end
 
 
+----速度表
+local gauge_bg = directx.create_texture(filesystem.resources_dir() .. '\\SakuraImg\\speedometer\\' .. '/dial.png')
+local needle = directx.create_texture(filesystem.resources_dir() .. '\\SakuraImg\\speedometer\\' .. '/needle.png')
+local wrench = directx.create_texture(filesystem.resources_dir() .. '\\SakuraImg\\speedometer\\' .. '/wrench.png')
+local gears = {} --挡位
+for i= 0, 7 do 
+    gears[i] = directx.create_texture(filesystem.resources_dir() .. '\\SakuraImg\\speedometer\\' .. '/gear_' .. tostring(i) .. '.png')
+end
+local speed_nums = {} --速度值
+for i= 0, 9 do 
+    speed_nums[i] = directx.create_texture(filesystem.resources_dir() .. '\\SakuraImg\\speedometer\\' .. '/mph_' .. tostring(i) .. '.png')
+end
+local hp_nums = {}
+for i= 0, 9 do 
+    hp_nums[i] = directx.create_texture(filesystem.resources_dir() .. '\\SakuraImg\\speedometer\\' .. '/hp_' .. tostring(i) .. '.png')
+end
+local kph_label = directx.create_texture(filesystem.resources_dir() .. '\\SakuraImg\\speedometer\\' .. '/kph_label.png')
+
+local texture_width = 0.08
+local texture_height = 0.08
+local carposX = 0.84
+local carposY = 0.75
+function speedometer_X(x)
+    carposX = x / 100
+end
+function speedometer_Y(y)
+    carposY = y / 100
+end
+function speedometer()
+    local car_ptr = entities.get_user_vehicle_as_pointer(false)
+    local car = entities.pointer_to_handle(car_ptr)
+    if car_ptr ~= 0 then
+        local rpm = entities.get_rpm(car_ptr)--每分钟转数
+        local max_rotation = math.rad(0.501 * 180) -- 针可以达到的最大旋转角度（弧度）
+
+        ----根据汽车的速度和最大速度计算打捆针的旋转
+        local needle_rotation = (rpm / 1)/1.485  - 0.170
+        local gear_pos_x = carposX - 0.0001
+        local gear_pos_y = carposY - 0.005
+        local gear = entities.get_current_gear(car_ptr)
+        directx.draw_texture(gauge_bg, texture_width, texture_height, 0.5, 0.5, carposX, carposY - 0.004, 0, 1.0, 1.0, 1.0, 1.0)
+        directx.draw_texture(needle, texture_width, texture_height, 0.5, 0.5, carposX, carposY, needle_rotation, 1.0, 1.0, 1.0, 0.5)
+        directx.draw_texture(gears[gear], texture_width, texture_height, 0.5, 0.5, gear_pos_x, gear_pos_y, 0, 1.0, 1.0, 1.0, 1)
+
+        ----健康值和颜色
+        local car_hp = ENTITY.GET_ENTITY_HEALTH(car)
+        local car_hp_str = tostring(car_hp)
+        local car_hp_r = 0.0 
+        local car_hp_g = 1.0 
+        local car_hp_b = 0.6
+        if car_hp < 210 then 
+            car_hp_r = 1.0 
+            car_hp_g = 0.5 
+            car_hp_b = 0.2
+        end
+        if car_hp < 100 then 
+            car_hp_r = 1.0 
+            car_hp_g = 0.0
+            car_hp_b = 0.0
+        end
+        --健康值图标
+        directx.draw_texture(wrench, 0.005, 0.005, 0.5, 0.5, gear_pos_x + 0.05, gear_pos_y + 0.04, 0, car_hp_r, car_hp_g, car_hp_b, 1)
+        local cur_hp_num_off = 0.001
+        for i=1, #car_hp_str do
+            directx.draw_texture(hp_nums[tonumber(car_hp_str:sub(i,i))], 0.008, 0.008, 0.5, 0.5, gear_pos_x + 0.06 + cur_hp_num_off, gear_pos_y + 0.04, 0, car_hp_r, car_hp_g, car_hp_b, 1)
+            cur_hp_num_off += 0.006
+        end
+
+        ----速度
+        local speed = math.ceil(ENTITY.GET_ENTITY_SPEED(car) * 3.6)
+
+        local cur_speed_num_offset = 0
+        local speed_str = tostring(speed)
+        for i=1, #speed_str do
+            directx.draw_texture(speed_nums[tonumber(speed_str:sub(i,i))] , 0.06, 0.06, 0.5, 0.5, (carposX) + cur_speed_num_offset, carposY + 0.1, 0, 1.0, 1.0, 1.0, 1)
+            cur_speed_num_offset += 0.06 / 2
+        end
+
+        cur_speed_num_offset += 0.011
+        directx.draw_texture(kph_label, 0.06, 0.06, 0.5, 0.5, (carposX) + cur_speed_num_offset, carposY + 0.13, 0, 1.0, 1.0, 1.0, 1)
+
+    end
+end
 
 
+----导弹雷达
+function Missile_radar()
+    for k, obj in pairs(entities.get_all_objects_as_handles()) do
+        if is_entity_a_projectile(ENTITY.GET_ENTITY_MODEL(obj)) then
+            if HUD.GET_BLIP_FROM_ENTITY(obj) == 0 then
+                local proj_blip = HUD.ADD_BLIP_FOR_ENTITY(obj)
+                HUD.SET_BLIP_SPRITE(proj_blip, 443)
+                HUD.SET_BLIP_COLOUR(proj_blip, 75)
+            end
+        end
+    end
+end
+----载具识别
+function Vehicle_identify()
+    local contact = directx.create_texture(filesystem.scripts_dir() .. '\\daidaiScript\\' .. '\\flightredux\\'.. 'contact.png')
+    for k,veh in pairs(entities.get_all_vehicles_as_handles()) do
+        local mdl = ENTITY.GET_ENTITY_MODEL(veh)
+        if ENTITY.GET_ENTITY_HEALTH(veh) > 0 then
+            local c = ENTITY.GET_ENTITY_COORDS(veh)
+            local draw_pos = world_to_screen_coords(c.x, c.y, c.z)
+            directx.draw_texture(contact, 0.005, 0.005, 0.5, 0.5, draw_pos.x, draw_pos.y, 0, 0, 100, 0, 100)
+        end
+    end
+end
 
 
-
-
-
-
-
-
-
-
-
+----召回载具
+function recall_vehicle()
+    local lastcar = PLAYER.GET_PLAYERS_LAST_VEHICLE()
+    if lastcar ~= 0 then
+        local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), 0.0, 5.0, 0.0)
+        local pedhash = -67533719
+        request_model(pedhash)
+        local tesla_ped = entities.create_ped(32, pedhash, coords, ENTITY.GET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID()))
+        ENTITY.SET_ENTITY_VISIBLE(tesla_ped, false, false)--不可见NPC
+        local tesla_blip = HUD.ADD_BLIP_FOR_ENTITY(lastcar)
+        HUD.SET_BLIP_COLOUR(tesla_blip, 7)
+        PED.SET_PED_INTO_VEHICLE(tesla_ped, lastcar, -1)
+        TASK.TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE(tesla_ped, lastcar, coords['x'], coords['y'], coords['z'], 300.0, 786996, 5)
+        while tesla_ped do
+            if PED.IS_PED_GETTING_INTO_A_VEHICLE(PLAYER.PLAYER_PED_ID()) then
+                local veh = PED.GET_VEHICLE_PED_IS_ENTERING(PLAYER.PLAYER_PED_ID())
+                if veh == lastcar then
+                    entities.delete(tesla_ped)
+                    util.remove_blip(tesla_blip) 
+                    break
+                end
+            end
+            util.yield()
+        end
+    end
+end
 
 
 ----读取外观
@@ -463,6 +629,7 @@ function read_appearance()
         local kk = "PROPS "..i..": "..index..","..texture.."\n"
         filewrite(path, "a+", kk)
     end
+    util.toast("读写完成")
 end
 
 
@@ -574,7 +741,7 @@ end
 --冲浪
 function surf()
     if not is_entity_on_water(PLAYER.PLAYER_PED_ID()) then
-        notification("~y~~bold~不在水上:D", HudColour.blue)
+        notification("~y~~bold~不在水上:)", HudColour.blue)
         return
     end
     local veh_hash = -311022263 --载具
@@ -591,7 +758,7 @@ function surf()
     
     --VEHICLE.SET_VEHICLE_DOORS_LOCKED(veh, 4)--禁止下车
     ENTITY.SET_ENTITY_INVINCIBLE(veh,true)
-    ENTITY.SET_ENTITY_ALPHA(players.user_ped(), 0, false)
+    ENTITY.SET_ENTITY_ALPHA(PLAYER.PLAYER_PED_ID(), 0, false)
     while ped do
         local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(players.user()), false)
         if not PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID()) and ENTITY.DOES_ENTITY_EXIST(veh) and ENTITY.DOES_ENTITY_EXIST(surfboard) then
@@ -766,7 +933,7 @@ function QueryIP(IP)
         return
     end
     async_http.init("http://ip-api.com","/json/"..IP .. "?lang=zh-CN",function(info,header,response)
-        if response == 200  then
+        if response == 200 and info ~= "" then
             local IPtable = StrToTable(info)
             if IPtable.status == "success" then
                 local str = "~y~IP: ~w~" .. IPtable.query .. 
@@ -1232,7 +1399,7 @@ function load_clothes(directory)
     local loaded_cloth = {}
     for i, filepath in ipairs(filesystem.list_files(directory)) do
         local _, filename, ext = string.match(filepath, "(.-)([^\\/]-%.?([^%.\\/]*))$")
-        if not filesystem.is_dir(filepath) and ext == "txt" then
+        if not filesystem.is_dir(filepath) and ext == "json" then
             table.insert(loaded_cloth, load_cloth_from_file(filepath))
         end
     end
@@ -2335,9 +2502,7 @@ function Shark_gun()
     local pos = v3.new()
 	if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pos) then
         local hash = 0x06C3F072
-        request_model(hash, 300)
-        local NPC = entities.create_ped(26, hash, pos, 0, true, false)
-        --local NPC = Cped(26, 0x06C3F072, pos , 0)
+        local NPC = create_ped(26, hash, pos.x, pos.y, pos.z, 0)
         ENTITY.FREEZE_ENTITY_POSITION(NPC, true)
         ENTITY.SET_ENTITY_ROTATION(NPC, 90, 0, 0, true)
         FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 4, 100, true, false, 1, false)
@@ -2481,13 +2646,15 @@ function save_config()
     local config_txt = 
         "--[Lua配置]"..
         "\nconfig_active1 = "..menu.get_value(host_sequence)..         ------------主机序列
-        "\nconfig_active1_x = "..menu.get_value(host_sequence_x)..       ------------主机序列x坐标
-        "\nconfig_active1_y = "..menu.get_value(host_sequence_y)..       ------------主机序列y坐标
+            "\nconfig_active1_x = "..menu.get_value(host_sequence_x)..       ------------主机序列x坐标
+            "\nconfig_active1_y = "..menu.get_value(host_sequence_y)..       ------------主机序列y坐标
         "\nconfig_active2 = "..menu.get_value(show_time)..             ------------显示时间
         "\nconfig_active3 = "..menu.get_value(script_name)..           ------------显示脚本名称
         "\nconfig_active4 = "..menu.get_value(numfps)..                -----------显示fps
         "\nconfig_active5 = "..menu.get_value(show_entityinfo)..       -----------实体池信息
         "\nconfig_active6 = "..menu.get_value(players_info)..          -----------绘制玩家信息
+            "\nconfig_active6_x = "..menu.get_value(infoverlay_x)..          -----------玩家信息x坐标
+            "\nconfig_active6_y = "..menu.get_value(infoverlay_y)..          -----------玩家信息y坐标
         "\nconfig_active7 = "..menu.get_value(auto_kick_adBot)..       -----------自动踢出广告机
         "\nconfig_active8 = "..menu.get_value(players_bar)             -----------玩家栏
     local file = io.open(selected_lang_path, 'w')
@@ -2785,6 +2952,19 @@ function CreateObject(Hash, Pos, static)
     return SpawnedVehicle
 end
 
+
+
+----无效绳索崩溃
+function Invalid_rope(pid)
+    local TargetPlayerPed = PLAYER.GET_PLAYER_PED(pid)
+    local Pos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
+    local cargobob = create_vehicle(0XFCFCB68B, Pos.x, Pos.y, Pos.z, ENTITY.GET_ENTITY_HEADING(SelfPlayerPed))
+    local cargobobPos = ENTITY.GET_ENTITY_COORDS(cargobob, true)
+    local vehicle = create_vehicle(0X187D938D, Pos.x, Pos.y, Pos.z, ENTITY.GET_ENTITY_HEADING(SelfPlayerPed))
+    local vehiclePos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
+    local newRope = PHYSICS.ADD_ROPE(Pos.x, Pos.y, Pos.z, 0, 0, 10, 1, 1, 0, 1, 1, false, false, false, 1.0, false, 0)
+    PHYSICS.ATTACH_ENTITIES_TO_ROPE(newRope, cargobob, vehicle, cargobobPos.x, cargobobPos.y, cargobobPos.z, vehiclePos.x, vehiclePos.y, vehiclePos.z, 2, false, false, 0, 0, "Center", "Center")
+end
 
 ----新鬼崩
 function new_guibeng(pid)
@@ -3916,7 +4096,8 @@ function yanhuafashe()
     for i = 1, 50 do
         for k, box in pairs(placed_firework_boxes) do 
             GRAPHICS.USE_PARTICLE_FX_ASSET(ptfx_asset)
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(effect_name, box, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 1.0, 0.0, 0.0, 0.0)
+            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(effect_name, box, 0, 0, 0, 0, 180, 0, 1, true, true, true)
+            GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(math.random(0, 255) / 255, math.random(0, 255) / 255, math.random(0, 255) / 255)
             util.yield(100)
         end
     end
@@ -5770,33 +5951,6 @@ local time = util.current_time_millis() + 2000
         end	
     end
 
----------彩蛋枪
-function get_random_colour()
-	local colour = {a = 255}
-	colour.r = math.random(0,255)
-	colour.g = math.random(0,255)
-	colour.b = math.random(0,255)
-	return colour
-end
-function request_control_once(entity)
-	if not NETWORK.NETWORK_IS_IN_SESSION() then
-		return true
-	end
-	local netId = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(entity)
-	NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netId, true)
-	return NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
-end
-function request_control(entity, timeOut)
-	if not ENTITY.DOES_ENTITY_EXIST(entity) then
-		return false
-	end
-	timeOut = timeOut or 500
-	while not request_control_once(entity) and timer.elapsed() < timeOut do
-		util.yield_once()
-	end
-	return timer.elapsed() < timeOut
-end
-
 
 ------踢出载具v1
 function kickcar(pid)
@@ -6211,7 +6365,7 @@ function laser_eyes()
             boneCoord_L.z += 0.02
             boneCoord_R.z += 0.02
         end
-        camRot.x += 90
+        camRot.x += -90
         request_ptfx_asset_lasereyes(dictionary)
         GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
         GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(ptfx_name, boneCoord_L.x, boneCoord_L.y, boneCoord_L.z, camRot.x, camRot.y, camRot.z, 2, 0, 0, 0, false)

@@ -71,7 +71,7 @@ end
 
 local constructor = {}
 local PROPS_PATH = filesystem.scripts_dir().."lib/YeMulib/constructor/objects_complete.txt"
-local CONSTRUCTS_DIR = filesystem.scripts_dir() .. "/daidaiScript/" .. 'Constructs\\'
+local CONSTRUCTS_DIR = filesystem.scripts_dir() .. "/YMS/" .. 'Constructs\\'
 filesystem.mkdirs(CONSTRUCTS_DIR)
 
 local spawned_constructs = {}

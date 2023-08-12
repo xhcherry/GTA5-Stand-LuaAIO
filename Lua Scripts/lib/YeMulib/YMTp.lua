@@ -498,4 +498,3 @@ end
 util.keep_running()
 
 menu.readonly(Transport, "感谢坐标提供者", "坤坤子")
-

@@ -1091,9 +1091,9 @@ saved:addSubOpt("生成", function(name, ext, path)
 end)
 
 saved:addSubOpt("删除文件", function (name, ext, path)
-os.remove(path)
-notification("已删除", HudColour.red)
-saved:reload()
+	os.remove(path)
+	notification("已删除", HudColour.red)
+	saved:reload()
 end)
 
 self:createCommands(self.ref)

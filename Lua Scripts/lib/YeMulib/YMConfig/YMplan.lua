@@ -1,3 +1,1 @@
-YMplanid = {{playerrid = "Hilovewould"}}
-YMth = {{playerid = "muyusd"},{playerid = "Dust-wine"},{playerid = "Maple_1999"},{playerid = "Xzzz_polar"},{playerid = "Hf19172798591"},{playerid = "dabaixiong0415"},{playerid = "sshiwga"},{playerid = "jasmine7294"},{playerid = "XiProNB"},{playerid = "hujkilsr"},{playerid = "Lyccchi"},{playerid = "dandanshinimenba"},{playerid = "Bronya_15644"},{playerid = "Royston7294"},{playerid = "liangzihui0522"},{playerid = "xx-bai"}}
-YMblacklist = {{playerrrid = "Angel00512"}}
+---CNM,看你麻痹看，破解你麻痹破解，CV你麻痹CV，CNM，操你全家MLGB,滚！！！

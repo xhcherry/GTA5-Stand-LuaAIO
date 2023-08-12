@@ -1,21 +1,19 @@
 
 
---游戏语言
-localisations = {
-    [0] = {"English"},
-    [1] = {"French"},
-    [2] = {"German"},
-    [3] = {"Italian"},
-    [4] = {"Spanish"},
-    [5] = {"Brasilian"},
-    [6] = {"Polish"},
-    [7] = {"Russian"},
-    [8] = {"Korean"},
-    [9] = {"Chinese (traditional)"},
-    [10] = {"Japanese"},
-    [11] = {"Mexican"},
-    [12] = {"Chinese (Simplified)"},
-}
+----载具降落伞
+Vparachute_name = {"降落伞1","降落伞2","降落伞3","降落伞4","雨伞1","雨伞2","雨伞3","雨伞4","路牌"}
+Vparachute_list = {
+        "sr_prop_specraces_para_s_01",
+        "p_parachute1_mp_dec",
+        "gr_prop_gr_para_s_01",
+        "imp_prop_impexp_para_s",
+        "prop_beach_parasol_03",
+        "prop_beach_parasol_02",
+        "prop_beach_parasol_07",
+        "prop_beach_parasol_09",
+        "prop_sign_road_01a"
+    }
+
 
 
 ----资产传送

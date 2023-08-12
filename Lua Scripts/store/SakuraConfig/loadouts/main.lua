@@ -126,11 +126,7 @@ return {
       ["attachments"] = {
          [1] = 1319465907
       },
-      ["tint"] = 2,
-      ["livery"] = {
-         ["hash"] = -1240142720,
-         ["colour"] = 0
-      }
+      ["tint"] = 3
    },
    [1119849093] = {
       ["attachments"] = {

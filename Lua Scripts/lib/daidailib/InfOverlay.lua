@@ -1,11 +1,8 @@
 local resx, resy = directx.get_client_size()
-local aspectratio <const> = resx/resy
+local aspectratio = resx/resy
 
---set position
-local guix = 0
-local guiy = 0
 
---set colours
+--默认颜色
 local colour =
 {
     titlebar = {r = 1, g = 0, b = 1, a = 1},
@@ -19,26 +16,27 @@ local colour =
     border = {r = 1, g = 0, b = 1, a = 1}
 }
 
---settings element sizing & spacing
+--默认元素大小和间距
 local nameh = 0.022
 local padding = 0.008
 local spacing = 0.003
 local textw = 0.16
 
---settings text sizing & spacing
+--默认文本大小和间距
 local namesize = 0.52
 local textsize = 0.41
 local linespacing = 0.0032
 
---settings border
+--默认宽度
 local borderwidth = 0
 
---settings blur
+--默认背景模糊
 local blurstrength = 4
 local blur = {}
 for i = 1, 8 do 
     blur[i] = directx.blurrect_new()
 end
+--释放模糊实例
 function blurrect_free()
     for i = 1, 8 do 
         directx.blurrect_free(blur[i])
@@ -68,10 +66,13 @@ end)
 
 --set position
 menu.divider(infoverlay, '位置')
-menu.slider_float(infoverlay, 'X:', {'overlayx'}, '信息覆盖的水平位置.', 0, 1000, 0, 1, function(s)
+--默认位置
+local guix = config_active6_x/1000
+local guiy = config_active6_y/1000
+infoverlay_x = menu.slider(infoverlay, 'X:', {'overlayx'}, '配置[√]\n信息覆盖的水平位置.', 0, 1000, config_active6_x, 1, function(s)
     guix = s/1000
 end)
-menu.slider_float(infoverlay, 'Y:', {'overlayy'}, '信息覆盖的垂直位置.', 0, 1000, 0, 1, function(s)
+infoverlay_y = menu.slider(infoverlay, 'Y:', {'overlayy'}, '配置[√]\n信息覆盖的垂直位置.', 0, 1000, config_active6_y, 1, function(s)
     guiy = s/1000
 end)
 

@@ -271,9 +271,9 @@ end
 ----快速关闭GTAV
 function exit_game()
     local pedhash = -67533719
-    STREAMING.REQUEST_MODEL(pedhash)
+    request_model(pedhash)
     local tesla_ped = entities.create_ped(32, pedhash, players.get_position(players.user()), 0)
-    ENTITY.DELETE_ENTITY(entities.handle_to_pointer(tesla_ped))
+    ENTITY.DELETE_ENTITY(tesla_ped)
 end
 
 
@@ -350,14 +350,15 @@ function set_remove_money_acc(value)
     remvalue = value
 end
 function remove_money()
-    SET_INT_GLOBAL(262145 + 20288, remvalue)
-    STATS.SET_PACKED_STAT_BOOL_CODE(15382, true, util.get_char_slot())
-    STATS.SET_PACKED_STAT_BOOL_CODE(9461, true, util.get_char_slot())
+    SET_INT_GLOBAL(262145 + 20468, remvalue)
+    STATS.SET_PACKED_STAT_BOOL_CODE(15382, true)
+    STATS.SET_PACKED_STAT_BOOL_CODE(9461, true)
     menu.trigger_commands("nopimenugrey on")
+
     if util.is_interaction_menu_open() then 
         PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 244, 1)
     end
-    SET_INT_GLOBAL(2766487, 85)
+    SET_INT_GLOBAL(2766622, 85)
     PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 244, 1)
     PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 176, 1)
 end
@@ -2178,6 +2179,7 @@ function transport_nuke()
     local skylift = VEHICLE.CREATE_VEHICLE(util.joaat("skylift"), pos.x, pos.y, pos.z, ENTITY.GET_ENTITY_HEADING(ped), true, false, false)
     PED.SET_PED_INTO_VEHICLE(ped, skylift, -1)
     local nuke = OBJECT.CREATE_OBJECT_NO_OFFSET(hash, pos.x, pos.y, pos.z, true, false, true)
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(nuke, true, true)--防止消失
     ENTITY.ATTACH_ENTITY_TO_ENTITY(nuke, skylift, 0, 0, -2.8, -1.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
     while true do
         local skyliftPos = ENTITY.GET_ENTITY_COORDS(skylift, true)
@@ -2924,11 +2926,11 @@ function all_drive_style()
 end
 
 
-local SCRIPT_VERSION = 9.2 - 0.1
+local SCRIPT_VERSION = 9.3 - 0.1
 function check_version()
     async_http.init("http://cnsakura.top", "/other/verification.json",function(info,header,response)
         local tab = StrToTable(info)
-        if response == 200 and tab ~= nil then
+        if response == 200 and tab ~= "" then
             if tab.version > SCRIPT_VERSION then
                 notification("~y~~bold~"..tab.notify, HudColour.blue)
                 util. stop_script()
@@ -3090,47 +3092,6 @@ function vehweapon_veh()
 end
 function setvehweapon(index)
     selectedOpt = index 
-end
-
-
-
-
-
-------------可视化速度表
---默认车速表 POS
-local sp_posX = 0.865
-local sp_posY = 0.86
-local sp_bg_tex = directx.create_texture(filesystem.resources_dir().."\\SakuraImg\\carspeed\\nfs_spc.png") 
-local sp_pin_tex = directx.create_texture(filesystem.resources_dir().."\\SakuraImg\\carspeed\\nfs_pin_spc.png")
-function spp_colour(colour)
-    sp_colour = colour
-end
-function txtt_colour(colour)
-    cartxt_colour = colour
-end
-function spp_posX(x)
-    sp_posX = x/1000
-end
-function spp_posY(y)
-    sp_posY = y/1000
-end 
-function Visual_speedometer()
-    local intoveh = PED.IS_PED_IN_ANY_VEHICLE(players.user_ped())
-    local veh = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
-    if intoveh then
-        local speed = ENTITY.GET_ENTITY_SPEED(veh);
-        local kmh = math.floor((speed * 3.6));
-        local rotation = 0.0
-        if kmh <= 240 and rotation <= 0.75 then
-            rotation = kmh/320
-        end
-        -- speedometer bg texture
-        directx.draw_texture(sp_bg_tex, 0.066, 0.066, 0.5, 0.5, sp_posX, sp_posY, 0.0, sp_colour)
-        -- speedometer pin texture
-        directx.draw_texture(sp_pin_tex, 0.066, 0.066, 0.5, 0.5, sp_posX, sp_posY, rotation, sp_colour)
-        --  small text top
-        directx.draw_text(sp_posX-0.022, sp_posY+0.068, kmh .." KMPH", ALIGN_TOP_LEFT, 0.6, cartxt_colour, false)	
-    end
 end
 
 
@@ -4998,22 +4959,24 @@ function obj_creat_speed(amount)
     delay = amount
 end
 function Ghost_Beast_Player(pid)
-    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-    local pos = players.get_position(pid)
-    local glitch_hash = object_hash
-    local mdl = util.joaat("rallytruck")
-        RequestModel(glitch_hash)
-        RequestModel(mdl)
-    local obj = entities.create_object(glitch_hash, pos)
-    local veh = entities.create_vehicle(mdl, pos, 0)
-    ENTITY.SET_ENTITY_VISIBLE(obj, false)
-    ENTITY.SET_ENTITY_VISIBLE(veh, false)
-    ENTITY.SET_ENTITY_INVINCIBLE(obj, true)
-    ENTITY.SET_ENTITY_COLLISION(obj, true, true)
-    ENTITY.APPLY_FORCE_TO_ENTITY(veh, 1, 0.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0, 1, 1, 1, 0, 1)
-    util.yield(delay)
-    entities.delete_by_handle(obj)
-    entities.delete_by_handle(veh)
+    if PLAYER.GET_PLAYER_PED(pid) ~= 0 then
+        local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        local pos = players.get_position(pid)
+        local glitch_hash = object_hash
+        local mdl = util.joaat("rallytruck")
+            RequestModel(glitch_hash)
+            RequestModel(mdl)
+        local obj = entities.create_object(glitch_hash, pos)
+        local veh = entities.create_vehicle(mdl, pos, 0)
+        ENTITY.SET_ENTITY_VISIBLE(obj, false)
+        ENTITY.SET_ENTITY_VISIBLE(veh, false)
+        ENTITY.SET_ENTITY_INVINCIBLE(obj, true)
+        ENTITY.SET_ENTITY_COLLISION(obj, true, true)
+        ENTITY.APPLY_FORCE_TO_ENTITY(veh, 1, 0.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0, 1, 1, 1, 0, 1)
+        util.yield(delay)
+        entities.delete_by_handle(obj)
+        entities.delete_by_handle(veh)
+    end
 end
 
 -----死亡屏障击杀
@@ -5111,7 +5074,7 @@ function new_firework()
     local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), math.random(-15, 15), 50+math.random(0, 10), 0)--偏移量坐标,前后,左右,上下
     GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(effect_name, pos.x, pos.y, pos.z, 0, 0, 0, 1.0, false, false, false, false)
     GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(indep_fireworks_r, indep_fireworks_g, indep_fireworks_b)
-    util.yield(1500)
+    util.yield(math.random(500, 2000))
 end
 --礼花桶
 function new_firework2()
@@ -5125,7 +5088,7 @@ function new_firework2()
     local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), math.random(-15, 15), 50+math.random(0, 10), 0)--偏移量坐标,前后,左右,上下
     GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(effect_name, pos.x, pos.y, pos.z, 0, 0, 0, 1.0, false, false, false, false)
     GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(indep_fireworks_r, indep_fireworks_g, indep_fireworks_b)
-    util.yield(1500)
+    util.yield(math.random(500, 2000))
 end
 
 
@@ -5782,7 +5745,7 @@ function scriptname(state)
                 mcspt.b=mcspt.b-1
             end
         end
-    draw_string(string.format("~italic~¦~bold~Sakura Script v9.1"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v9.2"), 0.38,0.1, 0.6,5)
     util.yield()
     end
 end
@@ -5794,7 +5757,9 @@ end
 function hammer(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)--给予指定武器
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), false, false, false, false)--武器隐形
+
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
         handlebar = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)--大锤手柄
         dachui = OBJECT.CREATE_OBJECT(util.joaat("prop_barrel_02a"), pos.x, pos.y, pos.z, true, true, false)--大锤
@@ -5809,27 +5774,53 @@ function hammer(on)
         entities.delete_by_handle(handlebar)
         entities.delete_by_handle(dachui)
         WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
-     end
+    end
 end
+
+----雷神锤
+function thunder_hammer(on)
+    if on then
+        PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)--给予指定武器
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), false, false, false, false)--武器隐形
+
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
+        thunderlebar = OBJECT.CREATE_OBJECT(-1924271972, pos.x, pos.y, pos.z, true, true, false)--大锤手柄
+        menu.trigger_commands("damagemultiplier 1000")
+        menu.trigger_commands("rangemultiplier 1.5")
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(thunderlebar, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.08, 0.22, 0.05, -75, 45.0, 0, true, true, false, false, 0, true)
+    else
+        menu.trigger_commands("damagemultiplier 1")
+        menu.trigger_commands("rangemultiplier 1")
+        entities.delete_by_handle(thunderlebar)
+
+        PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), true, false, false, false)--解除武器隐形
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
+    end
+end
+
 
 --流星锤
 function meteorhammer(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)--给予指定武器
+
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
         meteorhandlebar = OBJECT.CREATE_OBJECT(util.joaat("prop_glass_stack_03"), pos.x, pos.y, pos.z, true, true, false)--prop_gate_farm_post
         meteordachui = OBJECT.CREATE_OBJECT(util.joaat("prop_barrel_pile_03"), pos.x, pos.y, pos.z, true, true, false)--h4_prop_h4_barrel_01a
         menu.trigger_commands("damagemultiplier 1000")
         menu.trigger_commands("rangemultiplier 1.5")
-        ENTITY.ATTACH_ENTITY_TO_ENTITY(meteorhandlebar, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(meteorhandlebar, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 115, 30.0, 0, true, true, false, false, 0, true)
         ENTITY.ATTACH_ENTITY_TO_ENTITY(meteordachui,meteorhandlebar, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
     else
-        PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)
         menu.trigger_commands("damagemultiplier 1")
         menu.trigger_commands("rangemultiplier 1")
         entities.delete_by_handle(meteorhandlebar)
         entities.delete_by_handle(meteordachui)
+
+        PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
         WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
     end
 end
@@ -5838,7 +5829,9 @@ end
 function atomhammer(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)--给予指定武器
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), false, false, false, false)--武器隐形
+
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
         atomhandlebar = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_04"), pos.x, pos.y, pos.z, true, true, false)
         atomdachui = OBJECT.CREATE_OBJECT(util.joaat("prop_barrel_03d"), pos.x, pos.y, pos.z, true, true, false)
@@ -5849,12 +5842,14 @@ function atomhammer(on)
         ENTITY.ATTACH_ENTITY_TO_ENTITY(atomdachui,atomhandlebar, 0,  0, 0, -0.2, -35.0, 100.0,0, true, true, false, false, 0, true)
         ENTITY.ATTACH_ENTITY_TO_ENTITY(atomdachui1,atomhandlebar, 0,  0, 0, -0.201, 145, 100.0,0, true, true, false, false, 0, true)
     else
-        PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)
         menu.trigger_commands("damagemultiplier 1")
         menu.trigger_commands("rangemultiplier 1")
         entities.delete_by_handle(atomhandlebar)
         entities.delete_by_handle(atomdachui)
         entities.delete_by_handle(atomdachui1)
+
+        PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), true, false, false, false)--解除武器隐形
         WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
     end
 end
@@ -5863,7 +5858,8 @@ end
 function bearhammer(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)--给予指定武器
+
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
         bearhandlebar = OBJECT.CREATE_OBJECT(util.joaat("ba_prop_battle_cameradrone"), pos.x, pos.y, pos.z, true, true, false)
         beardachui = OBJECT.CREATE_OBJECT(util.joaat("prop_mr_raspberry_01"), pos.x, pos.y, pos.z, true, true, false)
@@ -5872,11 +5868,12 @@ function bearhammer(on)
         ENTITY.ATTACH_ENTITY_TO_ENTITY(bearhandlebar, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.2, 0.95, 0.2, 105, 30.0, 0, true, true, false, false, 0, true)
         ENTITY.ATTACH_ENTITY_TO_ENTITY(beardachui,bearhandlebar, 0,  0, 0, 0.15, 0, 180,180, true, true, false, false, 0, true)
     else
-        PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)
         menu.trigger_commands("damagemultiplier 1")
         menu.trigger_commands("rangemultiplier 1")
         entities.delete_by_handle(bearhandlebar)
         entities.delete_by_handle(beardachui)
+
+        PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
         WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
     end
 end
@@ -5885,7 +5882,9 @@ end
 function unicorn(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15, false, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)--给予指定武器
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), false, false, false, false)--武器隐形
+
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
         unicornhandlebar = OBJECT.CREATE_OBJECT(util.joaat("ba_prop_battle_cameradrone"), pos.x, pos.y, pos.z, true, true, false)
         ENTITY.SET_ENTITY_VISIBLE(unicornhandlebar, false, 0)
@@ -5895,11 +5894,13 @@ function unicorn(on)
         ENTITY.ATTACH_ENTITY_TO_ENTITY(unicornhandlebar, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.165, 0.9, 0.205, 105, 30, 1, true, true, false, false, 0, true)
         ENTITY.ATTACH_ENTITY_TO_ENTITY(unicorndachui,unicornhandlebar, 0, 0, 0, 0.74, -1.9, 184, 233, true, true, false, false, 0, true)
     else
-        PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)
         menu.trigger_commands("damagemultiplier 1")
         menu.trigger_commands("rangemultiplier 1")
         entities.delete_by_handle(unicornhandlebar)
         entities.delete_by_handle(unicorndachui)
+
+        PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), true, false, false, false)--解除武器隐形
         WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
     end
 end

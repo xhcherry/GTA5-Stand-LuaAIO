@@ -251,7 +251,7 @@ scaleform_thread = util.create_thread(function (thr)
     local scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE("mp_big_message_freemode")
     GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleForm, "SHOW_SHARD_WASTED_MP_MESSAGE")
     GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(" ~bold~&#8721;PIE Lua Script&#8721;")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("~b~‹~g~ ‹~y~ ‹ ~r~‹ ~p~‹\n\n~r~&#8721;=====欢迎使用=====&#8721;\n\n~s~ Version 1.5 ~b~文件群：772361223\n\n~b~‹~g~ ‹~y~ ‹ ~r~‹ ~p~‹")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("~b~‹~g~ ‹~y~ ‹ ~r~‹ ~p~‹\n\n~r~&#8721;=====欢迎使用=====&#8721;\n\n~s~ Version 4.0 ~b~文件群：772361223\n\n~b~‹~g~ ‹~y~ ‹ ~r~‹ ~p~‹")
     GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
     AUDIO.PLAY_SOUND_FRONTEND(55, "FocusIn", "HintCamSounds", true)
 

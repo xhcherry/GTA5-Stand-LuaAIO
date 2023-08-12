@@ -668,3 +668,160 @@ funptfx = {
 ----粒子拖尾
 vehparticle_name = {"烟花拖尾1","烟花拖尾2"}
 vehparticle_tb = {"scr_mich4_firework_trail_spawn","scr_mich4_firework_sparkle_spawn"}
+style_names = {"正常", "半冲刺", "反向", "无视红绿灯", "避开交通", "极度避开交通", "有时超车"}
+wasd = {
+    [1]  = { keys = {44, 52, 85, 138, 141, 152, 205, 264},                                               pressed = false, key = 'Q',     show = true },
+    [2]  = { keys = {32, 71, 77, 87, 129, 136, 150, 232},                                                pressed = false, key = 'W',     show = true },
+    [3]  = { keys = {38, 46, 51, 54, 86, 103, 119, 153, 184, 206, 350, 351, 355, 356},                   pressed = false, key = 'E',     show = true },
+    [4]  = { keys = {45, 80, 140, 250, 263, 310},                                                        pressed = false, key = 'R',     show = true },
+    [5]  = { keys = {34 ,63, 89, 133, 147, 234, 338},                                                    pressed = false, key = 'A',     show = true },
+    [6]  = { keys = {8, 31, 33, 72, 78, 88, 130, 139, 149, 151, 196, 219, 233, 268, 269, 302},           pressed = false, key = 'S',     show = true },
+    [7]  = { keys = {9, 30, 35, 59, 64, 90, 134, 146, 148, 195, 218, 235, 266, 267, 278, 279, 339, 342}, pressed = false, key = 'D',     show = true },
+    [8]  = { keys = {23, 49, 75, 145, 185, 251},                                                         pressed = false, key = 'F',     show = true },
+    [9]  = { keys = {21, 61, 131, 155, 209, 254, 340, 352},                                              pressed = false, key = 'Shift', show = true },
+    [10] = { keys = {36, 60, 62, 132, 224, 280, 281, 326, 341, 343},                                     pressed = false, key = 'Ctrl',  show = true },
+    [11] = { keys = {18, 22, 55, 76, 102, 143, 179, 203, 216, 255, 298, 321, 328, 353},                  pressed = false, key = 'Space', show = true },
+}
+proofs = {
+    bullet = {name="子弹",on=false},
+    fire = {name="火烧",on=false},
+    explosion = {name="爆炸",on=false},
+    collision = {name="撞击",on=false},
+    melee = {name="近战",on=false},
+    steam = {name="蒸汽",on=false},
+    drown = {name="遇水浸死",on=false},
+}
+read_global = {
+	byte = function(global)
+		local address = memory.script_global(global)
+		return memory.read_byte(address)
+	end,
+	int = function(global)
+		local address = memory.script_global(global)
+		return memory.read_int(address)
+	end,
+	float = function(global)
+		local address = memory.script_global(global)
+		return memory.read_float(address)
+	end,
+	string = function(global)
+		local address = memory.script_global(global)
+		return memory.read_string(address)
+	end
+}
+HudColour =
+{
+	pureWhite = 0,
+	white = 1,
+	black = 2,
+	grey = 3,
+	greyLight = 4,
+	greyDrak = 5,
+	red = 6,
+	redLight = 7,
+	redDark = 8,
+	blue = 9,
+	blueLight = 10,
+	blueDark = 11,
+	yellow = 12,
+	yellowLight = 13,
+	yellowDark = 14,
+	orange = 15,
+	orangeLight = 16,
+	orangeDark = 17,
+	green = 18,
+	greenLight = 19,
+	greenDark = 20,
+	purple = 21,
+	purpleLight = 22,
+	purpleDark = 23,
+	radarHealth = 25,
+	radarArmour = 26,
+	friendly = 118,
+}
+num = {
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30",
+    "31",
+    "32",
+    "33",
+    "34",
+    "35"
+}
+whitelistGroups = {user = true, friends = true, strangers  = true}
+expSettings = {camShake = 0, invisible = false, audible = true, noDamage = false, owned = false, blamed = false, blamedPlayer = false, expType = 0}
+
+function acknowledgement()
+
+    menu.divider(script_meta_menu, "快速加群")
+    menu.action(script_meta_menu, "快进来！", {}, "欢迎加入GTA夜幕用户群！", function()
+    util.toast("快进来,劝你耗子尾汁！~")
+    end)
+    menu.hyperlink(script_meta_menu, "加入新夜幕官方用户群", "https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=VzopCmy2xBEAkYmSU8ya4xQbllzQFQHv&authKey=NHDDDI56aESkD3ZS9E2W51WBf7MyvDkVkd5J5bGODrKpEL%2B0khMEESePgDemnlSV&noverify=0&group_code=859074951")
+    menu.readonly(script_meta_menu, "夜幕官方网站", "暂无官网")
+
+    menu.divider(script_meta_menu, "夜幕主要负责")
+    menu.readonly(script_meta_menu, "技术支持", "夜幕工作室")
+    menu.readonly(script_meta_menu, "夜幕主制作策划：", "Ping")
+    menu.divider(script_meta_menu, "夜幕制作支持")
+    menu.readonly(script_meta_menu, "夜幕策划管理：", "思庸")
+    menu.readonly(script_meta_menu, "夜幕副制作策划：", "呆呆")
+    menu.divider(script_meta_menu, "夜幕赞助人员")
+zanzhu = menu.list(script_meta_menu,"夜幕赞助人员", {},"Thanks")
+    menu.readonly(zanzhu, "Thanks", "白山茶") 
+    menu.readonly(zanzhu, "Thanks", "江书晚") 
+    menu.readonly(zanzhu, "Thanks", "到洛阳去爬山") 
+    menu.readonly(zanzhu, "Thanks", "大白熊") 
+    menu.readonly(zanzhu, "Thanks", "空城~旧梦") 
+    menu.readonly(zanzhu, "Thanks", "农夫三拳") 
+    menu.readonly(zanzhu, "Thanks", "Xzzz") 
+    menu.readonly(zanzhu, "Thanks", "今天嗨了吗？") 
+    menu.readonly(zanzhu, "Thanks", "graies") 
+    menu.readonly(zanzhu, "Thanks", "彭于晏") 
+    menu.readonly(zanzhu, "Thanks", "东北散打王") 
+    menu.readonly(zanzhu, "Thanks", "L.T团队") 
+    menu.readonly(zanzhu, "Thanks", "恶") 
+    menu.readonly(zanzhu, "Thanks", "陌然科技") 
+    menu.readonly(zanzhu, "Thanks", "媚") 
+    menu.readonly(zanzhu, "Thanks", "小久") 
+    menu.readonly(zanzhu, "Thanks", "诗雅") 
+    menu.readonly(zanzhu, "Thanks", "小板鸭") 
+    menu.readonly(zanzhu, "Thanks", "kui920") 
+    menu.readonly(zanzhu, "Thanks", "钱多多同志") 
+    menu.readonly(zanzhu, "Thanks", "白远") 
+    menu.readonly(zanzhu, "Thanks", "--KZboy-SSR--") 
+    menu.readonly(zanzhu, "Thanks", "蜻蜓队长") 
+    menu.readonly(zanzhu, "Thanks", "未知名人士") 
+    menu.readonly(zanzhu, "Thanks", "小安") 
+    menu.readonly(zanzhu, "Thanks", "911每天都很想静静")
+    menu.readonly(zanzhu, "Thanks", "Boze")  
+
+end
