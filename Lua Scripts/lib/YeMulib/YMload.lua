@@ -1,6 +1,6 @@
 ------------------------------------夜幕LUA------------------------------
 require "lib.YeMulib.YeMulib"
-Version5 = 6.0
+Version5 = 6.2
 local net = "夜幕LUA暂时无法连接到服务器！"
 local aalib = require("aalib")
 local PlaySound = aalib.play_sound
@@ -313,7 +313,6 @@ local colors = {
         util.log(message)
     end
      notification("你好，尊贵的夜幕用户!\n&#8721;已连接！\n""[" .. YMencouragement[random_notify] .. "]", colors.black)
-     util.toast("欢迎来到V6.0时代！")
     util.on_stop(function()
      notification("下次遇见会更好!", colors.gray)
     end)
@@ -354,5 +353,5 @@ end
 end
 
 YMplanid = {{playerrid = "Hilovewould"}}
-YMth = {{playerid = "muyusd"},{playerid = "Dust-wine"},{playerid = "Maple_1999"},{playerid = "Xzzz_polar"},{playerid = "Hf19172798591"},{playerid = "dabaixiong0415"},{playerid = "sshiwga"},{playerid = "jasmine7294"},{playerid = "XiProNB"},{playerid = "hujkilsr"},{playerid = "Lyccchi"},{playerid = "dandanshinimenba"},{playerid = "Bronya_15644"},{playerid = "Royston7294"},{playerid = "liangzihui0522"},{playerid = "xx-bai"},{playerid = "--KZboy-SSR--"},{playerid = "RESERVEDBOSS"},{playerid = "HHX0808"},{playerid = "tiantian_qwq"},{playerid = "PowerByAndroid"},{playerid = "HeezyLua"}}
+YMth = {{playerid = "muyusd"},{playerid = "Dust-wine"},{playerid = "Maple_1999"},{playerid = "Xzzz_polar"},{playerid = "Hf19172798591"},{playerid = "dabaixiong0415"},{playerid = "sshiwga"},{playerid = "jasmine7294"},{playerid = "XiProNB"},{playerid = "hujkilsr"},{playerid = "Lyccchi"},{playerid = "dandanshinimenba"},{playerid = "Bronya_15644"},{playerid = "Royston7294"},{playerid = "liangzihui0522"},{playerid = "xx-bai"},{playerid = "--KZboy-SSR--"},{playerid = "RESERVEDBOSS"},{playerid = "Moldoveanuu07"},{playerid = "tiantian_qwq"},{playerid = "PowerByAndroid"},{playerid = "HeezyLua"},{playerid = "smithnsksmsmzk"},{playerid = "JiYanaa"},{playerid = "daxingxingrule"},{playerid = "sfasafafasfa"}}
 YMblacklist = {{playerrrid = "Angel00512"}}

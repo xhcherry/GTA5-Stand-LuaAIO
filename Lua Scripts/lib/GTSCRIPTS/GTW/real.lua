@@ -42,7 +42,7 @@ local textnotify={
 random_notify = math.random(1,#textnotify)
 
 welcomet1 = menu.toggle_loop(players_root, "你看不到", {"ucantseeit"}, "", function ()
-    notification(textnotify[random_notify] .. "\n欢迎回到GRANDTOURINGVIP!")
+    notification(textnotify[random_notify] .. "\n欢迎 "..PLAYER.GET_PLAYER_NAME(players.user()))
 end)
 
 welcomet2 = menu.toggle_loop(players_root, "你看不到", {"youcantseeit"}, "", function ()
@@ -66,3 +66,57 @@ end]]
 function realheart()
 notification("谢谢你，能发现这个选项，并且点击了它，写下它之前，我想了很多很多\n希望你的人与事情不会为你带来压力，同时也希望事情中的任何人也不会有压力，希望你每天都开心快乐没有烦恼，与任何人和任何事都是的极其美好状态，\n也不会因为杂碎的事情而打破自己的心情，真心的祝福你\n如果真的不可避免，\n祝福你未来不会孤独的一个人承受，会有其他人聆听,而不会形只影单，\n也不会只能无奈的看着天花板,不要再半夜胡思乱想，遇到烦心事不要抱着酒瓶子库库炫一顿，\n这个样子对自己很不好，\n不仅对身体不好，对自己的心情也会有更大的影响,\n我的现实目前很糟糕，很多烦心的事情，\n围绕着我,即使我现在很不好，\n但是我仍然想为你们撑一把伞，即使我什么都做不了，但是我能对你有一个诚实的祝福\n希望你今后不会像我一样，遇到了不愉快的事情，只能去无奈，去心酸，却又一点办法都没有，我能做的就是为大家提供脚本的更新支持，除此之外没有别的，\n我也不会得到什么心灵安慰，\n而我可能仍然会困在糟糕的情绪中，我实在不想憋着了，所以请允许将这段话写进这里\n我不想描绘一幅不诚实的画面，但是很希望你们不会像我一样,我试图让这条通知变得更容易发现，但我不会这样做，\n因为显得我太矫情，同时我又很希望将我的心意传达给你们,我总是守护着自己心里的最纯真的东西，它导致我现实中心态很脆弱，总是被一切不起眼的事情而难过,\n我也在修正我自己,我希望你们遇到了令人痛苦，烦恼，烦恼之类的事情，能有一个或者多个人多个事情能在你们身边安慰你，能让糟糕心情不再那么糟糕，真心的祝福\n献给GRANDTOURINGVIP的顶级作弊者们")
 end
+
+credits_lines = {
+    {text = "特别感谢", size = 0.9},
+    {text = "", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "猛女丢丢", size = 0.8},
+    {text = "猛女名不虚传", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "21", size = 0.8},
+    {text = "Atom Menu, 21ProLua 制作人", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "xion, 02", size = 0.8},
+    {text = "Traveller 开发人员", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "感谢", size = 0.9},
+    {text = "", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "小马哥", size = 0.8},
+    {text = "柒月", size = 0.8},
+    {text = "12", size = 0.8},
+    {text = "林琪儿", size = 0.8},
+    {text = "安安", size = 0.8},
+    {text = "Super飞", size = 0.8},
+    {text = "点儿", size = 0.8},
+    {text = "沙耶", size = 0.8},
+    {text = "夜巡游", size = 0.8},
+    {text = "", size = 0.7},
+    {text = "帮助，爱心，支持，奉献", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "GTVIP 股东组", size = 0.9},
+    {text = "", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "rudan891018", size = 0.8},
+    {text = "我玉玉了", size = 0.8},
+    {text = "<所有皇榜成员>", size = 0.8},
+    {text = "", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "致谢所有的皇榜人员", size = 0.9},
+    {text = "感谢你们支持GTVIP", size = 0.8},
+    {text = "爱你们", size = 0.8},
+    {text = "", size = 0.8},
+    {text = "", size = 0.8},
+    {text = "Rockstar Games", size = 0.8},
+    {text = "Rockstar North", size = 0.8},
+    {text = "", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "再次感谢", size = 0.9},
+    {text = "屏幕前的你!!!", size = 1},
+}

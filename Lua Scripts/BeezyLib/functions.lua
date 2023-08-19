@@ -1457,12 +1457,11 @@ local function request_ptfx_asset_lasereyes(asset)
         util.yield()
     end
 end
---[[function laser_eyes()
+function laser_eyes()
     local weaponHash = util.joaat("weapon_heavysniper_mk2")
     local dictionary = "weap_xs_weapons"
     local ptfx_name = "bullet_tracer_xs_sr"
     local camRot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
-    HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
     if PAD.IS_CONTROL_PRESSED(51, 51) then
         local inst = v3.new()
         v3.set(inst,CAM.GET_FINAL_RENDERED_CAM_ROT(2))
@@ -1482,7 +1481,7 @@ end
                 right_eye_id = 27474
                 break
             case 225514697:
-            pluto_default:
+            default:
                 left_eye_id = 5956
                 right_eye_id = 6468
         end
@@ -1501,7 +1500,7 @@ end
         MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(boneCoord_L.x, boneCoord_L.y, boneCoord_L.z, camAim_x, camAim_y, camAim_z, 100, true, weaponHash, players.user_ped(), false, true, 100, players.user_ped(), 0)
         MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(boneCoord_R.x, boneCoord_R.y, boneCoord_R.z, camAim_x, camAim_y, camAim_z, 100, true, weaponHash, players.user_ped(), false, true, 100, players.user_ped(), 0)
     end
-end]]
+end
 
 --举手(按x)
 function hhandup()
@@ -3837,29 +3836,6 @@ local user = players.user()
             NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x,pos.y,pos.z, 0, false, false, 0)
         end)
     end
---大自然崩v2
-function naturalv2(PlayerID)
-    local user = players.user()
-    local user_ped = players.user_ped()
-    local pos = players.get_position(user)
-    BlockSyncs(PlayerID, function() 
-        util.yield(100)
-        PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(players.user(), 0xFBF7D21F)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
-        TASK.TASK_PARACHUTE_TO_TARGET(user_ped, pos.x, pos.y, pos.z)
-        util.yield()
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(user_ped)
-        util.yield(250)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
-        PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
-        util.yield(1000)
-        for i = 1, 5 do
-            util.spoof_script("freemode", SYSTEM.WAIT)
-        end
-        ENTITY.SET_ENTITY_HEALTH(user_ped, 0)
-        NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x, pos.y, pos.z, 0, false, false, 0)
-    end)
-end
 --美杜莎崩溃
 function MDS(PlayerID)
     menu.trigger_commands("anticrashcam on")

@@ -74,15 +74,6 @@ CAM1={
     ["_GET_CAM_ACTIVE_VIEW_MODE_CONTEXT"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("19CAFA3C87F7C2FF");return native_invoker.get_return_value_int();end,
     ["HARD_ATTACH_CAM_TO_ENTITY"]=--[[void]] function(--[[Cam (int)]] cam,--[[Entity (int)]] entity,--[[float]] xRot,--[[float]] yRot,--[[float]] zRot,--[[float]] xOffset,--[[float]] yOffset,--[[float]] zOffset,--[[BOOL (bool)]] isRelative)native_invoker.begin_call()native_invoker.push_arg_int(cam)native_invoker.push_arg_int(entity)native_invoker.push_arg_float(xRot)native_invoker.push_arg_float(yRot)native_invoker.push_arg_float(zRot)native_invoker.push_arg_float(xOffset)native_invoker.push_arg_float(yOffset)native_invoker.push_arg_float(zOffset)native_invoker.push_arg_bool(isRelative)native_invoker.end_call_2(0x202A5ED9CE01D6E7)end,
 }
-
-HUD1={
-    ["_SET_MINIMAP_SONAR_ENABLED"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("6B50FC8749632EC1");end,
-    ["_HUD_WEAPON_WHEEL_IGNORE_CONTROL_INPUT"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("14C9FDCC41F81F63");end,
-    ["_THEFEED_SET_NEXT_POST_BACKGROUND_COLOR"]=--[[void]] function(--[[int]] hudColorIndex)native_invoker.begin_call();native_invoker.push_arg_int(hudColorIndex);native_invoker.end_call("92F0DA1E27DB96DC");end,
-    ["_HUD_WEAPON_WHEEL_GET_SELECTED_HASH"]=--[[Hash (int)]] function()native_invoker.begin_call();native_invoker.end_call("A48931185F0536FE");return native_invoker.get_return_value_int();end,
-    ["HUD_SUPPRESS_WEAPON_WHEEL_RESULTS_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x0AFC4AF510774B47)end,
-}
-
 PLAYER1={
     ["_SET_PLAYER_HEALTH_RECHARGE_LIMIT"]=function(--[[Player (int)]] player,--[[float]] limit)native_invoker.begin_call();native_invoker.push_arg_int(player);native_invoker.push_arg_float(limit);native_invoker.end_call("C388A0F065F5BC34");end,
 }
@@ -6554,4 +6545,2386 @@ CAM={
 	["IS_ALLOWED_INDEPENDENT_CAMERA_MODES"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xEAF0FA793D05C592)return native_invoker.get_return_value_int()end,
 	["CAMERA_PREVENT_COLLISION_SETTINGS_FOR_TRIPLEHEAD_IN_INTERIORS_THIS_UPDATE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x62374889A4D59F72)end,
 	["REPLAY_GET_MAX_DISTANCE_ALLOWED_FROM_PLAYER"]=--[[float]] function()native_invoker.begin_call()native_invoker.end_call_2(0x8BFCEB5EA1B161B6)return native_invoker.get_return_value_float()end,
+}
+PAD={
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_ENABLED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x1CEA6BFDF248E5D9)return native_invoker.get_return_value_bool()end,
+	-- Returns whether a control is currently pressed.
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_PRESSED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0xF3A21BCD95725A4A)return native_invoker.get_return_value_bool()end,
+	-- Returns whether a control is currently _not_ pressed.
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_RELEASED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x648EE3E7F38877DD)return native_invoker.get_return_value_bool()end,
+	-- Returns whether a control was newly pressed since the last check.
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_JUST_PRESSED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x580417101DDB492F)return native_invoker.get_return_value_bool()end,
+	-- Returns whether a control was newly released since the last check.
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_JUST_RELEASED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x50F940259D3841E6)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_VALUE"]=--[[int]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0xD95E79E8686D2C27)return native_invoker.get_return_value_int()end,
+	-- Returns the value of GET_CONTROL_VALUE normalized (i.e. a real number value between -1 and 1)
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_NORMAL"]=--[[float]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0xEC3C9B8D5327B563)return native_invoker.get_return_value_float()end,
+	["SET_USE_ADJUSTED_MOUSE_COORDS"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x5B73C77D9EB66E24)end,
+	-- Seems to return values between -1 and 1 for controls like gas and steering.
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_UNBOUND_NORMAL"]=--[[float]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x5B84D09CEC5209C5)return native_invoker.get_return_value_float()end,
+	-- This is for simulating player input.
+	-- amount is a float value from 0 - 1
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["SET_CONTROL_VALUE_NEXT_FRAME"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control,--[[float]] amount)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.push_arg_float(amount)native_invoker.end_call_2(0xE8A25867FBA3B05E)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_DISABLED_CONTROL_PRESSED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0xE2587F8CBBD87B1D)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_DISABLED_CONTROL_RELEASED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0xFB6C4072E9A32E92)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_DISABLED_CONTROL_JUST_PRESSED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x91AEF906BCA88877)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_DISABLED_CONTROL_JUST_RELEASED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x305C8DCD79DA8B0F)return native_invoker.get_return_value_bool()end,
+	-- control - c# works with (int)GTA.Control.CursorY / (int)GTA.Control.CursorX and returns the mouse movement (additive).
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_DISABLED_CONTROL_NORMAL"]=--[[float]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x11E65974A982637C)return native_invoker.get_return_value_float()end,
+	-- The "disabled" variant of _0x5B84D09CEC5209C5.
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_DISABLED_CONTROL_UNBOUND_NORMAL"]=--[[float]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x4F8A26A890FD62FB)return native_invoker.get_return_value_float()end,
+	["GET_CONTROL_HOW_LONG_AGO"]=--[[int]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xD7D22F5592AED8BA)return native_invoker.get_return_value_int()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Used to be known as _GET_LAST_INPUT_METHOD & _IS_INPUT_DISABLED
+	["IS_USING_KEYBOARD_AND_MOUSE"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0xA571D46727E2B718)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Used to be known as _IS_INPUT_JUST_DISABLED
+	["IS_USING_CURSOR"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0x13337B38DB572509)return native_invoker.get_return_value_bool()end,
+	["SET_CURSOR_POSITION"]=--[[BOOL (bool)]] function(--[[float]] x,--[[float]] y)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.end_call_2(0xFC695459D4D0E219)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Hardcoded to return false.
+	["IS_USING_REMOTE_PLAY"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0x23F09EADC01449D6)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["HAVE_CONTROLS_CHANGED"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0x6CD79468A1E595C6)return native_invoker.get_return_value_bool()end,
+	-- formerly called _GET_CONTROL_ACTION_NAME incorrectly
+	-- 
+	-- p2 appears to always be true.
+	-- p2 is unused variable in function.
+	-- 
+	-- EG:
+	-- GET_CONTROL_INSTRUCTIONAL_BUTTON (2, 201, 1) /*INPUT_FRONTEND_ACCEPT (e.g. Enter button)*/
+	-- GET_CONTROL_INSTRUCTIONAL_BUTTON (2, 202, 1) /*INPUT_FRONTEND_CANCEL (e.g. ESC button)*/
+	-- GET_CONTROL_INSTRUCTIONAL_BUTTON (2, 51, 1) /*INPUT_CONTEXT (e.g. E button)*/
+	-- 
+	-- gtaforums.com/topic/819070-c-draw-instructional-buttons-scaleform-movie/#entry1068197378
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_INSTRUCTIONAL_BUTTONS_STRING"]=--[[string]] function(--[[int]] padIndex,--[[int]] control,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x0499D7B09FC9B407)return native_invoker.get_return_value_string()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_GROUP_INSTRUCTIONAL_BUTTONS_STRING"]=--[[string]] function(--[[int]] padIndex,--[[int]] controlGroup,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(controlGroup)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x80C2FD58D720C801)return native_invoker.get_return_value_string()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["SET_CONTROL_LIGHT_EFFECT_COLOR"]=--[[void]] function(--[[int]] padIndex,--[[int]] red,--[[int]] green,--[[int]] blue)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(red)native_invoker.push_arg_int(green)native_invoker.push_arg_int(blue)native_invoker.end_call_2(0x8290252FFF36ACB5)end,
+	["CLEAR_CONTROL_LIGHT_EFFECT"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0xCB0360EFEFB2580D)end,
+	-- padIndex always seems to be 0
+	-- duration in milliseconds 
+	-- frequency should range from about 10 (slow vibration) to 255 (very fast)
+	-- appears to be a hash collision, though it does do what it says
+	-- 
+	-- example:
+	-- SET_PAD_SHAKE(0, 100, 200);
+	["SET_CONTROL_SHAKE"]=--[[void]] function(--[[int]] padIndex,--[[int]] duration,--[[int]] frequency)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(duration)native_invoker.push_arg_int(frequency)native_invoker.end_call_2(0x48B3886C1358D0D5)end,
+	-- Does nothing (it's a nullsub).
+	["SET_CONTROL_TRIGGER_SHAKE"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.end_call_2(0x14D29BB12D47F68C)end,
+	["STOP_CONTROL_SHAKE"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0x38C16A305E8CDC8D)end,
+	["SET_CONTROL_SHAKE_SUPPRESSED_ID"]=--[[void]] function(--[[int]] padIndex,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xF239400E16C23E08)end,
+	["CLEAR_CONTROL_SHAKE_SUPPRESSED_ID"]=--[[void]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xA0CEFCEA390AAB9B)end,
+	["IS_LOOK_INVERTED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x77B612531280010D)return native_invoker.get_return_value_bool()end,
+	-- Used with IS_LOOK_INVERTED() and negates its affect.
+	-- 
+	-- --
+	-- 
+	-- Not sure how the person above got that description, but here's an actual example:
+	-- 
+	-- if (PAD::_GET_LAST_INPUT_METHOD(2)) {
+	--     if (a_5) {
+	--         if (PAD::IS_LOOK_INVERTED()) {
+	--             a_3 *= -1;
+	--         }
+	--         if (PAD::_E1615EC03B3BB4FD()) {
+	--             a_3 *= -1;
+	--         }
+	--     }
+	-- }
+	["IS_MOUSE_LOOK_INVERTED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xE1615EC03B3BB4FD)return native_invoker.get_return_value_bool()end,
+	-- Returns the local player's targeting mode. See PLAYER::SET_PLAYER_TARGETING_MODE.
+	["GET_LOCAL_PLAYER_AIM_STATE"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xBB41AFBBBC0A0287)return native_invoker.get_return_value_int()end,
+	-- Same behavior as GET_LOCAL_PLAYER_AIM_STATE but only used on the PC version.
+	["GET_LOCAL_PLAYER_GAMEPAD_AIM_STATE"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x59B9A7AF4C95133C)return native_invoker.get_return_value_int()end,
+	["GET_IS_USING_ALTERNATE_HANDBRAKE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x25AAA32BDC98F2A3)return native_invoker.get_return_value_bool()end,
+	-- Returns profile setting 225.
+	["GET_IS_USING_ALTERNATE_DRIVEBY"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x0F70731BACCFBB96)return native_invoker.get_return_value_bool()end,
+	-- Returns profile setting 17.
+	["GET_ALLOW_MOVEMENT_WHILE_ZOOMED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFC859E2374407556)return native_invoker.get_return_value_bool()end,
+	["SET_PLAYERPAD_SHAKES_WHEN_CONTROLLER_DISABLED"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x798FDEB5B1575088)end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["SET_INPUT_EXCLUSIVE"]=--[[void]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0xEDE476E5EE29EDB1)end,
+	-- control values and meaning: https://pastebin.com/JEkxhZ7R 
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Control values from the decompiled scripts: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,
+	-- 28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,53,5
+	-- 4,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,
+	-- 79,80,81,82,85,86,87,88,89,90,91,92,93,95,96,97,98,99,100,101,102,103,105,
+	-- 107,108,109,110,111,112,113,114,115,116,117,118,119,123,126,129,130,131,132,
+	-- 133,134,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,
+	-- 153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,171,172
+	-- ,177,187,188,189,190,195,196,199,200,201,202,203,205,207,208,209,211,212,213, 217,219,220,221,225,226,230,234,235,236,237,238,239,240,241,242,243,244,257,
+	-- 261,262,263,264,265,270,271,272,273,274,278,279,280,281,282,283,284,285,286,
+	-- 287,288,289,337.
+	-- 
+	-- Example: PAD::DISABLE_CONTROL_ACTION(2, 19, true) disables the switching UI from appearing both when using a keyboard and Xbox 360 controller. Needs to be executed each frame. 
+	--  
+	-- Control group 1 and 0 gives the same results as 2. Same results for all players. 
+	["DISABLE_CONTROL_ACTION"]=--[[void]] function(--[[int]] padIndex,--[[int]] control,--[[BOOL (bool)]] disable)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.push_arg_bool(disable)native_invoker.end_call_2(0xFE99B66D079CF6BC)end,
+	-- control values and meaning: https://pastebin.com/JEkxhZ7R 
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Control values from the decompiled scripts: 
+	-- 0,1,2,3,4,5,6,8,9,10,11,14,15,16,17,19,21,22,24,25,26,30,31,32,33,34,35,36,
+	-- 37,44,46,47,59,60,65,68,69,70,71,72,73,74,75,76,79,80,81,82,86,95,98,99,100
+	-- ,101,114,140,141,143,172,173,174,175,176,177,178,179,180,181,187,188,189,19
+	-- 0,195,196,197,198,199,201,202,203,204,205,206,207,208,209,210,217,218,219,2
+	-- 20,221,225,228,229,230,231,234,235,236,237,238,239,240,241,242,245,246,257,
+	-- 261,262,263,264,286,287,288,289,337,338,339,340,341,342,343
+	-- 
+	-- INPUTGROUP_MOVE
+	-- INPUTGROUP_LOOK
+	-- INPUTGROUP_WHEEL
+	-- INPUTGROUP_CELLPHONE_NAVIGATE
+	-- INPUTGROUP_CELLPHONE_NAVIGATE_UD
+	-- INPUTGROUP_CELLPHONE_NAVIGATE_LR
+	-- INPUTGROUP_FRONTEND_DPAD_ALL
+	-- INPUTGROUP_FRONTEND_DPAD_UD
+	-- INPUTGROUP_FRONTEND_DPAD_LR
+	-- INPUTGROUP_FRONTEND_LSTICK_ALL
+	-- INPUTGROUP_FRONTEND_RSTICK_ALL
+	-- INPUTGROUP_FRONTEND_GENERIC_UD
+	-- INPUTGROUP_FRONTEND_GENERIC_LR
+	-- INPUTGROUP_FRONTEND_GENERIC_ALL
+	-- INPUTGROUP_FRONTEND_BUMPERS
+	-- INPUTGROUP_FRONTEND_TRIGGERS
+	-- INPUTGROUP_FRONTEND_STICKS
+	-- INPUTGROUP_SCRIPT_DPAD_ALL
+	-- INPUTGROUP_SCRIPT_DPAD_UD
+	-- INPUTGROUP_SCRIPT_DPAD_LR
+	-- INPUTGROUP_SCRIPT_LSTICK_ALL
+	-- INPUTGROUP_SCRIPT_RSTICK_ALL
+	-- INPUTGROUP_SCRIPT_BUMPERS
+	-- INPUTGROUP_SCRIPT_TRIGGERS
+	-- INPUTGROUP_WEAPON_WHEEL_CYCLE
+	-- INPUTGROUP_FLY
+	-- INPUTGROUP_SUB
+	-- INPUTGROUP_VEH_MOVE_ALL
+	-- INPUTGROUP_CURSOR
+	-- INPUTGROUP_CURSOR_SCROLL
+	-- INPUTGROUP_SNIPER_ZOOM_SECONDARY
+	-- INPUTGROUP_VEH_HYDRAULICS_CONTROL
+	-- 
+	-- 
+	-- Took those in IDA Pro.Not sure in which order they go
+	["ENABLE_CONTROL_ACTION"]=--[[void]] function(--[[int]] padIndex,--[[int]] control,--[[BOOL (bool)]] enable)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.push_arg_bool(enable)native_invoker.end_call_2(0x351220255D64C155)end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["DISABLE_ALL_CONTROL_ACTIONS"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0x5F4B6931816E599B)end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["ENABLE_ALL_CONTROL_ACTIONS"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0xA5FFE9B05F199DE7)end,
+	-- Used in carsteal3 script with p0 = "Carsteal4_spycar".
+	["INIT_PC_SCRIPTED_CONTROLS"]=--[[BOOL (bool)]] function(--[[string]] name)native_invoker.begin_call()native_invoker.push_arg_string(name)native_invoker.end_call_2(0x3D42B92563939375)return native_invoker.get_return_value_bool()end,
+	-- Same as INIT_PC_SCRIPTED_CONTROLS
+	["SWITCH_PC_SCRIPTED_CONTROLS"]=--[[BOOL (bool)]] function(--[[string]] name)native_invoker.begin_call()native_invoker.push_arg_string(name)native_invoker.end_call_2(0x4683149ED1DDE7A1)return native_invoker.get_return_value_bool()end,
+	["SHUTDOWN_PC_SCRIPTED_CONTROLS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x643ED62D5EA3BEBD)end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- A*
+	["ALLOW_ALTERNATIVE_SCRIPT_CONTROLS_LAYOUT"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0x7F4724035FDCA1DD)end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_ENABLED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("1CEA6BFDF248E5D9");return native_invoker.get_return_value_bool();end,
+	-- Returns whether a control is currently pressed.
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_PRESSED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("F3A21BCD95725A4A");return native_invoker.get_return_value_bool();end,
+	-- Returns whether a control is currently _not_ pressed.
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_RELEASED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("648EE3E7F38877DD");return native_invoker.get_return_value_bool();end,
+	-- Returns whether a control was newly pressed since the last check.
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_JUST_PRESSED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("580417101DDB492F");return native_invoker.get_return_value_bool();end,
+	-- Returns whether a control was newly released since the last check.
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_JUST_RELEASED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("50F940259D3841E6");return native_invoker.get_return_value_bool();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_VALUE"]=--[[int]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("D95E79E8686D2C27");return native_invoker.get_return_value_int();end,
+	-- Returns the value of GET_CONTROL_VALUE normalized (i.e. a real number value between -1 and 1)
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_NORMAL"]=--[[float]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("EC3C9B8D5327B563");return native_invoker.get_return_value_float();end,
+	["_0x5B73C77D9EB66E24"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("5B73C77D9EB66E24");end,
+	-- Seems to return values between -1 and 1 for controls like gas and steering.
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_UNBOUND_NORMAL"]=--[[float]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("5B84D09CEC5209C5");return native_invoker.get_return_value_float();end,
+	-- This is for simulating player input.
+	-- amount is a float value from 0 - 1
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["_SET_CONTROL_NORMAL"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control,--[[float]] amount)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.push_arg_float(amount);native_invoker.end_call("E8A25867FBA3B05E");return native_invoker.get_return_value_bool();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_DISABLED_CONTROL_PRESSED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("E2587F8CBBD87B1D");return native_invoker.get_return_value_bool();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_DISABLED_CONTROL_RELEASED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("FB6C4072E9A32E92");return native_invoker.get_return_value_bool();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_DISABLED_CONTROL_JUST_PRESSED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("91AEF906BCA88877");return native_invoker.get_return_value_bool();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_DISABLED_CONTROL_JUST_RELEASED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("305C8DCD79DA8B0F");return native_invoker.get_return_value_bool();end,
+	-- control - c# works with (int)GTA.Control.CursorY / (int)GTA.Control.CursorX and returns the mouse movement (additive).
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_DISABLED_CONTROL_NORMAL"]=--[[float]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("11E65974A982637C");return native_invoker.get_return_value_float();end,
+	-- The "disabled" variant of _0x5B84D09CEC5209C5.
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_DISABLED_CONTROL_UNBOUND_NORMAL"]=--[[float]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("4F8A26A890FD62FB");return native_invoker.get_return_value_float();end,
+	["_0xD7D22F5592AED8BA"]=--[[int]] function(--[[int]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("D7D22F5592AED8BA");return native_invoker.get_return_value_int();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Used to be known as _GET_LAST_INPUT_METHOD & _IS_INPUT_DISABLED
+	["_IS_USING_KEYBOARD"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("A571D46727E2B718");return native_invoker.get_return_value_bool();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Used to be known as _IS_INPUT_JUST_DISABLED
+	["_IS_USING_KEYBOARD_2"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("13337B38DB572509");return native_invoker.get_return_value_bool();end,
+	["_SET_CURSOR_LOCATION"]=--[[BOOL (bool)]] function(--[[float]] x,--[[float]] y)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.end_call("FC695459D4D0E219");return native_invoker.get_return_value_bool();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Hardcoded to return false.
+	["_0x23F09EADC01449D6"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("23F09EADC01449D6");return native_invoker.get_return_value_bool();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["_0x6CD79468A1E595C6"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("6CD79468A1E595C6");return native_invoker.get_return_value_bool();end,
+	-- formerly called _GET_CONTROL_ACTION_NAME incorrectly
+	-- 
+	-- p2 appears to always be true.
+	-- p2 is unused variable in function.
+	-- 
+	-- EG:
+	-- GET_CONTROL_INSTRUCTIONAL_BUTTON (2, 201, 1) /*INPUT_FRONTEND_ACCEPT (e.g. Enter button)*/
+	-- GET_CONTROL_INSTRUCTIONAL_BUTTON (2, 202, 1) /*INPUT_FRONTEND_CANCEL (e.g. ESC button)*/
+	-- GET_CONTROL_INSTRUCTIONAL_BUTTON (2, 51, 1) /*INPUT_CONTEXT (e.g. E button)*/
+	-- 
+	-- gtaforums.com/topic/819070-c-draw-instructional-buttons-scaleform-movie/#entry1068197378
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_INSTRUCTIONAL_BUTTON"]=--[[string]] function(--[[int]] padIndex,--[[int]] control,--[[BOOL (bool)]] p2)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.push_arg_bool(p2);native_invoker.end_call("0499D7B09FC9B407");return native_invoker.get_return_value_string();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_GROUP_INSTRUCTIONAL_BUTTON"]=--[[string]] function(--[[int]] padIndex,--[[int]] controlGroup,--[[BOOL (bool)]] p2)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(controlGroup);native_invoker.push_arg_bool(p2);native_invoker.end_call("80C2FD58D720C801");return native_invoker.get_return_value_string();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["SET_CONTROL_LIGHT_EFFECT_COLOR"]=--[[void]] function(--[[int]] padIndex,--[[int]] red,--[[int]] green,--[[int]] blue)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(red);native_invoker.push_arg_int(green);native_invoker.push_arg_int(blue);native_invoker.end_call("8290252FFF36ACB5");end,
+	["_0xCB0360EFEFB2580D"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("CB0360EFEFB2580D");end,
+	-- padIndex always seems to be 0
+	-- duration in milliseconds 
+	-- frequency should range from about 10 (slow vibration) to 255 (very fast)
+	-- appears to be a hash collision, though it does do what it says
+	-- 
+	-- example:
+	-- SET_PAD_SHAKE(0, 100, 200);
+	["SET_PAD_SHAKE"]=--[[void]] function(--[[int]] padIndex,--[[int]] duration,--[[int]] frequency)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(duration);native_invoker.push_arg_int(frequency);native_invoker.end_call("48B3886C1358D0D5");end,
+	-- Does nothing (it's a nullsub).
+	["_0x14D29BB12D47F68C"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_int(p1);native_invoker.push_arg_int(p2);native_invoker.push_arg_int(p3);native_invoker.push_arg_int(p4);native_invoker.end_call("14D29BB12D47F68C");end,
+	["STOP_PAD_SHAKE"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("38C16A305E8CDC8D");end,
+	["SET_PAD_SHAKE_SUPPRESSED_ID"]=--[[void]] function(--[[int]] padIndex,--[[Any (int)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(p1);native_invoker.end_call("F239400E16C23E08");end,
+	["_0xA0CEFCEA390AAB9B"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("A0CEFCEA390AAB9B");end,
+	["IS_LOOK_INVERTED"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("77B612531280010D");return native_invoker.get_return_value_bool();end,
+	-- Used with IS_LOOK_INVERTED() and negates its affect.
+	-- 
+	-- --
+	-- 
+	-- Not sure how the person above got that description, but here's an actual example:
+	-- 
+	-- if (PAD::_GET_LAST_INPUT_METHOD(2)) {
+	--     if (a_5) {
+	--         if (PAD::IS_LOOK_INVERTED()) {
+	--             a_3 *= -1;
+	--         }
+	--         if (PAD::_E1615EC03B3BB4FD()) {
+	--             a_3 *= -1;
+	--         }
+	--     }
+	-- }
+	["_0xE1615EC03B3BB4FD"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("E1615EC03B3BB4FD");return native_invoker.get_return_value_bool();end,
+	-- Returns the local player's targeting mode. See PLAYER::SET_PLAYER_TARGETING_MODE.
+	["GET_LOCAL_PLAYER_AIM_STATE"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("BB41AFBBBC0A0287");return native_invoker.get_return_value_int();end,
+	-- Same behavior as GET_LOCAL_PLAYER_AIM_STATE but only used on the PC version.
+	["_GET_LOCAL_PLAYER_AIM_STATE_2"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("59B9A7AF4C95133C");return native_invoker.get_return_value_int();end,
+	["_0x25AAA32BDC98F2A3"]=--[[Any (int)]] function()native_invoker.begin_call();native_invoker.end_call("25AAA32BDC98F2A3");return native_invoker.get_return_value_int();end,
+	-- Returns profile setting 225.
+	["GET_IS_USING_ALTERNATE_DRIVEBY"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("0F70731BACCFBB96");return native_invoker.get_return_value_bool();end,
+	-- Returns profile setting 17.
+	["GET_ALLOW_MOVEMENT_WHILE_ZOOMED"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("FC859E2374407556");return native_invoker.get_return_value_bool();end,
+	["SET_PLAYERPAD_SHAKES_WHEN_CONTROLLER_DISABLED"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("798FDEB5B1575088");end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["SET_INPUT_EXCLUSIVE"]=--[[void]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.end_call("EDE476E5EE29EDB1");end,
+	-- control values and meaning: https://pastebin.com/JEkxhZ7R 
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Control values from the decompiled scripts: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,
+	-- 28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,53,5
+	-- 4,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,
+	-- 79,80,81,82,85,86,87,88,89,90,91,92,93,95,96,97,98,99,100,101,102,103,105,
+	-- 107,108,109,110,111,112,113,114,115,116,117,118,119,123,126,129,130,131,132,
+	-- 133,134,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,
+	-- 153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,171,172
+	-- ,177,187,188,189,190,195,196,199,200,201,202,203,205,207,208,209,211,212,213, 217,219,220,221,225,226,230,234,235,236,237,238,239,240,241,242,243,244,257,
+	-- 261,262,263,264,265,270,271,272,273,274,278,279,280,281,282,283,284,285,286,
+	-- 287,288,289,337.
+	-- 
+	-- Example: PAD::DISABLE_CONTROL_ACTION(2, 19, true) disables the switching UI from appearing both when using a keyboard and Xbox 360 controller. Needs to be executed each frame. 
+	--  
+	-- Control group 1 and 0 gives the same results as 2. Same results for all players. 
+	["DISABLE_CONTROL_ACTION"]=--[[void]] function(--[[int]] padIndex,--[[int]] control,--[[BOOL (bool)]] disable)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.push_arg_bool(disable);native_invoker.end_call("FE99B66D079CF6BC");end,
+	-- control values and meaning: https://pastebin.com/JEkxhZ7R 
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Control values from the decompiled scripts: 
+	-- 0,1,2,3,4,5,6,8,9,10,11,14,15,16,17,19,21,22,24,25,26,30,31,32,33,34,35,36,
+	-- 37,44,46,47,59,60,65,68,69,70,71,72,73,74,75,76,79,80,81,82,86,95,98,99,100
+	-- ,101,114,140,141,143,172,173,174,175,176,177,178,179,180,181,187,188,189,19
+	-- 0,195,196,197,198,199,201,202,203,204,205,206,207,208,209,210,217,218,219,2
+	-- 20,221,225,228,229,230,231,234,235,236,237,238,239,240,241,242,245,246,257,
+	-- 261,262,263,264,286,287,288,289,337,338,339,340,341,342,343
+	-- 
+	-- INPUTGROUP_MOVE
+	-- INPUTGROUP_LOOK
+	-- INPUTGROUP_WHEEL
+	-- INPUTGROUP_CELLPHONE_NAVIGATE
+	-- INPUTGROUP_CELLPHONE_NAVIGATE_UD
+	-- INPUTGROUP_CELLPHONE_NAVIGATE_LR
+	-- INPUTGROUP_FRONTEND_DPAD_ALL
+	-- INPUTGROUP_FRONTEND_DPAD_UD
+	-- INPUTGROUP_FRONTEND_DPAD_LR
+	-- INPUTGROUP_FRONTEND_LSTICK_ALL
+	-- INPUTGROUP_FRONTEND_RSTICK_ALL
+	-- INPUTGROUP_FRONTEND_GENERIC_UD
+	-- INPUTGROUP_FRONTEND_GENERIC_LR
+	-- INPUTGROUP_FRONTEND_GENERIC_ALL
+	-- INPUTGROUP_FRONTEND_BUMPERS
+	-- INPUTGROUP_FRONTEND_TRIGGERS
+	-- INPUTGROUP_FRONTEND_STICKS
+	-- INPUTGROUP_SCRIPT_DPAD_ALL
+	-- INPUTGROUP_SCRIPT_DPAD_UD
+	-- INPUTGROUP_SCRIPT_DPAD_LR
+	-- INPUTGROUP_SCRIPT_LSTICK_ALL
+	-- INPUTGROUP_SCRIPT_RSTICK_ALL
+	-- INPUTGROUP_SCRIPT_BUMPERS
+	-- INPUTGROUP_SCRIPT_TRIGGERS
+	-- INPUTGROUP_WEAPON_WHEEL_CYCLE
+	-- INPUTGROUP_FLY
+	-- INPUTGROUP_SUB
+	-- INPUTGROUP_VEH_MOVE_ALL
+	-- INPUTGROUP_CURSOR
+	-- INPUTGROUP_CURSOR_SCROLL
+	-- INPUTGROUP_SNIPER_ZOOM_SECONDARY
+	-- INPUTGROUP_VEH_HYDRAULICS_CONTROL
+	-- 
+	-- 
+	-- Took those in IDA Pro.Not sure in which order they go
+	["ENABLE_CONTROL_ACTION"]=--[[void]] function(--[[int]] padIndex,--[[int]] control,--[[BOOL (bool)]] enable)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.push_arg_bool(enable);native_invoker.end_call("351220255D64C155");end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["DISABLE_ALL_CONTROL_ACTIONS"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("5F4B6931816E599B");end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["ENABLE_ALL_CONTROL_ACTIONS"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("A5FFE9B05F199DE7");end,
+	-- Used in carsteal3 script with p0 = "Carsteal4_spycar".
+	-- 
+	-- S*
+	["_SWITCH_TO_INPUT_MAPPING_SCHEME"]=--[[BOOL (bool)]] function(--[[string]] name)native_invoker.begin_call();native_invoker.push_arg_string(name);native_invoker.end_call("3D42B92563939375");return native_invoker.get_return_value_bool();end,
+	-- Same as 0x3D42B92563939375
+	-- 
+	-- S*
+	["_SWITCH_TO_INPUT_MAPPING_SCHEME_2"]=--[[BOOL (bool)]] function(--[[string]] name)native_invoker.begin_call();native_invoker.push_arg_string(name);native_invoker.end_call("4683149ED1DDE7A1");return native_invoker.get_return_value_bool();end,
+	-- S*
+	["_RESET_INPUT_MAPPING_SCHEME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("643ED62D5EA3BEBD");end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- A*
+	["_0x7F4724035FDCA1DD"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("7F4724035FDCA1DD");end,
+}
+WEAPON={
+	-- Enables laser sight on any weapon.
+	-- 
+	-- It doesn't work. Neither on tick nor OnKeyDown
+	["ENABLE_LASER_SIGHT_RENDERING"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xC8B46D7727D864AA)end,
+	["GET_WEAPON_COMPONENT_TYPE_MODEL"]=--[[Hash (int)]] function(--[[Hash (int)]] componentHash)native_invoker.begin_call()native_invoker.push_arg_int(componentHash)native_invoker.end_call_2(0x0DB57B41EC1DB083)return native_invoker.get_return_value_int()end,
+	-- Returns the model of any weapon.
+	-- 
+	-- Can also take an ammo hash?
+	-- sub_6663a(&l_115B, WEAPON::GET_WEAPONTYPE_MODEL(${ammo_rpg}));
+	["GET_WEAPONTYPE_MODEL"]=--[[Hash (int)]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0xF46CDC33180FDA94)return native_invoker.get_return_value_int()end,
+	["GET_WEAPONTYPE_SLOT"]=--[[Hash (int)]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x4215460B9B8B7FA0)return native_invoker.get_return_value_int()end,
+	["GET_WEAPONTYPE_GROUP"]=--[[Hash (int)]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0xC3287EE3050FB74C)return native_invoker.get_return_value_int()end,
+	-- Returns the amount of extra components the specified component has.
+	-- Returns -1 if the component isn't of type CWeaponComponentVariantModel.
+	["GET_WEAPON_COMPONENT_VARIANT_EXTRA_COUNT"]=--[[int]] function(--[[Hash (int)]] componentHash)native_invoker.begin_call()native_invoker.push_arg_int(componentHash)native_invoker.end_call_2(0x6558AC7C17BFEF58)return native_invoker.get_return_value_int()end,
+	-- Returns the model hash of the extra component at specified index.
+	["GET_WEAPON_COMPONENT_VARIANT_EXTRA_MODEL"]=--[[Hash (int)]] function(--[[Hash (int)]] componentHash,--[[int]] extraComponentIndex)native_invoker.begin_call()native_invoker.push_arg_int(componentHash)native_invoker.push_arg_int(extraComponentIndex)native_invoker.end_call_2(0x4D1CB8DC40208A17)return native_invoker.get_return_value_int()end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["SET_CURRENT_PED_WEAPON"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[BOOL (bool)]] bForceInHand)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_bool(bForceInHand)native_invoker.end_call_2(0xADF692B254977C0C)end,
+	-- The return value seems to indicate returns true if the hash of the weapon object weapon equals the weapon hash.
+	-- p2 seems to be 1 most of the time.
+	-- 
+	-- 
+	-- 
+	-- 
+	-- 
+	-- p2 is not implemented
+	-- 
+	-- disassembly said that?
+	-- 
+	["GET_CURRENT_PED_WEAPON"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash* (pointer)]] weaponHash,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_pointer(weaponHash)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x3A87E44BB9A01D54)return native_invoker.get_return_value_bool()end,
+	["GET_CURRENT_PED_WEAPON_ENTITY_INDEX"]=--[[Entity (int)]] function(--[[Ped (int)]] ped,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x3B390A939AF0B5FC)return native_invoker.get_return_value_int()end,
+	-- p1 is always 0 in the scripts.
+	["GET_BEST_PED_WEAPON"]=--[[Hash (int)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x8483E98E8B888AE2)return native_invoker.get_return_value_int()end,
+	-- Full list of weapons by DurtyFree (Search for VEHICLE_*): https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["SET_CURRENT_PED_VEHICLE_WEAPON"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x75C55983C2C39DAA)return native_invoker.get_return_value_bool()end,
+	-- Example in VB
+	-- 
+	--     Public Shared Function GetVehicleCurrentWeapon(Ped As Ped) As Integer
+	--         Dim arg As New OutputArgument()
+	--         Native.Function.Call(Hash.GET_CURRENT_PED_VEHICLE_WEAPON, Ped, arg)
+	--         Return arg.GetResult(Of Integer)()
+	--     End Function
+	-- 
+	-- Usage:
+	-- If GetVehicleCurrentWeapon(Game.Player.Character) = -821520672 Then ...Do something
+	-- Note: -821520672 = VEHICLE_WEAPON_PLANE_ROCKET
+	["GET_CURRENT_PED_VEHICLE_WEAPON"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash* (pointer)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_pointer(weaponHash)native_invoker.end_call_2(0x1017582BCD3832DC)return native_invoker.get_return_value_bool()end,
+	["SET_PED_CYCLE_VEHICLE_WEAPONS_ONLY"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x50276EF8172F5F12)end,
+	-- Checks if the ped is currently equipped with a weapon matching a bit specified using a bitwise-or in typeFlags.
+	-- 
+	-- Type flag bit values:
+	-- 1 = Melee weapons
+	-- 2 = Explosive weapons
+	-- 4 = Any other weapons
+	-- 
+	-- Not specifying any bit will lead to the native *always* returning 'false', and for example specifying '4 | 2' will check for any weapon except fists and melee weapons.
+	-- 7 returns true if you are equipped with any weapon except your fists.
+	-- 6 returns true if you are equipped with any weapon except melee weapons.
+	-- 5 returns true if you are equipped with any weapon except the Explosives weapon group.
+	-- 4 returns true if you are equipped with any weapon except Explosives weapon group AND melee weapons.
+	-- 3 returns true if you are equipped with either Explosives or Melee weapons (the exact opposite of 4).
+	-- 2 returns true only if you are equipped with any weapon from the Explosives weapon group.
+	-- 1 returns true only if you are equipped with any Melee weapon.
+	-- 0 never returns true.
+	-- 
+	-- Note: When I say "Explosives weapon group", it does not include the Jerry can and Fire Extinguisher.
+	["IS_PED_ARMED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int]] typeFlags)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(typeFlags)native_invoker.end_call_2(0x475768A975D5AD17)return native_invoker.get_return_value_bool()end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["IS_WEAPON_VALID"]=--[[BOOL (bool)]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x937C71165CF334B3)return native_invoker.get_return_value_bool()end,
+	-- p2 should be FALSE, otherwise it seems to always return FALSE
+	-- 
+	-- Bool does not check if the weapon is current equipped, unfortunately.
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["HAS_PED_GOT_WEAPON"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x8DECB02F88F428BC)return native_invoker.get_return_value_bool()end,
+	["IS_PED_WEAPON_READY_TO_SHOOT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xB80CA294F2F26749)return native_invoker.get_return_value_bool()end,
+	["GET_PED_WEAPONTYPE_IN_SLOT"]=--[[Hash (int)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponSlot)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponSlot)native_invoker.end_call_2(0xEFFED78E9011134D)return native_invoker.get_return_value_int()end,
+	-- WEAPON::GET_AMMO_IN_PED_WEAPON(PLAYER::PLAYER_PED_ID(), a_0)
+	-- 
+	-- From decompiled scripts
+	-- Returns total ammo in weapon
+	-- 
+	-- GTALua Example :
+	-- natives.WEAPON.GET_AMMO_IN_PED_WEAPON(plyPed, WeaponHash)
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_AMMO_IN_PED_WEAPON"]=--[[int]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponhash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponhash)native_invoker.end_call_2(0x015A522136D7F951)return native_invoker.get_return_value_int()end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["ADD_AMMO_TO_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[int]] ammo)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(ammo)native_invoker.end_call_2(0x78F0424C34306220)end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["SET_PED_AMMO"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[int]] ammo,--[[BOOL (bool)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(ammo)native_invoker.push_arg_bool(p3)native_invoker.end_call_2(0x14E56BC5B5DB6A19)end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["SET_PED_INFINITE_AMMO"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle,--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x3EDCB0505123623B)end,
+	["SET_PED_INFINITE_AMMO_CLIP"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x183DADC6AA953186)end,
+	["SET_PED_STUN_GUN_FINITE_AMMO"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x24C024BA8379A70A)end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GIVE_WEAPON_TO_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[int]] ammoCount,--[[BOOL (bool)]] isHidden,--[[BOOL (bool)]] bForceInHand)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(ammoCount)native_invoker.push_arg_bool(isHidden)native_invoker.push_arg_bool(bForceInHand)native_invoker.end_call_2(0xBF0FD6E56C964FCB)end,
+	-- Gives a weapon to PED with a delay, example:
+	-- 
+	-- WEAPON::GIVE_DELAYED_WEAPON_TO_PED(PED::PLAYER_PED_ID(), MISC::GET_HASH_KEY("WEAPON_PISTOL"), 1000, false)
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GIVE_DELAYED_WEAPON_TO_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[int]] ammoCount,--[[BOOL (bool)]] bForceInHand)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(ammoCount)native_invoker.push_arg_bool(bForceInHand)native_invoker.end_call_2(0xB282DC6EBD803C75)end,
+	-- setting the last params to false it does that same so I would suggest its not a toggle
+	["REMOVE_ALL_PED_WEAPONS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xF25DF915FA38C5F3)end,
+	-- This native removes a specified weapon from your selected ped.
+	-- Weapon Hashes: pastebin.com/0wwDZgkF
+	-- 
+	-- Example:
+	-- C#:
+	-- Function.Call(Hash.REMOVE_WEAPON_FROM_PED, Game.Player.Character, 0x99B507EA);
+	-- 
+	-- C++:
+	-- WEAPON::REMOVE_WEAPON_FROM_PED(PLAYER::PLAYER_PED_ID(), 0x99B507EA);
+	-- 
+	-- The code above removes the knife from the player.
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["REMOVE_WEAPON_FROM_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x4899CB088EDF59B8)end,
+	-- Hides the players weapon during a cutscene.
+	["HIDE_PED_WEAPON_FOR_SCRIPTED_CUTSCENE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x6F6981D2253C208F)end,
+	-- Has 5 parameters since latest patches.
+	["SET_PED_CURRENT_WEAPON_VISIBLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] visible,--[[BOOL (bool)]] deselectWeapon,--[[BOOL (bool)]] p3,--[[BOOL (bool)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(visible)native_invoker.push_arg_bool(deselectWeapon)native_invoker.push_arg_bool(p3)native_invoker.push_arg_bool(p4)native_invoker.end_call_2(0x0725A4CCFDED9A70)end,
+	["SET_PED_DROPS_WEAPONS_WHEN_DEAD"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x476AE72C1D19D1A8)end,
+	-- It determines what weapons caused damage:
+	-- 
+	-- If you want to define only a specific weapon, second parameter=weapon hash code, third parameter=0
+	-- If you want to define any melee weapon, second parameter=0, third parameter=1.
+	-- If you want to identify any weapon (firearms, melee, rockets, etc.), second parameter=0, third parameter=2.
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["HAS_PED_BEEN_DAMAGED_BY_WEAPON"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[int]] weaponType)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(weaponType)native_invoker.end_call_2(0x2D343D2219CD027A)return native_invoker.get_return_value_bool()end,
+	-- Does NOT seem to work with HAS_PED_BEEN_DAMAGED_BY_WEAPON. Use CLEAR_ENTITY_LAST_WEAPON_DAMAGE and HAS_ENTITY_BEEN_DAMAGED_BY_WEAPON instead.
+	["CLEAR_PED_LAST_WEAPON_DAMAGE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x0E98F88A24C5F4B8)end,
+	-- It determines what weapons caused damage:
+	-- 
+	-- If you want to define only a specific weapon, second parameter=weapon hash code, third parameter=0
+	-- If you want to define any melee weapon, second parameter=0, third parameter=1.
+	-- If you want to identify any weapon (firearms, melee, rockets, etc.), second parameter=0, third parameter=2.
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["HAS_ENTITY_BEEN_DAMAGED_BY_WEAPON"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity,--[[Hash (int)]] weaponHash,--[[int]] weaponType)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(weaponType)native_invoker.end_call_2(0x131D401334815E94)return native_invoker.get_return_value_bool()end,
+	["CLEAR_ENTITY_LAST_WEAPON_DAMAGE"]=--[[void]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0xAC678E40BE7C74D2)end,
+	["SET_PED_DROPS_WEAPON"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x6B7513D9966FBEC0)end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["SET_PED_DROPS_INVENTORY_WEAPON"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[float]] xOffset,--[[float]] yOffset,--[[float]] zOffset,--[[int]] ammoCount)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_float(xOffset)native_invoker.push_arg_float(yOffset)native_invoker.push_arg_float(zOffset)native_invoker.push_arg_int(ammoCount)native_invoker.end_call_2(0x208A1888007FC0E6)end,
+	-- p2 is mostly 1 in the scripts.
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_MAX_AMMO_IN_CLIP"]=--[[int]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xA38DCFFCEA8962FA)return native_invoker.get_return_value_int()end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_AMMO_IN_CLIP"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[int* (pointer)]] ammo)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_pointer(ammo)native_invoker.end_call_2(0x2E1202248937775C)return native_invoker.get_return_value_bool()end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["SET_AMMO_IN_CLIP"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[int]] ammo)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(ammo)native_invoker.end_call_2(0xDCD2A934D65CB497)return native_invoker.get_return_value_bool()end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_MAX_AMMO"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[int* (pointer)]] ammo)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_pointer(ammo)native_invoker.end_call_2(0xDC16122C7A20C933)return native_invoker.get_return_value_bool()end,
+	-- Returns the max ammo for an ammo type. Ammo types: https://gist.github.com/root-cause/faf41f59f7a6d818b7db0b839bd147c1
+	["GET_MAX_AMMO_BY_TYPE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] ammoTypeHash,--[[int* (pointer)]] ammo)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(ammoTypeHash)native_invoker.push_arg_pointer(ammo)native_invoker.end_call_2(0x585847C5E4E11709)return native_invoker.get_return_value_bool()end,
+	-- Ammo types: https://gist.github.com/root-cause/faf41f59f7a6d818b7db0b839bd147c1
+	["ADD_PED_AMMO_BY_TYPE"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] ammoTypeHash,--[[int]] ammo)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(ammoTypeHash)native_invoker.push_arg_int(ammo)native_invoker.end_call_2(0x2472622CE1F2D45F)end,
+	-- Ammo types: https://gist.github.com/root-cause/faf41f59f7a6d818b7db0b839bd147c1
+	["SET_PED_AMMO_BY_TYPE"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] ammoTypeHash,--[[int]] ammo)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(ammoTypeHash)native_invoker.push_arg_int(ammo)native_invoker.end_call_2(0x5FD1E1F011E76D7E)end,
+	["GET_PED_AMMO_BY_TYPE"]=--[[int]] function(--[[Ped (int)]] ped,--[[Hash (int)]] ammoTypeHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(ammoTypeHash)native_invoker.end_call_2(0x39D22031557946C1)return native_invoker.get_return_value_int()end,
+	["SET_PED_AMMO_TO_DROP"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xA4EFEF9440A5B0EF)end,
+	["SET_PICKUP_AMMO_AMOUNT_SCALER"]=--[[void]] function(--[[float]] p0)native_invoker.begin_call()native_invoker.push_arg_float(p0)native_invoker.end_call_2(0xE620FD3512A04F18)end,
+	-- Returns the current ammo type of the specified ped's specified weapon.
+	-- MkII magazines will change the return value, like Pistol MkII returning AMMO_PISTOL without any components and returning AMMO_PISTOL_TRACER after Tracer Rounds component is attached.
+	-- Use 0xF489B44DD5AF4BD9 if you always want AMMO_PISTOL.
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_PED_AMMO_TYPE_FROM_WEAPON"]=--[[Hash (int)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x7FEAD38B326B9F74)return native_invoker.get_return_value_int()end,
+	-- Returns the base/default ammo type of the specified ped's specified weapon.
+	-- Use GET_PED_AMMO_TYPE_FROM_WEAPON if you want current ammo type (like AMMO_MG_INCENDIARY/AMMO_MG_TRACER while using MkII magazines) and use this if you want base ammo type. (AMMO_MG)
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_PED_ORIGINAL_AMMO_TYPE_FROM_WEAPON"]=--[[Hash (int)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0xF489B44DD5AF4BD9)return native_invoker.get_return_value_int()end,
+	-- Pass ped. Pass address of Vector3.
+	-- The coord will be put into the Vector3.
+	-- The return will determine whether there was a coord found or not.
+	["GET_PED_LAST_WEAPON_IMPACT_COORD"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Vector3* (pointer)]] coords)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_pointer(coords)native_invoker.end_call_2(0x6C4D0409BA1A2BC2)return native_invoker.get_return_value_bool()end,
+	-- p1/gadgetHash was always 0xFBAB5776 ("GADGET_PARACHUTE").
+	-- p2 is always true.
+	["SET_PED_GADGET"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] gadgetHash,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(gadgetHash)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xD0D7B1E680ED4A1A)end,
+	-- gadgetHash - was always 0xFBAB5776 ("GADGET_PARACHUTE").
+	["GET_IS_PED_GADGET_EQUIPPED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] gadgetHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(gadgetHash)native_invoker.end_call_2(0xF731332072F5156C)return native_invoker.get_return_value_bool()end,
+	-- Returns the hash of the weapon. 
+	-- 
+	--             var num7 = WEAPON::GET_SELECTED_PED_WEAPON(num4);
+	--             sub_27D3(num7);
+	--             switch (num7)
+	--             {
+	--                 case 0x24B17070:
+	-- 
+	-- Also see WEAPON::GET_CURRENT_PED_WEAPON. Difference?
+	-- 
+	-- -------------------------------------------------------------------------
+	-- 
+	-- The difference is that GET_SELECTED_PED_WEAPON simply returns the ped's current weapon hash but GET_CURRENT_PED_WEAPON also checks the weapon object and returns true if the hash of the weapon object equals the weapon hash
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_SELECTED_PED_WEAPON"]=--[[Hash (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x0A6DB4965674D243)return native_invoker.get_return_value_int()end,
+	--              WEAPON::EXPLODE_PROJECTILES(PLAYER::PLAYER_PED_ID(), func_221(0x00000003), 0x00000001);
+	["EXPLODE_PROJECTILES"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xFC4BD125DE7611E4)end,
+	-- If `explode` true, then removal is done through exploding the projectile. Basically the same as EXPLODE_PROJECTILES but without defining the owner ped.
+	["REMOVE_ALL_PROJECTILES_OF_TYPE"]=--[[void]] function(--[[Hash (int)]] weaponHash,--[[BOOL (bool)]] explode)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_bool(explode)native_invoker.end_call_2(0xFC52E0F37E446528)end,
+	["GET_LOCKON_DISTANCE_OF_CURRENT_PED_WEAPON"]=--[[float]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x840F03E9041E2C9C)return native_invoker.get_return_value_float()end,
+	["GET_MAX_RANGE_OF_CURRENT_PED_WEAPON"]=--[[float]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x814C9D19DFD69679)return native_invoker.get_return_value_float()end,
+	-- Third Parameter = unsure, but pretty sure it is weapon hash
+	-- --> get_hash_key("weapon_stickybomb")
+	-- 
+	-- Fourth Parameter = unsure, almost always -1
+	["HAS_VEHICLE_GOT_PROJECTILE_ATTACHED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] driver,--[[Vehicle (int)]] vehicle,--[[Hash (int)]] weaponHash,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(driver)native_invoker.push_arg_int(vehicle)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0x717C8481234E3B88)return native_invoker.get_return_value_bool()end,
+	-- Full list of weapons & components by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GIVE_WEAPON_COMPONENT_TO_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[Hash (int)]] componentHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(componentHash)native_invoker.end_call_2(0xD966D51AA5B28BB9)end,
+	-- Full list of weapons & components by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["REMOVE_WEAPON_COMPONENT_FROM_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[Hash (int)]] componentHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(componentHash)native_invoker.end_call_2(0x1E8BE90C74FB4C09)end,
+	-- Full list of weapons & components by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["HAS_PED_GOT_WEAPON_COMPONENT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[Hash (int)]] componentHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(componentHash)native_invoker.end_call_2(0xC593212475FAE340)return native_invoker.get_return_value_bool()end,
+	-- Full list of weapons & components by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["IS_PED_WEAPON_COMPONENT_ACTIVE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[Hash (int)]] componentHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(componentHash)native_invoker.end_call_2(0x0D78DE0572D3969E)return native_invoker.get_return_value_bool()end,
+	["REFILL_AMMO_INSTANTLY"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x8C0D57EA686FAD87)return native_invoker.get_return_value_bool()end,
+	-- Forces a ped to reload only if they are able to; if they have a full magazine, they will not reload.
+	["MAKE_PED_RELOAD"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x20AE33F3AC9C0033)return native_invoker.get_return_value_bool()end,
+	-- Nearly every instance of p1 I found was 31. Nearly every instance of p2 I found was 0.
+	-- 
+	-- REQUEST_WEAPON_ASSET(iLocal_1888, 31, 26);
+	["REQUEST_WEAPON_ASSET"]=--[[void]] function(--[[Hash (int)]] weaponHash,--[[int]] p1,--[[int]] p2)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x5443438F033E29C3)end,
+	["HAS_WEAPON_ASSET_LOADED"]=--[[BOOL (bool)]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x36E353271F0E90EE)return native_invoker.get_return_value_bool()end,
+	["REMOVE_WEAPON_ASSET"]=--[[void]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0xAA08EF13F341C8FC)end,
+	-- Now has 8 params.
+	["CREATE_WEAPON_OBJECT"]=--[[Object (int)]] function(--[[Hash (int)]] weaponHash,--[[int]] ammoCount,--[[float]] x,--[[float]] y,--[[float]] z,--[[BOOL (bool)]] showWorldModel,--[[float]] scale,--[[Any (int)]] p7,--[[Any (int)]] p8,--[[Any (int)]] p9)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(ammoCount)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_bool(showWorldModel)native_invoker.push_arg_float(scale)native_invoker.push_arg_int(p7)native_invoker.push_arg_int(p8)native_invoker.push_arg_int(p9)native_invoker.end_call_2(0x9541D3CF0D398F36)return native_invoker.get_return_value_int()end,
+	-- addonHash:
+	-- (use WEAPON::GET_WEAPON_COMPONENT_TYPE_MODEL() to get hash value)
+	-- ${component_at_ar_flsh}, ${component_at_ar_supp}, ${component_at_pi_flsh}, ${component_at_scope_large}, ${component_at_ar_supp_02}
+	["GIVE_WEAPON_COMPONENT_TO_WEAPON_OBJECT"]=--[[void]] function(--[[Object (int)]] weaponObject,--[[Hash (int)]] addonHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponObject)native_invoker.push_arg_int(addonHash)native_invoker.end_call_2(0x33E179436C0B31DB)end,
+	["REMOVE_WEAPON_COMPONENT_FROM_WEAPON_OBJECT"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xF7D82B0D66777611)end,
+	["HAS_WEAPON_GOT_WEAPON_COMPONENT"]=--[[BOOL (bool)]] function(--[[Object (int)]] weapon,--[[Hash (int)]] addonHash)native_invoker.begin_call()native_invoker.push_arg_int(weapon)native_invoker.push_arg_int(addonHash)native_invoker.end_call_2(0x76A18844E743BF91)return native_invoker.get_return_value_bool()end,
+	["GIVE_WEAPON_OBJECT_TO_PED"]=--[[void]] function(--[[Object (int)]] weaponObject,--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(weaponObject)native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xB1FA61371AF7C4B7)end,
+	-- Full list of weapons & components by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["DOES_WEAPON_TAKE_WEAPON_COMPONENT"]=--[[BOOL (bool)]] function(--[[Hash (int)]] weaponHash,--[[Hash (int)]] componentHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(componentHash)native_invoker.end_call_2(0x5CEE3DF569CECAB0)return native_invoker.get_return_value_bool()end,
+	-- Drops the current weapon and returns the object
+	-- 
+	-- Unknown behavior when unarmed.
+	["GET_WEAPON_OBJECT_FROM_PED"]=--[[Object (int)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xCAE1DC9A0E22A16D)return native_invoker.get_return_value_int()end,
+	-- Gives the specified loadout to the specified ped. 
+	-- Loadouts are defined in common.rpf\data\ai\loadouts.meta
+	["GIVE_LOADOUT_TO_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] loadoutHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(loadoutHash)native_invoker.end_call_2(0x68F8BE6AF5CDF8A6)end,
+	-- tintIndex can be the following:
+	-- 
+	-- 0 - Normal
+	-- 1 - Green
+	-- 2 - Gold
+	-- 3 - Pink
+	-- 4 - Army
+	-- 5 - LSPD
+	-- 6 - Orange
+	-- 7 - Platinum
+	-- Full list of weapons, components & tint indexes by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["SET_PED_WEAPON_TINT_INDEX"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[int]] tintIndex)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(tintIndex)native_invoker.end_call_2(0x50969B9B89ED5738)end,
+	-- Full list of weapons, components & tint indexes by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_PED_WEAPON_TINT_INDEX"]=--[[int]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x2B9EEDC07BD06B9F)return native_invoker.get_return_value_int()end,
+	-- Full list of weapons, components & tint indexes by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["SET_WEAPON_OBJECT_TINT_INDEX"]=--[[void]] function(--[[Object (int)]] weapon,--[[int]] tintIndex)native_invoker.begin_call()native_invoker.push_arg_int(weapon)native_invoker.push_arg_int(tintIndex)native_invoker.end_call_2(0xF827589017D4E4A9)end,
+	["GET_WEAPON_OBJECT_TINT_INDEX"]=--[[int]] function(--[[Object (int)]] weapon)native_invoker.begin_call()native_invoker.push_arg_int(weapon)native_invoker.end_call_2(0xCD183314F7CD2E57)return native_invoker.get_return_value_int()end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_WEAPON_TINT_COUNT"]=--[[int]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x5DCF6C5CAB2E9BF7)return native_invoker.get_return_value_int()end,
+	-- Colors:
+	-- 0 = Gray
+	-- 1 = Dark Gray
+	-- 2 = Black
+	-- 3 = White
+	-- 4 = Blue
+	-- 5 = Cyan
+	-- 6 = Aqua
+	-- 7 = Cool Blue
+	-- 8 = Dark Blue
+	-- 9 = Royal Blue
+	-- 10 = Plum
+	-- 11 = Dark Purple
+	-- 12 = Purple
+	-- 13 = Red
+	-- 14 = Wine Red
+	-- 15 = Magenta
+	-- 16 = Pink
+	-- 17 = Salmon
+	-- 18 = Hot Pink
+	-- 19 = Rust Orange
+	-- 20 = Brown
+	-- 21 = Earth
+	-- 22 = Orange
+	-- 23 = Light Orange
+	-- 24 = Dark Yellow
+	-- 25 = Yellow
+	-- 26 = Light Brown
+	-- 27 = Lime Green
+	-- 28 = Olive
+	-- 29 = Moss
+	-- 30 = Turquoise
+	-- 31 = Dark Green
+	-- Full list of weapons, components, tint indexes & weapon liveries by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["SET_PED_WEAPON_COMPONENT_TINT_INDEX"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[Hash (int)]] camoComponentHash,--[[int]] colorIndex)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(camoComponentHash)native_invoker.push_arg_int(colorIndex)native_invoker.end_call_2(0x9FE5633880ECD8ED)end,
+	-- Returns -1 if camoComponentHash is invalid/not attached to the weapon.
+	-- Full list of weapons, components, tint indexes & weapon liveries by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_PED_WEAPON_COMPONENT_TINT_INDEX"]=--[[int]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[Hash (int)]] camoComponentHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(camoComponentHash)native_invoker.end_call_2(0xF0A60040BE558F2D)return native_invoker.get_return_value_int()end,
+	-- Colors:
+	-- 0 = Gray
+	-- 1 = Dark Gray
+	-- 2 = Black
+	-- 3 = White
+	-- 4 = Blue
+	-- 5 = Cyan
+	-- 6 = Aqua
+	-- 7 = Cool Blue
+	-- 8 = Dark Blue
+	-- 9 = Royal Blue
+	-- 10 = Plum
+	-- 11 = Dark Purple
+	-- 12 = Purple
+	-- 13 = Red
+	-- 14 = Wine Red
+	-- 15 = Magenta
+	-- 16 = Pink
+	-- 17 = Salmon
+	-- 18 = Hot Pink
+	-- 19 = Rust Orange
+	-- 20 = Brown
+	-- 21 = Earth
+	-- 22 = Orange
+	-- 23 = Light Orange
+	-- 24 = Dark Yellow
+	-- 25 = Yellow
+	-- 26 = Light Brown
+	-- 27 = Lime Green
+	-- 28 = Olive
+	-- 29 = Moss
+	-- 30 = Turquoise
+	-- 31 = Dark Green
+	-- Full list of weapons, components, tint indexes & weapon liveries by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["SET_WEAPON_OBJECT_COMPONENT_TINT_INDEX"]=--[[void]] function(--[[Object (int)]] weaponObject,--[[Hash (int)]] camoComponentHash,--[[int]] colorIndex)native_invoker.begin_call()native_invoker.push_arg_int(weaponObject)native_invoker.push_arg_int(camoComponentHash)native_invoker.push_arg_int(colorIndex)native_invoker.end_call_2(0x5DA825A85D0EA6E6)end,
+	-- Returns -1 if camoComponentHash is invalid/not attached to the weapon object.
+	-- Full list of weapons, components, tint indexes & weapon liveries by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_WEAPON_OBJECT_COMPONENT_TINT_INDEX"]=--[[int]] function(--[[Object (int)]] weaponObject,--[[Hash (int)]] camoComponentHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponObject)native_invoker.push_arg_int(camoComponentHash)native_invoker.end_call_2(0xB3EA4FEABF41464B)return native_invoker.get_return_value_int()end,
+	["GET_PED_WEAPON_CAMO_INDEX"]=--[[int]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0xA2C9AC24B4061285)return native_invoker.get_return_value_int()end,
+	["SET_WEAPON_OBJECT_CAMO_INDEX"]=--[[void]] function(--[[Object (int)]] weaponObject,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(weaponObject)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x977CA98939E82E4B)end,
+	-- struct WeaponHudStatsData
+	-- {
+	--     BYTE hudDamage; // 0x0000
+	--     char _0x0001[0x7]; // 0x0001
+	--     BYTE hudSpeed; // 0x0008
+	--     char _0x0009[0x7]; // 0x0009
+	--     BYTE hudCapacity; // 0x0010
+	--     char _0x0011[0x7]; // 0x0011
+	--     BYTE hudAccuracy; // 0x0018
+	--     char _0x0019[0x7]; // 0x0019
+	--     BYTE hudRange; // 0x0020
+	-- };
+	-- 
+	-- Usage:
+	-- 
+	-- WeaponHudStatsData data;
+	-- if (GET_WEAPON_HUD_STATS(weaponHash, (int *)&data))
+	-- {
+	--     // BYTE damagePercentage = data.hudDamage and so on
+	-- }
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_WEAPON_HUD_STATS"]=--[[BOOL (bool)]] function(--[[Hash (int)]] weaponHash,--[[Any* (pointer)]] outData)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_pointer(outData)native_invoker.end_call_2(0xD92C739EE34C9EBA)return native_invoker.get_return_value_bool()end,
+	["GET_WEAPON_COMPONENT_HUD_STATS"]=--[[BOOL (bool)]] function(--[[Hash (int)]] componentHash,--[[Any* (pointer)]] outData)native_invoker.begin_call()native_invoker.push_arg_int(componentHash)native_invoker.push_arg_pointer(outData)native_invoker.end_call_2(0xB3CAF387AE12E9F8)return native_invoker.get_return_value_bool()end,
+	-- This native does not return damages of weapons from the melee and explosive group.
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_WEAPON_DAMAGE"]=--[[float]] function(--[[Hash (int)]] weaponHash,--[[Hash (int)]] componentHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_int(componentHash)native_invoker.end_call_2(0x3133B907D8B32053)return native_invoker.get_return_value_float()end,
+	-- // Returns the size of the default weapon component clip.
+	-- 
+	-- Use it like this:
+	-- 
+	-- char cClipSize[32];
+	-- Hash cur;
+	-- if (WEAPON::GET_CURRENT_PED_WEAPON(playerPed, &cur, 1))
+	-- {
+	--     if (WEAPON::IS_WEAPON_VALID(cur))
+	--     {
+	--         int iClipSize = WEAPON::GET_WEAPON_CLIP_SIZE(cur);
+	--         sprintf_s(cClipSize, "ClipSize: %.d", iClipSize);
+	--         vDrawString(cClipSize, 0.5f, 0.5f);
+	--     }
+	-- }
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_WEAPON_CLIP_SIZE"]=--[[int]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x583BE370B1EC6EB4)return native_invoker.get_return_value_int()end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_WEAPON_TIME_BETWEEN_SHOTS"]=--[[float]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x065D2AACAD8CF7A4)return native_invoker.get_return_value_float()end,
+	["SET_PED_CHANCE_OF_FIRING_BLANKS"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] xBias,--[[float]] yBias)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(xBias)native_invoker.push_arg_float(yBias)native_invoker.end_call_2(0x8378627201D5497D)end,
+	-- Returns handle of the projectile.
+	["SET_PED_SHOOT_ORDNANCE_WEAPON"]=--[[Object (int)]] function(--[[Ped (int)]] ped,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0xB4C8D77C80C0421E)return native_invoker.get_return_value_int()end,
+	["REQUEST_WEAPON_HIGH_DETAIL_MODEL"]=--[[void]] function(--[[Entity (int)]] weaponObject)native_invoker.begin_call()native_invoker.push_arg_int(weaponObject)native_invoker.end_call_2(0x48164DBB970AC3F0)end,
+	-- Changes the weapon damage output by the given multiplier value. Must be run every frame.
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["SET_WEAPON_DAMAGE_MODIFIER"]=--[[void]] function(--[[Hash (int)]] weaponHash,--[[float]] damageMultiplier)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_float(damageMultiplier)native_invoker.end_call_2(0x4757F00BC6323CFE)end,
+	["SET_WEAPON_AOE_MODIFIER"]=--[[void]] function(--[[Hash (int)]] weaponHash,--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0x4AE5AC8B852D642C)end,
+	["SET_WEAPON_EFFECT_DURATION_MODIFIER"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xE6D2CEDD370FF98E)end,
+	-- This native returns a true or false value.
+	-- 
+	-- Ped ped = The ped whose weapon you want to check.
+	["IS_PED_CURRENT_WEAPON_SILENCED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x65F0C5AE05943EC7)return native_invoker.get_return_value_bool()end,
+	["IS_FLASH_LIGHT_ON"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x4B7620C47217126C)return native_invoker.get_return_value_bool()end,
+	["SET_FLASH_LIGHT_FADE_DISTANCE"]=--[[Any (int)]] function(--[[float]] distance)native_invoker.begin_call()native_invoker.push_arg_float(distance)native_invoker.end_call_2(0xCEA66DAD478CD39B)return native_invoker.get_return_value_int()end,
+	-- Enables/disables flashlight on ped's weapon.
+	["SET_FLASH_LIGHT_ACTIVE_HISTORY"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x988DB6FE9B3AC000)end,
+	-- Changes the selected ped aiming animation style. 
+	-- Note : You must use GET_HASH_KEY!
+	-- 
+	-- Strings to use with GET_HASH_KEY :
+	-- 
+	--     "Ballistic",
+	--     "Default",
+	--   "Fat",
+	--   "Female",
+	--    "FirstPerson",
+	--   "FirstPersonAiming",
+	--     "FirstPersonFranklin",
+	--   "FirstPersonFranklinAiming",
+	--     "FirstPersonFranklinRNG",
+	--    "FirstPersonFranklinScope",
+	--  "FirstPersonMPFemale",
+	--   "FirstPersonMichael",
+	--    "FirstPersonMichaelAiming",
+	--  "FirstPersonMichaelRNG",
+	--     "FirstPersonMichaelScope",
+	--   "FirstPersonRNG",
+	--    "FirstPersonScope",
+	--  "FirstPersonTrevor",
+	--     "FirstPersonTrevorAiming",
+	--   "FirstPersonTrevorRNG",
+	--  "FirstPersonTrevorScope",
+	--    "Franklin",
+	--  "Gang",
+	--  "Gang1H",
+	--    "GangFemale",
+	--    "Hillbilly",
+	--     "MP_F_Freemode",
+	--     "Michael",
+	--   "SuperFat",
+	--  "Trevor"
+	["SET_WEAPON_ANIMATION_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] animStyle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(animStyle)native_invoker.end_call_2(0x1055AC3A667F09D9)end,
+	-- enum class eDamageType
+	-- {
+	-- 	UNKNOWN = 0,
+	-- 	NONE = 1,
+	-- 	MELEE = 2,
+	-- 	BULLET = 3,
+	-- 	BULLET_RUBBER = 4,
+	-- 	EXPLOSIVE = 5,
+	-- 	FIRE = 6,
+	-- 	COLLISION = 7,
+	-- 	FALL = 8,
+	-- 	DROWN = 9,
+	-- 	ELECTRIC = 10,
+	-- 	BARBED_WIRE = 11,
+	-- 	FIRE_EXTINGUISHER = 12,
+	-- 	SMOKE = 13,
+	-- 	WATER_CANNON = 14,
+	-- 	TRANQUILIZER = 15,
+	-- };
+	-- 
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["GET_WEAPON_DAMAGE_TYPE"]=--[[int]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x3BE0BB12D25FB305)return native_invoker.get_return_value_int()end,
+	["SET_EQIPPED_WEAPON_START_SPINNING_AT_FULL_SPEED"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xE4DCEC7FD5B739A5)end,
+	-- this returns if you can use the weapon while using a parachute
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["CAN_USE_WEAPON_ON_PARACHUTE"]=--[[BOOL (bool)]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0xBC7BE5ABC0879F74)return native_invoker.get_return_value_bool()end,
+	-- Both coordinates are from objects in the decompiled scripts. Native related to 0xECDC202B25E5CF48 p1 value. The only weapon hash used in the decompiled scripts is weapon_air_defence_gun. These two natives are used by the yacht script, decompiled scripts suggest it and the weapon hash used (valkyrie's rockets) are also used by yachts.
+	["CREATE_AIR_DEFENCE_SPHERE"]=--[[int]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[float]] p4,--[[float]] p5,--[[float]] p6,--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.push_arg_float(p6)native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x91EF34584710BE99)return native_invoker.get_return_value_int()end,
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["CREATE_AIR_DEFENCE_ANGLED_AREA"]=--[[int]] function(--[[float]] p0,--[[float]] p1,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[float]] p5,--[[float]] p6,--[[float]] p7,--[[float]] p8,--[[float]] p9,--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_float(p0)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.push_arg_float(p6)native_invoker.push_arg_float(p7)native_invoker.push_arg_float(p8)native_invoker.push_arg_float(p9)native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x9DA58CDBF6BDBC08)return native_invoker.get_return_value_int()end,
+	["REMOVE_AIR_DEFENCE_SPHERE"]=--[[BOOL (bool)]] function(--[[int]] zoneId)native_invoker.begin_call()native_invoker.push_arg_int(zoneId)native_invoker.end_call_2(0x0ABF535877897560)return native_invoker.get_return_value_bool()end,
+	["REMOVE_ALL_AIR_DEFENCE_SPHERES"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x1E45B34ADEBEE48E)end,
+	["SET_PLAYER_TARGETTABLE_FOR_AIR_DEFENCE_SPHERE"]=--[[void]] function(--[[Player (int)]] player,--[[int]] zoneId,--[[BOOL (bool)]] enable)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(zoneId)native_invoker.push_arg_bool(enable)native_invoker.end_call_2(0xECDC202B25E5CF48)end,
+	["IS_AIR_DEFENCE_SPHERE_IN_AREA"]=--[[BOOL (bool)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[int* (pointer)]] outZoneId)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.push_arg_pointer(outZoneId)native_invoker.end_call_2(0xDAB963831DBFD3F4)return native_invoker.get_return_value_bool()end,
+	["FIRE_AIR_DEFENCE_SPHERE_WEAPON_AT_POSITION"]=--[[void]] function(--[[int]] zoneId,--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call()native_invoker.push_arg_int(zoneId)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.end_call_2(0x44F1012B69313374)end,
+	["DOES_AIR_DEFENCE_SPHERE_EXIST"]=--[[BOOL (bool)]] function(--[[int]] zoneId)native_invoker.begin_call()native_invoker.push_arg_int(zoneId)native_invoker.end_call_2(0xCD79A550999D7D4F)return native_invoker.get_return_value_bool()end,
+	-- Disables selecting the given weapon. Ped isn't forced to put the gun away. However you can't reselect the weapon if you holster then unholster. Weapon is also grayed out on the weapon wheel.
+	-- Full list of weapons by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/weapons.json
+	["SET_CAN_PED_SELECT_INVENTORY_WEAPON"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xB4771B9AAF4E68E4)end,
+	-- Disable all weapons. Does the same as 0xB4771B9AAF4E68E4 except for all weapons.
+	["SET_CAN_PED_SELECT_ALL_WEAPONS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xEFF296097FF1E509)end,
+}
+HUD={
+	-- Initializes the text entry for the the text next to a loading prompt. All natives for building UI texts can be used here
+	-- 
+	-- 
+	-- e.g
+	-- void StartLoadingMessage(char *text, int spinnerType = 3)
+	--   {
+	--      _SET_LOADING_PROMPT_TEXT_ENTRY("STRING");
+	--        ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
+	--        _SHOW_LOADING_PROMPT(spinnerType);
+	--     }
+	-- /*OR*/
+	--  void ShowLoadingMessage(char *text, int spinnerType = 3, int timeMs = 10000)
+	--   {
+	--      _SET_LOADING_PROMPT_TEXT_ENTRY("STRING");
+	--        ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
+	--        _SHOW_LOADING_PROMPT(spinnerType);
+	--         WAIT(timeMs);
+	--      _REMOVE_LOADING_PROMPT();
+	--  }
+	-- 
+	-- 
+	-- These are some localized strings used in the loading spinner.
+	-- "PM_WAIT"                   = Please Wait
+	-- "CELEB_WPLYRS"              = Waiting For Players.
+	-- "CELL_SPINNER2"             = Scanning storage.
+	-- "ERROR_CHECKYACHTNAME" = Registering your yacht's name. Please wait.
+	-- "ERROR_CHECKPROFANITY"   = Checking your text for profanity. Please wait.
+	-- "FM_COR_AUTOD"                        = Just spinner no text
+	-- "FM_IHELP_WAT2"                        = Waiting for other players
+	-- "FM_JIP_WAITO"                            = Game options are being set
+	-- "FMMC_DOWNLOAD"                    = Downloading
+	-- "FMMC_PLYLOAD"                         = Loading
+	-- "FMMC_STARTTRAN"                    = Launching session
+	-- "HUD_QUITTING"                           =  Quiting session
+	-- "KILL_STRIP_IDM"                         = Waiting for to accept
+	-- "MP_SPINLOADING"                      = Loading
+	["BEGIN_TEXT_COMMAND_BUSYSPINNER_ON"]=--[[void]] function(--[[string]] string)native_invoker.begin_call();native_invoker.push_arg_string(string);native_invoker.end_call("ABA17D7CE615ADBF");end,
+	-- enum eBusySpinnerType
+	-- {
+	-- 	BUSY_SPINNER_LEFT,
+	-- 	BUSY_SPINNER_LEFT_2,
+	-- 	BUSY_SPINNER_LEFT_3,
+	-- 	BUSY_SPINNER_SAVE,
+	-- 	BUSY_SPINNER_RIGHT,
+	-- };
+	["END_TEXT_COMMAND_BUSYSPINNER_ON"]=--[[void]] function(--[[int]] busySpinnerType)native_invoker.begin_call();native_invoker.push_arg_int(busySpinnerType);native_invoker.end_call("BD12F8228410D9B4");end,
+	-- Removes the loading prompt at the bottom right of the screen.
+	["BUSYSPINNER_OFF"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("10D373323E5B9C0D");end,
+	["PRELOAD_BUSYSPINNER"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("C65AB383CD91DF98");end,
+	["BUSYSPINNER_IS_ON"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("D422FCC5F239A915");return native_invoker.get_return_value_bool();end,
+	["BUSYSPINNER_IS_DISPLAYING"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("B2A592B04648A9CB");return native_invoker.get_return_value_bool();end,
+	-- DISABLE_*
+	["_0x9245E81072704B8A"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("9245E81072704B8A");end,
+	-- Shows the cursor on screen for one frame.
+	["_SET_MOUSE_CURSOR_ACTIVE_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("AAE7CE1D63167423");end,
+	-- Changes the mouse cursor's sprite. 
+	-- 1 = Normal
+	-- 6 = Left Arrow
+	-- 7 = Right Arrow
+	["_SET_MOUSE_CURSOR_SPRITE"]=--[[void]] function(--[[int]] spriteId)native_invoker.begin_call();native_invoker.push_arg_int(spriteId);native_invoker.end_call("8DB8CFFD58B62552");end,
+	-- Shows/hides the frontend cursor on the pause menu or similar menus.
+	-- Clicking off and then on the game window will show it again.
+	["_SET_MOUSE_CURSOR_VISIBLE_IN_MENUS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("98215325A695E78A");end,
+	["_0x3D9ACB1EB139E702"]=--[[Any (int)]] function()native_invoker.begin_call();native_invoker.end_call("3D9ACB1EB139E702");return native_invoker.get_return_value_int();end,
+	["_0x632B2940C67F4EA9"]=--[[BOOL (bool)]] function(--[[int]] scaleformHandle,--[[Any* (pointer)]] p1,--[[Any* (pointer)]] p2,--[[Any* (pointer)]] p3)native_invoker.begin_call();native_invoker.push_arg_int(scaleformHandle);native_invoker.push_arg_pointer(p1);native_invoker.push_arg_pointer(p2);native_invoker.push_arg_pointer(p3);native_invoker.end_call("632B2940C67F4EA9");return native_invoker.get_return_value_bool();end,
+	["THEFEED_ONLY_SHOW_TOOLTIPS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("6F1554B0CC2089FA");end,
+	["THEFEED_SET_SCRIPTED_MENU_HEIGHT"]=--[[void]] function(--[[float]] pos)native_invoker.begin_call();native_invoker.push_arg_float(pos);native_invoker.end_call("55598D21339CB998");end,
+	-- Stops loading screen tips shown by invoking either `0x488043841BBE156F` or `0x15CFA549788D35EF`
+	["_THEFEED_DISABLE_LOADING_SCREEN_TIPS"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("32888337579A5970");end,
+	-- Once called each frame hides all above radar notifications.
+	["THEFEED_HIDE_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("25F87B30C382FCA7");end,
+	-- Displays loading screen tips, requires `0x56C8B608CFD49854` to be called beforehand.
+	["_THEFEED_DISPLAY_LOADING_SCREEN_TIPS"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("15CFA549788D35EF");end,
+	["THEFEED_FLUSH_QUEUE"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("A8FDB297A8D25FBA");end,
+	-- Removes a notification instantly instead of waiting for it to disappear
+	["THEFEED_REMOVE_ITEM"]=--[[void]] function(--[[int]] notificationId)native_invoker.begin_call();native_invoker.push_arg_int(notificationId);native_invoker.end_call("BE4390CB40B3E627");end,
+	["THEFEED_FORCE_RENDER_ON"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("A13C11E1B5C06BFC");end,
+	-- Enables loading screen tips to be be shown (`_0x15CFA549788D35EF` and `_0x488043841BBE156F`), blocks other kinds of notifications from being displayed (at least from current script). Call `0xADED7F5748ACAFE6` to display those again.
+	["THEFEED_FORCE_RENDER_OFF"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("583049884A2EEE3C");end,
+	["THEFEED_PAUSE"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("FDB423997FA30340");end,
+	["THEFEED_RESUME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("E1CD1E48E025E661");end,
+	["THEFEED_IS_PAUSED"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("A9CBFD40B3FA3010");return native_invoker.get_return_value_bool();end,
+	["THEFEED_SPS_EXTEND_WIDESCREEN_ON"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("D4438C0564490E63");end,
+	["THEFEED_SPS_EXTEND_WIDESCREEN_OFF"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("B695E2CD0A2DA9EE");end,
+	-- Returns the handle for the notification currently displayed on the screen. Name may be a hash collision, but describes the function accurately.
+	["THEFEED_GET_FIRST_VISIBLE_DELETE_REMAINING"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("82352748437638CA");return native_invoker.get_return_value_int();end,
+	-- Enables loading screen tips to be be shown (`_0x15CFA549788D35EF` and `_0x488043841BBE156F`), blocks other kinds of notifications from being displayed (at least from current script). Call `0xADED7F5748ACAFE6` to display those again.
+	["THEFEED_COMMENT_TELEPORT_POOL_ON"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("56C8B608CFD49854");end,
+	-- Displays "normal" notifications again after calling `_0x56C8B608CFD49854` (those that were drawn before calling this native too), though those will have a weird offset and stay on screen forever (tested with notifications created from same script).
+	["THEFEED_COMMENT_TELEPORT_POOL_OFF"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("ADED7F5748ACAFE6");end,
+	-- From the decompiled scripts:
+	-- HUD::_92F0DA1E27DB96DC(6);
+	-- HUD::_92F0DA1E27DB96DC(184);
+	-- HUD::_92F0DA1E27DB96DC(190);
+	-- 
+	-- sets background color for the next notification
+	-- 6 = red
+	-- 184 = green
+	-- 190 = yellow
+	-- 
+	-- Here is a list of some colors that can be used: gyazo.com/68bd384455fceb0a85a8729e48216e15
+	["_THEFEED_SET_NEXT_POST_BACKGROUND_COLOR"]=--[[void]] function(--[[int]] hudColorIndex)native_invoker.begin_call();native_invoker.push_arg_int(hudColorIndex);native_invoker.end_call("92F0DA1E27DB96DC");end,
+	["_THEFEED_SET_ANIMPOSTFX_COLOR"]=--[[void]] function(--[[int]] red,--[[int]] green,--[[int]] blue,--[[int]] alpha)native_invoker.begin_call();native_invoker.push_arg_int(red);native_invoker.push_arg_int(green);native_invoker.push_arg_int(blue);native_invoker.push_arg_int(alpha);native_invoker.end_call("17430B918701C342");end,
+	-- Related to notification color flashing, setting p0 to 0 invalidates a `_SET_NOTIFICATION_FLASH_COLOR` call for the target notification.
+	["_THEFEED_SET_ANIMPOSTFX_COUNT"]=--[[void]] function(--[[int]] count)native_invoker.begin_call();native_invoker.push_arg_int(count);native_invoker.end_call("17AD8C9706BDD88A");end,
+	["_THEFEED_SET_ANIMPOSTFX_SOUND"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("4A0C7C9BB10ABB36");end,
+	["THEFEED_RESET_ALL_PARAMETERS"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("FDD85225B2DEA55E");end,
+	-- Requires manual management of game stream handles (i.e., 0xBE4390CB40B3E627).
+	["THEFEED_FREEZE_NEXT_POST"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("FDEC055AB549E328");end,
+	["THEFEED_CLEAR_FROZEN_POST"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("80FE4F3AB4E1B62A");end,
+	["_THEFEED_SET_FLUSH_ANIMPOSTFX"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("BAE4F9B97CD43B30");end,
+	-- From the decompiled scripts, called 61 times:
+	-- HUD::_317EBA71D7543F52(&v_13, &v_13, &v_3, &v_3);
+	["_THEFEED_ADD_TXD_REF"]=--[[void]] function(--[[Any* (pointer)]] p0,--[[Any* (pointer)]] p1,--[[Any* (pointer)]] p2,--[[Any* (pointer)]] p3)native_invoker.begin_call();native_invoker.push_arg_pointer(p0);native_invoker.push_arg_pointer(p1);native_invoker.push_arg_pointer(p2);native_invoker.push_arg_pointer(p3);native_invoker.end_call("317EBA71D7543F52");end,
+	-- Declares the entry type of a notification, for example "STRING".
+	-- 
+	-- int ShowNotification(char *text)
+	-- {
+	-- 	BEGIN_TEXT_COMMAND_THEFEED_POST("STRING");
+	-- 	ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
+	-- 	return _DRAW_NOTIFICATION(1, 1);
+	-- }
+	["BEGIN_TEXT_COMMAND_THEFEED_POST"]=--[[void]] function(--[[string]] text)native_invoker.begin_call();native_invoker.push_arg_string(text);native_invoker.end_call("202709F4C58A0424");end,
+	-- List of picture names: https://pastebin.com/XdpJVbHz
+	-- Example result: https://i.imgur.com/SdEZ22m.png
+	["END_TEXT_COMMAND_THEFEED_POST_STATS"]=--[[int]] function(--[[string]] statTitle,--[[int]] iconEnum,--[[BOOL (bool)]] stepVal,--[[int]] barValue,--[[BOOL (bool)]] isImportant,--[[string]] pictureTextureDict,--[[string]] pictureTextureName)native_invoker.begin_call();native_invoker.push_arg_string(statTitle);native_invoker.push_arg_int(iconEnum);native_invoker.push_arg_bool(stepVal);native_invoker.push_arg_int(barValue);native_invoker.push_arg_bool(isImportant);native_invoker.push_arg_string(pictureTextureDict);native_invoker.push_arg_string(pictureTextureName);native_invoker.end_call("2B7E9A4EAAA93C89");return native_invoker.get_return_value_int();end,
+	-- This function can show pictures of every texture that can be requested by REQUEST_STREAMED_TEXTURE_DICT.
+	-- 
+	-- List of picNames: pastebin.com/XdpJVbHz
+	-- 
+	-- 
+	-- flash is a bool for fading in.
+	-- iconTypes:
+	-- 1 : Chat Box
+	-- 2 : Email
+	-- 3 : Add Friend Request
+	-- 4 : Nothing
+	-- 5 : Nothing
+	-- 6 : Nothing
+	-- 7 : Right Jumping Arrow
+	-- 8 : RP Icon
+	-- 9 : $ Icon
+	-- 
+	-- "sender" is the very top header. This can be any old string.
+	-- "subject" is the header under the sender.
+	["END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT"]=--[[int]] function(--[[string]] txdName,--[[string]] textureName,--[[BOOL (bool)]] flash,--[[int]] iconType,--[[string]] sender,--[[string]] subject)native_invoker.begin_call();native_invoker.push_arg_string(txdName);native_invoker.push_arg_string(textureName);native_invoker.push_arg_bool(flash);native_invoker.push_arg_int(iconType);native_invoker.push_arg_string(sender);native_invoker.push_arg_string(subject);native_invoker.end_call("1CCD9A37359072CF");return native_invoker.get_return_value_int();end,
+	-- This function can show pictures of every texture that can be requested by REQUEST_STREAMED_TEXTURE_DICT.
+	-- 
+	-- Needs more research.
+	-- 
+	-- Only one type of usage in the scripts:
+	-- 
+	-- HUD::_C6F580E4C94926AC("CHAR_ACTING_UP", "CHAR_ACTING_UP", 0, 0, "DI_FEED_CHAR", a_0);
+	["_END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT_GXT_ENTRY"]=--[[int]] function(--[[string]] txdName,--[[string]] textureName,--[[BOOL (bool)]] flash,--[[int]] iconType,--[[string]] sender,--[[string]] subject)native_invoker.begin_call();native_invoker.push_arg_string(txdName);native_invoker.push_arg_string(textureName);native_invoker.push_arg_bool(flash);native_invoker.push_arg_int(iconType);native_invoker.push_arg_string(sender);native_invoker.push_arg_string(subject);native_invoker.end_call("C6F580E4C94926AC");return native_invoker.get_return_value_int();end,
+	-- This function can show pictures of every texture that can be requested by REQUEST_STREAMED_TEXTURE_DICT.
+	-- 
+	-- NOTE: 'duration' is a multiplier, so 1.0 is normal, 2.0 is twice as long (very slow), and 0.5 is half as long.
+	-- 
+	-- Example, only occurrence in the scripts:
+	-- v_8 = HUD::_1E6611149DB3DB6B("CHAR_SOCIAL_CLUB", "CHAR_SOCIAL_CLUB", 0, 0, &v_9, "", a_5);
+	["END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT_TU"]=--[[int]] function(--[[string]] txdName,--[[string]] textureName,--[[BOOL (bool)]] flash,--[[int]] iconType,--[[string]] sender,--[[string]] subject,--[[float]] duration)native_invoker.begin_call();native_invoker.push_arg_string(txdName);native_invoker.push_arg_string(textureName);native_invoker.push_arg_bool(flash);native_invoker.push_arg_int(iconType);native_invoker.push_arg_string(sender);native_invoker.push_arg_string(subject);native_invoker.push_arg_float(duration);native_invoker.end_call("1E6611149DB3DB6B");return native_invoker.get_return_value_int();end,
+	-- This function can show pictures of every texture that can be requested by REQUEST_STREAMED_TEXTURE_DICT.
+	-- 
+	-- List of picNames pastebin.com/XdpJVbHz
+	-- 
+	-- flash is a bool for fading in.
+	-- iconTypes:
+	-- 1 : Chat Box
+	-- 2 : Email
+	-- 3 : Add Friend Request
+	-- 4 : Nothing
+	-- 5 : Nothing
+	-- 6 : Nothing
+	-- 7 : Right Jumping Arrow
+	-- 8 : RP Icon
+	-- 9 : $ Icon
+	-- 
+	-- "sender" is the very top header. This can be any old string.
+	-- "subject" is the header under the sender.
+	-- "duration" is a multiplier, so 1.0 is normal, 2.0 is twice as long (very slow), and 0.5 is half as long.
+	-- "clanTag" shows a crew tag in the "sender" header, after the text. You need to use 3 underscores as padding. Maximum length of this field seems to be 7. (e.g. "MK" becomes "___MK", "ACE" becomes "___ACE", etc.)
+	["END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT_WITH_CREW_TAG"]=--[[int]] function(--[[string]] txdName,--[[string]] textureName,--[[BOOL (bool)]] flash,--[[int]] iconType,--[[string]] sender,--[[string]] subject,--[[float]] duration,--[[string]] clanTag)native_invoker.begin_call();native_invoker.push_arg_string(txdName);native_invoker.push_arg_string(textureName);native_invoker.push_arg_bool(flash);native_invoker.push_arg_int(iconType);native_invoker.push_arg_string(sender);native_invoker.push_arg_string(subject);native_invoker.push_arg_float(duration);native_invoker.push_arg_string(clanTag);native_invoker.end_call("5CBF7BADE20DB93E");return native_invoker.get_return_value_int();end,
+	-- This function can show pictures of every texture that can be requested by REQUEST_STREAMED_TEXTURE_DICT.
+	-- 
+	-- List of picNames: pastebin.com/XdpJVbHz
+	-- 
+	-- flash is a bool for fading in.
+	-- iconTypes:
+	-- 1 : Chat Box
+	-- 2 : Email
+	-- 3 : Add Friend Request
+	-- 4 : Nothing
+	-- 5 : Nothing
+	-- 6 : Nothing
+	-- 7 : Right Jumping Arrow
+	-- 8 : RP Icon
+	-- 9 : $ Icon
+	-- 
+	-- "sender" is the very top header. This can be any old string.
+	-- "subject" is the header under the sender.
+	-- "duration" is a multiplier, so 1.0 is normal, 2.0 is twice as long (very slow), and 0.5 is half as long.
+	-- "clanTag" shows a crew tag in the "sender" header, after the text. You need to use 3 underscores as padding. Maximum length of this field seems to be 7. (e.g. "MK" becomes "___MK", "ACE" becomes "___ACE", etc.)
+	-- iconType2 is a mirror of iconType. It shows in the "subject" line, right under the original iconType.
+	-- 
+	-- 
+	-- int IconNotification(char *text, char *text2, char *Subject)
+	-- {
+	--     _SET_NOTIFICATION_TEXT_ENTRY("STRING");
+	--  ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
+	--    _SET_NOTIFICATION_MESSAGE_CLAN_TAG_2("CHAR_SOCIAL_CLUB", "CHAR_SOCIAL_CLUB", 1, 7, text2, Subject, 1.0f, "__EXAMPLE", 7);
+	--    return _DRAW_NOTIFICATION(1, 1);
+	-- }
+	["END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT_WITH_CREW_TAG_AND_ADDITIONAL_ICON"]=--[[int]] function(--[[string]] txdName,--[[string]] textureName,--[[BOOL (bool)]] flash,--[[int]] iconType1,--[[string]] sender,--[[string]] subject,--[[float]] duration,--[[string]] clanTag,--[[int]] iconType2,--[[int]] p9)native_invoker.begin_call();native_invoker.push_arg_string(txdName);native_invoker.push_arg_string(textureName);native_invoker.push_arg_bool(flash);native_invoker.push_arg_int(iconType1);native_invoker.push_arg_string(sender);native_invoker.push_arg_string(subject);native_invoker.push_arg_float(duration);native_invoker.push_arg_string(clanTag);native_invoker.push_arg_int(iconType2);native_invoker.push_arg_int(p9);native_invoker.end_call("531B84E7DA981FB6");return native_invoker.get_return_value_int();end,
+	["END_TEXT_COMMAND_THEFEED_POST_TICKER"]=--[[int]] function(--[[BOOL (bool)]] blink,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_bool(blink);native_invoker.push_arg_bool(p1);native_invoker.end_call("2ED7843F8F801023");return native_invoker.get_return_value_int();end,
+	["END_TEXT_COMMAND_THEFEED_POST_TICKER_FORCED"]=--[[int]] function(--[[BOOL (bool)]] blink,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_bool(blink);native_invoker.push_arg_bool(p1);native_invoker.end_call("44FA03975424A0EE");return native_invoker.get_return_value_int();end,
+	["END_TEXT_COMMAND_THEFEED_POST_TICKER_WITH_TOKENS"]=--[[int]] function(--[[BOOL (bool)]] blink,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_bool(blink);native_invoker.push_arg_bool(p1);native_invoker.end_call("378E809BF61EC840");return native_invoker.get_return_value_int();end,
+	-- Shows an "award" notification above the minimap, example: https://i.imgur.com/e2DNaKX.png
+	-- Example:
+	-- 
+	-- HUD::_SET_NOTIFICATION_TEXT_ENTRY("HUNT");
+	-- HUD::_0xAA295B6F28BD587D("Hunting", "Hunting_Gold_128", 0, 109, "HUD_MED_UNLKED");
+	["END_TEXT_COMMAND_THEFEED_POST_AWARD"]=--[[int]] function(--[[string]] textureDict,--[[string]] textureName,--[[int]] rpBonus,--[[int]] colorOverlay,--[[string]] titleLabel)native_invoker.begin_call();native_invoker.push_arg_string(textureDict);native_invoker.push_arg_string(textureName);native_invoker.push_arg_int(rpBonus);native_invoker.push_arg_int(colorOverlay);native_invoker.push_arg_string(titleLabel);native_invoker.end_call("AA295B6F28BD587D");return native_invoker.get_return_value_int();end,
+	["END_TEXT_COMMAND_THEFEED_POST_CREWTAG"]=--[[int]] function(--[[BOOL (bool)]] p0,--[[BOOL (bool)]] p1,--[[int* (pointer)]] p2,--[[int]] p3,--[[BOOL (bool)]] isLeader,--[[BOOL (bool)]] unk0,--[[int]] clanDesc,--[[int]] R,--[[int]] G,--[[int]] B)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.push_arg_bool(p1);native_invoker.push_arg_pointer(p2);native_invoker.push_arg_int(p3);native_invoker.push_arg_bool(isLeader);native_invoker.push_arg_bool(unk0);native_invoker.push_arg_int(clanDesc);native_invoker.push_arg_int(R);native_invoker.push_arg_int(G);native_invoker.push_arg_int(B);native_invoker.end_call("97C9E4E7024A8F2C");return native_invoker.get_return_value_int();end,
+	["END_TEXT_COMMAND_THEFEED_POST_CREWTAG_WITH_GAME_NAME"]=--[[int]] function(--[[BOOL (bool)]] p0,--[[BOOL (bool)]] p1,--[[int* (pointer)]] p2,--[[int]] p3,--[[BOOL (bool)]] isLeader,--[[BOOL (bool)]] unk0,--[[int]] clanDesc,--[[string]] playerName,--[[int]] R,--[[int]] G,--[[int]] B)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.push_arg_bool(p1);native_invoker.push_arg_pointer(p2);native_invoker.push_arg_int(p3);native_invoker.push_arg_bool(isLeader);native_invoker.push_arg_bool(unk0);native_invoker.push_arg_int(clanDesc);native_invoker.push_arg_string(playerName);native_invoker.push_arg_int(R);native_invoker.push_arg_int(G);native_invoker.push_arg_int(B);native_invoker.end_call("137BC35589E34E1E");return native_invoker.get_return_value_int();end,
+	["END_TEXT_COMMAND_THEFEED_POST_UNLOCK"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_int(p1);native_invoker.push_arg_int(p2);native_invoker.end_call("33EE12743CCD6343");return native_invoker.get_return_value_int();end,
+	["END_TEXT_COMMAND_THEFEED_POST_UNLOCK_TU"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_int(p1);native_invoker.push_arg_int(p2);native_invoker.push_arg_int(p3);native_invoker.end_call("C8F3AAF93D0600BF");return native_invoker.get_return_value_int();end,
+	["END_TEXT_COMMAND_THEFEED_POST_UNLOCK_TU_WITH_COLOR"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4,--[[Any (int)]] p5)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_int(p1);native_invoker.push_arg_int(p2);native_invoker.push_arg_int(p3);native_invoker.push_arg_int(p4);native_invoker.push_arg_int(p5);native_invoker.end_call("7AE0589093A2E088");return native_invoker.get_return_value_int();end,
+	["END_TEXT_COMMAND_THEFEED_POST_MPTICKER"]=--[[int]] function(--[[BOOL (bool)]] blink,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_bool(blink);native_invoker.push_arg_bool(p1);native_invoker.end_call("F020C96915705B3A");return native_invoker.get_return_value_int();end,
+	["END_TEXT_COMMAND_THEFEED_POST_CREW_RANKUP"]=--[[int]] function(--[[string]] p0,--[[string]] p1,--[[string]] p2,--[[BOOL (bool)]] p3,--[[BOOL (bool)]] p4)native_invoker.begin_call();native_invoker.push_arg_string(p0);native_invoker.push_arg_string(p1);native_invoker.push_arg_string(p2);native_invoker.push_arg_bool(p3);native_invoker.push_arg_bool(p4);native_invoker.end_call("8EFCCF6EC66D85E4");return native_invoker.get_return_value_int();end,
+	["END_TEXT_COMMAND_THEFEED_POST_VERSUS_TU"]=--[[Any (int)]] function(--[[Any* (pointer)]] p0,--[[Any* (pointer)]] p1,--[[Any (int)]] p2,--[[Any* (pointer)]] p3,--[[Any* (pointer)]] p4,--[[Any (int)]] p5,--[[Any (int)]] p6,--[[Any (int)]] p7)native_invoker.begin_call();native_invoker.push_arg_pointer(p0);native_invoker.push_arg_pointer(p1);native_invoker.push_arg_int(p2);native_invoker.push_arg_pointer(p3);native_invoker.push_arg_pointer(p4);native_invoker.push_arg_int(p5);native_invoker.push_arg_int(p6);native_invoker.push_arg_int(p7);native_invoker.end_call("B6871B0555B02996");return native_invoker.get_return_value_int();end,
+	-- returns a notification handle, prints out a notification like below:
+	-- type range: 0 - 2
+	-- if you set type to 1, image goes from 0 - 39 - Xbox you can add text to
+	-- 
+	-- example: 
+	-- HUD::_0xD202B92CBF1D816F(1, 20, "Who you trynna get crazy with, ese? Don't you know I'm LOCO?!");
+	-- - imgur.com/lGBPCz3
+	["_END_TEXT_COMMAND_THEFEED_POST_REPLAY_ICON"]=--[[int]] function(--[[int]] type,--[[int]] image,--[[string]] text)native_invoker.begin_call();native_invoker.push_arg_int(type);native_invoker.push_arg_int(image);native_invoker.push_arg_string(text);native_invoker.end_call("D202B92CBF1D816F");return native_invoker.get_return_value_int();end,
+	-- returns a notification handle, prints out a notification like below:
+	-- type range: 0 - 2
+	-- if you set type to 1, button accepts "~INPUT_SOMETHING~"
+	-- 
+	-- example:
+	-- HUD::_0xDD6CB2CCE7C2735C(1, "~INPUT_TALK~", "Who you trynna get crazy with, ese? Don't you know I'm LOCO?!");
+	-- - imgur.com/UPy0Ial
+	-- 
+	-- 
+	-- Examples from the scripts:
+	-- l_D1[1/*1*/]=HUD::_DD6CB2CCE7C2735C(1,"~INPUT_REPLAY_START_STOP_RECORDING~","");
+	-- l_D1[2/*1*/]=HUD::_DD6CB2CCE7C2735C(1,"~INPUT_SAVE_REPLAY_CLIP~","");
+	-- l_D1[1/*1*/]=HUD::_DD6CB2CCE7C2735C(1,"~INPUT_REPLAY_START_STOP_RECORDING~","");
+	-- l_D1[2/*1*/]=HUD::_DD6CB2CCE7C2735C(1,"~INPUT_REPLAY_START_STOP_RECORDING_SECONDARY~","");
+	-- 
+	["_END_TEXT_COMMAND_THEFEED_POST_REPLAY_INPUT"]=--[[int]] function(--[[int]] type,--[[string]] button,--[[string]] text)native_invoker.begin_call();native_invoker.push_arg_int(type);native_invoker.push_arg_string(button);native_invoker.push_arg_string(text);native_invoker.end_call("DD6CB2CCE7C2735C");return native_invoker.get_return_value_int();end,
+	-- Used to be known as _SET_TEXT_ENTRY_2
+	-- 
+	-- void ShowSubtitle(char *text)
+	-- {
+	--   BEGIN_TEXT_COMMAND_PRINT("STRING");
+	--  ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
+	--    END_TEXT_COMMAND_PRINT(2000, 1);
+	-- }
+	["BEGIN_TEXT_COMMAND_PRINT"]=--[[void]] function(--[[string]] GxtEntry)native_invoker.begin_call();native_invoker.push_arg_string(GxtEntry);native_invoker.end_call("B87A37EEB7FAA67D");end,
+	-- Draws the subtitle at middle center of the screen.
+	-- 
+	-- int duration = time in milliseconds to show text on screen before disappearing
+	-- 
+	-- drawImmediately = If true, the text will be drawn immediately, if false, the text will be drawn after the previous subtitle has finished
+	-- 
+	-- Used to be known as _DRAW_SUBTITLE_TIMED
+	["END_TEXT_COMMAND_PRINT"]=--[[void]] function(--[[int]] duration,--[[BOOL (bool)]] drawImmediately)native_invoker.begin_call();native_invoker.push_arg_int(duration);native_invoker.push_arg_bool(drawImmediately);native_invoker.end_call("9D77056A530643F6");end,
+	-- nothin doin. 
+	-- 
+	-- BOOL Message(const char* text)
+	--    {
+	--      BEGIN_TEXT_COMMAND_IS_MESSAGE_DISPLAYED("STRING");
+	--       ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
+	--        return END_TEXT_COMMAND_IS_MESSAGE_DISPLAYED();
+	--    }
+	["BEGIN_TEXT_COMMAND_IS_MESSAGE_DISPLAYED"]=--[[void]] function(--[[string]] text)native_invoker.begin_call();native_invoker.push_arg_string(text);native_invoker.end_call("853648FD1063A213");end,
+	["END_TEXT_COMMAND_IS_MESSAGE_DISPLAYED"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("8A9BA1AB3E237613");return native_invoker.get_return_value_bool();end,
+	-- The following were found in the decompiled script files:
+	-- STRING, TWOSTRINGS, NUMBER, PERCENTAGE, FO_TWO_NUM, ESMINDOLLA, ESDOLLA, MTPHPER_XPNO, AHD_DIST, CMOD_STAT_0, CMOD_STAT_1, CMOD_STAT_2, CMOD_STAT_3, DFLT_MNU_OPT, F3A_TRAFDEST, ES_HELP_SOC3
+	-- 
+	-- ESDOLLA - cash
+	-- ESMINDOLLA - cash (negative)
+	-- 
+	-- Used to be known as _SET_TEXT_ENTRY
+	["BEGIN_TEXT_COMMAND_DISPLAY_TEXT"]=--[[void]] function(--[[string]] text)native_invoker.begin_call();native_invoker.push_arg_string(text);native_invoker.end_call("25FBB336DF1804CB");end,
+	-- After applying the properties to the text (See HUD::SET_TEXT_), this will draw the text in the applied position. Also 0.0f < x, y < 1.0f, percentage of the axis.
+	-- 
+	-- Used to be known as _DRAW_TEXT
+	["END_TEXT_COMMAND_DISPLAY_TEXT"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[int]] p2)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.push_arg_int(p2);native_invoker.end_call("CD015E5BB0D96A57");end,
+	-- BEGIN_TEXT_COMMAND_*
+	-- 
+	-- Example:
+	-- _BEGIN_TEXT_COMMAND_GET_WIDTH("NUMBER");
+	-- ADD_TEXT_COMPONENT_FLOAT(69.420f, 2);
+	-- float width = _END_TEXT_COMMAND_GET_WIDTH(1);
+	["_BEGIN_TEXT_COMMAND_GET_WIDTH"]=--[[void]] function(--[[string]] text)native_invoker.begin_call();native_invoker.push_arg_string(text);native_invoker.end_call("54CE8AC98E120CAB");end,
+	-- END_TEXT_COMMAND_*
+	-- 
+	-- In scripts font most of the time is passed as 1.
+	-- Use _BEGIN_TEXT_GET_COMMAND_GET_WIDTH
+	-- 
+	-- param is not font from what i've tested
+	["_END_TEXT_COMMAND_GET_WIDTH"]=--[[float]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("85F061DA64ED2F67");return native_invoker.get_return_value_float();end,
+	-- BEGIN_TEXT_COMMAND_*
+	-- 
+	-- get's line count
+	-- 
+	-- 
+	-- int GetLineCount(char *text, float x, float y)
+	--     {
+	--      _BEGIN_TEXT_COMMAND_LINE_COUNT("STRING");
+	--                 ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
+	--       return _END_TEXT_COMMAND_GET_LINE_COUNT(x, y);
+	--     }
+	["_BEGIN_TEXT_COMMAND_LINE_COUNT"]=--[[void]] function(--[[string]] entry)native_invoker.begin_call();native_invoker.push_arg_string(entry);native_invoker.end_call("521FB041D93DD0E4");end,
+	-- END_TEXT_COMMAND_*
+	-- 
+	-- Determines how many lines the text string will use when drawn on screen. 
+	-- Must use 0x521FB041D93DD0E4 for setting up
+	["_END_TEXT_COMMAND_LINE_COUNT"]=--[[int]] function(--[[float]] x,--[[float]] y)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.end_call("9040DFB09BE75706");return native_invoker.get_return_value_int();end,
+	-- Used to be known as _SET_TEXT_COMPONENT_FORMAT
+	["BEGIN_TEXT_COMMAND_DISPLAY_HELP"]=--[[void]] function(--[[string]] inputType)native_invoker.begin_call();native_invoker.push_arg_string(inputType);native_invoker.end_call("8509B634FBE7DA11");end,
+	-- shape goes from -1 to 50 (may be more).
+	-- p0 is always 0.
+	-- 
+	-- Example:
+	-- void FloatingHelpText(const char* text)
+	-- {
+	--     BEGIN_TEXT_COMMAND_DISPLAY_HELP("STRING");
+	--   ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text);
+	--    END_TEXT_COMMAND_DISPLAY_HELP (0, 0, 1, -1);
+	-- }
+	-- 
+	-- Image:
+	-- - imgbin.org/images/26209.jpg
+	-- 
+	-- more inputs/icons:
+	-- - pastebin.com/nqNYWMSB
+	-- 
+	-- Used to be known as _DISPLAY_HELP_TEXT_FROM_STRING_LABEL
+	["END_TEXT_COMMAND_DISPLAY_HELP"]=--[[void]] function(--[[int]] p0,--[[BOOL (bool)]] loop,--[[BOOL (bool)]] beep,--[[int]] shape)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_bool(loop);native_invoker.push_arg_bool(beep);native_invoker.push_arg_int(shape);native_invoker.end_call("238FFE5C7B0498A6");end,
+	-- BOOL IsContextActive(char *ctx)
+	--     {
+	--      BEGIN_TEXT_COMMAND_IS_THIS_HELP_MESSAGE_BEING_DISPLAYED(ctx);
+	--      return END_TEXT_COMMAND_IS_THIS_HELP_MESSAGE_BEING_DISPLAYED(0);
+	--   }
+	["BEGIN_TEXT_COMMAND_IS_THIS_HELP_MESSAGE_BEING_DISPLAYED"]=--[[void]] function(--[[string]] labelName)native_invoker.begin_call();native_invoker.push_arg_string(labelName);native_invoker.end_call("0A24DA3A41B718F5");end,
+	["END_TEXT_COMMAND_IS_THIS_HELP_MESSAGE_BEING_DISPLAYED"]=--[[BOOL (bool)]] function(--[[int]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("10BDDBFC529428DD");return native_invoker.get_return_value_bool();end,
+	-- Starts a text command to change the name of a blip displayed in the pause menu.
+	-- This should be paired with `END_TEXT_COMMAND_SET_BLIP_NAME`, once adding all required text components.
+	-- Example:
+	-- 
+	-- HUD::BEGIN_TEXT_COMMAND_SET_BLIP_NAME("STRING");
+	-- HUD::_ADD_TEXT_COMPONENT_STRING("Name");
+	-- HUD::END_TEXT_COMMAND_SET_BLIP_NAME(blip);
+	["BEGIN_TEXT_COMMAND_SET_BLIP_NAME"]=--[[void]] function(--[[string]] textLabel)native_invoker.begin_call();native_invoker.push_arg_string(textLabel);native_invoker.end_call("F9113A30DE5C6670");end,
+	-- Finalizes a text command started with BEGIN_TEXT_COMMAND_SET_BLIP_NAME, setting the name of the specified blip.
+	["END_TEXT_COMMAND_SET_BLIP_NAME"]=--[[void]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("BC38B49BCB83BC9B");end,
+	["_BEGIN_TEXT_COMMAND_OBJECTIVE"]=--[[void]] function(--[[string]] p0)native_invoker.begin_call();native_invoker.push_arg_string(p0);native_invoker.end_call("23D69E0465570028");end,
+	["_END_TEXT_COMMAND_OBJECTIVE"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("CFDBDF5AE59BA0F4");end,
+	-- clears a print text command with this text
+	["BEGIN_TEXT_COMMAND_CLEAR_PRINT"]=--[[void]] function(--[[string]] text)native_invoker.begin_call();native_invoker.push_arg_string(text);native_invoker.end_call("E124FA80A759019C");end,
+	["END_TEXT_COMMAND_CLEAR_PRINT"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("FCC75460ABA29378");end,
+	["BEGIN_TEXT_COMMAND_OVERRIDE_BUTTON_TEXT"]=--[[void]] function(--[[string]] gxtEntry)native_invoker.begin_call();native_invoker.push_arg_string(gxtEntry);native_invoker.end_call("8F9EE5687F8EECCD");end,
+	["END_TEXT_COMMAND_OVERRIDE_BUTTON_TEXT"]=--[[void]] function(--[[int]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("A86911979638106F");end,
+	["ADD_TEXT_COMPONENT_INTEGER"]=--[[void]] function(--[[int]] value)native_invoker.begin_call();native_invoker.push_arg_int(value);native_invoker.end_call("03B504CF259931BC");end,
+	["ADD_TEXT_COMPONENT_FLOAT"]=--[[void]] function(--[[float]] value,--[[int]] decimalPlaces)native_invoker.begin_call();native_invoker.push_arg_float(value);native_invoker.push_arg_int(decimalPlaces);native_invoker.end_call("E7DCB5B874BCD96E");end,
+	["ADD_TEXT_COMPONENT_SUBSTRING_TEXT_LABEL"]=--[[void]] function(--[[string]] labelName)native_invoker.begin_call();native_invoker.push_arg_string(labelName);native_invoker.end_call("C63CD5D2920ACBE7");end,
+	-- It adds the localized text of the specified GXT entry name. Eg. if the argument is GET_HASH_KEY("ES_HELP"), adds "Continue". Just uses a text labels hash key
+	["ADD_TEXT_COMPONENT_SUBSTRING_TEXT_LABEL_HASH_KEY"]=--[[void]] function(--[[Hash (int)]] gxtEntryHash)native_invoker.begin_call();native_invoker.push_arg_int(gxtEntryHash);native_invoker.end_call("17299B63C7683A2B");end,
+	["ADD_TEXT_COMPONENT_SUBSTRING_BLIP_NAME"]=--[[void]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("80EAD8E2E1D5D52E");end,
+	["ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME"]=--[[void]] function(--[[string]] text)native_invoker.begin_call();native_invoker.push_arg_string(text);native_invoker.end_call("6C188BE134E074AA");end,
+	-- Adds a timer (e.g. "00:00:00:000"). The appearance of the timer depends on the flags, which needs more research.
+	["ADD_TEXT_COMPONENT_SUBSTRING_TIME"]=--[[void]] function(--[[int]] timestamp,--[[int]] flags)native_invoker.begin_call();native_invoker.push_arg_int(timestamp);native_invoker.push_arg_int(flags);native_invoker.end_call("1115F16B8AB9E8BF");end,
+	["ADD_TEXT_COMPONENT_FORMATTED_INTEGER"]=--[[void]] function(--[[int]] value,--[[BOOL (bool)]] commaSeparated)native_invoker.begin_call();native_invoker.push_arg_int(value);native_invoker.push_arg_bool(commaSeparated);native_invoker.end_call("0E4C749FF9DE9CC4");end,
+	-- p1 was always -1
+	["ADD_TEXT_COMPONENT_SUBSTRING_PHONE_NUMBER"]=--[[void]] function(--[[string]] p0,--[[int]] p1)native_invoker.begin_call();native_invoker.push_arg_string(p0);native_invoker.push_arg_int(p1);native_invoker.end_call("761B77454205A61D");end,
+	-- This native (along with 0x5F68520888E69014 and 0x6C188BE134E074AA) do not actually filter anything. They simply add the provided text (as of 944)
+	["ADD_TEXT_COMPONENT_SUBSTRING_WEBSITE"]=--[[void]] function(--[[string]] website)native_invoker.begin_call();native_invoker.push_arg_string(website);native_invoker.end_call("94CF4AC034C9C986");end,
+	["ADD_TEXT_COMPONENT_SUBSTRING_KEYBOARD_DISPLAY"]=--[[void]] function(--[[string]] string)native_invoker.begin_call();native_invoker.push_arg_string(string);native_invoker.end_call("5F68520888E69014");end,
+	["SET_COLOUR_OF_NEXT_TEXT_COMPONENT"]=--[[void]] function(--[[int]] hudColor)native_invoker.begin_call();native_invoker.push_arg_int(hudColor);native_invoker.end_call("39BBF623FC803EAC");end,
+	-- Returns a substring of a specified length starting at a specified position.
+	-- 
+	-- Example:
+	-- // Get "STRING" text from "MY_STRING"
+	-- subStr = HUD::_GET_TEXT_SUBSTRING("MY_STRING", 3, 6);
+	["_GET_TEXT_SUBSTRING"]=--[[string]] function(--[[string]] text,--[[int]] position,--[[int]] length)native_invoker.begin_call();native_invoker.push_arg_string(text);native_invoker.push_arg_int(position);native_invoker.push_arg_int(length);native_invoker.end_call("169BD9382084C8C0");return native_invoker.get_return_value_string();end,
+	-- Returns a substring of a specified length starting at a specified position. The result is guaranteed not to exceed the specified max length.
+	-- 
+	-- NOTE: The 'maxLength' parameter might actually be the size of the buffer that is returned. More research is needed. -CL69
+	-- 
+	-- Example:
+	-- // Condensed example of how Rockstar uses this function
+	-- strLen = HUD::GET_LENGTH_OF_LITERAL_STRING(MISC::GET_ONSCREEN_KEYBOARD_RESULT());
+	-- subStr = HUD::_GET_TEXT_SUBSTRING_SAFE(MISC::GET_ONSCREEN_KEYBOARD_RESULT(), 0, strLen, 63);
+	-- 
+	-- --
+	-- 
+	-- "fm_race_creator.ysc", line 85115:
+	-- // parameters modified for clarity
+	-- BOOL sub_8e5aa(char *text, int length) {
+	--     for (i = 0; i <= (length - 2); i += 1) {
+	--         if (!MISC::ARE_STRINGS_EQUAL(HUD::_GET_TEXT_SUBSTRING_SAFE(text, i, i + 1, 1), " ")) {
+	--             return FALSE;
+	--         }
+	--     }
+	--     return TRUE;
+	-- }
+	["_GET_TEXT_SUBSTRING_SAFE"]=--[[string]] function(--[[string]] text,--[[int]] position,--[[int]] length,--[[int]] maxLength)native_invoker.begin_call();native_invoker.push_arg_string(text);native_invoker.push_arg_int(position);native_invoker.push_arg_int(length);native_invoker.push_arg_int(maxLength);native_invoker.end_call("B2798643312205C5");return native_invoker.get_return_value_string();end,
+	-- Returns a substring that is between two specified positions. The length of the string will be calculated using (endPosition - startPosition).
+	-- 
+	-- Example:
+	-- // Get "STRING" text from "MY_STRING"
+	-- subStr = HUD::_GET_TEXT_SUBSTRING_SLICE("MY_STRING", 3, 9);
+	-- // Overflows are possibly replaced with underscores (needs verification)
+	-- subStr = HUD::_GET_TEXT_SUBSTRING_SLICE("MY_STRING", 3, 10); // "STRING_"?
+	["_GET_TEXT_SUBSTRING_SLICE"]=--[[string]] function(--[[string]] text,--[[int]] startPosition,--[[int]] endPosition)native_invoker.begin_call();native_invoker.push_arg_string(text);native_invoker.push_arg_int(startPosition);native_invoker.push_arg_int(endPosition);native_invoker.end_call("CE94AEBA5D82908A");return native_invoker.get_return_value_string();end,
+	-- Gets a string literal from a label name.
+	-- 
+	-- GET_F*
+	["_GET_LABEL_TEXT"]=--[[string]] function(--[[string]] labelName)native_invoker.begin_call();native_invoker.push_arg_string(labelName);native_invoker.end_call("7B5280EBA9840C72");return native_invoker.get_return_value_string();end,
+	["CLEAR_PRINTS"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("CC33FA791322B9D9");end,
+	["CLEAR_BRIEF"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("9D292F73ADBD9313");end,
+	["CLEAR_ALL_HELP_MESSAGES"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("6178F68A87A4D3A0");end,
+	-- p0: found arguments in the b617d scripts: pastebin.com/X5akCN7z
+	["CLEAR_THIS_PRINT"]=--[[void]] function(--[[string]] p0)native_invoker.begin_call();native_invoker.push_arg_string(p0);native_invoker.end_call("CF708001E1E536DD");end,
+	["CLEAR_SMALL_PRINTS"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("2CEA2839313C09AC");end,
+	["DOES_TEXT_BLOCK_EXIST"]=--[[BOOL (bool)]] function(--[[string]] gxt)native_invoker.begin_call();native_invoker.push_arg_string(gxt);native_invoker.end_call("1C7302E725259789");return native_invoker.get_return_value_bool();end,
+	-- Request a gxt into the passed slot.
+	["REQUEST_ADDITIONAL_TEXT"]=--[[void]] function(--[[string]] gxt,--[[int]] slot)native_invoker.begin_call();native_invoker.push_arg_string(gxt);native_invoker.push_arg_int(slot);native_invoker.end_call("71A78003C8E71424");end,
+	["REQUEST_ADDITIONAL_TEXT_FOR_DLC"]=--[[void]] function(--[[string]] gxt,--[[int]] slot)native_invoker.begin_call();native_invoker.push_arg_string(gxt);native_invoker.push_arg_int(slot);native_invoker.end_call("6009F9F1AE90D8A6");end,
+	["HAS_ADDITIONAL_TEXT_LOADED"]=--[[BOOL (bool)]] function(--[[int]] slot)native_invoker.begin_call();native_invoker.push_arg_int(slot);native_invoker.end_call("02245FE4BED318B8");return native_invoker.get_return_value_bool();end,
+	["CLEAR_ADDITIONAL_TEXT"]=--[[void]] function(--[[int]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_bool(p1);native_invoker.end_call("2A179DF17CCF04CD");end,
+	["IS_STREAMING_ADDITIONAL_TEXT"]=--[[BOOL (bool)]] function(--[[int]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("8B6817B71B85EBF0");return native_invoker.get_return_value_bool();end,
+	-- Checks if the specified gxt has loaded into the passed slot.
+	["HAS_THIS_ADDITIONAL_TEXT_LOADED"]=--[[BOOL (bool)]] function(--[[string]] gxt,--[[int]] slot)native_invoker.begin_call();native_invoker.push_arg_string(gxt);native_invoker.push_arg_int(slot);native_invoker.end_call("ADBF060E2B30C5BC");return native_invoker.get_return_value_bool();end,
+	["IS_MESSAGE_BEING_DISPLAYED"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("7984C03AA5CC2F41");return native_invoker.get_return_value_bool();end,
+	-- Checks if the passed gxt name exists in the game files.
+	["DOES_TEXT_LABEL_EXIST"]=--[[BOOL (bool)]] function(--[[string]] gxt)native_invoker.begin_call();native_invoker.push_arg_string(gxt);native_invoker.end_call("AC09CA973C564252");return native_invoker.get_return_value_bool();end,
+	-- GET_F*
+	["_0x98C3CF913D895111"]=--[[string]] function(--[[string]] string,--[[int]] length)native_invoker.begin_call();native_invoker.push_arg_string(string);native_invoker.push_arg_int(length);native_invoker.end_call("98C3CF913D895111");return native_invoker.get_return_value_string();end,
+	-- Returns the string length of the string from the gxt string .
+	["GET_LENGTH_OF_STRING_WITH_THIS_TEXT_LABEL"]=--[[int]] function(--[[string]] gxt)native_invoker.begin_call();native_invoker.push_arg_string(gxt);native_invoker.end_call("801BD273D3A23F74");return native_invoker.get_return_value_int();end,
+	-- Returns the length of the string passed (much like strlen).
+	["GET_LENGTH_OF_LITERAL_STRING"]=--[[int]] function(--[[string]] string)native_invoker.begin_call();native_invoker.push_arg_string(string);native_invoker.end_call("F030907CCBB8A9FD");return native_invoker.get_return_value_int();end,
+	["GET_LENGTH_OF_LITERAL_STRING_IN_BYTES"]=--[[int]] function(--[[string]] string)native_invoker.begin_call();native_invoker.push_arg_string(string);native_invoker.end_call("43E4111189E54F0E");return native_invoker.get_return_value_int();end,
+	-- This functions converts the hash of a street name into a readable string.
+	-- 
+	-- For how to get the hashes, see PATHFIND::GET_STREET_NAME_AT_COORD.
+	["GET_STREET_NAME_FROM_HASH_KEY"]=--[[string]] function(--[[Hash (int)]] hash)native_invoker.begin_call();native_invoker.push_arg_int(hash);native_invoker.end_call("D0EF8A959B8A4CB9");return native_invoker.get_return_value_string();end,
+	["IS_HUD_PREFERENCE_SWITCHED_ON"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("1930DFA731813EC4");return native_invoker.get_return_value_bool();end,
+	["IS_RADAR_PREFERENCE_SWITCHED_ON"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("9EB6522EA68F22FE");return native_invoker.get_return_value_bool();end,
+	["IS_SUBTITLE_PREFERENCE_SWITCHED_ON"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("AD6DACA4BA53E0A4");return native_invoker.get_return_value_bool();end,
+	-- If Hud should be displayed
+	["DISPLAY_HUD"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("A6294919E56FF02A");end,
+	-- Enables drawing some hud components, such as help labels, this frame, when the player is dead.
+	["_DISPLAY_HUD_WHEN_DEAD_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("7669F9E39DC17063");end,
+	["DISPLAY_HUD_WHEN_PAUSED_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("402F9ED62087E898");end,
+	-- If Minimap / Radar should be displayed.
+	["DISPLAY_RADAR"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("A0EBB943C300E693");end,
+	-- Setter for 0xC2D2AD9EAAE265B8
+	-- 
+	-- SET_*
+	["_0xCD74233600C4EA6B"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("CD74233600C4EA6B");end,
+	-- Getter for 0xCD74233600C4EA6B
+	-- 
+	-- GET_*
+	["_0xC2D2AD9EAAE265B8"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("C2D2AD9EAAE265B8");return native_invoker.get_return_value_bool();end,
+	["IS_HUD_HIDDEN"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("A86478C6958735C5");return native_invoker.get_return_value_bool();end,
+	["IS_RADAR_HIDDEN"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("157F93B036700462");return native_invoker.get_return_value_bool();end,
+	["IS_MINIMAP_RENDERING"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("AF754F20EB5CD51A");return native_invoker.get_return_value_bool();end,
+	["_0x0C698D8F099174C7"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("0C698D8F099174C7");end,
+	["_0xE4C3B169876D33D7"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("E4C3B169876D33D7");end,
+	["_0xEB81A3DADD503187"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("EB81A3DADD503187");end,
+	-- Enable / disable showing route for the Blip-object.
+	["SET_BLIP_ROUTE"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] enabled)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(enabled);native_invoker.end_call("4F7D8A9BFB0B43E9");end,
+	["_CLEAR_ALL_BLIP_ROUTES"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("D12882D3FF82BF11");end,
+	["SET_BLIP_ROUTE_COLOUR"]=--[[void]] function(--[[Blip (int)]] blip,--[[int]] colour)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(colour);native_invoker.end_call("837155CD2F63DA09");end,
+	-- SET_F*
+	["_0x2790F4B17D098E26"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("2790F4B17D098E26");end,
+	["_0x6CDD58146A436083"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("6CDD58146A436083");end,
+	["_0xD1942374085C8469"]=--[[void]] function(--[[BOOL (bool)]] disabled)native_invoker.begin_call();native_invoker.push_arg_bool(disabled);native_invoker.end_call("D1942374085C8469");end,
+	["ADD_NEXT_MESSAGE_TO_PREVIOUS_BRIEFS"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("60296AF4BA14ABC5");end,
+	-- FORCE_*
+	["_0x57D760D55F54E071"]=--[[void]] function(--[[int]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("57D760D55F54E071");end,
+	-- zoom ranges from 0 to 90f in R* Scripts
+	["SET_RADAR_ZOOM_PRECISE"]=--[[void]] function(--[[float]] zoom)native_invoker.begin_call();native_invoker.push_arg_float(zoom);native_invoker.end_call("BD12C5EEE184C337");end,
+	-- zoomLevel ranges from 0 to 1400 in R* Scripts
+	["SET_RADAR_ZOOM"]=--[[void]] function(--[[int]] zoomLevel)native_invoker.begin_call();native_invoker.push_arg_int(zoomLevel);native_invoker.end_call("096EF57A0C999BBA");end,
+	["SET_RADAR_ZOOM_TO_BLIP"]=--[[void]] function(--[[Blip (int)]] blip,--[[float]] zoom)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_float(zoom);native_invoker.end_call("F98E4B3E56AFC7B1");end,
+	["SET_RADAR_ZOOM_TO_DISTANCE"]=--[[void]] function(--[[float]] zoom)native_invoker.begin_call();native_invoker.push_arg_float(zoom);native_invoker.end_call("CB7CC0D58405AD41");end,
+	-- Does nothing (it's a nullsub).
+	["_0xD2049635DEB9C375"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("D2049635DEB9C375");end,
+	-- HUD colors and their values: pastebin.com/d9aHPbXN
+	["GET_HUD_COLOUR"]=--[[void]] function(--[[int]] hudColorIndex,--[[int* (pointer)]] r,--[[int* (pointer)]] g,--[[int* (pointer)]] b,--[[int* (pointer)]] a)native_invoker.begin_call();native_invoker.push_arg_int(hudColorIndex);native_invoker.push_arg_pointer(r);native_invoker.push_arg_pointer(g);native_invoker.push_arg_pointer(b);native_invoker.push_arg_pointer(a);native_invoker.end_call("7C9C91AB74A0360F");end,
+	-- Sets the color of HUD_COLOUR_SCRIPT_VARIABLE
+	["SET_SCRIPT_VARIABLE_HUD_COLOUR"]=--[[void]] function(--[[int]] r,--[[int]] g,--[[int]] b,--[[int]] a)native_invoker.begin_call();native_invoker.push_arg_int(r);native_invoker.push_arg_int(g);native_invoker.push_arg_int(b);native_invoker.push_arg_int(a);native_invoker.end_call("D68A5FF8A3A89874");end,
+	-- Sets the color of HUD_COLOUR_SCRIPT_VARIABLE_2
+	["_SET_SCRIPT_VARIABLE_2_HUD_COLOUR"]=--[[void]] function(--[[int]] r,--[[int]] g,--[[int]] b,--[[int]] a)native_invoker.begin_call();native_invoker.push_arg_int(r);native_invoker.push_arg_int(g);native_invoker.push_arg_int(b);native_invoker.push_arg_int(a);native_invoker.end_call("16A304E6CB2BFAB9");end,
+	-- HUD colors and their values: pastebin.com/d9aHPbXN
+	-- --------------------------------------------------
+	-- makes hudColorIndex2 color into hudColorIndex color
+	["REPLACE_HUD_COLOUR"]=--[[void]] function(--[[int]] hudColorIndex,--[[int]] hudColorIndex2)native_invoker.begin_call();native_invoker.push_arg_int(hudColorIndex);native_invoker.push_arg_int(hudColorIndex2);native_invoker.end_call("1CCC708F0F850613");end,
+	-- HUD colors and their values: pastebin.com/d9aHPbXN
+	["REPLACE_HUD_COLOUR_WITH_RGBA"]=--[[void]] function(--[[int]] hudColorIndex,--[[int]] r,--[[int]] g,--[[int]] b,--[[int]] a)native_invoker.begin_call();native_invoker.push_arg_int(hudColorIndex);native_invoker.push_arg_int(r);native_invoker.push_arg_int(g);native_invoker.push_arg_int(b);native_invoker.push_arg_int(a);native_invoker.end_call("F314CF4F0211894E");end,
+	["_SET_ABILITY_BAR_VISIBILITY_IN_MULTIPLAYER"]=--[[void]] function(--[[BOOL (bool)]] visible)native_invoker.begin_call();native_invoker.push_arg_bool(visible);native_invoker.end_call("1DFEDD15019315A9");end,
+	["_SET_ALLOW_ABILITY_BAR_IN_MULTIPLAYER"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("889329C80FE5963C");end,
+	["FLASH_ABILITY_BAR"]=--[[void]] function(--[[int]] millisecondsToFlash)native_invoker.begin_call();native_invoker.push_arg_int(millisecondsToFlash);native_invoker.end_call("02CFBA0C9E9275CE");end,
+	["SET_ABILITY_BAR_VALUE"]=--[[void]] function(--[[float]] p0,--[[float]] p1)native_invoker.begin_call();native_invoker.push_arg_float(p0);native_invoker.push_arg_float(p1);native_invoker.end_call("9969599CCFF5D85E");end,
+	["FLASH_WANTED_DISPLAY"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("A18AFB39081B6A1F");end,
+	-- FORCE_*
+	["_0xBA8D65C1C65702E5"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("BA8D65C1C65702E5");end,
+	["_SET_CURRENT_CHARACTER_HUD_COLOR"]=--[[void]] function(--[[int]] hudColorId)native_invoker.begin_call();native_invoker.push_arg_int(hudColorId);native_invoker.end_call("2ACCB195F3CCD9DE");end,
+	-- This gets the height of the FONT and not the total text. You need to get the number of lines your text uses, and get the height of a newline (I'm using a smaller value) to get the total text height.
+	["GET_RENDERED_CHARACTER_HEIGHT"]=--[[float]] function(--[[float]] size,--[[int]] font)native_invoker.begin_call();native_invoker.push_arg_float(size);native_invoker.push_arg_int(font);native_invoker.end_call("DB88A37483346780");return native_invoker.get_return_value_float();end,
+	-- Size range : 0F to 1.0F
+	-- p0 is unknown and doesn't seem to have an effect, yet in the game scripts it changes to 1.0F sometimes.
+	["SET_TEXT_SCALE"]=--[[void]] function(--[[float]] scale,--[[float]] size)native_invoker.begin_call();native_invoker.push_arg_float(scale);native_invoker.push_arg_float(size);native_invoker.end_call("07C837F9A01C34C9");end,
+	-- colors you input not same as you think?
+	-- A: for some reason its R B G A
+	["SET_TEXT_COLOUR"]=--[[void]] function(--[[int]] red,--[[int]] green,--[[int]] blue,--[[int]] alpha)native_invoker.begin_call();native_invoker.push_arg_int(red);native_invoker.push_arg_int(green);native_invoker.push_arg_int(blue);native_invoker.push_arg_int(alpha);native_invoker.end_call("BE6B23FFA53FB442");end,
+	["SET_TEXT_CENTRE"]=--[[void]] function(--[[BOOL (bool)]] align)native_invoker.begin_call();native_invoker.push_arg_bool(align);native_invoker.end_call("C02F4DBFB51D988B");end,
+	["SET_TEXT_RIGHT_JUSTIFY"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("6B3C4650BC8BEE47");end,
+	-- Types -
+	-- 0: Center-Justify
+	-- 1: Left-Justify
+	-- 2: Right-Justify
+	-- 
+	-- Right-Justify requires SET_TEXT_WRAP, otherwise it will draw to the far right of the screen
+	["SET_TEXT_JUSTIFICATION"]=--[[void]] function(--[[int]] justifyType)native_invoker.begin_call();native_invoker.push_arg_int(justifyType);native_invoker.end_call("4E096588B13FFECA");end,
+	-- It sets the text in a specified box and wraps the text if it exceeds the boundries. Both values are for X axis. Useful when positioning text set to center or aligned to the right.
+	-- 
+	-- start - left boundry on screen position (0.0 - 1.0)
+	-- end - right boundry on screen position (0.0 - 1.0)
+	["SET_TEXT_WRAP"]=--[[void]] function(--[[float]] start,--[[float]] _end)native_invoker.begin_call();native_invoker.push_arg_float(start);native_invoker.push_arg_float(_end);native_invoker.end_call("63145D9C883A1A70");end,
+	["SET_TEXT_LEADING"]=--[[void]] function(--[[int]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("A50ABC31E3CDFAFF");end,
+	-- This native does absolutely nothing, just a nullsub
+	["SET_TEXT_PROPORTIONAL"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("038C1F517D7FDCF8");end,
+	-- fonts that mess up your text where made for number values/misc stuff
+	["SET_TEXT_FONT"]=--[[void]] function(--[[int]] fontType)native_invoker.begin_call();native_invoker.push_arg_int(fontType);native_invoker.end_call("66E0276CC5F6B9DA");end,
+	["SET_TEXT_DROP_SHADOW"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("1CA3E9EAC9D93E5E");end,
+	-- distance - shadow distance in pixels, both horizontal and vertical
+	-- r, g, b, a - color
+	["SET_TEXT_DROPSHADOW"]=--[[void]] function(--[[int]] distance,--[[int]] r,--[[int]] g,--[[int]] b,--[[int]] a)native_invoker.begin_call();native_invoker.push_arg_int(distance);native_invoker.push_arg_int(r);native_invoker.push_arg_int(g);native_invoker.push_arg_int(b);native_invoker.push_arg_int(a);native_invoker.end_call("465C84BC39F1C351");end,
+	["SET_TEXT_OUTLINE"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("2513DFB0FB8400FE");end,
+	-- This native does absolutely nothing, just a nullsub
+	["SET_TEXT_EDGE"]=--[[void]] function(--[[int]] p0,--[[int]] r,--[[int]] g,--[[int]] b,--[[int]] a)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_int(r);native_invoker.push_arg_int(g);native_invoker.push_arg_int(b);native_invoker.push_arg_int(a);native_invoker.end_call("441603240D202FA6");end,
+	["SET_TEXT_RENDER_ID"]=--[[void]] function(--[[int]] renderId)native_invoker.begin_call();native_invoker.push_arg_int(renderId);native_invoker.end_call("5F15302936E07111");end,
+	-- This function is hard-coded to always return 1.
+	["GET_DEFAULT_SCRIPT_RENDERTARGET_RENDER_ID"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("52F0982D7FD156B6");return native_invoker.get_return_value_int();end,
+	["REGISTER_NAMED_RENDERTARGET"]=--[[BOOL (bool)]] function(--[[string]] name,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_string(name);native_invoker.push_arg_bool(p1);native_invoker.end_call("57D9C12635E25CE3");return native_invoker.get_return_value_bool();end,
+	["IS_NAMED_RENDERTARGET_REGISTERED"]=--[[BOOL (bool)]] function(--[[string]] name)native_invoker.begin_call();native_invoker.push_arg_string(name);native_invoker.end_call("78DCDC15C9F116B4");return native_invoker.get_return_value_bool();end,
+	["RELEASE_NAMED_RENDERTARGET"]=--[[BOOL (bool)]] function(--[[string]] name)native_invoker.begin_call();native_invoker.push_arg_string(name);native_invoker.end_call("E9F6FFE837354DD4");return native_invoker.get_return_value_bool();end,
+	["LINK_NAMED_RENDERTARGET"]=--[[void]] function(--[[Hash (int)]] modelHash)native_invoker.begin_call();native_invoker.push_arg_int(modelHash);native_invoker.end_call("F6C09E276AEB3F2D");end,
+	["GET_NAMED_RENDERTARGET_RENDER_ID"]=--[[int]] function(--[[string]] name)native_invoker.begin_call();native_invoker.push_arg_string(name);native_invoker.end_call("1A6478B61C6BDC3B");return native_invoker.get_return_value_int();end,
+	["IS_NAMED_RENDERTARGET_LINKED"]=--[[BOOL (bool)]] function(--[[Hash (int)]] modelHash)native_invoker.begin_call();native_invoker.push_arg_int(modelHash);native_invoker.end_call("113750538FA31298");return native_invoker.get_return_value_bool();end,
+	["CLEAR_HELP"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("8DFCED7A656F8802");end,
+	["IS_HELP_MESSAGE_ON_SCREEN"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("DAD37F45428801AE");return native_invoker.get_return_value_bool();end,
+	-- HAS_S*
+	["_0x214CD562A939246A"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("214CD562A939246A");return native_invoker.get_return_value_bool();end,
+	["IS_HELP_MESSAGE_BEING_DISPLAYED"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("4D79439A6B55AC67");return native_invoker.get_return_value_bool();end,
+	["IS_HELP_MESSAGE_FADING_OUT"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("327EDEEEAC55C369");return native_invoker.get_return_value_bool();end,
+	["_SET_HELP_MESSAGE_TEXT_STYLE"]=--[[void]] function(--[[int]] style,--[[int]] hudColor,--[[int]] alpha,--[[int]] p3,--[[int]] p4)native_invoker.begin_call();native_invoker.push_arg_int(style);native_invoker.push_arg_int(hudColor);native_invoker.push_arg_int(alpha);native_invoker.push_arg_int(p3);native_invoker.push_arg_int(p4);native_invoker.end_call("B9C362BABECDDC7A");end,
+	["GET_STANDARD_BLIP_ENUM_ID"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("4A9923385BDB9DAD");return native_invoker.get_return_value_int();end,
+	["GET_WAYPOINT_BLIP_ENUM_ID"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("186E5D252FA50E7D");return native_invoker.get_return_value_int();end,
+	["GET_NUMBER_OF_ACTIVE_BLIPS"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("9A3FF3DE163034E8");return native_invoker.get_return_value_int();end,
+	["GET_NEXT_BLIP_INFO_ID"]=--[[Blip (int)]] function(--[[int]] blipSprite)native_invoker.begin_call();native_invoker.push_arg_int(blipSprite);native_invoker.end_call("14F96AA50D6FBEA7");return native_invoker.get_return_value_int();end,
+	["GET_FIRST_BLIP_INFO_ID"]=--[[Blip (int)]] function(--[[int]] blipSprite)native_invoker.begin_call();native_invoker.push_arg_int(blipSprite);native_invoker.end_call("1BEDE233E6CD2A1F");return native_invoker.get_return_value_int();end,
+	["_GET_CLOSEST_BLIP_OF_TYPE"]=--[[Blip (int)]] function(--[[int]] blipSprite)native_invoker.begin_call();native_invoker.push_arg_int(blipSprite);native_invoker.end_call("D484BF71050CA1EE");return native_invoker.get_return_value_int();end,
+	["GET_BLIP_INFO_ID_COORD"]=--[[Vector3 (vector3)]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("FA7C7F0AADF25D09");return native_invoker.get_return_value_vector3();end,
+	["GET_BLIP_INFO_ID_DISPLAY"]=--[[int]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("1E314167F701DC3B");return native_invoker.get_return_value_int();end,
+	-- Returns a value based on what the blip is attached to
+	-- 1 - Vehicle
+	-- 2 - Ped
+	-- 3 - Object
+	-- 4 - Coord
+	-- 5 - unk
+	-- 6 - Pickup
+	-- 7 - Radius
+	["GET_BLIP_INFO_ID_TYPE"]=--[[int]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("BE9B0959FFD0779B");return native_invoker.get_return_value_int();end,
+	["GET_BLIP_INFO_ID_ENTITY_INDEX"]=--[[Entity (int)]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("4BA4E2553AFEDC2C");return native_invoker.get_return_value_int();end,
+	-- This function is hard-coded to always return 0.
+	["GET_BLIP_INFO_ID_PICKUP_INDEX"]=--[[Pickup (int)]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("9B6786E4C03DD382");return native_invoker.get_return_value_int();end,
+	-- Returns the Blip handle of given Entity.
+	["GET_BLIP_FROM_ENTITY"]=--[[Blip (int)]] function(--[[Entity (int)]] entity)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.end_call("BC8DBDCA2436F7E8");return native_invoker.get_return_value_int();end,
+	["ADD_BLIP_FOR_RADIUS"]=--[[Blip (int)]] function(--[[float]] posX,--[[float]] posY,--[[float]] posZ,--[[float]] radius)native_invoker.begin_call();native_invoker.push_arg_float(posX);native_invoker.push_arg_float(posY);native_invoker.push_arg_float(posZ);native_invoker.push_arg_float(radius);native_invoker.end_call("46818D79B1F7499A");return native_invoker.get_return_value_int();end,
+	-- Adds a rectangular blip for the specified coordinates/area.
+	-- 
+	-- It is recommended to use SET_BLIP_ROTATION and SET_BLIP_COLOUR to make the blip not rotate along with the camera.
+	-- 
+	-- By default, the blip will show as a _regular_ blip with the specified color/sprite if it is outside of the minimap view.
+	-- 
+	-- Example image:
+	-- minimap https://w.wew.wtf/pdcjig.png
+	-- big map https://w.wew.wtf/zgcjcm.png
+	-- 
+	-- (Native name is _likely_ to actually be ADD_BLIP_FOR_AREA, but due to the usual reasons this can't be confirmed)
+	["_ADD_BLIP_FOR_AREA"]=--[[Blip (int)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] width,--[[float]] height)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.push_arg_float(z);native_invoker.push_arg_float(width);native_invoker.push_arg_float(height);native_invoker.end_call("CE5D0E5E315DB238");return native_invoker.get_return_value_int();end,
+	-- Returns red ( default ) blip attached to entity.
+	-- 
+	-- Example:
+	-- Blip blip; //Put this outside your case or option
+	-- blip = HUD::ADD_BLIP_FOR_ENTITY(YourPedOrBodyguardName);
+	-- HUD::SET_BLIP_AS_FRIENDLY(blip, true);
+	["ADD_BLIP_FOR_ENTITY"]=--[[Blip (int)]] function(--[[Entity (int)]] entity)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.end_call("5CDE92C702A8FCE7");return native_invoker.get_return_value_int();end,
+	["ADD_BLIP_FOR_PICKUP"]=--[[Blip (int)]] function(--[[Pickup (int)]] pickup)native_invoker.begin_call();native_invoker.push_arg_int(pickup);native_invoker.end_call("BE339365C863BD36");return native_invoker.get_return_value_int();end,
+	-- Creates an orange ( default ) Blip-object. Returns a Blip-object which can then be modified.
+	["ADD_BLIP_FOR_COORD"]=--[[Blip (int)]] function(--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.push_arg_float(z);native_invoker.end_call("5A039BB0BCA604B6");return native_invoker.get_return_value_int();end,
+	["TRIGGER_SONAR_BLIP"]=--[[void]] function(--[[float]] posX,--[[float]] posY,--[[float]] posZ,--[[float]] radius,--[[int]] p4)native_invoker.begin_call();native_invoker.push_arg_float(posX);native_invoker.push_arg_float(posY);native_invoker.push_arg_float(posZ);native_invoker.push_arg_float(radius);native_invoker.push_arg_int(p4);native_invoker.end_call("72DD432F3CDFC0EE");end,
+	["ALLOW_SONAR_BLIPS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("60734CC207C9833C");end,
+	["SET_BLIP_COORDS"]=--[[void]] function(--[[Blip (int)]] blip,--[[float]] posX,--[[float]] posY,--[[float]] posZ)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_float(posX);native_invoker.push_arg_float(posY);native_invoker.push_arg_float(posZ);native_invoker.end_call("AE2AF67E9D9AF65D");end,
+	["GET_BLIP_COORDS"]=--[[Vector3 (vector3)]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("586AFE3FF72D996E");return native_invoker.get_return_value_vector3();end,
+	-- Sets the displayed sprite for a specific blip..
+	-- 
+	-- You may have your own list, but since dev-c didn't show it I was bored and started looking through scripts and functions to get a presumable almost positive list of a majority of blip IDs
+	-- h t t p://pastebin.com/Bpj9Sfft
+	-- 
+	-- Blips Images + IDs:
+	-- gtaxscripting.blogspot.com/2016/05/gta-v-blips-id-and-image.html
+	["SET_BLIP_SPRITE"]=--[[void]] function(--[[Blip (int)]] blip,--[[int]] spriteId)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(spriteId);native_invoker.end_call("DF735600A4696DAF");end,
+	-- Blips Images + IDs:
+	-- gtaxscripting.blogspot.com/2016/05/gta-v-blips-id-and-image.html
+	["GET_BLIP_SPRITE"]=--[[int]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("1FC877464A04FC4F");return native_invoker.get_return_value_int();end,
+	-- SET_C*
+	["_0x9FCB3CBFB3EAD69A"]=--[[void]] function(--[[int]] p0,--[[float]] p1)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_float(p1);native_invoker.end_call("9FCB3CBFB3EAD69A");end,
+	-- SET_C*
+	["_0xB7B873520C84C118"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("B7B873520C84C118");end,
+	-- Doesn't work if the label text of gxtEntry is >= 80.
+	["SET_BLIP_NAME_FROM_TEXT_FILE"]=--[[void]] function(--[[Blip (int)]] blip,--[[string]] gxtEntry)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_string(gxtEntry);native_invoker.end_call("EAA0FFE120D92784");end,
+	["SET_BLIP_NAME_TO_PLAYER_NAME"]=--[[void]] function(--[[Blip (int)]] blip,--[[Player (int)]] player)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(player);native_invoker.end_call("127DE7B20C60A6A3");end,
+	-- Sets alpha-channel for blip color.
+	-- 
+	-- Example:
+	-- 
+	-- Blip blip = HUD::ADD_BLIP_FOR_ENTITY(entity);
+	-- HUD::SET_BLIP_COLOUR(blip , 3);
+	-- HUD::SET_BLIP_ALPHA(blip , 64);
+	-- 
+	["SET_BLIP_ALPHA"]=--[[void]] function(--[[Blip (int)]] blip,--[[int]] alpha)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(alpha);native_invoker.end_call("45FF974EEE1C8734");end,
+	["GET_BLIP_ALPHA"]=--[[int]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("970F608F0EE6C885");return native_invoker.get_return_value_int();end,
+	["SET_BLIP_FADE"]=--[[void]] function(--[[Blip (int)]] blip,--[[int]] opacity,--[[int]] duration)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(opacity);native_invoker.push_arg_int(duration);native_invoker.end_call("2AEE8F8390D2298C");end,
+	-- Returns -1, 0, +1, depending on if the blip is fading out, doing nothing, or fading in respectively.
+	["_GET_BLIP_FADE_STATUS"]=--[[int]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("2C173AE2BDB9385E");return native_invoker.get_return_value_int();end,
+	-- After some testing, looks like you need to use CEIL() on the rotation (vehicle/ped heading) before using it there.
+	["SET_BLIP_ROTATION"]=--[[void]] function(--[[Blip (int)]] blip,--[[int]] rotation)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(rotation);native_invoker.end_call("F87683CDF73C3F6E");end,
+	-- Does not require whole number/integer rotations.
+	["_SET_BLIP_SQUARED_ROTATION"]=--[[void]] function(--[[Blip (int)]] blip,--[[float]] heading)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_float(heading);native_invoker.end_call("A8B6AFDAC320AC87");end,
+	["_GET_BLIP_ROTATION"]=--[[int]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("003E92BA477F9D7F");return native_invoker.get_return_value_int();end,
+	-- Adds up after viewing multiple R* scripts. I believe that the duration is in miliseconds.
+	["SET_BLIP_FLASH_TIMER"]=--[[void]] function(--[[Blip (int)]] blip,--[[int]] duration)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(duration);native_invoker.end_call("D3CD6FD297AE87CC");end,
+	["SET_BLIP_FLASH_INTERVAL"]=--[[void]] function(--[[Blip (int)]] blip,--[[Any (int)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(p1);native_invoker.end_call("AA51DB313C010A7E");end,
+	-- https://gtaforums.com/topic/864881-all-blip-color-ids-pictured/
+	["SET_BLIP_COLOUR"]=--[[void]] function(--[[Blip (int)]] blip,--[[int]] color)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(color);native_invoker.end_call("03D7FB09E75D6B7E");end,
+	["SET_BLIP_SECONDARY_COLOUR"]=--[[void]] function(--[[Blip (int)]] blip,--[[int]] r,--[[int]] g,--[[int]] b)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(r);native_invoker.push_arg_int(g);native_invoker.push_arg_int(b);native_invoker.end_call("14892474891E09EB");end,
+	["GET_BLIP_COLOUR"]=--[[int]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("DF729E8D20CF7327");return native_invoker.get_return_value_int();end,
+	["GET_BLIP_HUD_COLOUR"]=--[[int]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("729B5F1EFBC0AAEE");return native_invoker.get_return_value_int();end,
+	["IS_BLIP_SHORT_RANGE"]=--[[BOOL (bool)]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("DA5F8727EB75B926");return native_invoker.get_return_value_bool();end,
+	["IS_BLIP_ON_MINIMAP"]=--[[BOOL (bool)]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("E41CA53051197A27");return native_invoker.get_return_value_bool();end,
+	["DOES_BLIP_HAVE_GPS_ROUTE"]=--[[BOOL (bool)]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("DD2238F57B977751");return native_invoker.get_return_value_bool();end,
+	["SET_BLIP_HIDDEN_ON_LEGEND"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("54318C915D27E4CE");end,
+	["SET_BLIP_HIGH_DETAIL"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("E2590BC29220CEBB");end,
+	["SET_BLIP_AS_MISSION_CREATOR_BLIP"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("24AC0137444F9FD5");end,
+	["IS_MISSION_CREATOR_BLIP"]=--[[BOOL (bool)]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("26F49BF3381D933D");return native_invoker.get_return_value_bool();end,
+	["GET_NEW_SELECTED_MISSION_CREATOR_BLIP"]=--[[Blip (int)]] function()native_invoker.begin_call();native_invoker.end_call("5C90988E7C8E1AF4");return native_invoker.get_return_value_int();end,
+	["IS_HOVERING_OVER_MISSION_CREATOR_BLIP"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("4167EFE0527D706E");return native_invoker.get_return_value_bool();end,
+	["SHOW_START_MISSION_INSTRUCTIONAL_BUTTON"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("F1A6C18B35BCADE6");end,
+	["_SHOW_CONTACT_INSTRUCTIONAL_BUTTON"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("C772A904CDE1186F");end,
+	["_0x2916A928514C9827"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("2916A928514C9827");end,
+	["_0xB552929B85FC27EC"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_int(p1);native_invoker.end_call("B552929B85FC27EC");end,
+	["SET_BLIP_FLASHES"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("B14552383D39CE3E");end,
+	["SET_BLIP_FLASHES_ALTERNATE"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("2E8D9498C56DD0D1");end,
+	["IS_BLIP_FLASHING"]=--[[BOOL (bool)]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("A5E41FD83AD6CEF0");return native_invoker.get_return_value_bool();end,
+	-- Sets whether or not the specified blip should only be displayed when nearby, or on the minimap.
+	["SET_BLIP_AS_SHORT_RANGE"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("BE8BE4FE60E27B72");end,
+	["SET_BLIP_SCALE"]=--[[void]] function(--[[Blip (int)]] blip,--[[float]] scale)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_float(scale);native_invoker.end_call("D38744167B2FA257");end,
+	-- See https://imgur.com/a/lLkEsMN
+	["_SET_BLIP_SCALE_TRANSFORMATION"]=--[[void]] function(--[[Blip (int)]] blip,--[[float]] xScale,--[[float]] yScale)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_float(xScale);native_invoker.push_arg_float(yScale);native_invoker.end_call("CD6524439909C979");end,
+	-- See this topic for more details : gtaforums.com/topic/717612-v-scriptnative-documentation-and-research/page-35?p=1069477935
+	["SET_BLIP_PRIORITY"]=--[[void]] function(--[[Blip (int)]] blip,--[[int]] priority)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(priority);native_invoker.end_call("AE9FC9EF6A9FAC79");end,
+	-- Display Id behaviours:
+	-- 0 = Doesn't show up, ever, anywhere.
+	-- 1 = Doesn't show up, ever, anywhere.
+	-- 2 = Shows on both main map and minimap. (Selectable on map)
+	-- 3 = Shows on main map only. (Selectable on map)
+	-- 4 = Shows on main map only. (Selectable on map)
+	-- 5 = Shows on minimap only.
+	-- 6 = Shows on both main map and minimap. (Selectable on map)
+	-- 7 = Doesn't show up, ever, anywhere.
+	-- 8 = Shows on both main map and minimap. (Not selectable on map)
+	-- 9 = Shows on minimap only.
+	-- 10 = Shows on both main map and minimap. (Not selectable on map)
+	-- 
+	-- Anything higher than 10 seems to be exactly the same as 10.
+	["SET_BLIP_DISPLAY"]=--[[void]] function(--[[Blip (int)]] blip,--[[int]] displayId)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(displayId);native_invoker.end_call("9029B2F3DA924928");end,
+	-- Example: https://i.imgur.com/skY6vAJ.png
+	-- 
+	-- Index:
+	-- 1 = No distance shown in legend
+	-- 2 = Distance shown in legend
+	-- 7 = "Other Players" category, also shows distance in legend
+	-- 10 = "Property" category
+	-- 11 = "Owned Property" category
+	-- 
+	-- Any other value behaves like index = 1, index wraps around after 255
+	-- Blips with categories 7, 10 or 11 will all show under the specific categories listing in the map legend, regardless of sprite or name.
+	-- Legend entries:
+	-- 7 = Other Players (BLIP_OTHPLYR)
+	-- 10 = Property (BLIP_PROPCAT)
+	-- 11 = Owned Property (BLIP_APARTCAT)
+	-- 
+	-- Category needs to be `7` in order for blip names to show on the expanded minimap when using DISPLAY_PLAYER_NAME_TAGS_ON_BLIPS.
+	["SET_BLIP_CATEGORY"]=--[[void]] function(--[[Blip (int)]] blip,--[[int]] index)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(index);native_invoker.end_call("234CDD44D996FD9A");end,
+	-- In the C++ SDK, this seems not to work-- the blip isn't removed immediately. I use it for saving cars.
+	-- 
+	-- E.g.:
+	-- 
+	-- Ped pped = PLAYER::PLAYER_PED_ID();
+	-- Vehicle v = PED::GET_VEHICLE_PED_IS_USING(pped);
+	-- Blip b = HUD::ADD_BLIP_FOR_ENTITY(v);
+	-- 
+	-- works fine.
+	-- But later attempting to delete it with:
+	-- 
+	-- Blip b = HUD::GET_BLIP_FROM_ENTITY(v);
+	-- if (HUD::DOES_BLIP_EXIST(b)) HUD::REMOVE_BLIP(&b);
+	-- 
+	-- doesn't work. And yes, doesn't work without the DOES_BLIP_EXIST check either. Also, if you attach multiple blips to the same thing (say, a vehicle), and that thing disappears, the blips randomly attach to other things (in my case, a vehicle).
+	-- 
+	-- Thus for me, HUD::REMOVE_BLIP(&b) only works if there's one blip, (in my case) the vehicle is marked as no longer needed, you drive away from it and it eventually despawns, AND there is only one blip attached to it. I never intentionally attach multiple blips but if the user saves the car, this adds a blip. Then if they delete it, it is supposed to remove the blip, but it doesn't. Then they can immediately save it again, causing another blip to re-appear.
+	-- -------------
+	-- 
+	-- Passing the address of the variable instead of the value works for me.
+	-- e.g.
+	-- int blip = HUD::ADD_BLIP_FOR_ENTITY(ped);
+	-- HUD::REMOVE_BLIP(&blip);
+	-- 
+	-- 
+	-- Remove blip will currently crash your game, just artificially remove the blip by setting the sprite to a id that is 'invisible'.
+	-- 
+	-- --
+	-- It crashes my game.
+	["REMOVE_BLIP"]=--[[void]] function(--[[Blip* (pointer)]] blip)native_invoker.begin_call();native_invoker.push_arg_pointer(blip);native_invoker.end_call("86A652570E5F25DD");end,
+	-- false for enemy
+	-- true for friendly
+	["SET_BLIP_AS_FRIENDLY"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("6F6F290102C02AB4");end,
+	["PULSE_BLIP"]=--[[void]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("742D6FD43115AF73");end,
+	["SHOW_NUMBER_ON_BLIP"]=--[[void]] function(--[[Blip (int)]] blip,--[[int]] number)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_int(number);native_invoker.end_call("A3C0B359DCB848B6");end,
+	["HIDE_NUMBER_ON_BLIP"]=--[[void]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("532CFF637EF80148");end,
+	["SHOW_HEIGHT_ON_BLIP"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("75A16C3DA34F1245");end,
+	-- Adds a green checkmark on top of a blip.
+	["SHOW_TICK_ON_BLIP"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("74513EA3E505181E");end,
+	-- Adds the GTA: Online player heading indicator to a blip.
+	["SHOW_HEADING_INDICATOR_ON_BLIP"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("5FBCA48327B914DF");end,
+	-- Highlights a blip by a cyan color circle.
+	-- 
+	-- Color can be changed with SET_BLIP_SECONDARY_COLOUR
+	["SHOW_OUTLINE_INDICATOR_ON_BLIP"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("B81656BC81FE24D1");end,
+	-- Highlights a blip by a half cyan circle on the right side of the blip. https://i.imgur.com/FrV9M4e.png
+	-- .Indicating that that player is a friend (in GTA:O). This color can not be changed.
+	-- To toggle the left side (crew member indicator) of the half circle around the blip, use: `SHOW_CREW_INDICATOR_ON_BLIP`
+	["SHOW_FRIEND_INDICATOR_ON_BLIP"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("23C3EB807312F01A");end,
+	-- Enables or disables the blue half circle https://i.imgur.com/iZes9Ec.png around the specified blip on the left side of the blip. This is used to indicate that the player is in your crew in GTA:O. Color is changeable by using `SET_BLIP_SECONDARY_COLOUR`.
+	["SHOW_CREW_INDICATOR_ON_BLIP"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("DCFB5D4DB8BF367E");end,
+	-- Must be toggled before being queued for animation
+	["_SET_BLIP_DISPLAY_INDICATOR_ON_BLIP"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("C4278F70131BAA6D");end,
+	["_0x4B5B620C9B59ED34"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_int(p1);native_invoker.end_call("4B5B620C9B59ED34");end,
+	["_0x2C9F302398E13141"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_int(p1);native_invoker.end_call("2C9F302398E13141");end,
+	-- Makes a blip go small when off the minimap.
+	["SET_BLIP_AS_MINIMAL_ON_EDGE"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("2B6D467DAB714E8D");end,
+	-- Enabling this on a radius blip will make it outline only. See https://cdn.discordapp.com/attachments/553235301632573459/575132227935928330/unknown.png
+	["SET_RADIUS_BLIP_EDGE"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("25615540D894B814");end,
+	["DOES_BLIP_EXIST"]=--[[BOOL (bool)]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("A6DB27D19ECBB7DA");return native_invoker.get_return_value_bool();end,
+	-- This native removes the current waypoint from the map.
+	-- 
+	-- Example:
+	-- C#:
+	-- Function.Call(Hash.SET_WAYPOINT_OFF);
+	-- 
+	-- C++:
+	-- HUD::SET_WAYPOINT_OFF();
+	["SET_WAYPOINT_OFF"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("A7E4E2D361C2627F");end,
+	["_DELETE_WAYPOINT"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("D8E694757BCEA8E9");end,
+	["REFRESH_WAYPOINT"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("81FA173F170560D1");end,
+	["IS_WAYPOINT_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("1DD1F58F493F1DA5");return native_invoker.get_return_value_bool();end,
+	["SET_NEW_WAYPOINT"]=--[[void]] function(--[[float]] x,--[[float]] y)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.end_call("FE43368D2AA4F2FC");end,
+	["SET_BLIP_BRIGHT"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.end_call("B203913733F27884");end,
+	["SET_BLIP_SHOW_CONE"]=--[[void]] function(--[[Blip (int)]] blip,--[[BOOL (bool)]] toggle,--[[Any (int)]] p2)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.push_arg_bool(toggle);native_invoker.push_arg_int(p2);native_invoker.end_call("13127EC3665E8EE1");end,
+	-- Interesting fact: A hash collision for this is RESET_JETPACK_MODEL_SETTINGS
+	["_0xC594B315EDF2D4AF"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.end_call("C594B315EDF2D4AF");end,
+	["_0xF83D0FEBE75E62C9"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4,--[[Any (int)]] p5,--[[Any (int)]] p6,--[[Any (int)]] p7,--[[Any (int)]] p8)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_int(p1);native_invoker.push_arg_int(p2);native_invoker.push_arg_int(p3);native_invoker.push_arg_int(p4);native_invoker.push_arg_int(p5);native_invoker.push_arg_int(p6);native_invoker.push_arg_int(p7);native_invoker.push_arg_int(p8);native_invoker.end_call("F83D0FEBE75E62C9");end,
+	["_0x35A3CD97B2C0A6D2"]=--[[void]] function(--[[Blip (int)]] blip)native_invoker.begin_call();native_invoker.push_arg_int(blip);native_invoker.end_call("35A3CD97B2C0A6D2");end,
+	["_0x8410C5E0CD847B9D"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("8410C5E0CD847B9D");end,
+	-- This native is used to colorize certain map components like the army base at the top of the map.
+	-- p2 appears to be always -1. If p2 is -1 then native wouldn't change the color. See https://gfycat.com/SkinnyPinkChupacabra
+	["SET_MINIMAP_COMPONENT"]=--[[Any (int)]] function(--[[int]] componentId,--[[BOOL (bool)]] toggle,--[[int]] overrideColor)native_invoker.begin_call();native_invoker.push_arg_int(componentId);native_invoker.push_arg_bool(toggle);native_invoker.push_arg_int(overrideColor);native_invoker.end_call("75A9A10948D1DEA6");return native_invoker.get_return_value_int();end,
+	["_SET_MINIMAP_SONAR_ENABLED"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("6B50FC8749632EC1");end,
+	["_SHOW_SIGNIN_UI"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("60E892BA4F5BDCA4");end,
+	["GET_MAIN_PLAYER_BLIP_ID"]=--[[Blip (int)]] function()native_invoker.begin_call();native_invoker.end_call("DCD4EC3F419D02FA");return native_invoker.get_return_value_int();end,
+	["_0x41350B4FC28E3941"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("41350B4FC28E3941");end,
+	["HIDE_LOADING_ON_FADE_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("4B0311D3CDC4648F");end,
+	-- List of interior hashes: pastebin.com/1FUyXNqY
+	-- Not for every interior zoom > 0 available.
+	["SET_RADAR_AS_INTERIOR_THIS_FRAME"]=--[[void]] function(--[[Hash (int)]] interior,--[[float]] x,--[[float]] y,--[[int]] z,--[[int]] zoom)native_invoker.begin_call();native_invoker.push_arg_int(interior);native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.push_arg_int(z);native_invoker.push_arg_int(zoom);native_invoker.end_call("59E727A1C9D3E31A");end,
+	["_SET_INTERIOR_ZOOM_LEVEL_INCREASED"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("504DFE62A1692296");end,
+	["_SET_INTERIOR_ZOOM_LEVEL_DECREASED"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("7EC8ABA5E74B3D7A");end,
+	["SET_RADAR_AS_EXTERIOR_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("E81B7D2A3DAB2D81");end,
+	-- Sets the position of the arrow icon representing the player on both the minimap and world map.
+	-- 
+	-- Too bad this wouldn't work over the network (obviously not). Could spoof where we would be.
+	["_SET_PLAYER_BLIP_POSITION_THIS_FRAME"]=--[[void]] function(--[[float]] x,--[[float]] y)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.end_call("77E2DD177910E1CF");end,
+	["_0xA17784FCA9548D15"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_int(p1);native_invoker.push_arg_int(p2);native_invoker.end_call("A17784FCA9548D15");end,
+	["_IS_MINIMAP_IN_INTERIOR"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("9049FE339D5F6F6F");return native_invoker.get_return_value_bool();end,
+	["HIDE_MINIMAP_EXTERIOR_MAP_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("5FBAE526203990C9");end,
+	["HIDE_MINIMAP_INTERIOR_MAP_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("20FE7FDFEEAD38C0");end,
+	-- Toggles the Cayo Perico map.
+	["_SET_TOGGLE_MINIMAP_HEIST_ISLAND"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("5E1460624D194A38");end,
+	-- When calling this, the current frame will have the players "arrow icon" be focused on the dead center of the radar.
+	["DONT_TILT_MINIMAP_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("6D14BFDC33B34F55");end,
+	["_0x55F5A5F07134DE60"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("55F5A5F07134DE60");end,
+	["SET_WIDESCREEN_FORMAT"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("C3B07BA00A83B0F1");end,
+	["DISPLAY_AREA_NAME"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("276B6CE369C33678");end,
+	-- "DISPLAY_CASH(false);" makes the cash amount render on the screen when appropriate
+	-- "DISPLAY_CASH(true);" disables cash amount rendering
+	["DISPLAY_CASH"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("96DEC8D5430208B7");end,
+	-- Related to displaying cash on the HUD
+	-- Always called before HUD::_SET_SINGLEPLAYER_HUD_CASH in decompiled scripts
+	["_0x170F541E1CADD1DE"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("170F541E1CADD1DE");end,
+	-- Displays cash change notifications on HUD.
+	["_SET_PLAYER_CASH_CHANGE"]=--[[void]] function(--[[int]] cash,--[[int]] bank)native_invoker.begin_call();native_invoker.push_arg_int(cash);native_invoker.push_arg_int(bank);native_invoker.end_call("0772DF77852C2E30");end,
+	["DISPLAY_AMMO_THIS_FRAME"]=--[[void]] function(--[[BOOL (bool)]] display)native_invoker.begin_call();native_invoker.push_arg_bool(display);native_invoker.end_call("A5E78BA2B1331C55");end,
+	-- Displays the crosshair for this frame.
+	["DISPLAY_SNIPER_SCOPE_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("73115226F4814E62");end,
+	-- I think this works, but seems to prohibit switching to other weapons (or accessing the weapon wheel)
+	["HIDE_HUD_AND_RADAR_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("719FF505F097FD20");end,
+	["_0xE67C6DFD386EA5E7"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("E67C6DFD386EA5E7");end,
+	["SET_MULTIPLAYER_WALLET_CASH"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("C2D15BEF167E27BC");end,
+	["REMOVE_MULTIPLAYER_WALLET_CASH"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("95CF81BD06EE1887");end,
+	["SET_MULTIPLAYER_BANK_CASH"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("DD21B55DF695CD0A");end,
+	["REMOVE_MULTIPLAYER_BANK_CASH"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("C7C6789AA1CFEDD0");end,
+	-- This native does absolutely nothing, just a nullsub
+	["SET_MULTIPLAYER_HUD_CASH"]=--[[void]] function(--[[int]] p0,--[[int]] p1)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_int(p1);native_invoker.end_call("FD1D220394BCB824");end,
+	-- Removes multiplayer cash hud each frame
+	["REMOVE_MULTIPLAYER_HUD_CASH"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("968F270E39141ECA");end,
+	["HIDE_HELP_TEXT_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("D46923FC481CA285");end,
+	-- IS_*
+	["_0x801879A9B4F4B2FB"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("801879A9B4F4B2FB");return native_invoker.get_return_value_bool();end,
+	-- The messages are localized strings.
+	-- Examples:
+	-- "No_bus_money"
+	-- "Enter_bus"
+	-- "Tour_help"
+	-- "LETTERS_HELP2"
+	-- "Dummy"
+	-- 
+	-- **The bool appears to always be false (if it even is a bool, as it's represented by a zero)**
+	-- --------
+	-- p1 doesn't seem to make a difference, regardless of the state it's in. 
+	-- 
+	-- 
+	-- picture of where on the screen this is displayed? 
+	["DISPLAY_HELP_TEXT_THIS_FRAME"]=--[[void]] function(--[[string]] message,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_string(message);native_invoker.push_arg_bool(p1);native_invoker.end_call("960C9FF8F616E41C");end,
+	-- Forces the weapon wheel to show/hide.
+	["HUD_FORCE_WEAPON_WHEEL"]=--[[void]] function(--[[BOOL (bool)]] show)native_invoker.begin_call();native_invoker.push_arg_bool(show);native_invoker.end_call("EB354E5376BC81A7");end,
+	-- Displays loading screen tips, requires `_0x56C8B608CFD49854` to be called beforehand.
+	["_HUD_DISPLAY_LOADING_SCREEN_TIPS"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("488043841BBE156F");end,
+	-- Calling this each frame, stops the player from receiving a weapon via the weapon wheel.
+	["_HUD_WEAPON_WHEEL_IGNORE_SELECTION"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("0AFC4AF510774B47");end,
+	-- Returns the weapon hash to the selected/highlighted weapon in the wheel
+	["_HUD_WEAPON_WHEEL_GET_SELECTED_HASH"]=--[[Hash (int)]] function()native_invoker.begin_call();native_invoker.end_call("A48931185F0536FE");return native_invoker.get_return_value_int();end,
+	-- Set the active slotIndex in the wheel weapon to the slot associated with the provided Weapon hash
+	["HUD_SET_WEAPON_WHEEL_TOP_SLOT"]=--[[void]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call();native_invoker.push_arg_int(weaponHash);native_invoker.end_call("72C1056D678BB7D8");end,
+	-- Returns the weapon hash active in a specific weapon wheel slotList
+	["_HUD_WEAPON_WHEEL_GET_SLOT_HASH"]=--[[Hash (int)]] function(--[[int]] weaponTypeIndex)native_invoker.begin_call();native_invoker.push_arg_int(weaponTypeIndex);native_invoker.end_call("A13E93403F26C812");return native_invoker.get_return_value_int();end,
+	-- Sets a global that disables many weapon input tasks (shooting, aiming, etc.). Does not work with vehicle weapons, only used in selector.ysc
+	["_HUD_WEAPON_WHEEL_IGNORE_CONTROL_INPUT"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("14C9FDCC41F81F63");end,
+	-- Only the script that originally called SET_GPS_FLAGS can set them again. Another script cannot set the flags, until the first script that called it has called CLEAR_GPS_FLAGS.
+	-- 
+	-- Doesn't seem like the flags are actually read by the game at all.
+	["SET_GPS_FLAGS"]=--[[void]] function(--[[int]] p0,--[[float]] p1)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_float(p1);native_invoker.end_call("5B440763A4C8D15B");end,
+	-- Clears the GPS flags. Only the script that originally called SET_GPS_FLAGS can clear them.
+	-- 
+	-- Doesn't seem like the flags are actually read by the game at all.
+	["CLEAR_GPS_FLAGS"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("21986729D6A3A830");end,
+	["SET_RACE_TRACK_RENDER"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("1EAC5F91BCBC5073");end,
+	-- Does the same as SET_RACE_TRACK_RENDER(false);
+	["CLEAR_GPS_RACE_TRACK"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("7AA5B4CE533C858B");end,
+	-- Starts a new GPS custom-route, allowing you to plot lines on the map.
+	-- Lines are drawn directly between points.
+	-- The GPS custom route works like the GPS multi route, except it does not follow roads.
+	-- Example result: https://i.imgur.com/BDm5pzt.png
+	-- hudColor: The HUD color of the GPS path.
+	-- displayOnFoot: Draws the path regardless if the player is in a vehicle or not.
+	-- followPlayer: Draw the path partially between the previous and next point based on the players position between them. When false, the GPS appears to not disappear after the last leg is completed.
+	["START_GPS_CUSTOM_ROUTE"]=--[[void]] function(--[[int]] hudColor,--[[BOOL (bool)]] displayOnFoot,--[[BOOL (bool)]] followPlayer)native_invoker.begin_call();native_invoker.push_arg_int(hudColor);native_invoker.push_arg_bool(displayOnFoot);native_invoker.push_arg_bool(followPlayer);native_invoker.end_call("DB34E8D56FC13B08");end,
+	["ADD_POINT_TO_GPS_CUSTOM_ROUTE"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.push_arg_float(z);native_invoker.end_call("311438A071DD9B1A");end,
+	-- radarThickness: The width of the GPS route on the radar
+	-- mapThickness: The width of the GPS route on the map
+	["SET_GPS_CUSTOM_ROUTE_RENDER"]=--[[void]] function(--[[BOOL (bool)]] toggle,--[[int]] radarThickness,--[[int]] mapThickness)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.push_arg_int(radarThickness);native_invoker.push_arg_int(mapThickness);native_invoker.end_call("900086F371220B6F");end,
+	["CLEAR_GPS_CUSTOM_ROUTE"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("E6DE0561D9232A64");end,
+	-- Starts a new GPS multi-route, allowing you to create custom GPS paths.
+	-- GPS functions like the waypoint, except it can contain multiple points it's forced to go through.
+	-- Once the player has passed a point, the GPS will no longer force its path through it.
+	-- 
+	-- Works independently from the player-placed waypoint and blip routes.
+	-- Example result: https://i.imgur.com/ZZHQatX.png
+	-- hudColor: The HUD color of the GPS path.
+	-- routeFromPlayer: Makes the GPS draw a path from the player to the next point, rather than the original path from the previous point.
+	-- displayOnFoot: Draws the GPS path regardless if the player is in a vehicle or not.
+	["START_GPS_MULTI_ROUTE"]=--[[void]] function(--[[int]] hudColor,--[[BOOL (bool)]] routeFromPlayer,--[[BOOL (bool)]] displayOnFoot)native_invoker.begin_call();native_invoker.push_arg_int(hudColor);native_invoker.push_arg_bool(routeFromPlayer);native_invoker.push_arg_bool(displayOnFoot);native_invoker.end_call("3D3D15AF7BCAAF83");end,
+	["ADD_POINT_TO_GPS_MULTI_ROUTE"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.push_arg_float(z);native_invoker.end_call("A905192A6781C41B");end,
+	["SET_GPS_MULTI_ROUTE_RENDER"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("3DDA37128DD1ACA8");end,
+	-- Does the same as SET_GPS_MULTI_ROUTE_RENDER(false);
+	["CLEAR_GPS_MULTI_ROUTE"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("67EEDEA1B9BAFD94");end,
+	["CLEAR_GPS_PLAYER_WAYPOINT"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("FF4FB7C8CDFA3DA7");end,
+	["SET_GPS_FLASHES"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("320D0E0D936A0E9B");end,
+	["_SET_MAIN_PLAYER_BLIP_COLOUR"]=--[[void]] function(--[[int]] color)native_invoker.begin_call();native_invoker.push_arg_int(color);native_invoker.end_call("7B21E0BB01E8224A");end,
+	-- adds a short flash to the Radar/Minimap
+	-- Usage: UI.FLASH_MINIMAP_DISPLAY
+	["FLASH_MINIMAP_DISPLAY"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("F2DD778C22B15BDA");end,
+	["FLASH_MINIMAP_DISPLAY_WITH_COLOR"]=--[[void]] function(--[[int]] hudColorIndex)native_invoker.begin_call();native_invoker.push_arg_int(hudColorIndex);native_invoker.end_call("6B1DE27EE78E6A19");end,
+	["TOGGLE_STEALTH_RADAR"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("6AFDFB93754950C7");end,
+	["SET_MINIMAP_IN_SPECTATOR_MODE"]=--[[void]] function(--[[BOOL (bool)]] toggle,--[[Ped (int)]] ped)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.push_arg_int(ped);native_invoker.end_call("1A5CD7752DD28CD3");end,
+	["SET_MISSION_NAME"]=--[[void]] function(--[[BOOL (bool)]] p0,--[[string]] name)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.push_arg_string(name);native_invoker.end_call("5F28ECF5FC84772F");end,
+	["_SET_MISSION_NAME_2"]=--[[void]] function(--[[BOOL (bool)]] p0,--[[string]] name)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.push_arg_string(name);native_invoker.end_call("E45087D85F468BC2");end,
+	-- HUD::_817B86108EB94E51(1, &g_189F36._f10CD1[0/*16*/], &g_189F36._f10CD1[1/*16*/], &g_189F36._f10CD1[2/*16*/], &g_189F36._f10CD1[3/*16*/], &g_189F36._f10CD1[4/*16*/], &g_189F36._f10CD1[5/*16*/], &g_189F36._f10CD1[6/*16*/], &g_189F36._f10CD1[7/*16*/]);
+	["_0x817B86108EB94E51"]=--[[void]] function(--[[BOOL (bool)]] p0,--[[Any* (pointer)]] p1,--[[Any* (pointer)]] p2,--[[Any* (pointer)]] p3,--[[Any* (pointer)]] p4,--[[Any* (pointer)]] p5,--[[Any* (pointer)]] p6,--[[Any* (pointer)]] p7,--[[Any* (pointer)]] p8)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.push_arg_pointer(p1);native_invoker.push_arg_pointer(p2);native_invoker.push_arg_pointer(p3);native_invoker.push_arg_pointer(p4);native_invoker.push_arg_pointer(p5);native_invoker.push_arg_pointer(p6);native_invoker.push_arg_pointer(p7);native_invoker.push_arg_pointer(p8);native_invoker.end_call("817B86108EB94E51");end,
+	["SET_MINIMAP_BLOCK_WAYPOINT"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("58FADDED207897DC");end,
+	-- Toggles the North Yankton map
+	["SET_MINIMAP_IN_PROLOGUE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("9133955F1A2DA957");end,
+	-- If true, the entire map will be revealed.
+	-- 
+	-- FOW = Fog of War
+	["SET_MINIMAP_HIDE_FOW"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("F8DEE0A5600CBB93");end,
+	["GET_MINIMAP_FOW_DISCOVERY_RATIO"]=--[[float]] function()native_invoker.begin_call();native_invoker.end_call("E0130B41D3CF4574");return native_invoker.get_return_value_float();end,
+	["GET_MINIMAP_FOW_COORDINATE_IS_REVEALED"]=--[[BOOL (bool)]] function(--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.push_arg_float(z);native_invoker.end_call("6E31B91145873922");return native_invoker.get_return_value_bool();end,
+	["_0x62E849B7EB28E770"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("62E849B7EB28E770");end,
+	["SET_MINIMAP_FOW_REVEAL_COORDINATE"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.push_arg_float(z);native_invoker.end_call("0923DBF87DFF735E");end,
+	-- Not much is known so far on what it does _exactly_.
+	-- All I know for sure is that it draws the specified hole ID on the pause menu map as well as on the mini-map/radar. This native also seems to change some other things related to the pause menu map's behaviour, for example: you can no longer set waypoints, the pause menu map starts up in a 'zoomed in' state. This native does not need to be executed every tick.
+	-- You need to center the minimap manually as well as change/lock it's zoom and angle in order for it to appear correctly on the minimap.
+	-- You'll also need to use the `GOLF` scaleform in order to get the correct minmap border to show up.
+	-- Use `0x35edd5b2e3ff01c0` to reset the map when you no longer want to display any golf holes (you still need to unlock zoom, position and angle of the radar manually after calling this).
+	["SET_MINIMAP_GOLF_COURSE"]=--[[void]] function(--[[int]] hole)native_invoker.begin_call();native_invoker.push_arg_int(hole);native_invoker.end_call("71BDB63DBAF8DA59");end,
+	["SET_MINIMAP_GOLF_COURSE_OFF"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("35EDD5B2E3FF01C0");end,
+	-- Locks the minimap to the specified angle in integer degrees.
+	-- 
+	-- angle: The angle in whole degrees. If less than 0 or greater than 360, unlocks the angle.
+	["LOCK_MINIMAP_ANGLE"]=--[[void]] function(--[[int]] angle)native_invoker.begin_call();native_invoker.push_arg_int(angle);native_invoker.end_call("299FAEBB108AE05B");end,
+	["UNLOCK_MINIMAP_ANGLE"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("8183455E16C42E3A");end,
+	-- Locks the minimap to the specified world position.
+	["LOCK_MINIMAP_POSITION"]=--[[void]] function(--[[float]] x,--[[float]] y)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.end_call("1279E861A329E73F");end,
+	["UNLOCK_MINIMAP_POSITION"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("3E93E06DB8EF1F30");end,
+	-- Argument must be 0.0f or above 38.0f, or it will be ignored.
+	["_SET_MINIMAP_ALTITUDE_INDICATOR_LEVEL"]=--[[void]] function(--[[float]] altitude,--[[BOOL (bool)]] p1,--[[Any (int)]] p2)native_invoker.begin_call();native_invoker.push_arg_float(altitude);native_invoker.push_arg_bool(p1);native_invoker.push_arg_int(p2);native_invoker.end_call("D201F3FF917A506D");end,
+	["SET_HEALTH_HUD_DISPLAY_VALUES"]=--[[void]] function(--[[int]] health,--[[int]] capacity,--[[BOOL (bool)]] wasAdded)native_invoker.begin_call();native_invoker.push_arg_int(health);native_invoker.push_arg_int(capacity);native_invoker.push_arg_bool(wasAdded);native_invoker.end_call("3F5CC444DCAAA8F2");end,
+	["SET_MAX_HEALTH_HUD_DISPLAY"]=--[[void]] function(--[[int]] maximumValue)native_invoker.begin_call();native_invoker.push_arg_int(maximumValue);native_invoker.end_call("975D66A0BC17064C");end,
+	["SET_MAX_ARMOUR_HUD_DISPLAY"]=--[[void]] function(--[[int]] maximumValue)native_invoker.begin_call();native_invoker.push_arg_int(maximumValue);native_invoker.end_call("06A320535F5F0248");end,
+	-- Toggles the big minimap state like in GTA:Online.
+	["SET_BIGMAP_ACTIVE"]=--[[void]] function(--[[BOOL (bool)]] toggleBigMap,--[[BOOL (bool)]] showFullMap)native_invoker.begin_call();native_invoker.push_arg_bool(toggleBigMap);native_invoker.push_arg_bool(showFullMap);native_invoker.end_call("231C8F89D0539D8F");end,
+	-- Full list of components below
+	-- 
+	-- HUD = 0;
+	-- HUD_WANTED_STARS = 1;
+	-- HUD_WEAPON_ICON = 2;
+	-- HUD_CASH = 3;
+	-- HUD_MP_CASH = 4;
+	-- HUD_MP_MESSAGE = 5;
+	-- HUD_VEHICLE_NAME = 6;
+	-- HUD_AREA_NAME = 7;
+	-- HUD_VEHICLE_CLASS = 8;
+	-- HUD_STREET_NAME = 9;
+	-- HUD_HELP_TEXT = 10;
+	-- HUD_FLOATING_HELP_TEXT_1 = 11;
+	-- HUD_FLOATING_HELP_TEXT_2 = 12;
+	-- HUD_CASH_CHANGE = 13;
+	-- HUD_RETICLE = 14;
+	-- HUD_SUBTITLE_TEXT = 15;
+	-- HUD_RADIO_STATIONS = 16;
+	-- HUD_SAVING_GAME = 17;
+	-- HUD_GAME_STREAM = 18;
+	-- HUD_WEAPON_WHEEL = 19;
+	-- HUD_WEAPON_WHEEL_STATS = 20;
+	-- MAX_HUD_COMPONENTS = 21;
+	-- MAX_HUD_WEAPONS = 22;
+	-- MAX_SCRIPTED_HUD_COMPONENTS = 141;
+	["IS_HUD_COMPONENT_ACTIVE"]=--[[BOOL (bool)]] function(--[[int]] id)native_invoker.begin_call();native_invoker.push_arg_int(id);native_invoker.end_call("BC4C9EA5391ECC0D");return native_invoker.get_return_value_bool();end,
+	["IS_SCRIPTED_HUD_COMPONENT_ACTIVE"]=--[[BOOL (bool)]] function(--[[int]] id)native_invoker.begin_call();native_invoker.push_arg_int(id);native_invoker.end_call("DD100EB17A94FF65");return native_invoker.get_return_value_bool();end,
+	["HIDE_SCRIPTED_HUD_COMPONENT_THIS_FRAME"]=--[[void]] function(--[[int]] id)native_invoker.begin_call();native_invoker.push_arg_int(id);native_invoker.end_call("E374C498D8BADC14");end,
+	-- SHOW_*
+	["_SHOW_SCRIPTED_HUD_COMPONENT_THIS_FRAME"]=--[[void]] function(--[[int]] id)native_invoker.begin_call();native_invoker.push_arg_int(id);native_invoker.end_call("4F38DCA127DAAEA2");end,
+	["IS_SCRIPTED_HUD_COMPONENT_HIDDEN_THIS_FRAME"]=--[[BOOL (bool)]] function(--[[int]] id)native_invoker.begin_call();native_invoker.push_arg_int(id);native_invoker.end_call("09C0403ED9A751C2");return native_invoker.get_return_value_bool();end,
+	-- This function hides various HUD (Heads-up Display) components.
+	-- Listed below are the integers and the corresponding HUD component.
+	-- - 1 : WANTED_STARS
+	-- - 2 : WEAPON_ICON
+	-- - 3 : CASH
+	-- - 4 : MP_CASH
+	-- - 5 : MP_MESSAGE
+	-- - 6 : VEHICLE_NAME
+	-- - 7 : AREA_NAME
+	-- - 8 : VEHICLE_CLASS
+	-- - 9 : STREET_NAME
+	-- - 10 : HELP_TEXT
+	-- - 11 : FLOATING_HELP_TEXT_1
+	-- - 12 : FLOATING_HELP_TEXT_2
+	-- - 13 : CASH_CHANGE
+	-- - 14 : RETICLE
+	-- - 15 : SUBTITLE_TEXT
+	-- - 16 : RADIO_STATIONS
+	-- - 17 : SAVING_GAME
+	-- - 18 : GAME_STREAM
+	-- - 19 : WEAPON_WHEEL
+	-- - 20 : WEAPON_WHEEL_STATS
+	-- - 21 : HUD_COMPONENTS
+	-- - 22 : HUD_WEAPONS
+	-- 
+	-- These integers also work for the `SHOW_HUD_COMPONENT_THIS_FRAME` native, but instead shows the HUD Component.
+	["HIDE_HUD_COMPONENT_THIS_FRAME"]=--[[void]] function(--[[int]] id)native_invoker.begin_call();native_invoker.push_arg_int(id);native_invoker.end_call("6806C51AD12B83B8");end,
+	-- This function hides various HUD (Heads-up Display) components.
+	-- Listed below are the integers and the corresponding HUD component.
+	-- - 1 : WANTED_STARS
+	-- - 2 : WEAPON_ICON
+	-- - 3 : CASH
+	-- - 4 : MP_CASH
+	-- - 5 : MP_MESSAGE
+	-- - 6 : VEHICLE_NAME
+	-- - 7 : AREA_NAME
+	-- - 8 : VEHICLE_CLASS
+	-- - 9 : STREET_NAME
+	-- - 10 : HELP_TEXT
+	-- - 11 : FLOATING_HELP_TEXT_1
+	-- - 12 : FLOATING_HELP_TEXT_2
+	-- - 13 : CASH_CHANGE
+	-- - 14 : RETICLE
+	-- - 15 : SUBTITLE_TEXT
+	-- - 16 : RADIO_STATIONS
+	-- - 17 : SAVING_GAME
+	-- - 18 : GAME_STREAM
+	-- - 19 : WEAPON_WHEEL
+	-- - 20 : WEAPON_WHEEL_STATS
+	-- - 21 : HUD_COMPONENTS
+	-- - 22 : HUD_WEAPONS
+	-- 
+	-- These integers also work for the `HIDE_HUD_COMPONENT_THIS_FRAME` native, but instead hides the HUD Component.
+	["SHOW_HUD_COMPONENT_THIS_FRAME"]=--[[void]] function(--[[int]] id)native_invoker.begin_call();native_invoker.push_arg_int(id);native_invoker.end_call("0B4DF1FA60C0E664");end,
+	-- HIDE_*_THIS_FRAME
+	-- 
+	-- Hides area and vehicle name HUD components for one frame.
+	["_HIDE_AREA_AND_VEHICLE_NAME_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("A4DEDE28B1814289");end,
+	["RESET_RETICULE_VALUES"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("12782CE0A636E9F0");end,
+	["RESET_HUD_COMPONENT_VALUES"]=--[[void]] function(--[[int]] id)native_invoker.begin_call();native_invoker.push_arg_int(id);native_invoker.end_call("450930E616475D0D");end,
+	["SET_HUD_COMPONENT_POSITION"]=--[[void]] function(--[[int]] id,--[[float]] x,--[[float]] y)native_invoker.begin_call();native_invoker.push_arg_int(id);native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.end_call("AABB1F56E2A17CED");end,
+	["GET_HUD_COMPONENT_POSITION"]=--[[Vector3 (vector3)]] function(--[[int]] id)native_invoker.begin_call();native_invoker.push_arg_int(id);native_invoker.end_call("223CA69A8C4417FD");return native_invoker.get_return_value_vector3();end,
+	-- This native does absolutely nothing, just a nullsub
+	["CLEAR_REMINDER_MESSAGE"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("B57D8DD645CFA2CF");end,
+	-- World to relative screen coords, this world to screen will keep the text on screen. Was named _GET_SCREEN_COORD_FROM_WORLD_COORD, but this conflicts with 0x34E82F05DF2974F5. As that hash actually matches GET_SCREEN_COORD_FROM_WORLD_COORD that one supercedes and this one was renamed to _GET_2D_COORD_FROM_3D_COORD
+	["GET_HUD_SCREEN_POSITION_FROM_WORLD_POSITION"]=--[[BOOL (bool)]] function(--[[float]] worldX,--[[float]] worldY,--[[float]] worldZ,--[[float* (pointer)]] screenX,--[[float* (pointer)]] screenY)native_invoker.begin_call();native_invoker.push_arg_float(worldX);native_invoker.push_arg_float(worldY);native_invoker.push_arg_float(worldZ);native_invoker.push_arg_pointer(screenX);native_invoker.push_arg_pointer(screenY);native_invoker.end_call("F9904D11F1ACBEC3");return native_invoker.get_return_value_bool();end,
+	-- Shows a menu for reporting UGC content.
+	["OPEN_REPORTUGC_MENU"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("523A590C1A3CC0D3");end,
+	["FORCE_CLOSE_REPORTUGC_MENU"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("EE4C0E6DBC6F2C6F");end,
+	["IS_REPORTUGC_MENU_OPEN"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("9135584D09A3437E");return native_invoker.get_return_value_bool();end,
+	["IS_FLOATING_HELP_TEXT_ON_SCREEN"]=--[[BOOL (bool)]] function(--[[int]] hudIndex)native_invoker.begin_call();native_invoker.push_arg_int(hudIndex);native_invoker.end_call("2432784ACA090DA4");return native_invoker.get_return_value_bool();end,
+	["SET_FLOATING_HELP_TEXT_SCREEN_POSITION"]=--[[void]] function(--[[int]] hudIndex,--[[float]] x,--[[float]] y)native_invoker.begin_call();native_invoker.push_arg_int(hudIndex);native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.end_call("7679CC1BCEBE3D4C");end,
+	["SET_FLOATING_HELP_TEXT_WORLD_POSITION"]=--[[void]] function(--[[int]] hudIndex,--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call();native_invoker.push_arg_int(hudIndex);native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.push_arg_float(z);native_invoker.end_call("784BA7E0ECEB4178");end,
+	["SET_FLOATING_HELP_TEXT_TO_ENTITY"]=--[[void]] function(--[[int]] hudIndex,--[[Entity (int)]] entity,--[[float]] offsetX,--[[float]] offsetY)native_invoker.begin_call();native_invoker.push_arg_int(hudIndex);native_invoker.push_arg_int(entity);native_invoker.push_arg_float(offsetX);native_invoker.push_arg_float(offsetY);native_invoker.end_call("B094BC1DB4018240");end,
+	["SET_FLOATING_HELP_TEXT_STYLE"]=--[[void]] function(--[[int]] hudIndex,--[[int]] p1,--[[int]] p2,--[[int]] p3,--[[int]] p4,--[[int]] p5)native_invoker.begin_call();native_invoker.push_arg_int(hudIndex);native_invoker.push_arg_int(p1);native_invoker.push_arg_int(p2);native_invoker.push_arg_int(p3);native_invoker.push_arg_int(p4);native_invoker.push_arg_int(p5);native_invoker.end_call("788E7FD431BD67F1");end,
+	["CLEAR_FLOATING_HELP"]=--[[void]] function(--[[int]] hudIndex,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(hudIndex);native_invoker.push_arg_bool(p1);native_invoker.end_call("50085246ABD3FEFA");end,
+	-- clanFlag: takes a number 0-5
+	["CREATE_MP_GAMER_TAG_WITH_CREW_COLOR"]=--[[void]] function(--[[Player (int)]] player,--[[string]] username,--[[BOOL (bool)]] pointedClanTag,--[[BOOL (bool)]] isRockstarClan,--[[string]] clanTag,--[[int]] clanFlag,--[[int]] r,--[[int]] g,--[[int]] b)native_invoker.begin_call();native_invoker.push_arg_int(player);native_invoker.push_arg_string(username);native_invoker.push_arg_bool(pointedClanTag);native_invoker.push_arg_bool(isRockstarClan);native_invoker.push_arg_string(clanTag);native_invoker.push_arg_int(clanFlag);native_invoker.push_arg_int(r);native_invoker.push_arg_int(g);native_invoker.push_arg_int(b);native_invoker.end_call("6DD05E9D83EFA4C9");end,
+	["IS_MP_GAMER_TAG_MOVIE_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("6E0EB3EB47C8D7AA");return native_invoker.get_return_value_bool();end,
+	-- clanFlag: takes a number 0-5
+	["CREATE_FAKE_MP_GAMER_TAG"]=--[[int]] function(--[[Ped (int)]] ped,--[[string]] username,--[[BOOL (bool)]] pointedClanTag,--[[BOOL (bool)]] isRockstarClan,--[[string]] clanTag,--[[int]] clanFlag)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_string(username);native_invoker.push_arg_bool(pointedClanTag);native_invoker.push_arg_bool(isRockstarClan);native_invoker.push_arg_string(clanTag);native_invoker.push_arg_int(clanFlag);native_invoker.end_call("BFEFE3321A3F5015");return native_invoker.get_return_value_int();end,
+	["REMOVE_MP_GAMER_TAG"]=--[[void]] function(--[[int]] gamerTagId)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.end_call("31698AA80E0223F8");end,
+	["IS_MP_GAMER_TAG_ACTIVE"]=--[[BOOL (bool)]] function(--[[int]] gamerTagId)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.end_call("4E929E7A5796FD26");return native_invoker.get_return_value_bool();end,
+	["IS_MP_GAMER_TAG_FREE"]=--[[BOOL (bool)]] function(--[[int]] gamerTagId)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.end_call("595B5178E412E199");return native_invoker.get_return_value_bool();end,
+	-- enum eMpGamerTagComponent
+	-- {
+	-- 	MP_TAG_GAMER_NAME,
+	-- 	MP_TAG_CREW_TAG,
+	-- 	MP_TAG_HEALTH_ARMOUR,
+	-- 	MP_TAG_BIG_TEXT,
+	-- 	MP_TAG_AUDIO_ICON,
+	-- 	MP_TAG_USING_MENU,
+	-- 	MP_TAG_PASSIVE_MODE,
+	-- 	MP_TAG_WANTED_STARS,
+	-- 	MP_TAG_DRIVER,
+	-- 	MP_TAG_CO_DRIVER,
+	-- 	MP_TAG_TAGGED,
+	-- 	MP_TAG_GAMER_NAME_NEARBY,
+	-- 	MP_TAG_ARROW,
+	-- 	MP_TAG_PACKAGES,
+	-- 	MP_TAG_INV_IF_PED_FOLLOWING,
+	-- 	MP_TAG_RANK_TEXT,
+	-- 	MP_TAG_TYPING,
+	-- 	MP_TAG_BAG_LARGE,
+	-- 	MP_TAG_ARROW,
+	-- 	MP_TAG_GANG_CEO,
+	-- 	MP_TAG_GANG_BIKER,
+	-- 	MP_TAG_BIKER_ARROW,
+	-- 	MP_TAG_MC_ROLE_PRESIDENT,
+	-- 	MP_TAG_MC_ROLE_VICE_PRESIDENT,
+	-- 	MP_TAG_MC_ROLE_ROAD_CAPTAIN,
+	-- 	MP_TAG_MC_ROLE_SARGEANT,
+	-- 	MP_TAG_MC_ROLE_ENFORCER,
+	-- 	MP_TAG_MC_ROLE_PROSPECT,
+	-- 	MP_TAG_TRANSMITTER,
+	-- 	MP_TAG_BOMB
+	-- };
+	["SET_MP_GAMER_TAG_VISIBILITY"]=--[[void]] function(--[[int]] gamerTagId,--[[int]] component,--[[BOOL (bool)]] toggle,--[[Any (int)]] p3)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.push_arg_int(component);native_invoker.push_arg_bool(toggle);native_invoker.push_arg_int(p3);native_invoker.end_call("63BB75ABEDC1F6A0");end,
+	["_SET_MP_GAMER_TAG_ENABLED"]=--[[void]] function(--[[int]] gamerTagId,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.push_arg_bool(toggle);native_invoker.end_call("EE76FF7E6A0166B0");end,
+	-- Displays a bunch of icons above the players name, and level, and their name twice
+	["_SET_MP_GAMER_TAG_ICONS"]=--[[void]] function(--[[int]] gamerTagId,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.push_arg_bool(toggle);native_invoker.end_call("A67F9C46D612B6F1");end,
+	["_SET_MP_GAMER_HEALTH_BAR_DISPLAY"]=--[[void]] function(--[[int]] gamerTagId,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.push_arg_bool(toggle);native_invoker.end_call("D29EC58C2F6B5014");end,
+	["_SET_MP_GAMER_HEALTH_BAR_MAX"]=--[[void]] function(--[[int]] gamerTagId,--[[int]] value,--[[int]] maximumValue)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.push_arg_int(value);native_invoker.push_arg_int(maximumValue);native_invoker.end_call("1563FE35E9928E67");end,
+	-- Sets a gamer tag's component colour
+	-- 
+	-- gamerTagId is obtained using for example CREATE_FAKE_MP_GAMER_TAG
+	-- Ranges from 0 to 255. 0 is grey health bar, ~50 yellow, 200 purple.
+	["SET_MP_GAMER_TAG_COLOUR"]=--[[void]] function(--[[int]] gamerTagId,--[[int]] component,--[[int]] hudColorIndex)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.push_arg_int(component);native_invoker.push_arg_int(hudColorIndex);native_invoker.end_call("613ED644950626AE");end,
+	-- Ranges from 0 to 255. 0 is grey health bar, ~50 yellow, 200 purple.
+	-- Should be enabled as flag (2). Has 0 opacity by default.
+	-- 
+	-- - This was _SET_MP_GAMER_TAG_HEALTH_BAR_COLOR,
+	-- -> Rockstar use the EU spelling of 'color' so I hashed the same name with COLOUR and it came back as the correct hash, so it has been corrected above.
+	["SET_MP_GAMER_TAG_HEALTH_BAR_COLOUR"]=--[[void]] function(--[[int]] gamerTagId,--[[int]] hudColorIndex)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.push_arg_int(hudColorIndex);native_invoker.end_call("3158C77A7E888AB4");end,
+	-- Sets flag's sprite transparency. 0-255.
+	["SET_MP_GAMER_TAG_ALPHA"]=--[[void]] function(--[[int]] gamerTagId,--[[int]] component,--[[int]] alpha)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.push_arg_int(component);native_invoker.push_arg_int(alpha);native_invoker.end_call("D48FE545CD46F857");end,
+	-- displays wanted star above head
+	["SET_MP_GAMER_TAG_WANTED_LEVEL"]=--[[void]] function(--[[int]] gamerTagId,--[[int]] wantedlvl)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.push_arg_int(wantedlvl);native_invoker.end_call("CF228E2AA03099C3");end,
+	["_SET_MP_GAMER_TAG_UNK"]=--[[void]] function(--[[int]] gamerTagId,--[[int]] p1)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.push_arg_int(p1);native_invoker.end_call("9C16459B2324B2CF");end,
+	["SET_MP_GAMER_TAG_NAME"]=--[[void]] function(--[[int]] gamerTagId,--[[string]] string)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.push_arg_string(string);native_invoker.end_call("DEA2B8283BAA3944");end,
+	-- IS_*
+	["_IS_VALID_MP_GAMER_TAG_MOVIE"]=--[[BOOL (bool)]] function(--[[int]] gamerTagId)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.end_call("EB709A36958ABE0D");return native_invoker.get_return_value_bool();end,
+	["SET_MP_GAMER_TAG_BIG_TEXT"]=--[[void]] function(--[[int]] gamerTagId,--[[string]] string)native_invoker.begin_call();native_invoker.push_arg_int(gamerTagId);native_invoker.push_arg_string(string);native_invoker.end_call("7B7723747CCB55B6");end,
+	["GET_CURRENT_WEBPAGE_ID"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("01A358D9128B7A86");return native_invoker.get_return_value_int();end,
+	["GET_CURRENT_WEBSITE_ID"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("97D47996FC48CBAD");return native_invoker.get_return_value_int();end,
+	-- Returns the ActionScript flagValue.
+	-- ActionScript flags are global flags that scaleforms use
+	-- Flags found during testing
+	-- 0: Returns 1 if the web_browser keyboard is open, otherwise 0
+	-- 1: Returns 1 if the player has clicked back twice on the opening page, otherwise 0 (web_browser)
+	-- 2: Returns how many links the player has clicked in the web_browser scaleform, returns 0 when the browser gets closed
+	-- 9: Returns the current selection on the mobile phone scaleform
+	-- 
+	-- There are 20 flags in total.
+	["GET_GLOBAL_ACTIONSCRIPT_FLAG"]=--[[int]] function(--[[int]] flagIndex)native_invoker.begin_call();native_invoker.push_arg_int(flagIndex);native_invoker.end_call("E3B05614DCE1D014");return native_invoker.get_return_value_int();end,
+	["RESET_GLOBAL_ACTIONSCRIPT_FLAG"]=--[[void]] function(--[[int]] flagIndex)native_invoker.begin_call();native_invoker.push_arg_int(flagIndex);native_invoker.end_call("B99C4E4D9499DF29");end,
+	-- IS_WARNING_MESSAGE_*
+	["_IS_WARNING_MESSAGE_ACTIVE_2"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("AF42195A42C63BBA");return native_invoker.get_return_value_bool();end,
+	-- You can only use text entries. No custom text.
+	-- 
+	-- Example: SET_WARNING_MESSAGE("t20", 3, "adder", false, -1, 0, 0, true);
+	-- errorCode: shows an error code at the bottom left if nonzero
+	["SET_WARNING_MESSAGE"]=--[[void]] function(--[[string]] titleMsg,--[[int]] flags,--[[string]] promptMsg,--[[BOOL (bool)]] p3,--[[int]] p4,--[[string]] p5,--[[string]] p6,--[[BOOL (bool)]] showBackground,--[[int]] errorCode)native_invoker.begin_call();native_invoker.push_arg_string(titleMsg);native_invoker.push_arg_int(flags);native_invoker.push_arg_string(promptMsg);native_invoker.push_arg_bool(p3);native_invoker.push_arg_int(p4);native_invoker.push_arg_string(p5);native_invoker.push_arg_string(p6);native_invoker.push_arg_bool(showBackground);native_invoker.push_arg_int(errorCode);native_invoker.end_call("7B1776B3B53F8D74");end,
+	-- Shows a warning message on screen with a header.
+	-- Note: You can only use text entries. No custom text. You can recreate this easily with scaleforms.
+	-- Example: https://i.imgur.com/ITJt8bJ.png
+	["SET_WARNING_MESSAGE_WITH_HEADER"]=--[[void]] function(--[[string]] entryHeader,--[[string]] entryLine1,--[[int]] instructionalKey,--[[string]] entryLine2,--[[BOOL (bool)]] p4,--[[Any (int)]] p5,--[[Any* (pointer)]] showBackground,--[[Any* (pointer)]] p7,--[[BOOL (bool)]] p8,--[[Any (int)]] p9)native_invoker.begin_call();native_invoker.push_arg_string(entryHeader);native_invoker.push_arg_string(entryLine1);native_invoker.push_arg_int(instructionalKey);native_invoker.push_arg_string(entryLine2);native_invoker.push_arg_bool(p4);native_invoker.push_arg_int(p5);native_invoker.push_arg_pointer(showBackground);native_invoker.push_arg_pointer(p7);native_invoker.push_arg_bool(p8);native_invoker.push_arg_int(p9);native_invoker.end_call("DC38CC1E35B6A5D7");end,
+	-- You can use this native for custom input, without having to use any scaleform-related natives.
+	-- The native must be called on tick.
+	-- The entryHeader must be a valid label.
+	-- For Single lines use JL_INVITE_N as entryLine1, JL_INVITE_ND for multiple.
+	-- Notes:
+	-- - additionalIntInfo: replaces first occurrence of ~1~ in provided label with an integer
+	-- - additionalTextInfoLine1: replaces first occurrence of ~a~ in provided label, with your custom text
+	-- - additionalTextInfoLine2: replaces second occurrence of ~a~ in provided label, with your custom text
+	-- - showBackground: shows black background of the warning screen
+	-- - errorCode: shows an error code at the bottom left if nonzero
+	-- Example of usage:
+	-- SET_WARNING_MESSAGE_WITH_HEADER_AND_SUBSTRING_FLAGS("ALERT", "JL_INVITE_ND", 66, "", true, -1, -1, "Testing line 1", "Testing line 2", true, 0);
+	-- Screenshot:
+	-- https://imgur.com/a/IYA7vJ8
+	["SET_WARNING_MESSAGE_WITH_HEADER_AND_SUBSTRING_FLAGS"]=--[[void]] function(--[[string]] entryHeader,--[[string]] entryLine1,--[[int]] instructionalKey,--[[string]] entryLine2,--[[BOOL (bool)]] p4,--[[Any (int)]] p5,--[[Any (int)]] additionalIntInfo,--[[string]] additionalTextInfoLine1,--[[string]] additionalTextInfoLine2,--[[BOOL (bool)]] showBackground,--[[int]] errorCode)native_invoker.begin_call();native_invoker.push_arg_string(entryHeader);native_invoker.push_arg_string(entryLine1);native_invoker.push_arg_int(instructionalKey);native_invoker.push_arg_string(entryLine2);native_invoker.push_arg_bool(p4);native_invoker.push_arg_int(p5);native_invoker.push_arg_int(additionalIntInfo);native_invoker.push_arg_string(additionalTextInfoLine1);native_invoker.push_arg_string(additionalTextInfoLine2);native_invoker.push_arg_bool(showBackground);native_invoker.push_arg_int(errorCode);native_invoker.end_call("701919482C74B5AB");end,
+	["_SET_WARNING_MESSAGE_WITH_HEADER_UNK"]=--[[void]] function(--[[string]] entryHeader,--[[string]] entryLine1,--[[int]] flags,--[[string]] entryLine2,--[[BOOL (bool)]] p4,--[[Any (int)]] p5,--[[Any* (pointer)]] p6,--[[Any* (pointer)]] p7,--[[BOOL (bool)]] showBg,--[[Any (int)]] p9,--[[Any (int)]] p10)native_invoker.begin_call();native_invoker.push_arg_string(entryHeader);native_invoker.push_arg_string(entryLine1);native_invoker.push_arg_int(flags);native_invoker.push_arg_string(entryLine2);native_invoker.push_arg_bool(p4);native_invoker.push_arg_int(p5);native_invoker.push_arg_pointer(p6);native_invoker.push_arg_pointer(p7);native_invoker.push_arg_bool(showBg);native_invoker.push_arg_int(p9);native_invoker.push_arg_int(p10);native_invoker.end_call("38B55259C2E078ED");end,
+	-- labelTitle: Label of the alert's title.
+	-- labelMsg: Label of the alert's message.
+	-- p2: This is an enum, check the description for a list.
+	-- p3: This is an enum, check the description for a list.
+	-- labelMsg2: Label of another message line
+	-- p5: usually 0
+	-- p6: usually -1
+	-- p7: usually 0
+	-- p8: unknown label
+	-- p9: unknown label
+	-- background: Set to anything other than 0 or false (even any string) and it will draw a background. Setting it to 0 or false will draw no background.
+	-- errorCode: Error code, shown at the bottom left if set to value other than 0.
+	-- 
+	-- instructionalKey enum list:
+	-- Buttons = {
+	--       Empty = 0,
+	--       Select = 1, -- (RETURN)
+	--       Ok = 2, -- (RETURN)
+	--       Yes = 4, -- (RETURN)
+	--       Back = 8, -- (ESC)
+	--       Cancel = 16, -- (ESC)
+	--       No = 32, -- (ESC)
+	--       RetrySpace = 64, -- (SPACE)
+	--       Restart = 128, -- (SPACE)
+	--       Skip = 256, -- (SPACE)
+	--       Quit = 512, -- (ESC)
+	--       Adjust = 1024, -- (ARROWS)
+	--       SpaceKey = 2048, -- (SPACE)
+	--       Share = 4096, -- (SPACE)
+	--       SignIn = 8192, -- (SPACE)
+	--       Continue = 16384, -- (RETURN)
+	--       AdjustLeftRight = 32768, -- (SCROLL L/R)
+	--       AdjustUpDown = 65536, -- (SCROLL U/D)
+	--       Overwrite = 131072, -- (SPACE)
+	--       SocialClubSignup = 262144, -- (RETURN)
+	--       Confirm = 524288, -- (RETURN)
+	--       Queue = 1048576, -- (RETURN)
+	--       RetryReturn = 2097152, -- (RETURN)
+	--       BackEsc = 4194304, -- (ESC)
+	--       SocialClub = 8388608, -- (RETURN)
+	--       Spectate = 16777216, -- (SPACE)
+	--       OkEsc = 33554432, -- (ESC)
+	--       CancelTransfer = 67108864, -- (ESC)
+	--       LoadingSpinner = 134217728,
+	--       NoReturnToGTA = 268435456, -- (ESC)
+	--       CancelEsc = 536870912, -- (ESC)
+	-- }
+	-- 
+	-- Alt = {
+	--       Empty = 0,
+	--       No = 1, -- (SPACE)
+	--       Host = 2, -- (ESC)
+	--       SearchForJob = 4, -- (RETURN)
+	--       ReturnKey = 8, -- (TURN)
+	--       Freemode = 16, -- (ESC)
+	-- }
+	-- 
+	-- Example: https://i.imgur.com/TvmNF4k.png
+	["_SET_WARNING_MESSAGE_WITH_ALERT"]=--[[void]] function(--[[string]] labelTitle,--[[string]] labelMessage,--[[int]] p2,--[[int]] p3,--[[string]] labelMessage2,--[[BOOL (bool)]] p5,--[[int]] p6,--[[int]] p7,--[[string]] p8,--[[string]] p9,--[[BOOL (bool)]] background,--[[int]] errorCode)native_invoker.begin_call();native_invoker.push_arg_string(labelTitle);native_invoker.push_arg_string(labelMessage);native_invoker.push_arg_int(p2);native_invoker.push_arg_int(p3);native_invoker.push_arg_string(labelMessage2);native_invoker.push_arg_bool(p5);native_invoker.push_arg_int(p6);native_invoker.push_arg_int(p7);native_invoker.push_arg_string(p8);native_invoker.push_arg_string(p9);native_invoker.push_arg_bool(background);native_invoker.push_arg_int(errorCode);native_invoker.end_call("15803FEC3B9A872B");end,
+	-- Has to do with the confirmation overlay (E.g. confirm exit)
+	["_GET_WARNING_MESSAGE_TITLE_HASH"]=--[[Hash (int)]] function()native_invoker.begin_call();native_invoker.end_call("81DF9ABA6C83DFF9");return native_invoker.get_return_value_int();end,
+	-- Some sort of list displayed in a warning message. Yet unknown how to prevent repeating.
+	-- Param names copied from the corresponding scaleform function "SET_LIST_ROW".
+	-- Example: https://i.imgur.com/arKvOYx.png
+	["_SET_WARNING_MESSAGE_LIST_ROW"]=--[[BOOL (bool)]] function(--[[int]] index,--[[string]] name,--[[int]] cash,--[[int]] rp,--[[int]] lvl,--[[int]] colour)native_invoker.begin_call();native_invoker.push_arg_int(index);native_invoker.push_arg_string(name);native_invoker.push_arg_int(cash);native_invoker.push_arg_int(rp);native_invoker.push_arg_int(lvl);native_invoker.push_arg_int(colour);native_invoker.end_call("0C5A80A9E096D529");return native_invoker.get_return_value_bool();end,
+	["_0xDAF87174BE7454FF"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("DAF87174BE7454FF");return native_invoker.get_return_value_bool();end,
+	["_REMOVE_WARNING_MESSAGE_LIST_ITEMS"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("6EF54AB721DC6242");end,
+	["IS_WARNING_MESSAGE_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("E18B138FABC53103");return native_invoker.get_return_value_bool();end,
+	["CLEAR_DYNAMIC_PAUSE_MENU_ERROR_MESSAGE"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("7792424AA0EAC32E");end,
+	-- If toggle is true, the map is shown in full screen
+	-- If toggle is false, the map is shown in normal mode
+	["CUSTOM_MINIMAP_SET_ACTIVE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("5354C5BA2EA868A4");end,
+	-- Sets the sprite of the next BLIP_GALLERY blip, values used in the native scripts: 143 (ObjectiveBlue), 144 (ObjectiveGreen), 145 (ObjectiveRed), 146 (ObjectiveYellow).
+	["CUSTOM_MINIMAP_SET_BLIP_OBJECT"]=--[[void]] function(--[[int]] spriteId)native_invoker.begin_call();native_invoker.push_arg_int(spriteId);native_invoker.end_call("1EAE6DD17B7A5EFA");end,
+	-- Add a BLIP_GALLERY at the specific coordinate. Used in fm_maintain_transition_players to display race track points.
+	["CUSTOM_MINIMAP_CREATE_BLIP"]=--[[Any (int)]] function(--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.push_arg_float(z);native_invoker.end_call("551DF99658DB6EE8");return native_invoker.get_return_value_int();end,
+	["CUSTOM_MINIMAP_CLEAR_BLIPS"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("2708FC083123F9FF");end,
+	-- Doesn't actually return anything.
+	["FORCE_SONAR_BLIPS_THIS_FRAME"]=--[[Any (int)]] function()native_invoker.begin_call();native_invoker.end_call("1121BFA1A1A522A8");return native_invoker.get_return_value_int();end,
+	["_GET_NORTH_RADAR_BLIP"]=--[[Blip (int)]] function()native_invoker.begin_call();native_invoker.end_call("3F0CF9CB7E589B88");return native_invoker.get_return_value_int();end,
+	-- Toggles whether or not name labels are shown on the expanded minimap next to player blips, like in GTA:O.
+	-- Doesn't need to be called every frame.
+	-- Preview: https://i.imgur.com/DfqKWfJ.png
+	-- 
+	-- Make sure to call SET_BLIP_CATEGORY with index 7 for this to work on the desired blip.
+	["DISPLAY_PLAYER_NAME_TAGS_ON_BLIPS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("82CEDC33687E1F50");end,
+	-- This native does absolutely nothing, just a nullsub
+	["_0x211C4EF450086857"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("211C4EF450086857");end,
+	["_0xBF4F34A85CA2970C"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("BF4F34A85CA2970C");end,
+	-- Does stuff like this:
+	-- gyazo.com/7fcb78ea3520e3dbc5b2c0c0f3712617
+	-- 
+	-- Example:
+	-- int GetHash = GET_HASH_KEY("fe_menu_version_corona_lobby");
+	-- ACTIVATE_FRONTEND_MENU(GetHash, 0, -1);
+	-- 
+	-- BOOL p1 is a toggle to define the game in pause.
+	-- int p2 is unknown but -1 always works, not sure why though.
+	-- 
+	-- [30/03/2017] ins1de :
+	-- 
+	-- the int p2 is actually a component variable. When the pause menu is visible, it opens the tab related to it.
+	-- 
+	-- Example : Function.Call(Hash.ACTIVATE_FRONTEND_MENU,-1171018317, 0, 42);
+	-- Result : Opens the "Online" tab without pausing the menu, with -1 it opens the map.Below is a list of all known Frontend Menu Hashes.
+	-- - FE_MENU_VERSION_SP_PAUSE
+	-- - FE_MENU_VERSION_MP_PAUSE
+	-- - FE_MENU_VERSION_CREATOR_PAUSE
+	-- - FE_MENU_VERSION_CUTSCENE_PAUSE
+	-- - FE_MENU_VERSION_SAVEGAME
+	-- - FE_MENU_VERSION_PRE_LOBBY
+	-- - FE_MENU_VERSION_LOBBY
+	-- - FE_MENU_VERSION_MP_CHARACTER_SELECT
+	-- - FE_MENU_VERSION_MP_CHARACTER_CREATION
+	-- - FE_MENU_VERSION_EMPTY
+	-- - FE_MENU_VERSION_EMPTY_NO_BACKGROUND
+	-- - FE_MENU_VERSION_TEXT_SELECTION
+	-- - FE_MENU_VERSION_CORONA
+	-- - FE_MENU_VERSION_CORONA_LOBBY
+	-- - FE_MENU_VERSION_CORONA_JOINED_PLAYERS
+	-- - FE_MENU_VERSION_CORONA_INVITE_PLAYERS
+	-- - FE_MENU_VERSION_CORONA_INVITE_FRIENDS
+	-- - FE_MENU_VERSION_CORONA_INVITE_CREWS
+	-- - FE_MENU_VERSION_CORONA_INVITE_MATCHED_PLAYERS
+	-- - FE_MENU_VERSION_CORONA_INVITE_LAST_JOB_PLAYERS
+	-- - FE_MENU_VERSION_CORONA_RACE
+	-- - FE_MENU_VERSION_CORONA_BETTING
+	-- - FE_MENU_VERSION_JOINING_SCREEN
+	-- - FE_MENU_VERSION_LANDING_MENU
+	-- - FE_MENU_VERSION_LANDING_KEYMAPPING_MENU
+	["ACTIVATE_FRONTEND_MENU"]=--[[void]] function(--[[Hash (int)]] menuhash,--[[BOOL (bool)]] togglePause,--[[int]] component)native_invoker.begin_call();native_invoker.push_arg_int(menuhash);native_invoker.push_arg_bool(togglePause);native_invoker.push_arg_int(component);native_invoker.end_call("EF01D36B9C9D0C7B");end,
+	-- Before using this native click the native above and look at the decription.
+	-- 
+	-- Example:
+	-- int GetHash = Function.Call<int>(Hash.GET_HASH_KEY, "fe_menu_version_corona_lobby");
+	-- Function.Call(Hash.ACTIVATE_FRONTEND_MENU, GetHash, 0, -1);
+	-- Function.Call(Hash.RESTART_FRONTEND_MENU(GetHash, -1);
+	-- 
+	-- This native refreshes the frontend menu.
+	-- 
+	-- p1 = Hash of Menu
+	-- p2 = Unknown but always works with -1.
+	["RESTART_FRONTEND_MENU"]=--[[void]] function(--[[Hash (int)]] menuHash,--[[int]] p1)native_invoker.begin_call();native_invoker.push_arg_int(menuHash);native_invoker.push_arg_int(p1);native_invoker.end_call("10706DC6AD2D49C0");end,
+	-- if (HUD::GET_CURRENT_FRONTEND_MENU_VERSION() == joaat("fe_menu_version_empty_no_background"))
+	["GET_CURRENT_FRONTEND_MENU_VERSION"]=--[[Hash (int)]] function()native_invoker.begin_call();native_invoker.end_call("2309595AD6145265");return native_invoker.get_return_value_int();end,
+	["SET_PAUSE_MENU_ACTIVE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("DF47FC56C71569CF");end,
+	["DISABLE_FRONTEND_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("6D3465A73092F0E6");end,
+	["SUPPRESS_FRONTEND_RENDERING_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("BA751764F0821256");end,
+	-- Allows opening the pause menu this frame, when the player is dead.
+	["_ALLOW_PAUSE_MENU_WHEN_DEAD_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("CC3FDDED67BCFC63");end,
+	["SET_FRONTEND_ACTIVE"]=--[[void]] function(--[[BOOL (bool)]] active)native_invoker.begin_call();native_invoker.push_arg_bool(active);native_invoker.end_call("745711A75AB09277");end,
+	["IS_PAUSE_MENU_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("B0034A223497FFCB");return native_invoker.get_return_value_bool();end,
+	-- Returns something related to the store.
+	-- 
+	-- IS_S*
+	-- 
+	-- IS_STORE_EXIT_PURCHASE_CAPABILITY_ACTIVATED ?
+	["_0x2F057596F2BD0061"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("2F057596F2BD0061");return native_invoker.get_return_value_bool();end,
+	-- Returns:
+	-- 
+	-- 0
+	-- 5
+	-- 10
+	-- 15
+	-- 20
+	-- 25
+	-- 30
+	-- 35
+	-- 
+	["GET_PAUSE_MENU_STATE"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("272ACD84970869C5");return native_invoker.get_return_value_int();end,
+	-- GET_PAUSE_MENU_*
+	["_0x5BFF36D6ED83E0AE"]=--[[Vector3 (vector3)]] function()native_invoker.begin_call();native_invoker.end_call("5BFF36D6ED83E0AE");return native_invoker.get_return_value_vector3();end,
+	["IS_PAUSE_MENU_RESTARTING"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("1C491717107431C7");return native_invoker.get_return_value_bool();end,
+	-- Not present in retail version of the game, actual definiton seems to be
+	-- _LOG_DEBUG_INFO(const char* category, const char* debugText);
+	["_LOG_DEBUG_INFO"]=--[[void]] function(--[[string]] p0)native_invoker.begin_call();native_invoker.push_arg_string(p0);native_invoker.end_call("2162C446DFDF38FD");end,
+	["_0x77F16B447824DA6C"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("77F16B447824DA6C");end,
+	["_0xCDCA26E80FAECB8F"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("CDCA26E80FAECB8F");end,
+	["_0x2DE6C5E2E996F178"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("2DE6C5E2E996F178");end,
+	-- Activates the specified frontend menu context.
+	-- pausemenu.xml defines some specific menu options using 'context'. Context is basically a 'condition'. 
+	-- The `*ALL*` part of the context means that whatever is being defined, will be active when any or all of those conditions after `*ALL*` are met.
+	-- The `*NONE*` part of the context section means that whatever is being defined, will NOT be active if any or all of the conditions after `*NONE*` are met.
+	-- This basically allows you to hide certain menu sections, or things like instructional buttons.
+	["PAUSE_MENU_ACTIVATE_CONTEXT"]=--[[void]] function(--[[Hash (int)]] contextHash)native_invoker.begin_call();native_invoker.push_arg_int(contextHash);native_invoker.end_call("DD564BDD0472C936");end,
+	["PAUSE_MENU_DEACTIVATE_CONTEXT"]=--[[void]] function(--[[Hash (int)]] contextHash)native_invoker.begin_call();native_invoker.push_arg_int(contextHash);native_invoker.end_call("444D8CF241EC25C5");end,
+	["PAUSE_MENU_IS_CONTEXT_ACTIVE"]=--[[BOOL (bool)]] function(--[[Hash (int)]] contextHash)native_invoker.begin_call();native_invoker.push_arg_int(contextHash);native_invoker.end_call("84698AB38D0C6636");return native_invoker.get_return_value_bool();end,
+	["PAUSE_MENU_IS_CONTEXT_MENU_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("2A25ADC48F87841F");return native_invoker.get_return_value_bool();end,
+	["_0xDE03620F8703A9DF"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("DE03620F8703A9DF");return native_invoker.get_return_value_int();end,
+	["_0x359AF31A4B52F5ED"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("359AF31A4B52F5ED");return native_invoker.get_return_value_int();end,
+	["_0x13C4B962653A5280"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("13C4B962653A5280");return native_invoker.get_return_value_int();end,
+	["_0xC8E1071177A23BE5"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any* (pointer)]] p1,--[[Any* (pointer)]] p2)native_invoker.begin_call();native_invoker.push_arg_pointer(p0);native_invoker.push_arg_pointer(p1);native_invoker.push_arg_pointer(p2);native_invoker.end_call("C8E1071177A23BE5");return native_invoker.get_return_value_bool();end,
+	["_0x4895BDEA16E7C080"]=--[[void]] function(--[[int]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("4895BDEA16E7C080");end,
+	["PAUSE_MENU_SET_BUSY_SPINNER"]=--[[void]] function(--[[BOOL (bool)]] p0,--[[int]] position,--[[int]] spinnerIndex)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.push_arg_int(position);native_invoker.push_arg_int(spinnerIndex);native_invoker.end_call("C78E239AC5B2DDB9");end,
+	["_0xF06EBB91A81E09E3"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("F06EBB91A81E09E3");end,
+	["IS_FRONTEND_READY_FOR_CONTROL"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("3BAB9A4E4F2FF5C7");return native_invoker.get_return_value_bool();end,
+	-- Disables frontend (works in custom frontends, not sure about regular pause menu) navigation keys on keyboard. Not sure about controller. Does not disable mouse controls. No need to call this every tick.
+	-- 
+	-- To enable the keys again, use `0x14621BB1DF14E2B2`.
+	["TAKE_CONTROL_OF_FRONTEND"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("EC9264727EEC0F28");end,
+	-- Enables frontend (works in custom frontends, not sure about regular pause menu) navigation keys on keyboard if they were disabled using the native below.
+	-- To disable the keys, use `0xEC9264727EEC0F28`
+	["RELEASE_CONTROL_OF_FRONTEND"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("14621BB1DF14E2B2");end,
+	["_0x66E7CB63C97B7D20"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("66E7CB63C97B7D20");return native_invoker.get_return_value_bool();end,
+	["_0x593FEAE1F73392D4"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("593FEAE1F73392D4");return native_invoker.get_return_value_int();end,
+	["IS_NAVIGATING_MENU_CONTENT"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("4E3CD0EF8A489541");return native_invoker.get_return_value_bool();end,
+	["_0xF284AC67940C6812"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("F284AC67940C6812");return native_invoker.get_return_value_bool();end,
+	-- Returns true when the menu state(?) changed this frame.
+	-- HAS_*? _GET_MENU_STATE_CHANGED_THIS_FRAME?
+	["_0x2E22FEFA0100275E"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("2E22FEFA0100275E");return native_invoker.get_return_value_bool();end,
+	["_0x0CF54F20DE43879C"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("0CF54F20DE43879C");end,
+	["_GET_PAUSE_MENU_SELECTION"]=--[[void]] function(--[[int* (pointer)]] lastItemMenuId,--[[int* (pointer)]] selectedItemUniqueId)native_invoker.begin_call();native_invoker.push_arg_pointer(lastItemMenuId);native_invoker.push_arg_pointer(selectedItemUniqueId);native_invoker.end_call("36C1451A88A09630");end,
+	-- lastItemMenuId: this is the menuID of the last selected item minus 1000 (lastItem.menuID - 1000)
+	-- selectedItemMenuId: same as lastItemMenuId except for the currently selected menu item
+	-- selectedItemUniqueId: this is uniqueID of the currently selected menu item
+	-- 
+	-- when the pausemenu is closed:
+	-- lastItemMenuId = -1
+	-- selectedItemMenuId = -1
+	-- selectedItemUniqueId = 0
+	-- 
+	-- when the header gains focus:
+	-- lastItemMenuId updates as normal or 0 if the pausemenu was just opened
+	-- selectedItemMenuId becomes a unique id for the pausemenu page that focus was taken from (?) or 0 if the pausemenu was just opened
+	-- selectedItemUniqueId = -1
+	-- 
+	-- when focus is moved from the header to a pausemenu page:
+	-- lastItemMenuId becomes a unique id for the pausemenu page that focus was moved to (?)
+	-- selectedItemMenuId = -1
+	-- selectedItemUniqueId updates as normal
+	["_GET_PAUSE_MENU_SELECTION_DATA"]=--[[void]] function(--[[int* (pointer)]] lastItemMenuId,--[[int* (pointer)]] selectedItemMenuId,--[[int* (pointer)]] selectedItemUniqueId)native_invoker.begin_call();native_invoker.push_arg_pointer(lastItemMenuId);native_invoker.push_arg_pointer(selectedItemMenuId);native_invoker.push_arg_pointer(selectedItemUniqueId);native_invoker.end_call("7E17BE53E1AAABAF");end,
+	["_0xA238192F33110615"]=--[[BOOL (bool)]] function(--[[int* (pointer)]] r,--[[int* (pointer)]] g,--[[int* (pointer)]] b)native_invoker.begin_call();native_invoker.push_arg_pointer(r);native_invoker.push_arg_pointer(g);native_invoker.push_arg_pointer(b);native_invoker.end_call("A238192F33110615");return native_invoker.get_return_value_bool();end,
+	["GET_MENU_PED_INT_STAT"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any* (pointer)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_pointer(p1);native_invoker.end_call("EF4CED81CEBEDC6D");return native_invoker.get_return_value_bool();end,
+	["_0xCA6B2F7CE32AB653"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any* (pointer)]] p1,--[[Any (int)]] p2)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_pointer(p1);native_invoker.push_arg_int(p2);native_invoker.end_call("CA6B2F7CE32AB653");return native_invoker.get_return_value_bool();end,
+	["GET_MENU_PED_MASKED_INT_STAT"]=--[[BOOL (bool)]] function(--[[Hash (int)]] p0,--[[Any* (pointer)]] p1,--[[Any (int)]] p2,--[[int]] p3)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_pointer(p1);native_invoker.push_arg_int(p2);native_invoker.push_arg_int(p3);native_invoker.end_call("90A6526CF0381030");return native_invoker.get_return_value_bool();end,
+	["_0x24A49BEAF468DC90"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any* (pointer)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_pointer(p1);native_invoker.push_arg_int(p2);native_invoker.push_arg_int(p3);native_invoker.push_arg_int(p4);native_invoker.end_call("24A49BEAF468DC90");return native_invoker.get_return_value_bool();end,
+	["GET_MENU_PED_FLOAT_STAT"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[float* (pointer)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_pointer(p1);native_invoker.end_call("5FBD7095FE7AE57F");return native_invoker.get_return_value_bool();end,
+	["_0x8F08017F9D7C47BD"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any* (pointer)]] p1,--[[Any (int)]] p2)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_pointer(p1);native_invoker.push_arg_int(p2);native_invoker.end_call("8F08017F9D7C47BD");return native_invoker.get_return_value_bool();end,
+	-- p0 was always 0xAE2602A3.
+	["GET_MENU_PED_BOOL_STAT"]=--[[BOOL (bool)]] function(--[[Hash (int)]] p0,--[[Any* (pointer)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_pointer(p1);native_invoker.end_call("052991E59076E4E4");return native_invoker.get_return_value_bool();end,
+	["CLEAR_PED_IN_PAUSE_MENU"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("5E62BE5DC58E9E06");end,
+	-- p1 is either 1 or 2 in the PC scripts.
+	["GIVE_PED_TO_PAUSE_MENU"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] p1)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_int(p1);native_invoker.end_call("AC0BFBDC3BE00E14");end,
+	-- Toggles the light state for the pause menu ped in frontend menus.
+	-- 
+	-- This is used by R* in combination with `SET_PAUSE_MENU_PED_SLEEP_STATE` to toggle the "offline" or "online" state in the "friends" tab of the pause menu in GTA Online.
+	-- 
+	-- 
+	-- Example:
+	-- Lights On: https://vespura.com/hi/i/2019-04-01_16-09_540ee_1015.png
+	-- Lights Off: https://vespura.com/hi/i/2019-04-01_16-10_8b5e7_1016.png
+	["SET_PAUSE_MENU_PED_LIGHTING"]=--[[void]] function(--[[BOOL (bool)]] state)native_invoker.begin_call();native_invoker.push_arg_bool(state);native_invoker.end_call("3CA6050692BC61B0");end,
+	-- Toggles the pause menu ped sleep state for frontend menus.
+	-- 
+	-- Example: https://vespura.com/hi/i/2019-04-01_15-51_8ed38_1014.gif
+	-- 
+	-- `state` 0 will make the ped slowly fall asleep, 1 will slowly wake the ped up.
+	["SET_PAUSE_MENU_PED_SLEEP_STATE"]=--[[void]] function(--[[BOOL (bool)]] state)native_invoker.begin_call();native_invoker.push_arg_bool(state);native_invoker.end_call("ECF128344E9FF9F1");end,
+	["OPEN_ONLINE_POLICIES_MENU"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("805D7CBB36FD6C4C");end,
+	["_0xF13FE2A80C05C561"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("F13FE2A80C05C561");return native_invoker.get_return_value_bool();end,
+	-- Returns the same as IS_SOCIAL_CLUB_ACTIVE
+	["IS_ONLINE_POLICIES_MENU_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("6F72CD94F7B5B68C");return native_invoker.get_return_value_bool();end,
+	-- Uses the `SOCIAL_CLUB2` scaleform.
+	["OPEN_SOCIAL_CLUB_MENU"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("75D3691713C3B05A");end,
+	["CLOSE_SOCIAL_CLUB_MENU"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("D2B32BE3FC1626C6");end,
+	-- HUD::SET_SOCIAL_CLUB_TOUR("Gallery");
+	-- HUD::SET_SOCIAL_CLUB_TOUR("Missions");
+	-- HUD::SET_SOCIAL_CLUB_TOUR("General");
+	-- HUD::SET_SOCIAL_CLUB_TOUR("Playlists");
+	["SET_SOCIAL_CLUB_TOUR"]=--[[void]] function(--[[string]] name)native_invoker.begin_call();native_invoker.push_arg_string(name);native_invoker.end_call("9E778248D6685FE0");end,
+	["IS_SOCIAL_CLUB_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("C406BE343FC4B9AF");return native_invoker.get_return_value_bool();end,
+	-- SET_TEXT_??? - Used in golf and golf_mp
+	["_0x1185A8087587322C"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("1185A8087587322C");end,
+	["_FORCE_CLOSE_TEXT_INPUT_BOX"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("8817605C2BA76200");end,
+	["_0x577599CCED639CA2"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("577599CCED639CA2");end,
+	["_OVERRIDE_MULTIPLAYER_CHAT_PREFIX"]=--[[void]] function(--[[Hash (int)]] gxtEntryHash)native_invoker.begin_call();native_invoker.push_arg_int(gxtEntryHash);native_invoker.end_call("6A1738B4323FE2D9");end,
+	-- Returns whether or not the text chat (MULTIPLAYER_CHAT Scaleform component) is active.
+	["_IS_MULTIPLAYER_CHAT_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("B118AF58B5F332A1");return native_invoker.get_return_value_bool();end,
+	["_CLOSE_MULTIPLAYER_CHAT"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("1AC8F4AD40E22127");end,
+	["_0x7C226D5346D4D10A"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.end_call("7C226D5346D4D10A");end,
+	["_OVERRIDE_MULTIPLAYER_CHAT_COLOUR"]=--[[void]] function(--[[int]] p0,--[[int]] hudColor)native_invoker.begin_call();native_invoker.push_arg_int(p0);native_invoker.push_arg_int(hudColor);native_invoker.end_call("F47E567B3630DD12");end,
+	-- Sets an unknown boolean value in the text chat.
+	["_SET_TEXT_CHAT_UNK"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call();native_invoker.push_arg_bool(p0);native_invoker.end_call("1DB21A44B09E8BA3");end,
+	["FLAG_PLAYER_CONTEXT_IN_TOURNAMENT"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("CEF214315D276FD1");end,
+	-- This native turns on the AI blip on the specified ped. It also disappears automatically when the ped is too far or if the ped is dead. You don't need to control it with other natives.
+	-- 
+	-- See gtaforums.com/topic/884370-native-research-ai-blips for further information.
+	["SET_PED_HAS_AI_BLIP"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] hasCone)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_bool(hasCone);native_invoker.end_call("D30C50DF888D58B5");end,
+	-- color: see SET_BLIP_COLOUR
+	["_SET_PED_HAS_AI_BLIP_WITH_COLOR"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] hasCone,--[[int]] color)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_bool(hasCone);native_invoker.push_arg_int(color);native_invoker.end_call("B13DCB4C6FAAD238");end,
+	["DOES_PED_HAVE_AI_BLIP"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.end_call("15B8ECF844EE67ED");return native_invoker.get_return_value_bool();end,
+	["SET_PED_AI_BLIP_GANG_ID"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] gangId)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_int(gangId);native_invoker.end_call("E52B8E7F85D39A08");end,
+	["SET_PED_AI_BLIP_HAS_CONE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_bool(toggle);native_invoker.end_call("3EED80DFF7325CAA");end,
+	["SET_PED_AI_BLIP_FORCED_ON"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_bool(toggle);native_invoker.end_call("0C4BBF625CA98C4E");end,
+	["SET_PED_AI_BLIP_NOTICE_RANGE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] range)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_float(range);native_invoker.end_call("97C65887D4B37FA9");end,
+	["_SET_PED_AI_BLIP_SPRITE"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] spriteId)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_int(spriteId);native_invoker.end_call("FCFACD0DB9D7A57D");end,
+	["_GET_AI_BLIP_2"]=--[[Blip (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.end_call("7CD934010E115C2C");return native_invoker.get_return_value_int();end,
+	-- Returns the current AI BLIP for the specified ped
+	["_GET_AI_BLIP"]=--[[Blip (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.end_call("56176892826A4FE8");return native_invoker.get_return_value_int();end,
+	-- HAS_*
+	["_HAS_DIRECTOR_MODE_BEEN_TRIGGERED"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("A277800A9EAE340E");return native_invoker.get_return_value_bool();end,
+	-- SET_*
+	["_SET_DIRECTOR_MODE_CLEAR_TRIGGERED_FLAG"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("2632482FD6B9AB87");end,
+	-- If toggle is true, hides special ability bar / character name in the pause menu
+	-- If toggle is false, shows special ability bar / character name in the pause menu
+	-- 
+	-- SET_PLAYER_*
+	["_SET_PLAYER_IS_IN_DIRECTOR_MODE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("808519373FD336A3");end,
+	-- SET_*
+	["_0x04655F9D075D0AE5"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("04655F9D075D0AE5");end,
+	["_0x243296A510B562B6"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("243296A510B562B6");end,
 }

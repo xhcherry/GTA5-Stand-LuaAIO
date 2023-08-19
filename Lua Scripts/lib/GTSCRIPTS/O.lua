@@ -1340,7 +1340,7 @@ function memory_scan(name, pattern, callback)
 	if address == NULL then error("Failed to find " .. name) end
 
 	callback(address)
-	util.log("Found %s", name)
+	--util.log("Found %s", name)
 end
 
 --------------------------

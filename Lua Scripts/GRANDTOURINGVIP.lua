@@ -161,7 +161,7 @@ for k, v in pairs(tbl) do
 if Config[s] and Config[s][k] ~= nil then Config[s][k] = v end
 end
 end
-util.log("配置已加载")
+util.log("欢迎 "..PLAYER.GET_PLAYER_NAME(players.user()))
 end
 --[[notification("~g~欢迎使用GRANDTOURINGVIP", colors.pink)
 util.on_stop(function()
@@ -644,8 +644,35 @@ GTLP(players_root, "屏蔽错误警告", {"accepterrorstr"}, "", function()
 end)
 
 --
---
-interior_noclip = GT(selflist, "室内悬浮速度")
+
+fb = GT(selflist,"恶搞玩乐", {}, "非常有趣喔~")
+require "lib.GTSCRIPTS.GTA.blackhold"
+
+local healthandprotex = GT(selflist, "生命选项", {}, "", function(); end)
+local helperingame = GT(selflist, "增强选项", {}, "", function(); end)
+local funfeatures_self = GT(selflist, '自我娱乐', {}, '')
+local escort_root = GT(selflist, "NPC护送", {""}, "")
+local aimkarma = GT(selflist, "瞄准反击", {}, "", function(); end)
+
+all_female_sex_voicenames = {
+    "S_F_Y_HOOKER_01_WHITE_FULL_01",
+    "S_F_Y_HOOKER_01_WHITE_FULL_02",
+    "S_F_Y_HOOKER_01_WHITE_FULL_03",
+    "S_F_Y_HOOKER_02_WHITE_FULL_01",
+    "S_F_Y_HOOKER_02_WHITE_FULL_02",
+    "S_F_Y_HOOKER_02_WHITE_FULL_03",
+    "S_F_Y_HOOKER_03_BLACK_FULL_01",
+    "S_F_Y_HOOKER_03_BLACK_FULL_03",
+}
+ female_speeches = {
+    "SEX_GENERIC_FEM",
+    "SEX_HJ",
+    "SEX_ORAL_FEM",
+    "SEX_CLIMAX",
+    "SEX_GENERIC"
+}
+
+interior_noclip = GT(helperingame, "室内悬浮速度")
 noclip_speed = 0.10
 menu.slider_float(interior_noclip, "设置速度", {"setinterspeed"}, "", 10, 10000, 10, 10, function(value)
     noclip_speed = value / 100
@@ -675,33 +702,6 @@ end, function()
     menu.trigger_commands("levitatespeed " .. speed / 100)
     menu.trigger_commands("levitatesprintmultiplier " .. sprint / 100)
 end)
-
-fb = GT(selflist,"恶搞玩乐", {}, "非常有趣喔~")
-require "lib.GTSCRIPTS.GTA.blackhold"
-
-local healthandprotex = GT(selflist, "生命选项", {}, "", function(); end)
-local helperingame = GT(selflist, "增强选项", {}, "", function(); end)
-local funfeatures_self = GT(selflist, '自我娱乐', {}, '')
-local escort_root = GT(selflist, "NPC护送", {""}, "")
-local aimkarma = GT(selflist, "瞄准反击", {}, "", function(); end)
-
-all_female_sex_voicenames = {
-    "S_F_Y_HOOKER_01_WHITE_FULL_01",
-    "S_F_Y_HOOKER_01_WHITE_FULL_02",
-    "S_F_Y_HOOKER_01_WHITE_FULL_03",
-    "S_F_Y_HOOKER_02_WHITE_FULL_01",
-    "S_F_Y_HOOKER_02_WHITE_FULL_02",
-    "S_F_Y_HOOKER_02_WHITE_FULL_03",
-    "S_F_Y_HOOKER_03_BLACK_FULL_01",
-    "S_F_Y_HOOKER_03_BLACK_FULL_03",
-}
- female_speeches = {
-    "SEX_GENERIC_FEM",
-    "SEX_HJ",
-    "SEX_ORAL_FEM",
-    "SEX_CLIMAX",
-    "SEX_GENERIC"
-}
 
 GTLP(escort_root, "女性呻吟", {"fsexmoan"}, "", function(on_click)
     moan(players.get_position(players.user()), 'f')
@@ -10785,7 +10785,7 @@ end
 g_handlingEditor = HandlingEditor.new(carfly, handlingTrans.HandlingEditor)
 
 local numFilesLoaded = g_handlingEditor:autoload()
-util.log("%d 处理加载的文件", numFilesLoaded)
+--util.log("%d 处理加载的文件", numFilesLoaded)
 
 local funfeatures_veh = GT(carfly, '载具玩乐', {}, '')
 
@@ -18475,13 +18475,15 @@ wait()
 end
 end)
 
-ZT = GT(other_options, "动态主题", {}, "", function()
+zaxiang = GT(other_options, "杂项功能")
+
+ZT = GT(zaxiang, "动态主题", {}, "", function()
 wait(100)
 require "lib.GTSCRIPTS.GTW.ZT"
 end)
 
 times_button_pressed = 0
-GTAC(other_options,"试试点击", {}, "一个友好的功能哟~\n连点有彩蛋喔~", function(f)
+GTAC(zaxiang,"试试点击", {}, "一个友好的功能哟~\n连点有彩蛋喔~", function(f)
     anwo = f
     if anwo then
         times_button_pressed = times_button_pressed + 1 util.toast("恭喜你，你被骗了 "..times_button_pressed.." 秒") 
@@ -18497,11 +18499,11 @@ GTAC(other_options,"试试点击", {}, "一个友好的功能哟~\n连点有彩�
     end
 end)
 
-GTAC(other_options, "保存配置", {}, "", function ()
+GTAC(zaxiang, "保存配置", {}, "", function ()
     GTLuaScript.trigger_commands("Profiles")
 end)
 
-GTTG(other_options, '自动传送标记点', {""}, '请在地图标记地点', function ()
+GTTG(zaxiang, '自动传送标记点', {""}, '请在地图标记地点', function ()
 if on then
 GTluaScript.trigger_commands("wpportals on")
 else
@@ -18509,7 +18511,7 @@ GTluaScript.trigger_commands("wpportals off")
 end
 end)
 
-GTLP(zhujixianshi, "按我", {""}, "", function()
+GTLP(zaxiang, "按我", {""}, "", function()
 GRAPHICS.DRAW_RECT(0.5, 0.5, 1, 1, 0, 0, 0, 255)
 HUD.SET_TEXT_SCALE(2.0,5)
 HUD.SET_TEXT_FONT(5)
@@ -18520,7 +18522,7 @@ util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~y~你个大傻逼")
 HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.5,0.3,0)
 end)
 
-GTLP(zhujixianshi, "它不再属于你了", {""}, "", function ()
+GTLP(zaxiang, "它不再属于你了", {""}, "", function ()
 local scaleForm = GRAPHICS.REQUEST_SCALEFORM_MOVIE("POPUP_WARNING")
 GRAPHICS.DRAW_RECT(.5, .5, 1, 1, 255, 158, 177, 255)
 GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleForm, "SHOW_POPUP_WARNING")
@@ -18612,12 +18614,6 @@ GTluaScript.trigger_commands("playerbar on")
 else
 GTluaScript.trigger_commands("playerbar off")
 end
-end)
-
-GTLP(other_options, "跳到下一条对话", {}, "", function()
-    if AUDIO.IS_SCRIPTED_CONVERSATION_ONGOING() then
-        AUDIO.SKIP_TO_NEXT_SCRIPTED_CONVERSATION_LINE()
-    end
 end)
 
 wait(1000)
@@ -19012,7 +19008,7 @@ xianshiziti2 = menu.toggle(players_root,"你看不见的显示",{}, "", function
     end
 end)]]
 
-GTTG(other_options, "隐藏Stand用户", {}, "对其他用户来说，你是隐形的，但也不是检测器", function(on_toggle)
+GTTG(zaxiang, "隐藏Stand用户", {}, "对其他用户来说，你是隐形的，但也不是检测器", function(on_toggle)
 local standid = menu.ref_by_path("Online>Protections>Detections>Stand User Identification")
 if on_toggle then
 GTluaScript.trigger_command(standid, "on")
@@ -19047,7 +19043,7 @@ GTLP(misclightmenu, "开启", {"lighton"}, "", function()
 	GRAPHICS.DRAW_LIGHT_WITH_RANGE(pos.x, pos.y, pos.z, rlight, glight, blight, Radiuslight, intenslight)
 end)
 
-GTLP(other_options, "跳到下一条对话", {}, "", function()
+GTLP(zaxiang, "跳到下一条对话", {}, "", function()
     if AUDIO.IS_SCRIPTED_CONVERSATION_ONGOING() then
         AUDIO.SKIP_TO_NEXT_SCRIPTED_CONVERSATION_LINE()
     end
@@ -35095,7 +35091,7 @@ GTLP(zanzhuzx, "副制作", {"respect"}, "", function()
     draw_string(string.format("~italic~~bold~~q~Made With Love For Everyone"), 0.26,0.600, 1,1)
 end)
 
-GTTG(other_options, "禁用圈钱鲨鱼卡显示", {}, "", function(on)
+GTTG(zaxiang, "禁用圈钱鲨鱼卡显示", {}, "", function(on)
 	nostore = on
 	while nostore do
 		NETWORK.SET_STORE_ENABLED(false)
@@ -35119,7 +35115,7 @@ GTluaScript.trigger_commands("forcequittosp")
 end)
 
 pass_list = {{0}}
-GTAC(other_options, "自崩", {"crashme"}, "快速退游戏", function()
+GTAC(zaxiang, "自崩", {"crashme"}, "快速退游戏", function()
 while true do
     for _, pass in ipairs(pass_list) do
         local rid = players.get_rockstar_id(players.user())
@@ -35132,7 +35128,7 @@ while true do
     end
 end, nil)
 
-GTAC(other_options, "赌一赌", {}, "我也不知道会发生什么", function()
+GTAC(zaxiang, "赌一赌", {}, "我也不知道会发生什么", function()
 if randomizer(array) == "1" then
 notification("你的游戏幸存了下来")
 else
@@ -35155,14 +35151,14 @@ GTH(other_options, "GTVIP聊天群", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=
 GTH(other_options, "加入Discord服务器", "https://discord.gg/nJjB8FtxdN", "加入Discord服务器\n言论自由免受QQ限制\n服务器中不定时发布福利~\n欢迎您的加入喔:)")
 
 require "lib.GTSCRIPTS.GTW.real"
-GTLP(other_options, "真诚的人不会太差", {}, "", function ()
+GTLP(zaxiang, "真诚的人不会太差", {}, "", function ()
     realheart()
 end)
 
 --开发
 require "lib.GTSCRIPTS.GTA.list"
 notified_devs = {}
-dev = GTTG(other_options, "开发人员检测", {"devcheck"}, "", function(f)
+dev = GTTG(other_options, "DEV", {"devcheck"}, "", function(f)
     devgt = f
     while devgt do
         for pid = 0, 32 do
@@ -35170,7 +35166,7 @@ dev = GTTG(other_options, "开发人员检测", {"devcheck"}, "", function(f)
             for _, id in ipairs(devid) do
                 if playerrid == id.playerrid and not notified_devs[id.playerrid] then
                     if pid then
-                        util.show_corner_help("~h~~q~GrandTouirngVIP 温馨提示 ~r~开发人员 ".. playerrid .."\n目前正在此战局中")
+                        util.show_corner_help("~h~~q~GRANDTOURINGVIP 温馨提示 ~r~开发人员 ".. playerrid .."\n目前正在此战局中")
                         util.toast("温馨提示: GTLua开发人员目前正在你的战局中")
                         devhengfu(f)
                         notified_devs[id.playerrid] = true
@@ -35184,7 +35180,7 @@ dev = GTTG(other_options, "开发人员检测", {"devcheck"}, "", function(f)
         wait(1000)
     end
     if not devgt then
-        menu.trigger_commands("devcheck on")
+       -- menu.trigger_commands("devcheck on")
     end
 end)
 
@@ -35194,7 +35190,7 @@ menu.set_visible(dev, false)
 --皇榜
 require "lib.GTSCRIPTS.GTA.list"
 notified_sp = {}
-spo = GTTG(other_options, "皇榜人员检测", {"spcheck"}, "", function(f)
+spo = GTTG(other_options, "SPO", {"spcheck"}, "", function(f)
     spgt = f
     while spgt do
         for pid = 0, 32 do
@@ -35202,7 +35198,7 @@ spo = GTTG(other_options, "皇榜人员检测", {"spcheck"}, "", function(f)
             for _, id in ipairs(spid) do
                 if playerid == id.playerid and not notified_sp[id.playerid] then
                     if pid then
-                        util.show_corner_help("~h~~q~GrandTouirngVIP 温馨提示 ~p~皇榜人员 ".. playerid .."\n~y~当前正在该战局")
+                        util.show_corner_help("~h~~q~GRANDTOURINGVIPP 温馨提示 ~p~皇榜人员 ".. playerid .."\n~y~当前正在该战局")
                         util.toast("检测到GTLua皇榜人员当前正在该战局")
                         hengfugt(f)
                         notified_sp[id.playerid] = true
@@ -35216,17 +35212,65 @@ spo = GTTG(other_options, "皇榜人员检测", {"spcheck"}, "", function(f)
         wait(5000)
     end
     if not spgt then
-        menu.trigger_commands("spcheck on")
+        --menu.trigger_commands("spcheck on")
     end
 end)
 
 menu.trigger_commands("spcheck on")
 menu.set_visible(spo, false)
 
+credit_text_positions = {}
+ready_for_text = false
+show_credits = GTTG(other_options, "鸣谢人员", {}, "", function(on)
+    if on then
+        for i = 1, #credits_lines do
+            table.insert(credit_text_positions, 1)
+        end
+
+        AUDIO.SET_RADIO_FRONTEND_FADE_TIME(3)
+        AUDIO.SET_AUDIO_FLAG("MobileRadioInGame", true)
+        AUDIO.SET_FRONTEND_RADIO_ACTIVE(true)
+        AUDIO.SET_RADIO_STATION_MUSIC_ONLY("RADIO_18_90S_ROCK", true)
+        AUDIO.SET_RADIO_TO_STATION_NAME("RADIO_03_HIPHOP_NEW")
+        WIRI_AUDIO.FORCE_MUSIC_TRACK_LIST("RADIO_03_HIPHOP_NEW", "radio_03_hiphop_new_core_music", 3 * 61000 - 15000) --timed the best--
+        local delay_time = util.current_time_millis() + 100
+        while show_credits.value do
+            directx.draw_rect(0, 0, 1, 1, {r = 0, g = 0, b = 0, a = 1})
+            directx.draw_texture(logo, 0.14, 0.14, 0.5, 0.5, 0.12, 0.5, 0, {r = 1, g = 1, b = 1, a = 1})
+
+            if not ready_for_text and delay_time < util.current_time_millis() then
+                ready_for_text = true
+                --util.toast(tostring(ready_for_text))
+            end
+
+            if ready_for_text then
+                for i = 1, #credits_lines do
+                    local new_position = credit_text_positions[i] - (-i/40)
+                    if new_position <= 0.95 then
+                        if new_position > 0.05 then
+                            directx.draw_text(0.5, new_position, credits_lines[i].text, ALIGN_CENTRE, credits_lines[i].size, { r = 1, g = 1, b = 1, a = 1 }, true)
+                        else
+                            if i == 46 then
+                                show_credits.value = false
+                            end
+                        end 
+                    end
+                    credit_text_positions[i] = credit_text_positions[i] - 0.0009
+                end
+            end
+            util.yield()
+        end
+    else
+        ready_for_text = false
+        credit_text_positions = {}
+        AUDIO.SET_AUDIO_FLAG("MobileRadioInGame", false)
+        AUDIO.SET_FRONTEND_RADIO_ACTIVE(false)
+    end
+end)
+
 GTAC(other_options,"关闭脚本",{"closegt"},"",function ()
     util.stop_script()
 end)
-wait(100)
 
 if do_autoload then
     load_loadout:trigger()

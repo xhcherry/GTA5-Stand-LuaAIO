@@ -87,3 +87,4 @@ local function Scaleform(id)
     return tbl
 end
 return Scaleform
+

@@ -187,6 +187,7 @@ local function request_ptfx_asset_lasereyes(asset)
         util.yield()
     end
 end
+--激光眼
 function laser_eyes()
     local weaponHash = util.joaat("weapon_heavysniper_mk2")
     local dictionary = "weap_xs_weapons"
@@ -221,7 +222,7 @@ function laser_eyes()
             boneCoord_L.z += 0.02
             boneCoord_R.z += 0.02
         end
-        camRot.x += 90
+        camRot.x += -90
         request_ptfx_asset_lasereyes(dictionary)
         GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
         GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(ptfx_name, boneCoord_L.x, boneCoord_L.y, boneCoord_L.z, camRot.x, camRot.y, camRot.z, 2, 0, 0, 0, false)
@@ -823,5 +824,11 @@ zanzhu = menu.list(script_meta_menu,"夜幕赞助人员", {},"Thanks")
     menu.readonly(zanzhu, "Thanks", "小安") 
     menu.readonly(zanzhu, "Thanks", "911每天都很想静静")
     menu.readonly(zanzhu, "Thanks", "Boze")  
+    menu.readonly(zanzhu, "Thanks", "飞猪")  
+    menu.readonly(zanzhu, "Thanks", "JiYanaa")  
+    menu.readonly(zanzhu, "Thanks", "哦豁")  
+    menu.readonly(zanzhu, "Thanks", "以马内利")  
+    menu.readonly(zanzhu, "Thanks", "卢本伟")  
+    menu.readonly(zanzhu, "Thanks", "sfasafafasfa")  
 
 end

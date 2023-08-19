@@ -554,11 +554,11 @@ function ProfileManager:load()
 
 	::LABEL_CONTINUE::
 	end
-	util.log("已加载虚假配置文件: %d", count)
+	--util.log("已加载虚假配置文件: %d", count)
 end
 
 
-util.log("虚假配置文件已初始化")
+--util.log("虚假配置文件已初始化")
 
 
 
@@ -566,7 +566,7 @@ function memoryScan(name, pattern, callback)
 	local address = memory.scan(pattern)
 	assert(address ~= NULL, "内存扫描失败： " .. name)
 	callback(address)
-	util.log("成功找到内存 %s", name)
+	--util.log("成功找到内存 %s", name)
 end
 
 

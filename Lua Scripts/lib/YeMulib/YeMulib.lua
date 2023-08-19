@@ -3786,6 +3786,10 @@ function FastTurnVehicleWithKeys(scale)
     end
     v3.free(vv)
 end
+local YMencouragement1={
+    "夜幕LUA为你保驾护航",
+}
+random_notify1 = math.random(1,#YMencouragement1)
 function YM_label_setting(YMlabel, text)
     log("Setting up YMlabel present for label " .. YMlabel .. " with text " .. text)
     menu.trigger_commands("addlabel " .. YMlabel)
@@ -3801,6 +3805,11 @@ function YM_label_setting(YMlabel, text)
     YM_label_setting("PM_INF_LEAB", "跟随夜幕一同前往GTA故事模式，您的所有游戏进度都将保存在R星的服务器中")
     YM_label_setting("UI_FLOW_OP_CL_M", "关于夜幕团队")
     YM_label_setting("UI_FLOW_OP_CL", "关于 夜幕团队 ")
+    YM_label_setting("RESPAWN_W_MP", "" .. YMencouragement1[random_notify1] .. "")
+    YM_label_setting("FE_THDR_GTAO", "夜幕LUA在线模式")
+    YM_label_setting("PM_INF_EXIT", "下次遇见会更好！")
+    YM_label_setting("CELL_29", "鸭梨手机")
+    YM_label_setting("EXIT_SURE_2", "你确定要退出侠盗猎车手V吗？任何未保存的进度都将丢失，夜幕LUA期待你的下次使用！")
     YM_label_setting("UI_FLOW_OP_CL_d", "夜幕秉承 稳定 可靠 配合 简单 简洁的团队理念\n\n主要策划:Ping 副策划:呆呆\n致谢人员：" .. players.get_name(players.user()) .. "感谢你的使用""\n夜幕官方群聊:859074951\n感谢使用夜幕！")
 end
 function has_anim_dict_loaded(dict)
@@ -3950,7 +3959,7 @@ function YMplan3(YM)
         end
         --devhf = false
     end
-    function YMplan4(YM2)
+function YMplan4(YM2)
     start1time1 = os.time()
     local startX = 0
     zanzhu = YM2
@@ -3965,7 +3974,7 @@ function YMplan3(YM)
         HUD.SET_TEXT_CENTRE(1)
         HUD.SET_TEXT_OUTLINE(0)
         HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
-        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~&#8721;夜幕赞助人员 " .. playerid .. " 目前在你的战局&#8721;")
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~&#8721;夜幕VIP人员 " .. playerid .. " 目前在你的战局&#8721;")
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.75, 0.18)
         
         if os.time() - start1time1 >= 5 then
@@ -3973,7 +3982,7 @@ function YMplan3(YM)
         end
         end
         --zanzhu = false
-    end
+end
 -------------------自崩
 function exit_game()
     local pedhash = -67533719

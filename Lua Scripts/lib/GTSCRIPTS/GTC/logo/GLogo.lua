@@ -40,7 +40,7 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '8.05'
+GT_version = '8.18'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -48,7 +48,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("版本:8.05\n修复了每次启动Stand或者脚本时出现的<attempt to yield across a C-call boundary>信息\n解决了部分用户无法自启脚本或者每次打开脚本时出现的线程阻隔，并加快了脚本启动速度\n修复了激光眼V1不能使用的问题\n其他的一些改进与修复")
+    notification("版本:8.18\n对大部分代码进行了优化\n对低配机器做出了适配，在开启脚本时会更流畅\n撇去了无用的log记录日志到控制台\n移动室内悬浮速度到增强选项\n在其他选项中添加了鸣谢\n添加了新的皇榜成员\n其他的一些改进与修复")
 end
 loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
 coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
@@ -190,7 +190,7 @@ end
 --]]
 
 function do_label_preset(label, text)
-    log("Setting up label present for label " .. label .. " with text " .. text)
+    --log("Setting up label present for label " .. label .. " with text " .. text)
     menu.trigger_commands("addlabel " .. label)
     local prep = "edit" .. string.gsub(label, "_", "") .. " " .. text
     menu.trigger_commands(prep)
@@ -1899,7 +1899,7 @@ if not filesystem.exists(scripts_dir) then
 end
 --Logo 在脚本开启时弹出
 if SCRIPT_MANUAL_START then
-MISC.FORCE_LIGHTNING_FLASH()
+--MISC.FORCE_LIGHTNING_FLASH()
 end
 if SCRIPT_MANUAL_START then
     util.create_thread(function()
@@ -19817,7 +19817,7 @@ else
 mcb=mcb-1
 end
 end
-draw_string(string.format("~italic~~h~\nGRANDTOURINGVIP\n Version 8;05"), jiaoben_x,jiaoben_y, jiaoben_dx,2)
+draw_string(string.format("~italic~~h~\nGRANDTOURINGVIP\n Version 8;18"), jiaoben_x,jiaoben_y, jiaoben_dx,2)
 wait()
 end
 end    
