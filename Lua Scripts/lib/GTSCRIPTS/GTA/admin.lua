@@ -229,8 +229,8 @@ function IS_HOSTILE_ENTITY(entity)
 end
 
 function GET_PED_IN_VEHICLE_SEAT(vehicle, seat)
-    if not VEHICLE.IS_VEHICLE_SEAT_FREE(vehicle, seat, false) then
-        return VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, seat)
+    if not IS_VEHICLE_SEAT_FREE(vehicle, seat, false) then
+        return GET_PED_IN_VEHICLE_SEAT(vehicle, seat)
     end
     return 0
 end

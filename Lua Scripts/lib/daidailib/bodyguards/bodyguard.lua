@@ -23,10 +23,6 @@ function ModelList.new(parent, name, command, helpText, tbl, onClick, changeName
 	self.options = tbl
 	self.reference = menu.list(parent, name, {self.command}, helpText or "")
 
-	if searchOpt then
-		self:createSearchList(self.reference, "搜索")
-	end
-
 	for caption, value in pairs_by_keys(self.options) do
 		if type(value) == "string" then
 			self:addOpt(self.reference, caption, value)
@@ -58,40 +54,6 @@ function ModelList:addSection(parent, tbl, outReferences)
 		local reference = self:addOpt(parent, caption, name)
 		if outReferences then table.insert(outReferences, reference) end
 	end
-end
-
-function ModelList:createSearchList(parent, menu_name)
-	menu.action(parent, menu_name, {}, "", function (click)
-		if (CLICK_FLAG_AUTO & click) ~= 0 then
-			return
-		end
-
-		for _, reference in ipairs(self.foundOpts) do
-			menu.delete(reference)
-			self.foundOpts = {}
-		end
-
-		local text = get_input_from_screen_keyboard(util.register_label("搜索"), 20, "")
-		if text == "" then
-			return
-		else
-			text = string.lower(text)
-		end
-
-		for caption, value in pairs(self.options) do
-			if type(value) == "string" then
-				if string.lower(caption):find(text) or value:find(text) then
-					local opt = self:addOpt(reference, caption, value)
-					table.insert(self.foundOpts, opt)
-				end
-
-			elseif type(value) == "table" then
-				local tbl = value
-				local matches = self.getSectionMatches(caption, text, tbl)
-				self:addSection(reference, matches, self.foundOpts)
-			end
-		end
-	end)
 end
 
 function ModelList.getSectionMatches(section, find, tbl)
@@ -1028,7 +990,7 @@ end, function()
 end)
 self.group = Group.new()
 
-ModelList.new(self.ref, "生成", "spawnbg", "", PedList, function (caption, model)
+ModelList.new(self.ref, "生成", "", "", PedList, function (caption, model)
 	if self.group:getSize() >= 7 then
 		return notification("你达到了保镖的最大数量", HudColour.red)
 	end
@@ -1045,7 +1007,7 @@ ModelList.new(self.ref, "生成", "spawnbg", "", PedList, function (caption, mod
 	if self.group.defaults.invincible then member:setInvincible(true) end
 end, false, true)
 
-menu.action(self.ref, "克隆我自己", {"clonebg"}, "", function ()
+menu.action(self.ref, "克隆我自己", {}, "", function ()
 	if self.group:getSize() >= 7 then
 		return notification("你达到了保镖的最大数量", HudColour.red)
 	end
@@ -1113,7 +1075,7 @@ function BodyguardMenu:createCommands(parent)
 		"自由", "围绕",
 		"线列", "在你后面"
 	}
-	menu.textslider_stateful(list, "小组编队", {"groupformation"}, "", formations, function (index)
+	menu.textslider_stateful(list, "小组编队", {}, "", formations, function (index)
 		local formation
 		if index == 1 then
 			formation = Formation.freedomToMove
@@ -1140,7 +1102,7 @@ function BodyguardMenu:createCommands(parent)
 	}
 	local menuName = "关联小组"
 	local helpText = "仅线上"
-	menu.list_select(list, menuName, {"rg"}, helpText, relGroups, 7, function(opt)
+	menu.list_select(list, menuName, {}, helpText, relGroups, 7, function(opt)
 		local rg
 		if opt == 1 then
 			rg = util.joaat("rgFM_AiLike")
@@ -1160,16 +1122,16 @@ function BodyguardMenu:createCommands(parent)
 		self.group:setRelationshipGrp(rg)
 	end)
 
-	menu.action(list, "删除成员", {"cleargroup"}, "", function()
+	menu.action(list, "删除成员", {}, "", function()
 		self.group:deleteMembers()
 	end)
-	menu.action(list, "传送成员到我", {"tpmembers"}, "", function()
+	menu.action(list, "传送成员到我", {}, "", function()
 		self.group:teleport()
 	end)
-	menu.toggle(list, "无敌的", {"groupgodmode"}, "", function(on)
+	menu.toggle(list, "无敌的", {}, "", function(on)
 		self.group:setInvincible(on)
 	end)
-	WeaponList.new(list, "默认武器", "groupgun", "", function(caption, model)
+	WeaponList.new(list, "默认武器", "", "", function(caption, model)
 		self.group.defaults.weaponHash = util.joaat(model)
 	end, true)
 end

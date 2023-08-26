@@ -132,6 +132,7 @@ function request_ptfx_asset(asset)
 		STREAMING.REQUEST_NAMED_PTFX_ASSET(asset)
 		util.yield()
 	end
+    GRAPHICS.USE_PARTICLE_FX_ASSET(asset)
 end
 
 --请求控制
@@ -429,13 +430,104 @@ end
 
 
 
+----集束炸弹
+function cluster_bomb(pid)
+    local playerPed = PLAYER.GET_PLAYER_PED(pid)
+    if playerPed ~= 0 then
+        local playerPos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+        local maxExplosions = 1200 -- 最大爆炸次数
+        local explosionRadius = 0.001 -- 初始爆炸半径
+        local explosionRadiusStep = 0.03 -- 每次爆炸的爆炸半径增加
+        
+        -- 从多个方向引发爆炸
+        for i = 1, maxExplosions do
+            -- 每次爆炸前的延迟
+            util.yield(0.000001)
+            
+            -- 计算每个方向的随机角度
+            local angle = math.rad(math.random(0, 360))
+            
+            -- 根据角度和半径计算爆炸位置
+            local offsetX = math.cos(angle) * explosionRadius
+            local offsetY = math.sin(angle) * explosionRadius
+            local explosionPos = v3(playerPos.x + offsetX, playerPos.y + offsetY, playerPos.z)
+            
+            FIRE.ADD_EXPLOSION(explosionPos.x, explosionPos.y, explosionPos.z, 0, 100, true, false, 0, false)
+            
+            -- 增加爆炸半径
+            explosionRadius = explosionRadius + explosionRadiusStep
+        end
+        util.yield(0.001)
+    end
+end
+
+----屠杀载具
+function massacre_vehicle(pid)
+    local playerVehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(pid), false)
+    if playerVehicle ~= nil then
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+        local forceMultiplier = 999999.0
+        request_control(playerVehicle)
+        for i = 1, 1000 do
+            local forceX = math.random(-forceMultiplier, forceMultiplier)
+            local forceY = math.random(-forceMultiplier, forceMultiplier)
+            local forceZ = -forceMultiplier
+            --entity.apply_force_to_entity(playerVehicle, 1, pos.x, pos.y, pos.z, forceX, forceY, forceZ, true, true)
+            ENTITY.APPLY_FORCE_TO_ENTITY(playerVehicle, 1, pos.x, pos.y, pos.z, forceX, forceY, forceZ, 0, true, true, true, false, true)
+            util.yield(1)
+        end
+        util.yield(1)
+    end
+end
 
 
 
+----派遣警车
+function spawn_police_car(pid)
+    local targetPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local offset = get_random_offset_from_entity(targetPed, 50.0, 60.0)
+    local outCoords = v3.new()
+    local outHeading = memory.alloc(4)
+    if PATHFIND.GET_CLOSEST_VEHICLE_NODE_WITH_HEADING(offset.x, offset.y, offset.z, outCoords, outHeading, 1, 3.0, 0) then
+        local vehicleHash <const> = util.joaat("police3")
+        local pedHash <const> = util.joaat("s_m_y_cop_01")
+        request_model(vehicleHash); request_model(pedHash)
 
+        local pos = ENTITY.GET_ENTITY_COORDS(targetPed, false)
+        local vehicle = entities.create_vehicle(vehicleHash, pos, 0.0)
+        if not ENTITY.DOES_ENTITY_EXIST(vehicle) then return end
+        ENTITY.SET_ENTITY_COORDS(vehicle, outCoords.x, outCoords.y, outCoords.z, false, false, false, false)
+        ENTITY.SET_ENTITY_HEADING(vehicle, memory.read_float(outHeading))
+        VEHICLE.SET_VEHICLE_SIREN(vehicle, true)
+        AUDIO.BLIP_SIREN(vehicle)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, true, true, true)
+        ENTITY.SET_ENTITY_INVINCIBLE(vehicle, true)
 
+        local pSequence = memory.alloc_int()
+        TASK.OPEN_SEQUENCE_TASK(pSequence)
+        TASK.TASK_COMBAT_PED(0, targetPed, 0, 16)
+        TASK.TASK_GO_TO_ENTITY(0, targetPed, 6000, 10.0, 3.0, 0.0, 0)
+        TASK.SET_SEQUENCE_TO_REPEAT(memory.read_int(pSequence), true)
+        TASK.CLOSE_SEQUENCE_TASK(memory.read_int(pSequence))
 
+        for seat = -1, 0 do
+            local cop = entities.create_ped(5, pedHash, outCoords, 0.0)
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(cop, true, false)
+            set_decor_flag(cop, DecorFlag_isAttacker)
+            PED.SET_PED_INTO_VEHICLE(cop, vehicle, seat)
+            PED.SET_PED_RANDOM_COMPONENT_VARIATION(cop, 0)
+            local weapon <const> = (seat == -1) and "weapon_pistol" or "weapon_pumpshotgun"
+            WEAPON.GIVE_WEAPON_TO_PED(cop, util.joaat(weapon), -1, false, true)
+            PED.SET_PED_COMBAT_ATTRIBUTES(cop, 1, true)
+            PED.SET_PED_AS_COP(cop, true)
+            ENTITY.SET_ENTITY_INVINCIBLE(cop, true)
+            TASK.TASK_PERFORM_SEQUENCE(cop, memory.read_int(pSequence))
+        end
 
+        TASK.CLEAR_SEQUENCE_TASK(pSequence)
+        AUDIO.PLAY_POLICE_REPORT("SCRIPTED_SCANNER_REPORT_FRANLIN_0_KIDNAP", 0.0)
+    end
+end
 
 
 
@@ -703,7 +795,7 @@ function World_Bombing()
 	velo.x = 0.0
 	velo.y = 0.0
 	velo.z = 1000.00
-	local myveh = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(players.user()), false)
+    local myveh = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(players.user()), false)
 	for i = 1, #allpeds do
 		if not PED.IS_PED_A_PLAYER(allpeds[i]) then
 			vel.x = math.random(1000.0, 10000.0)
@@ -715,7 +807,7 @@ function World_Bombing()
 		end
 	end
 	for y = 1, #allveh do
-		if y ~= myveh then
+		if allveh[y] ~= myveh then
 			vel.x = math.random(1000.0, 10000.0)
 			vel.y = math.random(1000.0, 10000.0)
 			vel.z = math.random(1000.0, 7500.0)
@@ -1188,13 +1280,20 @@ function biker_lift(on,pid)
         local hash = -1342281820
         request_model(hash)
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
-        pos.z = pos.z - 15
+        pos.z = pos.z - 10
         send_biker = OBJECT.CREATE_OBJECT_NO_OFFSET(hash, pos.x, pos.y, pos.z, true, false, true)
         while biker_toggled do
             local pos2 = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
             ENTITY.SET_ENTITY_COORDS_NO_OFFSET(send_biker, pos2.x, pos2.y, pos.z, false, false, false, false)
             pos.z = pos.z + 0.1
             util.yield(10)
+            local pos3 = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+            local hight = pos3.z
+            if pos.z > hight then
+                ENTITY.APPLY_FORCE_TO_ENTITY(PLAYER.GET_PLAYER_PED(pid), 3, 50, 50, 0, 0.0, 0.0, 0.0, 0, false, false, true, false, false)
+                ENTITY.APPLY_FORCE_TO_ENTITY(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(pid), false), 3, 50, 50, 0, 0.0, 0.0, 0.0, 0, false, false, true, false, false)
+                pos.z = hight - 10
+            end
         end
     else
         entities.delete_by_handle(send_biker)
@@ -1334,6 +1433,9 @@ end
 function cat_bomb(pid)
     local target_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local coords = ENTITY.GET_ENTITY_COORDS(target_ped, false)
+    coords.x = coords['x']
+    coords.y = coords['y']
+    coords.z = coords['z']
     hash = util.joaat("a_c_cat_01")
     request_model(hash)
     for i=1, 30 do
@@ -2508,6 +2610,16 @@ function Shark_gun()
         FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 4, 100, true, false, 1, false)
         FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 13, 1, true, false, 0, false)
     end
+end
+--鲨鱼吃掉玩家
+function Shark_eating(pid)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+    local hash = 0x06C3F072
+    local NPC = create_ped(26, hash, pos.x, pos.y, pos.z, 0)
+    ENTITY.FREEZE_ENTITY_POSITION(NPC, true)
+    ENTITY.SET_ENTITY_ROTATION(NPC, 90, 0, 0, true)
+    FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 4, 100, true, false, 1, false)
+    FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 13, 1, true, false, 0, false)
 end
 
 
@@ -6293,8 +6405,7 @@ function Character_locus()
     elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
         for _, boneId in ipairs(bones) do
             GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
-            local fx =
-            GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(
                 effect.name,
                 players.user_ped(),
                 0.0,

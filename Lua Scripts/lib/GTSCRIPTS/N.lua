@@ -302,10 +302,10 @@ menu.action(NEAR_PED_CAM, "杀死所有NPC", {}, "", function()
         if not IS_PED_PLAYER(ent) then
             if HostilePed then
                 if PED.IS_PED_IN_COMBAT(ent, PLAYER.PLAYER_ID()) then
-                    ENTITY.SET_ENTITY_HEALTH(ent, 0.0)
+                    SET_ENTITY_HEALTH(ent, 0.0)
                 end
             else
-                ENTITY.SET_ENTITY_HEALTH(ent, 0.0)
+                SET_ENTITY_HEALTH(ent, 0.0)
             end
         end
     end

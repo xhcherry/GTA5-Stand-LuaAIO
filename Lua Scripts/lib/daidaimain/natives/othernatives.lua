@@ -1,4 +1,7 @@
 AUDIO1={
+    ["_TRIGGER_SIREN"]=--[[void]] function(--[[Vehicle (int)]] vehicle)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.end_call_2(0x66C3FB05206041BA)end,
+
+    ["_SET_SIREN_KEEP_ON"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xF584CF8529B51434)end,
     ["SET_PED_AUDIO_FOOTSTEP_LOUD"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_bool(toggle);native_invoker.end_call("0653B735BFBDFE87");end,
 }
 

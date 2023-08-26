@@ -1305,7 +1305,7 @@ constructor_lib.deserialize_vehicle_attributes = function(vehicle)
     ENTITY.SET_ENTITY_AS_MISSION_ENTITY(vehicle.handle, true, true)    -- Needed for plate text
 
     constructor_lib.deserialize_vehicle_neon(vehicle)
-    constructor_lib.deserialize_vehicle_paint(vehicle)
+    --修复 constructor_lib.deserialize_vehicle_paint(vehicle)
     constructor_lib.deserialize_vehicle_wheels(vehicle)
     constructor_lib.deserialize_vehicle_doors(vehicle)
     constructor_lib.deserialize_vehicle_headlights(vehicle)
@@ -1821,7 +1821,7 @@ constructor_lib.deserialize_vehicle_options = function(vehicle)
 end
 
 ---
---- Ped Attributes
+--- Ped Attributes 修复
 ---
 
 constructor_lib.default_ped_attributes = function(attachment)
@@ -1838,16 +1838,16 @@ constructor_lib.default_ped_attributes = function(attachment)
         if attachment.ped_attributes.props["_"..prop_index] == nil then attachment.ped_attributes.props["_"..prop_index] = {} end
         if attachment.ped_attributes.props["_"..prop_index].drawable_variation == nil then attachment.ped_attributes.props["_"..prop_index].drawable_variation = -1 end
         if attachment.ped_attributes.props["_"..prop_index].texture_variation == nil then attachment.ped_attributes.props["_"..prop_index].texture_variation = 0 end
-        attachment.ped_attributes.props["_"..prop_index].num_drawable_variations = PED.GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS(attachment.handle, prop_index) - 1
-        attachment.ped_attributes.props["_"..prop_index].num_texture_variations = PED.GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS(attachment.handle, prop_index, attachment.ped_attributes.props["_"..prop_index].drawable_variation) - 1
+        attachment.ped_attributes.props["_"..prop_index].num_drawable_variations = PED.GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS(players.user(), prop_index) - 1
+        attachment.ped_attributes.props["_"..prop_index].num_texture_variations = PED.GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS(players.user(), prop_index, attachment.ped_attributes.props["_"..prop_index].drawable_variation) - 1
     end
     for component_index = 0, 11 do
         if attachment.ped_attributes.components["_"..component_index] == nil then attachment.ped_attributes.components["_"..component_index] = {} end
         if attachment.ped_attributes.components["_"..component_index].drawable_variation == nil then attachment.ped_attributes.components["_"..component_index].drawable_variation = 0 end
         if attachment.ped_attributes.components["_"..component_index].texture_variation == nil then attachment.ped_attributes.components["_"..component_index].texture_variation = 0 end
         if attachment.ped_attributes.components["_"..component_index].palette_variation == nil then attachment.ped_attributes.components["_"..component_index].palette_variation = 1 end
-        attachment.ped_attributes.components["_"..component_index].num_drawable_variations = PED.GET_NUMBER_OF_PED_DRAWABLE_VARIATIONS(attachment.handle, component_index) - 1
-        attachment.ped_attributes.components["_"..component_index].num_texture_variations = PED.GET_NUMBER_OF_PED_TEXTURE_VARIATIONS(attachment.handle, component_index, attachment.ped_attributes.components["_".. component_index].drawable_variation) - 1
+        attachment.ped_attributes.components["_"..component_index].num_drawable_variations = PED.GET_NUMBER_OF_PED_DRAWABLE_VARIATIONS(players.user(), component_index) - 1
+        attachment.ped_attributes.components["_"..component_index].num_texture_variations = PED.GET_NUMBER_OF_PED_TEXTURE_VARIATIONS(players.user(), component_index, attachment.ped_attributes.components["_".. component_index].drawable_variation) - 1
     end
 end
 

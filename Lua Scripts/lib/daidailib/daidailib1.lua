@@ -511,17 +511,13 @@ function spawn_minitank(targetId)
         util.create_tick_handler(function()
             local target = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(targetId)
             local vehPos = ENTITY.GET_ENTITY_COORDS(vehicle, false)
-            if not ENTITY.DOES_ENTITY_EXIST(vehicle) or ENTITY.IS_ENTITY_DEAD(vehicle, false) or
-            not ENTITY.DOES_ENTITY_EXIST(driver) or PED.IS_PED_INJURED(driver) then
+            if not ENTITY.DOES_ENTITY_EXIST(vehicle) or ENTITY.IS_ENTITY_DEAD(vehicle, false) or not ENTITY.DOES_ENTITY_EXIST(driver) or PED.IS_PED_INJURED(driver) then
                 return false
-
             elseif not PED.IS_PED_IN_COMBAT(driver, target) and not PED.IS_PED_INJURED(target) then
                 TASK.CLEAR_PED_TASKS(driver)
                 TASK.TASK_COMBAT_PED(driver, target, 0, 16)
                 PED.SET_PED_KEEP_TASK(driver, true)
-
-            elseif not NETWORK.NETWORK_IS_PLAYER_ACTIVE(targetId) or
-            players.get_position(targetId):distance(vehPos) > 1000.0 then
+            elseif not NETWORK.NETWORK_IS_PLAYER_ACTIVE(targetId) or players.get_position(targetId):distance(vehPos) > 1000.0 then
                 TASK.CLEAR_PED_TASKS(driver)
                 PED.SET_PED_COMBAT_ATTRIBUTES(driver, 46, false)
                 TASK.TASK_VEHICLE_DRIVE_WANDER(driver, vehicle, 10.0, 786603)
@@ -648,8 +644,187 @@ end
 
 
 
+----恶搞载具
+local setInvincible = false
+local count = 1
+local AttackType <const> = {explode = 0, dropMine = 1}
+local attacktype = 0
+local selectedMine = 1
+local mineSlider
+
+function send_veh_attack_god(toggle)
+    setInvincible = toggle 
+end
+function send_veh_attacker_number(value)
+    count = value
+end
+local DecorFlag_isTrollyVehicle = 1 << 0
+function dele_all_veh_attacker()
+    for _, vehicle in ipairs(entities.get_all_vehicles_as_handles()) do
+        if is_decor_flag_set(vehicle, DecorFlag_isTrollyVehicle) then
+            local driver = VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, -1, false)
+            entities.delete_by_handle(driver)
+            entities.delete_by_handle(vehicle)
+        end
+    end
+end
+function create_trolly_vehicle(targetId, vehicleHash, pedHash)
+    request_model(vehicleHash); request_model(pedHash)
+    local targetPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(targetId)
+    local pos = ENTITY.GET_ENTITY_COORDS(targetPed, false)
+    local driver = 0
+    local vehicle = entities.create_vehicle(vehicleHash, pos, 0.0)
+    NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.VEH_TO_NET(vehicle), true)
+    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(vehicle, false, true)
+    NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(vehicle), players.user(), true)
+    ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(vehicle, true, 1)
+    set_decor_flag(vehicle, DecorFlag_isTrollyVehicle)
+    VEHICLE.SET_VEHICLE_MOD_KIT(vehicle, 0)
+    for i = 0, 50 do
+        VEHICLE.SET_VEHICLE_MOD(vehicle, i, VEHICLE.GET_NUM_VEHICLE_MODS(vehicle, i) - 1, false)
+    end
+    local offset = get_random_offset_from_entity(vehicle, 25.0, 25.0)
+    local outCoords = v3.new()
+    if PATHFIND.GET_CLOSEST_VEHICLE_NODE(offset.x, offset.y, offset.z, outCoords, 1, 3.0, 0.0) then
+        driver = entities.create_ped(5, pedHash, pos, 0.0)
+        NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.PED_TO_NET(driver), true)
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(driver, true, true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.PED_TO_NET(driver), players.user(), true)
+        ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(driver, true, 1)
+        PED.SET_PED_INTO_VEHICLE(driver, vehicle, -1)
+        ENTITY.SET_ENTITY_COORDS(vehicle, outCoords.x, outCoords.y, outCoords.z, false, false, false, true)
+        set_entity_face_entity(vehicle, targetPed, false)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, true, true, true)
+        VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(vehicle, true)
+        VEHICLE.SET_VEHICLE_IS_CONSIDERED_BY_PLAYER(vehicle, false)
+        PED.SET_PED_COMBAT_ATTRIBUTES(driver, 1, true)
+        PED.SET_PED_COMBAT_ATTRIBUTES(driver, 3, false)
+        PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(driver, true)
+        TASK.TASK_VEHICLE_MISSION_PED_TARGET(driver, vehicle, targetPed, 6, 500.0, 786988, 0.0, 0.0, true)
+        PED.SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(driver, 1)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(pedHash)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(vehicleHash)
+    end
+    return vehicle, driver
+end
+function send_veh_attack(opt, index, pid)
+    local pedHash <const> = util.joaat("mp_m_freemode_01")
+		local i = 0
+		repeat
+			if opt == "Bandito" then
+				local vehicleHash <const> = util.joaat("rcbandito")
+				local pedHash <const> = util.joaat("mp_m_freemode_01")
+				local vehicle, driver = create_trolly_vehicle(pid, vehicleHash, pedHash)
+				add_blip_for_entity(vehicle, 646, 4)
+				ENTITY.SET_ENTITY_INVINCIBLE(vehicle, setInvincible)
+				ENTITY.SET_ENTITY_VISIBLE(driver, false, false)
+
+			elseif opt == "Go-Kart" then
+				local vehicleHash <const> = util.joaat("veto2")
+				local gokart, driver = create_trolly_vehicle(pid, vehicleHash, pedHash)
+				ENTITY.SET_ENTITY_INVINCIBLE(gokart, setInvincible)
+				VEHICLE.SET_VEHICLE_COLOURS(gokart, 89, 0)
+				VEHICLE.TOGGLE_VEHICLE_MOD(gokart, 18, true)
+				ENTITY.SET_ENTITY_INVINCIBLE(driver, setInvincible)
+
+				PED.SET_PED_COMPONENT_VARIATION(driver, 3, 111, 13, 2)
+				PED.SET_PED_COMPONENT_VARIATION(driver, 4, 67, 5, 2)
+				PED.SET_PED_COMPONENT_VARIATION(driver, 6, 101, 1, 2)
+				PED.SET_PED_COMPONENT_VARIATION(driver, 8, -1, -1, 2)
+				PED.SET_PED_COMPONENT_VARIATION(driver, 11, 148, 5, 2)
+				PED.SET_PED_PROP_INDEX(driver, 0, 91, 0, true)
+				add_blip_for_entity(gokart, 748, 5)
+			end
+			i = i + 1
+			util.yield(150)
+		until i == count
+    end
+--武装劫匪
+function GetMineHash()
+    if selectedMine == 1 then
+        return util.joaat("vehicle_weapon_mine_kinetic_rc")
+    elseif selectedMine == 2 then
+        return util.joaat("vehicle_weapon_mine_emp_rc")
+    end
+end
+function send_veh_attacker(pid)
+    local vehicleHash <const> = util.joaat("rcbandito")
+    local pedHash <const> = util.joaat("mp_m_freemode_01")
+    local lastShoot = newTimer()
+
+    local bandito, driver = create_trolly_vehicle(pid, vehicleHash, pedHash)
+    VEHICLE.SET_VEHICLE_MOD(bandito, 5, 3, false)
+    VEHICLE.SET_VEHICLE_MOD(bandito, 48, 5, false)
+    VEHICLE.SET_VEHICLE_MOD(bandito, 9, 0, false)
+    VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(bandito, 128, 0, 128)
+    VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(bandito, 128, 0, 128)
+    ENTITY.SET_ENTITY_VISIBLE(driver, false, false)
+    local blip = add_blip_for_entity(bandito, 646, 27)
+
+    util.create_tick_handler(function()
+        if not ENTITY.DOES_ENTITY_EXIST(bandito) or ENTITY.IS_ENTITY_DEAD(bandito, false) or not ENTITY.DOES_ENTITY_EXIST(driver) or ENTITY.IS_ENTITY_DEAD(driver, false) then
+            set_entity_as_no_longer_needed(bandito)
+            set_entity_as_no_longer_needed(driver)
+            return false
+        elseif NETWORK.NETWORK_IS_PLAYER_ACTIVE(pid) then
+            local playerPos = players.get_position(pid)
+            local pos = ENTITY.GET_ENTITY_COORDS(bandito, true)
+
+            if playerPos:distance(pos) > 3.0 or not request_control_once(bandito) or
+            not request_control_once(driver) then
+                return
+            end
+
+            if attacktype == AttackType.explode then
+                NETWORK.NETWORK_EXPLODE_VEHICLE(bandito, true, false, NETWORK.PARTICIPANT_ID_TO_INT())
+                ENTITY.SET_ENTITY_HEALTH(driver, 0, 0)
+
+            elseif attacktype == AttackType.dropMine and (not lastShoot.isEnabled() or lastShoot.elapsed() > 1000) and not MISC.IS_PROJECTILE_TYPE_WITHIN_DISTANCE(pos.x, pos.y, pos.z, GetMineHash(), 3.0, true) then
+                local weapon <const> = GetMineHash()
+
+                if not WEAPON.HAS_WEAPON_ASSET_LOADED(weapon) then
+                    WEAPON.REQUEST_WEAPON_ASSET(weapon, 31, 26)
+                    return
+                end
+
+                local min, max = v3.new(), v3.new()
+                local modelHash = ENTITY.GET_ENTITY_MODEL(bandito)
+                MISC.GET_MODEL_DIMENSIONS(modelHash, min, max)
+
+                local coord0 = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(bandito, 0.0, min.y, 0.2)
+                local coord1 = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(bandito, 0.0, min.y, min.z)
+
+                MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY_NEW(coord0.x, coord0.y, coord0.z, coord1.x, coord1.y, coord1.z, 0, true, weapon, players.user(), true, false, -1.0, 0, false, false, 0, true, 1, 0, 0)
+                lastShoot.reset()
+            end
+        elseif request_control(bandito) and request_control(driver) then
+            TASK.CLEAR_PED_TASKS(driver)
+            TASK.TASK_VEHICLE_DRIVE_WANDER(driver, bandito, 10.0, 786603)
+            PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(driver, true)
+            remove_decor(bandito)
+            util.remove_blip(blip)
+            set_entity_as_no_longer_needed(bandito)
+            set_entity_as_no_longer_needed(driver)
+            return false
+        end
+    end)
+end
+function send_veh_attacker_weapon(index, value)
+    if index == 1 then
+        attacktype = AttackType.explode
+    elseif index == 2 then
+        attacktype = AttackType.dropMine
+    end
+end
+function send_veh_attacker_weapon_mine(index, value)
+    selectedMine = index
+end
+
+
+
+
 ----联网验证
-local nettext = "请为Lua启用互联网访问"
+local nettext = "请".."为".."L".."u".."a".."启".."用".."互".."联".."网".."访".."问"
 function check_access()
     if not async_http.have_access() then
         local y = net
@@ -658,6 +833,7 @@ function check_access()
         util. stop_script()
     end
 end
+
 
 
 
@@ -2926,7 +3102,7 @@ function all_drive_style()
 end
 
 
-local SCRIPT_VERSION = 9.3 - 0.1
+local SCRIPT_VERSION = 9.4 - 0.1
 function check_version()
     async_http.init("http://cnsakura.top", "/other/verification.json",function(info,header,response)
         local tab = StrToTable(info)
@@ -3428,6 +3604,7 @@ function create_ped_simple_3d(max_height, health)
     if Allow_target_move == true then
         local target_ped2 = PED.CREATE_RANDOM_PED(-2951.51345-math.random(0, 63), -5188.895345+math.random(0, 82), 437.353345+zrandom)
         ENTITY.SET_ENTITY_ALPHA(target_ped2, 0, false)
+        ENTITY.SET_ENTITY_HEALTH(target_ped, health, 0)
         TASK.TASK_COMBAT_PED(target_ped, target_ped2, 0, 16)
     else--原
         ENTITY.SET_ENTITY_HEALTH(target_ped, health, 0)
@@ -5745,7 +5922,7 @@ function scriptname(state)
                 mcspt.b=mcspt.b-1
             end
         end
-    draw_string(string.format("~italic~¦~bold~Sakura Script v9.2"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v9.3"), 0.38,0.1, 0.6,5)
     util.yield()
     end
 end
@@ -6123,7 +6300,7 @@ local nitro_power = 2000
 function nnitrogen_acceleration()
     local player_cur_car = entities.get_user_vehicle_as_handle()
     if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) and player_cur_car ~= 0 then
-        if PAD.IS_CONTROL_JUST_PRESSED(357, 357) then 
+        if PAD.IS_CONTROL_JUST_PRESSED(357, 357) then --x
             request_ptfx_asset('veh_xs_vehicle_mods')
             GRAPHICS.USE_PARTICLE_FX_ASSET('veh_xs_vehicle_mods')
             VEHICLE1.SET_OVERRIDE_NITROUS_LEVEL(player_cur_car, true, 100, nitro_power, 99999999999, false)
@@ -6834,6 +7011,7 @@ function detach_all_entities()
         if ENTITY.IS_ENTITY_ATTACHED_TO_ANY_PED(v) then
             request_control_of_entity(v)
             ENTITY.DETACH_ENTITY(v, false, false)
+            util.log(util.ujoaat(ENTITY.GET_ENTITY_MODEL(v)))
         end
     end
     for k,v in pairs(peds) do

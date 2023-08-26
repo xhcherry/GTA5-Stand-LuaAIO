@@ -57,7 +57,7 @@ util.create_tick_handler(function()
 			vehiclelist[vehicule] = vehlist
 			GTAC(vehiclelist[vehicule], "爆炸", {""}, "", function()
 				requestControlLoop(vehhandle[vehicule])
-				NETWORK.NETWORK_EXPLODE_VEHICLE(vehhandle[vehicule], true, true, false)
+				NETWORK_EXPLODE_VEHICLE(vehhandle[vehicule], true, true, false)
 			end)
 			GTAC(vehiclelist[vehicule], "传送到我", {""}, "", function()
 				requestControlLoop(vehhandle[vehicule])

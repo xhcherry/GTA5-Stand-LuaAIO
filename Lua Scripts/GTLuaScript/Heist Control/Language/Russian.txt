@@ -1,18 +1,15 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 03/23/2023 03:46:48 AM
-# Heist Control Version: V 3.2.4
+# Generated Date: 07/12/2023 10:29:43 PM
+# Heist Control Version: V 3.3.4
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
 # You can use all characters except '=' character.
 # Using '#' character means the line will be ignored.
-# If you want to release your own translation officially, please contact to the developer of Heist Control in its Discord server.
-# Learn more: https://icedoomfist.com/Stand_Heist_Control/How_To_Translate/
-
+# Please join the Discord Server for Heist Control if you don't know how to translate.
 
 Heist Control = Heist Control
-Announcement = Объявление
 Hard = Трудный
 Normal = Нормально
 Notification = Уведомление
@@ -145,7 +142,6 @@ Unlock Awards = Разблокируйте Награды
 Unlock Animal Masks = Разблокируйте Маски животных
 Unlock DJ Pooh Shirts = Разблокируйте футболки DJ Pooh
 Buildings = Здания
-Arcade Unlockers = Аркадные разблокеры
 Casino Store Ace Masks = Магазин казино Ace Masks
 Missions = Mиссии
 Unlock Yacht Missions = Разблокируйте Миссии на Яхте
@@ -179,13 +175,9 @@ Single MC Vehicle Sell = Продажа одного транспортного 
 Make One Snack Full Health = Сделайте Один Перекус Полноценным Для Здоровья
 Whatever you use a snack, will make you full health. = Что бы вы ни употребили в качестве закуски, это принесет вам полное здоровье.
 Custom Money Remover = Пользовательское Средство для Снятия денег
-AFK Money = АФК Деньги
-Auto Rig Slot Machine = Игровой автомат Auto Rig
-Ratio of Jackpot and Loss = Соотношение Джекпота и проигрыша
 Heist Cooldown Timer = Таймер перезарядки Ограбления
 Use Stand's Overlay = Используйте маску Stand
 Disabled: Use Heist Control's Overlay & Settings = Отключено: Используйте Наложение и настройки элемента управления ограблением
-Work only to hostile peds = Работать только с враждебными Педами
 Peds = Педы
 Remove Weapons = Убрать Оружие
 Delete = Удалить
@@ -233,7 +225,6 @@ Note: MP0_ or MP1_ will be selected by HC automatically, therefore don't write i
 Custom Stat Reader = Пользовательский Считыватель статистики
 Copy Stat Value = Копировать Значение статистики
 Read Stat = Состояние чтения
-How To Translate = Как Перевести
 Language = Язык
 Settings = Настройки
 In-Game = внутри-игровой
@@ -258,16 +249,12 @@ Light Blue = светло-синий
 Text Color = Цвет текста
 About HC = О компании HC
 Join Discord Server! = Присоединяйтесь к серверу Discord!
-Youtube = Ютуб
-Tutorial = Руководство
 Changelog = Журнал изменений
 Credits = Титры
-Let me know about stats info. = Дайте мне знать о статистике.
 Translators = Переводчики
 Maintains HC's translation = Поддерживает перевод HC
 [NOT WORKING] = [NOT WORKING]
 - This feature isn't working due to the latest GTA Online patch: = - This feature isn't working due to the latest GTA Online patch:
-Please download the lastest version of Heist Control or wait for Heist Control's developer patching. = Please download the lastest version of Heist Control or wait for Heist Control's developer patching.
 Please re-enable 'Stand > Lua Scripts > Repository > Heist Control' to fix! = Please re-enable 'Stand > Lua Scripts > Repository > Heist Control' to fix!
 Except [NOT WORKING] features should work! = Except [NOT WORKING] features should work!
 But, all features of HC should work! = But, all features of HC should work!
@@ -367,20 +354,17 @@ Modify Finale's Payout (2 Million) = Изменить выплату финал�
 Make sure it's enabled before starting any contracts or hits. = Убедитесь, что он включен, прежде чем запускать какие-либо контракты или обращения.
 Complete All Missions = Завершите все миссии
 Unlock all Arena Wars Trophies and Toys = Разблокируйте все трофеи и игрушки Arena Wars
-Clothing = Одежда
 The Criminal Enterprises DLC = DLC Криминальные предприятия
 Jackets / Sweaters / Hoodies / Shirts = Куртки / Свитера / Толстовки / Рубашки
 Pants / Caps / Hats = Брюки / Кепки / Головные уборы
 Earphones / Masks / Tech Demon = Наушники / Маски / Технический демон
 Shoes (Sliders) / Tiger = Обувь (ползунки) / Тигр
 Drug War DLC = DLC Война с наркотиками
-Unlock Arcade Trophies and Toys = Разблокируйте аркадные трофеи и игрушки
 Acid Lab Equipment Upgrade = Модернизация оборудования кислотной лаборатории
 Unlock Nightclub Awards = Разблокируйте награды ночного клуба
 Make sure click before buying. When you change your session, will be changed to non-unlocked status. = Обязательно нажмите перед покупкой. Когда вы измените свой сеанс, он будет изменен на статус не разблокирован.
 Add Cosmetic Decorations To The Office/MC = Добавьте косметических Украшений в Офис /MC
 To apply, sell special crate or vehicle cargo and change your session! = Чтобы подать заявку, продайте специальный ящик или грузовой автомобиль и измените свою сессию!
-Cayo Perico Unlockables = Кайо Перико разблокируемые
 Unlock Taxi Missions = Разблокируйте миссии такси
 Unlock All Contacts = Разблокируйте все контакты
 Skip Lamar Missions To The Last One = Пропустите миссии Ламара До Последней
@@ -419,19 +403,6 @@ Infinite Stone Hatchet's Power = Бесконечная сила каменны�
 Make your account look like you've played GTA Online for 7 years. = Сделайте так, чтобы ваш аккаунт выглядел так, как будто вы играли в GTA Online 7 лет.
 Do you sure remove your money? = Вы уверены, что снимаете свои деньги?
 Because this feature works via requesting the Ballistic Armor, it'll be dropped nearby soon. = Поскольку эта функция работает через запрос баллистической брони, она скоро будет сброшена поблизости.
-Cooldown Time (Seconds) = Время перезарядки (секунды)
-Auto Cayo Bot = Авто Кайо Бот
-25K Chips = 25 Тысяч фишек
-15K RP = 15K RP
-Vehicle Discount = Скидка на ТС
-Teleport to the Lucky Wheel = ТП к Колесу удачи
-Make sure your spawning position is 'Last Location' = Убедитесь, что ваша позиция для нереста - "Последнее местоположение"
-You can set it on Interaction Menu. = Вы можете установить его в меню взаимодействия.
-Playing one time has been done! Waiting for the cooldown time... = Игра один раз была сделана! Ожидание времени перезарядки...
-How many times you've played after enabled: = Сколько раз вы играли после включения:
-Auto Lucky Wheel = Автоматическое колесо удачи
-Let you get the selected lucky wheel reward per 3 seconds automatically. = Позволяет вам автоматически получать выбранную награду lucky wheel за 3 секунды.
-Please use with 'Teleport to the Lucky Wheel' feature! = Пожалуйста, используйте функцию "Телепортация на колесо удачи"!
 Instant Finish Heists & Others = Ограбления с мгновенным завершением и другие
 Heists = Ограбления
 Cayo / Tuners / ULP / Agency = Кайо / Тюнеры / ULP / Агентство
@@ -446,8 +417,6 @@ Enabled: Use Stand's Overlay & Settings: Game > Info Overlay = Включено:
 Set Custom Time (Seconds) = Установите пользовательское время (секунды)
 Custom Timer = Пользовательский таймер
 Manage Nearby Peds And Cams = Управляйте НПС Отделениями и Камерами
-Enabled: Ped options will only affect hostile peds = Включено: параметры Ped будут влиять только на враждебные ped
-Disabled: Ped options will affect all peds = Disabled: Параметры Ped повлияют на все ped
 Shoot = Стрелять
 Cameras = Камеры
 Stat Spoofing = Подмена статистики
@@ -486,17 +455,9 @@ This action will take a few seconds. Please wait for it patiently, don't press m
 - Total number of translations: = - Общее количество переводов:
 - Number of not modified translations: = - Количество не измененных переводов:
 - Number of modified (updated) translations: = - Количество измененных (обновленных) переводов:
-Always looking for translators for non-existing languages. If you're interested in translating HC, click! = Всегда ищу переводчиков для несуществующих языков. Если вы заинтересованы в переводе HC, нажмите!
 Notification's Style = Стиль уведомления
 Type = Тип
 Heist Control for 2Take1 Developer. He allowed me to use his code. HC wouldn't exist without his help. Serious thanks to him! = Контроль ограбления для разработчика 2Take1. Он позволил мне использовать его код. HC не существовал бы без его помощи. Серьезное спасибо ему!
-Creator of WiriScript which helped me code HC! = Создатель вики-скрипта, который помог мне написать код HC!
-Helped me with a lot of things for HC website's maintenance. = Помог мне со многими вещами для обслуживания сайта HC.
-Helped me code the website's design. = Помог мне разработать дизайн веб-сайта.
-Made the logo, banner and other images for HC. = Сделал логотип, баннер и другие изображения для HC.
-Get Support, Report Bugs and Enjoy Other Stuffs! = Получайте поддержку, сообщайте об ошибках и наслаждайтесь другими материалами!
-Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D = Видео, связанные с учебным пособием HC, загружены здесь, подпишитесь на канал, чтобы показать свою поддержку : D
-If you don't know how to use HC, click me! = Если вы не знаете, как использовать HC, нажмите на меня!
 If you want to know what was changed in the latest version, click me! = Если вы хотите узнать, что было изменено в последней версии, нажмите на меня!
 When using this method, the percentage and final payment will be random! = При использовании этого метода процент и окончательный платеж будут случайными!
 Works On Both: Fingerprint and Keypad = Работает как с отпечатками пальцев, так и с клавиатурой
@@ -507,10 +468,6 @@ Note: You may need to keep activating to use some of Independence Day's contents
 Tattoos = Татуировки
 Unlock Some Tattoos = Разблокируйте несколько татуировок
 Ceramic Pistol = Керамический пистолет
-You try removing banked money amount that more than currently you have. = Вы пытаетесь снять с банковского счета сумму денег, которая больше, чем у вас есть в данный момент.
-All of features use undetected methods but use at own your risk. If you earn too much, you can be banned. = Все функции используют необнаруженные методы, но используйте на свой страх и риск. Если вы зарабатываете слишком много, вас могут забанить.
-Solo Cayo Perico Heist will be done by Heist Control automatically per 20 mins to get $2.09M. Don't press any keys to prevent some game bugs. = Одиночное ограбление Кайо Перико будет совершено системой Heist Control автоматически за 20 минут, чтобы получить $ 2,09млн. Не нажимайте никаких клавиш, чтобы предотвратить некоторые игровые ошибки.
-Don't earn more than $50M per a day (real-time), otherwise it'll lead you get banned! = Не зарабатывайте более 50 миллионов долларов в день (в режиме реального времени), иначе это приведет к тому, что вас забанят!
 Cooldown time has passed, you can play the heist again! = Время перезарядки прошло, вы можете снова сыграть в ограбление!
 Wallet Money = Деньги в кошельке
 Mins = Мин
@@ -524,7 +481,6 @@ Seems like you need to be a MC President. So, Heist Control made you become MC P
 Seems like you need to be a CEO. So, Heist Control made you become CEO. = Похоже, тебе нужно быть генеральным директором. Итак, контроль за ограблением заставил вас стать генеральным директором.
 HC Logo image file doesn't exist. = Файл изображения логотипа HC не существует.
 Native file for HC doesn't exist. = Собственный файл для HC не существует.
-Please re-enable 'Stand > Lua Scripts > Repository > natives-1676318796' or please join HC DC server to get support! = Пожалуйста, повторно включите "Stand > Скрипты Lua > Репозиторий > natives-1676318796" или, пожалуйста, присоединяйтесь к серверу HC DC, чтобы получить поддержку!
 Your current Stand version isn't compatible with current Heist Control version. Please update Stand to use it. = Ваша текущая версия Stand несовместима с текущей версией Heist Control. Пожалуйста, обновите стенд, чтобы использовать его.
 - Current your Heist Control version: = - Текущая версия вашего средства управления ограблением:
 - At least required Stand version: = - По крайней мере, требуемая версия подставки:
@@ -565,7 +521,6 @@ Remove All = Удалите все
 Equipment Spawn Location = Место появления оборудования
 Entrance and Exit will be selected 'Staff Lobby' and Buyer will be selected 'Low' by HC. But, selected Buyer won't be visible at the board somehow, don't change those options when you are before launching the heist. = Вход и выход будут выбраны "Лобби для персонала", а покупатель будет выбран "Низкий" HC. Но выбранный покупатель каким-то образом не будет виден на доске, не меняйте эти параметры, когда вы находитесь перед запуском ограбления.
 Please don't forget that buyer should be selected 'Low'! Otherwise, won't get money. = Пожалуйста, не забывайте, что покупатель должен быть выбран "Низким"! В противном случае, вы не получите денег.
-$3.5 Millions For All Players = 3,5М Для всех Игроков
 Makes Forced Able To Launch = Позволяет Принудительно Запускать
 When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout. = Когда вы находитесь за доской и выбираете "Игроки вырезаны", эта функция позволит вам принудительно начать, даже если другие игроки не настроены как готовые. Есть визуальная ошибка, связанная с выплатой.
 Refresh Arcade Boards = Обновите аркадные доски
@@ -627,7 +582,6 @@ Pacific Standard Heist = Ограбление "Пасифик Стандард"
 Keep Cash $1.85M Take = Оставьте себе наличные в размере 1,85м.
 This makes you won't lose money by getting shot to the cash bags from polices = Это означает, что вы не потеряете деньги, получив пулю в денежные мешки от полисов
 Bypass Minimum And Maximum Percentage = Минимальный И Максимальный Процент Обхода
-Bypass minimum percentage 15(%) and maximum percentage 70(%). This feature will allow you set 0 ~ 100(%). = Обходите минимальный процент 15 (%) и максимальный процент 70 (%). Эта функция позволит вам установить 0 ~ 100(%).
 Works on all of the classic heists. You need to activate this until first setup mission is ended. = Работает при всех классических ограблениях. Вам нужно активировать это до тех пор, пока не будет завершена первая установочная миссия.
 The Nightclub = Ночной клуб
 (Prep) = (Подготовка)
@@ -653,15 +607,9 @@ Independence's Day = День независимости
 Unlock Lots of Hats And Shirts = Разблокируйте множество шляп и рубашек
 Also will increase Kosatka missiles distance. = Увеличится дальность ракет "Косатка".
 Auto Refill Snacks & Armours = Автоматическое пополнение закусок и доспехов
-Keep Full Nightclub Population = Поддерживать полную посещаемость ночного клуба
 Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader. = Увеличивает количество транспортных средств для продажи MC Business до единицы. Пожалуйста, нажмите один раз, прежде чем начать миссию по продаже. Работает только тогда, когда ты лидер.
 The best way to remove GTA Online banked money up to $2B at once! = Лучший способ снять с банковского счета GTA Online деньги на сумму до 2 миллиардов долларов сразу!
 Successfully cancelled! = Успешно отменен!
-Change Reward = Измените вознаграждение
-Can be used to increase your crew level. = Может быть использован для повышения уровня вашей команды.
-How Many Times To Play = Сколько раз Играть
-Works unless you are in the casino. = Работает, если вы не находитесь в казино.
-If you are in it, not required to use. Just use 'Auto Lucky Wheel' = Если вы находитесь в нем, использовать не обязательно. Просто используйте "Автоматическое колесо удачи'
 Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you. = Мгновенная отделка - это довольно новые функции. Из-за этого большинство из них неизвестно, как они не работают. Пожалуйста, не жалуйтесь мне, если один из них вам не подходит.
 Note that may works for some of other preps. Only 'Quick Preset' is compatible with Cayo Perico Heist. = Обратите внимание, что май подходит для некоторых других приготовлений. Только "Быстрая предустановка" совместима с Cayo Perico Heist.
 Note that if you don't use Heist Control's automated Casino Heist presets, won't get money. = Обратите внимание, что если вы не используете автоматические настройки ограбления казино Heist Control, вы не получите денег.
@@ -728,11 +676,26 @@ Open Folder for Translations = Откройте папку для перевод
 'Stand' setting is synced with Stand's default feature: 'Stand > Settings > Appearance > Colours > AR Colour' = 'Настройка подставки синхронизирована с функцией подставки по умолчанию: "Подставка > Настройки > Внешний вид > Цвета > AR Color"
 If you changed the Stand's setting while HC is still running, need to restart HC to apply. = Если вы изменили настройку Stand, пока HC все еще работает, необходимо перезапустить HC для применения.
 Don't enable both of automated presets at once = Не включайте обе автоматические предустановки одновременно
+Please make sure you can play ULP Missions now! = Пожалуйста, убедитесь что вы можете играть в миссии ULP прямо сейчас!
+Unlock Clothing = Разблокируйте одежду
 
 
 # Start of newly updated translations.
 # Translate them!
 
 
-Please make sure you can play ULP Missions now! = Пожалуйста, убедитесь что вы можете играть в миссии ULP прямо сейчас!
-Unlock Clothing = Разблокируйте одежду
+Please download the latest version of Heist Control or wait for Heist Control's developer patching. = Пожалуйста, скачайте последнюю версию HC или дождитесь обновления разработчика HC.
+Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support! = Пожалуйста, повторно включите "Stand> Lua Scripts > Репозиторий > natives-1681379138" или, пожалуйста, присоединяйтесь к серверу HC DC, чтобы получить поддержку!
+Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist. = Обратите внимание, что изменение этого параметра не будет применено к доске ограблений. Вы можете проверить нанесенный разрез после окончания ограбления.
+If the Heist Planning (Board 3) is empty, then please re-enable the preset that you enabled! = Если поле Планирование ограбления (панель 3) пусто, то, пожалуйста, повторно включите предустановку, которую вы включили!
+It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts. = Это позволяет вам установить 0 ~ 100 (%), изменив доску ограбления, игнорирует все ограничения, изменяющие разрезы.
+Skip Nightclub Setups = Пропускать мероприятия в ночных клубах
+Skip all of setups when you buy a Nightclub first: Equipment, Staff, and Collect DJ = Пропустите все настройки, когда вы сначала покупаете ночной клуб: оборудование, персонал и приглашенного ди-джея
+Unlock Arcade Awards = Разблокируйте аркадные награды
+Trophies, toys, and clothings are included. = В комплект входят трофеи, игрушки и одежда.
+500+ unlocks are included, try and see how many clothes would be unlocked. = Включено более 500 разблокировок, попробуйте и посмотрите, сколько одежды будет разблокировано.
+Club Work = Клубная работа
+Taze = Оцепенение
+If you have any questions regarding Heist Control? Joining it will help you so much! = Если у вас есть какие-либо вопросы относительно HC? Присоединение к нему поможет вам!
+- Download sharable customized translations and GTAHaXUI stat files. = - Загружайте доступные для общего доступа индивидуальные переводы и статистические файлы GTAHaXUI.
+- Post a suggestion or an issue to improve Heist Control. = - Опубликуйте предложение или проблему, чтобы улучшить контроль за кражами.

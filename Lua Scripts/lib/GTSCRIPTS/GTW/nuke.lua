@@ -253,7 +253,7 @@ function ent_func.create_nuke_explosion(Position)
     nuke_expl1(Position)
 
 	for i = 1, 4 do
-		AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "DLC_XM_Explosions_Orbital_Cannon", players.user_ped(), 0, true, false)
+		PLAY_SOUND_FROM_ENTITY(-1, "DLC_XM_Explosions_Orbital_Cannon", players.user_ped(), 0, true, false)
 	end
 
     for count = 1, 2 do
