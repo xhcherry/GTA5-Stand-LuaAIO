@@ -40,7 +40,7 @@
 
         HC_VERSION = "V 3.3.7"
         CODED_GTAO_VERSION = 1.67
-        SUPPORTED_STAND_VERSION = 101  --  Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
+        SUPPORTED_STAND_VERSION = "101"  --  Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
 
     ---
 
@@ -715,18 +715,14 @@
             ERROR_LOG(TRANSLATE("Native file for HC doesn't exist.") .. "\n\n" .. TRANSLATE("Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support!"))
         end
 
-        FULL_STAND_VERSION = menu.get_version().version_target
-        CURRENT_STAND_VERSION = tonumber(string.format("%.3f", FULL_STAND_VERSION))
-        if not string.contains(FULL_STAND_VERSION, "preview") then
-            if CURRENT_STAND_VERSION < SUPPORTED_STAND_VERSION then
-                ERROR_LOG
-                (
-                    TRANSLATE("Your current Stand version isn't compatible with current Heist Control version. Please update Stand to use it.") .. "\n\n" ..
-                    TRANSLATE("- Current your Heist Control version:") .. " " .. HC_VERSION .. "\n" .. 
-                    TRANSLATE("- At least required Stand version:") .. " " .. SUPPORTED_STAND_VERSION .. "\n" ..
-                    TRANSLATE("- Current your Stand version:") .. " " .. CURRENT_STAND_VERSION
-                )
-            end
+        if soup.version_compare(menu.get_version().version, SUPPORTED_STAND_VERSION) < 0 then
+            ERROR_LOG
+            (
+                TRANSLATE("Your current Stand version isn't compatible with current Heist Control version. Please update Stand to use it.") .. "\n\n" ..
+                TRANSLATE("- Current your Heist Control version:") .. " " .. HC_VERSION .. "\n" .. 
+                TRANSLATE("- At least required Stand version:") .. " " .. SUPPORTED_STAND_VERSION .. "\n" ..
+                TRANSLATE("- Current your Stand version:") .. " " .. CURRENT_STAND_VERSION
+            )
         end
 
         if SCRIPT_MANUAL_START and not SCRIPT_SILENT_START then
