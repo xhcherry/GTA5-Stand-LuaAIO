@@ -1,7 +1,7 @@
 ------- 实体控制枪 -------
 function entity_control_all(menu_parent, ent)
     menu.action(menu_parent, "检测该实体是否存在", {}, "", function()
-        if ENTITY.DOES_ENTITY_EXIST(ent) then
+        if ENTITY.DOES_ENTITY_EXIST(ent or 0) then
             util.toast("实体存在")
         else
             util.toast("该实体已经不存在，已为你删除此纪录！")
@@ -11,7 +11,7 @@ function entity_control_all(menu_parent, ent)
         end
     end)
 menu.action(menu_parent, "删除此实体", {}, "", function()
-        entities.delete_by_handle(ent)
+        entities.delete(ent)
 end)
     local module_hash = ENTITY.GET_ENTITY_MODEL(ent)
         menu.readonly(menu_parent, "实体hash: ", module_hash)
@@ -254,10 +254,10 @@ function GetEntity_PlayerIsAimingAt(p)
         local ptr = memory.alloc_int()
         if PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(p, ptr) then
             ent = memory.read_int(ptr)
-        end
-        if ENTITY.IS_ENTITY_A_PED(ent) and PED.IS_PED_IN_ANY_VEHICLE(ent) then
-            local vehicle = PED.GET_VEHICLE_PED_IS_IN(ent, false)
-            ent = vehicle
+            if ENTITY.IS_ENTITY_A_PED(ent) and PED.IS_PED_IN_ANY_VEHICLE(ent) then
+                local vehicle = PED.GET_VEHICLE_PED_IS_IN(ent, false)
+                ent = vehicle
+            end
         end
     end
     return ent
@@ -284,7 +284,7 @@ end
 
 function entitycontrol()
     local ent = GetEntity_PlayerIsAimingAt(players.user())
-    if ent ~= NULL and ENTITY.DOES_ENTITY_EXIST(ent) then
+    if ent ~= NULL and ENTITY.DOES_ENTITY_EXIST(ent or 0) then
         if not isInTable(control_ent_list, ent) then
             table.insert(control_ent_list, ent)
             ---

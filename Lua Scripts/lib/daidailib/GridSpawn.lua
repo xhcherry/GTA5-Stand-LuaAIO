@@ -263,7 +263,7 @@ menu.toggle_loop(gridspawn, "网格生成", {}, "", function()
     PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), true)
     gridarrow_rot += MISC.GET_FRAME_TIME() * 45
     local camPos = v3.new(CAM.GET_FINAL_RENDERED_CAM_COORD())
-    local camRot = v3.new(CAM.GET_FINAL_RENDERED_CAM_ROT())
+    local camRot = v3.new(CAM.GET_FINAL_RENDERED_CAM_ROT(2))
     local dir = v3.toDir(camRot)
     v3.mul(dir, 200)
     v3.add(dir, camPos)
@@ -298,7 +298,7 @@ menu.toggle_loop(gridspawn, "网格生成", {}, "", function()
             for _, tbl in pairs(preview_cars) do
                 for _, car in pairs(tbl) do
                     local pos = ENTITY.GET_ENTITY_COORDS(car, false)
-                    entities.delete_by_handle(car)
+                    entities.delete(car)
                     local new_car = VEHICLE.CREATE_VEHICLE(gridcar_hash, pos.x, pos.y, pos.z, cam_start_heading, true, false, false)
                     new_record[#new_record+1] = new_car
                 end
@@ -308,8 +308,8 @@ menu.toggle_loop(gridspawn, "网格生成", {}, "", function()
 
         if x_click() and #undo_record > 0 then
             for _, car in pairs(undo_record[#undo_record]) do
-                if ENTITY.DOES_ENTITY_EXIST(car) then
-                    entities.delete_by_handle(car)
+                if ENTITY.DOES_ENTITY_EXIST(car or 0) then
+                    entities.delete(car)
                 end
             end
             undo_record[#undo_record] = nil
@@ -370,7 +370,7 @@ menu.toggle_loop(gridspawn, "网格生成", {}, "", function()
             for x, tbl in pairs(preview_cars) do
                 for y, car in pairs(tbl) do
                     if x > x_count or y > y_count then
-                        entities.delete_by_handle(car)
+                        entities.delete(car)
                         preview_cars[x][y] = nil
                     end
                 end

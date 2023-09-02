@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SpoonerPlacements xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ClearDatabase>false</ClearDatabase>
+  <ClearWorld>false</ClearWorld>
+  <ReferenceCoords>
+    <X>-2316.611</X>
+    <Y>4127.00342</Y>
+    <Z>48.26226</Z>
+  </ReferenceCoords>
+</SpoonerPlacements>

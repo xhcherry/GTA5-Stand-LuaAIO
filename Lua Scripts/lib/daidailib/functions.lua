@@ -1,6 +1,5 @@
+json = require "lib.daidailib.Main.json"
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-json = require "lib.daidaimain.pretty.json"
 local self = {}
 self.version = 26
 
@@ -362,7 +361,7 @@ local draw_rect = function (pos0, pos1, pos2, pos3, colour)
 end
 
 function draw_bounding_box(entity, showPoly, colour)
-	if not ENTITY.DOES_ENTITY_EXIST(entity) then
+	if not ENTITY.DOES_ENTITY_EXIST(entity or 0) then
 		return
 	end
 	colour = colour or {r = 255, g = 0, b = 0, a = 255}
@@ -428,7 +427,7 @@ function add_blip_for_entity(entity, blipSprite, colour)
 	HUD.SHOW_HEIGHT_ON_BLIP(blip, false)
 
 	util.create_tick_handler(function ()
-		if not ENTITY.DOES_ENTITY_EXIST(entity)or ENTITY.IS_ENTITY_DEAD(entity, false) then
+		if not ENTITY.DOES_ENTITY_EXIST(entity or 0)or ENTITY.IS_ENTITY_DEAD(entity, false) then
 			util.remove_blip(blip)
 			return false
 		elseif not HUD.DOES_BLIP_EXIST(blip) then
@@ -459,18 +458,6 @@ function request_control_once(entity)
 	local netId = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(entity)
 	NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netId, true)
 	return NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
-end
-
-function request_control(entity, timeOut)
-	if not ENTITY.DOES_ENTITY_EXIST(entity) then
-		return false
-	end
-	timeOut = timeOut or 500
-	local start = newTimer()
-	while not request_control_once(entity) and start.elapsed() < timeOut do
-		util.yield_once()
-	end
-	return start.elapsed() < timeOut
 end
 
 function get_ped_nearby_peds(ped, maxPeds, ignore)
@@ -539,7 +526,7 @@ function set_decor_flag(entity, flag)
 end
 
 function is_decor_flag_set(entity, flag)
-	if ENTITY.DOES_ENTITY_EXIST(entity) and
+	if ENTITY.DOES_ENTITY_EXIST(entity or 0) and
 	DECORATOR.DECOR_EXIST_ON(entity, "Casino_Game_Info_Decorator") then
 		local value = DECORATOR.DECOR_GET_INT(entity, "Casino_Game_Info_Decorator")
 		return (value & flag) ~= 0
@@ -584,14 +571,14 @@ function get_random_offset_in_range(coords, minDistance, maxDistance)
 end
 
 function set_entity_as_no_longer_needed(entity)
-	if not ENTITY.DOES_ENTITY_EXIST(entity) then return end
+	if not ENTITY.DOES_ENTITY_EXIST(entity or 0) then return end
 	local pHandle = memory.alloc_int()
 	memory.write_int(pHandle, entity)
 	ENTITY.SET_ENTITY_AS_NO_LONGER_NEEDED(pHandle)
 end
 
 function get_distance_between_entities(entity, target)
-	if not ENTITY.DOES_ENTITY_EXIST(entity) or not ENTITY.DOES_ENTITY_EXIST(target) then
+	if not ENTITY.DOES_ENTITY_EXIST(entity or 0) or not ENTITY.DOES_ENTITY_EXIST(target or 0) then
 		return 0.0
 	end
 	local pos = ENTITY.GET_ENTITY_COORDS(entity, true)

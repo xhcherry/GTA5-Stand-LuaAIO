@@ -918,7 +918,7 @@ constructor_lib.request_control_once = function(entity)
 end
 
 constructor_lib.request_control = function(entity, timeout)
-    if not ENTITY.DOES_ENTITY_EXIST(entity) then
+    if not ENTITY.DOES_ENTITY_EXIST(entity or 0) then
         return false
     end
     local end_time = util.current_time_millis() + (timeout or 500)
@@ -1290,7 +1290,7 @@ constructor_lib.serialize_vehicle_attributes = function(vehicle)
     if vehicle.type ~= "VEHICLE" then return end
     debug_log("Serializing vehicle attributes "..tostring(vehicle.name))
     constructor_lib.default_vehicle_attributes(vehicle)
-    if not ENTITY.DOES_ENTITY_EXIST(vehicle.handle) then return end
+    if not ENTITY.DOES_ENTITY_EXIST(vehicle.handle or 0) then return end
     debug_log("Serializing vehicle attributes "..tostring(vehicle.name))
     constructor_lib.serialize_vehicle_paint(vehicle)
     constructor_lib.serialize_vehicle_neon(vehicle)

@@ -665,7 +665,7 @@ function Member:removeMgr()
 end
 
 function Member:delete()
-	if ENTITY.DOES_ENTITY_EXIST(self.handle) and request_control(self.handle, 1000) then
+	if ENTITY.DOES_ENTITY_EXIST(self.handle or 0) and request_control(self.handle, 1000) then
 		entities.delete_by_handle(self.handle); self.handle = 0
 	end
 end
@@ -854,7 +854,7 @@ function Group.new()
 	local self = setmetatable({}, Group)
 	for num = 0, 6, 1 do
 		local ped = PED.GET_PED_AS_GROUP_MEMBER(self.getID(), num)
-		if ENTITY.DOES_ENTITY_EXIST(ped) and
+		if ENTITY.DOES_ENTITY_EXIST(ped or 0) and
 		request_control(ped, 1000) then self:pushMember(Member.new(ped)) end
 	end
 	return self
@@ -890,7 +890,7 @@ end
 function Group:setRelationshipGrp(rgHash)
 	for num = 0, 6, 1 do
 		local ped = PED.GET_PED_AS_GROUP_MEMBER(self.getID(), num)
-		if ENTITY.DOES_ENTITY_EXIST(ped) and
+		if ENTITY.DOES_ENTITY_EXIST(ped or 0) and
 		request_control(ped, 1000) then PED.SET_PED_RELATIONSHIP_GROUP_HASH(ped, rgHash) end
 	end
 	self.rg = rgHash
@@ -906,7 +906,7 @@ function Group:onTick()
 		local member = self.members[i]
 		local ped = member.handle
 
-		if not ENTITY.DOES_ENTITY_EXIST(ped) or PED.IS_PED_INJURED(ped) then
+		if not ENTITY.DOES_ENTITY_EXIST(ped or 0) or PED.IS_PED_INJURED(ped) then
 			self.numMembers = self.numMembers - 1
 			member:removeMgr()
 			table.remove(self.members, i)
@@ -935,7 +935,7 @@ end
 function Group:deleteMembers()
 	for num = 0, 6, 1 do
 		local ped = PED.GET_PED_AS_GROUP_MEMBER(self.getID(), num)
-		if ENTITY.DOES_ENTITY_EXIST(ped) and
+		if ENTITY.DOES_ENTITY_EXIST(ped or 0) and
 		request_control(ped, 1000) then entities.delete_by_handle(ped) end
 	end
 end

@@ -240,7 +240,7 @@ local DoesVehicleHavePlayerDriver = function(vehicle)
 		return false
 	end
 	local driver = VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, -1, false)
-	if not ENTITY.DOES_ENTITY_EXIST(driver) or not PED.IS_PED_A_PLAYER(driver) or
+	if not ENTITY.DOES_ENTITY_EXIST(driver or 0) or not PED.IS_PED_A_PLAYER(driver) or
 	not IsPedAnyTargetablePlayer(driver) then
 		return false
 	end
@@ -266,7 +266,7 @@ end
 ---@param entity Entity
 ---@return boolean
 local IsEntityTargetable = function(entity)
-	if not ENTITY.DOES_ENTITY_EXIST(entity) or ENTITY.IS_ENTITY_DEAD(entity, false) then
+	if not ENTITY.DOES_ENTITY_EXIST(entity or 0) or ENTITY.IS_ENTITY_DEAD(entity, false) then
 		return false
 	end
 	local distance = get_distance_between_entities(myVehicle, entity)
@@ -311,7 +311,7 @@ end
 ---@return boolean
 local TargetEntitiesInsert = function (entity)
 	for i, target in ipairs(targetEnts) do
-        if target == -1 or not ENTITY.DOES_ENTITY_EXIST(target) then
+        if target == -1 or not ENTITY.DOES_ENTITY_EXIST(target or 0) then
             targetEnts[i] = entity
             numTargets = numTargets + 1
 			return true
@@ -356,7 +356,7 @@ local SetTargetEntities = function()
     end
 	local entity = nearbyEntities[entCount + 1]
 
-	if ENTITY.DOES_ENTITY_EXIST(entity) and not ENTITY.IS_ENTITY_DEAD(entity, false) and
+	if ENTITY.DOES_ENTITY_EXIST(entity or 0) and not ENTITY.IS_ENTITY_DEAD(entity, false) and
 	ENTITY.HAS_ENTITY_CLEAR_LOS_TO_ENTITY(myVehicle, entity, 287) then
 		if numTargets < maxTargets then
 			if TargetEntitiesInsert(entity) then
@@ -420,7 +420,7 @@ local LockonEntity = function (entity, count)
 	local lockOnTimer = homingTimers[count]
 	local amberSound = amberHomingSounds[count]
 
-	if not ENTITY.DOES_ENTITY_EXIST(entity) or ENTITY.IS_ENTITY_DEAD(entity, false) or
+	if not ENTITY.DOES_ENTITY_EXIST(entity or 0) or ENTITY.IS_ENTITY_DEAD(entity, false) or
 	not IsEntityInSafeScreenPos(entity) or (IsWebBrowserOpen() or IsCameraAppOpen()) then
 		amberSound:stop()
 		lockOnBits:ClearBit(bitPlace)
@@ -431,7 +431,7 @@ local LockonEntity = function (entity, count)
 
 	if ENTITY.IS_ENTITY_A_VEHICLE(entity) and VEHICLE.IS_VEHICLE_DRIVEABLE(entity, false) then
 		local driver = VEHICLE.GET_PED_IN_VEHICLE_SEAT(entity, -1, false)
-		if ENTITY.DOES_ENTITY_EXIST(driver) and PED.IS_PED_A_PLAYER(driver) and
+		if ENTITY.DOES_ENTITY_EXIST(driver or 0) and PED.IS_PED_A_PLAYER(driver) and
 		NETWORK.NETWORK_IS_PLAYER_ACTIVE(NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(driver)) then
 			VEHICLE.SET_VEHICLE_HOMING_LOCKEDONTO_STATE(entity, 2)
 		end
@@ -502,7 +502,7 @@ end
 local UpdateTargetEntities = function ()
 	local count = 0
 	for i = 1, 6 do
-		if ENTITY.DOES_ENTITY_EXIST(targetEnts[i]) then
+		if ENTITY.DOES_ENTITY_EXIST(targetEnts[i] or 0) then
 			local timer = lostTargetTimers[i]
 			local entity = targetEnts[i]
 
@@ -529,7 +529,7 @@ local UpdateTargetEntities = function ()
 			else timer.disable() end
 		end
 
-		if ENTITY.DOES_ENTITY_EXIST(targetEnts[i]) then
+		if ENTITY.DOES_ENTITY_EXIST(targetEnts[i] or 0) then
 			count = count + 1
 		end
 	end
@@ -593,7 +593,7 @@ local ShootMissiles = function()
 		local ownerPed = players.user_ped()
 
 		if numTargets > 0 then
-			if ENTITY.DOES_ENTITY_EXIST(targetEnts[numShotTargets + 1]) and
+			if ENTITY.DOES_ENTITY_EXIST(targetEnts[numShotTargets + 1] or 0) and
 			not ENTITY.IS_ENTITY_DEAD(targetEnts[numShotTargets + 1], false) then
 				target = targetEnts[numShotTargets + 1]
 				bits:SetBit(Bit_IsTargetShooting)
@@ -793,7 +793,7 @@ end
 self.mainLoop = function ()
 	if NETWORK.NETWORK_IS_PLAYER_ACTIVE(players.user()) and PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
 		local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-		if ENTITY.DOES_ENTITY_EXIST(vehicle) and not ENTITY.IS_ENTITY_DEAD(vehicle, false) and
+		if ENTITY.DOES_ENTITY_EXIST(vehicle or 0) and not ENTITY.IS_ENTITY_DEAD(vehicle, false) and
 		VEHICLE.IS_VEHICLE_DRIVEABLE(vehicle, false) and
 		VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, -1, false) == players.user_ped() then
 

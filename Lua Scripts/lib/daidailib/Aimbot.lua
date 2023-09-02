@@ -127,12 +127,6 @@ end
 
 
 
-
-
-
-
-
-
 menu.toggle_loop(silent_aimbotroot, "开启", {}, "", function(toggle)
     local target = get_aimbot_target()
     if target ~= 0 then
@@ -146,12 +140,12 @@ menu.toggle_loop(silent_aimbotroot, "开启", {}, "", function(toggle)
         end
         if PED.IS_PED_SHOOTING(players.user_ped()) then
             local wep = WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped())
-            local dmg = WEAPON.GET_WEAPON_DAMAGE(wep, 0)
+            local dmg = math.ceil(WEAPON.GET_WEAPON_DAMAGE(wep, 0))
             if satarget_damageo then
                 dmg = sa_odmg
             end
             local veh = PED.GET_VEHICLE_PED_IS_IN(target, false)
-            MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(t_pos['x'], t_pos['y'], t_pos['z'], t_pos2['x'], t_pos2['y'], t_pos2['z'], dmg, true, wep, players.user_ped(), true, false, 10000, veh)
+            MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(t_pos['x'], t_pos['y'], t_pos['z'], t_pos2['x'], t_pos2['y'], t_pos2['z'], dmg, true, wep, players.user_ped(), true, false, 10000, veh, 0)
         end
     end
 end)
@@ -182,7 +176,7 @@ exclude = menu.list(silent_aimbotroot, "排除选项", {}, "")
 modify_damage = menu.list(silent_aimbotroot, "修改伤害", {}, "")
     menu.toggle(modify_damage, "伤害覆盖", {}, "", function(on)
         satarget_damageo = on
-    end, true)
+    end)
     sa_odmg = 100
     menu.slider(modify_damage, "伤害覆盖量", {}, "", 0, 1000, 100, 10, function(s)
         sa_odmg = s

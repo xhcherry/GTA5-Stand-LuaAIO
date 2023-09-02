@@ -40,7 +40,7 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '8.26'
+GT_version = '9.03'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -48,7 +48,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("GTLua 8.26\n此次更新同时修复了近期更新中的所有崩溃\n且现在可在近期更新中找到'船船船'崩溃\n以及玩家功能的恶搞选项（经典恶搞，以及更多）\n以及大部分友好选项中的内容\n还有主选项的一些功能\n同时修复了一些玩家提出的错误功能\n更新了任务功能,现在可以正常使用\n添加了新增的皇榜成员")
+    notification(checkme().."\n脚本名称：当检测到用户为皇榜人员时\n新增>主菜单>启用快捷入口\n显示为：VIP EDITION，其他用户不变\n开启后会在以下选项添加快捷选项入口\n自我：GTVIP自我选项\n载具：GTVIP载具选项\n线上：GTVIP线上选项\n世界：GTVIP世界选项\n游戏：GTVIP游戏娱乐\n新增>自我选项>自我娱乐>空中飞人\n新增>自我选项>自我娱乐>电磁瞄准镜头\n新增>自我选项>自我娱乐>缩小自己\n新增>自我选项>自我娱乐>强奸妓女\n新增>载具选项>载具武器>设置天煞机炮\n新增>恶搞选项>近期更新>被狗强奸的NPC\n新增>恶搞选项>近期更新>磁吸飞机\n新增>恶搞选项>近期更新>赠送任意载具\n新增>恶搞选项>近期更新>赠送生成的载具\n新增>恶搞选项>近期更新>玩家头部显示\n新增>自我选项>自我娱乐>特效选项>火人V3\n新增>自我选项>自我娱乐>特效选项>近期更新>过载能量]\n新增>自我选项>自我娱乐>特效选项>近期更新>终极过载\n添加了新的皇榜成员\n其他的一些改进与修复")
 end
 loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
 coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
@@ -6801,22 +6801,9 @@ function VehicleWeapon.new(modelName, timeBetweenShots)
 	return instance
 end
 
---[[translations = {}
-setmetatable(translations, {
-    __index = function (self, key)
-        return key
-    end
-})]]
 G = GTluaScript.attach_before(GTluaScript.ref_by_path('Stand>Settings'),GTluaScript.list(GTluaScript.shadow_root(), 'GRANDTOURINGVIP', {"GTLuaScript"}, 'GRANDTOURINGVIP YYDS ! ! !', 
 function()end))
 GTluaScript.trigger_commands("GTLuaScript")
---[[local loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
-util.create_tick_handler(function()
-    for _, frame in pairs(loading_frames) do
-        GTluaScript.set_menu_name(G, frame .. '')
-        wait(100)
-    end
-end)]]
 
 local vehicleWeaponList <const> = {
 	VehicleWeapon.new("weapon_vehicle_rocket", 220),
@@ -8853,6 +8840,41 @@ function huanyingjiemian(f)
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX, startY + 0.23) 
     end
 end
+--
+util.create_tick_handler(function()
+    local alert_screen = GRAPHICS.REQUEST_SCALEFORM_MOVIE("MP_BIG_MESSAGE_FREEMODE")
+    
+    local yPositionUp = -0.05
+    local yPositionDown = 0.40
+    
+    local i = 0
+    while i < 300 do
+        GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(alert_screen, "SHOW_SHARD_WASTED_MP_MESSAGE")
+        GRAPHICS.DRAW_SCALEFORM_MOVIE(alert_screen, 0.5, yPositionUp, 1, 1, 255, 225, 255, 255)
+        GRAPHICS.DRAW_SCALEFORM_MOVIE(alert_screen, 0.5, yPositionUp, 1, 1, 255, 225, 255, 255)
+        GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("~h~~r~∑~y~G~g~R~q~A~p~N~f~D~p~T~g~O~b~U~q~R~p~I~k~N~g~G~p~V~y~I~g~P~r~∑~r~\n~h~~g~[".. PLAYER.GET_PLAYER_NAME(players.user()).. "]~y~VIP∑")
+        GRAPHICS.END_SCALEFORM_MOVIE_METHOD(alert_screen)
+        
+        i = i + 1
+        yPositionUp = yPositionUp + 0.0015
+        wait()
+    end
+    
+    i = 0
+    while i < 300 do
+        GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(alert_screen, "SHOW_SHARD_WASTED_MP_MESSAGE")
+        GRAPHICS.DRAW_SCALEFORM_MOVIE(alert_screen, 0.5, yPositionDown, 1, 1, 255, 225, 255, 255)
+        GRAPHICS.DRAW_SCALEFORM_MOVIE(alert_screen, 0.5, yPositionDown, 1, 1, 255, 225, 255, 255)
+        GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("~h~~r~∑~y~G~g~R~q~A~p~N~f~D~p~T~g~O~b~U~q~R~p~I~k~N~g~G~p~V~y~I~g~P~r~∑~r~\n~h~~g~[".. PLAYER.GET_PLAYER_NAME(players.user()).. "]~y~VIP∑")
+        GRAPHICS.END_SCALEFORM_MOVIE_METHOD(alert_screen)
+        
+        i = i + 1
+        yPositionDown = yPositionDown - 0.0015
+        wait()
+    end
+    
+    wait(1000000000)
+end)
 --hundouluo
 function hunhuan9()
 hunhuan()
@@ -9532,6 +9554,324 @@ function player_active(pid, Playing, inTransition)
 	return true
 end
 --
+function kongzhongyouyong()
+    HUD.SET_TEXT_SCALE(1.0,0.5)
+    HUD.SET_TEXT_FONT(0)
+    HUD.SET_TEXT_CENTRE(1)
+    HUD.SET_TEXT_OUTLINE(0)
+    HUD.SET_TEXT_COLOUR(0, 0, 255, 255)
+    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("+")
+    HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.4999,0.4798,0)
+    if state == 0 then
+		local objHash = util.joaat("v_res_d_dildo_f")
+        ENTITY.SET_ENTITY_VISIBLE(objHash, false)
+		request_model(objHash)
+		STREAMING.REQUEST_ANIM_DICT("swimming@scuba")
+		while not STREAMING.HAS_ANIM_DICT_LOADED("swimming@scuba") do
+			wait()
+		end
+		local localPed = players.user_ped()
+		local pos = ENTITY.GET_ENTITY_COORDS(localPed, false)
+        pos.z = pos.z-7
+		TASK.CLEAR_PED_TASKS_IMMEDIATELY(localPed)
+		object = entities.create_object(objHash, pos)
+		ENTITY.ATTACH_ENTITY_TO_ENTITY(localPed, object, 0,0, 0.0,+10,0.0,0.0,0,0.0, true, true, false, 0, true)
+		ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(object, false, false)
+        TASK.TASK_PLAY_ANIM(localPed, "swimming@scuba", "dive_glide", 8.0, -8.0, -1, 1, 8, true, true, true)
+		state = 1
+	elseif state == 1 then
+		HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
+		local objPos = ENTITY.GET_ENTITY_COORDS(object, false)
+		local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
+		ENTITY.SET_ENTITY_ROTATION(object, 0, 0, camrot.z, 0, true)
+		local forwardV = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
+		forwardV.z = 0.0
+		local delta = v3.new(0, 0, 0)
+		local speed = 0.2
+		if PAD.IS_CONTROL_PRESSED(0, 61) then
+			speed = 1.5
+		end
+		if PAD.IS_CONTROL_PRESSED(0, 32) then
+			delta = v3.new(forwardV)
+			delta:mul(speed)
+		end
+		if PAD.IS_CONTROL_PRESSED(0, 130)  then
+			delta = v3.new(forwardV)
+			delta:mul(-speed)
+		end
+		if PAD.IS_DISABLED_CONTROL_PRESSED(0, 22) then
+			delta.z = speed
+		end
+		if PAD.IS_CONTROL_PRESSED(0, 36) then
+			delta.z = -speed
+		end
+		local newPos = v3.new(objPos)
+		newPos:add(delta)
+		ENTITY.SET_ENTITY_COORDS(object, newPos.x,newPos.y,newPos.z, false, false, false, false)
+	end
+end
+--
+function topless(pid)
+    function play_anim(ped, dict, name, duration)
+        while not STREAMING.HAS_ANIM_DICT_LOADED(dict) do
+            STREAMING.REQUEST_ANIM_DICT(dict)
+            wait()
+        end
+        TASK.TASK_PLAY_ANIM(ped, dict, name, 1.0, 1.0, duration, 3, 0.5, false, false, false)
+    end
+        local HOOKER_VOICES = {
+        "S_F_Y_HOOKER_01_WHITE_FULL_01",
+        "S_F_Y_HOOKER_01_WHITE_FULL_02",
+        "S_F_Y_HOOKER_01_WHITE_FULL_03",
+        "S_F_Y_HOOKER_02_WHITE_FULL_01",
+        "S_F_Y_HOOKER_02_WHITE_FULL_02",
+        "S_F_Y_HOOKER_02_WHITE_FULL_03",
+        "S_F_Y_HOOKER_03_BLACK_FULL_01",
+        "S_F_Y_HOOKER_03_BLACK_FULL_03",
+    }
+        local voice_name = HOOKER_VOICES[math.random(1, #HOOKER_VOICES)]
+        local ped1_mdl = util.joaat('a_c_chop')
+        local ped2_mdl = util.joaat('a_f_y_topless_01')
+        local speeches = {
+            "SEX_GENERIC_FEM",
+            "SEX_CLIMAX",
+            "SEX_GENERIC"
+        }
+        local c1 = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 0, 2, 0)
+        util.request_model(ped1_mdl, 2000)
+        util.request_model(ped2_mdl, 2000)
+        local ped1 = entities.create_ped(28, ped1_mdl, c1, 30.0)
+        ENTITY.SET_ENTITY_INVINCIBLE(ped1, true)
+        play_anim(ped1, 'missfra0_chop_find', 'hump_loop_chop', -1)
+        local ped2 = entities.create_ped(28, ped2_mdl, c1, 30.0)
+        ENTITY.SET_ENTITY_INVINCIBLE(ped2, true)
+        play_anim(ped2, 'rcmpaparazzo_2', 'shag_loop_poppy', -1)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(ped1, ped2, 0, 0, -0.3, 0, 0, 0, 0, true, false, true, true, 0, false, 0)
+        PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped1, true)
+        PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped2, true)
+        PED.SET_PED_CAN_RAGDOLL(ped1, false)
+        PED.SET_PED_CAN_RAGDOLL(ped2, false)
+        PED.SET_PED_CAN_BE_TARGETTED(ped1, false)
+        PED.SET_PED_CAN_BE_TARGETTED(ped2, false)
+        util.create_thread(function()
+            while true do 
+                play_anim(ped1, 'missfra0_chop_find', 'hump_loop_chop', -1)
+                AUDIO.PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(ped2, speeches[math.random(#speeches)], voice_name, "SPEECH_PARAMS_FORCE_SHOUTED", 0)
+                ENTITY.SET_ENTITY_HEADING(ped1, 30)
+                play_anim(ped2, 'rcmpaparazzo_2', 'shag_loop_poppy', -1)
+                ENTITY.SET_ENTITY_HEADING(ped2, 30)
+                wait(3000)
+            end
+        end)
+    end
+--
+function biaoji(f)
+    local pedp  = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    gametag = WIRI_HUD.CREATE_FAKE_MP_GAMER_TAG(pedp,"我是傻逼",false,false,"flakin",0)
+end
+--
+function first_to_upper(str)
+    return (str:gsub("^%l", string.upper))
+end
+
+function request_control_of_entity(vehicle)
+    if not util.is_session_started() then 
+        return 
+    end
+    local ctr = 0
+    local migrate_ctr = 0
+    if vehicle != 0 then
+        if not entities.get_can_migrate(vehicle) then
+            repeat
+                if migrate_ctr >= 250 then
+                    ctr = 0
+                    return
+                end
+                entities.set_can_migrate(vehicle, true)
+                migrate_ctr +=1 
+                wait()
+            until entities.get_can_migrate(vehicle)
+            migrate_ctr = 0
+        end
+
+        while not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(vehicle) do
+            if ctr >= 250 then
+                ctr = 0
+                return
+            end
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle)
+            wait()
+            ctr += 1
+        end
+    end
+end
+
+function upgrade_car(veh)
+    request_control_of_entity(veh)
+    VEHICLE.SET_VEHICLE_FIXED(veh)
+    for i=0, 47 do
+        num = VEHICLE.GET_NUM_VEHICLE_MODS(veh, i)
+        VEHICLE.SET_VEHICLE_MOD(veh, i, num -1, true)
+    end
+end
+
+function give_player_vehicle(pid, v_hash)
+    util.request_model(v_hash, 2000)
+    local c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED(pid), 0.0, 10.0, 0.0)
+    local veh = entities.create_vehicle(v_hash, c, ENTITY.GET_ENTITY_HEADING(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)))
+    upgrade_car(veh)
+end
+
+CARS = {}
+PLANES = {}
+BOATS = {}
+    for _, veh in pairs(util.get_vehicles()) do 
+        local mdl = first_to_upper(veh.name)
+        local v_hash = util.joaat(mdl)
+        if WIRI_VEHICLE.IS_THIS_MODEL_A_CAR(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_A_BIKE(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_A_BICYCLE(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_A_QUADBIKE(v_hash) then
+        CARS[#CARS+1] = mdl
+        elseif WIRI_VEHICLE.IS_THIS_MODEL_A_PLANE(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_A_HELI(v_hash) then 
+        PLANES[#PLANES+1] = mdl
+        elseif WIRI_VEHICLE.IS_THIS_MODEL_A_BOAT(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_AN_AMPHIBIOUS_CAR(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_AN_AMPHIBIOUS_QUADBIKE(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_A_JETSKI(v_hash) then 
+        BOATS[#BOATS+1] = mdl
+    end
+end
+--
+function utgz(on)
+    if not on then 
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+    else
+        request_ptfx_asset(man_ptfx_asset)
+        for _, bone in pairs(l_bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
+            local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0, 0.0, 0.0, 0.0, 0.0, 0, bone_id, 1, false, false, false, 0, 0, 0, 0)
+            load_ptfxs[#load_ptfxs+1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 255, 255, 0, 255)
+        end
+        end
+    if not on then 
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+    else
+        request_ptfx_asset(man_ptfx_asset)
+        for _, bone in pairs(l_bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
+            local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0, 0.0, 0.0, 0.0, 0.0, 0, bone_id, 1, false, false, false, 0, 0, 0, 0)
+            load_ptfxs[#load_ptfxs+1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 255, 0, 0, 255)
+        end
+        end
+    if not on then 
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+    else
+        request_ptfx_asset(man_ptfx_asset)
+        for _, bone in pairs(l_bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
+            local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0, 0.0, 0.0, 0.0, 0.0, 0, bone_id, 1, false, false, false, 0, 0, 0, 0)
+            load_ptfxs[#load_ptfxs+1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 255, 0, 255, 255)
+        end
+        end
+    if not on then 
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+    else
+        request_ptfx_asset(man_ptfx_asset)
+        for _, bone in pairs(l_bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
+            local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0, 0.0, 0.0, 0.0, 0.0, 0, bone_id, 1, false, false, false, 0, 0, 0, 0)
+            load_ptfxs[#load_ptfxs+1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 0, 255, 255, 255)
+        end
+        end
+    if not on then 
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+    else
+        request_ptfx_asset(man_ptfx_asset)
+        for _, bone in pairs(l_bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
+            local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0, 0.0, 0.0, 0.0, 0.0, 0, bone_id, 1, false, false, false, 0, 0, 0, 0)
+            load_ptfxs[#load_ptfxs+1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 0, 0, 255, 255)
+        end
+    end
+end
+--
+function request_control_of_entity(vehicle)
+    if not util.is_session_started() then 
+        return 
+    end
+    local ctr = 0
+    local migrate_ctr = 0
+    if vehicle != 0 then
+        if not entities.get_can_migrate(vehicle) then
+            repeat
+                if migrate_ctr >= 250 then
+                    ctr = 0
+                    return
+                end
+                entities.set_can_migrate(vehicle, true)
+                migrate_ctr +=1 
+                util.yield()
+            until entities.get_can_migrate(vehicle)
+            migrate_ctr = 0
+        end
+
+        while not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(vehicle) do
+            if ctr >= 250 then
+                ctr = 0
+                return
+            end
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle)
+            util.yield()
+            ctr += 1
+        end
+    end
+end
+--
+function Quick_Enable(on)
+    if on then
+        G_Self = GTluaScript.attach_before(GTluaScript.ref_by_path('Self>Movement'),GTluaScript.action(GTluaScript.shadow_root(), 'GTVIP自我选项', {""}, '', function()
+            menu.trigger_command(selflist)
+        end))
+        G_Veh = GTluaScript.attach_before(GTluaScript.ref_by_path('Vehicle>Spawner'),GTluaScript.action(GTluaScript.shadow_root(), 'GTVIP载具选项', {""}, '', function()
+            menu.trigger_command(carfly)
+        end))
+        G_Online = GTluaScript.attach_before(GTluaScript.ref_by_path('Online>New Session'),GTluaScript.action(GTluaScript.shadow_root(), 'GTVIP线上选项', {""}, '', function()
+            menu.trigger_command(onlinemode)
+        end))
+        G_World = GTluaScript.attach_before(GTluaScript.ref_by_path('World>Places'),GTluaScript.action(GTluaScript.shadow_root(), 'GTVIP世界选项', {""}, '', function()
+            menu.trigger_command(lobbyFeats)
+        end))
+        G_Game = GTluaScript.attach_before(GTluaScript.ref_by_path('Game>Disables'),GTluaScript.action(GTluaScript.shadow_root(), 'GTVIP游戏娱乐', {""}, '', function()
+            menu.trigger_command(funfeatures)
+        end))
+    else
+        menu.delete(G_Self)
+        menu.delete(G_Veh)
+        menu.delete(G_Online)
+        menu.delete(G_World)
+        menu.delete(G_Game)
+    end
+end
 ------------------------------------
 -------------玩家崩溃---------------
 ------------------------------------
@@ -19666,6 +20006,29 @@ util.create_thread(function()
     end
 end)
 
+require "lib.GTSCRIPTS.GTA.list"
+function checkme()
+    local vipme = " VIP Edition" 
+    local standard = " Version 9;03"
+    local name = PLAYER.GET_PLAYER_NAME(players.user())
+    
+    if name == "RhymeBear" then
+        return " Respcet LOVE"
+    end
+
+    if name == "rudan891018" then
+        return "  Rudan Owner"
+    end
+    
+    for _, id in ipairs(spid) do
+        if name == id.playerid then
+            return vipme
+        end
+    end
+    
+    return standard
+end
+
 function xianshijiaoben(state)
 jiaoben_x = 0.01
 jiaoben_y = 0.160
@@ -19715,10 +20078,10 @@ else
 mcb=mcb-1
 end
 end
-draw_name(string.format("~italic~~h~\nGRANDTOURINGVIP\n Version 8;26"), jiaoben_x,jiaoben_y, jiaoben_dx,2)
+draw_name(string.format("~italic~~h~\nGRANDTOURINGVIP\n"..checkme()), jiaoben_x,jiaoben_y, jiaoben_dx,2)
 wait()
 end
-end    
+end
 
 function xianshijiaoben2(state)
 sname = state

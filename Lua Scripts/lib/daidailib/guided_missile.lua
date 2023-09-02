@@ -302,7 +302,7 @@ local destroy = function ()
 
     STREAMING.CLEAR_FOCUS()
     GRAPHICS.CLEAR_TIMECYCLE_MODIFIER()
-    entities.delete_by_handle(object)
+    entities.delete(object)
     HUD.UNLOCK_MINIMAP_ANGLE()
     HUD.UNLOCK_MINIMAP_POSITION()
     ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)

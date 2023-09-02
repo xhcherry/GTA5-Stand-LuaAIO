@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<OutfitPedData>
+	<ClearDecalOverlays>true</ClearDecalOverlays>
+	<ModelHash>0x9c9effd8</ModelHash>
+	<Type>1</Type>
+	<Dynamic>true</Dynamic>
+	<FrozenPos>false</FrozenPos>
+	<HashName>0x9c9effd8</HashName>
+	<InitialHandle>114434</InitialHandle>
+	<PedProperties>
+		<IsStill>false</IsStill>
+		<CanRagdoll>true</CanRagdoll>
+		<HasShortHeight>false</HasShortHeight>
+		<CurrentWeapon>0xa2719263</CurrentWeapon>
+		<PedProps>
+			<_0>82,5</_0>
+			<_1>25,9</_1>
+			<_2>-1,-1</_2>
+			<_3>-1,-1</_3>
+			<_4>-1,-1</_4>
+			<_5>-1,-1</_5>
+			<_6>13,0</_6>
+			<_7>-1,-1</_7>
+			<_8>-1,-1</_8>
+			<_9>-1,-1</_9>
+		</PedProps>
+		<PedComps>
+			<_0>0,0</_0>
+			<_1>0,0</_1>
+			<_2>-1,-1</_2>
+			<_3>9,0</_3>
+			<_4>77,0</_4>
+			<_5>0,0</_5>
+			<_6>51,0</_6>
+			<_7>0,0</_7>
+			<_8>3,0</_8>
+			<_9>0,0</_9>
+			<_10>0,0</_10>
+			<_11>161,0</_11>
+		</PedComps>
+		<HeadFeatures WasInArray="false">
+			<ShapeAndSkinTone>
+				<ShapeFatherId>-1644961384</ShapeFatherId>
+				<ShapeMotherId>114434</ShapeMotherId>
+				<ShapeOverrideId>128</ShapeOverrideId>
+				<ToneFatherId>1600326848</ToneFatherId>
+				<ToneMotherId>29</ToneMotherId>
+				<ToneOverrideId>-1644961384</ToneOverrideId>
+				<ShapeVal>1.60356188e-40</ShapeVal>
+				<ToneVal>1.79366203e-43</ToneVal>
+				<OverrideVal>0</OverrideVal>
+				<IsP>0</IsP>
+			</ShapeAndSkinTone>
+		</HeadFeatures>
+		<TattooLogoDecals />
+		<RelationshipGroupAltered>false</RelationshipGroupAltered>
+		<RelationshipGroup>0x6f0783f5</RelationshipGroup>
+		<ScenarioActive>false</ScenarioActive>
+		<AnimActive>false</AnimActive>
+	</PedProperties>
+	<OpacityLevel>255</OpacityLevel>
+	<LodDistance>240</LodDistance>
+	<IsVisible>true</IsVisible>
+	<MaxHealth>175</MaxHealth>
+	<Health>175</Health>
+	<HasGravity>true</HasGravity>
+	<IsOnFire>false</IsOnFire>
+	<IsInvincible>true</IsInvincible>
+	<IsBulletProof>true</IsBulletProof>
+	<IsCollisionProof>false</IsCollisionProof>
+	<IsExplosionProof>true</IsExplosionProof>
+	<IsFireProof>false</IsFireProof>
+	<IsMeleeProof>true</IsMeleeProof>
+	<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+	<PositionRotation>
+		<X>1686.17114</X>
+		<Y>3247.61401</Y>
+		<Z>40.8332253</Z>
+		<Pitch>0</Pitch>
+		<Roll>-0</Roll>
+		<Yaw>121.645882</Yaw>
+	</PositionRotation>
+	<Attachment isAttached="false" />
+	<SpoonerAttachments SetAttachmentsPersistentAndAddToSpoonerDatabase="false" StartTaskSequencesOnLoad="true" />
+</OutfitPedData>

@@ -65,7 +65,7 @@ end
 -- END TEMPLATE --
 
 
-require "lib.daidaimain.natives.natives"
+--require "lib.daidaimain.natives.natives"
 
 if metaList then
     menu.divider(metaList, "-- Credits --")
@@ -91,7 +91,7 @@ function pairsByKeys(t, f)
     end
     return iter
  end
-local status = pcall(require, 'lib.daidaimain.action.actions_data')
+local status = pcall(require, 'lib.daidailib.Main.action.actions_data')
 if not status then
     util.toast("加载资源文件失败: lib.daidaimain.action.actions_data")
     util.stop_script()
@@ -481,13 +481,13 @@ for _, pair in ipairs(SPEECHES) do
                             util.create_thread(function()
                                 NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ped)
                                 for x = 1,ambientSpeechDuration do
-                                    AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(ped, pair[2], speechParam)
+                                    AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(ped, pair[2], speechParam, 0)
                                     util.yield(speechDelay)
                                 end
                             end)
                         else
                             NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ped)
-                            AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(ped, pair[2], speechParam)
+                            AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(ped, pair[2], speechParam, 0)
                         end
                     end
                 end
@@ -502,7 +502,7 @@ for _, pair in ipairs(SPEECHES) do
             end
             util.create_thread(function()
                 for _ = 1,ambientSpeechDuration do
-                    AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(selfSpeechPed.entity, pair[2], speechParam)
+                    AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(selfSpeechPed.entity, pair[2], speechParam, 0)
                     util.yield(speechDelay)
                 end
             end)
@@ -521,11 +521,11 @@ for _, pair in ipairs(SPEECHES) do
                     if affectType > 0 then
                         for _, ped in ipairs(entities.get_all_peds_as_handles()) do
                             NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ped)
-                            AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(ped, activeSpeech, speechParam)
+                            AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(ped, activeSpeech, speechParam, 0)
                         end
                     end
                     if selfSpeechPed.entity > 0 and affectType == 0 or affectType == 2 then
-                        AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(selfSpeechPed.entity, activeSpeech, speechParam)
+                        AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(selfSpeechPed.entity, activeSpeech, speechParam, 0)
                         selfSpeechPed.lastUsed = os.millis()
                     end
                     util.yield(speechDelay)
@@ -828,7 +828,8 @@ function _play_animation(ped, group, animation, flags, duration, props)
                 false,
                 true,
                 1,
-                true
+                true,
+                0
             )
             STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
         end

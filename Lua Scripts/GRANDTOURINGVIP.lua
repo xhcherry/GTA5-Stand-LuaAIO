@@ -74,6 +74,9 @@ menu.trigger_commands("nodailyexpenses off")
 GTAC(menu.my_root(), "进入GRANDTOURINGVIP", {}, "",function ()
     menu.trigger_command(G)
 end)
+enable_options = GTTG(G, "启用快捷入口", {}, "", function (on)
+    Quick_Enable(on)
+end)
 changelogs = GTLP(G, "[更新日志]", {}, "", function ()
     updatelogs()
 end)
@@ -84,8 +87,8 @@ weapon_options = GT(G, "[武器选项]", {}, "")
 pvphelp = GT(G, "[自瞄选项]", {""}, "")
 carfly = GT(G, "[载具选项]", {}, "", function(); end)
 visuals = GT(G, "[视觉选项]", {}, "")
-custselc = GT(G, "[战局恶搞]", {}, "", function(); end)
-onlinemode = GT(G, '[线上恢复]', {''}, '')
+custselc = GT(G, "[战局选项]", {}, "", function(); end)
+onlinemode = GT(G, '[线上选项]', {''}, '')
 entity_options = GT(G, "[管理选项]", {}, "")
 protex = GT(G, "[保护选项]", {}, "", function(); end)
 funfeatures = GT(G, "[娱乐选项]", {}, "", function(); end)
@@ -104,7 +107,7 @@ GTD(selflist, "[自我选项]")
 GTD(weapon_options, "[武器选项]")
 GTD(carfly, "[载具选项]")
 GTD(visuals, "[视觉选项]")
-GTD(custselc, "[战局恶搞]")
+GTD(custselc, "[战局选项]")
 GTD(onlinemode, "[线上恢复]")
 GTD(entity_options, "[管理选项]")
 GTD(protex, "[保护选项]")
@@ -1136,8 +1139,95 @@ GTLP(aimkrma, "爆炸", {}, "", function()
     end
 end)
 
+GTLP(funfeatures_self, "空中飞人", {}, "E键发射激光眼\n空格向上,Ctrl向下,Shift加速", function()
+laser_eyes()
+    kongzhongyouyong()
+end,function()
+	entities.delete_by_handle(object)
+	state = 0
+end)
+
+GTTG(funfeatures_self, "电磁瞄准镜头", {}, "", function(g)
+    gt = g
+    local startViewMode = nil
+    while gt do
+        wait()
+        if util.is_key_down(0x02) then
+            local context = CAM._GET_CAM_ACTIVE_VIEW_MODE_CONTEXT()
+            if startViewMode == nil then
+                startViewMode = CAM.GET_CAM_VIEW_MODE_FOR_CONTEXT(context)
+                CAM.SET_CAM_VIEW_MODE_FOR_CONTEXT(context, 4)
+            end
+            scope_scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE('REMOTE_SNIPER_HUD')
+            GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scope_scaleform, 'REMOTE_SNIPER_HUD')
+            GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scope_scaleform, 255, 255, 255, 255, 0)
+            GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+        else
+            if startViewMode then
+                CAM.SET_CAM_VIEW_MODE_FOR_CONTEXT(context, 1)
+                startViewMode = nil
+            end
+        end
+    end
+    gt = false
+end)
+
+GTTG(funfeatures_self, "缩小自己",{},"本地可见",function(g)
+    gt = g
+    while gt do
+    wait()
+    peds = players.user_ped()
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(peds)
+    PED.SET_PED_CONFIG_FLAG(peds, 223, true)
+    end
+    gt = false
+    PED.SET_PED_CONFIG_FLAG(peds, 223, false)
+end)
+    
 GTLuaScript.slider_text(funfeatures_self, "获取鸡巴", {}, "请选择你的鸡巴", opt_pp, function(index, value, click_type)
     getbigjb(index, value, click_type)
+end)
+
+GTTG(funfeatures_self, "强奸妓女", {}, "", function (f)
+    usingPiggyback = f
+    if usingPiggyback then
+        usingRape = false
+        local target = players.get_position(players.user())
+        target.z=target.z-0.9
+       local hash = util.joaat("a_f_y_topless_01")
+       request_model_load(hash)
+       local animal = entities.create_ped(8, hash, target, ENTITY.GET_ENTITY_HEADING(players.user_ped()))
+       ENTITY.SET_ENTITY_INVINCIBLE(animal, true)
+       ENTITY.FREEZE_ENTITY_POSITION(animal, true)
+        STREAMING.REQUEST_ANIM_DICT("rcmpaparazzo_2")
+        while not STREAMING.HAS_ANIM_DICT_LOADED("rcmpaparazzo_2") do
+            wait()
+        end
+        local boneId = PED.GET_PED_BONE_INDEX(target, 0xDD1C)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(
+            players.user_ped(),
+            animal,
+            boneId,
+            0.0, -0.3, 0,
+            0, 0, 0,
+            false, true, false, false, 0, true, 0)
+        TASK.TASK_PLAY_ANIM(players.user_ped(), "rcmpaparazzo_2", "shag_loop_a", 8.0, -8.0, -1, 1, 0.0, false, false, false)
+        TASK.TASK_PLAY_ANIM(animal, "rcmpaparazzo_2", "shag_loop_a", 8.0, -8.0, -1, 1, 0.0, false, false, false)
+        while usingPiggyback and player_active(pid, false, true) and
+        not util.is_session_transition_active() do
+            wait()
+        entities.delete_by_handle(hash)
+        end
+        usingPiggyback = false
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
+        ENTITY.DETACH_ENTITY(players.user_ped(), true, false)
+        else
+        wait(0)
+        local car_vs = entities.get_all_peds_as_handles()
+        for k, value in pairs(car_vs) do
+        entities.delete_by_handle(value)
+       end
+    end
 end)
 
 chuansong = {"向前传送", "向后传送", "向左传送", "向右传送", "向上传送", "向下传送"}
@@ -1359,7 +1449,7 @@ GTLP(funfeatures_self, "斗罗魂环", {""}, "", function ()
 end)
 
 startgt = GTTG(funfeatures_self, "启动界面", {"jiemian"}, "", huanyingjiemian) 
-menu.trigger_commands("jiemian on")
+--menu.trigger_commands("jiemian on")
 menu.set_visible(startgt, false)
 
 local bounce_height = 15
@@ -5710,10 +5800,68 @@ GTTG(huorentexiao, "火人V2",{""}, "",function(state)
         GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(players.user_ped())
     end
 end)
-        
+
+burning_man_ptfx_asset = "core"
+burning_man_ptfx_effect = "fire_wrecked_plane_cockpit"
+request_ptfx_asset(burning_man_ptfx_asset)
+trail_bones = {0xffa, 0xfa11, 0x83c, 0x512d, 0x796e, 0xb3fe, 0x3fcf, 0x58b7, 0xbb0}
+looped_ptfxs = {}
+was_burning_man_on = false
+huorentexiao:toggle('火人V3', {}, "", function(on)
+    if not on then 
+        for _, p in pairs(looped_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+    else
+        request_ptfx_asset(burning_man_ptfx_asset)
+        for _, bone in pairs(trail_bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(burning_man_ptfx_asset)
+            local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(burning_man_ptfx_effect, players.user_ped(), 0.0, 0.0, 0.0, 0.0, 0.0, 90.0, bone_id, 0.5, false, false, false, 0, 0, 0, 0)
+            looped_ptfxs[#looped_ptfxs+1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 100, 100, 100, false)
+        end
+    end
+end)
+
 affects = {}
 
 newptfx = GT(texiao, "近期更新", {}, "部分特效需成为[战局脚本主机]\n成为后战局玩家即可看见您的特效\n\n<如何成为战局脚本主机?>\n本体菜单 >> 线上 >> 战局选项 >> 成为战局脚本主机")
+
+man_ptfx_asset = "scr_bike_adversary"
+man_ptfx_effect = "scr_adversary_gunsmith_weap_smoke"
+request_ptfx_asset(man_ptfx_asset)
+l_bones = {0xffa, 0xfa11, 0x83c, 0x512d, 0x796e, 0xb3fe, 0x3fcf, 0x58b7, 0xbb0}
+load_ptfxs = {}
+was_burning_man_on = false
+newptfx:toggle('终极过载', {}, "", function(on)
+    utgz(on)
+end)
+
+man_ptfx_asset = "scr_bike_adversary"
+man_ptfx_effect = "scr_adversary_gunsmith_weap_smoke"
+request_ptfx_asset(man_ptfx_asset)
+l_bones = {0xffa, 0xfa11, 0x83c, 0x512d, 0x796e, 0xb3fe, 0x3fcf, 0x58b7, 0xbb0}
+load_ptfxs = {}
+was_burning_man_on = false
+newptfx:toggle('过载能量', {}, "", function(on)
+    if not on then 
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+    else
+        request_ptfx_asset(man_ptfx_asset)
+        for _, bone in pairs(l_bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
+            local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0, 0.0, 0.0, 0.0, 0.0, 90.0, bone_id, 0.7, false, false, false, 0, 0, 0, 0)
+            load_ptfxs[#load_ptfxs+1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 0, 255, 255, 255)
+        end
+    end
+end)
 
 GTLP(newptfx, "奥义秘术", {""}, "此特效由于粒子上限可能无法展示完全效果", function()
     for i = 1, 16 do
@@ -9998,6 +10146,38 @@ GTTG(Vehicle_Light_options, "内饰灯光", {},
 end)
 --
 local carweaponfun = GT(carfly, "载具武器", {}, "", function(); end)
+
+P99tiansha = menu.list(carweaponfun, "设置天煞机炮", {""}, "")
+
+GTAC(P99tiansha, "修改天煞机炮", {""}, "将你的天煞机炮修改为任务版", function(on_toggle)
+local p99_explosive_type = memory.scan("81 7B ? ? ? ? ? 75 0D")
+local module_base = p99_explosive_type - tonumber("102C5CC",16)
+local alter_wait_time = module_base + tonumber("1E28E50",16)
+local shoot_between_time = module_base + tonumber("1E2847C",16)
+if module_base then
+memory.write_int(p99_explosive_type+16,0)
+memory.write_float(alter_wait_time,-1)
+memory.write_float(shoot_between_time,0.03999999911)
+util.toast('修改完毕')
+else
+util.toast('无法获取数据')
+end
+end)
+
+GTAC(P99tiansha, "修改回现版本机炮", {""}, "将你的天煞机炮修改回当前版本", function(on_toggle)
+local p99_explosive_type = memory.scan("81 7B ? ? ? ? ? 75 0D")
+local module_base = p99_explosive_type - tonumber("102C5CC",16)
+local alter_wait_time = module_base + tonumber("1E28E50",16)
+local shoot_between_time = module_base + tonumber("1E2847C",16)
+if module_base then
+memory.write_int(p99_explosive_type+16,85)
+memory.write_float(alter_wait_time,0.125)
+memory.write_float(shoot_between_time,0.125)
+util.toast('修改完毕')
+else
+util.toast('无法获取数据')
+end
+end)
 
 ff9car = GT(carweaponfun, "电磁脉冲道奇战马", {}, "生成带有电磁脉冲功能的道奇战马")
 
@@ -18704,15 +18884,13 @@ GTROOT = GTD(GTluaScript.player_root(PlayerID), "GRANDTOURINGVIP")
 GT = GTluaScript.list
 
 PlayerMainMenu2 = GT(GTLuaScript.player_root(PlayerID), "踢出选项", {"GTKick"}, "赤诚相见,别来无恙", function()
-    --util.create_thread(function()
     local name = PLAYER.GET_PLAYER_NAME(PlayerID)
     for _, id in ipairs(spid) do
         if name == id.playerid then
-                gtoast("你无法对皇榜用户使用任何攻击性功能")
-                menu.trigger_commands("GTProt"..name)
-            end
+            gtoast("你无法对皇榜用户使用任何攻击性功能")
+            menu.trigger_commands("GTProt"..name)
         end
-    --end)
+    end
 end)
 
 GTAC(PlayerMainMenu2, "快速踢出", {}, "", function()
@@ -25079,10 +25257,106 @@ end)
 
 local updatetroll = GT(playerMain, "近期更新", {}, "")
 
-function biaoji(f)
-    local pedp  = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-    gametag = WIRI_HUD.CREATE_FAKE_MP_GAMER_TAG(pedp,"我是傻逼",false,false,"flakin",0)
+updatetroll:toggle("玩家头部显示", {},"", function(f)
+    gt = f
+    while gt do
+    wait(0)
+       pos = players.get_position(pid)
+       WIRI_GRAPHICS.DRAW_MARKER(2, pos.x, pos.y, pos.z+1.5, 0, 0, 0, 0, 180, 0, 1, 1, 1, 0, 255, 255, 255, false, true, 2, true, 0, 0, false)
+    end
+    gt = false
+end)
+
+updatetroll:action('磁吸飞机', {}, '需要对方在车里!', function()
+local p_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+     local target_v = PED.GET_VEHICLE_PED_IS_IN(p_ped, true)
+     local c = players.get_position(pid)
+c.z += 10
+     if target_v == 0 then 
+        notification('玩家不在车内',blak)
+        return
+     end
+if detection_protection and players.is_marked_as_modder(pid) then 
+     notification('此玩家无法吸住.',blak)
+     return
 end
+local v_hash = util.joaat('cargobob2')
+local p_hash = util.joaat('u_m_y_croupthief_01')
+        util.request_model(v_hash, 2000)
+        util.request_model(p_hash, 2000)
+local veh = entities.create_vehicle(v_hash, c, ENTITY.GET_ENTITY_HEADING(target_v))
+local pilot = entities.create_ped(28, p_hash, c, 0.0)
+    VEHICLE.SET_CARGOBOB_FORCE_DONT_DETACH_VEHICLE(veh, true)
+    VEHICLE.SET_HELI_BLADES_FULL_SPEED(veh)
+    VEHICLE.CREATE_PICK_UP_ROPE_FOR_CARGOBOB(veh, 1)
+    PED.SET_PED_INTO_VEHICLE(pilot, veh, -1)    
+    VEHICLE.SET_CARGOBOB_PICKUP_MAGNET_ENSURE_PICKUP_ENTITY_UPRIGHT(target_v, true)
+    VEHICLE.SET_CARGOBOB_PICKUP_MAGNET_PULL_STRENGTH(veh, 1000.0)
+    VEHICLE.SET_CARGOBOB_PICKUP_MAGNET_FALLOFF(veh, 1000.0)
+request_control_of_entity(target_v)
+    ENTITY.SET_ENTITY_INVINCIBLE(target_v, true)
+    VEHICLE.SET_VEHICLE_GRAVITY(target_v, false)
+local v = ENTITY.GET_ENTITY_VELOCITY(target_v)
+    ENTITY.SET_ENTITY_VELOCITY(veh, 0, 0, 60.0)
+    VEHICLE.ATTACH_VEHICLE_TO_CARGOBOB(veh, target_v, 0, 0.0, 0.0, 5.0)
+    ENTITY.SET_ENTITY_ANGULAR_VELOCITY(target_v, 0, 0, 0)
+    TASK.TASK_HELI_MISSION(pilot, veh, 0, 0, math.random(1000), math.random(1000), 300, 4, 200.0, 0.0, 0, 100, 1000, 0.0, 16)
+    VEHICLE.SET_HELI_TURBULENCE_SCALAR(veh, 0.0)
+end)
+--
+
+GTAC(updatetroll, "赠送生成的载具", {}, "允许他将大部分的载具放进自己的车库", function()  menu.trigger_commands("gift"..PLAYER.GET_PLAYER_NAME(pid)) end)
+
+local zsveh = GT(updatetroll, "赠送任意载具", {}, "")
+
+local give_root_cars = zsveh:list('车辆', {}, '')
+
+local give_root_planes = zsveh:list('飞机', {}, '')
+
+local give_root_boats = zsveh:list('船', {}, '')
+
+give_root_cars:action('随机', {'giverandomcar'}, '', function()
+    local rand_pick = CARS[math.random(#CARS)]
+    give_player_vehicle(pid, util.joaat(rand_pick))
+    gtoast('赠送给 ' .. players.get_name(pid) .. '一辆' .. rand_pick)
+end)
+
+for _, mdl in pairs(CARS) do 
+    give_root_cars:action(mdl, {'dolosgivecar' .. mdl}, '', function()
+    give_player_vehicle(pid, util.joaat(mdl))
+    gtoast('赠送给 ' .. players.get_name(pid) .. '一辆' .. mdl)
+    end)
+end
+
+give_root_planes:action('随机', {'giverandomplane'}, '', function()
+   local rand_pick = PLANES[math.random(#PLANES)]
+   give_player_vehicle(pid, util.joaat(rand_pick))
+   gtoast('赠送给 ' .. players.get_name(pid) .. '一辆' .. rand_pick)
+end)
+
+for _, mdl in pairs(PLANES) do 
+  give_root_planes:action(mdl, {'dolosgiveplane' .. mdl}, '', function()
+  give_player_vehicle(pid, util.joaat(mdl))
+  gtoast('赠送给 ' .. players.get_name(pid) .. '一辆' .. mdl)
+  end)
+end
+
+give_root_boats:action('随机', {'giverandomboat'}, '', function()
+    local rand_pick = BOATS[math.random(#BOATS)]
+    give_player_vehicle(pid, util.joaat(rand_pick))
+    gtoast('赠送给 ' .. players.get_name(pid) .. '一辆' .. rand_pick)
+end)
+
+for _, mdl in pairs(BOATS) do 
+   give_root_boats:action(mdl, {'dolosgiveboat' .. mdl}, '', function()
+   give_player_vehicle(pid, util.joaat(mdl))
+   gtoast('赠送给 ' .. players.get_name(pid) .. '一辆' .. mdl)
+    end)
+end
+
+
+GTAC(updatetroll, "被狗强奸的NPC", {}, "",topless)
+
 GTAC(updatetroll, "标记为傻逼", {}, "",biaoji)
 
 GTTG(updatetroll, '背背佳', {"nightvision"}, '', function (on)

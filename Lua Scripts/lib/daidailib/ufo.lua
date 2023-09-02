@@ -121,7 +121,7 @@ local setTractorBeamVehicles = function ()
         if #targetVehicles >= 16 then break end
         local distance = ENTITY.GET_ENTITY_COORDS(vehicle, false):distance(backholePos)
 
-        if ENTITY.DOES_ENTITY_EXIST(vehicle) and vehicle ~= jet and distance < 80.0 and
+        if ENTITY.DOES_ENTITY_EXIST(vehicle or 0) and vehicle ~= jet and distance < 80.0 and
         ENTITY.HAS_ENTITY_CLEAR_LOS_TO_ENTITY(object, vehicle, 17) then
             if Config.ufo.targetplayer then
                 local pVehicle = entities.handle_to_pointer(vehicle)
@@ -162,7 +162,7 @@ local tractorBeam = function ()
         local vehiclePos = ENTITY.GET_ENTITY_COORDS(vehicle, false)
         local distance = vehiclePos:distance(pos)
 
-        if ENTITY.DOES_ENTITY_EXIST(vehicle) and distance < 200 then
+        if ENTITY.DOES_ENTITY_EXIST(vehicle or 0) and distance < 200 then
             request_control_once(vehicle)
             local delta = v3.new(pos)
             delta:sub(vehiclePos)
@@ -472,14 +472,14 @@ local destroy = function()
     set_scaleform_movie_as_no_longer_needed(scaleform)
     scaleform = 0
 
-    if ENTITY.DOES_ENTITY_EXIST(jet) then
+    if ENTITY.DOES_ENTITY_EXIST(jet or 0) then
         request_control_once(jet)
         setVehicleCamDistance(jet, -1.57)
         entities.delete_by_handle(jet)
         jet = 0
     end
 
-    if ENTITY.DOES_ENTITY_EXIST(object) then
+    if ENTITY.DOES_ENTITY_EXIST(object or 0) then
         request_control_once(object)
         entities.delete_by_handle(object)
         object = 0
@@ -512,7 +512,7 @@ self.mainLoop = function ()
         if not CAM.IS_SCREEN_FADED_OUT() then
             CAM.DO_SCREEN_FADE_OUT(800)
         else
-            if not ENTITY.DOES_ENTITY_EXIST(jet) then
+            if not ENTITY.DOES_ENTITY_EXIST(jet or 0) then
                 request_model(vehicleHash)
                 request_model(objHash)
                 local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)

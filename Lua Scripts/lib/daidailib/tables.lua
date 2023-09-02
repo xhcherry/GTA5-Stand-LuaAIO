@@ -1,5 +1,9 @@
 
 
+----设置天气
+weather_name = {"阳光明媚","晴朗","云","环境污染","雾天","阴天","雨天","雷雨天","雨晴天","温室天气","雪天","暴风雪","雪雾天","圣诞节","万圣节"}
+weather_val = {"EXTRASUNNY","CLEAR","CLOUDS","SMOG","FOGGY","OVERCAST","RAIN","THUNDER","CLEARING","NEUTRAL","SNOW","BLIZZARD","SNOWLIGHT","XMAS","HALLOWEEN"}
+
 ----电台
 radio_name = {
     "布莱恩郡之声", "蓝色方舟","全球电台","飞莲电台","真相 91.1","实验室电台",
@@ -21,6 +25,7 @@ station_name = {
 ----预设模型
 my_model_list = {
     {"小狗戴恩", util.joaat("ig_furry")},
+    {"太空游骑兵", util.joaat("u_m_y_rsranger_01")},
     {"圣诞怪兽", util.joaat("u_m_m_yulemonster")},
     {"莱斯特", "2013139108"},
     {"麦克", util.joaat("player_zero")},

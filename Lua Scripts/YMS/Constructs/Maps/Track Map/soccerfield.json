@@ -1,0 +1,1027 @@
+{
+	"author": "hexarobo",
+	"name": "soccerfield",
+	"blip_color": 2,
+	"num_bones": 0,
+	"id": 2,
+	"rotation_order": 2,
+	"blip_sprite": 1,
+	"hash": -235062017,
+	"type": "OBJECT",
+	"children": [{
+		"num_bones": 0,
+		"children": {},
+		"hash": -235062017,
+		"type": "OBJECT",
+		"offset": {
+			"y": -4.7,
+			"z": 0,
+			"x": -75.08
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"lod_distance": 16960,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"alpha": 255,
+			"is_invincible": false,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"is_dynamic": true,
+			"has_collision": true
+		},
+		"rotation": {
+			"y": 0,
+			"z": -180,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "stt_prop_stunt_soccer_goal",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": 149.999985,
+			"x": 0.0
+		},
+		"model": "stt_prop_stunt_soccer_goal",
+		"id": 4,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": 15.71,
+			"z": -0.3,
+			"x": -61.86
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"lod_distance": 16960,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"has_collision": true,
+			"alpha": 255,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"is_dynamic": true,
+			"is_invincible": false
+		},
+		"rotation": {
+			"y": 0,
+			"z": 4,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": -25.999998,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": 16.31,
+			"z": -0.3,
+			"x": -51.56
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"lod_distance": 16960,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"alpha": 255,
+			"is_invincible": false,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"is_dynamic": true,
+			"has_collision": true
+		},
+		"rotation": {
+			"y": 0,
+			"z": 4,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": -25.999998,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": 16.91,
+			"z": -0.3,
+			"x": -40.56
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"lod_distance": 16960,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"has_collision": true,
+			"is_invincible": false,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"is_dynamic": true,
+			"alpha": 255
+		},
+		"rotation": {
+			"y": 0,
+			"z": 4,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": -25.999998,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": 17.51,
+			"z": -0.3,
+			"x": -30.36
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"is_dynamic": true,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"alpha": 255,
+			"is_invincible": false,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"lod_distance": 16960,
+			"has_collision": true
+		},
+		"rotation": {
+			"y": 0,
+			"z": 4,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": -25.999998,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": 18.12,
+			"z": -0.3,
+			"x": -20.16
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"alpha": 255,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"lod_distance": 16960,
+			"is_invincible": false,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"is_dynamic": true,
+			"has_collision": true
+		},
+		"rotation": {
+			"y": 0,
+			"z": 4,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": -25.999998,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": 18.72,
+			"z": -0.3,
+			"x": -12.03
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"has_collision": true,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"lod_distance": 16960,
+			"is_invincible": false,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"is_dynamic": true,
+			"alpha": 255
+		},
+		"rotation": {
+			"y": 0,
+			"z": 4,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": -25.999998,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": 19.12,
+			"z": -0.3,
+			"x": -1.63
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"lod_distance": 16960,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"has_collision": true,
+			"is_invincible": false,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"is_dynamic": true,
+			"alpha": 255
+		},
+		"rotation": {
+			"y": 0,
+			"z": -88,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": -117.999992,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"model": "xs_prop_arena_wall_02a",
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"rotation": {
+			"y": 0,
+			"z": -88,
+			"x": 0
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"is_dynamic": true,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"alpha": 255,
+			"has_collision": true,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"is_invincible": false,
+			"lod_distance": 16960
+		},
+		"offset": {
+			"y": -10.11,
+			"z": -0.3,
+			"x": -1.63
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": -117.999992,
+			"x": 0.0
+		},
+		"num_bones": 0,
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": -21.21,
+			"z": -0.3,
+			"x": -1.63
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"is_invincible": false,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"lod_distance": 16960,
+			"alpha": 255,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"has_collision": true,
+			"is_dynamic": true
+		},
+		"rotation": {
+			"y": 0,
+			"z": -178,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": 151.999985,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"model": "xs_prop_arena_wall_02a",
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"rotation": {
+			"y": 0,
+			"z": -178,
+			"x": 0
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"has_collision": true,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"is_dynamic": true,
+			"lod_distance": 16960,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"alpha": 255,
+			"is_invincible": false
+		},
+		"offset": {
+			"y": -21.61,
+			"z": -0.3,
+			"x": -12.63
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": 151.999985,
+			"x": 0.0
+		},
+		"num_bones": 0,
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": -26.51,
+			"z": -0.3,
+			"x": -26.73
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"alpha": 255,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"is_invincible": false,
+			"is_dynamic": true,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"lod_distance": 16960,
+			"has_collision": true
+		},
+		"rotation": {
+			"y": 0,
+			"z": -178,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": 151.999985,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"model": "xs_prop_arena_wall_02a",
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"rotation": {
+			"y": 0,
+			"z": -178,
+			"x": 0
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"lod_distance": 16960,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"has_collision": true,
+			"is_invincible": false,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"is_dynamic": true,
+			"alpha": 255
+		},
+		"offset": {
+			"y": -26.81,
+			"z": -0.3,
+			"x": -36.33
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": 151.999985,
+			"x": 0.0
+		},
+		"num_bones": 0,
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": -23.81,
+			"z": -0.3,
+			"x": -49.33
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"is_dynamic": true,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"alpha": 255,
+			"has_collision": true,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"is_invincible": false,
+			"lod_distance": 16960
+		},
+		"rotation": {
+			"y": 0,
+			"z": -178,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": 151.999985,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"model": "xs_prop_arena_wall_02a",
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"rotation": {
+			"y": 0,
+			"z": -178,
+			"x": 0
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"is_invincible": false,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"lod_distance": 16960,
+			"alpha": 255,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"has_collision": true,
+			"is_dynamic": true
+		},
+		"offset": {
+			"y": -24.31,
+			"z": -0.3,
+			"x": -60.43
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": 151.999985,
+			"x": 0.0
+		},
+		"num_bones": 0,
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": -24.31,
+			"z": -0.3,
+			"x": -72.63
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"has_collision": true,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"is_dynamic": true,
+			"lod_distance": 16960,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"alpha": 255,
+			"is_invincible": false
+		},
+		"rotation": {
+			"y": 0,
+			"z": 90,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": 59.999985,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"model": "xs_prop_arena_wall_02a",
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"rotation": {
+			"y": 0,
+			"z": 93,
+			"x": 0
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"alpha": 255,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"is_invincible": false,
+			"is_dynamic": true,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"lod_distance": 16960,
+			"has_collision": true
+		},
+		"offset": {
+			"y": 5.29,
+			"z": -0.3,
+			"x": -73.63
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": 62.999989,
+			"x": 0.0
+		},
+		"num_bones": 0,
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": 16.29,
+			"z": -0.3,
+			"x": -73.03
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"lod_distance": 16960,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"has_collision": true,
+			"is_invincible": false,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"is_dynamic": true,
+			"alpha": 255
+		},
+		"rotation": {
+			"y": 0,
+			"z": 0,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": -30.0,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}, {
+		"num_bones": 0,
+		"children": {},
+		"hash": -1529768751,
+		"type": "OBJECT",
+		"offset": {
+			"y": -33.11,
+			"z": -0.3,
+			"x": -46.43
+		},
+		"options": {
+			"use_soft_pinning": true,
+			"is_visible": true,
+			"is_light_on": true,
+			"is_dynamic": true,
+			"is_attached": true,
+			"is_fire_proof": false,
+			"is_explosion_proof": false,
+			"is_melee_proof": false,
+			"bone_index": 0,
+			"has_gravity": true,
+			"is_mission_entity": true,
+			"alpha": 255,
+			"has_collision": true,
+			"is_networked": true,
+			"is_bullet_proof": false,
+			"is_invincible": false,
+			"lod_distance": 16960
+		},
+		"rotation": {
+			"y": 0,
+			"z": 147,
+			"x": 0
+		},
+		"target_version": "0.30b3",
+		"name": "xs_prop_arena_wall_02a",
+		"blip_icon": 1,
+		"position": {
+			"y": 0.0,
+			"z": 0.0,
+			"x": 0.0
+		},
+		"blip_color": 2,
+		"world_rotation": {
+			"y": 0.0,
+			"z": 116.999985,
+			"x": 0.0
+		},
+		"model": "xs_prop_arena_wall_02a",
+		"id": 80,
+		"rotation_order": 2
+	}],
+	"options": {
+		"use_soft_pinning": true,
+		"is_visible": true,
+		"is_light_on": true,
+		"alpha": 255,
+		"is_attached": false,
+		"is_fire_proof": false,
+		"is_explosion_proof": false,
+		"is_melee_proof": false,
+		"bone_index": 0,
+		"is_frozen": true,
+		"has_gravity": true,
+		"is_mission_entity": true,
+		"lod_distance": 16960,
+		"is_invincible": false,
+		"is_networked": true,
+		"is_bullet_proof": false,
+		"has_collision": true,
+		"is_dynamic": true
+	},
+	"offset": {
+		"y": 0,
+		"z": 0,
+		"x": 0
+	},
+	"always_spawn_at_position": true,
+	"blip_handle": 255918959,
+	"target_version": "0.30b3",
+	"position": {
+		"x": 804.58,
+		"y": -250.44,
+		"z": 65.03
+	},
+	"model": "stt_prop_stunt_soccer_goal",
+	"world_rotation": {
+		"y": 0.0,
+		"z": -30.0,
+		"x": 0.0
+	},
+	"created": "2022-11-29T23:35:02Z",
+	"rotation": {
+		"y": 0,
+		"z": 0,
+		"x": 0
+	},
+	"version": "Constructor 0.30b2 / 0.30b3 / 0.29"
+}

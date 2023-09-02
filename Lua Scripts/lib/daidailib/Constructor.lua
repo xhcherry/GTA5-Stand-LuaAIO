@@ -152,7 +152,7 @@ local function delete_entities_by_range(my_entities, range, type)
         local dist = SYSTEM.VDIST(player_pos.x, player_pos.y, player_pos.z, entity_pos.x, entity_pos.y, entity_pos.z)
         if dist <= range then
             if not is_entity_occupied(entity, type, player_vehicle_handles) then
-                entities.delete_by_handle(entity)
+                entities.delete(entity)
                 count = count + 1
             end
         end
@@ -653,7 +653,7 @@ local function get_aim_info()
     local aim_info = {handle=0}
     if success then
         local handle = memory.read_int(outptr)
-        if ENTITY.DOES_ENTITY_EXIST(handle) then
+        if ENTITY.DOES_ENTITY_EXIST(handle or 0) then
             aim_info.handle = handle
         end
         if ENTITY.GET_ENTITY_TYPE(handle) == 1 then

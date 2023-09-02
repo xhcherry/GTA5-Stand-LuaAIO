@@ -16,8 +16,8 @@ local function request_control(entity, tick)
 end
 
 ---判断是否为实体
-local function is_an_entity(entity)
-    if ENTITY.DOES_ENTITY_EXIST(entity) then
+function is_an_entity(entity)
+    if entity ~= nil and ENTITY.DOES_ENTITY_EXIST(entity or 0) then
         if ENTITY.IS_ENTITY_A_PED(entity) or ENTITY.IS_ENTITY_A_VEHICLE(entity) or ENTITY.IS_ENTITY_AN_OBJECT(entity) then
             return true
         end
@@ -128,7 +128,7 @@ end
 
 ---玩家和实体之间连线
 local function draw_line_to_entity(ent)
-    if ENTITY.DOES_ENTITY_EXIST(ent) then
+    if ENTITY.DOES_ENTITY_EXIST(ent or 0) then
         local pos1 = ENTITY.GET_ENTITY_COORDS(players.user_ped())
         local pos2 = ENTITY.GET_ENTITY_COORDS(ent)
         GRAPHICS.DRAW_LINE(pos1.x, pos1.y, pos1.z, pos2.x, pos2.y, pos2.z, 255, 0, 255, 255)
@@ -535,7 +535,7 @@ local function draw_entity_menu(ent)
     end)
     draw_button("爆炸", 0.6, function()
         local pos = ENTITY.GET_ENTITY_COORDS(ent)
-        FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z - 0.5, EXP_TAG_STICKYBOMB, 5.0, true, false, 0.0, false)
+        FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z - 0.5, 0, 5.0, true, false, 0.0, false)
     end)
     draw_toggle("可见的", ent_data.visible, 0.6, function(toggle)
         ent_data.visible = toggle
@@ -857,7 +857,7 @@ menu.toggle_loop(funfeatures, "看门狗模式", {}, "开启后会禁用弹出�
     end
 
     if is_pressed_key == true and tick_ent ~= nil then
-        if not ENTITY.DOES_ENTITY_EXIST(tick_ent) then
+        if not ENTITY.DOES_ENTITY_EXIST(tick_ent or 0) then
             tick_ent = nil
             is_pressed_key = false
             draw_menu_select = "entity"

@@ -139,7 +139,7 @@ end
 
 ---@param distance number
 ---@return integer
-local GetArrowAlpha = function (distance)
+function GetArrowAlpha(distance)
     local alpha = 255
     local maxDistance = 2500
     local minDistance = 1000
@@ -165,7 +165,7 @@ end
 
 ---@param entity Entity
 ---@param hudColour HudColour
-local DrawDirectionalArrowForEntity = function (entity, hudColour)
+function DrawDirectionalArrowForEntity(entity, hudColour)
     local entPos = ENTITY.GET_ENTITY_COORDS(entity, false)
     local screenX, screenY = memory.alloc(4), memory.alloc(4)
     if not GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(entPos.x, entPos.y, entPos.z, screenX, screenY) then
@@ -215,7 +215,7 @@ local IsPlayerActive = function (player)
 end
 
 
-local DrawMarkersOnPlayers = function ()
+function DrawMarkersOnPlayers()
     for _, player in ipairs(players.list()) do
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player)
         if PED.IS_PED_INJURED(ped) or not IsPlayerActive(player) or player == targetId then

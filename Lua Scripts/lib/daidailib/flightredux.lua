@@ -117,8 +117,9 @@ local sink_rate = 0.0
 last_z = 0.0
 util.create_thread(function()
     while true do
+        local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
         if player_vehicle ~= 0 then
-            local c = ENTITY.GET_ENTITY_COORDS(player_vehicle)
+            local c = ENTITY.GET_ENTITY_COORDS(player_vehicle, false)
             sink_rate = c.z - last_z 
             last_z = c.z
         end
