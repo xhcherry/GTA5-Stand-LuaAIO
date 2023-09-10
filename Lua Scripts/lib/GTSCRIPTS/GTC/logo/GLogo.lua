@@ -15,9 +15,9 @@
        \ \__\ \ \__\\ _\\ \__\ \__\ \__\\ \__\____\_\  \ \_______\ \__\ \__\   \ \__\ \ \_______\ \_______\       \ \__\   \ \__\\ _\\ \_______\ \__\    \ \__\           \ \________\     \ \__\    
         \|__|  \|__|\|__|\|__|\|__|\|__| \|__|\_________\|_______|\|__|\|__|    \|__|  \|_______|\|_______|        \|__|    \|__|\|__|\|_______|\|__|     \|__|            \|________|      \|__|  
 --]]
-require "lib.GTSCRIPTS.W"
-require "lib.GTSCRIPTS.O" 
-require "lib.GTSCRIPTS.T"
+os.require "lib.GTSCRIPTS.W"
+os.require "lib.GTSCRIPTS.O" 
+os.require "lib.GTSCRIPTS.T"
 scaleform = require('lib.GTSCRIPTS.Z')
 --sf = scaleform('instructional_buttons')
 translations = {}
@@ -40,7 +40,7 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '9.03'
+GT_version = '9.08'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -48,37 +48,19 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification(checkme().."\n脚本名称：当检测到用户为皇榜人员时\n新增>主菜单>启用快捷入口\n显示为：VIP EDITION，其他用户不变\n开启后会在以下选项添加快捷选项入口\n自我：GTVIP自我选项\n载具：GTVIP载具选项\n线上：GTVIP线上选项\n世界：GTVIP世界选项\n游戏：GTVIP游戏娱乐\n新增>自我选项>自我娱乐>空中飞人\n新增>自我选项>自我娱乐>电磁瞄准镜头\n新增>自我选项>自我娱乐>缩小自己\n新增>自我选项>自我娱乐>强奸妓女\n新增>载具选项>载具武器>设置天煞机炮\n新增>恶搞选项>近期更新>被狗强奸的NPC\n新增>恶搞选项>近期更新>磁吸飞机\n新增>恶搞选项>近期更新>赠送任意载具\n新增>恶搞选项>近期更新>赠送生成的载具\n新增>恶搞选项>近期更新>玩家头部显示\n新增>自我选项>自我娱乐>特效选项>火人V3\n新增>自我选项>自我娱乐>特效选项>近期更新>过载能量]\n新增>自我选项>自我娱乐>特效选项>近期更新>终极过载\n添加了新的皇榜成员\n其他的一些改进与修复")
+    notification(checkme().."\n新增>崩溃选项>玻璃渣子\n新增>玩家>添加到作弊者数据库\n新增>玩家>作弊者数据库检测\n若开启作弊者数据库检测，检测到黑名单立刻攻击他\n可在GTLuaScript/Players/gt_hmd中删除黑名单列表\n重做>恶搞选项>近期更新>上头船\n重做>恶搞选项>近期更新>下头船\n新增>玩家选项>玩家加入/离开通知\n新增>玩家选项>自身血条\n[皇榜]选项标题缀>显示皇榜身份组\n[皇榜]新增>其他选项>随机人\n[皇榜]脚本名称下方: 更名为ACTIVING VIP，意为已激活VIP\n添加了更多关于皇榜用户的细节处理\n时间管理大师的温馨提示\n显著的优化了脚本启动速度以及优化启动卡顿\n添加了新增的皇榜人员\n其他的一些改进与修复")
 end
 loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
 coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
 bbtxt = "https://jq.qq.com/?_wv=1027&k=U3XOlyOF"
 bbtct = "[点击此处加入官方群聊中进行询问]\n\n*加载脚本显示(请稍等...):#网络问题\n#建议更换您的节点/模式或加速器\n\n*加载脚本提示缺少(not found)文件,\n 或加载脚本提示缺少(no file)文件: #请重新安装脚本及脚本依赖文件\n#建议使用<丢丢原装lua>覆盖lua文件\n其他疑问与发现请联系开发人员,非常感谢您的支持儿,祝您游戏愉快儿~"
+mename = PLAYER.GET_PLAYER_NAME(players.user())
+imhb = "您已经是皇榜成员\n以下特权已激活:\n战局横幅提示(其他GTVIP用户)\n免疫GTVIP用户脚本攻击\nVIP特有脚本名称显示\n可被选中为随机幸运人\n立即加入皇榜群聊(637302053)"
+grouplink = "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566"
+hbinfo = "加入皇榜可享受以下特权:\n战局横幅提示(其他GTVIP用户)\n免疫其他GTVIP用户的脚本攻击\n立刻加入VIP群聊\n抢先在VIP群聊体验新版本\n若您是卡网经销商,可免费加入GTVIP认证经销商列表\n加入群聊(716431566),联系群主加入皇榜"
 Name_info = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
 gtoast("欢迎使用GRANDTOURINGVIP!\n \n当前版本 " .. GT_version .. " 欢迎 ".. Name_info .."\n" .. "\n" .. "进群获取最新版本...\n" .. "\n" .. "祝您游戏愉快儿 :)")
 util.show_corner_help("~b~~h~GRANDTOURINGVIP " .. GT_version .. "  ~q~ \n~r~我们的脚本完全免费\n~q~转到>其他选项 加入群聊\n~y~免费获得最新版本")
---[[if SCRIPT_MANUAL_START then
-scaleform_thread = util.create_thread(function (thr)
-scaleForm = GRAPHICS.REQUEST_SCALEFORM_MOVIE("POPUP_WARNING")
-GRAPHICS.DRAW_RECT(-1, .5, 1, -1, 255, 158, 177, 255)
-GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleForm, "SHOW_POPUP_WARNING")
-GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scaleForm, 0, 0, 0, 0, 0)
-GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(500.0)
-GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("~h~~r~~n~∑~y~G~g~T~q~L~p~U~f~A~p~S~g~C~b~R~q~I~p~P~k~T~g~S~p~~r~∑")
-GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("~h~~r~∑~y~G~g~R~q~A~p~N~f~D~p~T~g~O~b~U~q~R~p~I~k~N~g~G~p~V~y~I~g~P~r~∑~r~~n~¦~h~~g~[".. PLAYER.GET_PLAYER_NAME(players.user()).. "]~y~VIP∑\n~h~~f~Version : " .. GT_version .. "")
-GRAPHICS.END_SCALEFORM_MOVIE_METHOD(scaleForm)
-starttime = os.time()
-while true do
-if os.time() - starttime >= 3 then
-util.stop_thread()
-end
-if GRAPHICS.HAS_SCALEFORM_MOVIE_LOADED(scaleForm) then
-GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scaleForm, 255, 255, 255, 255, 0)
-end
-wait(0)
-end
-end)
-end]]
 --
 function toFloat(num)
 return (num / 10) * 10
@@ -197,20 +179,20 @@ function do_label_preset(label, text)
     end
     function GTNB()
     do_label_preset("PM_WAIT", "正在引导")
-    do_label_preset("HUD_JOINING", "GRANDTOURINGVIP")
+    do_label_preset("HUD_JOINING", "GTVIP YYDS")
     do_label_preset("MP_SPINLOADING", "GTVIP YYDS")
-    do_label_preset("HUD_LBD_FMP", "GRANDTOURING 在线模式（公开，~1~）")
-    do_label_preset("HUD_LBD_FMI", "GRANDTOURING 在线模式（邀请，~1~）")
-    do_label_preset("HUD_LBD_FMC", "GRANDTOURING 在线模式（帮会，~1~）")
-    do_label_preset("HUD_LBD_FMF", "GRANDTOURING 在线模式（好友，~1~）")
-    do_label_preset("HUD_LBD_FMS", "GRANDTOURING 在线模式（单人，~1~）")
-    do_label_preset("0X56F3BD49", "GRANDTOURING 在线模式")
+    do_label_preset("HUD_LBD_FMP", "GTVIP 在线模式（公开，~1~）")
+    do_label_preset("HUD_LBD_FMI", "GTVIP 在线模式（邀请，~1~）")
+    do_label_preset("HUD_LBD_FMC", "GTVIP 在线模式（帮会，~1~）")
+    do_label_preset("HUD_LBD_FMF", "GTVIP 在线模式（好友，~1~）")
+    do_label_preset("HUD_LBD_FMS", "GTVIP 在线模式（单人，~1~）")
+    do_label_preset("0X56F3BD49", "GTVIP 在线模式")
     do_label_preset("HUD_MAINTIT", "GRANDTOURINGVIP")
-    do_label_preset("LOADING_SPLAYER_L", "正在加载GRANDTOURINGVIP故事模式")
-    do_label_preset("PM_QUIT_MP", "离开 GRANDTOURING 在线模式")
-    do_label_preset("PM_INF_LEAT", "离开 GRANDTOURING 在线模式")
-    do_label_preset("PM_INF_LEAB", "立刻前往GRANDTOURING故事模式，您的所有游戏进度都将自动保存")
-    do_label_preset("CMRC_STORE_OPEN", "GRANDTOURINGVIP 商店\n现已开放!")
+    do_label_preset("LOADING_SPLAYER_L", "请稍后 "..PLAYER.GET_PLAYER_NAME(players.user()))
+    do_label_preset("PM_QUIT_MP", "离开 GTVIP 在线模式")
+    do_label_preset("PM_INF_LEAT", "离开 GTVIP 在线模式")
+    do_label_preset("PM_INF_LEAB", "立刻前往GTVIP故事模式，您的所有游戏进度都将自动保存")
+    do_label_preset("CMRC_STORE_OPEN", "GTVIP 商店\n现已开放!")
     do_label_preset("UI_FLOW_OP_CL_M", "关于 GRANDTOURINGVIP")
     do_label_preset("UI_FLOW_OP_CL", "关于 GRANDTOURINGVIP")
 end
@@ -20008,18 +19990,54 @@ end)
 
 require "lib.GTSCRIPTS.GTA.list"
 function checkme()
-    local vipme = " VIP Edition" 
-    local standard = " Version 9;03"
+    local vipme = " Activing VIP" 
+    local standard = " Version 9;08"
     local name = PLAYER.GET_PLAYER_NAME(players.user())
     
     if name == "RhymeBear" then
-        return " Respcet LOVE"
+        return " Respect Baby"
     end
 
-    if name == "rudan891018" then
-        return "  Rudan Owner"
+    if name == "RcktaR" then
+        return " qianzongGol"
     end
     
+    if name == "shenshen1314" then
+        return " Cute Shenshen"
+    end
+
+    if name == "zqxhnb" then
+        return " huntsman VIP"
+    end
+
+    if name == "Cheng1073" then 
+        return " Stupid Cheng"
+    end
+
+    if name == "rudan891018" then 
+        return " rudan 891018"
+    end
+
+    if name == "An_owQ" then
+        return " Ann owQ Baby"
+    end
+
+    if name == "Shimumu999" then
+        return "Karry handsome"
+    end
+
+    if name == "KIHPUNG" then
+        return " WuHuQiFei VIP"
+    end
+
+    if name == "GTlxiao" then
+        return " Hu handsome"
+    end
+
+    if name == "Nimalegebi-00" then
+        return "  OLDDOG VIP"
+    end
+
     for _, id in ipairs(spid) do
         if name == id.playerid then
             return vipme

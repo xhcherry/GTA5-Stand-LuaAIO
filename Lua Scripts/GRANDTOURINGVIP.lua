@@ -15,25 +15,6 @@
        \ \__\ \ \__\\ _\\ \__\ \__\ \__\\ \__\____\_\  \ \_______\ \__\ \__\   \ \__\ \ \_______\ \_______\       \ \__\   \ \__\\ _\\ \_______\ \__\    \ \__\           \ \________\     \ \__\    
         \|__|  \|__|\|__|\|__|\|__|\|__| \|__|\_________\|_______|\|__|\|__|    \|__|  \|_______|\|_______|        \|__|    \|__|\|__|\|_______|\|__|     \|__|            \|________|      \|__|  
 
-    ,o888888o.    88888888888888888        ;8      ,8.             88888888888888   b.             8   88888       888
-  8888      `88.  88888888888888888       ,88.     ,88.            8 8888           888.           8   88888       888
- 8 888        `8.       88888            ,888.     ,888.           8 8888           888o.          8   88888       888
-88 888                  88888           .`8888.   .`8888.          8 8888           Y88888o.       8   88888       888
-88 888                  88888          ,8.`8888. ,8.`8888.         8 8888           Y`Y888888o.    8   88888       888
-88 888     88888        88888         ,8'8.`8888,8^8.`8888.        8 888888888888   8oooYY888888o. 8   88888       888
-88 888        88        88888        ,88' `8.`8888' `8.`8888.      8 8888           8`Y8o. `Y88888o8   88888       888
-`8 888       .8'        88888       ,88'   `8.`88'   `8.`8888.     8 8888           8   `Y8o. `Y8888   88888       888
- `88888     ,88'        88888      ,88'     `8.8'     `8.`8888.    8 8888           8      `Y8o. `Y8   `8888       8PP
-   `888888888'          88888     ,88'       `8        `8.`8888.   8 888888888888   8         `Y8o.3    888888888,dPP
- GRANDTOURINGVIP        88888    ,88'                   `8.`8888.  88888888888888   8            `Yo     `Y88888888P
-
-当你打开这个文件时,这句话送给你:
-Ctrl C, Ctrl V, 你丫就一大傻B
-GRANDTOURINGVIP 养活你们这群CV党
-CV之前想一想, 难道你们有自主生存能力吗
-不要靠GRANDTOURINGVIP来养活你们的脚本
-累死你们M了个臭B:)~~~
-
 
 
 
@@ -46,12 +27,13 @@ CV之前想一想, 难道你们有自主生存能力吗
 GRANDTOURINGVIP™ Copyright© 2023
 Developing by GT & Respect
 All rights reserved.]]
-require "lib.GTSCRIPTS.GTW.fixnative"
-require "lib.GTSCRIPTS.G"
-require "lib.GTSCRIPTS.V"
-require "lib.GTSCRIPTS.O" 
-require "lib.GTSCRIPTS.W" 
-require ('lib/GTSCRIPTS/T')
+os.require = util.require_no_lag
+os.require "lib.GTSCRIPTS.GTW.fixnative"
+os.require "lib.GTSCRIPTS.G"
+os.require "lib.GTSCRIPTS.V"
+os.require "lib.GTSCRIPTS.O" 
+os.require "lib.GTSCRIPTS.W" 
+os.require ('lib/GTSCRIPTS/T')
 require "lib.GTSCRIPTS.GTC.logo.GLogo" 
 K = require 'lib.GTSCRIPTS.K'
 local scaleForm = require'lib.GTSCRIPTS.Z'
@@ -69,7 +51,6 @@ wait(100)
 end
 end)
 
-menu.trigger_commands("nodailyexpenses off")
 --主菜单与UI
 GTAC(menu.my_root(), "进入GRANDTOURINGVIP", {}, "",function ()
     menu.trigger_command(G)
@@ -99,7 +80,7 @@ Heist_Control = GT(G, "[任务选项]", {}, "")
 Musiness_Banager = GT(G, "[自动资产]")
 Constructor_Lua = GT(G, "[模组选项]")
 other_options = GT(G, "[其他选项]")
-bbtvt = GTH(G, "[疑难解答]", bbtxt, bbtct)
+--bbtvt = GTH(G, "[疑难解答]", bbtxt, bbtct)
 bbttt = GTH(G, "GTVIP三群[下载脚本]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oza9NK13Ql0LJDjvFg6x71QKAu5cDFYj&authKey=mKgjAapXxRtPTKUrwoLi%2FX%2FRovM4ufPDjh9nBhnQ6dFACL%2Fa%2Bqu7QkFTd55ipnEO&noverify=0&group_code=651502721", "此群为下载脚本群以及更新脚本,全员禁言,若想聊天可以加入聊天群")
 --显示UI
 GTD(players_root, "[玩家选项]")
@@ -257,8 +238,55 @@ simulate_left_click_delay = value
 end)
 
 kdr = GT(players_root, "设置KD值", {}, "请注意，这不是虚假KD")
-require "lib.GTSCRIPTS.GTA.kd"
+os.require "lib.GTSCRIPTS.GTA.kd"
 
+GTTG(players_root, "玩家加入/离开通知", {}, "", function(g)
+    gt = g
+      pljoin = players.on_join(function(pid)
+      if gt then
+        local Joinrid = players.get_rockstar_id(pid)
+        local Joinname = players.get_name(pid)
+        local Joinip = intToIp(players.get_connect_ip(pid))
+        notification("~p~有傻逼进来啦\n玩家名字: " .. Joinname .. " 玩家RID: " .. Joinrid .. " 玩家IP: " .. Joinip, blue)
+        end
+        pljoin = 0
+      end)
+      plleave= players.on_leave(function(pid)
+      if gt then
+          local leaverid = players.get_rockstar_id(pid)
+          local leavename = PLAYER.GET_PLAYER_NAME(pid)
+          local leaveip = intToIp(players.get_connect_ip(pid))
+          notification("~r~傻逼跑了\n玩家名字: " .. leavename .. [[玩家RID: ]] .. leaverid .. [[玩家IP: ]] .. leaveip .. "",blue)
+        end
+        plleave = 0
+      end)
+  end)
+
+GTTG(players_root, "自身血条", {""}, "", function(on)
+    local x = 0.085
+    local y = 0.1
+    local width = 0.17
+    local height = 0.03
+    local bg_color = { r = 0, g = 0, b = 0, a = 155 }
+    local health_color = { r = 255, g = 0, b = 0, a = 255 }
+    gt = on
+    while gt do
+    wait()
+    my_health = ENTITY.GET_ENTITY_HEALTH(PLAYER.GET_PLAYER_PED(players.user()))
+    local percentage = math.max(my_health / 328, 0)
+    GRAPHICS.DRAW_RECT(x + 0.005, y + 0.005, width - 0.006, height - 0.006, bg_color.r, bg_color.g, bg_color.b, bg_color.a)
+    GRAPHICS.DRAW_RECT(x + 0.005, y + 0.005, (width - 0.008) * percentage, height - 0.01, health_color.r, health_color.g, health_color.b, health_color.a)
+    HUD.SET_TEXT_SCALE(0.5,0.3)
+    HUD.SET_TEXT_FONT(0)
+    HUD.SET_TEXT_CENTRE(1)
+    HUD.SET_TEXT_OUTLINE(0)
+    HUD.SET_TEXT_COLOUR(0, 255, 255, 255)
+    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("生命值: ".. math.floor(my_health).."/328")
+    HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.08, 0.092)
+    end
+    gt = false
+end)
+    
 GTAC(players_root, "出其不意的传送", {""}, "", function()
     if not HUD.IS_WAYPOINT_ACTIVE(true) then
         util.toast("你需要设置一个标记点")
@@ -564,7 +592,7 @@ end)
 --require "lib.GTSCRIPTS.GTA.wd3"
 --
 Weapon_Cam_Gun = GT(weapon_options, "视野范围枪")
-require "lib.GTSCRIPTS.GTA.eg"
+os.require "lib.GTSCRIPTS.GTA.eg"
 --
 wea_func = GT(weapon_options, '实用选项', {}, '大部分武器选项都在这里~')
 --枪械玩乐
@@ -649,7 +677,7 @@ end)
 --
 
 fb = GT(selflist,"恶搞玩乐", {}, "非常有趣喔~")
-require "lib.GTSCRIPTS.GTA.blackhold"
+os.require "lib.GTSCRIPTS.GTA.blackhold"
 
 local healthandprotex = GT(selflist, "生命选项", {}, "", function(); end)
 local helperingame = GT(selflist, "增强选项", {}, "", function(); end)
@@ -3189,10 +3217,10 @@ GTTG(p_AttachGun, "不传送到骨骼位置", {"pattachdonttptobone"}, "不要�
 toolFeats = GT(entity_options, "控制器", {}, "", function(); end)
 
 entitymanagerlist = GT(lobbyFeats, "天眼黑客面板", {}, "管理玩家附近的NPC/载具/物体")
-require "lib.GTSCRIPTS.GTA.hack"
+os.require "lib.GTSCRIPTS.GTA.hack"
 
 adminworld = GT(lobbyFeats, "控制任务实体", {}, "")
-require "lib.GTSCRIPTS.GTA.admin"
+os.require "lib.GTSCRIPTS.GTA.admin"
 
 -------------------
 -- 交通人口密度
@@ -8098,7 +8126,7 @@ end)
 shitixinxi = GT(weapon_options, "实体信息枪")
 nuke = GT(weapon_options, '核弹枪', {}, '超级壮观喔~')
 
-require "lib.GTSCRIPTS.GTW.nuke"
+os.require "lib.GTSCRIPTS.GTW.nuke"
 GTLP(nuke, "核弹枪", {}, "如果想要开飞机扔核弹，你只需要打开此选项并且使用手枪向地面射击", function()
 	if PED.IS_PED_SHOOTING(players.user_ped()) then
 		local hash = util.joaat("prop_military_pickup_01")
@@ -9957,7 +9985,7 @@ dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\GTW\\NFS.lua")
 end)]]
 
 Vehicle_Collision_Reaction = GT(carfly, "载具碰撞反应")
-require "lib.GTSCRIPTS.GTA.vehpop"
+os.require "lib.GTSCRIPTS.GTA.vehpop"
 
 mission_car = GT(carfly, "任务专用载具", {}, "")
     GTAC(mission_car, "生成骷髅马", {""}, "", function ()
@@ -10760,7 +10788,7 @@ local rotation_speed = 50
 GTLuaScript.slider(funfeatures_veh,("空中漂移速度"), {"flydriftspeed"} , "", 50, 1000, 50, 50, function(value)
     rotation_speed = value
 end)
-local vehflyt = require "lib.GTSCRIPTS.GTA.vehflyt"
+local vehflyt = os.require "lib.GTSCRIPTS.GTA.vehflyt"
 local vehicle_rotation = nil
 set_vehicle_to_cam_rot = GTLP(funfeatures_veh,("载具空中漂移"), {}, "鼠标控制方向", function()
     if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
@@ -15023,7 +15051,9 @@ end)
     wait(1)
     end
 
-    loop750 = GTAC(onlinemode, '50万金钱', {""}, '$$$\n<GRANDTOURING免责声明>\n风险随着您使用的次数而增加\n请不要无脑地频繁使用该功能\n您如果因此封禁脚本概不负责', function()
+    recovery = GT(onlinemode, "刷钱")
+
+    loop750 = GTAC(recovery, '50万金钱', {""}, '$$$\n<GRANDTOURING免责声明>\n风险随着您使用的次数而增加\n请不要无脑地频繁使用该功能\n您如果因此封禁脚本概不负责', function()
         menu.show_warning(loop750, 2, "GRANDTOURINGVIP 警告(免责声明)\n此项功能未经广泛测试，可能是一项不安全的功能\n您想要继续吗？", function()
         STEALTH_LOOP_COMBINED()
         menu.trigger_commands("accepterrorstr")
@@ -15031,7 +15061,7 @@ end)
         menu.trigger_commands("accepterrorstr")
         end)
     end)
-
+            
     GTAC(onlinemode, "一键解锁成就", {''}, "几乎无风险\n但可能造成云存档失败", function(f)
         for i=0,77 do
         PLAYER.GIVE_ACHIEVEMENT_TO_PLAYER(i)
@@ -15053,7 +15083,7 @@ end)
 
     throttler = GT(protex, "自动节流器", {}, "")
 
-    require "lib.GTSCRIPTS.E"
+    os.require "lib.GTSCRIPTS.E"
 
     local pool_limiter = GT(protex, "实体池限制", {}, "")
 
@@ -15062,7 +15092,7 @@ end)
     local block_effect = GT(protex, "拦截选项", {}, "", function() end)
     
 
-	require("lib.GTSCRIPTS.N")
+	os.require("lib.GTSCRIPTS.N")
 
     adbotblock = GT(protex, "广告拦截", {"blockidiotbot"}, "自动踢出聊天频道里发送广告的混蛋", function(on)
     end)
@@ -15677,10 +15707,10 @@ end)
 	end)
 
     action_lua = GT(funfeatures, "动作选项", {}, "", function(); end)
-    require "lib.GTSCRIPTS.A"
+    os.require "lib.GTSCRIPTS.A"
 
     jingche = GT(funfeatures, "警车选项", {}, "警车延伸功能", function(); end)
-    require "lib.GTSCRIPTS.J"
+    os.require "lib.GTSCRIPTS.J"
 
     heidong = GT(funfeatures, "黑洞选项")
     dont_stop = false
@@ -15773,7 +15803,7 @@ end)
     Load_Blackhole = GTAC(Blackhole, "加载黑洞选项", {""}, "", function()
     gtoast("请稍后...")
     wait(2000)
-    require "lib.GTSCRIPTS.B"
+    os.require "lib.GTSCRIPTS.B"
     GTluaScript.delete(Load_Blackhole)
     end)
     local num = {
@@ -17379,10 +17409,10 @@ require "lib.GTSCRIPTS.GTW.C6"
 GTLuaScript.delete(Heist_Control_Load)
 end)
 
-require "lib.GTSCRIPTS.Q"
+os.require "lib.GTSCRIPTS.Q"
 
 Constructor_Lua_Load = GT(Constructor_Lua, "模组选项1", {""}, "", function(); end)
-require "lib.GTSCRIPTS.GTC.Constructor"
+os.require "lib.GTSCRIPTS.GTC.Constructor"
 
 sc = GT(Constructor_Lua, "模组选项2")
 
@@ -17809,11 +17839,28 @@ function xianshishijian(state)
         end
     end 
 end
+--
+hblink = GTH(G, "立刻加入皇榜", grouplink, hbinfo)
+hbauth = GTAC(G, "皇榜用户: ".. mename, {}, imhb, function ();end)
+util.create_tick_handler(function ()
+    local name = PLAYER.GET_PLAYER_NAME(players.user())
+    local isInSpid = false
 
-blackweb = GT(other_options, "欺诈售卖商", {}, "此列表为各路玩家提供,提供了疑似恶意欺诈消费者的卡网或者任何类型的售卖业务,您可以在此查看\n若你了解,或者经历过某个售卖商欺骗,请联系开发者")
-GTD(blackweb,"疑似欺诈业务列表")
-GTAC(blackweb, "极致科技[欺诈行为]", {}, "欺诈消费者售卖行为\n售卖Stand激活码而非注册ID\n目前已被多个玩家乃至群组举报", function ();end)
-GTAC(blackweb, "零龙Shop[拉黑欺诈]", {}, "严重欺诈行为\n多数玩家购买后被拉黑\n请留意此信息", function ();end)
+    for _, id in ipairs(spid) do 
+        if name == id.playerid then
+            isInSpid = true
+            break
+        end
+    end
+    
+    hbauth.visible = isInSpid
+    hblink.visible = not isInSpid
+end)
+--
+blackweb = GT(other_options, "GTVIP认证经销商", {}, "你可以在此找到经过GTVIP团队认证的经销商")
+GTD(blackweb,"经销商列表")
+GTH(blackweb, "沙耶的小店", "https://symenu.shop", "")
+GTH(blackweb, "西瓜 XiGua Store", "https://xgmenu.me", "")
 
 --
 zhujixianshi = GT(other_options, "显示选项")
@@ -17997,7 +18044,7 @@ GTluaScript.slider(scriptname, '脚本名称 大小', {''}, '',1, 900, 720, 5, f
 jiaoben_dx = jb_dx / 900
 end)
 
-WaterMark = GT(other_options, "GT信息栏", {""}, "非常好看且实用的信息显示~")
+WaterMark = GT(other_options, "信息栏功能", {""}, "非常好看且实用的信息显示~")
 rainbowinfo = GTAC(WaterMark, "开启信息显示", {""}, "开启该功能选项在最下方", function()
 dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\GTW\\WM.lua")
 GTLuaScript.delete(rainbowinfo)
@@ -18693,6 +18740,31 @@ GTTG(zhujixianshi, "显示Stand版本", {"standedition"}, "", function(toggle)
 set_menu_open(toggle)
 end)
 
+GTAC(other_options, "随机人", {}, "", function ()
+    require "lib.GTSCRIPTS.GTA.list"
+    local name = PLAYER.GET_PLAYER_NAME(players.user())
+    local hasPermission = false 
+
+    for _, id in ipairs(spid) do
+        if name == id.playerid then
+            hasPermission = true
+            break
+        end
+    end
+
+    if not hasPermission then
+        gtoast("权限不足")
+        return 
+    end
+
+    local numPlayersToNotify = math.random(5, 5)
+    for i = 1, numPlayersToNotify do
+        local randomIndex = math.random(1, #spid)
+        local randomPlayer = spid[randomIndex].playerid
+        gtoast("幸运人员: " .. randomPlayer)
+    end
+end)
+
 skills={
     "搞人",
     "嫖娼",
@@ -18706,7 +18778,12 @@ skills={
     "骂人",
     "抢劫",
     "任务",
-    "打炮"
+    "打炮",
+    "考妣",
+    "考妣",
+    "考妣",
+    "考妣",
+    "考妣",
 }
 rainbowr = 0
 rainbowg = 0
@@ -24060,7 +24137,7 @@ updates:textslider("船船船", {"extasy"}, "提供三种模式，普通模式�
             ENTITY.SET_ENTITY_VISIBLE(c[crash],false)
             wait(0)
         end 
-    end 
+    end
     wait(100) 
     local handle = entities.get_all_vehicles_as_handles() 
     for clear, value in pairs(handle) do 
@@ -24069,6 +24146,15 @@ updates:textslider("船船船", {"extasy"}, "提供三种模式，普通模式�
         silentclear()
         util.stop_thread()
     end 
+end)
+--
+GTAC(updates, "玻璃渣子", {}, "", function ()
+    local obj = util.joaat("prop_tall_grass_ba")
+    request_model(obj)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)) 
+    local cobj = OBJECT.CREATE_OBJECT_NO_OFFSET(obj, pos.x, pos.y, pos.z)
+    wait(6000)
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(model)
 end)
 --
 fireworklove = GTAC(updates, "寂寞烟火", {"coastline"}, coasttext, function()
@@ -25241,7 +25327,7 @@ local playerMain = GT(GTluaScript.player_root(pid), "恶搞选项", {"GTTrolling
     --end)
 end)
 
-marking_as_modder = GTTG(GTLuaScript.player_root(pid), "标记为作弊者", {"markmodder"}, "#实验阶段\n阻止TA看见您,但您仍然可以看见TA", function (on)
+--[[marking_as_modder = GTTG(GTLuaScript.player_root(pid), "标记为作弊者", {"markmodder"}, "#实验阶段\n阻止TA看见您,但您仍然可以看见TA", function (on)
     if on then
         if pid == players.user() then 
             util.toast("你已经是个挂壁了")
@@ -25253,7 +25339,95 @@ marking_as_modder = GTTG(GTLuaScript.player_root(pid), "标记为作弊者", {"m
     else
         menu.trigger_commands("desync".. PLAYER.GET_PLAYER_NAME(pid) .." off")
     end
+end)]]
+--
+local rootPath = filesystem.scripts_dir().."GTLuaScript\\"
+local blacklistpath = rootPath.."\\Players\\gt_hmd.txt"
+blacklist = {}
+function split(str,delimiter)
+    local dLen = string.len(delimiter)
+    local newDeli = ''
+    for i=1,dLen,1 do
+        newDeli = newDeli .. "["..string.sub(delimiter,i,i).."]"
+    end
+
+    local locaStart,locaEnd = string.find(str,newDeli)
+    local arr = {}
+    local n = 1
+    while locaStart ~= nil
+    do
+        if locaStart>0 then
+            arr[n] = string.sub(str,1,locaStart-1)
+            n = n + 1
+        end
+
+        str = string.sub(str,locaEnd+1,string.len(str))
+        locaStart,locaEnd = string.find(str,newDeli)
+    end
+    if str ~= nil then
+        arr[n] = str
+    end
+    return arr
+end 
+function addFiletoblcak()
+	local f = assert(io.open(blacklistpath,'a+'))
+	local line = f:read('*all')
+	local bllist = split(line,"\n")
+	for k, v in pairs(bllist) do
+		local bl = {}
+		bl = split(v,"----")
+		table.insert(blacklist,bl)
+	end
+	f:close()
+end
+
+function addFile(Name,Rid)
+	local f = assert(io.open(blacklistpath,"a"))
+	f:write(Name..'----'..Rid..'\n')
+	f:close()
+	addFiletoblcak()
+end
+
+GTAC(GTLuaScript.player_root(pid), "添加到作弊者数据库", {}, "可在GTLuaScript/Players/gt_hmd中删除黑名单列表", function()
+    local name = players.get_name(pid) 
+    local scied = players.get_rockstar_id(pid)
+    addFile(name,scied)
+    notification("~r~已写入作弊者数据库",blue)
+    notification("~r~已写入作弊者数据库",blue)
+    blacklist = {}
+    addFiletoblcak()
 end)
+
+GTTG(GTLuaScript.player_root(pid),"作弊者数据库检测", {}, "", function(g) 
+    gt = g
+	if gt then
+		for pid = 0, 32 do
+			local name = players.get_name(pid) 
+			local scied = tostring(players.get_rockstar_id(pid))
+			for k,v in pairs(blacklist) do
+            if pid ~= players.user() and players.exists(pid) then end
+				if v[2] == scied and not players.is_marked_as_modder(pid) then
+                util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, WIRI_NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, math.random(1, 10)})
+                util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, WIRI_NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+                util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, WIRI_NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
+					if bolkp ~= pid then
+						bolkp = pid
+						notification("~r~检测黑名单\n名字： "..name.."\nRid: "..scied.." 正在踢出黑名单玩家",blue)
+					end
+				end
+			end
+		end
+		return HANDLER_CONTINUE
+	end
+end)
+
+if not filesystem.exists(blacklistpath) then
+	local f = assert(io.open(blacklistpath,'a+'))
+	f:close()
+else
+	addFiletoblcak()
+end
+--
 
 local updatetroll = GT(playerMain, "近期更新", {}, "")
 
@@ -25605,63 +25779,40 @@ GTAC(updatetroll, "让他滚蛋", {}, "", function ()
     end
 end)
 
-GTTG(updatetroll, "上头船", {}, "骑人", function (f)
-    if players.user() == pid then return end
-    usingPiggyback = f
-    if usingPiggyback then
-        usingRape = false
-        local target = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0,pid)
-        STREAMING.REQUEST_ANIM_DICT("rcmjosh2")
+GTTG(updatetroll, '上头船', {""}, '骑人', function (on)
+    if on then
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(), PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 0,0, -0.2, 0.595, 2.0, 1.0,180, true, true, true, false, 0, true)
+        ped = players.user_ped()
         while not STREAMING.HAS_ANIM_DICT_LOADED("rcmjosh2") do
+            STREAMING.REQUEST_ANIM_DICT("rcmjosh2")
             wait()
         end
-        local boneId = PED.GET_PED_BONE_INDEX(target, 0xDD1C)
-        ENTITY.ATTACH_ENTITY_TO_ENTITY(
-            players.user_ped(),
-            target,
-            boneId,
-            0.0, 0.3, 0.7,
-            0, 0, 0,
-            false, true, false, false, 0, true, 0)
-        TASK.TASK_PLAY_ANIM(players.user_ped(), "rcmjosh2", "josh_sitting_loop", 8.0, -8.0, -1, 1, 0.0, false, false, false)
-        while usingPiggyback and player_active(pid, false, true) and
-        not util.is_session_transition_active() do
-            wait()
-        end
-        usingPiggyback = false
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
-        ENTITY.DETACH_ENTITY(players.user_ped(), true, false)
+        TASK.TASK_PLAY_ANIM(ped, "rcmjosh2", "josh_sitting_loop", 3.0, 2.0, -1, 3, 1.0, false, false, false)
+    else
+        local p = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        ENTITY.DETACH_ENTITY(p, false, false)
+        ENTITY.DETACH_ENTITY(players.user_ped(), false, false)
+        TASK.CLEAR_PED_TASKS(PLAYER.PLAYER_PED_ID())
     end
-end)
-
-GTTG(updatetroll, "下头船", {}, "强奸", function (f)
-    if players.user() == pid then return end
-    usingPiggyback = f
-    if usingPiggyback then
-        usingRape = false
-        local target = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0,pid)
-        STREAMING.REQUEST_ANIM_DICT("rcmpaparazzo_2")
+    end)
+    
+    GTTG(updatetroll, '下头船', {""}, '强奸', function (on)
+    if on then
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(), PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 0, 0, -0.2, 0, 2.0, 1.0,1, true, true, true, false, 0, true)
+        ped = players.user_ped()
         while not STREAMING.HAS_ANIM_DICT_LOADED("rcmpaparazzo_2") do
+            STREAMING.REQUEST_ANIM_DICT("rcmpaparazzo_2")
             wait()
         end
-        local boneId = PED.GET_PED_BONE_INDEX(target, 0xDD1C)
-        ENTITY.ATTACH_ENTITY_TO_ENTITY(
-            players.user_ped(),
-            target,
-            boneId,
-            0.0, -0.3, 0,
-            0, 0, 0,
-            false, true, false, false, 0, true, 0)
-        TASK.TASK_PLAY_ANIM(players.user_ped(), "rcmpaparazzo_2", "shag_loop_a", 8.0, -8.0, -1, 1, 0.0, false, false, false)
-        while usingPiggyback and player_active(pid, false, true) and
-        not util.is_session_transition_active() do
-            wait()
-        end
-        usingPiggyback = false
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
-        ENTITY.DETACH_ENTITY(players.user_ped(), true, false)
+        TASK.TASK_PLAY_ANIM(ped, "rcmpaparazzo_2", "shag_loop_a", 3.0, 2.0, -1, 3, 1.0, false, false, false)
+    else
+        local p = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        ENTITY.DETACH_ENTITY(p, false, false)
+        ENTITY.DETACH_ENTITY(players.user_ped(), false, false)
+        TASK.CLEAR_PED_TASKS(PLAYER.PLAYER_PED_ID())
     end
-end)
+    end)
+    
 
 GTAC(updatetroll, "小丑花车攻击", {"letpersonfk"}, "", function(on_click)
     local target_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
@@ -27369,7 +27520,7 @@ end)
         end)
     
     local attack = GT(playerMain, "闪电突击", {}, "召唤军队袭击该玩家")
-    require "lib.GTSCRIPTS.GTA.attacker"
+    os.require "lib.GTSCRIPTS.GTA.attacker"
     lazer_visible = true
     local gunner_weapons = "weapon_combatmg"
     GTAC(attack, "突击该玩家!!!", {"flashout"}, "默认无敌模式", function()
@@ -34543,8 +34694,8 @@ end
 end)
 
 GTLP(zanzhuzx, "致谢名单", {""}, "GRANDTOURING董事会", function()
-draw_string(string.format("~italic~~bold~~q~ ~y~[12] ~r~[Super飞]~g~[柒月]\n~f~[小马哥] ~p~[瑞思拜] ~d~[西木]"), 0.280,0.300,1.5,5)
-draw_string(string.format("~italic~~bold~~q~ ~q~[丢丢] ~w~[02] ~y~[xion]"), 0.300,0.520,1.5,5)
+draw_string(string.format("~italic~~bold~~q~ ~y~[12] ~r~[Super飞]~g~[柒月]\n~f~[小马哥] ~q~[安安安] ~d~[西木]"), 0.280,0.300,1.5,5)
+draw_string(string.format("~italic~~bold~~q~ ~q~[丢丢] ~w~[02] ~y~[xion] ~r~[rudan]"), 0.250,0.520,1.5,5)
 end)
 
 require "lib.GTSCRIPTS.GTA.hbl"
@@ -34659,17 +34810,19 @@ dev = GTTG(other_options, "DEV", {"devcheck"}, "", function(f)
                         util.toast("GTVIP开发人员目前正在你的战局中")
                         devhengfu(f)
                         notified_devs[id.playerrid] = true
-                        --wait(1000)
-                        notified_devs[id.playerrid] = false
-                        devgt = false
                     end
                 end
             end
         end
         wait(1000)
     end
-    if not devgt then
-       -- menu.trigger_commands("devcheck on")
+end)
+
+players.on_leave(function(pid)
+    for _, id in ipairs(devid) do
+        if id.playerrid == pid then
+            notified_devs[id.playerrid] = false
+        end
     end
 end)
 
@@ -34705,6 +34858,14 @@ spo = GTTG(other_options, "SPO", {"spcheck"}, "", function(f)
     end
 end)
 
+players.on_leave(function(pid)
+    for _, id in ipairs(spid) do
+        if id.playerid == pid then
+            notified_devs[id.playerid] = false
+        end
+    end
+end)
+
 menu.trigger_commands("spcheck on")
 menu.set_visible(spo, false)
 
@@ -34725,7 +34886,7 @@ show_credits = GTTG(other_options, "鸣谢人员", {}, "", function(on)
         local delay_time = util.current_time_millis() + 100
         while show_credits.value do
             directx.draw_rect(0, 0, 1, 1, {r = 0, g = 0, b = 0, a = 1})
-            directx.draw_texture(logo, 0.14, 0.14, 0.5, 0.5, 0.12, 0.5, 0, {r = 1, g = 1, b = 1, a = 1})
+            --directx.draw_texture(logo, 0.14, 0.14, 0.5, 0.5, 0.12, 0.5, 0, {r = 1, g = 1, b = 1, a = 1})
 
             if not ready_for_text and delay_time < util.current_time_millis() then
                 ready_for_text = true
@@ -34739,15 +34900,15 @@ show_credits = GTTG(other_options, "鸣谢人员", {}, "", function(on)
                         if new_position > 0.05 then
                             directx.draw_text(0.5, new_position, credits_lines[i].text, ALIGN_CENTRE, credits_lines[i].size, { r = 1, g = 1, b = 1, a = 1 }, true)
                         else
-                            if i == 46 then
+                            if i == 56 then
                                 show_credits.value = false
                             end
                         end 
                     end
-                    credit_text_positions[i] = credit_text_positions[i] - 0.0009
+                    credit_text_positions[i] = credit_text_positions[i] - 0.0010
                 end
             end
-            util.yield()
+            wait()
         end
     else
         ready_for_text = false

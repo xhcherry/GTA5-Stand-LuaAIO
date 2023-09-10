@@ -180,17 +180,6 @@ function Profile:enableName()
 end
 
 
-function Profile:enableRId()
-	local rIdSpoofing = menu.ref_by_path("Online>Spoofing>RID Spoofing", 33)
-	local spoofRId = menu.ref_by_rel_path(rIdSpoofing, "RID Spoofing")
-	if menu.get_value(spoofRId) ~= 2 then
-		menu.trigger_command(spoofRId, "2")
-	end
-	local spoofedRId = menu.ref_by_rel_path(rIdSpoofing, "Spoofed RID")
-	menu.trigger_command(spoofedRId, tostring(self.rid))
-end
-
-
 function Profile:enableCrew()
 	local crewSpoofing = menu.ref_by_path("Online>Spoofing>Crew Spoofing", 33)
 	local crew = menu.ref_by_rel_path(crewSpoofing, "Crew Spoofing")
@@ -244,7 +233,6 @@ end
 
 function Profile:enable()
 	if self:isFlagOn(ProfileFlag_SpoofName) then self:enableName() end
-	if self:isFlagOn(ProfileFlag_SpoofRId) then self:enableRId() end
 	if self:isFlagOn(ProfileFlag_SpoofCrew) then self:enableCrew() end
 	if self:isFlagOn(ProfileFlag_SpoofIp) then self:enableIp() end
 end
@@ -507,11 +495,6 @@ function ProfileManager:disableSpoofing()
 	if self.activeProfile:isFlagOn(ProfileFlag_SpoofName) then
 		local spoofName = menu.ref_by_rel_path(spoofing, "Name Spoofing>Name Spoofing")
 		if menu.get_value(spoofName) ~= 0 then menu.trigger_command(spoofName, "off") end
-	end
-
-	if self.activeProfile:isFlagOn(ProfileFlag_SpoofRId) then
-		local spoofRId = menu.ref_by_rel_path(spoofing, "RID Spoofing>RID Spoofing")
-		if menu.get_value(spoofRId) ~= 0 then menu.trigger_command(spoofRId, "off") end
 	end
 
 	if self.activeProfile:isFlagOn(ProfileFlag_SpoofCrew) then

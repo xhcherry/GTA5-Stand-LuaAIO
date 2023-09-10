@@ -1,4 +1,5 @@
 local textnotify={
+    "不要自己有病,还给别人开药方\n中国最强外交官————汪文斌",
     "见不到光的事情,总有一天会见光\n——崔佛·菲利普",
     "请尽你所能发光发热",
     "鱼没有水会死,水没有鱼却会更清澈",
@@ -39,10 +40,23 @@ local textnotify={
     "放弃不难,但坚持一定很酷",
     "在尘埃落定前奋力一搏",
 }
+
+function welcomehb()
+    welcomevip = "近来可好,皇榜用户: "
+    welcomestand = "欢迎 "
+    local name = PLAYER.GET_PLAYER_NAME(players.user())
+    for _, id in ipairs(spid) do
+        if name == id.playerid then
+            return welcomevip
+        end
+    end
+    return welcomestand
+end
+
 random_notify = math.random(1,#textnotify)
 
 welcomet1 = menu.toggle_loop(players_root, "你看不到", {"ucantseeit"}, "", function ()
-    notification(textnotify[random_notify] .. "\n欢迎 "..PLAYER.GET_PLAYER_NAME(players.user()))
+    notification(textnotify[random_notify] .. "\n"..welcomehb()..PLAYER.GET_PLAYER_NAME(players.user()))
 end)
 
 welcomet2 = menu.toggle_loop(players_root, "你看不到", {"youcantseeit"}, "", function ()
@@ -56,31 +70,59 @@ menu.trigger_commands("youcantseeit on")
 menu.set_visible(welcomet1, false)
 menu.set_visible(welcomet2, false)
 
---[[if SCRIPT_MANUAL_START then
-notification(textnotify[random_notify] .. "\n欢迎回到GRANDTOURINGVIP!")
-end
-if SCRIPT_SILENT_START then
-notification(textnotify[random_notify] .. "\n欢迎回到GRANDTOURINGVIP!")
-end]]
-
 function realheart()
-notification("谢谢你，能发现这个选项，并且点击了它，写下它之前，我想了很多很多\n希望你的人与事情不会为你带来压力，同时也希望事情中的任何人也不会有压力，希望你每天都开心快乐没有烦恼，与任何人和任何事都是的极其美好状态，\n也不会因为杂碎的事情而打破自己的心情，真心的祝福你\n如果真的不可避免，\n祝福你未来不会孤独的一个人承受，会有其他人聆听,而不会形只影单，\n也不会只能无奈的看着天花板,不要再半夜胡思乱想，遇到烦心事不要抱着酒瓶子库库炫一顿，\n这个样子对自己很不好，\n不仅对身体不好，对自己的心情也会有更大的影响,\n我的现实目前很糟糕，很多烦心的事情，\n围绕着我,即使我现在很不好，\n但是我仍然想为你们撑一把伞，即使我什么都做不了，但是我能对你有一个诚实的祝福\n希望你今后不会像我一样，遇到了不愉快的事情，只能去无奈，去心酸，却又一点办法都没有，我能做的就是为大家提供脚本的更新支持，除此之外没有别的，\n我也不会得到什么心灵安慰，\n而我可能仍然会困在糟糕的情绪中，我实在不想憋着了，所以请允许将这段话写进这里\n我不想描绘一幅不诚实的画面，但是很希望你们不会像我一样,我试图让这条通知变得更容易发现，但我不会这样做，\n因为显得我太矫情，同时我又很希望将我的心意传达给你们,我总是守护着自己心里的最纯真的东西，它导致我现实中心态很脆弱，总是被一切不起眼的事情而难过,\n我也在修正我自己,我希望你们遇到了令人痛苦，烦恼，烦恼之类的事情，能有一个或者多个人多个事情能在你们身边安慰你，能让糟糕心情不再那么糟糕，真心的祝福\n献给GRANDTOURINGVIP的顶级作弊者们")
+notification("")
 end
+
+local wennuan={
+    "玩了那么久的游戏，休息一下吧，这样对眼睛会很累哒！",
+    "小心游戏时间哦，不要让游戏吃掉所有的时间呢！",
+    "休息一下，喝口水，在游戏中继续变强大！",
+    "如果需要休息，记得停下来，我会一直在这里等着你的回归！",
+    "玩了那么久的游戏，不要忘了宠爱自己，好好照顾自己的身心健康~",
+    "每隔一段时间，和朋友一起赌场上岛，更有趣呢！我的意思是让您休息一会~",
+    "游戏时间是快乐的时光，但也要保持游戏与生活的平衡哦！更要保持自己的身体健康哦！",
+    "亲爱的小星星，玩游戏要开心，但别让它偷走你的笑容哦！",
+    "如果感觉游戏占据了太多时间，就来找我，我们一起寻找平衡的秘密吧！",
+    "每小时来一次可爱的小休息，可以继续享受游戏的欢乐哦~",
+    "宝子！记住要休息一下，身体健康最重要呢！",
+    "玩得开心的同时，也别忘了给眼睛和身体一个小休息哦！",
+    "宝子！，玩游戏是开心的事，但别忘了给自己一个小甜点的时间哦！",
+    "记住，游戏是一场旅程，但家人和朋友是一生的宝藏哦",
+    "宝子们，游戏时间太长可能会变成南瓜哦，记得适时休息，不要变成南瓜宝宝！",
+    "在游戏世界中畅游，但也别忘了在现实中闪闪发光！",
+    "喔，亲爱的小可爱们，游戏时间要小心控制咯，不然宝宝会担心的吖！",
+    "宝宝，游戏是有趣的，但也要记得在生活中积累更多美好的回忆喔！",
+    "如果觉得疲倦，闭上眼睛，做个小梦，然后继续你的冒险！",
+}
+
+util.create_tick_handler(function ()
+    --local name = PLAYER.GET_PLAYER_NAME(players.user())
+    --for _,id in ipairs(spid) do
+       -- if name == id.playerid then 
+            wait(3600000)
+            random_wennuan = math.random(1,#wennuan)
+            notification(wennuan[random_wennuan])
+        --end
+   -- end
+end)
 
 credits_lines = {
     {text = "特别感谢", size = 0.9},
     {text = "", size = 0.7},
     {text = "", size = 0.7},
     {text = "猛女丢丢", size = 0.8},
-    {text = "猛女名不虚传", size = 0.7},
-    {text = "", size = 0.7},
+    {text = "猛女名不虚传", size = 0.6},
     {text = "", size = 0.7},
     {text = "21", size = 0.8},
-    {text = "Atom Menu, 21ProLua 制作人", size = 0.7},
-    {text = "", size = 0.7},
+    {text = "Atom Menu, 21Pro Lua 制作人", size = 0.6},
     {text = "", size = 0.7},
     {text = "xion, 02", size = 0.8},
-    {text = "Traveller 开发人员", size = 0.7},
+    {text = "Traveller 开发人员", size = 0.6},
+    {text = "", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "安安", size = 0.8},
+    {text = "快乐源泉", size = 0.6},
     {text = "", size = 0.7},
     {text = "", size = 0.7},
     {text = "感谢", size = 0.9},
@@ -93,22 +135,46 @@ credits_lines = {
     {text = "安安", size = 0.8},
     {text = "Super飞", size = 0.8},
     {text = "点儿", size = 0.8},
-    {text = "沙耶", size = 0.8},
     {text = "夜巡游", size = 0.8},
     {text = "", size = 0.7},
-    {text = "帮助，爱心，支持，奉献", size = 0.7},
+    {text = "帮助，爱心，支持，奉献", size = 0.6},
     {text = "", size = 0.7},
     {text = "", size = 0.7},
-    {text = "GTVIP 股东组", size = 0.9},
+    {text = "着重介绍", size = 0.9},
     {text = "", size = 0.7},
     {text = "", size = 0.7},
-    {text = "rudan891018", size = 0.8},
-    {text = "我玉玉了", size = 0.8},
-    {text = "<所有皇榜成员>", size = 0.8},
+    {text = "安安", size = 0.8},
+    {text = "敲里吗，甘霖娘，直视我", size = 0.6},
+    {text = "", size = 0.7},
+    {text = "rudan", size = 0.8},
+    {text = "乱世中的金主", size = 0.6},
+    {text = "", size = 0.7},
+    {text = "夜巡游", size = 0.8},
+    {text = "洛城第一摆子", size = 0.6},
+    {text = "", size = 0.7},
+    {text = "照夜清", size = 0.8},
+    {text = "泰国第一游侠", size = 0.6},
     {text = "", size = 0.7},
     {text = "", size = 0.7},
+    {text = "其他开发者", size = 0.9},
     {text = "", size = 0.7},
-    {text = "致谢所有的皇榜人员", size = 0.9},
+    {text = "", size = 0.7},
+    {text = "Famiglistimo[Traveller]", size = 0.8},
+    {text = "", size = 0.7},
+    {text = "xion[Traveller]", size = 0.8},
+    {text = "", size = 0.7},
+    {text = "ice[Traveller]", size = 0.8},
+    {text = "", size = 0.7},
+    {text = "M78[TITAN Menu]", size = 0.8},
+    {text = "", size = 0.7},
+    {text = "UnnKai[Theme Lua for Stand]", size = 0.8},
+    {text = "", size = 0.7},
+    {text = "21[Atom Menu, 21Pro Lua]", size = 0.8},
+    {text = "", size = 0.7},
+    {text = "When you came[MT Lua 2Take1]", size = 0.8},
+    {text = "", size = 0.7},
+    {text = "", size = 0.7},
+    {text = "GTVIP所有皇榜成员", size = 0.9},
     {text = "感谢你们支持GTVIP", size = 0.8},
     {text = "爱你们", size = 0.8},
     {text = "", size = 0.8},
