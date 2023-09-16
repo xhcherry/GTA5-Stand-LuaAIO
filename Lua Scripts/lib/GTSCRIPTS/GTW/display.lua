@@ -2,7 +2,7 @@
 if SCRIPT_MANUAL_START then 
     menu.trigger_commands("hostqu on") --主机序列
     menu.trigger_commands("scriptname on") --脚本名称
-    menu.trigger_commands("hostqus off") --实体池显示
+    menu.trigger_commands("entityqus off") --实体池显示
     menu.trigger_commands("scriptinfo off") --名称信息
     menu.trigger_commands("timeos off") --显示时间
     menu.trigger_commands("dayos off") --显示日期

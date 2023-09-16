@@ -1579,7 +1579,6 @@ end
 -- Special Cargo Shit
 ----------------------------------
 --#region Special Cargo Shit
-GTD(Musiness_Banager, "版本: e94d676")
 local SCMan = menu.list(Musiness_Banager, MenuLabels.SPECIALCARGO, {}, MenuLabels.SPECIALCARGOLIST_DESC)
 
 local WarehouseSelector = menu.list_select(SCMan, MenuLabels.WAREHOUSE, {"selectcargowarehouse"}, MenuLabels.SPECIALCARGOWAREHOUSE_DESC, MenuCurrentWarehouses, 0, function(value)

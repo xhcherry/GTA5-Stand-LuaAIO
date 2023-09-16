@@ -18,6 +18,7 @@
 os.require "lib.GTSCRIPTS.W"
 os.require "lib.GTSCRIPTS.O" 
 os.require "lib.GTSCRIPTS.T"
+os.require "lib.GTSCRIPTS.GTW.hbcheck"
 scaleform = require('lib.GTSCRIPTS.Z')
 --sf = scaleform('instructional_buttons')
 translations = {}
@@ -40,7 +41,7 @@ GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
 new = {}
 Ini = {}
-GT_version = '9.08'
+GT_version = '9.15'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -48,19 +49,33 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification(checkme().."\n新增>崩溃选项>玻璃渣子\n新增>玩家>添加到作弊者数据库\n新增>玩家>作弊者数据库检测\n若开启作弊者数据库检测，检测到黑名单立刻攻击他\n可在GTLuaScript/Players/gt_hmd中删除黑名单列表\n重做>恶搞选项>近期更新>上头船\n重做>恶搞选项>近期更新>下头船\n新增>玩家选项>玩家加入/离开通知\n新增>玩家选项>自身血条\n[皇榜]选项标题缀>显示皇榜身份组\n[皇榜]新增>其他选项>随机人\n[皇榜]脚本名称下方: 更名为ACTIVING VIP，意为已激活VIP\n添加了更多关于皇榜用户的细节处理\n时间管理大师的温馨提示\n显著的优化了脚本启动速度以及优化启动卡顿\n添加了新增的皇榜人员\n其他的一些改进与修复")
+    notification("[重要]消失了五个月的启动音效现已重新应用到脚本启动\n而且不影响用户名为中文名玩家的运行，灰常好用\n脚本名称缀现在可正确显示大小写以及特殊符号\n优化了皇榜系统检测，现在可正确的检测到其他皇榜成员\n优化了普通/皇榜/专属主页闪烁名称可能会错位的问题\n当游戏处于云上加载，脚本名称不会再显示*Invalid*\n当游戏处于云上加载，定制后的主页名称不会再显示普通内容\n在地图旁的主机序列添加了皇榜名称缀，以及可显示定制名称\n在脚本启动时，取消了隐藏地图，解决了在这之间无法选中武器的问题\n校准了FPS显示，现在不会占用更多的线程导致不必要的卡顿\n显著的优化了脚本运行速度\n\n我们一直在创造更多细节处理，使得GTLua使用的体验感更加沉浸\nVersion: "..GT_version)
 end
-loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
+--
+
+--
 coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
 bbtxt = "https://jq.qq.com/?_wv=1027&k=U3XOlyOF"
 bbtct = "[点击此处加入官方群聊中进行询问]\n\n*加载脚本显示(请稍等...):#网络问题\n#建议更换您的节点/模式或加速器\n\n*加载脚本提示缺少(not found)文件,\n 或加载脚本提示缺少(no file)文件: #请重新安装脚本及脚本依赖文件\n#建议使用<丢丢原装lua>覆盖lua文件\n其他疑问与发现请联系开发人员,非常感谢您的支持儿,祝您游戏愉快儿~"
 mename = PLAYER.GET_PLAYER_NAME(players.user())
-imhb = "您已经是皇榜成员\n以下特权已激活:\n战局横幅提示(其他GTVIP用户)\n免疫GTVIP用户脚本攻击\nVIP特有脚本名称显示\n可被选中为随机幸运人\n立即加入皇榜群聊(637302053)"
 grouplink = "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566"
-hbinfo = "加入皇榜可享受以下特权:\n战局横幅提示(其他GTVIP用户)\n免疫其他GTVIP用户的脚本攻击\n立刻加入VIP群聊\n抢先在VIP群聊体验新版本\n若您是卡网经销商,可免费加入GTVIP认证经销商列表\n加入群聊(716431566),联系群主加入皇榜"
 Name_info = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
 gtoast("欢迎使用GRANDTOURINGVIP!\n \n当前版本 " .. GT_version .. " 欢迎 ".. Name_info .."\n" .. "\n" .. "进群获取最新版本...\n" .. "\n" .. "祝您游戏愉快儿 :)")
 util.show_corner_help("~b~~h~GRANDTOURINGVIP " .. GT_version .. "  ~q~ \n~r~我们的脚本完全免费\n~q~转到>其他选项 加入群聊\n~y~免费获得最新版本")
+--
+util.create_thread(function ()
+    --if SCRIPT_MANUAL_START then
+        local fr = soup.FileReader(filesystem.scripts_dir() .. 'GTLuaScript\\gt\\GT.wav')
+        local wav = soup.audWav(fr)
+        local dev = soup.audDevice.getDefault()
+        local pb = dev:open(wav.channels)
+        local mix = soup.audMixer()
+        mix.stop_playback_when_done = true
+        mix:setOutput(pb)
+        mix:playSound(wav)
+        while pb:isPlaying() do util.yield() end
+    --end
+end)
 --
 function toFloat(num)
 return (num / 10) * 10
@@ -97,7 +112,7 @@ if SCRIPT_MANUAL_START then
     while not GRAPHICS.HAS_SCALEFORM_MOVIE_LOADED(scaleform) do
     wait()
     end
-    HUD.HIDE_HUD_AND_RADAR_THIS_FRAME()
+    --HUD.HIDE_HUD_AND_RADAR_THIS_FRAME()
     if state == 0 then
     SETUP_SINGLE_LINE(scaleform)
     ADD_TEXT_TO_SINGLE_LINE(scaleform, "Welcome", "$font5", "HUD_COLOUR_FREEMODE")
@@ -121,7 +136,7 @@ if SCRIPT_MANUAL_START then
     if util.current_time_millis() - sTime >= 3000 and state == 2 then
     SETUP_SINGLE_LINE(scaleform)
     ADD_TEXT_TO_SINGLE_LINE(scaleform, "GRANDTOURINGVIP", "$font5", "HUD_COLOUR_FREEMODE")
-    ADD_TEXT_TO_SINGLE_LINE(scaleform, 'v' .. GT_version, "$font5", "HUD_COLOUR_RED")
+    ADD_TEXT_TO_SINGLE_LINE(scaleform, "" .. GT_version, "$font5", "HUD_COLOUR_RED")
     GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_SINGLE_LINE")
     GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
     GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
@@ -147,32 +162,7 @@ if SCRIPT_MANUAL_START then
     end)
 end
 
---[[if SCRIPT_MANUAL_START then   
-scaleform_thread = util.create_thread(function (thr)
-launch_guided_missile_scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE("SUBMARINE_MISSILES")
-GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(launch_guided_missile_scaleform, "GENERIC_2")
-GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(launch_guided_missile_scaleform, 255, 255, 255, 255, 0)
-GRAPHICS.END_SCALEFORM_MOVIE_METHOD(launch_guided_missile_scaleform)
-launch_guided_missile_scaleform_2 = GRAPHICS.REQUEST_SCALEFORM_MOVIE("DRONE_CAM")
-GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(launch_guided_missile_scaleform_2, "DRONE_CAM")
-GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(launch_guided_missile_scaleform_2, 255, 255, 255, 255, 0)
-GRAPHICS.END_SCALEFORM_MOVIE_METHOD(launch_guided_missile_scaleform_2)
-starttime = os.time()
-while true do
-if os.time() - starttime >= 5 then
-util.stop_thread()
-end
-if GRAPHICS.HAS_SCALEFORM_MOVIE_LOADED(launch_guided_missile_scaleform) then
-GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(launch_guided_missile_scaleform, 255, 255, 255, 255, 0)
-end
-wait(1)
-end
-end)
-end
---]]
-
 function do_label_preset(label, text)
-    --log("Setting up label present for label " .. label .. " with text " .. text)
     menu.trigger_commands("addlabel " .. label)
     local prep = "edit" .. string.gsub(label, "_", "") .. " " .. text
     menu.trigger_commands(prep)
@@ -1712,167 +1702,191 @@ local darkBlue = new.colour( 132, 207, 255 )
 
 b_notifications = {}
 b_notifications.new = function ()
-    local self = {}
-    local active_notifs = {}
-    self.notif_padding = 0.005
-    self.notif_text_size = 0.55
-    self.notif_title_size = 0.6
-    self.notif_spacing = 0.015
-    self.notif_width = 0.16
-    self.notif_flash_duration = 1
-    self.notif_anim_speed = 0.75
-    self.notif_banner_colour = {r = 1, g = 0.51, b = 0.61, a = 1}
-    self.notif_flash_colour = {r = 1, g = 0.34, b = 0.47, a = 1}
-    self.max_notifs = 10
-    self.notif_banner_height = 0.002
-    self.use_toast = false
-    local split = function (input, sep)
-    local t={}
-    for str in string.gmatch(input, "([^"..sep.."]+)") do
-    table.insert(t, str)
-    end
-    return t
-    end
-    local function lerp(a, b, t)
-    return a + (b - a) * t
-    end
-    local cut_string_to_length = function(input, length, fontSize)
-    input = split(input, " ")
-    local output = {}
-    local line = ""
-    for i, word in ipairs(input) do
-    if directx.get_text_size(line..word, fontSize) >= length then
-    if directx.get_text_size(word, fontSize) > length then
-    while directx.get_text_size(word , fontSize) > length do
-    local word_lenght = string.len(word)
-    for x = 1, word_lenght, 1 do
-    if directx.get_text_size(line..string.sub(word ,1, x), fontSize) > length then
-    output[#output+1] = line..string.sub(word, 1, x - 1)
-    line = ""
-    word = string.sub(word, x, word_lenght)
-    break
-    end
-    end
-    end
-    else
-    output[#output+1] =  line
-    line = ""
-    end
-    end
-    if i == #input then
-    output[#output+1] = line..word
-    end
-    line = line..word.." "
-    end
-    return table.concat(output, "\n")
-    end
-    local draw_notifs = function ()
-    local aspect_16_9 = 1.777777777777778
-    util.create_tick_handler(function ()
-    local total_height = 0
-    local delta_time = MISC.GET_FRAME_TIME()
-    for i = #active_notifs, 1, -1 do
-    local notif = active_notifs[i]
-    local notif_body_colour = notif.colour
-    if notif.flashtimer > 0 then
-    notif_body_colour = self.notif_flash_colour
-    notif.flashtimer = notif.flashtimer - delta_time
-    end
-    if notif.current_y_pos == -10 then
-    notif.current_y_pos = total_height
-    end
-    notif.current_y_pos = lerp(notif.current_y_pos, total_height, 5 * delta_time * self.notif_anim_speed)
-    if not notif.marked_for_deletetion then
-    notif.animation_state = lerp(notif.animation_state, 1, 10 * delta_time * self.notif_anim_speed)
-    end
-    directx.draw_rect(
-    1 - self.notif_width - self.notif_padding * 2,
-    0.1 - self.notif_padding * 2 * aspect_16_9 + notif.current_y_pos,
-    self.notif_width + (self.notif_padding * 2),
-    (notif.text_height + notif.title_height + self.notif_padding * 2 * aspect_16_9) * notif.animation_state,
-    notif_body_colour
-    )
-    directx.draw_rect(
-    1 - self.notif_width - self.notif_padding * 2,
-    0.1 - self.notif_padding * 2 * aspect_16_9 + notif.current_y_pos,
-    self.notif_width + (self.notif_padding * 2),
-    self.notif_banner_height * aspect_16_9 * notif.animation_state,
-    self.notif_banner_colour
-    )
-    directx.draw_text(
-    1 - self.notif_padding - self.notif_width,
-    0.1 - self.notif_padding * aspect_16_9 + notif.current_y_pos,
-    notif.title,
-    ALIGN_TOP_LEFT,
-    self.notif_title_size,
-   {r = 1 * notif.animation_state, g = 1 * notif.animation_state, b = 1 * notif.animation_state, a = 1 * notif.animation_state}
-    )
-    directx.draw_text(
-    1 - self.notif_padding - self.notif_width,
-    0.1 - self.notif_padding * aspect_16_9 + notif.current_y_pos + notif.title_height,
-    notif.text,
-    ALIGN_TOP_LEFT,
-    self.notif_text_size,
-    {r = 1 * notif.animation_state, g = 1 * notif.animation_state, b = 1 * notif.animation_state, a = 1 * notif.animation_state}
-    )
-    total_height = total_height + ((notif.total_height + self.notif_padding * 2 + self.notif_spacing) * notif.animation_state)
-    if notif.marked_for_deletetion then
-    notif.animation_state = lerp(notif.animation_state, 0, 10 * delta_time)
-    if notif.animation_state < 0.05 then
-    table.remove(active_notifs, i)
-    end
-    elseif notif.duration < 0 then
-    notif.marked_for_deletetion = true
-    end
-    notif.duration = notif.duration - delta_time
-    end
-    return #active_notifs > 0
-    end)
-    end
-   self.notify = function (title,text, duration, colour)
-   if self.use_toast then
-   util.toast(title.."\n"..text)
-   return
-   end
-   title = cut_string_to_length(title, self.notif_width, self.notif_title_size)
-   text = cut_string_to_length(text, self.notif_width, self.notif_text_size)
-   local x, text_heigth = directx.get_text_size(text, self.notif_text_size)
-   local xx, title_height = directx.get_text_size(title, self.notif_title_size)
-   local hash = util.joaat(title..text)
-   local new_notification = {
-   title = title,
-   flashtimer = self.notif_flash_duration,
-   colour = colour or {r = 0.094, g = 0.098, b = 0.101, a = 0.6},
-   duration = duration or 3,
-   current_y_pos = -10,
-   marked_for_deletetion = false,
-   animation_state = 0,
-   text = text,
-   hash = hash,
-   text_height = text_heigth,
-   title_height = title_height,
-   total_height = title_height + text_heigth
-   }
-   for i, notif in ipairs(active_notifs) do
-   if notif.hash == hash then
-   notif.flashtimer = self.notif_flash_duration * 0.5
-   notif.marked_for_deletetion = false
-   notif.duration = duration or 3
-   return
-   end
-   end
-   active_notifs[#active_notifs+1] = new_notification
-   if #active_notifs > self.max_notifs then
-   table.remove(active_notifs, 1)
-   end
-   if #active_notifs == 1 then draw_notifs() end
-   end
-   return self
-   end
+local self = {}
+local active_notifs = {}
+self.notif_padding = 0.005
+self.notif_text_size = 0.55
+self.notif_title_size = 0.6
+self.notif_spacing = 0.015
+self.notif_width = 0.17
+self.notif_flash_duration = 1
+self.notif_anim_speed = 0.75
+self.notif_banner_colour = {r = 1, g = 0.51, b = 0.61, a = 1}
+self.notif_flash_colour = {r = 1, g = 0.34, b = 0.47, a = 1}
+self.max_notifs = 10
+self.notif_banner_height = 0.002
+self.use_toast = false
+local split = function (input, sep)
+local t={}
+for str in string.gmatch(input, "([^"..sep.."]+)") do
+table.insert(t, str)
+end
+return t
+end
+local function lerp(a, b, t)
+return a + (b - a) * t
+end
+local cut_string_to_length = function(input, length, fontSize)
+input = split(input, " ")
+local output = {}
+local line = ""
+for i, word in ipairs(input) do
+if directx.get_text_size(line..word, fontSize) >= length then
+if directx.get_text_size(word, fontSize) > length then
+while directx.get_text_size(word , fontSize) > length do
+local word_lenght = string.len(word)
+for x = 1, word_lenght, 1 do
+if directx.get_text_size(line..string.sub(word ,1, x), fontSize) > length then
+output[#output+1] = line..string.sub(word, 1, x - 1)
+line = ""
+word = string.sub(word, x, word_lenght)
+break
+end
+end
+end
+else
+output[#output+1] =  line
+line = ""
+end
+end
+if i == #input then
+output[#output+1] = line..word
+end
+line = line..word.." "
+end
+return table.concat(output, "\n")
+end
+local draw_notifs = function ()
+local aspect_16_9 = 1.777777777777778
+util.create_tick_handler(function ()
+local total_height = 0
+local delta_time = MISC.GET_FRAME_TIME()
+for i = #active_notifs, 1, -1 do
+local notif = active_notifs[i]
+local notif_body_colour = notif.colour
+if notif.flashtimer > 0 then
+notif_body_colour = self.notif_flash_colour
+notif.flashtimer = notif.flashtimer - delta_time
+end
+if notif.current_y_pos == -10 then
+notif.current_y_pos = total_height
+end
+notif.current_y_pos = lerp(notif.current_y_pos, total_height, 5 * delta_time * self.notif_anim_speed)
+if not notif.marked_for_deletetion then
+notif.animation_state = lerp(notif.animation_state, 1, 10 * delta_time * self.notif_anim_speed)
+end
+directx.draw_rect(
+1 - self.notif_width - self.notif_padding * 2,
+0.1 - self.notif_padding * 2 * aspect_16_9 + notif.current_y_pos,
+self.notif_width + (self.notif_padding * 2),
+(notif.text_height + notif.title_height + self.notif_padding * 2 * aspect_16_9) * notif.animation_state,
+notif_body_colour
+)
+directx.draw_rect(
+1 - self.notif_width - self.notif_padding * 2,
+0.1 - self.notif_padding * 2 * aspect_16_9 + notif.current_y_pos,
+self.notif_width + (self.notif_padding * 2),
+self.notif_banner_height * aspect_16_9 * notif.animation_state,
+self.notif_banner_colour
+)
+directx.draw_text(
+1 - self.notif_padding - self.notif_width,
+0.1 - self.notif_padding * aspect_16_9 + notif.current_y_pos,
+notif.title,
+ALIGN_TOP_LEFT,
+self.notif_title_size,
+{r = 1 * notif.animation_state, g = 1 * notif.animation_state, b = 1 * notif.animation_state, a = 1 * notif.animation_state}
+)
+directx.draw_text(
+1 - self.notif_padding - self.notif_width,
+0.1 - self.notif_padding * aspect_16_9 + notif.current_y_pos + notif.title_height,
+notif.text,
+ALIGN_TOP_LEFT,
+self.notif_text_size,
+{r = 1 * notif.animation_state, g = 1 * notif.animation_state, b = 1 * notif.animation_state, a = 1 * notif.animation_state}
+)
+total_height = total_height + ((notif.total_height + self.notif_padding * 2 + self.notif_spacing) * notif.animation_state)
+if notif.marked_for_deletetion then
+notif.animation_state = lerp(notif.animation_state, 0, 10 * delta_time)
+if notif.animation_state < 0.05 then
+table.remove(active_notifs, i)
+end
+elseif notif.duration < 0 then
+notif.marked_for_deletetion = true
+end
+notif.duration = notif.duration - delta_time
+end
+return #active_notifs > 0
+end)
+end
+self.notify = function (title,text, duration, colour)
+if self.use_toast then
+util.toast(title.."\n"..text)
+return
+end
+title = cut_string_to_length(title, self.notif_width, self.notif_title_size)
+text = cut_string_to_length(text, self.notif_width, self.notif_text_size)
+local x, text_heigth = directx.get_text_size(text, self.notif_text_size)
+local xx, title_height = directx.get_text_size(title, self.notif_title_size)
+local hash = util.joaat(title..text)
+local new_notification = {
+title = title,
+flashtimer = self.notif_flash_duration,
+colour = colour or {r = 0.094, g = 0.098, b = 0.101, a = 0.6},
+duration = duration or 3,
+current_y_pos = -10,
+marked_for_deletetion = false,
+animation_state = 0,
+text = text,
+hash = hash,
+text_height = text_heigth,
+title_height = title_height,
+total_height = title_height + text_heigth
+}
+for i, notif in ipairs(active_notifs) do
+if notif.hash == hash then
+notif.flashtimer = self.notif_flash_duration * 0.5
+notif.marked_for_deletetion = false
+notif.duration = duration or 3
+return
+end
+end
+active_notifs[#active_notifs+1] = new_notification
+if #active_notifs > self.max_notifs then
+table.remove(active_notifs, 1)
+end
+if #active_notifs == 1 then draw_notifs() end
+end
+return self
+end
 
 local mayonotification = b_notifications.new()
+
 function notification(input)
-    mayonotification.notify("GRANDTOURINGVIP",input)
+    local name = PLAYER.GET_PLAYER_NAME(players.user())
+    local shouldCallNotify = false  -- 默认情况下不在 for 循环中调用
+
+    for _, id in ipairs(spid) do 
+        if name == id.playerid then 
+            local combinedText = "GRANDTOURINGVIP\n" .. checkme()
+            combinedText = combinedText:gsub("\n%s*", "\n") -- 移除换行后的空格
+            mayonotification.notify(combinedText, input)
+            shouldCallNotify = true  -- 设置标志以在 for 循环中调用
+        end
+    end
+
+    for _, id in ipairs(devid) do 
+        if name == id.playerrid then 
+            local combinedText = "GRANDTOURINGVIP\n" .. checkme()
+            combinedText = combinedText:gsub("\n%s*", "\n") -- 移除换行后的空格
+            mayonotification.notify(combinedText, input)
+            shouldCallNotify = true  -- 设置标志以在 for 循环中调用
+        end
+    end
+
+    if not shouldCallNotify then
+        mayonotification.notify("GRANDTOURINGVIP",input)  -- 只有在标志为 false 时调用
+    end
 end
 
 scripts_dir = filesystem.scripts_dir()
@@ -4199,174 +4213,6 @@ function on_user_change_vehicle(vehicle)
         end
 
     end
-end
-
---new
-b_notifications = {}
-b_notifications.new = function ()
-    local self = {}
-
-    local active_notifs = {}
-    self.notif_padding = 0.005
-    self.notif_text_size = 0.5
-    self.notif_title_size = 0.6
-    self.notif_spacing = 0.015
-    self.notif_width = 0.15
-    self.notif_flash_duration = 1
-    self.notif_anim_speed = 1
-    self.notif_banner_colour = {r = 1, g = 0, b = 1, a = 1}
-    self.notif_flash_colour = {r = 0.5, g = 0.0, b = 0.5, a = 1}
-    self.max_notifs = 10
-    self.notif_banner_height = 0.002
-    self.use_toast = false
-    local split = function (input, sep)
-        local t={}
-        for str in string.gmatch(input, "([^"..sep.."]+)") do
-                table.insert(t, str)
-        end
-        return t
-    end
-    
-    local function lerp(a, b, t)
-        return a + (b - a) * t
-    end
-    local cut_string_to_length = function(input, length, fontSize)
-        input = split(input, " ")
-        local output = {}
-        local line = ""
-        for i, word in ipairs(input) do
-            if directx.get_text_size(line..word, fontSize) >= length then
-                if directx.get_text_size(word, fontSize) > length then
-                    while directx.get_text_size(word , fontSize) > length do
-                        local word_lenght = string.len(word)
-                        for x = 1, word_lenght, 1 do
-                            if directx.get_text_size(line..string.sub(word ,1, x), fontSize) > length then
-                                output[#output+1] = line..string.sub(word, 1, x - 1)
-                                line = ""
-                                word = string.sub(word, x, word_lenght)
-                                break
-                            end
-                        end
-                    end
-                else
-                    output[#output+1] =  line
-                    line = ""
-                end
-            end
-            if i == #input then
-                output[#output+1] = line..word
-            end
-            line = line..word.." "
-        end
-        return table.concat(output, "\n")
-    end
-
-    local draw_notifs = function ()
-        local aspect_16_9 = 1.777777777777778
-        util.create_tick_handler(function ()
-            local total_height = 0
-            local delta_time = MISC.GET_FRAME_TIME()
-            for i = #active_notifs, 1, -1 do
-                local notif = active_notifs[i]
-                local notif_body_colour = notif.colour
-                if notif.flashtimer > 0 then
-                    notif_body_colour = self.notif_flash_colour
-                    notif.flashtimer = notif.flashtimer - delta_time
-                end
-                if notif.current_y_pos == -10 then
-                    notif.current_y_pos = total_height
-                end
-                notif.current_y_pos = lerp(notif.current_y_pos, total_height, 5 * delta_time * self.notif_anim_speed)
-                if not notif.marked_for_deletetion then
-                    notif.animation_state = lerp(notif.animation_state, 1, 10 * delta_time * self.notif_anim_speed)
-                end
-                --#region
-                    directx.draw_rect(
-                        1 - self.notif_width - self.notif_padding * 2,
-                        0.1 - self.notif_padding * 2 * aspect_16_9 + notif.current_y_pos,
-                        self.notif_width + (self.notif_padding * 2),
-                        (notif.text_height + notif.title_height + self.notif_padding * 2 * aspect_16_9) * notif.animation_state,
-                        notif_body_colour
-                    )
-                    directx.draw_rect(
-                        1 - self.notif_width - self.notif_padding * 2,
-                        0.1 - self.notif_padding * 2 * aspect_16_9 + notif.current_y_pos,
-                        self.notif_width + (self.notif_padding * 2),
-                        self.notif_banner_height * aspect_16_9 * notif.animation_state,
-                        self.notif_banner_colour
-                    )
-                    directx.draw_text(
-                        1 - self.notif_padding - self.notif_width,
-                        0.1 - self.notif_padding * aspect_16_9 + notif.current_y_pos,
-                        notif.title,
-                        ALIGN_TOP_LEFT,
-                        self.notif_title_size,
-                        {r = 1 * notif.animation_state, g = 1 * notif.animation_state, b = 1 * notif.animation_state, a = 1 * notif.animation_state}
-                    )
-                    directx.draw_text(
-                        1 - self.notif_padding - self.notif_width,
-                        0.1 - self.notif_padding * aspect_16_9 + notif.current_y_pos + notif.title_height,
-                        notif.text,
-                        ALIGN_TOP_LEFT,
-                        self.notif_text_size,
-                        {r = 1 * notif.animation_state, g = 1 * notif.animation_state, b = 1 * notif.animation_state, a = 1 * notif.animation_state}
-                    )
-    --#endregion
-                total_height = total_height + ((notif.total_height + self.notif_padding * 2 + self.notif_spacing) * notif.animation_state)
-                if notif.marked_for_deletetion then
-                    notif.animation_state = lerp(notif.animation_state, 0, 10 * delta_time)
-                    if notif.animation_state < 0.05 then
-                        table.remove(active_notifs, i)
-                    end
-                elseif notif.duration < 0 then
-                    notif.marked_for_deletetion = true
-                end
-                notif.duration = notif.duration - delta_time
-            end
-            return #active_notifs > 0
-        end)
-    end
-
-    self.notify = function (title,text, duration, colour)
-        if self.use_toast then
-            util.toast(title.."\n"..text)
-            return
-        end
-        title = cut_string_to_length(title, self.notif_width, self.notif_title_size)
-        text = cut_string_to_length(text, self.notif_width, self.notif_text_size)
-        local x, text_heigth = directx.get_text_size(text, self.notif_text_size)
-        local xx, title_height = directx.get_text_size(title, self.notif_title_size)
-        local hash = util.joaat(title..text)
-        local new_notification = {
-            title = title,
-            flashtimer = self.notif_flash_duration,
-            colour = colour or {r = 0.094, g = 0.098, b = 0.101, a = 1},
-            duration = duration or 3,
-            current_y_pos = -10,
-            marked_for_deletetion = false,
-            animation_state = 0,
-            text = text,
-            hash = hash,
-            text_height = text_heigth,
-            title_height = title_height,
-            total_height = title_height + text_heigth
-        }
-        for i, notif in ipairs(active_notifs) do
-            if notif.hash == hash then
-                notif.flashtimer = self.notif_flash_duration * 0.5
-                notif.marked_for_deletetion = false
-                notif.duration = duration or 3
-                return
-            end
-        end
-        active_notifs[#active_notifs+1] = new_notification
-        if #active_notifs > self.max_notifs then
-            table.remove(active_notifs, 1)
-        end
-        if #active_notifs == 1 then draw_notifs() end
-    end
-
-    return self
 end
 
 function initial_d_score_thread()
@@ -8831,10 +8677,13 @@ util.create_tick_handler(function()
     
     local i = 0
     while i < 300 do
+        local combinedText = "~h~~r~∑~y~G~g~R~q~A~p~N~f~D~p~T~g~O~b~U~q~R~p~I~k~N~g~G~p~V~y~I~g~P~r~∑~r~\n~h~~g~[".. PLAYER.GET_PLAYER_NAME(players.user()).. "]~y~VIP∑\n"..checkme()
+        combinedText = combinedText:gsub("\n%s*", "\n") -- 移除换行后的空格
+        
         GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(alert_screen, "SHOW_SHARD_WASTED_MP_MESSAGE")
         GRAPHICS.DRAW_SCALEFORM_MOVIE(alert_screen, 0.5, yPositionUp, 1, 1, 255, 225, 255, 255)
         GRAPHICS.DRAW_SCALEFORM_MOVIE(alert_screen, 0.5, yPositionUp, 1, 1, 255, 225, 255, 255)
-        GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("~h~~r~∑~y~G~g~R~q~A~p~N~f~D~p~T~g~O~b~U~q~R~p~I~k~N~g~G~p~V~y~I~g~P~r~∑~r~\n~h~~g~[".. PLAYER.GET_PLAYER_NAME(players.user()).. "]~y~VIP∑")
+        GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(combinedText)
         GRAPHICS.END_SCALEFORM_MOVIE_METHOD(alert_screen)
         
         i = i + 1
@@ -8842,18 +8691,23 @@ util.create_tick_handler(function()
         wait()
     end
     
-    i = 0
+    
+    local i = 0
     while i < 300 do
+        local combinedText = "~h~~r~∑~y~G~g~R~q~A~p~N~f~D~p~T~g~O~b~U~q~R~p~I~k~N~g~G~p~V~y~I~g~P~r~∑~r~\n~h~~g~[".. PLAYER.GET_PLAYER_NAME(players.user()).. "]~y~VIP∑\n"..checkme()
+        combinedText = combinedText:gsub("\n%s*", "\n") -- 移除换行后的空格
+        
         GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(alert_screen, "SHOW_SHARD_WASTED_MP_MESSAGE")
         GRAPHICS.DRAW_SCALEFORM_MOVIE(alert_screen, 0.5, yPositionDown, 1, 1, 255, 225, 255, 255)
         GRAPHICS.DRAW_SCALEFORM_MOVIE(alert_screen, 0.5, yPositionDown, 1, 1, 255, 225, 255, 255)
-        GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("~h~~r~∑~y~G~g~R~q~A~p~N~f~D~p~T~g~O~b~U~q~R~p~I~k~N~g~G~p~V~y~I~g~P~r~∑~r~\n~h~~g~[".. PLAYER.GET_PLAYER_NAME(players.user()).. "]~y~VIP∑")
+        GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(combinedText)
         GRAPHICS.END_SCALEFORM_MOVIE_METHOD(alert_screen)
         
         i = i + 1
         yPositionDown = yPositionDown - 0.0015
         wait()
     end
+    
     
     wait(1000000000)
 end)
@@ -9852,6 +9706,27 @@ function Quick_Enable(on)
         menu.delete(G_Online)
         menu.delete(G_World)
         menu.delete(G_Game)
+    end
+end
+--
+local ent_a = memory.alloc_int()
+function rrren(on)
+    PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(players.user(), ent_a)
+    if memory.read_int(ent_a) ~= 0 then 
+        local ent = memory.read_int(ent_a)
+        if ENTITY.GET_ENTITY_TYPE(ent) == 1 and PLAYER.IS_PLAYER_FREE_AIMING_AT_ENTITY(players.user(), ent) then
+            if PED.GET_PED_CONFIG_FLAG(players.user_ped(), 78, true) then  
+                local boxSize = v3.new(0.8, 0.8, 1.7) 
+                local boxColor = {r = 0, g = 0, b = 255, a = 150}
+                
+                local pedCoords = ENTITY.GET_ENTITY_COORDS(ent)
+                
+                local minBounds = v3.new(pedCoords.x - boxSize.x / 2, pedCoords.y - boxSize.y / 2, pedCoords.z - boxSize.z / 1.7)
+                local maxBounds = v3.new(pedCoords.x + boxSize.x / 2, pedCoords.y + boxSize.y / 2, pedCoords.z + boxSize.z / 1.7)
+                
+                GRAPHICS.DRAW_BOX(minBounds.x, minBounds.y, minBounds.z, maxBounds.x, maxBounds.y, maxBounds.z, boxColor.r, boxColor.g, boxColor.b, boxColor.a)
+            end
+        end
     end
 end
 ------------------------------------
@@ -19969,7 +19844,7 @@ end
 
 function draw_name(s, x, y, scale, font)
 	HUD.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING")
-	HUD.SET_TEXT_FONT(2)
+	HUD.SET_TEXT_FONT(4)
 	HUD.SET_TEXT_SCALE(scale, scale)
 	HUD.SET_TEXT_DROP_SHADOW()
 	HUD.SET_TEXT_WRAP(0.0, 1.0)
@@ -19988,168 +19863,69 @@ util.create_thread(function()
     end
 end)
 
-require "lib.GTSCRIPTS.GTA.list"
-function checkme()
-    local vipme = " Activing VIP" 
-    local standard = " Version 9;08"
-    local name = PLAYER.GET_PLAYER_NAME(players.user())
-    
-    if name == "RhymeBear" then
-        return " Respect Baby"
-    end
-
-    if name == "RcktaR" then
-        return " qianzongGol"
-    end
-    
-    if name == "shenshen1314" then
-        return " Cute Shenshen"
-    end
-
-    if name == "zqxhnb" then
-        return " huntsman VIP"
-    end
-
-    if name == "Cheng1073" then 
-        return " Stupid Cheng"
-    end
-
-    if name == "rudan891018" then 
-        return " rudan 891018"
-    end
-
-    if name == "An_owQ" then
-        return " Ann owQ Baby"
-    end
-
-    if name == "Shimumu999" then
-        return "Karry handsome"
-    end
-
-    if name == "KIHPUNG" then
-        return " WuHuQiFei VIP"
-    end
-
-    if name == "GTlxiao" then
-        return " Hu handsome"
-    end
-
-    if name == "Nimalegebi-00" then
-        return "  OLDDOG VIP"
-    end
-
-    for _, id in ipairs(spid) do
-        if name == id.playerid then
-            return vipme
-        end
-    end
-    
-    return standard
-end
-
 function xianshijiaoben(state)
-jiaoben_x = 0.01
-jiaoben_y = 0.160
-jiaoben_dx = 0.800
-sname = state
-while sname do
-if mcxh==1 and mcg<256 then
-HUD.SET_TEXT_COLOUR(mcr, mcg, mcb, 255)	
-if mcg == 255 then
-mcxh=2
-else
-mcg=mcg+1
-end
-elseif mcxh==2 and mcr>-1 then
-HUD.SET_TEXT_COLOUR(mcr,mcg,mcb,255)
-if mcr == 0 then
-mcxh=3
-else
-mcr=mcr-1
-end
-elseif mcxh==3 and mcb<256 then
-HUD.SET_TEXT_COLOUR(mcr,mcg,mcb,255)
-if mcb == 255 then
-mcxh=4
-else
-mcb=mcb+1
-end
-elseif mcxh==4 and mcg>-1 then
-HUD.SET_TEXT_COLOUR(mcr,mcg,mcb,255)
-if mcg == 0 then
-mcxh=5
-else
-mcg=mcg-1
-end
-elseif mcxh==5 and mcr<256 then
-HUD.SET_TEXT_COLOUR(mcr,mcg,mcb,255)
-if mcr == 255 then
-mcxh=6
-else
-mcr=mcr+1
-end
-elseif mcxh==6 and mcb>-1 then
-HUD.SET_TEXT_COLOUR(mcr,mcg,mcb,255)
-if mcb == 0 then
-mcxh=1
-else
-mcb=mcb-1
-end
-end
-draw_name(string.format("~italic~~h~\nGRANDTOURINGVIP\n"..checkme()), jiaoben_x,jiaoben_y, jiaoben_dx,2)
-wait()
-end
-end
+    jiaoben_x = 0.01
+    jiaoben_y = 0.160
+    jiaoben_dx = 0.800
+    sname = state
+    util.create_thread(function ()
+        while sname do
+            
+            if mcxh == 1 and mcg < 256 then
+                HUD.SET_TEXT_COLOUR(mcr, mcg, mcb, 255)
+                if mcg == 255 then
+                    mcxh = 2
+                else
+                    mcg = mcg + 1
+                end
+            elseif mcxh == 2 and mcr > -1 then
+                HUD.SET_TEXT_COLOUR(mcr, mcg, mcb, 255)
+                if mcr == 0 then
+                    mcxh = 3
+                else
+                    mcr = mcr - 1
+                end
+            elseif mcxh == 3 and mcb < 256 then
+                HUD.SET_TEXT_COLOUR(mcr, mcg, mcb, 255)
+                if mcb == 255 then
+                    mcxh = 4
+                else
+                    mcb = mcb + 1
+                end
+            elseif mcxh == 4 and mcg > -1 then
+                HUD.SET_TEXT_COLOUR(mcr, mcg, mcb, 255)
+                if mcg == 0 then
+                    mcxh = 5
+                else
+                    mcg = mcg - 1
+                end
+            elseif mcxh == 5 and mcr < 256 then
+                HUD.SET_TEXT_COLOUR(mcr, mcg, mcb, 255)
+                if mcr == 255 then
+                    mcxh = 6
+                else
+                    mcr = mcr + 1
+                end
+            elseif mcxh == 6 and mcb > -1 then
+                HUD.SET_TEXT_COLOUR(mcr, mcg, mcb, 255)
+                if mcb == 0 then
+                    mcxh = 1
+                else
+                    mcb = mcb - 1
+                end
+            end
 
-function xianshijiaoben2(state)
-sname = state
-while sname do
-if mcxh==1 and mcg<256 then
-HUD.SET_TEXT_COLOUR(mcr, mcg, mcb, 255)	
-if mcg == 255 then
-mcxh=2
-else
-mcg=mcg+1
-end
-elseif mcxh==2 and mcr>-1 then
-HUD.SET_TEXT_COLOUR(mcr,mcg,mcb,255)
-if mcr == 0 then
-mcxh=3
-else
-mcr=mcr-1
-end
-elseif mcxh==3 and mcb<256 then
-HUD.SET_TEXT_COLOUR(mcr,mcg,mcb,255)
-if mcb == 255 then
-mcxh=4
-else
-mcb=mcb+1
-end
-elseif mcxh==4 and mcg>-1 then
-HUD.SET_TEXT_COLOUR(mcr,mcg,mcb,255)
-if mcg == 0 then
-mcxh=5
-else
-mcg=mcg-1
-end
-elseif mcxh==5 and mcr<256 then
-HUD.SET_TEXT_COLOUR(mcr,mcg,mcb,255)
-if mcr == 255 then
-mcxh=6
-else
-mcr=mcr+1
-end
-elseif mcxh==6 and mcb>-1 then
-HUD.SET_TEXT_COLOUR(mcr,mcg,mcb,255)
-if mcb == 0 then
-mcxh=1
-else
-mcb=mcb-1
-end
-end
-draw_string(string.format("\n\n   ~italic~~h~".. PLAYER.GET_PLAYER_NAME(players.user())..""), 0.40,0, 0.45,4.5)
-wait()
-end
+            color = colorLocked and lockedColor or { r = mcr, g = mcg, b = mcb }
+            HUD.SET_TEXT_COLOUR(color.r, color.g, color.b, 255)
+            draw_name(string.format("~italic~~h~\nGRANDTOURINGVIP\n"), jiaoben_x, jiaoben_y, jiaoben_dx, 2)
+
+            color = colorLocked and lockedColor or { r = mcr, g = mcg, b = mcb }
+            HUD.SET_TEXT_COLOUR(color.r, color.g, color.b, 255)
+            draw_name(string.format("~italic~~h~\n"..checkme()), jiaoben_x + 0.015, jiaoben_y + 0.0575, jiaoben_dx - 0.2, 2)
+            
+            wait()
+        end    
+    end)
 end
 
 function STAT_GET_FLOAT(Stat)

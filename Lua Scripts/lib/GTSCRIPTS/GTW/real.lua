@@ -42,7 +42,7 @@ local textnotify={
 }
 
 function welcomehb()
-    welcomevip = "近来可好,皇榜用户: "
+    welcomevip = "近来可好，"
     welcomestand = "欢迎 "
     local name = PLAYER.GET_PLAYER_NAME(players.user())
     for _, id in ipairs(spid) do
@@ -186,3 +186,4 @@ credits_lines = {
     {text = "再次感谢", size = 0.9},
     {text = "屏幕前的你!!!", size = 1},
 }
+--
