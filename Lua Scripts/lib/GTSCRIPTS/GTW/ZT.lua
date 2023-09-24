@@ -18,7 +18,7 @@ local bg_ref_a = menu.ref_by_path("Stand>Settings>Appearance>Colours>Background 
 
 local time = util.current_time_millis
 local timer = time()
-local pulsel = true
+local pulsel = false
 
 menu.toggle(ZT,"重置动画", {}, "", function(st) pulsel = st end, pulsel)
 local animsp = 0.001

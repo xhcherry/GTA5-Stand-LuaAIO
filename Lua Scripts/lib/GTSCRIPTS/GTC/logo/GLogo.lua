@@ -39,9 +39,10 @@ GTD = GTluaScript.divider
 GTLP = GTluaScript.toggle_loop
 GTTG = GTluaScript.toggle
 GTH = GTluaScript.hyperlink
+gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '9.15'
+GT_version = '9.20'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +50,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("[重要]消失了五个月的启动音效现已重新应用到脚本启动\n而且不影响用户名为中文名玩家的运行，灰常好用\n脚本名称缀现在可正确显示大小写以及特殊符号\n优化了皇榜系统检测，现在可正确的检测到其他皇榜成员\n优化了普通/皇榜/专属主页闪烁名称可能会错位的问题\n当游戏处于云上加载，脚本名称不会再显示*Invalid*\n当游戏处于云上加载，定制后的主页名称不会再显示普通内容\n在地图旁的主机序列添加了皇榜名称缀，以及可显示定制名称\n在脚本启动时，取消了隐藏地图，解决了在这之间无法选中武器的问题\n校准了FPS显示，现在不会占用更多的线程导致不必要的卡顿\n显著的优化了脚本运行速度\n\n我们一直在创造更多细节处理，使得GTLua使用的体验感更加沉浸\nVersion: "..GT_version)
+    notification("修复了无法在108.3版本运行\n修复了一个错误，当GTLuaScript/profiles这个文件夹不存在时，脚本会报错且无法运行\n据我们所知，某些解压缩软件可能无法将这个文件夹正确的解压到脚本文件夹内\n现在这个文件夹若不存在，将在加载脚本过程中自动创建这个文件夹以修复错误\n同时再次优化了脚本的性能问题，现在主脚本将在启动过程中异步加载，包括大部分的资源库文件\n新增>其他选项>显示选项>实体池显示\n新增>自我选项>增强选项>三维准心\n新增>自我选项>增强选项>坐标显示\n新增>自我选项>自我娱乐>彩虹头发\n新增>其他选项>显示选项>纯净模式\n新增>自我选项>自我娱乐>滑稽枪械\n新增>滑稽枪械>钞票枪\n新增>滑稽枪械>卡片枪\n新增>滑稽枪械>玩偶枪\n新增>线上选项>金钱选项>循环掉钱[2000]\n其他的一些改进与修复\nVersion: "..GT_version)
 end
 --
 
@@ -60,21 +61,19 @@ bbtct = "[点击此处加入官方群聊中进行询问]\n\n*加载脚本显示(
 mename = PLAYER.GET_PLAYER_NAME(players.user())
 grouplink = "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566"
 Name_info = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
-gtoast("欢迎使用GRANDTOURINGVIP!\n \n当前版本 " .. GT_version .. " 欢迎 ".. Name_info .."\n" .. "\n" .. "进群获取最新版本...\n" .. "\n" .. "祝您游戏愉快儿 :)")
-util.show_corner_help("~b~~h~GRANDTOURINGVIP " .. GT_version .. "  ~q~ \n~r~我们的脚本完全免费\n~q~转到>其他选项 加入群聊\n~y~免费获得最新版本")
+gtoast("GRANDTOURINGVIP!\n版本 " .. GT_version .. " 欢迎 ".. Name_info.."\n加入群聊可获得最新版本\n"..checkme())
+util.show_corner_help("~b~~h~GRANDTOURINGVIP\n~q~~h~欢迎 "..Name_info)
 --
 util.create_thread(function ()
-    --if SCRIPT_MANUAL_START then
-        local fr = soup.FileReader(filesystem.scripts_dir() .. 'GTLuaScript\\gt\\GT.wav')
-        local wav = soup.audWav(fr)
-        local dev = soup.audDevice.getDefault()
-        local pb = dev:open(wav.channels)
-        local mix = soup.audMixer()
-        mix.stop_playback_when_done = true
-        mix:setOutput(pb)
-        mix:playSound(wav)
-        while pb:isPlaying() do util.yield() end
-    --end
+    local fr = soup.FileReader(filesystem.scripts_dir() .. 'GTLuaScript\\gt\\GT.wav')
+    local wav = soup.audWav(fr)
+    local dev = soup.audDevice.getDefault()
+    local pb = dev:open(wav.channels)
+    local mix = soup.audMixer()
+    mix.stop_playback_when_done = true
+    mix:setOutput(pb)
+    mix:playSound(wav)
+    while pb:isPlaying() do util.yield() end
 end)
 --
 function toFloat(num)

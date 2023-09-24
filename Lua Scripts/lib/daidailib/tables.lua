@@ -1,5 +1,11 @@
 
 
+
+----冰淇凌盛宴
+ice_entity_name = {"钻石圣诞树","宝石圣诞树","五角星圣诞树","啤酒桶杯"}
+ice_entity = {"ch_prop_ch_diamond_xmastree","ch_prop_tree_01a","ch_prop_tree_02a","ch_prop_tree_03a"}
+
+
 ----设置天气
 weather_name = {"阳光明媚","晴朗","云","环境污染","雾天","阴天","雨天","雷雨天","雨晴天","温室天气","雪天","暴风雪","雪雾天","圣诞节","万圣节"}
 weather_val = {"EXTRASUNNY","CLEAR","CLOUDS","SMOG","FOGGY","OVERCAST","RAIN","THUNDER","CLEARING","NEUTRAL","SNOW","BLIZZARD","SNOWLIGHT","XMAS","HALLOWEEN"}
@@ -755,13 +761,18 @@ vehparticle_tb = {"scr_mich4_firework_trail_spawn","scr_mich4_firework_sparkle_s
 
 
 ------生成坡道
-ramps_hashes = {util.joaat("prop_mp_ramp_02_tu"), 
+ramps_names = {"普通坡道", "高坡道", "摩托艇坡道"}
+ramps_names1 = {"竞技场跳板","特技坡道","Small ramp","Big ramp"}
+ramps_hashes = {
+    util.joaat("prop_mp_ramp_02_tu"), 
     util.joaat("prop_mp_ramp_03_tu"), 
     util.joaat("prop_jetski_ramp_01"),
     "2108723836",
-    "677027815"
+    "677027815",
+    util.joaat("xs_prop_arena_jump_xxl_01a_sf"),
+    util.joaat("xs_prop_arena_jump_02b")
 }
-ramps_names = {"普通坡道", "高坡道", "摩托艇坡道","竞技场跳板","特技坡道"}
+
 
 
 ------火翅膀
@@ -1260,38 +1271,40 @@ disguise_names = {
 
 ----防笼子
 cageModels = {
-    util.reverse_joaat(1089807209),
-    util.reverse_joaat(-37176073),
-    util.reverse_joaat(684586828),
-    util.reverse_joaat(238789712),
-    util.reverse_joaat(4022605402),
-    'u_m_m_jesus_01',
-    "ig_lestercrest",
-    "player_two",
-    "s_m_y_factory_01",
-    "cargobob",
-    "ch_prop_tree_03a",
-    "ch_prop_tree_02a",
-    "prop_gascage01",
-    "prop_coffin_02b",
-    "boxville3",
-    "prop_container_ld_pu",
-    "p_cablecar_s",
-    "prop_gold_cont_01",
-    "prop_gold_cont_01b",
-    "prop_feeder1_cr",
-    "prop_rub_cage01a",
-    "stt_prop_stunt_tube_s",
-    "stt_prop_stunt_tube_end",
-    "prop_jetski_ramp_01",
-    "stt_prop_stunt_tube_xs",
-    "prop_fnclink_03e",
-    "prop_container_05a",
-    "prop_jetski_ramp_01",
-    "prop_cs_dumpster_01a",
-    "p_v_43_safe_s",
-    "bkr_prop_moneypack_03a",
-    "prop_elecbox_12"
+    -251167274,
+    -1603817716,
+    1089807209,
+    -37176073,
+    684586828,
+    238789712,
+    4022605402,
+    MISC.GET_HASH_KEY('u_m_m_jesus_01'),
+    MISC.GET_HASH_KEY("ig_lestercrest"),
+    MISC.GET_HASH_KEY("player_two"),
+    MISC.GET_HASH_KEY("s_m_y_factory_01"),
+    MISC.GET_HASH_KEY("cargobob"),
+    MISC.GET_HASH_KEY("ch_prop_tree_03a"),
+    MISC.GET_HASH_KEY("ch_prop_tree_02a"),
+    MISC.GET_HASH_KEY("prop_gascage01"),
+    MISC.GET_HASH_KEY("prop_coffin_02b"),
+    MISC.GET_HASH_KEY("boxville3"),
+    MISC.GET_HASH_KEY("prop_container_ld_pu"),
+    MISC.GET_HASH_KEY("p_cablecar_s"),
+    MISC.GET_HASH_KEY("prop_gold_cont_01"),
+    MISC.GET_HASH_KEY("prop_gold_cont_01b"),
+    MISC.GET_HASH_KEY("prop_feeder1_cr"),
+    MISC.GET_HASH_KEY("prop_rub_cage01a"),
+    MISC.GET_HASH_KEY("stt_prop_stunt_tube_s"),
+    MISC.GET_HASH_KEY("stt_prop_stunt_tube_end"),
+    MISC.GET_HASH_KEY("prop_jetski_ramp_01"),
+    MISC.GET_HASH_KEY("stt_prop_stunt_tube_xs"),
+    MISC.GET_HASH_KEY("prop_fnclink_03e"),
+    MISC.GET_HASH_KEY("prop_container_05a"),
+    MISC.GET_HASH_KEY("prop_jetski_ramp_01"),
+    MISC.GET_HASH_KEY("prop_cs_dumpster_01a"),
+    MISC.GET_HASH_KEY("p_v_43_safe_s"),
+    MISC.GET_HASH_KEY("bkr_prop_moneypack_03a"),
+    MISC.GET_HASH_KEY("prop_elecbox_12")
 }
 
 ------载具枪

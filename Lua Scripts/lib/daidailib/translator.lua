@@ -143,7 +143,7 @@ function createGoogleTranslateCall(config)
                     onSuccess(translation, sourceLang)
                 end
             end,function()
-                util.toast("翻译出错啦")
+                util.toast("翻译超时啦")
             end)
         async_http.dispatch()
     end
@@ -181,7 +181,7 @@ function createOnMessageCallback(config, translateTextCB)
                         return
                     end
 
-                    util.log("[谷歌翻译]: " ..string.format('["%s"]', text).." ⇒ ".. string.format('["%s"]', translation))
+                    LOG("[谷歌翻译]: " ..string.format('["%s"]', text).." ⇒ ".. string.format('["%s"]', resultText))
 
                     if (translatedMsgLocation == 1) then--"团队聊天未联网"
                         sfchat.ADD_MESSAGE(senderName, resultText, "团队(未联网)", false, transl_text_col)
@@ -213,7 +213,7 @@ end
 
 
 
-menu.toggle(chat_transl, "开启", {},"翻译器将监听传入的消息并进行翻译", function(on)
+local auto_toggle = menu.toggle(chat_transl, "开启", {},"翻译器将监听传入的消息并进行翻译", function(on)
     config.translateOn = on
 end)
 
@@ -236,6 +236,35 @@ local blacklistMenu = menu.list(chat_transl, "翻译语言黑名单", {},"在列
 
 menu.list_select(chat_transl, "目标语言", {}, "",LangNameList, 1, function(index)
     config.targetLanguageIncoming = LangKeyList[index]
+end)
+
+menu.action(chat_transl, "发送翻译文本", {}, "会禁用自动翻译开关", function()
+    local label = util.register_label("输入文本")
+	local input = get_input_from_screen_keyboard(label, 254, "")
+    if input == "" then return end
+    local params = {
+        client = "dict-chrome-ex",
+        sl = "auto",
+        tl = config.targetLanguageIncoming,
+        dt = "t",
+        dj = "1",
+        source = "input",
+        q = url_encode(input),
+    }
+    async_http.init("translate.googleapis.com", "/translate_a/t?" .. tableToUrlParams(params),function(body, header_fields, status_code)
+            if status_code == 200 and body ~= "" then
+                local translation, sourceLang = body:match('%[%["(.-)","(.-)"%]%]')
+                translation = translation:gsub("\\u(%x%x%x%x)", unicode_escape)
+                translation = translation:gsub(" <code> 0 </code> ", "\n")
+                translation = translation:gsub("<code>0</code>", "\n")
+                translation = translation:gsub("\\(.)", "%1")
+                menu.set_value(auto_toggle, false)
+                chat.send_message(translation,false,true,true)
+            end
+        end,function()
+            util.toast("翻译超时啦")
+        end)
+    async_http.dispatch()
 end)
 
 local common_settings = menu.list(chat_transl, "通用设置", {},"")

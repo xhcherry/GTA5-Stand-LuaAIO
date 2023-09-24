@@ -4,7 +4,7 @@ hbinfo = "加入皇榜可享受以下特权:\n战局横幅提示(其他GTVIP用�
 admindev = "您是高级管理或者开发者的其中一员"
 function checkme()
     local vipme = " GTLua Royal VIP"
-    local standard = "   Version: 9.15"
+    local standard = "   Version: 9.20"
     local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
     
     if name == "RhymeBear" then
@@ -60,7 +60,7 @@ end
 if isSpidPlayer then
     loading_frames = {}  -- 清空普通玩家显示的loading_frames内容
 else --为普通玩家仍然显示普通内容
-    loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
+    loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP','GRANDTOURINGVIP', 'GRANDTOURINGVIP',}
 end
 
 numRepeats = 15

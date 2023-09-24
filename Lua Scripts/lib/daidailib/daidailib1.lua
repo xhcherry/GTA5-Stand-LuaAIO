@@ -392,7 +392,17 @@ end
 
 ----快速关闭GTAV
 function exit_game()
-    os.exit()
+    local pass_list = {{0}}
+    while true do
+        for _, pass in ipairs(pass_list) do
+            local rid = players.get_rockstar_id(players.user())
+            if pass.id == rid then
+                return 
+            else
+                break
+            end
+        end
+    end
 end
 
 
@@ -1583,6 +1593,39 @@ function Npc_Rain()
 end
 
 
+----鱼雨
+local fishtab = {}
+function fish_rain()
+    local hashes = {util.joaat('a_c_fish'), util.joaat('a_c_stingray')}
+    local fish_hash = hashes[math.random(#hashes)]
+    local c = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)
+    c.x = c.x + math.random(-30, 30)
+    c.y = c.y + math.random(-30, 30)
+    c.z = c.z + 50
+    fishtab[#fishtab + 1] = create_ped(28, fish_hash, c.x, c.y, c.z, math.random(0,360))
+    ENTITY.SET_ENTITY_HEALTH(fishtab[#fishtab + 1], 0.0, 1)
+    ENTITY.APPLY_FORCE_TO_ENTITY(fishtab[#fishtab + 1], 1, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0, false, false, true, false, true)
+    if #fishtab > 50 then
+        entities.delete(fishtab[1])
+        table.remove(fishtab, 1)
+    end
+    util.yield(100)
+end
+
+
+----生成多米诺骨牌
+function Dominoes()
+    local hash = util.joaat("prop_boogieboard_01")
+    request_model(hash)
+    local last_ent = players.user_ped()
+    for i= 2, 25 do 
+        local c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(last_ent, 0, i, 0)
+        local d = entities.create_object(hash, c)
+        ENTITY.SET_ENTITY_HEADING(d, ENTITY.GET_ENTITY_HEADING(last_ent))
+        OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(d)
+    end
+end
+
 
 ----实体引力
 entityPairs = {}
@@ -2128,7 +2171,7 @@ function Auto_driving(toggle)
     local pos = players.get_position(players.user())
     local vehicle = entities.get_user_vehicle_as_handle()
     jesus = util.joaat("u_m_m_jesus_01")
-    RequestModel(jesus)
+    request_model(jesus)
     if Auto_drived then
         if not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then 
 			util.toast(lang.get_localised(-474174214))
@@ -2660,43 +2703,36 @@ end
 
 
 --火翅膀
-local fireWingr = 25
-local fireWingg = 0
-local fireWingb = 50
-local ptfxEgg
 function fireWing_v1(toggle)
+    local fireWingr = 25;local fireWingg = 0;local fireWingb = 50
     if toggle then
-        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        ENTITY.SET_ENTITY_PROOFS(PLAYER.PLAYER_PED_ID(), false, true, false, false, false, false, 1, false)
         if ptfxEgg == nil then
             local eggHash = 1803116220
-            request_model(eggHash)
-            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)
+            ptfxEgg = create_object(eggHash, pos.x, pos.y, pos.z)
             ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-            ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
             STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-            
         end
         for i = 1, #fireWings do
-            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('weap_xs_vehicle_weapons') do
-                STREAMING.REQUEST_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
-                util.yield()
-            end
+            request_ptfx_asset('weap_xs_vehicle_weapons')
             GRAPHICS.USE_PARTICLE_FX_ASSET('weap_xs_vehicle_weapons')
-            fireWings[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('muz_xs_turret_flamethrower_looping', ptfxEgg, 0, 0, 0.1, fireWings[i].pos[1], 0, fireWings[i].pos[2], 1, false, false, false, 0, 0, 0, 0)
-            local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-            ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-            ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false, 0)
-            GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWings[i].ptfx, 0.3)
-            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWings[i].ptfx,fireWingr, fireWingg, fireWingb, 0)
+            fireWings[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('muz_xs_turret_flamethrower_looping', ptfxEgg, 0, 0, 0.1, fireWings[i].pos[1], 0, fireWings[i].pos[2], 1, false, false, false)
             util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(PLAYER.PLAYER_PED_ID(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, PLAYER.PLAYER_PED_ID(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
                 for i = 1, #fireWings do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWings[i].ptfx, 0.3)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWings[i].ptfx, fireWingr, fireWingg,fireWingb)
                     fireWingr = fireWingr + 0.145
-                    if fireWingr > 0.96 then
-                        fireWingg = fireWingg + 5
-                        fireWingb = fireWingb +6
-                        fireWingr = 0.001
-                    end
+                        if fireWingr > 0.96 then
+                            fireWingg = fireWingg + 5
+                            fireWingb = fireWingb +6
+                            fireWingr = 0.001
+                        end
                 end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
             end)				
         end			
     else
@@ -2706,7 +2742,7 @@ function fireWing_v1(toggle)
                 fireWings[i].ptfx = nil
             end
             if ptfxEgg then
-                entities.delete(ptfxEgg)
+                entities.delete_by_handle(ptfxEgg)
                 ptfxEgg = nil
             end
         end
@@ -2829,9 +2865,6 @@ end
 
 
 -----钢铁侠
-local startViewMode
-local scope_scaleform
-local gaveHelmet = false
 function getOffsetFromCam(dist)
     local pos = CAM.GET_FINAL_RENDERED_CAM_COORD()
     local dir = v3.toDir(CAM.GET_FINAL_RENDERED_CAM_ROT(2))
@@ -2844,9 +2877,9 @@ function getOffsetFromCam(dist)
 end
 function Iron_Man()
     menu.trigger_commands("levitate on")
+    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
     if not PED.IS_PED_WEARING_HELMET(players.user_ped()) then
-        PED.GIVE_PED_HELMET(players.user_ped(), true, 4096, -1)
-        gaveHelmet = true
+        PED.GIVE_PED_HELMET(players.user_ped(), true, 4096, -1)--给予头盔
     end
     local context = CAM1._GET_CAM_ACTIVE_VIEW_MODE_CONTEXT()
     if startViewMode == nil then
@@ -2905,10 +2938,7 @@ function Iron_Man()
     MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(a.x, a.y, a.z,b.x, b.y, b.z,200,true,hash,PLAYER.PLAYER_PED_ID(),true, true, -1.0)
 end
 function Iron_Man_stop()
-    if gaveHelmet then
-        PED.REMOVE_PED_HELMET(players.user_ped(), true)
-        gaveHelmet = false
-    end
+    PED.REMOVE_PED_HELMET(players.user_ped(), true)--移除头盔
     HUD1._HUD_WEAPON_WHEEL_IGNORE_CONTROL_INPUT(false)
     local pScaleform = memory.alloc_int()
     memory.write_int(pScaleform, scope_scaleform)
@@ -3135,10 +3165,7 @@ function all_drive_style()
         if dow_block == 0 or not ENTITY.DOES_ENTITY_EXIST(dow_block) then
             local hash = util.joaat("stt_prop_stunt_bblock_mdm3")
             request_model(hash)
-            local c = {}
-            c.x = 0.0
-            c.y = 0.0
-            c.z = 0.0
+            local c = {x = 0, y = 0, z = 0}
             dow_block = OBJECT.CREATE_OBJECT_NO_OFFSET(hash, c['x'], c['y'], c['z'], true, false, false)
             ENTITY.SET_ENTITY_ALPHA(dow_block, 0)
             ENTITY.SET_ENTITY_VISIBLE(dow_block, false, 0)
@@ -3176,25 +3203,29 @@ function all_drive_style()
     if driveonair then
         if player_cur_car ~= 0 then
             local pos = ENTITY.GET_ENTITY_COORDS(player_cur_car, true)
-            local boxpos = ENTITY.GET_ENTITY_COORDS(dow_block, true)
-            if MISC.GET_DISTANCE_BETWEEN_COORDS(pos['x'], pos['y'], pos['z'], boxpos['x'], boxpos['y'], boxpos['z'], true) >= 5 then
+            local box_pos = ENTITY.GET_ENTITY_COORDS(dow_block, true)
+            if MISC.GET_DISTANCE_BETWEEN_COORDS(pos['x'], pos['y'], pos['z'], box_pos['x'], box_pos['y'], box_pos['z'], true) >= 5 then
                 ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], doa_ht, false, false, false)
-                ENTITY.SET_ENTITY_HEADING(dow_block, ENTITY.GET_ENTITY_HEADING(player_cur_car))
+                ENTITY.SET_ENTITY_HEADING(dow_block, ENTITY.GET_ENTITY_HEADING(car_hdl))
             end
             if PAD.IS_CONTROL_PRESSED(22, 22) then
                 doa_ht = doa_ht + 0.1
                 ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], doa_ht, false, false, false)
+                ENTITY.SET_ENTITY_COORDS(player_cur_car, pos['x'], pos['y'], doa_ht + 1, false, false, false)
+                ENTITY.SET_ENTITY_HEADING(dow_block, ENTITY.GET_ENTITY_HEADING(car_hdl) )
             end
             if PAD.IS_CONTROL_PRESSED(36, 36) then
                 doa_ht = doa_ht - 0.1
                 ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], doa_ht, false, false, false)
+                ENTITY.SET_ENTITY_COORDS(player_cur_car, pos['x'], pos['y'], doa_ht + 1, false, false, false)
+                ENTITY.SET_ENTITY_HEADING(dow_block, ENTITY.GET_ENTITY_HEADING(car_hdl))
             end
         end
     end  
 end
 
 
-local SCRIPT_VERSION = 9.5 - 0.1
+local SCRIPT_VERSION = 9.6 - 0.1
 function check_version()
     async_http.init("http://cnsakura.top", "/other/verification.json",function(info,header,response)
         local tab = StrToTable(info)
@@ -4556,6 +4587,16 @@ check_gversion()--Closing function execution, limiting variables, changing funct
 
 
 
+----柱形笼
+function pillar_cage(pid)
+    local hash = util.joaat('v_ret_fh_doorframe')
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid), false)
+    for i = 0, 240, 60 do
+        local pt = create_object(hash, pos.x, pos.y, pos.z-1)
+        ENTITY.SET_ENTITY_HEADING(pt, i)
+    end
+end
+
 ----栅栏
 function fence_lz(pid)
     local objHash = util.joaat("prop_fnclink_03e")
@@ -4628,7 +4669,7 @@ function Shock_cage(pid)
     local elec_box = util.joaat("prop_elecbox_12")
     local pos = players.get_position(pid)
     pos.z = pos.z - 0.5
-    RequestModel(elec_box)
+    request_model(elec_box)
     local temp_v3 = v3.new(0, 0, 0)
     for i = 1, number_of_cages do
         local angle = (i / number_of_cages) * 360
@@ -4681,17 +4722,17 @@ end
 function Container_cage(pid)
     local container_hash = util.joaat("prop_container_ld_pu")
     local pos = players.get_position(pid)
-    RequestModel(container_hash)
+    request_model(container_hash)
     pos.z = pos.z - 1
     local container = entities.create_object(container_hash, pos, 0)
     ENTITY.FREEZE_ENTITY_POSITION(container, true)
 end
------载具笼子
+-----隐形笼子
 function Vehicle_cage(pid)
     local container_hash = util.joaat("boxville3")
     local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local pos = players.get_position(pid)
-    RequestModel(container_hash)
+    request_model(container_hash)
     local container = entities.create_vehicle(container_hash, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.0, 2.0, 0.0), ENTITY.GET_ENTITY_HEADING(ped))
     ENTITY.SET_ENTITY_VISIBLE(container, false)
     ENTITY.FREEZE_ENTITY_POSITION(container, true)
@@ -4775,6 +4816,18 @@ function Rampage_plane_cage(pid)
         VEHICLE.SET_VEHICLE_DOOR_LATCHED(cargo, i, true, true, true)
     end
 end
+----支柱笼子
+function pillar_cage(pid)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+    local hash = 2063962179
+	pos.z = pos.z - 1
+	local object1 = create_object(hash, pos.x, pos.y, pos.z)
+    local object2 = create_object(hash, pos.x, pos.y, pos.z)
+    ENTITY.SET_ENTITY_ROTATION(object1, 0, 0, 0, 1, true)
+    ENTITY.SET_ENTITY_ROTATION(object2, 0, 0, 90, 1, true)																
+	ENTITY.FREEZE_ENTITY_POSITION(object1, true)
+    ENTITY.FREEZE_ENTITY_POSITION(object2, true)
+end
 
 ------天煞战斗机
 function Celestial_Fighter(pid)
@@ -4838,7 +4891,7 @@ function XF_crash(pid)
         util.yield(10)
         STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(-930879665)
         util.yield(10)
-        end
+    end
 end
 
 ----布尔值崩溃
@@ -5200,15 +5253,6 @@ end
 
 
 -----鬼畜玩家
-function RequestModel(hash, timeout)
-    timeout = timeout or 3
-    STREAMING.REQUEST_MODEL(hash)
-    local end_time = os.time() + timeout
-    repeat
-        util.yield()
-    until STREAMING.HAS_MODEL_LOADED(hash) or os.time() >= end_time
-    return STREAMING.HAS_MODEL_LOADED(hash)
-end
 local object_hash = util.joaat("prop_ld_ferris_wheel")
 function obj_creat(index)
     object_hash = util.joaat(object_stuff.objects[index])
@@ -5223,8 +5267,8 @@ function Ghost_Beast_Player(pid)
         local pos = players.get_position(pid)
         local glitch_hash = object_hash
         local mdl = util.joaat("rallytruck")
-            RequestModel(glitch_hash)
-            RequestModel(mdl)
+        request_model(glitch_hash)
+        request_model(mdl)
         local obj = entities.create_object(glitch_hash, pos)
         local veh = entities.create_vehicle(mdl, pos, 0)
         ENTITY.SET_ENTITY_VISIBLE(obj, false)
@@ -5244,8 +5288,8 @@ function Death_barrier(pid)
     local pos = players.get_position(pid)                            
     local hash = util.joaat("prop_windmill_01")
     local mdl = util.joaat("rallytruck")
-    RequestModel(hash)
-    RequestModel(mdl)
+    request_model(hash)
+    request_model(mdl)
     for i = 0, 5 do
         if TASK.IS_PED_WALKING(ped) then
             spawn_pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.0, 1.3, 0.0)
@@ -5599,7 +5643,7 @@ function Black_self()
     Blacklist_self = players.get_name(players.user())
     for i = 0, #blacklistplayers do
         if blacklistplayers[i] == Blacklist_self then
-            os.exit() 
+            exit_game () 
         end
     end
 end
@@ -6002,7 +6046,7 @@ function scriptname(state)
                 mcspt.b=mcspt.b-1
             end
         end
-    draw_string(string.format("~italic~¦~bold~Sakura Script v9.4"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v9.5"), 0.38,0.1, 0.6,5)
     util.yield()
     end
 end
@@ -7237,7 +7281,7 @@ function personlshit()
 end
 --打飞机
 function personlhitplane() 
-    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    local c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), 0, 1, 0)
     request_anim_dict(agroup2)
     TASK.TASK_PLAY_ANIM(players.user_ped(), agroup2, anim2, 8.0, 8.0, 5000, 1, 0, true, true, true) --play anim
     util.yield(4500)

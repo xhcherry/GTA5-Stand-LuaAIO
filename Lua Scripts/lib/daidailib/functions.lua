@@ -1,5 +1,3 @@
-json = require "lib.daidailib.Main.json"
-
 local self = {}
 self.version = 26
 

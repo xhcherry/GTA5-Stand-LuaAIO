@@ -194,20 +194,10 @@ aspect_opt = menu.list(self_option, "外观选项", {}, "")
         util.yield(100)
     end)
 
-menu.toggle_loop(self_option, "快速重生", {}, "", function()--fastRespawn
-    local gwobaw = memory.script_global(2672524 + 1685 + 756)
-    if PED.IS_PED_DEAD_OR_DYING(players.user_ped()) then
-        GRAPHICS.ANIMPOSTFX_STOP_ALL()
-        memory.write_int(gwobaw, memory.read_int(gwobaw) | 1 << 1)
-    end
-end,function()
-    local gwobaw = memory.script_global(2672505 + 1685 + 756)
-    memory.write_int(gwobaw, memory.read_int(gwobaw) &~ (1 << 1))
-end)
-
 action_list = menu.list(self_option, "人物行为", {}, "")
     menu.toggle_loop(action_list, '自转', {}, '', function(on)
         ENTITY.APPLY_FORCE_TO_ENTITY(PLAYER.PLAYER_PED_ID(), 5, 200, 8200, 89000, 10, 10, 100, 10000, false, true)
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
     end)
     menu.toggle_loop(action_list, '超级跳', {}, '', function()
         MISC.SET_SUPER_JUMP_THIS_FRAME(PLAYER.PLAYER_ID())
@@ -242,6 +232,17 @@ action_list = menu.list(self_option, "人物行为", {}, "")
             ENTITY.SET_ENTITY_VELOCITY(PLAYER.PLAYER_PED_ID(), f['x'], f['y']*3, 0.0)
         end
     end)
+
+menu.toggle_loop(self_option, "快速重生", {}, "", function()--fastRespawn
+    local gwobaw = memory.script_global(2672524 + 1685 + 756)
+    if PED.IS_PED_DEAD_OR_DYING(players.user_ped()) then
+        GRAPHICS.ANIMPOSTFX_STOP_ALL()
+        memory.write_int(gwobaw, memory.read_int(gwobaw) | 1 << 1)
+    end
+end,function()
+    local gwobaw = memory.script_global(2672505 + 1685 + 756)
+    memory.write_int(gwobaw, memory.read_int(gwobaw) &~ (1 << 1))
+end)
 
 menu.toggle_loop(self_option, '超级飞行', {}, '按下跳跃的时间越长,继续走得更高（也可用于飞行）', function()
     if PAD.IS_CONTROL_PRESSED(0, 22) and PAD.IS_CONTROL_PRESSED(0, 32) then
@@ -469,10 +470,6 @@ attach_self = menu.list(self_option, "附加", {})
         end
     end)
 
-menu.toggle(self_option, "骑牛", {}, "",function(state)
-    ride_cow(state)   
-end)
-
 menu.toggle_loop(self_option, '金钱追踪', {}, '', function()
     local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
     local tar1 = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
@@ -629,6 +626,54 @@ frendlist = menu.list(online, "好友列表", {}, "")
 play_info =menu.list(online, "玩家信息", {}, "")
     require "lib.daidailib.InfOverlay"
 
+--战局信息
+online_other = menu.list(online, "战局信息", {}, "")
+    menu.toggle(online_other, "关闭电台", {"closeradio"}, "",function(on)
+        if on then
+            AUDIO.SET_RADIO_TO_STATION_NAME("OFF")
+            menu.trigger_commands("Playmusic off")
+        end
+    end)
+    menu.toggle(online_other, '同步时间', {}, '与现实时间同步', function(toggle)
+        Real_world_time(toggle)
+    end)
+    show_time = menu.toggle(online_other, "显示时间", {}, "配置[√]\n请于其他选项使用[保存配置]", function(state)
+        daidaishijian(state)
+    end)
+    menu.set_value(show_time, config_active2)
+
+    host_sequence_list = menu.list(online_other,"主机序列",{},"")
+        host_sequence = menu.toggle_loop(host_sequence_list, "主机序列", {}, "配置[√]\n请于其他选项使用[保存配置]", function()
+            zhujixvlie()
+        end)
+        menu.set_value(host_sequence, config_active1)
+        host_sequence_x = menu.slider(host_sequence_list, "x坐标", {"watermark-x"}, "配置[√]\n请于其他选项使用[保存配置]", -1000, 1000, config_active1_x, 10, function(x_)
+            zhujixvlie_x(x_)
+        end)
+        host_sequence_y = menu.slider(host_sequence_list, "y坐标", {"watermark-y"}, "配置[√]\n请于其他选项使用[保存配置]", -1000, 1000, config_active1_y, 10, function(y_)
+            zhujixvlie_y(y_)
+        end)
+
+    numfps = menu.toggle(online_other, "显示fps", {}, "配置[√]\n请于其他选项使用[保存配置]", function(on)
+        fps(on)
+    end)
+    menu.set_value(numfps, config_active4)
+
+    show_entityinfo = menu.toggle_loop(online_other, "实体池信息", {}, "配置[√]\n请于其他选项使用[保存配置]", function()
+        entityinfo()
+    end)
+    menu.set_value(show_entityinfo, config_active5)
+
+    script_name = menu.toggle(online_other, "显示脚本名称", {}, "配置[√]\n请于其他选项使用[保存配置]", function(state)
+        scriptname(state)
+    end)
+    menu.set_value(script_name, config_active3)
+
+    players_bar = menu.toggle_loop(online_other, "玩家栏", {}, "配置[√]\n请于其他选项使用[保存配置]", function()
+        player_bar()
+    end)
+    menu.set_value(players_bar, config_active8)
+
 musiclist = menu.list(online, "音乐", {}, "")
     menu.toggle(musiclist, "播放", {"Playmusic"}, "音乐文件放置: '文档\\Rockstar Games\\GTA V\\User Music'中", function(on)
         music(on)
@@ -671,6 +716,9 @@ personal_vehicle = menu.list(online, '个人载具', {}, '')
         else
             PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), vehicle, -1)
         end
+    end)
+    menu.action(personal_vehicle, "索赔所有车辆", {}, "", function()
+        reclaimVehicles()
     end)
 
 request_services = menu.list(online, "请求服务", {}, "")
@@ -835,11 +883,8 @@ menu.toggle_loop(online, "自动接受并加入游戏", {}, "将自动接受加�
     end
 end)
 
-menu.action(online, "索赔所有车辆", {}, "", function()
-	reclaimVehicles()
-end)
 
-----全局选项
+--全局选项
 all_opt = menu.list(online, "全局选项", {}) 
     menu.divider(all_opt, "全局娱乐")
     all_happy = menu.list(all_opt, "娱乐选项", {}) 
@@ -879,6 +924,14 @@ end)
 
 --全局恶搞选项
 menu.divider(sn, "全局恶搞")
+menu.action(sn, "传送全部玩家到我", {}, "", function()
+    for pid = 0, 31 do
+        local pedm = PLAYER.GET_PLAYER_PED(pid)
+        request_control(pedm)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+        ENTITY.SET_ENTITY_COORDS(pedm, pos.x, pos.y, pos.z)
+    end
+end)
 menu.toggle_loop(sn,  "禁止进入天基炮室", {}, "生成一个物体 挡住天基炮的门", function()
     local mdd = util.joaat("h4_prop_h4_garage_door_01a")
     if orb_obj_smc == nil or not ENTITY.DOES_ENTITY_EXIST(orb_obj_smc) then
@@ -1074,72 +1127,6 @@ end)
 menu.action(kickall_list, "踢出所有玩家", {}, "", function () 
     menu.trigger_commands("kickall")
 end)
-
---其他选项
-online_other = menu.list(online, "其他选项", {}, "")
-    unlocks = menu.list(online_other, "解锁选项")
-        menu.toggle_loop(unlocks, "50辆载具车库", {}, "", function()
-            if memory.read_byte(memory.script_global(262145 + 32688)) ~= 0 then-- thx aero for this global <3
-                memory.write_byte(memory.script_global(262145 + 32688), 0) 
-            end
-            if memory.read_byte(memory.script_global(262145 + 32702)) ~= 1 then
-                memory.write_byte(memory.script_global(262145 + 32702), 1)  
-            end
-        end)
-        menu.action(unlocks, "毒品战争内容", {}, "", function()
-            for i = 33974, 34112, 1 do
-                memory.write_byte(memory.script_global(262145 + i), 1)  
-            end
-        end)
-        menu.action(unlocks, "圣诞和新年礼物", {}, "Change sessions for the gifts to be awarded.", function()
-            memory.write_byte(memory.script_global(262145 + 33915), 1)  
-            memory.write_byte(memory.script_global(262145 + 33916), 1)  
-        end)
-    menu.toggle(online_other, "关闭电台", {"closeradio"}, "",function(on)
-        if on then
-            AUDIO.SET_RADIO_TO_STATION_NAME("OFF")
-            menu.trigger_commands("Playmusic off")
-        end
-    end)
-    menu.toggle(online_other, '同步时间', {}, '与现实时间同步', function(toggle)
-        Real_world_time(toggle)
-    end)
-    show_time = menu.toggle(online_other, "显示时间", {}, "配置[√]\n请于其他选项使用[保存配置]", function(state)
-        daidaishijian(state)
-    end)
-    menu.set_value(show_time, config_active2)
-
-    host_sequence_list = menu.list(online_other,"主机序列",{},"")
-        host_sequence = menu.toggle_loop(host_sequence_list, "主机序列", {}, "配置[√]\n请于其他选项使用[保存配置]", function()
-            zhujixvlie()
-        end)
-        menu.set_value(host_sequence, config_active1)
-        host_sequence_x = menu.slider(host_sequence_list, "x坐标", {"watermark-x"}, "配置[√]\n请于其他选项使用[保存配置]", -1000, 1000, config_active1_x, 10, function(x_)
-            zhujixvlie_x(x_)
-        end)
-        host_sequence_y = menu.slider(host_sequence_list, "y坐标", {"watermark-y"}, "配置[√]\n请于其他选项使用[保存配置]", -1000, 1000, config_active1_y, 10, function(y_)
-            zhujixvlie_y(y_)
-        end)
-
-    numfps = menu.toggle(online_other, "显示fps", {}, "配置[√]\n请于其他选项使用[保存配置]", function(on)
-        fps(on)
-    end)
-    menu.set_value(numfps, config_active4)
-
-    show_entityinfo = menu.toggle_loop(online_other, "实体池信息", {}, "配置[√]\n请于其他选项使用[保存配置]", function()
-        entityinfo()
-    end)
-    menu.set_value(show_entityinfo, config_active5)
-
-    script_name = menu.toggle(online_other, "显示脚本名称", {}, "配置[√]\n请于其他选项使用[保存配置]", function(state)
-        scriptname(state)
-    end)
-    menu.set_value(script_name, config_active3)
-
-    players_bar = menu.toggle_loop(online_other, "玩家栏", {}, "配置[√]\n请于其他选项使用[保存配置]", function()
-        player_bar()
-    end)
-    menu.set_value(players_bar, config_active8)
 
 
 ----聊天选项
@@ -2299,6 +2286,25 @@ menu.toggle_loop(Task_robbery, '自动出租车', {}, '自动传送到出租车�
             curcoords = {}
     end)
 
+    unlocks = menu.list(Task_robbery, "解锁选项")
+        menu.toggle_loop(unlocks, "50辆载具车库", {}, "", function()
+            if memory.read_byte(memory.script_global(262145 + 32688)) ~= 0 then-- thx aero for this global <3
+                memory.write_byte(memory.script_global(262145 + 32688), 0) 
+            end
+            if memory.read_byte(memory.script_global(262145 + 32702)) ~= 1 then
+                memory.write_byte(memory.script_global(262145 + 32702), 1)  
+            end
+        end)
+        menu.action(unlocks, "毒品战争内容", {}, "", function()
+            for i = 33974, 34112, 1 do
+                memory.write_byte(memory.script_global(262145 + i), 1)  
+            end
+        end)
+        menu.action(unlocks, "圣诞和新年礼物", {}, "Change sessions for the gifts to be awarded.", function()
+            memory.write_byte(memory.script_global(262145 + 33915), 1)  
+            memory.write_byte(memory.script_global(262145 + 33916), 1)  
+        end)
+
     menu.toggle_loop(Task_robbery, "自动跳过NPC对话", {}, "", function()
         if AUDIO.IS_SCRIPTED_CONVERSATION_ONGOING() then
             AUDIO.STOP_SCRIPTED_CONVERSATION(false)
@@ -2340,7 +2346,14 @@ weaponsetting = menu.list(weapons, '武器设置', {}, '')
     end)
     menu.action(weaponsetting, "补充所有弹药",{}, "",function()
         for _, weapon in ipairs(util.get_weapons()) do
-            WEAPON.SET_PED_AMMO(PLAYER.PLAYER_PED_ID(), weapon.hash, 9999,false)
+            WEAPON.SET_PED_AMMO(PLAYER.PLAYER_PED_ID(), weapon.hash, 9999, false)
+        end
+    end)
+    menu.toggle_loop(weaponsetting, '锁定弹药数量', {}, '', function()
+        if PED.IS_PED_SHOOTING(PLAYER.PLAYER_PED_ID()) then
+            local hash = WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.PLAYER_PED_ID())
+            WEAPON.SET_PED_AMMO(PLAYER.PLAYER_PED_ID(), hash, 9999, false)
+            WEAPON.REFILL_AMMO_INSTANTLY(PLAYER.PLAYER_PED_ID())
         end
     end)
     menu.click_slider(weaponsetting, "添加弹药", {}, "添加指定武器弹药", 1, 9999, 1, 20, function(value)
@@ -2429,6 +2442,23 @@ entity_control = menu.list(weapons, "实体控制枪", {}, "控制你所瞄准�
     menu.divider(entity_control, "实体列表")
 
 weapon_fun = menu.list(weapons, "武器娱乐", {}, "")
+    menu.toggle_loop(weapon_fun, "死亡之眼", {}, "当然,这对玩家无效", function()
+        dead_eye()
+    end)
+    graffiti = menu.list(weapon_fun, "涂鸦枪", {}, "")
+        menu.toggle(graffiti, "开启", {}, "", function(toggled)
+            Graffiti_weapon(toggled)
+        end)
+        menu.slider(graffiti, "亮度", {"graffitiness"}, "光亮强度.", 0, 1000, 100, 10, function(value)
+            graffiti_bright(value)
+        end)
+        menu.slider(graffiti, "半径", {"graffitiradius"}, "光束半径.", 0, 20, 5, 1, function(value)
+            graffiti_radiu(value)
+        end)
+        menu.rainbow(menu.colour(graffiti, "颜色", {"graffiticolour"}, "", {r = 0, g = 0, b = 1, a = 0}, true, function(value)
+            graffiti_color(value)
+        end))
+
     menu.toggle_loop(weapon_fun, "目标靶", {}, "", function() 
         local pos = v3.new()
         if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pos) and not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) then
@@ -2458,8 +2488,7 @@ weapon_fun = menu.list(weapons, "武器娱乐", {}, "")
     menu.toggle_loop(weapon_fun, "粑粑枪", {}, "", function() 
         local pos = v3.new()
         if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pos) then
-            local hash = -2071359746
-            create_object(hash, pos.x, pos.y, pos.z)
+            create_object(-2071359746, pos.x, pos.y, pos.z)
         end
     end)
     menu.toggle_loop(weapon_fun,"陨石枪", {}, "", function()
@@ -2817,38 +2846,31 @@ menu.toggle_loop(weapons, '翻滚换弹', {}, '', function()
 end)
 
 ----------娱乐选项
-menu.toggle_loop(funfeatures, "军演轰炸", {}, "", function()
+menu.toggle(funfeatures, "蜘蛛侠飞行", {}, "", function(on)
+    superman_fly(on)
+end)
+
+
+menu.toggle_loop(funfeatures, "军演轰炸", {}, "射击你要轰炸的地点", function()
     Military_exercises()
+end)
+
+menu.list_action(funfeatures, "骑乘动物", {}, "", {"鹿", "公猪", "牛"}, function(index)
+    riding_animals(index)
+end)
+menu.toggle(funfeatures, "牛车", {}, "",function(state)
+    ride_cow(state)   
 end)
 
 police_vehicle = menu.list(funfeatures, "警车模式", {}, "")
     menu.action(police_vehicle, "变成警车", {}, "针对载具", function()
-        local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(players.user()), false)
-
-        VEHICLE.SET_VEHICLE_LIGHTS(vehicle, 2)
-        VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 22, true)
-        VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, true, true, true)
-        VEHICLE.SET_VEHICLE_LIGHT_MULTIPLIER(vehicle, 1)
-
-        VEHICLE.SET_VEHICLE_MOD(vehicle, 14, 1)
-        -- 涂成哑光黑色
-        VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vehicle, 0, 0, 0)
-        VEHICLE.SET_VEHICLE_MOD_COLOR_1(vehicle, 3, 0, 0)
-        VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vehicle, 0, 0, 0)
-        VEHICLE.SET_VEHICLE_MOD_COLOR_2(vehicle, 3, 0, 0)
-        -- Clear livery
-        VEHICLE.SET_VEHICLE_MOD(vehicle, 48, -1)
-        -- 设置车牌
-        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(vehicle, true, true)
-        VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(vehicle, 4)
-        VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, "FBI")
+        Become_police_car()
     end)
     menu.action(police_vehicle, "呼叫支援", {}, "呼叫附近单位支援", function()
         local incident_id = memory.alloc(8)
         MISC.CREATE_INCIDENT_WITH_ENTITY(7, PLAYER.PLAYER_PED_ID(), 3, 3, incident_id, 0, 0)
         AUDIO.PLAY_POLICE_REPORT("SCRIPTED_SCANNER_REPORT_PS_2A_01", 0)
     end)
-
 
 menu.action(funfeatures, "世界轰炸", {}, "", function()
     World_Bombing()
@@ -3135,6 +3157,10 @@ headlamp = menu.list(funfeatures, "头灯", {}, "仅本地可见")
         local head_pos = PED.GET_PED_BONE_COORDS(players.user_ped(), 31086, 0.0, 0.0, 0.0)
         local cam_rot = players.get_cam_rot(players.user())
         GRAPHICS1.DRAW_SPOT_LIGHT(head_pos, cam_rot:toDir(), math.floor(headlamp_color.r * 255), math.floor(headlamp_color.g * 255), math.floor(headlamp_color.b * 255), distance * 1.5, brightness, 0.0, radius, distance)
+        util.toast("x"..cam_rot:toDir().x)
+        util.toast("y"..cam_rot:toDir().y)
+        util.toast("z"..cam_rot:toDir().x)
+        
     end)
     distance = 25.0
     menu.slider_float(headlamp, "距离", {"distance"}, "光照距离.", 100, 10000, 1500, 100, function(value)
@@ -3793,6 +3819,9 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
         end)
 
     ------友好选项
+    menu.action(friendly, "保存玩家信息", {}, "", function()
+        save_p_info(pid)
+    end)
     menu.action(friendly, "掉落足球", {}, "", function()
         ball_drop(players.get_position(pid))
     end)
@@ -4221,27 +4250,14 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
     menu.toggle(classic_trolling, "撒尿", {}, "随地大小便应该遭到谴责", function(on)
         peeloop_player(pid,on)
     end)
+    menu.toggle(classic_trolling, "骑乘玩家1", {}, "仅本地有效", function(on)
+        ride_player1(pid,on)
+    end)
+    menu.toggle(classic_trolling, "骑乘玩家2", {}, "仅本地有效", function(on)
+        ride_player2(pid,on)
+    end)
     menu.action(classic_trolling, "UFO引力", {}, "使用UFO将它们拉起一秒钟", function()
-        local coords = players.get_position(pid)
-        coords.z = coords.z + 63
-        local ufoModel = MISC.GET_HASH_KEY("p_spinning_anus_s")
-        local ufo = entities.create_object(ufoModel, coords)
-        local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-        local vehicle = PED.GET_VEHICLE_PED_IS_IN(player, false)
-
-        if PED.IS_PED_IN_VEHICLE(player, vehicle, false) then 
-            caremp(pid)
-            util.yield(1000)
-            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle)
-            VEHICLE.BRING_VEHICLE_TO_HALT(vehicle, 3, 4, false)
-            VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, false, true, true)
-            ENTITY.APPLY_FORCE_TO_ENTITY(vehicle, 1, 0.0, 0.0, 65, 0.0, 0.0, 0.0, 1, false, true, true, true, true)
-            util.yield(6000)
-            entities.delete(ufo)
-        else
-            entities.delete(ufo)
-            util.toast("目标不在车辆中") 
-    end
+        UFO_gravitation(pid)
     end)
 
 
@@ -4348,6 +4364,9 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
         menu.list_select(obj_cage_lt,"选择物体笼子", {}, "", objsetcage_name, 1, function (index)
             select_obj_cage(index)
         end)
+    menu.action(lz, "柱形笼", {}, "", function()
+        pillar_cage(pid)
+    end)
     menu.action(lz, "栅栏", {}, "", function()
         fence_lz(pid)
     end)
@@ -4466,10 +4485,10 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
         Rampage_plane_cage(pid)
     end)
     menu.action(lz, "支柱笼子", {}, "", function ()
-        menu.trigger_commands("cage".. players.get_name(pid))
+        pillar_cage(pid)
     end)
     menu.toggle_loop(lz, "全自动笼子", {}, "每一秒套一次", function ()
-        menu.trigger_commands("cage".. players.get_name(pid))
+        pillar_cage(pid)
         util.yield(1000)
     end)
     menu.action(lz, "英国女王笼子", {}, "", function(cl)
@@ -4504,6 +4523,9 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
     end)
 
     ----------NPC恶搞
+    menu.action(npc_trolling, "消防车攻击", {}, "消防车对着玩家一直洒水", function()
+        Firetruck_attack(pid)
+    end)
     menu.list_action(npc_trolling, "NPC在玩家面前自杀", {}, "在玩家面前生成一个自杀的ped", traumatize_options, function(index)
         npc_suicide(index,pid)
     end)
@@ -4523,7 +4545,6 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
     menu.action(npc_trolling, "发送崔佛", {}, "派崔佛去撞他们或碾压他们", function()
         send_Angry_Trevor(pid)
     end)
-
 
     attackers_root = menu.list(npc_trolling, "攻击者", {}, "")
         menu.action(attackers_root, "狗子攻击者", {}, "arf uwu", function()
@@ -4560,9 +4581,6 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
             end
             --ENTITY.FREEZE_ENTITY_POSITION(dust, true)
         end)
-
-        ice_entity_name = {"钻石圣诞树","宝石圣诞树","五角星圣诞树","啤酒桶杯"}
-        ice_entity = {"ch_prop_ch_diamond_xmastree","ch_prop_tree_01a","ch_prop_tree_02a","ch_prop_tree_03a"}
         menu.textslider(create_garbage_entities, "冰淇凌盛宴", {}, "在他们面前生成一个类似冰淇凌的实体", ice_entity_name, function (index)
             local obj = ice_entity[index]
             local container_hash = util.joaat(obj)
@@ -4791,15 +4809,23 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
             menu.trigger_commands("detachwheel" ..  players.get_name(pid))
         end)
     end)
-    menu.textslider(vehicle_car, "生成坡道", {}, "", ramps_names, function(ramps)
+    menu.textslider(vehicle_car, "生成普通坡道", {}, "", ramps_names, function(ramps)
         local ramp = ramps_hashes[ramps]
-        request_model(ramp)
-        control_vehicle1(pid, true, function(vehicle)
-            local veh_coords_offset = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(vehicle, 0.0, 5, 0.0)
-            local heading = ENTITY.GET_ENTITY_HEADING(vehicle)
-            local ramp = entities.create_object(ramp, veh_coords_offset)
-            ENTITY.SET_ENTITY_HEADING(ramp, heading)
-        end)
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(pid), false)
+        local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(vehicle, 0, 5, 0)
+        local heading = ENTITY.GET_ENTITY_HEADING(vehicle)
+        local ramp = create_object(ramp, pos.x, pos.y, pos.z-0.8)
+        ENTITY.SET_ENTITY_HEADING(ramp, heading)
+        ENTITY.FREEZE_ENTITY_POSITION(ramp, true)
+    end)
+    menu.textslider(vehicle_car, "生成竞技坡道", {}, "", ramps_names1, function(ramps)
+        local ramp = ramps_hashes[ramps+3]
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(pid), false)
+        local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(vehicle, 0, 30, 0)
+        local heading = ENTITY.GET_ENTITY_HEADING(vehicle)
+        local ramp = create_object(ramp, pos.x, pos.y, pos.z-0.8)
+        ENTITY.SET_ENTITY_HEADING(ramp, heading+90)
+        ENTITY.FREEZE_ENTITY_POSITION(ramp, true)
     end)
 
     menu.toggle_loop(vehicle_car, "载具爆炸", {}, "爆炸目标进入的任何车辆", function()
@@ -5473,6 +5499,9 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
     end)
 
     -----崩溃玩家
+    menu.action(crashplayer, "道具草崩溃", {}, "", function()
+        prop_grass(pid)
+    end)
     menu.action(crashplayer, "PED崩溃", {}, "", function()
         PED_crash(pid)
     end)
@@ -5565,32 +5594,14 @@ end)
 
 
 ----传送选项
-menu.action(tp_world, "传送到标记点", {}, "不完善的功能", function()
-    if HUD.IS_WAYPOINT_ACTIVE() then
-        local waypointpos = HUD.GET_BLIP_INFO_ID_COORD(HUD.GET_FIRST_BLIP_INFO_ID(HUD.GET_WAYPOINT_BLIP_ENUM_ID()))
-		if waypointpos.x ~= 16000 then
-			local mypos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
-			local esliposz = 850
-			if waypointpos:magnitude(mypos.x,mypos.y) > 35 then
-				local boolpara, posz = util.get_ground_z(waypointpos.x, waypointpos.y, esliposz)
-				while not boolpara do
-					esliposz  = esliposz - 5
-					boolpara, posz = util.get_ground_z(waypointpos.x, waypointpos.y, esliposz)
-					if esliposz  < -200 then
-						esliposz  = -200
-						boolpara = true
-					end
-                    util.yield()
-				end
-                teleport(waypointpos.x, waypointpos.y, posz)
-			end
-		end
-    end
+menu.action(tp_world, "传送到标记点", {}, "", function()
+    tp_waypoint()
 end)
-
-
 menu.action(tp_world, "过渡传送", {}, "", function()
     transit_tp()
+end)
+menu.toggle_loop(tp_world, "自动传送到标记点", {}, "", function()
+    tp_waypoint()
 end)
 menu.toggle_loop(tp_world, "自动传送到任务点", {}, "", function()
     if HUD.DOES_BLIP_EXIST(HUD.GET_FIRST_BLIP_INFO_ID(1)) then
@@ -6229,9 +6240,9 @@ all_npc = menu.list(worldlist, "NPC", {})
         PED.SET_PED_RESET_FLAG(players.user_ped(), 124, true)
     end)
     menu.toggle_loop(all_npc, "自动杀死敌人", {}, "", function()
-        for _, ped in ipairs(entities.get_all_peds_as_handles()) do
-            if HUD.GET_BLIP_COLOUR(HUD.GET_BLIP_FROM_ENTITY(ped)) == 1 or TASK.GET_IS_TASK_ACTIVE(ped, 352) then -- 这是一种糟糕的方式,但它有效（大多数时候）.
-                ENTITY.SET_ENTITY_HEALTH(ped, 0, 0)
+        for i, ent in pairs(entities.get_all_peds_as_handles()) do
+            if not PED.IS_PED_A_PLAYER(ent) and PED.IS_PED_IN_COMBAT(ent, PLAYER.PLAYER_ID()) then
+                ENTITY.SET_ENTITY_HEALTH(ent, 0.0)
             end
         end
     end)
@@ -6377,6 +6388,9 @@ clear_list = menu.list(protection, "清除选项", {}, "")
 
 menu.action(protection, "分离元素", {}, "分离附加到PED的每个附着元素,不区分玩家和NPC", function()
     detach_all_entities()
+end)
+menu.action(protection, "恢复状态", {}, "恢复玩家正常状态,姿势等", function()
+    TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
 end)
     
 deathlog_lt = menu.list(protection,'死亡日志', {}, '记录谁杀了你')
@@ -6850,7 +6864,7 @@ pendants = menu.list(otherlist, '小挂件', {}, '')
         menu.slider_float(illustration, "尺寸", { "illsize" }, "", 0, 200, 80, 1, function(s)
             ill_size = s/800
         end)
-        menu.slider(illustration, "序号", {}, "", 1, 12, 1, 1, function(s)
+        menu.slider(illustration, "序号", {}, "", 1, 14, 1, 1, function(s)
             illus_header = directx.create_texture(filesystem.resources_dir() .. "/SakuraImg/illustrations/"..s..".png")
         end)
 

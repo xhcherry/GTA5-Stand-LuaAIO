@@ -314,7 +314,13 @@ local trans =
 	InvalidOutfit = "%s 有一套无效的衣服: %s"
 }
 
-
+local function createProfilesDirectory()
+    local profilesDir = filesystem.scripts_dir().. "GTLuaScript\\profiles"
+    if not filesystem.scripts_dir().. "GTLuaScript\\profiles" then
+        filesystem.mkdir(profilesDir)
+    end
+end
+createProfilesDirectory()
 ProfileManager =
 {
 	reference = 0,
@@ -331,8 +337,6 @@ ProfileManager =
 	activeProfile = nil
 }
 ProfileManager.__index = ProfileManager
-
-
 
 function ProfileManager.new(parent)
 	local self = setmetatable({}, ProfileManager)

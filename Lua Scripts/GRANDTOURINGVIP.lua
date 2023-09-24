@@ -1,32 +1,16 @@
 --[[
- _________     _________    ________     ________     ________     _________     _________    ________     ________     ________      _________     _________    ________     ________     ________ 
-|\   ____ \   |\___  ___\  |\   __  \   |\   __  \   |\   __  \   |\   ____ \   |\___  ___\  |\   __  \   |\   __  \   |\   __  \    |\   ____ \   |\___  ___\  |\   __  \   |\   __  \   |\   __  \
-\ \  \___| \  \|___\  \_/  \ \  \|\ /_  \ \  \|\ /_  \ \  \|\ /_  \ \  \___| \  \|___\  \_/  \ \  \|\ /_  \ \  \|\ /_  \ \  \|\ /_   \ \  \___| \  \|___\  \_/  \ \  \|\ /_  \ \  \|\ /_  \ \  \|\ /_
- \ \  \ __  \     \ \  \    \ \   __  \  \ \   __  \  \ \   __  \  \ \  \ __  \     \ \  \    \ \   __  \  \ \   __  \  \ \   __  \   \ \  \ __  \     \ \  \    \ \   __  \  \ \   __  \  \ \   __  \ 
-  \ \  \|\ \ \     \ \  \    \ \  \|\  \  \ \  \|\  \  \ \  \|\  \  \ \  \|\ \ \     \ \  \    \ \  \|\  \  \ \  \|\  \  \ \  \|\  \   \ \  \|\ \ \     \ \  \    \ \  \|\  \  \ \  \|\  \  \ \  \|\  \
-   \ \________\     \ \__\    \ \_______\  \ \_______\  \ \_______\  \ \________\     \ \__\    \ \_______\  \ \_______\  \ \_______\   \ \________\     \ \__\    \ \_______\  \ \_______\  \ \_______\
-    \|________|      \|__|     \|_______|   \|_______|   \|_______|   \|________|      \|__|     \|_______|   \|_______|   \|_______|    \|________|      \|__|     \|_______|   \|_______|   \|_______|
-                                                                                                                                                                                                                                    
- _________  ________  ________  ________   ________  ___       ________  _________  _______   ________          ________ ________  ________  _____ ______              _________      _________ 
-|\___   ___\\   __  \|\   __  \|\   ___  \|\   ____\|\  \     |\   __  \|\___   ___\\  ___ \ |\   ___ \        |\  _____\\   __  \|\   __  \|\   _ \  _   \           |\    _____\   |\___  ___\  
-\|___ \  \_\ \  \|\  \ \  \|\  \ \  \\ \  \ \  \___|\ \  \    \ \  \|\  \|___ \  \_\ \   __/|\ \  \_|\ \       \ \  \__/\ \  \|\  \ \  \|\  \ \  \\\__\ \  \           \ \  \___| \  \|___\  \_/  
-     \ \  \ \ \   _  _\ \   __  \ \  \\ \  \ \_____  \ \  \    \ \   __  \   \ \  \ \ \  \_|/_\ \  \ \\ \       \ \   __\\ \   _  _\ \  \\\  \ \  \\|__| \  \           \ \  \ __  \     \ \  \    
-      \ \  \ \ \  \\  \\ \  \ \  \ \  \\ \  \|____|\  \ \  \____\ \  \ \  \   \ \  \ \ \  \_|\ \ \  \_\\ \       \ \  \_| \ \  \\  \\ \  \\\  \ \  \    \ \  \           \ \  \|\ \ \     \ \  \    
-       \ \__\ \ \__\\ _\\ \__\ \__\ \__\\ \__\____\_\  \ \_______\ \__\ \__\   \ \__\ \ \_______\ \_______\       \ \__\   \ \__\\ _\\ \_______\ \__\    \ \__\           \ \________\     \ \__\    
-        \|__|  \|__|\|__|\|__|\|__|\|__| \|__|\_________\|_______|\|__|\|__|    \|__|  \|_______|\|_______|        \|__|    \|__|\|__|\|_______|\|__|     \|__|            \|________|      \|__|  
-
-
-
-
-̧̨̡̧̨̢̡̢̞̝̯̙͕̣͇͓̹͉̰͔͓͉̰̫̙̘̠͙̯̹͉̜͎̞̝͎͓̘͓̫͓̥̭̠̟̭̈́̔Ǫ̷̡̡̧̢̧̨͕̯̰͎͈̤͚̳̺̹̺̮̯͍̜̝̮̓͌̐̓͛̈́̌̔̄̎͗̅̓̓̈̎̚͝n̵̙̖͍͚̥̥̟̘̖͔͚̬̙̮̈́͒́̎͌̏͋̍͛͑̈́̀̐̀͊̎́̈́̊̏̓̂͑͋̍̈́͋̌̀̂̾͆̀̈̒̉̈́̾̉̔̐͑̕̚͘͜͠ͅ ̵̨̨̺̖̞̭͖̤̰͍̖̱͖͈̼̥̣̦͍̣̤̙̘̝͓̠͖̹̦̐̍̿̈́͗́̋̀̃̈́͋̃̏͗̚͘̕͜͜͠͝ͅͅT̷̢̧̡͈̺͍̰͕̣̤̟̭̯͎̮͙̤̖͈͈̥͎͍̪̪͉̘̞͖̗̣͔͚̝̲̝̯̲͍͖̯͖̘̘̪̻̘̿́̿͆̑̀̓̂͒̂̀̈́̄͜ǫ̵̛͚͇̻͎̼̬̖͒͌̍̀̔͊͛̔̒̈́́̓̏̈̎̃̏̋͑́̏͐̄̈͌͋͌͒͋́̉̃̇̇̑̀̍͂͠͠p̵̨͚͇̜͍̣̝͓̖̳̞̄̉̏͐̂!̸̢̡̢̨̢̤̣̦̬͍̫͇̰̻͍̯̙̬̤̦̘̲͓̱̦̥̄̽̋̔̑̾̎͒̇͌̑̽͐̕̕͘͝!̷̢̡̛̛͎̖͉͚̭͓̜̩̲͉̜̥͕̞̫̩̜̗͍̺͕̲̪͉̬̩̼̙̖̠̐͂̉̈́͊̒̆̈́̃̈́́̓̇̓̇̋̈́̓̄̅̉̾̋̔̃͌̈́̄̔̎͆̀̕͘̚͝͝ͅ2̴͔͍̻́̉̽̆̎̈́̈́̓̐̈͐̎̀̂̏́̚̕͝S̵̡̧̼͚̭͍̹̗͎̱̖̟͚̖̹͑̐̎͋͛̓̽̏̽̀̽̽̇̓͑̊̋͘̚k̸̛͇̰̗̟̹̮̱̭͉̘̯̈̀̑͐̿͐̈́̀͑͆͋̐̂̽͊͒͗͗̾̏̾̅̒̍̉̆͑͆̿̉̂͒͆̽͋̿̿̃̎̕͘̚̕͘͜͠ĩ̶̧̧̖̩͓̞̺̦͍͙̩̯̘͔̜̮͍͕̘̩͎̣̫̫̘̤̱͓̯̱̝͕͇̩͕̳͕̤̘͈͇͇͎̺̀̔͛̇̽̿̍̑̈͒̄̋̂̓͑͗̈́͒̍̀̑̑́̿̃́̈́͋̑̔̃͛̅̽̃̄̊̀̌̉̕̚͜͠͠͠͝ͅͅͅḑ̶̧̧̢̛̛̦̯̦̹͕͉̯̳͇̞̥̯̦͕̗̫̘͔̤̜̞͕̯̖͓̗̹̫͖̟̫̻̖̳̰͚̟̝̀͌̏̔̿̑͆̉̑̅͗̓̑̓̀͑̊̓̇̆̋͌̀̉́̀̽̏͌̏̑̚̕͜͜͜͠͝1̷̧̨̢̛̲̳͎̭͕̯͇͙̹̹̩͉͍̬̮̫͇̝̗͉̘͈̯͈̼̭̗̥̗͇͙̱̽̆̓̍̋̌̀͌̈́͂̈́̐͌͆́͂̀̊̊̈̾͑̃͛̿̌̄̎̋̇͗̋̽͆̄͘͜͜͝͝͝͠ͅ ̴̧̧̨̛̫̬͓̫̲̘̤̖̝̜͎̮̯̞̖̜͚̹̥͇̖͕̀̉̾̐͊̆̈́́͊͆̈̇͑͐͐̋̋̑̒̓͘̕͜͝Ơ̴̛̛̘̥̘͖̈̄̃̀̌̍̈́̈́̅͒̓̂̄͐́̉̽̅̂͒̄̆̎̐͋̅͐̍̂͛͒̑́͛͛͂͌̈́̉̀͆̚̕͝͠n̷̨̨̛͕̻͙̱͎̞̜̙̟͇̼̹͚̘̝͍̝̩̱͓̭͙̳̘̩͔͉̮͔͍̙͈͈̻̊̇̉͋͆́̽̋̓̕͜ͅ ̴̞̌́͛̍̉̓̓͂̅͆̍̇̑̏́͑̓̒̍̋̋̄̓̇̓̂̅̾̆͛̈́̍̏͊̃̽̄̐̆͘̚͝T̷̨̨̨̡̡̢̛͕̪̱̘̩̩̖̘̯̤͉̪̼̝̺̻̥̞̰̳̻͙̱̮̲̘͕̗͍̿̆̋̈̒̇̈̾̓̉̔̐̈́͂̚͜o̶̡̡̯͙̮͇͉̭̯͎̮͚̪̬͎̹̗̟̗̠̱̩̘̣̞͙̻͊͆͌̋̽̈́̌́̑̂͂͐͋͗̓͝͝p̷̡̢̨̧̛̱͎̗̞͈̖̲̞̞̝̱̻̗̘̞̘̫͙͕͖͉̺̗̟̥̤̫̝̰͙̝̳̻̦̻̻̘̦̳̰̦̤͐̈́͑̆̆̀̿̈́̾̽̐̂̌̈̎̎͋́̿̈̐̈́͒̽͗̄͐̆͊̄̕͘͜͜͝͝!̷͎̭̠̜͙̪̝̟̹̻͇̳̹̆̎͐̐́̈́̐̒̉̈́̄̄̾́̓̄̌́̌̿͗͋̑̅̍͋̇̈́͘̕̚̕̕͜ͅ!̴̢̡̨̗͚͔͍̖̥̭̯̦̹̰͕̙̼̊̆̒̈́͊̋̍̂͋̎́̾̔̒̈́́̈͗̌̍̚͜͝2̸̡̨̧̨̢̛͇͇̗̻̱̞̤̳̱̦̲̻̣̥̗̠̹͎̝̳̰͇̻̤͋̑͗̈̆͋̒͋̀̍̃͋͐̾̽̊͊̔̈́̋͘̕͜ͅŞ̴̧̧̨͈̥̹͙͇̜̙̩̰̟̙͖̥͚͓̫͓͚̼̭̩̂̔͋̾̎̓̕͠͝ͅk̷̡̨̨̜̦͎̙̬͙̝̰̹̳̦͙̠͉̥̣̩͓̾̾̈́͑̀̔͐̈́͛̅̋̿̊͋̍̓͋͠i̶̢̢̡̡̩̖͎̠̗͔͓̝͖̗͖̹̬̭̯̗̙͈͕̯̬̺̙̗̺͍͙̙͉̗̽̈́̓́̊̊̇̍̍̐͛̉̋̆̈́͜͠d̵̙̖̪̭̂͗̓̏͗̐̒̒̽̓͋͊͋̋̒͂̔̑̔͊̂́͆̈́͗̌͐̆͋̄̔̈̕͘̚͠ͅ1̷̢̦͖̘̟̯̘͉̼͇͙̜͊͆̽͋͋̓̎͌͑̓̅́̓̌̊̇̂͒́́̃̀́̈́̍͐͌̂̏́̎̿̉͗̈́͐̏̉͘̚͜͝͝͝͠͝͝ ̸̨̟̜͚̣̘͈̳̠̖͖̜̪̠͚͕̣̠͙̫̎̋Ǫ̶̛͚̙̺̘̦̺̞̣̼͕͒̏͆͌͆̽̒̓͑́̅̓̆͆̒̆̓̇͐͊̉̃n̴̡̡̻̮̺̩̣̥̰̦̳̘̯̞͓̗͉̱̳̞̞͍͈̼͇̯̎͌̄̍̐̄̾̂̃͌͛̏̿̅̑͘̕ ̸̢̛̛̛͍͓̤̼͕̖̝̺̭̟͖̞͍͖͙̜͛̓̿̈͗̍̈͛̐̈́͆̋͒̃̔̔͋͛̇͐̒́̔̈́͐̈́̆̇̊̏́̉̈́̽́̔͘̕̕̕͝Ţ̷̡̳̮͚̞͉͕͕̯͓͚͎̹͙͇̤̫͕͈͕̖͔̬̲̘̀̂́͋́̈̓̿͐̂̋̎̃̃͐̌̓͑̽̏́̔͋̑̾̈̽̈̇͑̕͝͝͝ǫ̶̛̛̲̲̹̳̙̤͓̣̼̘̟̩̋͂͑̂́̀̊̌͆̽̏͆͌̅̌̎̉͌̒͒́̍̔̀̓͂̏̌͒̏̓͐̂̽̿̍̽̚͘͠p̴̡̦̗͍̯͈̱̬̼͋̏̾̀̑̎͑̊͊̈̍̐̈́̓̅́̚̕͘͝͠!̷̨̨̨̧̡̢̢̛̛͓̤͎̖̯̦̣͍͙͈̱̖͚̼͍̳͚͚̟͔̻̳̣̝̗̙̪̘͈̙͔̬͖̜̤̠̅̈̍́͑͊̽̈́̀͊̊̿̅͂̒̈̀͑́̀̐̒̐̉̈́͗́̉̒͐̿́̓͑͘͘̚͘͝͝͝͝͝!̶̧̨̧̘͎̠͍͍̖̫̤̱̖͇͚͖̬̗̗͍͓̳͈͙̞̯͙͙̰̦̺̗̰̩̟̹͔̦̳̮̈̓͊́́̎͒̃͐̓̉̔́̑́̒̀͋̉̌̋̅͜͜2̵̧̢̨̨̹̹͔͖̱͙̯͕̝̠͙̱̱̦̜͎̜̖͖̪͈͚̟̞̗̟̥̦̭̠̟̺̐͗͛̃̓̈́͛̕͜͝S̴̨̡̢̨̖̜̟̙̮̠̩̗̩̖̙̗͔͓͓̮̤̮̼̪̜͙̖͕̣͖͍̳̖̞̙̰͚͖͙̜̝̫̠͓̽͐̄̿̏̈͜ͅḵ̵̢̛̪̣͕̦̣̩̞̳͚̲̦̰̟̩̺̊͆̌̑̓͌̽̉̒͒̀̾̆͛̆͗̑̉̐̆̈́̐̋͂̏͂̈́͋̀̓̓̇̅̄́̐͗̈́͘͘̕͜͠͠͝͝͠͝͝͠į̶̡̥̮̗͈̮̺̠̮͓͙̺̯̥̭̗̭̰͇̠̃͊̀̈́́̊̆͋͊̔̐̐̄̌͌̓͊̾̒̔̂̆͘̕͘̚̕͝͝ḑ̵̧̛͇̟̮͇̦̝͑̊̏̔̆̍̋̍͋̈́͂̂̒͋͊̈̀̈́͑͂̃̄̓̈́̊͑̄̆̈̒̌̾̓̓̾͋1̵̨̗̜͇̮͖̩̺̬͉͕̟̦̠͙͕̜̽̈͐̈̍̄͆̆̂͂͂̀̋̑͑̑̀̿̽́̈́̂̚͠͠͠ ̷̧̢̢̡̧̜̦͇͔͔̪̮͔̞̠̣̟̺̫͓̤̣̼͚͍̹̖̘̰̰̗̰͕͚͔̬̲͕̠͇͋̈́́͐̾̚͜ͅƠ̸̛̻̮͙̪̝̜̫̻͚̖͗͛̓͂̇̀͋́̓̇͗͌̅̅̈̂̍͒͐̀̒͒͌̄̅͌̽̈́̽̊̀͆͂̀̀̓̕ṉ̸̨̡̪͕̱̟̘̫̯̬̳̪̦͈̲̙͈̪̯́̐̇͌̊͒̎̉̏̈́͛̂̏̋̔͜ͅͅ ̸̭̦̦̭̬̯̪̥̦͈͔̪͈̻̳͐͐̌͊ͅT̶͙̖͕̬̬̈̍͐̿͒̅͋̊̽̏̉̊́̇̅̅̎͌̋̏͊̓̓̈́̌́̕͝͝͝͝͝ò̷̧̻͑̅͑̍̅̈́̇͂͆͌̈́̽̿̂̚͝͝͠͝ͅͅp̴͚̥̬̯̳̜̬͎̪͎̤̥̯̙̙̀̒̈́͌͗̓̑͗̍́̉̈́̚!̶̧̣̞͉̜̪̦̖̰̳̝̼̳̟̻̬̂̐̉̿͆̒͛̒̋̒̌̊̀̀͂̂́̎͜͝͝!̸̢̨̪̠̻̙͙̜̮͙̱̖͖̳͈̩̹̭͔̝̞͚̲̯͓̥̰͎̩̪̒͐̋͗̃̀̈́̌̈́̅̉̎̿̆͆̏͂̄͊͒̄́͂̈̓̏̇̉́̋̀̕͘͘͘̚̕͜͝͝͠͝ͅ2̵̡̢̣̠̪̟̩̘̙̯̜̗̺̼̦̠̟̞̥̥̯̫̣͔͔̝̗̰̭̩͈̗̅͋̒̉͊͒̔̈̑̾͗͒̋̋́͛̒̌͛̒͆̇̽̀̒͒̏͂̄̇̓̌̿̒̌̈́̈́͊̚͝͝ͅṢ̸̢̢̛̹͇͖̬̩̪̮̖̜̜͈̯̮̪͕̺̞̟͔̰̼̥̆̌̐̂̒͛͆͆̃̅̓͐̅̐̒̃̒̒̀̊̐̓̈́̊̽͒͌̈́̽͑͛́̂̉̚̕̕͘̚͜͠͠ͅk̴̟̓͋̿̔́̀̌͆̋̍̈́̇̅̑͑́͠ĩ̴̧͈̘̺̺̚͜ḑ̶̨̛̬͉̯̝̻̤͉̣̳̳̖͓̼̳̝͕̤̩̞̩͍͓̐̆̀̿̆̓̆̀́͌̏͑̅͛͌̚͘̕͜͠͝1̸̛̤͙̠̻̜̗̠̩̪̳̱̰̩̮͎̩̙͗͊̓͛̑̋̋̈́͌͒̂̍̆͆̃̅͐̓̊̓͐̑̊͒̽̋̉̏̆͌͂̏̅͐̀̏̐̊̋̚̕̕̚͘͜͜͠͠ ̵̬̻̼͔̝̼͎͓͐̔̇̓͆̀͒̉̊̓͌̿̋̏̏̈́́̈́̒̐̌̃͂̇̽͂͗͐̇̐̾̋̾̽̄̕͘̚͝͝͝O̸̧̧̡̢̡͕̻̖̫̠̰̰̫̳̱̲̱̺̻̠̭͓̻͓̞̦̖͚̲͇͕̗̘̘̅̃̀̋̄̋̑͛͋̎͂̾̾͋̉̑̀͜͜͝ñ̸̡̧̛͈̣̟͈͍̺͚̣̬͎̣͉̤̮̩͔̳͍̞͛̓̋̀͒̅̓́̉͑̊̂̂̇̏͋͑̀͊̇̒̑͊͊͌̾͐͊̈́͒̌̓̕͜͝ ̸̢̛̞̣̥̩͎̥̠̹͉̳̘̩͎͍̠̺̠̦̰͚̤̣̖̤̰͈̣̈́̉̃̂̇̀͊͆̅͐̑̄͂̈͑͒̈͂͊̀̂̆̄̒͊̀̿̓̕͘̕͜͝͝͝T̶̢̛̥̠̰̳̫̟̬̯̰͙̖̟͎͉͇͔͕͔͕͓̜͇̞͖̥̤̘͚͇̣̳̙̹̈́͐̓̌̽̈́͑̏̄̔̋̈̇͆̂̇́̅͜͠͝ͅͅo̷̧̡͈̱̤͍͍̻̠̳͕̖͉͕͇̙͓̪̜͚̲̫͊̅̏̄̆̅̔͑̽̓̎̐̎̉͜͝p̷̺̱̏̄͐͆̒͒̃͑͗͆̈̐̊̈́͐̀́̃̀̉̈̃̽̈́̂̄̀́̎̓̀̆̌͂̕͝!̴̢̧̨̡̡̳͍̼̥̲̜̼̪̬̣̩̫̲͈̥̞͙̮̮̘̭͖͍͇͛̉̓̓͐̐̄̃̀͒̎̉̑̒̇̓̃͗͑͒̔̽̆̈́͆̓̇͛̍̕͜͠ͅͅ!̶̧̨̛̮͓͆͊̿̈́̇̈͊̔̄̑͋͊̍̒̐̈́̑̋̈́̑̈́̑̚̕̕͝2̴̨̠̰̼͗̑͆̓̃͂̂́̑̾͐̂͗̈́̎̋̽̀͂͂̂̏̑̒͛̓́͗̽͋͆́̑̈́̉͘͝S̷̨̨̨̢̧̢̛̹̼͎̼̟̣̲̥͕͔̱͉̲͔̭̳̭͖͈̻̬͙̱̣͙̭̣̫͓͍̯̞̐̎͒̀̈́̒͌̀͋́́̀̌̉͆̅̓̒͊̊̄̈́͑̂̍̔̽͆̊̑̍̊́̃̾̌͂̿̆͆̿͘̚͘̕͜͠͝k̶̡̢̧̡̨̥̱̫͇͍̜̫̥̹̤̗̬̼̭̣̘̜̰̞̤̬̘̲͍̤̱̺͎͚̯̣̠͇̣̘̰̟̗̥̝̪̋̇͂͊̆̐̄͗̍̍̋̿̓̌͑̋̀͂̐̇̈́́͐͂͐͗̅̍͂̄̑͘͘͜͜͝͝͝͝͝i̵̧̨̨̢̫̝̜͔͙̳̭͓̬͙̻͈̘̥̬̫̬͇̝̼͇͋̀́̀́̽̈́̔͛̎̑̆͌̐̍̎̓̂͂̈́̆̃̈́͂̇̿͂̈́͘̕͠͝d̶̛͕̗̮̣͎̩͓͉̜̮̆͑̄͂͐͐̔̄̔̊́̓̊̂̽͆̋͘͘̕͠ͅ1̶̧̱̠̎ ̶̡̨̨̤͔̙̮̬̳̺̫̬͔͖̬͖̤̳̲̠̫̭̭̫͚̮̬̖̰͖̟͚̠̺̠͇͉̤͉͉̜̰̭̲̮́͊̽́̎͌̈̉̋͑͗̕͘̕͜͠͝ͅǪ̶̗͗̍͗̀̋͗̓̈́̅̄̎̕̕͜n̶̢̨̨͖̱̘̲̗̭̯̼͈͚̹̤͔̘̲̰̝̤̞̬̦͙͙̓ ̷̨̛̗͍͓̠͉̻̣̱̭͕̯͎̪̼̱͎̤͎͍̟̮̥̮̿͗͊̾̇̈́̃̈́̌̈́̒͂͗̇̿͋͗͊̀̓T̷̡̧̡̢̧̢̧̡̨̛͚̞̫̦͈̖̠̤̯͇͈̭̣̻̪̖̲͔͙͕̩̬̣̳͚̭͉̮̰̩̥̘̱̰͉̝̩̜͙̤̠͌͂̀͌́̒̌́̌̈́̔̄͊̎̏̾̏̈́̂̀́͆̓̀̈́͆̀̀̾͗͛̈̀̏̊̀͘͝͠o̸̤̱̖͇̭̻̾͂̊͋̑̃̎́́̆̂̑̓́̑́̊̒̿͊̈́̃͝͝͠p̵̨̨̛̛̮̤̬͙̺̦̥͕̣̜̺͓͕̜͍̖͎͖̜̝͖̼̗̍́͋̃̉͋͒̉͋̓̃͐̎́̔̀͂̓̈̔͒̊̒͒̅́̓̈̐͂̏̇̌̚̚͝͝ͅ!̶̲̣̩̰̺̙̬̌̉͑̿̈́̌͐̀͌͑̕!̷̛̯̝̠̝̯̟̻͂͆̽͛̋̋̊̂̃̿̾̿̓́͂̋̿̂̈́̒̿͐̐̈͊̍̾̈́̃̀̀̉̓̆̈̎͘̚̕̚̚̕͜͠͝͝͠͝͝2̴̨̢̢̛̛̬̖̘̭̦̭̬̼͓̳̙̪̘̬͖̠͇̟̥̰̖͖͙̖̗̞̺͔̦͕̼̾̆́͌̔͊̌̂̍͛̋̀͆́͒̃̈́͛͂́̓̃̋̅̒͆͌̀̾̊̉̈́̃̎͘͠ͅS̵̺͑̆͋̔̍̌̋̂͋̀̈̆̆͋̑̈͝ḳ̸̼̩̩̮̥͋͗̔͛́̽͂̾͆͗͆̅̐̈̅̊̓̈́͒̍̽̑̀́̈́͆̄̈́̅̋̈́̓̈́̑̐̋́͒̓͒̈̚͘̕͝͠ỉ̸̡͖̠͙̣̰̯̫̠̻͍̞̩͖̬͖̿́́͛͗̋̒͂̊̉̿̚̚͝ͅď̶̢̡̢̪͈̬̙̺̳̜͈̼̝̮͈̹̪̞̲̫̬̪̪̫̤̳̼̩̫̑̈́̑̍̓͊͐͐̇͐̚͝͠ͅ1̵̧̧̤̲͍̝͉͓̥̦͉͔̰̝̣̙̗̫̻̬̝̖̠͕͓̖͊͐̀̈́͌͌̌̊̄͜͜ͅͅ ̴̡̧̧͖͇̦͍̩̳̝̩̖͓̙̺͔̱̭̩̜͔̙̼͕̩̺̣͚̞̥͖̝̮͍͔̝̪͖͉̐̽̉͝ͅͅǪ̴̨̨̱͇͍͔̖͇̤͇͖̯͚̭̝̥̗̠̙͓͉̼̰͉̠̻͍̮̺͇͕̖̌̉̌̓͋̒͌̐͑́͌̓͒̀̾̈́̓̓̏͂̿̒̽̄͋̃̾͌͂̈͋̄͒̉̅͐͘͜͜͠n̵̢̡̢̧̛̠̖̙̹͇̩̥̖̹͙̦̞͓͖͍͍̝̰̦͔̙̩̲͖̤̘̙͖̺͉͔̦̯̗̆̊̎͆̀͌͆̐̀̂͊̂̔̈́͑̅̊̎͆̈͌͛̽̒̄̏̚͘͝͝ ̷̧̡̛͈̭͓̫̮̠͙͙̞̬̙̫͇̯͉͙̣͚̜͚͔̪̻̟̗͕̤͇̰̟̟̯͙̥̀̇̋̌̀̈́̂̉̔͜T̴̢̧̛̬̦̮̰̜͕̯̘̫̲̜͙̩̜̤̠̭̮̩̲̜̘͚̙̱̱̣̗̣̮̙̲̩̏̽͑̅͆̍͋̑́̄͘͜ͅͅò̴̜̥͌̒̆̊͊ṕ̵̜̻̟͓̗͔̗͗̀̔̅̒͌͒̽̿̊̇̒͑͂͛̀̈́̋̍͛!̷̛̫́̀̀̍̋̒̆́̈͊͐̂̄̈́̃̂̂̆̄̋̓́̓̾͂̍̏̑̅͂͐́͑͠͠͝͝͝!̵̛̥̝͇̳̯̉͂̾́͋̈̎̀͐͛̊̀̉́͆̔́̎̑̎͒̈̽́̍̌́̎́͋́̍̀̃̓̔̌͘̚̕̚͝͝͠͠͠͠2̸̡̻͇̖͖̭̜͈̥̘̣̱͓̪̱̺̰͈̪̼̝̣̳̺͔̲̼͎̗̩̼͍̼̒́̏̈́̓͂͂̽́̐̔̍́̉̇̒͑͌͘͘͜͝͝S̶̢̡̡̢̨̡̳͖͇̺̻̤͔͈̦̭̗͕͈̲̱͉̺͎̖̭̖̪̰̪͇̦͚̥͖̜͎̻͈̫̋́͐͘͜k̴̡̧̡̨̛̛͕̠͙̼̻͚̻̳̗͇͇̥͍̖̦̣͙͇̗̜̝̤̬̮̱̺̩͍̓͋̿̈́̄̽̀̓̉̆̽̀̈́̅̀́̐͂͑͌͒̐́̀̉̽̒̊̔͊̒̽͆̊̔̿̃̕̚̕͘͝͝͝͠͠ͅi̵̡͕̣̯̰͍̟̤̿͌́̈́̈͐͊̐͊̐͒́̓̔̊͗͋͑́͝͠͠ḑ̴̨͈̋̑́̾̾̊͂̆͛̀̏͋̇̇̄̈́̈́̌͋̆̍̏̀͗͗̈́1̴̢̨̢̧̡̛̛͙̟̩̗̘̪͖̪͇͎͎̙̤̤̯̟̭̪̣̖̰͔̜̝̟͇̘̝͙̙͖̹̩̯̉̓̇͐̾̎͑̂̔̋̄̐̂̇͛̓̈̒̿̐̒̊̀̋̂̄́̚͘̕͜͜͠͝͠͠ͅͅ ̸̱̮̣͔̥͌̋̀͛̃̊Ǫ̷̡̛͔̼̥͎̟̦̤͎̙̖̰̞̜͉̙̥̻̬̠̮͚̟̘̲͇̞͎̗̪̱̲͔̰͖̮̻͍̜͓̮̃̏̐͗̇͂͗͐̄̂̅͌̈́͆̾̃͒͗͗̈́̄̃̚͘̕͜n̸̡̛͓͚̦͈̰̮̲͇̺͓̘͚̻̥̗͉̹̓͛́̈́̀̅̾̍̒̏̉̍̄̐̉̽̓͋̐͆͘͘̕͘̕͠͝͝ͅͅ ̶̢̧̢̨͔̞̥̗̠͈̺̮̥̥̹̤̺̱̦̪͔͙̖̱̻̦̪̻͚͖͔͎͙͌̆̓̓̂̔̅͊͗͗͒̚͜͝͠͠ͅT̴̲̼̹̱̰̟͕̰̘̊̐͐̽͋́̋͐́̊͊̍͆͒̾̚ơ̷̡̙̲̯̫͓̣͔̮͎̣̘͎͔͓̦͉̑͛͗́̈́̋͛̄̽͗͛̀̌͊̾̂͑̊̾͗̐͗͋̈̂́̍͌̃̀̀̚̕̕̕͝p̸̨͔͕͖͚̪̥̺̦͔̙̟͙̻̬̪̥̝͔̬̼̗̲͍̮͚̜̞͖̳̣̆̇̈́̂̑̉̈́̀̃́́̈́̐̄̇̂̉͌̓̈́́̕̚!̸̡̢̡̨̢̛̛̯̹̺̹͚̜̹̫͇͈͇̙̖͖͇̞̳̮̱͚͓͖̮̹͇̙̩͚̱̙̘̝̳͚̝̞͓͔̩̫̬̭̩̥͊̐̌̊͌̂̌͊̄̅̅̿̽̔̀͋̑͐̔͘͘͠!̸̨̨̲̼͍͕̼̖̺̜̜̻̫̭̬̺̻̯̰̮̞̮͋̐̆͆͐̒̈́̑͑̾̔͐͌̈́̌̀͑̆̓̏͒̅͒̇̒̎̀̾̇̇͂̅̔̕̕̕̕͠͠ͅ2̵̡͔̳̣̮̦̜̞̗̯̬̜͕̩̩̭̩̬̘͎̣̬͍͕̤̩̯̺̞̹̱̻̭̪̥̣̲̠͍͎̤̬̎̑͆̽̀͌̔̍͂͂̊͘͜ͅS̷̡̧̡͔̼̣̺̤̹̜͚͙̣̣̗͊͛͑͊̒̾̈́̊͒̽̀̐̂̋̋̄̃̇̎̀̓̌͂̈́̏͌̕͠͝͝k̶̨̧̥̺͓͎͖̲͉̣͖̫̏̈̏̂̇͗͒̀̑̈́̾̈́̽͒̚̕̚͘͝͝į̶̡̢̨͙̰̱̰̗̝͙̣̻̦̦̩͔͚̲̮͖͔͚̩͉͚̤̻͉͙̞͈͕͈̯͙͖̥͕͚̻͖͖̭͕̟͕̾͛͂̑̌̽̎̈̿͗̀̅͛̀̂̊̑́͐͂̓̆͛̅͛͆̀͌͋͑͘̚̚͠͠͠͠͝d̷̠͙̠̜̥͉͕̣͖̺͖͈̘̤̹͉̯̮̳̘͉̎̐̓̒͂͊̈͛̈͒̚1̴̧̨̛͔̼͖̲̠͇̖̦̻̜̮̟̥͙͗̋̇̆̄̉̓͐͆͌̊͐̾̇̑͌͂͊̿̚͘͠ͅ ̶̳͈̥͎̘̰̫̗̣͈͍̺̲͚̲́̐̋̄̎̍̅͊̇̚ͅƠ̷͌̈̆̍̊̊̐̎̍͑́͌́͋̆̓̿͌̅̚
-
-
-
-
-
+ ██████╗ ██████╗  █████╗ ███╗   ██╗██████╗ ████████╗ ██████╗ ██╗   ██╗██████╗ ██╗███╗   ██╗ ██████╗ ██╗   ██╗██╗██████╗ 
+██╔════╝ ██╔══██╗██╔══██╗████╗  ██║██╔══██╗╚══██╔══╝██╔═══██╗██║   ██║██╔══██╗██║████╗  ██║██╔════╝ ██║   ██║██║██╔══██╗
+██║  ███╗██████╔╝███████║██╔██╗ ██║██║  ██║   ██║   ██║   ██║██║   ██║██████╔╝██║██╔██╗ ██║██║  ███╗██║   ██║██║██████╔╝
+██║   ██║██╔══██╗██╔══██║██║╚██╗██║██║  ██║   ██║   ██║   ██║██║   ██║██╔══██╗██║██║╚██╗██║██║   ██║╚██╗ ██╔╝██║██╔═══╝ 
+╚██████╔╝██║  ██║██║  ██║██║ ╚████║██████╔╝   ██║   ╚██████╔╝╚██████╔╝██║  ██║██║██║ ╚████║╚██████╔╝ ╚████╔╝ ██║██║     
+ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝    ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝      
 GRANDTOURINGVIP™ Copyright© 2023
-Developing by GT & Respect
+Author: GT
+Developer: Respect
+Manager: Strawbetter
 All rights reserved.]]
+os.load = util.execute_in_os_thread
 os.require = util.require_no_lag
 os.require "lib.GTSCRIPTS.GTW.fixnative"
 os.require "lib.GTSCRIPTS.G"
@@ -45,10 +29,10 @@ local logo = directx.create_texture(filesystem.scripts_dir() .. '/GTLuaScript/' 
 
 festive_div = GTD(G, "GRANDTOURINGVIP")
 util.create_tick_handler(function()
-for _, frame in pairs(loading_frames) do
-GTluaScript.set_menu_name(festive_div, frame .. '')
-wait(100)
-end
+    for _, frame in pairs(loading_frames) do
+        GTluaScript.set_menu_name(festive_div, frame .. '')
+        wait(100)
+    end
 end)
 
 --主菜单与UI
@@ -81,7 +65,7 @@ Musiness_Banager = GT(G, "[自动资产]")
 Constructor_Lua = GT(G, "[模组选项]")
 other_options = GT(G, "[其他选项]")
 --bbtvt = GTH(G, "[疑难解答]", bbtxt, bbtct)
-bbttt = GTH(G, "GTVIP三群[下载脚本]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oza9NK13Ql0LJDjvFg6x71QKAu5cDFYj&authKey=mKgjAapXxRtPTKUrwoLi%2FX%2FRovM4ufPDjh9nBhnQ6dFACL%2Fa%2Bqu7QkFTd55ipnEO&noverify=0&group_code=651502721", "此群为下载脚本群以及更新脚本,全员禁言,若想聊天可以加入聊天群")
+bbttt = GTH(G, "GTVIP三群[下载脚本]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oza9NK13Ql0LJDjvFg6x71QKAu5cDFYj&authKey=mKgjAapXxRtPTKUrwoLi%2FX%2FRovM4ufPDjh9nBhnQ6dFACL%2Fa%2Bqu7QkFTd55ipnEO&noverify=0&group_code=651502721", "")
 --显示UI
 GTD(players_root, "[玩家选项]")
 GTD(selflist, "[自我选项]")
@@ -147,6 +131,38 @@ notification("欢迎使用GRANDTOURINGVIP", colors.pink)
 util.on_stop(function()
 notification("脚本已关闭",colors.pink)
 end)
+
+util.create_thread(function ()
+    if Name_info == "Brook-Hill" or "RhymeBear" then
+        wait()
+        gtlog("███████╗████████╗██████╗  █████╗ ██╗    ██╗██████╗ ███████╗██████╗ ██████╗ ██╗   ██╗")
+        wait()
+        gtlog("██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██║    ██║██╔══██╗██╔════╝██╔══██╗██╔══██╗╚██╗ ██╔╝")
+        wait()
+        gtlog("███████╗   ██║   ██████╔╝███████║██║ █╗ ██║██████╔╝█████╗  ██████╔╝██████╔╝ ╚████╔╝ ")
+        wait()
+        gtlog("╚════██║   ██║   ██╔══██╗██╔══██║██║███╗██║██╔══██╗██╔══╝  ██╔══██╗██╔══██╗  ╚██╔╝  ")
+        wait()
+        gtlog("███████║   ██║   ██║  ██║██║  ██║╚███╔███╔╝██████╔╝███████╗██║  ██║██║  ██║   ██║   ")
+        wait()
+        gtlog("╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ")
+    elseif Name_info ~= "RhymeBear" or "Brook-Hill" then 
+        wait()
+        gtlog(" ██████╗████████╗██╗   ██╗██╗██████╗ ")
+        wait()
+        gtlog("██╔════╝╚══██╔══╝██║   ██║██║██╔══██╗")
+        wait()
+        gtlog("██║  ███╗  ██║   ██║   ██║██║██████╔╝")
+        wait()
+        gtlog("██║   ██║  ██║   ╚██╗ ██╔╝██║██╔═══╝ ")
+        wait()
+        gtlog("╚██████╔╝  ██║    ╚████╔╝ ██║██║     ")
+        wait()
+        gtlog(" ╚═════╝   ╚═╝     ╚═══╝  ╚═╝╚═╝     ")
+        wait()
+    end
+end)
+
 focusref = {}
 isfocused = false
 selectedcolormenu = 0
@@ -541,6 +557,8 @@ end)
 menu.trigger_commands("spcheck on")
 menu.set_visible(spo, false)
 --
+menu.link(players_root, menu.ref_by_path("Online>Rockstar ID Tools"), true)
+
 GTTG(players_root, "玩家加入/离开通知", {}, "", function(g)
     gt = g
       pljoin = players.on_join(function(pid)
@@ -1001,6 +1019,65 @@ all_female_sex_voicenames = {
     "SEX_CLIMAX",
     "SEX_GENERIC"
 }
+
+GTTG(helperingame, "三维准星", {}, "", function(gt)
+    local cam = {}
+    local cam = {cam.gun,cam.guna,cam.gunb}
+    cam.gun = directx.create_texture(filesystem.scripts_dir() .. '/GTLuaScript/flightredux/' .. 'boresight.png')
+    cam.guna = directx.create_texture(filesystem.scripts_dir() .. '/GTLuaScript/flightredux/' .. 'contact.png')
+    cam.gunb = directx.create_texture(filesystem.scripts_dir() .. '/GTLuaScript/GTINFO/' .. 'Playerblip.png')
+    gtz = gt
+    while gtz do
+    directx.draw_texture(cam.gun, 0.01, 0.01, 0.0, 0.0, 0.4895, 0.4825, 0, 0, 0, 1, 1)
+    directx.draw_texture(cam.guna, 0.01, 0.01, 0.0, 0.0, 0.48942, 0.48253, 0, 0, 1, 0, 1)
+    directx.draw_texture(cam.gunb, 0.003, 0.003, 0.0, 0.0, 0.4963, 0.4930, 0, 1, 0.5, 1, 1)
+    wait()
+    end
+    return false
+end)
+
+GTTG(helperingame, '坐标显示', {}, '', function (f)
+    gt = f
+    while gt do
+        wait()
+        local pos = v2()
+        pos.x = 0.001
+        pos.y = 0.045
+        local MyPed = players.user_ped(players.user())
+        local MyPos = ENTITY.GET_ENTITY_COORDS(MyPed)
+        local MyRot = ENTITY.GET_ENTITY_ROTATION(MyPed)
+        local MyHeading = ENTITY.GET_ENTITY_HEADING(MyPed)
+        local CamRot = CAM.GET_GAMEPLAY_CAM_ROT(0)
+        local CamPos = CAM.GET_GAMEPLAY_CAM_COORD()
+        local FwdVec = ENTITY.GET_ENTITY_FORWARD_VECTOR(MyPed)
+
+        local displayText = function(text, x, y)
+            HUD.SET_TEXT_SCALE(0.5, 0.28)
+            HUD.SET_TEXT_FONT(1)
+            HUD.SET_TEXT_COLOUR(255, 182, 193, 255)
+            HUD.SET_TEXT_CENTRE(false)
+            HUD.SET_TEXT_OUTLINE(true)
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(text)
+            HUD.END_TEXT_COMMAND_DISPLAY_TEXT(pos.x, pos.y, 0)
+        end
+
+        displayText("~italic~位置: " .. string.format("%.5f, %.5f, %.5f", MyPos.x, MyPos.y, MyPos.z), pos.x, pos.y)
+        pos.y = pos.y + 0.02
+        displayText("~italic~旋转: " .. string.format("%.5f, %.5f, %.5f", MyRot.x, MyRot.y, MyRot.z), pos.x, pos.y)
+        pos.y = pos.y + 0.02
+        displayText("~italic~方向: " .. string.format("%.5f", MyHeading), pos.x, pos.y)
+        pos.y = pos.y + 0.02
+        local MyDir = MyRot:magnitude(MyRot)
+        displayText("~italic~方向矢量: " .. string.format("%.5f", MyDir), pos.x, pos.y)
+        pos.y = pos.y + 0.02
+        displayText("~italic~视角旋转: " .. string.format("%.5f, %.5f, %.5f", CamRot.x, CamRot.y, CamRot.z), pos.x, pos.y)
+        pos.y = pos.y + 0.02
+        displayText("~italic~视角位置: " .. string.format("%.5f, %.5f, %.5f", CamPos.x, CamPos.y, CamPos.z), pos.x, pos.y)
+        pos.y = pos.y + 0.02
+        displayText("~italic~前进矢量: " .. string.format("%.5f, %.5f, %.5f", FwdVec.x, FwdVec.y, FwdVec.z), pos.x, pos.y)
+      end
+    gt = false
+end)
 
 interior_noclip = GT(helperingame, "室内悬浮速度")
 noclip_speed = 0.10
@@ -1466,7 +1543,50 @@ GTLP(aimkrma, "爆炸", {}, "", function()
     end
 end)
 
+weaponfun = GT(funfeatures_self, "滑稽枪械")
 
+GTTG(weaponfun, '钞票枪', {}, '', function (f)
+    gt = f
+    while gt do
+        wait()
+        STREAMING.REQUEST_MODEL(util.joaat("prop_cash_pile_01"))
+        local coords = players.get_position(PLAYER.PLAYER_PED_ID())
+        if STREAMING.HAS_MODEL_LOADED(util.joaat("prop_cash_pile_01")) then
+        local bool_rtn, impact = WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(PLAYER.PLAYER_PED_ID(),coords)
+            OBJECT.CREATE_MONEY_PICKUPS(coords.x, coords.y, coords.z, 2000, 20, util.joaat("prop_cash_pile_01"))
+        end
+        end
+    gt = false
+end)
+
+GTTG(weaponfun, '卡片枪', {}, '', function (f)
+    gt = f
+    while gt do
+        wait()
+        request_model(3030532197)
+        local coords = players.get_position(PLAYER.PLAYER_PED_ID())
+        local bool_rtn, v3_coord = WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(PLAYER.PLAYER_PED_ID(),coords)
+        if bool_rtn then
+            OBJECT.CREATE_AMBIENT_PICKUP(-1009939663, coords.x,coords.y,coords.z, 0, 1, 3030532197, false, true)
+        end
+           end
+    gt = false
+end)
+
+GTTG(weaponfun, '玩偶枪', {}, '', function (f)
+    gt = f
+    while gt do
+        wait()
+        request_model(437412629)
+        local coords = players.get_position(PLAYER.PLAYER_PED_ID())
+        local bool_rtn, v3_coord = WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(PLAYER.PLAYER_PED_ID(),coords)
+        if bool_rtn then
+            OBJECT.CREATE_AMBIENT_PICKUP(738282662, coords.x,coords.y,coords.z, 0, 1, 437412629, false, true)
+        end
+           end
+    gt = false
+end)
+    
 GTluaScript.slider(funfeatures_self, '神奇的水坑', {}, '',0, 10, 0, 1, function(g)
     shuik = g * 1
         WIRI_MISC.SET_RAIN(shuik)
@@ -1560,6 +1680,18 @@ GTLP(lines, "物体连接线", {}, "", function(toggle)
             WIRI_GRAPHICS.DRAW_MARKER(43, lineEndCoords.x, lineEndCoords.y, lineEndCoords.z-0.90, pedCoords.x, pedCoords.y, pedCoords.z, 0, 0, 0, 1, 1, 1.5, boxColor.r, boxColor.b, boxColor.g, boxColor.a, false, true, 2, 0, 0, 0, false)
         end
     end
+end)
+
+GTTG(funfeatures_self, '彩虹头发', {}, '', function (f)
+    gt=f
+    while gt do
+        local playerped = players.user_ped(players.user())
+        for s = 0, 255 do
+            PED._SET_PED_HAIR_COLOR(playerped, s, s)
+            wait()
+        end
+    end
+    gt = false
 end)
 
 GTLP(funfeatures_self, "瞄准方框", {}, "只对人物有效", function(toggle)
@@ -1971,37 +2103,6 @@ quantou = k
     quantou = false
 end)
 
-rotation = 0
-loop_count = 0
-dict, name
-GTLP(funfeatures_self,"霹雳舞", {}, "倒头旋转", function()
-    if loop_count <= 200 then
-        dict = "missfbi5ig_20b"
-        name = "hands_up_scientist"
-    elseif loop_count <= 400 then
-        dict = "nm@hands"
-        name = "hands_up"
-    elseif loop_count <= 600 then
-        dict = "missheist_agency2ahands_up"
-        name = "handsup_anxious"
-    elseif loop_count <= 800 then
-        dict = "missheist_agency2ahands_up"
-        name = "handsup_loop"
-    end
-
-    ENTITY.SET_ENTITY_ROTATION(players.user_ped(), 180, 0, rotation, 1, true)
-    ent_func.has_anim_dict_loaded(dict)
-    TASK.TASK_PLAY_ANIM(players.user_ped(), dict, name, 8.0, 0, -1, 0, 0.0, 0, 0, 0)
- 
-    rotation = rotation + 5
-    if loop_count < 1000 then
-        loop_count = loop_count + 1
-    else
-        loop_count = 0
-    end
-end, function()
-    TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
-end)
 
 GTluaScript.click_slider(funfeatures_self, "缩小NPC", {""}, "本地可见, 1 = 缩小, 2 = 恢复", 1, 2, 1, 1, function(NPCON)
     if NPCON == 1 then	
@@ -15450,7 +15551,7 @@ end)
     wait(1)
     end
 
-    recovery = GT(onlinemode, "刷钱")
+    recovery = GT(onlinemode, "金钱选项")
 
     loop750 = GTAC(recovery, '50万金钱', {""}, '$$$\n<GRANDTOURING免责声明>\n风险随着您使用的次数而增加\n请不要无脑地频繁使用该功能\n您如果因此封禁脚本概不负责', function()
         menu.show_warning(loop750, 2, "GRANDTOURINGVIP 警告(免责声明)\n此项功能未经广泛测试，可能是一项不安全的功能\n您想要继续吗？", function()
@@ -15460,7 +15561,23 @@ end)
         menu.trigger_commands("accepterrorstr")
         end)
     end)
-            
+    
+    GTTG(recovery, '循环掉钱[2000]', {}, '', function (f)
+        gt = f
+        while gt do
+            request_model(0x749B5065)
+            local coords = players.get_position(players.user())
+            local peds = entities.create_ped(6, 0x749B5065, coords ,ENTITY.GET_ENTITY_HEADING(players.user_ped())) 
+            ENTITY.SET_ENTITY_VISIBLE(peds, false)
+            PED.SET_PED_MONEY(peds, 2000)
+            PED.SET_PED_CONFIG_FLAG(peds, 392, true) 
+            ENTITY.SET_ENTITY_HEALTH(peds,0)
+            wait(200)
+            entities.delete_by_handle(peds)
+        end
+        gt = false
+    end)
+
     GTAC(onlinemode, "一键解锁成就", {''}, "几乎无风险\n但可能造成云存档失败", function(f)
         for i=0,77 do
         PLAYER.GIVE_ACHIEVEMENT_TO_PLAYER(i)
@@ -17818,13 +17935,13 @@ GTD(sc, "载具")
 GTAC(sc, "搜索载具模组", {"lssearchv"}, "", function(click_type)
     menu.show_command_box("lssearchv" .. " ")
     end, function(on_command)
-        local results = search_vehicle(on_command)
-        if #results == 0 then 
-            util.toast("无搜索结果 :(")
-        else
-            menu.set_list_action_options(v_search_results_action, results)
-            menu.trigger_commands("lsvsearchresults")
-        end
+    local results = search_vehicle(on_command)
+    if #results == 0 then 
+        util.toast("无搜索结果 :(")
+    else
+        menu.set_list_action_options(v_search_results_action, results)
+        menu.trigger_commands("lsvsearchresults")
+    end
 end)
 
 load_vehicle_action = GTLuaScript.list_action(sc, "加载模组载具", {}, "加载载具. " .. instruction_text, all_vehicles, function(index, value)
@@ -18267,10 +18384,13 @@ end)
 hblink = GTAC(G, authvalue, {}, authinfo, function ()
 end)
 
-blackweb = GT(other_options, "GTVIP认证经销商", {}, "你可以在此找到经过GTVIP团队认证的经销商")
+myString = "关于如何更新脚本到最新版,您可加入群聊(651502721) 关于脚本的基本功能疑问,您可直接加入群聊获得帮助(716431566) 若要购买其他菜单,您可在经销商列表中找到各个经销商 若要获取一对一的帮助,您可联系我们的经理草莓姐姐(1104626388)"
+GTAC(other_options,"获取技术支持",{},myString,function()end)
+blackweb = GT(other_options, "经销商(非脚本)", {}, "你可以在此找到经过GTVIP团队认证的经销商")
 GTD(blackweb,"经销商列表")
 GTH(blackweb, "沙耶的小店", "https://symenu.shop", "")
 GTH(blackweb, "西瓜 XiGua Store", "https://xgmenu.me", "")
+GTAC(blackweb, "rudan891018", {}, "联系方式:1922439505 仅售[2Take1/厄里斯]", function ()end)
 --
 zhujixianshi = GT(other_options, "显示选项")
 zanzhuzx = GT(other_options, "致谢人员")
@@ -18280,6 +18400,23 @@ misclightmenu = GT(other_options, "追光灯")
 displayfolder = filesystem.stand_dir().."\\Lua Scripts\\lib\\GTSCRIPTS\\GTW"
 GTAC(zhujixianshi, "更改显示选项配置",{""}, "#点击这个选项即可前往更改\n#打开文件夹中的display文件\n#请您编辑on(开启)与off(关闭)\n#请勿编辑除on与off以外任何文字\n#最后关闭文件时记得保存喔~", function()
 util.open_folder(displayfolder)
+end)
+
+GTAC(zhujixianshi, "纯净模式", {}, "一键关闭所有显示", function ()
+    menu.trigger_commands("hostqu off") --主机序列
+    menu.trigger_commands("scriptname off") --脚本名称
+    menu.trigger_commands("entityqus off") --实体池显示
+    menu.trigger_commands("scriptinfo off") --名称信息
+    menu.trigger_commands("timeos off") --显示时间
+    menu.trigger_commands("dayos off") --显示日期
+    menu.trigger_commands("gtpng off") --显示图片
+    menu.trigger_commands("playerbar1 off") --玩家栏1.0 
+    menu.trigger_commands("playerbar2 off") --玩家栏2.0
+    menu.trigger_commands("gifpng off") --GIF图片显示
+    menu.trigger_commands("newsplay off") --新闻恶搞
+    menu.trigger_commands("speedmeteor off") --显示速度
+    menu.trigger_commands("standedition off") --Stand版本
+    util.toast("享受纯净的游戏体验！")
 end)
 
 anjian = GT(zhujixianshi, '按键显示', {''}, '')
@@ -18503,12 +18640,71 @@ GTluaScript.slider(scriptname, '颜色-蓝', {'scriptnameblue'}, '', 0, 255, def
     defaultColor.b = value
 end)
 
-WaterMark = GT(other_options, "信息栏功能", {""}, "非常好看且实用的信息显示~")
+WaterMark = GT(other_options, "信息栏", {""}, "非常好看且实用的信息显示~")
 rainbowinfo = GTAC(WaterMark, "开启信息显示", {""}, "开启该功能选项在最下方", function()
 dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\GTW\\WM.lua")
 GTLuaScript.delete(rainbowinfo)
 end)
 
+GTLP(zhujixianshi, "实体池显示", {}, "", function(toggle)
+    local fullVersion = menu.get_version()["version"]
+    local width = window_width
+    local height = window_height
+    local function colour(r, g, b, a)
+        return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
+    end
+    local border_color_left = colour(0, 255, 255, 255)
+    local border_color_right = colour(255, 0, 0, 255)
+    local border_color_a= colour(100, 50, 50, 255)
+    local border_color_b= colour(60, 70, 150, 255)
+    local border_color_c= colour(0, 0, 0, 200)
+    local window_xx = 0.66
+    local window_yy = 0.026
+    local window_width = 0.12
+    local window_height = 0.128
+    directx.draw_line(
+        window_xx, window_yy,
+        window_xx + window_width, window_yy,
+        border_color_left, border_color_right
+    )
+    directx.draw_line(
+        window_xx, window_yy,
+        window_xx, window_yy + window_height,
+        border_color_left, border_color_right
+    )
+    directx.draw_line(
+        window_xx + window_width, window_yy,
+        window_xx + window_width, window_yy + window_height,
+        border_color_right,border_color_left
+    )
+    directx.draw_line(
+        window_xx, window_yy + window_height,
+        window_xx + window_width, window_yy + window_height,
+        border_color_left, border_color_right
+    )
+    local rect_x = window_xx + 0.0006
+    local rect_y = window_yy + 0.0010
+    local rect_width = window_width - 0.6618
+    local rect_height = window_height - 0.05
+    directx.draw_rect(rect_x, rect_y, rect_x + rect_width, rect_y + rect_height+0.0220,border_color_b, border_color_a)
+    local rect_xx = 0.6695
+    local rect_yy = 0.04
+    local rect_widthx = 0.101
+    local rect_heighty = 0.102
+    local rgb = {colorr=255, colorg=0, colorb=255, colorta=255}
+    directx.draw_rect(rect_xx, rect_yy, rect_widthx, rect_heighty,border_color_c)
+    local text_scale = 0.5
+    local text = ("ID:".. PLAYER.GET_PLAYER_NAME(players.user()).."      人数:"..#players.list().."\n".."PED:"..memory.read_int(pedInterface + 0x0110).."/"..memory.read_int(pedInterface + 0x0108).."".."\n".."载具:"..memory.read_int(vehInterface + 0x0190).."/"..memory.read_int(vehInterface + 0x0188).."\n".."实体:"..memory.read_int(objectInterface + 0x0168).."/"..memory.read_int(objectInterface + 0x0160).."\n".."拾取物:"..memory.read_int(pickupInterface + 0x0110).."/"..memory.read_int(pickupInterface + 0x0108))
+    directx.draw_text(
+        window_xx+0.009, window_yy+0.013, text, ALIGN_TOP_LEFT, text_scale,
+        colour(255, 100, 50, 255)
+    )
+    directx.draw_text(
+        window_xx+0.003, window_yy+0.0015,"游戏在线版本:"..NETWORK.GET_ONLINE_VERSION().."            STAND版本:"..fullVersion, ALIGN_TOP_LEFT, 0.35,
+        colour(255, 255, 0, 255)
+    )
+end)
+    
 GTTG(zhujixianshi, "禁用地图", {""}, "", function(f)
     disableMap = f
     while disableMap do
@@ -18809,6 +19005,7 @@ end
 end)
 
 zaxiang = GT(other_options, "杂项功能")
+menu.link(other_options, menu.ref_by_path("Stand>Profiles"), true)
 
 ZT = GT(zaxiang, "动态主题", {}, "", function()
 wait(100)
@@ -18830,10 +19027,6 @@ GTAC(zaxiang,"试试点击", {}, "一个友好的功能哟~\n连点有彩蛋喔~
         elseif times_button_pressed == 1000 then util.toast("这是你的奖品，给你两个大嘴巴 :)") util.toast("这是你的奖品，给你两个大嘴巴 :)") 
         end 
     end
-end)
-
-GTAC(other_options, "保存配置", {}, "", function ()
-    GTLuaScript.trigger_commands("Profiles")
 end)
 
 function teleportToWaypoint()
@@ -19232,7 +19425,7 @@ GTTG(zhujixianshi, "显示Stand版本", {"standedition"}, "", function(toggle)
 set_menu_open(toggle)
 end)
 
-GTAC(other_options, "随机人", {}, "", function ()
+GTAC(other_options, "幸运人员", {}, "", function ()
     require "lib.GTSCRIPTS.GTA.list"
     local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
     local hasPermission = false 
@@ -35210,11 +35403,6 @@ end
 end
 end)
 
-GTLP(zanzhuzx, "致谢名单", {""}, "GRANDTOURING董事会", function()
-draw_string(string.format("~italic~~bold~~q~ ~y~[12] ~r~[Super飞]~g~[柒月]\n~f~[小马哥] ~q~[安安安] ~d~[西木]"), 0.280,0.300,1.5,5)
-draw_string(string.format("~italic~~bold~~q~ ~q~[丢丢] ~w~[02] ~y~[xion] ~r~[rudan]"), 0.250,0.520,1.5,5)
-end)
-
 require "lib.GTSCRIPTS.GTA.hbl"
 sponsor = GT(zanzhuzx, '皇榜人员', {}, '功德无量，爱心支持')
 for _, v in ipairs(hb_id) do 
@@ -35224,7 +35412,7 @@ end
 GTD(sponsor, "...未完待续...", function() 
 end)
 
-GTLP(zanzhuzx, "制作人", {"gtdev"}, "", function()
+gtauthor = GTLP(zanzhuzx, "作者", {"gtdev"}, "", function()
     draw_string(string.format("~italic~~bold~~f~GRANDTOURINGVIP"), 0.38,0.560, 1,2)
     draw_string(string.format("~italic~~bold~~z~GT"), 0.30,0.150, 7,5)
     draw_string(string.format("~italic~~bold~~w~制作"), 0.40,0.320, 1.2,5)
@@ -35240,12 +35428,17 @@ GTLP(zanzhuzx, "制作人", {"gtdev"}, "", function()
     draw_string(string.format("~italic~~bold~~w~关闭请到其他选项(感谢使用)"), 0.28,0.600, 1,5)
 end)
 
-GTLP(zanzhuzx, "副制作", {"respect"}, "", function()
+gtdev = GTLP(zanzhuzx, "开发", {"respect"}, "", function()
     draw_string(string.format("~italic~~bold~~p~~h~瑞思拜"), 0.40,0.270, 1.5,2)
     draw_name(string.format("~italic~~bold~~y~Developer Updates For"), 0.25,0.370, 2,2)
     draw_name(string.format("~italic~~bold~&#8721;"), 0.27,0.50, 1.1,5)
     draw_name(string.format("~italic~~bold~~b~GRANDTOURINGVIP YYDS"), 0.30,0.480, 2,2)
     draw_name(string.format("~italic~~bold~~q~Made With Love For Everyone"), 0.26,0.600, 1,1)
+end)
+
+GTLP(zanzhuzx, "致谢名单", {""}, "GRANDTOURING董事会", function()
+    draw_string(string.format("~italic~~bold~~q~ ~y~[12] ~r~[Super飞]~g~[柒月]\n~f~[小马哥] ~q~[安安安] ~d~[西木]"), 0.280,0.300,1.5,5)
+    draw_string(string.format("~italic~~bold~~q~ ~q~[丢丢] ~w~[02] ~y~[xion] ~r~[rudan]"), 0.250,0.520,1.5,5)
 end)
 
 GTTG(zaxiang, "禁用圈钱鲨鱼卡显示", {}, "", function(on)
@@ -35256,20 +35449,6 @@ GTTG(zaxiang, "禁用圈钱鲨鱼卡显示", {}, "", function(on)
 	end
 	NETWORK.SET_STORE_ENABLED(true)
 end, false)
-
-GTAC(other_options, "重新启动GTAV", {""}, "", function(on_click)
-MISC._RESTART_GAME()
-end)
-
-GTAC(other_options, "退到故事模式", {""}, "只可在线上使用", function() 
-	if NETWORK.NETWORK_CAN_BAIL() then
-	NETWORK.NETWORK_BAIL(0, 0, 0)
-    end
-end)
-
-GTAC(other_options, '强制退到故事模式', {""}, '', function ()
-GTluaScript.trigger_commands("forcequittosp")
-end)
 
 pass_list = {{0}}
 GTAC(zaxiang, "自崩", {"crashme"}, "快速退游戏", function()
@@ -35294,25 +35473,18 @@ wait(3000)
 ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
 end
 end)
-
-GTAC(other_options,"关于脚本",{},"请点击查看信息",function ()
-    util.show_corner_help("~h~~p~*GRANDTOURINGVIP*\n~b~主作者: GT\n~y~副作者: 瑞思拜\n~r~交流群: 642072208\n~q~您的赞助是我们更新的最大动力")
-    util.toast("如您的脚本是通过付费渠道所得\n请积极在官方群聊中公开举报他\n《GRANDTOURING严正声明》\n脚本永久免费使用,脚本倒卖者一律不予原谅\n脚本永久免费使用,脚本倒卖者一律不予原谅\n脚本永久免费使用,脚本倒卖者一律不予原谅")
-end)  
               
-GTH(other_options, "GTVIP一群[已满]", "https://jq.qq.com/?_wv=1027&k=wo92Nl0a", "")
-GTH(other_options, "GTVIP二群[已满]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=fecyAfmh_yGqElM5ABguu9YIVIuIiNqh&authKey=Nt%2FvK%2B2K6lEnVl3%2Bz3ZyRtoEEXXX%2FpZjLrrgPpvsXVXHsWCS2kKV%2Bir5P1Xg7f6F&noverify=0&group_code=642072208", "")
-GTH(other_options, "GTVIP三群", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oza9NK13Ql0LJDjvFg6x71QKAu5cDFYj&authKey=mKgjAapXxRtPTKUrwoLi%2FX%2FRovM4ufPDjh9nBhnQ6dFACL%2Fa%2Bqu7QkFTd55ipnEO&noverify=0&group_code=651502721", "此群为下载脚本群,全员禁言,若想聊天可以加入聊天群")
+GTH(other_options, "GTVIP一群", "https://jq.qq.com/?_wv=1027&k=wo92Nl0a", "")
+GTH(other_options, "GTVIP二群", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=fecyAfmh_yGqElM5ABguu9YIVIuIiNqh&authKey=Nt%2FvK%2B2K6lEnVl3%2Bz3ZyRtoEEXXX%2FpZjLrrgPpvsXVXHsWCS2kKV%2Bir5P1Xg7f6F&noverify=0&group_code=642072208", "")
+GTH(other_options, "GTVIP三群", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oza9NK13Ql0LJDjvFg6x71QKAu5cDFYj&authKey=mKgjAapXxRtPTKUrwoLi%2FX%2FRovM4ufPDjh9nBhnQ6dFACL%2Fa%2Bqu7QkFTd55ipnEO&noverify=0&group_code=651502721", "")
 GTH(other_options, "GTVIP聊天群", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566", "脚本获取渠道属禁言状态\n仅提供用户获取脚本:)\n聊天交流请加入此群:)")
 
-GTH(other_options, "加入Discord服务器", "https://discord.gg/nJjB8FtxdN", "加入Discord服务器\n言论自由免受QQ限制\n服务器中不定时发布福利~\n欢迎您的加入喔:)")
+GTH(other_options, "加入Discord", "https://discord.gg/nJjB8FtxdN", "加入Discord服务器\n言论自由免受QQ限制\n服务器中不定时发布福利~\n欢迎您的加入喔:)")
 
 require "lib.GTSCRIPTS.GTW.real"
 GTLP(zaxiang, "真诚的人不会太差", {}, "", function ()
     realheart()
 end)
-
-
 
 credit_text_positions = {}
 ready_for_text = false
@@ -35676,26 +35848,16 @@ util.on_stop(function()
         GuidedMissile.destroy()
 	end
 end)   
-
 --[[
- _________     _________    ________     ________     ________     _________     _________    ________     ________     ________      _________     _________    ________     ________     ________ 
-|\   ____ \   |\___  ___\  |\   __  \   |\   __  \   |\   __  \   |\   ____ \   |\___  ___\  |\   __  \   |\   __  \   |\   __  \    |\   ____ \   |\___  ___\  |\   __  \   |\   __  \   |\   __  \
-\ \  \___| \  \|___\  \_/  \ \  \|\ /_  \ \  \|\ /_  \ \  \|\ /_  \ \  \___| \  \|___\  \_/  \ \  \|\ /_  \ \  \|\ /_  \ \  \|\ /_   \ \  \___| \  \|___\  \_/  \ \  \|\ /_  \ \  \|\ /_  \ \  \|\ /_
- \ \  \ __  \     \ \  \    \ \   __  \  \ \   __  \  \ \   __  \  \ \  \ __  \     \ \  \    \ \   __  \  \ \   __  \  \ \   __  \   \ \  \ __  \     \ \  \    \ \   __  \  \ \   __  \  \ \   __  \ 
-  \ \  \|\ \ \     \ \  \    \ \  \|\  \  \ \  \|\  \  \ \  \|\  \  \ \  \|\ \ \     \ \  \    \ \  \|\  \  \ \  \|\  \  \ \  \|\  \   \ \  \|\ \ \     \ \  \    \ \  \|\  \  \ \  \|\  \  \ \  \|\  \
-   \ \________\     \ \__\    \ \_______\  \ \_______\  \ \_______\  \ \________\     \ \__\    \ \_______\  \ \_______\  \ \_______\   \ \________\     \ \__\    \ \_______\  \ \_______\  \ \_______\
-    \|________|      \|__|     \|_______|   \|_______|   \|_______|   \|________|      \|__|     \|_______|   \|_______|   \|_______|    \|________|      \|__|     \|_______|   \|_______|   \|_______|
-                                                                                                                                                                                                                              
- _________  ________  ________  ________   ________  ___       ________  _________  _______   ________          ________ ________  ________  _____ ______              _________      _________ 
-|\___   ___\\   __  \|\   __  \|\   ___  \|\   ____\|\  \     |\   __  \|\___   ___\\  ___ \ |\   ___ \        |\  _____\\   __  \|\   __  \|\   _ \  _   \           |\    _____\   |\___  ___\  
-\|___ \  \_\ \  \|\  \ \  \|\  \ \  \\ \  \ \  \___|\ \  \    \ \  \|\  \|___ \  \_\ \   __/|\ \  \_|\ \       \ \  \__/\ \  \|\  \ \  \|\  \ \  \\\__\ \  \           \ \  \___| \  \|___\  \_/  
-     \ \  \ \ \   _  _\ \   __  \ \  \\ \  \ \_____  \ \  \    \ \   __  \   \ \  \ \ \  \_|/_\ \  \ \\ \       \ \   __\\ \   _  _\ \  \\\  \ \  \\|__| \  \           \ \  \ __  \     \ \  \    
-      \ \  \ \ \  \\  \\ \  \ \  \ \  \\ \  \|____|\  \ \  \____\ \  \ \  \   \ \  \ \ \  \_|\ \ \  \_\\ \       \ \  \_| \ \  \\  \\ \  \\\  \ \  \    \ \  \           \ \  \|\ \ \     \ \  \    
-       \ \__\ \ \__\\ _\\ \__\ \__\ \__\\ \__\____\_\  \ \_______\ \__\ \__\   \ \__\ \ \_______\ \_______\       \ \__\   \ \__\\ _\\ \_______\ \__\    \ \__\           \ \________\     \ \__\    
-        \|__|  \|__|\|__|\|__|\|__|\|__| \|__|\_________\|_______|\|__|\|__|    \|__|  \|_______|\|_______|        \|__|    \|__|\|__|\|_______|\|__|     \|__|            \|________|      \|__|  
-
+ ________  ________  ________  ________   ________  _________  ________  ___  ___  ________  ___  ________   ________  ___      ___ ___  ________   
+|\   ____\|\   __  \|\   __  \|\   ___  \|\   ___ \|\___   ___\\   __  \|\  \|\  \|\   __  \|\  \|\   ___  \|\   ____\|\  \    /  /|\  \|\   __  \  
+\ \  \___|\ \  \|\  \ \  \|\  \ \  \\ \  \ \  \_|\ \|___ \  \_\ \  \|\  \ \  \\\  \ \  \|\  \ \  \ \  \\ \  \ \  \___|\ \  \  /  / | \  \ \  \|\  \ 
+ \ \  \  __\ \   _  _\ \   __  \ \  \\ \  \ \  \ \\ \   \ \  \ \ \  \\\  \ \  \\\  \ \   _  _\ \  \ \  \\ \  \ \  \  __\ \  \/  / / \ \  \ \   ____\
+  \ \  \|\  \ \  \\  \\ \  \ \  \ \  \\ \  \ \  \_\\ \   \ \  \ \ \  \\\  \ \  \\\  \ \  \\  \\ \  \ \  \\ \  \ \  \|\  \ \    / /   \ \  \ \  \___|
+   \ \_______\ \__\\ _\\ \__\ \__\ \__\\ \__\ \_______\   \ \__\ \ \_______\ \_______\ \__\\ _\\ \__\ \__\\ \__\ \_______\ \__/ /     \ \__\ \__\   
+    \|_______|\|__|\|__|\|__|\|__|\|__| \|__|\|_______|    \|__|  \|_______|\|_______|\|__|\|__|\|__|\|__| \|__|\|_______|\|__|/       \|__|\|__|   
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 GRANDTOURINGVIP™ Copyright© 2023 
-Developing by GT & Respect
 All rights reserved.
     ⠄⠄⠄⣰⣿⠄⠄⠄⠄⠄⢠⠄⠄⢀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄
     ⠄⠄⢰⣿⠿⠄⡀⠄⠄⠄⠘⣷⡀⠄⠢⣄⠄⠄⠄⠄⠄⠄⠄⣠⠖⠁⠄⠄⠄⠄
