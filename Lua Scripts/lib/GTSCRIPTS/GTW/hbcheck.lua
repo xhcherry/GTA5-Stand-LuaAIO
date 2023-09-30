@@ -4,7 +4,7 @@ hbinfo = "加入皇榜可享受以下特权:\n战局横幅提示(其他GTVIP用�
 admindev = "您是高级管理或者开发者的其中一员"
 function checkme()
     local vipme = " GTLua Royal VIP"
-    local standard = "   Version: 9.20"
+    local standard = "   Version: 9.26"
     local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
     
     if name == "RhymeBear" then

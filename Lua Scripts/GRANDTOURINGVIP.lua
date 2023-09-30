@@ -35,9 +35,17 @@ util.create_tick_handler(function()
     end
 end)
 
+function restartscript()
+    package.loaded["lib.GTSCRIPTS.GTC.logo.GLogo"] = nil
+    util.restart_script()
+end
+
 --主菜单与UI
 GTAC(menu.my_root(), "进入GRANDTOURINGVIP", {}, "",function ()
     menu.trigger_command(G)
+end)
+GTAC(menu.my_root(), "重新启动脚本", {}, "", function ()
+    restartscript()
 end)
 enable_options = GTTG(G, "启用快捷入口", {}, "", function (on)
     Quick_Enable(on)
@@ -85,19 +93,19 @@ GTD(Constructor_Lua, "[模组选项]")
 GTD(other_options, "[其他选项]")
 --
 local configFile <const> = filesystem.scripts_dir() .. '\\GTLuaScript\\'.. "config.ini"
-os.require "lib.GTSCRIPTS.Q"
-
+--
 function log(content)
     if verbose then
         util.log("[GTluaScript] " .. content)
     end
 end
-
+--
+os.require "lib.GTSCRIPTS.Q"
 if SCRIPT_MANUAL_START then
 GTNB()
 menu.trigger_commands("gtluascript")
 end
-
+--
 local notification = b_notifications.new()
 function notification(message, color)
 C_HUD._THEFEED_SET_NEXT_POST_BACKGROUND_COLOR(0,color)
@@ -127,7 +135,7 @@ end
 end
 util.log("欢迎 "..PLAYER.GET_PLAYER_NAME(players.user()))
 end
-notification("欢迎使用GRANDTOURINGVIP", colors.pink)
+notification("欢迎使用 GRANDTOURINGVIP", colors.pink)
 util.on_stop(function()
 notification("脚本已关闭",colors.pink)
 end)
@@ -999,6 +1007,7 @@ os.require "lib.GTSCRIPTS.GTA.blackhold"
 local healthandprotex = GT(selflist, "生命选项", {}, "", function(); end)
 local helperingame = GT(selflist, "增强选项", {}, "", function(); end)
 local funfeatures_self = GT(selflist, '自我娱乐', {}, '')
+texiao = GT(selflist, "特效选项", {}, "#建议您成为脚本主机后使用\n部分特效关闭后战局玩家仍可见,所以请您关闭特效后自杀一次即可", function(); end)  
 local escort_root = GT(selflist, "NPC护送", {""}, "")
 local aimkarma = GT(selflist, "瞄准反击", {}, "", function(); end)
 
@@ -1543,6 +1552,75 @@ GTLP(aimkrma, "爆炸", {}, "", function()
     end
 end)
 
+smalldido = GT(funfeatures_self, "小叮当")
+
+GTAC(smalldido, '挂起小叮当', {}, '', function (g)
+    local dildo = 0xe6cb661e
+    local counter = 0
+    local pped = players.user_ped(players.user())
+    local dildo = 0xe6cb661e
+    local bone = 0xDD1C
+    local gotModel = requestModel(dildo, 1800)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED())
+    local objectdildo = OBJECT.CREATE_OBJECT(dildo,pos.x,pos.y,pos.z, true, true, true)
+    local SmokeOffset = v3.new(0,0,0.1)
+    local SmokeRot = v3.new(0,90,0)
+    attachPTFX(objectdildo,"core","ent_amb_candle_flame",1.0,SmokeOffset,SmokeRot)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(objectdildo, pped, PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), bone), 0, 0.15, -0.2, 270, 0, 0, false, true, true, true, 0, true)
+    local snowball = 1297482736
+    requestModel(snowball, 1800)
+    local Ball1 = OBJECT.CREATE_OBJECT(snowball, pos.x,pos.y,pos.z, true, true, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(Ball1, pped, PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), bone), 0, 0.05, 0.15, -0.2, 0, 0, false, true, true, true, 0, true)   
+    local Ball2 = OBJECT.CREATE_OBJECT(snowball, pos.x,pos.y,pos.z, true, true, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(Ball2, pped, PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), bone), 0,-0.05, 0.15, -0.2, 0, 0, false, true, true, true, 0, true)
+end)
+    
+GTAC(smalldido, "清除小叮当", {}, "", function()
+function Mypos()
+    return ENTITY.GET_ENTITY_COORDS(players.user())
+end
+local myPed = players.user()
+local myPos = ENTITY.GET_ENTITY_COORDS(myPed)
+allobj = entities.get_all_objects_as_handles()
+for i = 1, #allobj do
+if myPed ~= allobj[i] and myPos:magnitude(Mypos(allobj[i])) <= 5 then
+entities.delete_by_handle(allobj[i])
+end
+end
+end)
+
+rotation = 0
+loop_count = 0
+GTLP(funfeatures_self,"霹雳舞", {}, "倒头旋转", function()
+local dict, name
+    if loop_count <= 200 then
+        dict = "missfbi5ig_20b"
+        name = "hands_up_scientist"
+    elseif loop_count <= 400 then
+        dict = "nm@hands"
+        name = "hands_up"
+    elseif loop_count <= 600 then
+        dict = "missheist_agency2ahands_up"
+        name = "handsup_anxious"
+    elseif loop_count <= 800 then
+        dict = "missheist_agency2ahands_up"
+        name = "handsup_loop"
+    end
+
+    ENTITY.SET_ENTITY_ROTATION(players.user_ped(), 180, 0, rotation, 1, true)
+    ent_func.has_anim_dict_loaded(dict)
+    TASK.TASK_PLAY_ANIM(players.user_ped(), dict, name, 8.0, 0, -1, 0, 0.0, 0, 0, 0)
+ 
+    rotation = rotation + 5
+    if loop_count < 1000 then
+        loop_count = loop_count + 1
+    else
+        loop_count = 0
+    end
+end, function()
+    TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
+end)
+
 weaponfun = GT(funfeatures_self, "滑稽枪械")
 
 GTTG(weaponfun, '钞票枪', {}, '', function (f)
@@ -1696,6 +1774,15 @@ end)
 
 GTLP(funfeatures_self, "瞄准方框", {}, "只对人物有效", function(toggle)
     rrren(true)
+end)
+
+GTLP(funfeatures_self, '起飞', {}, '按住空格+W鼠标控制方向', function ()
+    if PAD.IS_CONTROL_PRESSED(0, 22) then
+    cam_pos = CAM.GET_GAMEPLAY_CAM_ROT(0)
+    ENTITY.SET_ENTITY_ROTATION(players.user_ped(), cam_pos.x, cam_pos.y, cam_pos.z, 1, true)
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 0.5, 0.1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(),pos.x,pos.y,pos.z,true, false, false)
+    end
 end)
 
 GTLP(funfeatures_self, "空中飞人", {}, "E键发射激光眼\n空格向上,Ctrl向下,Shift加速", function()
@@ -2131,7 +2218,6 @@ sessionfun = GT(funfeatures_self, "各种战局玩乐", {}, "我们将大部分�
 super_xrays = GT(funfeatures_self, "超人模式", {}, "", function(); end)
 renwuxuanxiang = GT(funfeatures_self, "人物选项")
 dongwuxuanxiang = GT(funfeatures_self, "动物选项")
-texiao = GT(funfeatures_self, "特效选项", {}, "#建议您成为脚本主机后使用\n部分特效关闭后战局玩家仍可见,所以请您关闭特效后自杀一次即可", function(); end)  
 wushidao = GT(funfeatures_self, "娱乐武器", {}, "", function(); end)
 quantoutexiao = GT(funfeatures_self, "拳头特效", {}, "", function(); end)
 jigaungyan = GT(funfeatures_self, "激光眼", {}, "", function(); end)
@@ -6357,6 +6443,252 @@ affects = {}
 
 newptfx = GT(texiao, "近期更新", {}, "部分特效需成为[战局脚本主机]\n成为后战局玩家即可看见您的特效\n\n<如何成为战局脚本主机?>\n本体菜单 >> 线上 >> 战局选项 >> 成为战局脚本主机")
 
+GTLP(newptfx, '闪电侠', {}, '', function (g)
+    local function colour(r, g, b, a)
+      return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
+    end
+    local windowss_xx = 0.693
+    local windowss_yy = 0.026
+    local windowss_width = 0.03
+    local windowss_height = 0.04
+    local rectss_x = windowss_xx + 0.0006
+    local rectss_y = windowss_yy + 0.0010
+    local rectss_width = windowss_width - 0.6618
+    local rectss_height = windowss_height - 0.05
+    local border_colorss_a= colour(100, 50, 50, 255)
+    local border_colorss_b= colour(150, 70, 150, 255)
+    directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按SHIFT键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+        ENTITY.SET_ENTITY_MAX_SPEED(players.user_ped(players.user()), 100)
+        local dir = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped(players.user()))
+        dir = v3(dir.x * 100, dir.y * 100, dir.z * 100)
+        local a = { value = 1.0 }
+        if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+            if PAD.GET_CONTROL_NORMAL(0, 32) == 1.0 then
+                if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+                    if not ENTITY.IS_ENTITY_IN_AIR(players.user_ped(players.user())) then
+                        while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("core") and a.value do
+                            STREAMING.REQUEST_NAMED_PTFX_ASSET("core")
+                            wait(0)
+                        end
+                        GRAPHICS.USE_PARTICLE_FX_ASSET("core")
+                        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY('ent_dst_elec_fire_sp', players.user_ped(players.user()), 0, 0, 0, 0, 0, 0, 1)
+                        
+                        local forwardSpeed = 100 * a.value
+                        ENTITY.SET_ENTITY_VELOCITY(players.user_ped(players.user()), dir.x * forwardSpeed, dir.y * forwardSpeed, dir.z * forwardSpeed)
+                    end
+                else
+                    ENTITY.SET_ENTITY_VELOCITY(players.user_ped(players.user()), 0, 0, 0)
+              end
+          end
+     end
+end)
+
+GTLP(newptfx, '星光尾拖', {}, '', function (g)
+    local function colour(r, g, b, a)
+      return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
+    end
+    local windowss_xx = 0.693
+    local windowss_yy = 0.026
+    local windowss_width = 0.03
+    local windowss_height = 0.04
+    local rectss_x = windowss_xx + 0.0006
+    local rectss_y = windowss_yy + 0.0010
+    local rectss_width = windowss_width - 0.6618
+    local rectss_height = windowss_height - 0.05
+    local border_colorss_a= colour(100, 50, 50, 255)
+    local border_colorss_b= colour(150, 70, 150, 255)
+    directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按SHIFT键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+        ENTITY.SET_ENTITY_MAX_SPEED(players.user_ped(players.user()), 100)
+        local dir = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped(players.user()))
+        dir = v3(dir.x * 100, dir.y * 100, dir.z * 100)
+        local a = { value = 1.0 }
+        if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+            if PAD.GET_CONTROL_NORMAL(0, 32) == 1.0 then
+                if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+                    if not ENTITY.IS_ENTITY_IN_AIR(players.user_ped(players.user())) then
+                        while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_rcbarry1") and a.value do
+                            STREAMING.REQUEST_NAMED_PTFX_ASSET("scr_rcbarry1")
+                            wait(0)
+                        end
+                        GRAPHICS.USE_PARTICLE_FX_ASSET("scr_rcbarry1")
+                        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY('scr_alien_disintegrate', players.user_ped(players.user()), 0, 0, -0.9, 0, 0, 0, 0.5)
+                        
+                        local forwardSpeed = 100 * a.value
+                        ENTITY.SET_ENTITY_VELOCITY(players.user_ped(players.user()), dir.x * forwardSpeed, dir.y * forwardSpeed, dir.z * forwardSpeed)
+                    end
+                else
+                    ENTITY.SET_ENTITY_VELOCITY(players.user_ped(players.user()), 0, 0, 0)
+              end
+          end
+     end
+end)
+
+GTLP(newptfx, '尾拖蓝', {}, '', function (g)
+    local function colour(r, g, b, a)
+      return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
+    end
+    local windowss_xx = 0.693
+    local windowss_yy = 0.026
+    local windowss_width = 0.03
+    local windowss_height = 0.04
+    local rectss_x = windowss_xx + 0.0006
+    local rectss_y = windowss_yy + 0.0010
+    local rectss_width = windowss_width - 0.6618
+    local rectss_height = windowss_height - 0.05
+    local border_colorss_a= colour(100, 50, 50, 255)
+    local border_colorss_b= colour(150, 70, 150, 255)
+    directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按SHIFT键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+        ENTITY.SET_ENTITY_MAX_SPEED(players.user_ped(players.user()), 100)
+        local dir = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped(players.user()))
+        dir = v3(dir.x * 100, dir.y * 100, dir.z * 100)
+        local a = { value = 1.0 }
+        if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+            if PAD.GET_CONTROL_NORMAL(0, 32) == 1.0 then
+                if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+                    if not ENTITY.IS_ENTITY_IN_AIR(players.user_ped(players.user())) then
+                        while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_sum2_hal") and a.value do
+                            STREAMING.REQUEST_NAMED_PTFX_ASSET("scr_sum2_hal")
+                            wait(0)
+                        end
+                        GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
+                        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY('scr_sum2_hal_rider_weak_blue', players.user_ped(players.user()), 0, 0, 0, 0, 0, 0, 1)
+                        
+                        local forwardSpeed = 100 * a.value
+                        ENTITY.SET_ENTITY_VELOCITY(players.user_ped(players.user()), dir.x * forwardSpeed, dir.y * forwardSpeed, dir.z * forwardSpeed)
+                    end
+                else
+                    ENTITY.SET_ENTITY_VELOCITY(players.user_ped(players.user()), 0, 0, 0)
+              end
+          end
+     end
+end)
+
+GTLP(newptfx, '尾拖绿', {}, '', function (g)
+    local function colour(r, g, b, a)
+      return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
+    end
+    local windowss_xx = 0.693
+    local windowss_yy = 0.026
+    local windowss_width = 0.03
+    local windowss_height = 0.04
+    local rectss_x = windowss_xx + 0.0006
+    local rectss_y = windowss_yy + 0.0010
+    local rectss_width = windowss_width - 0.6618
+    local rectss_height = windowss_height - 0.05
+    local border_colorss_a= colour(100, 50, 50, 255)
+    local border_colorss_b= colour(150, 70, 150, 255)
+    directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按SHIFT键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+        ENTITY.SET_ENTITY_MAX_SPEED(players.user_ped(players.user()), 100)
+        local dir = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped(players.user()))
+        dir = v3(dir.x * 100, dir.y * 100, dir.z * 100)
+        local a = { value = 1.0 }
+        if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+            if PAD.GET_CONTROL_NORMAL(0, 32) == 1.0 then
+                if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+                    if not ENTITY.IS_ENTITY_IN_AIR(players.user_ped(players.user())) then
+                        while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_sum2_hal") and a.value do
+                            STREAMING.REQUEST_NAMED_PTFX_ASSET("scr_sum2_hal")
+                            wait(0)
+                        end
+                        GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
+                        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY('scr_sum2_hal_rider_weak_green', players.user_ped(players.user()), 0, 0, 0, 0, 0, 0, 1)
+                        
+                        local forwardSpeed = 100 * a.value
+                        ENTITY.SET_ENTITY_VELOCITY(players.user_ped(players.user()), dir.x * forwardSpeed, dir.y * forwardSpeed, dir.z * forwardSpeed)
+                    end
+                else
+                    ENTITY.SET_ENTITY_VELOCITY(players.user_ped(players.user()), 0, 0, 0)
+              end
+          end
+     end
+end)
+
+GTLP(newptfx, '尾拖黄', {}, '', function (g)
+    local function colour(r, g, b, a)
+      return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
+    end
+    local windowss_xx = 0.693
+    local windowss_yy = 0.026
+    local windowss_width = 0.03
+    local windowss_height = 0.04
+    local rectss_x = windowss_xx + 0.0006
+    local rectss_y = windowss_yy + 0.0010
+    local rectss_width = windowss_width - 0.6618
+    local rectss_height = windowss_height - 0.05
+    local border_colorss_a= colour(100, 50, 50, 255)
+    local border_colorss_b= colour(150, 70, 150, 255)
+    directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按SHIFT键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+        ENTITY.SET_ENTITY_MAX_SPEED(players.user_ped(players.user()), 100)
+        local dir = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped(players.user()))
+        dir = v3(dir.x * 100, dir.y * 100, dir.z * 100)
+        local a = { value = 1.0 }
+        if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+            if PAD.GET_CONTROL_NORMAL(0, 32) == 1.0 then
+                if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+                    if not ENTITY.IS_ENTITY_IN_AIR(players.user_ped(players.user())) then
+                        while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_sum2_hal") and a.value do
+                            STREAMING.REQUEST_NAMED_PTFX_ASSET("scr_sum2_hal")
+                            wait(0)
+                        end
+                        GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
+                        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY('scr_sum2_hal_rider_weak_orange', players.user_ped(players.user()), 0, 0, 0, 0, 0, 0, 1)
+                        
+                        local forwardSpeed = 100 * a.value
+                        ENTITY.SET_ENTITY_VELOCITY(players.user_ped(players.user()), dir.x * forwardSpeed, dir.y * forwardSpeed, dir.z * forwardSpeed)
+                    end
+                else
+                    ENTITY.SET_ENTITY_VELOCITY(players.user_ped(players.user()), 0, 0, 0)
+              end
+          end
+     end
+end)
+
+GTLP(newptfx, '尾拖白', {}, '', function (g)
+    local function colour(r, g, b, a)
+      return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
+    end
+    local windowss_xx = 0.693
+    local windowss_yy = 0.026
+    local windowss_width = 0.03
+    local windowss_height = 0.04
+    local rectss_x = windowss_xx + 0.0006
+    local rectss_y = windowss_yy + 0.0010
+    local rectss_width = windowss_width - 0.6618
+    local rectss_height = windowss_height - 0.05
+    local border_colorss_a= colour(100, 50, 50, 255)
+    local border_colorss_b= colour(150, 70, 150, 255)
+    directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按SHIFT键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+        ENTITY.SET_ENTITY_MAX_SPEED(players.user_ped(players.user()), 100)
+        local dir = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped(players.user()))
+        dir = v3(dir.x * 100, dir.y * 100, dir.z * 100)
+        local a = { value = 1.0 }
+        if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+            if PAD.GET_CONTROL_NORMAL(0, 32) == 1.0 then
+                if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+                    if not ENTITY.IS_ENTITY_IN_AIR(players.user_ped(players.user())) then
+                        while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_sum2_hal") and a.value do
+                            STREAMING.REQUEST_NAMED_PTFX_ASSET("scr_sum2_hal")
+                            wait(0)
+                        end
+                        GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
+                        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY('scr_sum2_hal_rider_weak_greyblack', players.user_ped(players.user()), 0, 0, 0, 0, 0, 0, 1)
+                        
+                        local forwardSpeed = 100 * a.value
+                        ENTITY.SET_ENTITY_VELOCITY(players.user_ped(players.user()), dir.x * forwardSpeed, dir.y * forwardSpeed, dir.z * forwardSpeed)
+                    end
+                else
+                    ENTITY.SET_ENTITY_VELOCITY(players.user_ped(players.user()), 0, 0, 0)
+              end
+          end
+     end
+end)
+
 man_ptfx_asset = "scr_bike_adversary"
 man_ptfx_effect = "scr_adversary_gunsmith_weap_smoke"
 request_ptfx_asset(man_ptfx_asset)
@@ -8601,6 +8933,22 @@ GTLP(selflist, "行动无声", {}, "", function()
     PLAYER.SET_PLAYER_NOISE_MULTIPLIER(PLAYER.PLAYER_ID(), 0.0)
 end)
 
+GTLP(selflist, '随机海滩服装', {}, '', function (f)
+    wipe_outfit(players.user_ped())
+    random_tropical_outfit(players.user_ped())
+    wait(100)
+end)
+
+GTAC(selflist, '让自己赤脚', {}, '', function (f)
+barefoot(players.user_ped())
+end)
+
+GTAC(selflist, '罪人', {}, '', function (f)
+    pped = players.user_ped(players.user())
+    PED.SET_PED_COMPONENT_VARIATION(pped, 7, 25, 0, 0)
+    WEAPON.GIVE_DELAYED_WEAPON_TO_PED(pped, 0xD04C944D, 0, 1)
+end)
+
 GTLP(sessionfun, "显示轴向", {}, "", function(toggle)
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     GRAPHICS.DRAW_LINE(c.x, c.y, c.z, c.x + 2, c.y, c.z, 255, 0, 0, 255) --x
@@ -9370,6 +9718,26 @@ end)
             end
     end)
 
+GTTG(weapon_options, "瞎打枪", {""}, "", function(g)
+    gt = g
+    while gt do
+    wait()
+        if PED.IS_PED_SHOOTING(players.user_ped(players.user())) then
+        util.create_thread(function()
+        local coords = WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(PLAYER.PLAYER_PED_ID(),v3.new())
+    while not success do
+        success, pos = WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(PLAYER.PLAYER_PED_ID(),v3.new())
+    wait(0)
+end
+    for i = 1, 20 do
+MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x+(math.random(-10, 10)), pos.y+(math.random(-10, 10)),pos.z+(math.random(-10, 10)), pos.x+(math.random(-10, 10)), pos.y+(math.random(-10, 10)),pos.z+(math.random(-10, 10)), 1000,true, util.joaat("weapon_airstrike_rocket"), PLAYER.PLAYER_PED_ID(), true, false, 250)
+    wait(200)
+    end
+        end, nil)
+    end
+    end
+end)
+    
 GTLP(weapon_options, "磁铁枪", {"magnetgun"}, "很有趣喔~", function ()
     magnetgun()
 end)
@@ -13245,6 +13613,38 @@ end, function()
     end
 end)
 
+GTAC(vehtroll, '冻结车辆与实体', {}, '', function (f)
+allobj = entities.get_all_objects_as_handles()
+wait(200)
+allveh = entities.get_all_vehicles_as_handles()
+wait(200)
+wait(400)
+for i = 1, #allobj do
+    ENTITY.FREEZE_ENTITY_POSITION(allobj[i], false)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(allobj[i])
+    ENTITY.FREEZE_ENTITY_POSITION(allobj[i], true)
+end
+wait(400)
+for i = 1, #allveh do
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(allveh[i])
+    ENTITY.FREEZE_ENTITY_POSITION(allveh[i], true)
+end
+end)
+
+GTTG(vehtroll, '车辆漏油', {}, '', function (f)
+    feat = f
+    local vehicles
+    while feat do
+        vehicles = entities.get_all_vehicles_as_handles()
+        for i = 1, #vehicles do
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicles[i])
+            VEHICLE.SET_VEHICLE_CHEAT_POWER_INCREASE(vehicles[i], math.random(1.0, 10.0))
+            FIRE.ADD_EXPLOSION(ENTITY.GET_ENTITY_COORDS(vehicles[i]).x,ENTITY.GET_ENTITY_COORDS(vehicles[i]).y,ENTITY.GET_ENTITY_COORDS(vehicles[i]).z,67, 1.0,false, false, 0, players.user())
+            wait(10)
+        end
+    end
+end)
+
 GTLP(vehtroll,("删除所有车辆"), {}, "", function()
 local my_pos = players.get_position(players.user())
     CLEAR_AREA_OF_VEHICLES(my_pos.x, my_pos.y, my_pos.z, 10000, false, false, false, false, false, false, false)
@@ -16358,50 +16758,153 @@ end)
     "33",
     "34",
     "35"
-}    
-    GTTG(funfeatures, "特斯拉自动驾驶", {}, "", function(toggled)
-            local player = players.user_ped()
-            local playerpos = ENTITY.GET_ENTITY_COORDS(player, false)
-            local tesla_ai = util.joaat("u_m_y_baygor")
-            local tesla = util.joaat("raiden")
-            request_model(tesla_ai)
-            request_model(tesla)
-            if toggled then     
-                if PED.IS_PED_IN_ANY_VEHICLE(player, true) then
-                    menu.trigger_commands("deletevehicle")
-                end
-        
-                tesla_ai_ped = entities.create_ped(26, tesla_ai, playerpos, 0)
-                tesla_vehicle = entities.create_vehicle(tesla, playerpos, 0)
-                ENTITY.SET_ENTITY_INVINCIBLE(tesla_ai_ped, true)
-                ENTITY.SET_ENTITY_VISIBLE(tesla_ai_ped, false)
-                PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(tesla_ai_ped, true)
-                PED.SET_PED_INTO_VEHICLE(player, tesla_vehicle, -2)
-                PED.SET_PED_INTO_VEHICLE(tesla_ai_ped, tesla_vehicle, -1)
-                PED.SET_PED_KEEP_TASK(tesla_ai_ped, true)
-                VEHICLE.SET_VEHICLE_COLOURS(tesla_vehicle, 111, 111)
-                VEHICLE.SET_VEHICLE_MOD(tesla_vehicle, 23, 8, false)
-                VEHICLE.SET_VEHICLE_MOD(tesla_vehicle, 15, 1, false)
-                VEHICLE.SET_VEHICLE_EXTRA_COLOURS(tesla_vehicle, 111, 147)
-                menu.trigger_commands("performance")
-        
-                if HUD.IS_WAYPOINT_ACTIVE() then
-                    local pos = HUD.GET_BLIP_COORDS(HUD.GET_FIRST_BLIP_INFO_ID(8))
-                    TASK.TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE(tesla_ai_ped, tesla_vehicle, pos.x, pos.y, pos.z, 20, 786603, 0)
-                else
-                    TASK.TASK_VEHICLE_DRIVE_WANDER(tesla_ai_ped, tesla_vehicle, 20, 786603)
-                end
-            else
-                if tesla_ai_ped ~= nil then 
-                    entities.delete_by_handle(tesla_ai_ped)
-                end
-                if tesla_vehicle ~= nil then 
-                    entities.delete_by_handle(tesla_vehicle)
-                end
-            end
-    end)
+}
 
-GTACR(funfeatures, "UFO", {"ufo"}, "#超好玩滴延伸功能\n驾驶UFO在战局中穿梭,并且拥有特殊功能(天基炮/牵引吸附)", {"外星UF0", "军用UFO"}, function (index)
+GTLP(funfeatures_self, '黑洞控制', {}, '吸附附近载具与实体到我面前', function (g)
+    local function colour(r, g, b, a)
+      return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
+    end
+    local pedp = players.user_ped(players.user())
+    local windowss_xx = 0.675
+    local windowss_yy = 0.026
+    local windowss_width = 0.03
+    local windowss_height = 0.04
+    local rectss_x = windowss_xx + 0.0006
+    local rectss_y = windowss_yy + 0.0010
+    local rectss_width = windowss_width - 0.6618
+    local rectss_height = windowss_height - 0.05
+    local border_colorss_a= colour(100, 50, 50, 255)
+    local border_colorss_b= colour(150, 70, 150, 255)
+    directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按X键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+    local me = players.user()
+    for i = 1, 2 do
+      if util.is_key_down(0x58)  then
+        local allvehs = entities.get_all_vehicles_as_handles()
+        for i = 1, #allvehs do
+          local playerpos = ENTITY.GET_ENTITY_COORDS(players.user())
+          local entitypos = ENTITY.GET_ENTITY_COORDS(allvehs[i])
+          if playerpos:magnitude(entitypos) < 60 then
+            local mypos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 5, 0)
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allvehs[i], mypos.x,mypos.y,mypos.z,true, false, false)
+          end
+        end
+        wait(1)
+        local allobjects = entities.get_all_objects_as_handles()
+        for i = 1, #allobjects do
+          local playerpos = ENTITY.GET_ENTITY_COORDS(players.user())
+          local entitypos = ENTITY.GET_ENTITY_COORDS(allobjects[i])
+          if playerpos:magnitude(entitypos) < 60 then
+            local mypos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 5, 0)
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allobjects[i], mypos.x,mypos.y,mypos.z,true, false, false)
+          end
+        end
+        wait(500)
+      end
+    end
+end)
+
+GTTG(funfeatures, '骑在附近NPC头上', {""}, '', function (on)
+    if on then
+        local ped = players.user_ped()
+        local nearbyPed = nil
+        local pedCoords = ENTITY.GET_ENTITY_COORDS(ped, true)
+        local pedInFront = players.user_ped()
+        while not STREAMING.HAS_ANIM_DICT_LOADED("rcmjosh2") do
+            STREAMING.REQUEST_ANIM_DICT("rcmjosh2")
+            wait()
+        end
+        local nearbyPeds = entities.get_all_peds_as_handles()
+        for i = 1, #nearbyPeds do
+            local npcCoords = ENTITY.GET_ENTITY_COORDS(nearbyPeds[i], true)
+            local distance = SYSTEM.VDIST2(pedCoords.x, pedCoords.y, pedCoords.z, npcCoords.x, npcCoords.y, npcCoords.z)
+            if distance < 100 and nearbyPeds[i] ~= pedInFront then
+                nearbyPed = nearbyPeds[i]
+                break
+            end
+        end
+        if nearbyPed then
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(ped, nearbyPed, PED.GET_PED_BONE_INDEX(nearbyPed, 0), 0.0, -0.2, 0.60, 0.0, 0.0, 180, true, true, true, true, 2, true)
+            TASK.TASK_PLAY_ANIM(ped, "rcmjosh2", "josh_sitting_loop", 3.0, 2.0, -1, 3, 1.0, false, false, false)
+        end
+    else
+        ENTITY.DETACH_ENTITY(players.user_ped(), true, true)
+        TASK.CLEAR_PED_TASKS(PLAYER.PLAYER_PED_ID())
+    end
+end)
+
+GTTG(funfeatures, '强奸附近NPC', {""}, '', function (on)
+    if on then
+        local ped = players.user_ped()
+        local nearbyPed = nil
+        local pedCoords = ENTITY.GET_ENTITY_COORDS(ped, true)
+        local pedInFront = players.user_ped()
+        while not STREAMING.HAS_ANIM_DICT_LOADED("rcmpaparazzo_2") do
+            STREAMING.REQUEST_ANIM_DICT("rcmpaparazzo_2")
+            wait()
+        end
+        local nearbyPeds = entities.get_all_peds_as_handles()
+        for i = 1, #nearbyPeds do
+            local npcCoords = ENTITY.GET_ENTITY_COORDS(nearbyPeds[i], true)
+            local distance = SYSTEM.VDIST2(pedCoords.x, pedCoords.y, pedCoords.z, npcCoords.x, npcCoords.y, npcCoords.z)
+            if distance < 100 and nearbyPeds[i] ~= pedInFront then
+                nearbyPed = nearbyPeds[i]
+                break
+            end
+        end
+        if nearbyPed then
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(ped, nearbyPed, PED.GET_PED_BONE_INDEX(nearbyPed, 0), 0.0, -0.2, 0, 0.0, 0.0, 0, true, true, true, true, 2, true)
+            TASK.TASK_PLAY_ANIM(ped, "rcmpaparazzo_2", "shag_loop_a", 3.0, 2.0, -1, 3, 1.0, false, false, false)
+        end
+    else
+        ENTITY.DETACH_ENTITY(players.user_ped(), true, true)
+        TASK.CLEAR_PED_TASKS(PLAYER.PLAYER_PED_ID())
+    end
+end)
+
+GTTG(funfeatures, "特斯拉自动驾驶", {}, "", function(toggled)
+        local player = players.user_ped()
+        local playerpos = ENTITY.GET_ENTITY_COORDS(player, false)
+        local tesla_ai = util.joaat("u_m_y_baygor")
+        local tesla = util.joaat("raiden")
+        request_model(tesla_ai)
+        request_model(tesla)
+        if toggled then     
+            if PED.IS_PED_IN_ANY_VEHICLE(player, true) then
+                menu.trigger_commands("deletevehicle")
+            end
+    
+            tesla_ai_ped = entities.create_ped(26, tesla_ai, playerpos, 0)
+            tesla_vehicle = entities.create_vehicle(tesla, playerpos, 0)
+            ENTITY.SET_ENTITY_INVINCIBLE(tesla_ai_ped, true)
+            ENTITY.SET_ENTITY_VISIBLE(tesla_ai_ped, false)
+            PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(tesla_ai_ped, true)
+            PED.SET_PED_INTO_VEHICLE(player, tesla_vehicle, -2)
+            PED.SET_PED_INTO_VEHICLE(tesla_ai_ped, tesla_vehicle, -1)
+            PED.SET_PED_KEEP_TASK(tesla_ai_ped, true)
+            VEHICLE.SET_VEHICLE_COLOURS(tesla_vehicle, 111, 111)
+            VEHICLE.SET_VEHICLE_MOD(tesla_vehicle, 23, 8, false)
+            VEHICLE.SET_VEHICLE_MOD(tesla_vehicle, 15, 1, false)
+            VEHICLE.SET_VEHICLE_EXTRA_COLOURS(tesla_vehicle, 111, 147)
+            menu.trigger_commands("performance")
+    
+            if HUD.IS_WAYPOINT_ACTIVE() then
+                local pos = HUD.GET_BLIP_COORDS(HUD.GET_FIRST_BLIP_INFO_ID(8))
+                TASK.TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE(tesla_ai_ped, tesla_vehicle, pos.x, pos.y, pos.z, 20, 786603, 0)
+            else
+                TASK.TASK_VEHICLE_DRIVE_WANDER(tesla_ai_ped, tesla_vehicle, 20, 786603)
+            end
+        else
+            if tesla_ai_ped ~= nil then 
+                entities.delete_by_handle(tesla_ai_ped)
+            end
+            if tesla_vehicle ~= nil then 
+                entities.delete_by_handle(tesla_vehicle)
+            end
+        end
+end)
+
+GTACR(funfeatures, "UFO玩乐", {"ufo"}, "#超好玩滴延伸功能\n驾驶UFO在战局中穿梭,并且拥有特殊功能(天基炮/牵引吸附)", {"外星UF0", "军用UFO"}, function (index)
 	local obj = ufomodels[index]
 	UFO.setObjModel(obj)
 	if not (GuidedMissile.exists() or UFO.exists()) then UFO.create() end
@@ -18383,7 +18886,9 @@ end)
 
 hblink = GTAC(G, authvalue, {}, authinfo, function ()
 end)
-
+restartgt = GTAC(G, "重新启动脚本", {}, "", function ()
+    restartscript()
+end)
 myString = "关于如何更新脚本到最新版,您可加入群聊(651502721) 关于脚本的基本功能疑问,您可直接加入群聊获得帮助(716431566) 若要购买其他菜单,您可在经销商列表中找到各个经销商 若要获取一对一的帮助,您可联系我们的经理草莓姐姐(1104626388)"
 GTAC(other_options,"获取技术支持",{},myString,function()end)
 blackweb = GT(other_options, "经销商(非脚本)", {}, "你可以在此找到经过GTVIP团队认证的经销商")
@@ -18645,6 +19150,14 @@ rainbowinfo = GTAC(WaterMark, "开启信息显示", {""}, "开启该功能选项
 dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\GTW\\WM.lua")
 GTLuaScript.delete(rainbowinfo)
 end)
+
+startTime = os.clock() GTTG(zhujixianshi, '脚本运行时长', {""}, '', function (on) gt=on while gt do wait() local endTime = os.clock() local duration = endTime - startTime local hours = math.floor(duration / 3600) local minutes = math.floor((duration % 3600) / 60) local seconds = math.floor(duration % 60) if seconds >= 60 then minutes = minutes + 1 seconds = 0 end formattedTime = string.format("~h~您已使用:")
+if minutes >= 60 then hours = hours + 1 minutes = 0 end
+if duration > 7200 then edTime = "~h~~r~\n您已过度疲劳游戏\n请合理安排时间游戏!" HUD.SET_TEXT_SCALE(0.5, 0.40) HUD.SET_TEXT_FONT(1) HUD.SET_TEXT_COLOUR(255, 182, 193, 255) HUD.SET_TEXT_CENTRE(1) HUD.SET_TEXT_OUTLINE(0) util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(edTime) HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.08, 0.01, 0) end
+if hours > 0 then formattedTime = formattedTime .. string.format("%d小时", hours) end
+if minutes > 0 then formattedTime = formattedTime .. string.format("%d分钟", minutes) end
+if seconds > 0 or (hours == 0 and minutes == 0) then formattedTime = formattedTime .. string.format("%d秒", seconds)
+end HUD.SET_TEXT_SCALE(0.5, 0.40) HUD.SET_TEXT_FONT(1) HUD.SET_TEXT_COLOUR(255, 182, 193, 255) HUD.SET_TEXT_CENTRE(1) HUD.SET_TEXT_OUTLINE(0) util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(formattedTime) HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.08, 0.01, 0) end gt = false end)
 
 GTLP(zhujixianshi, "实体池显示", {}, "", function(toggle)
     local fullVersion = menu.get_version()["version"]
@@ -26141,6 +26654,30 @@ end
 --
 
 local updatetroll = GT(playerMain, "近期更新", {}, "")
+
+updatetroll:action('天基炮玩家', {}, '', function()
+    local d = players.user_ped(pid)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+    AUDIO.PLAY_SOUND_FROM_COORD(-1, "ORBITAL_CANNON_FIRE_LASER", pos.x, pos.y, pos.z, 0, true, 10000000000, false)
+    AUDIO.PLAY_SOUND_FROM_COORD(-1, "ORBITAL_CANNON_FIRE_LASER", pos.x, pos.y, pos.z, 0, true, 10000000000, true)
+    wait(100)
+    AUDIO.PLAY_SOUND_FROM_COORD(-1, "ORBITAL_CANNON_FIRE_EXPLOSION", pos.x, pos.y, pos.z, "DLC_XM_Explosions_Orbital_Cannon", true, 100000000000, false)
+    AUDIO.PLAY_SOUND_FROM_COORD(-1, "ORBITAL_CANNON_FIRE_EXPLOSION", pos.x, pos.y, pos.z, "DLC_XM_Explosions_Orbital_Cannon", true, 100000000000, false)
+    GRAPHICS.USE_PARTICLE_FX_ASSET("scr_xm_orbital")
+    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_xm_orbital") do
+      STREAMING.REQUEST_NAMED_PTFX_ASSET("scr_xm_orbital")
+      wait(0)
+    end
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("scr_xm_orbital_blast", pos.x, pos.y, pos.z, 0, 0, 0, 5, true, true, true)
+    FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 59,1, true, false, 1.5, false)
+    FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 60,1, true, false, 1.8, false)
+    FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 62,1, true, false, 2.0, false)
+    FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 52,1, true, false, 1.0, false)
+    FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 50,1, true, false, 1.0, false)
+    FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 29,1, false, false, 29.0, false)
+    FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 29,1, true, false, 29.0, false)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("scr_xm_orbital_blast", pos.x, pos.y, pos.z,0, 0, 0, 10, true, true, true)
+  end)
 
 updatetroll:toggle("玩家头部显示", {},"", function(f)
     gt = f
@@ -35535,6 +36072,9 @@ show_credits = GTTG(other_options, "鸣谢人员", {}, "", function(on)
     end
 end)
 
+GTAC(other_options, "重新启动脚本", {}, "", function ()
+    restartscript()
+end)
 GTAC(other_options,"关闭脚本",{"closegt"},"",function ()
     util.stop_script()
 end)
@@ -35847,7 +36387,7 @@ util.on_stop(function()
     if GuidedMissile.exists() then
         GuidedMissile.destroy()
 	end
-end)   
+end)
 --[[
  ________  ________  ________  ________   ________  _________  ________  ___  ___  ________  ___  ________   ________  ___      ___ ___  ________   
 |\   ____\|\   __  \|\   __  \|\   ___  \|\   ___ \|\___   ___\\   __  \|\  \|\  \|\   __  \|\  \|\   ___  \|\   ____\|\  \    /  /|\  \|\   __  \  

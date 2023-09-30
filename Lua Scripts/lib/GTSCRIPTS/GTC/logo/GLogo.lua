@@ -42,7 +42,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '9.20'
+GT_version = '9.26'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -50,7 +50,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("修复了无法在108.3版本运行\n修复了一个错误，当GTLuaScript/profiles这个文件夹不存在时，脚本会报错且无法运行\n据我们所知，某些解压缩软件可能无法将这个文件夹正确的解压到脚本文件夹内\n现在这个文件夹若不存在，将在加载脚本过程中自动创建这个文件夹以修复错误\n同时再次优化了脚本的性能问题，现在主脚本将在启动过程中异步加载，包括大部分的资源库文件\n新增>其他选项>显示选项>实体池显示\n新增>自我选项>增强选项>三维准心\n新增>自我选项>增强选项>坐标显示\n新增>自我选项>自我娱乐>彩虹头发\n新增>其他选项>显示选项>纯净模式\n新增>自我选项>自我娱乐>滑稽枪械\n新增>滑稽枪械>钞票枪\n新增>滑稽枪械>卡片枪\n新增>滑稽枪械>玩偶枪\n新增>线上选项>金钱选项>循环掉钱[2000]\n其他的一些改进与修复\nVersion: "..GT_version)
+    notification("重新添加>自我选项>自我娱乐>霹雳舞\n新增>自我选项>自我娱乐>起飞\n新增>自我选项>自我娱乐>小叮当\n新增>小叮当>挂起小叮当\n新增>小叮当>清除小叮当\n新增>自我选项>随机海滩服装\n新增>自我选项>让自己赤脚\n新增>自我选项>罪人\n新增>武器选项>瞎打枪\n新增>特效选项>闪电侠\n新增>特效选项>星光尾拖\n新增>特效选项>尾拖蓝\n新增>特效选项>尾拖绿\n新增>特效选项>尾拖黄\n新增>特效选项>尾拖白\n新增>恶搞选项>天基炮玩家\n新增>战局选项>战局载具恶搞>冻结车辆与实体\n新增>战局选项>战局载具恶搞>车辆漏油\n新增>娱乐选项>黑洞控制\n新增>娱乐选项>骑在附近NPC头上\n新增>娱乐选项>XX附近NPC\n新增>其他选项>脚本运行时长\n新增>Lua脚本/主菜单/其他选项>重新启动脚本(很多人催的东西)\n其他的一些改进与修复\nVersion: "..GT_version)
 end
 --
 
@@ -61,8 +61,8 @@ bbtct = "[点击此处加入官方群聊中进行询问]\n\n*加载脚本显示(
 mename = PLAYER.GET_PLAYER_NAME(players.user())
 grouplink = "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566"
 Name_info = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
-gtoast("GRANDTOURINGVIP!\n版本 " .. GT_version .. " 欢迎 ".. Name_info.."\n加入群聊可获得最新版本\n"..checkme())
 util.show_corner_help("~b~~h~GRANDTOURINGVIP\n~q~~h~欢迎 "..Name_info)
+util.toast("\n版本 " .. GT_version .. " 欢迎 ".. Name_info.."\n加入群聊可获得最新版本\n"..checkme())
 --
 util.create_thread(function ()
     local fr = soup.FileReader(filesystem.scripts_dir() .. 'GTLuaScript\\gt\\GT.wav')
@@ -9726,6 +9726,115 @@ function rrren(on)
                 GRAPHICS.DRAW_BOX(minBounds.x, minBounds.y, minBounds.z, maxBounds.x, maxBounds.y, maxBounds.z, boxColor.r, boxColor.g, boxColor.b, boxColor.a)
             end
         end
+    end
+end
+--
+function ptfx_looped(ptfx, entity, offset, rot, scale)
+	GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(ptfx, entity, offset.x, offset.y, offset.z, rot.x, rot.y, rot.z, scale)
+end
+
+function attachPTFX(entity,dict,ptfx,scale,offset,rot)
+  GRAPHICS.USE_PARTICLE_FX_ASSET(dict)
+  while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(dict) do
+    STREAMING.REQUEST_NAMED_PTFX_ASSET(dict)
+    wait(0)
+    return HANDLER_CONTINUE 
+  end
+  ptfx_looped(ptfx,entity,offset,rot,scale)
+end
+--
+function barefoot(freemode_ped)
+    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 35, 0, 0)
+    else
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 34, 0, 0)
+    end
+end
+
+function wipe_outfit(freemode_ped)
+    local hair = PED.GET_PED_DRAWABLE_VARIATION(freemode_ped, 2)
+    local hair_tex = PED.GET_PED_TEXTURE_VARIATION(freemode_ped, 2)
+
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 1, 0, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 2, hair, hair_tex, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 0, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 9, 0, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 7, 0, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, 0, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 8, 15, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 0, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 0, 0, 0) 
+    PED.CLEAR_ALL_PED_PROPS(freemode_ped)
+end
+
+function shirtless(freemode_ped)
+    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 15, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, 15, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 8, 14, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 7, 0, 0, 0)
+    else
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 15, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, 15, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 8, 15, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 7, 0, 0, 0)
+    end
+end
+
+function get_random_drawable_variation(freemode_ped, component, drawable)
+    return math.random(0, PED.GET_NUMBER_OF_PED_TEXTURE_VARIATIONS(freemode_ped, component, drawable))-1
+end
+
+function barefoot(freemode_ped)
+    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 35, 0, 0)
+    else
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 34, 0, 0)
+    end
+end
+
+function random_tropical_outfit(freemode_ped)
+    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 11, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 44, 269, get_random_drawable_variation(freemode_ped, 44, 269), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 137, get_random_drawable_variation(freemode_ped, 4, 137), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, select(math.random(1, 2), 15, 16),get_random_drawable_variation(freemode_ped, 6, select(math.random(1, 2), 15, 16)), 0)
+        
+        if (math.random(0, 15) == 5) then
+            barefoot(freemode_ped)
+        elseif (math.random(0, 15) == 9) then
+            shirtless(freemode_ped)
+        elseif (math.random(0, 15) == 11) then
+            shirtless(freemode_ped)
+            barefoot(freemode_ped)
+        end
+    else
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 44, 260, get_random_drawable_variation(freemode_ped, 44, 260), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 15, get_random_drawable_variation(freemode_ped, 4, 15), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 16, get_random_drawable_variation(freemode_ped, 6, 16), 0)
+
+        if (math.random(0, 15) == 5) then
+            barefoot(freemode_ped)
+        elseif (math.random(0, 15) == 9) then
+            shirtless(freemode_ped)
+        elseif (math.random(0, 15) == 11) then
+            shirtless(freemode_ped)
+            barefoot(freemode_ped)
+        end
+    end
+end
+
+function random_golf_outfit(freemode_ped)
+    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 14, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, math.random(400, 401), get_random_drawable_variation(freemode_ped, 11, math.random(400, 401)), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 137, get_random_drawable_variation(freemode_ped, 4, 137), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 103, get_random_drawable_variation(freemode_ped, 6, 103), 0)
+    else
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 0, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, math.random(382, 383), get_random_drawable_variation(freemode_ped, 11, math.random(382, 383)), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 12, select(math.random(1, 5), 0, 4, 5, 7, 12), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 99, get_random_drawable_variation(freemode_ped, 6, 99), 0)
     end
 end
 ------------------------------------
