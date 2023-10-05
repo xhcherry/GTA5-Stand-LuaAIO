@@ -103,6 +103,7 @@ end
 os.require "lib.GTSCRIPTS.Q"
 if SCRIPT_MANUAL_START then
 GTNB()
+util.toast("\n版本 " .. GT_version .. " 欢迎 ".. Name_info.."\n加入群聊可获得最新版本\n"..checkme())
 menu.trigger_commands("gtluascript")
 end
 --
@@ -259,24 +260,13 @@ end)
 kdr = GT(players_root, "设置KD值", {}, "请注意，这不是虚假KD")
 os.require "lib.GTSCRIPTS.GTA.kd"
 
-project_3d_coord = function (coord)
-    local x_ptr, y_ptr = memory.alloc_int(), memory.alloc_int()
-    local status = GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(coord.x, coord.y, coord.z, x_ptr, y_ptr)
-    local x, y = memory.read_float(x_ptr), memory.read_float(y_ptr)
-    return status, v2(x, y)
-end
-
-Round = function(num, dp)
-    local mult = 10^(dp or 0)
-    return ((num * mult + 0.5) // 1) / mult 
-end
-
 espinfo = GT(players_root, "定位透视信息")
 GTTG(espinfo, "载具信息透视", {}, "", function(g)
     gt = g
     while gt do
         wait()
-        local MyPos = ENTITY.GET_ENTITY_COORDS(players.user())
+        local playerPed = players.user_ped()
+        local MyPos = ENTITY.GET_ENTITY_COORDS(playerPed)
         local AllVehicles = entities.get_all_vehicles_as_handles()
         for i = 1, #AllVehicles do
             local veh = AllVehicles[i]
@@ -287,6 +277,9 @@ GTTG(espinfo, "载具信息透视", {}, "", function(g)
                 local success, pos = project_3d_coord(VehCoords)
                 if success then
                     local speed = ENTITY.GET_ENTITY_SPEED(veh)
+                    local distances = MyPos:magnitude(VehCoords)
+                    local distanceText = "距离 : " .. Round(distances, 2) .. " 米"
+                    local vehnameText = "名字 : " .. tostring(util.reverse_joaat(ENTITY.GET_ENTITY_MODEL(AllVehicles[i])))
                     local speedText = "速度 : " .. Round(speed * 2.23694, 2) .. " 公里/每小时" 
                     local vehGodText = "哈希值 : " .. tostring(util.joaat(AllVehicles[i]))
                     local healthText = "健康值 : " .. tostring(entities.get_health(AllVehicles[i]))
@@ -295,7 +288,7 @@ GTTG(espinfo, "载具信息透视", {}, "", function(g)
                     HUD.SET_TEXT_CENTRE(1)
                     HUD.SET_TEXT_OUTLINE(0)
                     HUD.SET_TEXT_COLOUR(200, 100, 255, 255)
-                    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("载具 : " .. "\n" .. speedText .. "\n" .. vehGodText .. "\n" .. healthText)
+                    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("载具 : "  .. "\n" .. vehnameText .. "\n" .. speedText .. "\n" .. vehGodText .. "\n" .. healthText .. "\n" ..distanceText)
                     HUD.END_TEXT_COMMAND_DISPLAY_TEXT(pos.x, pos.y, 0)
                 end
             end
@@ -308,34 +301,36 @@ GTTG(espinfo, "NPC信息透视", {}, "", function(g)
     gt = g
     while gt do
         wait()
-        local MyPos = ENTITY.GET_ENTITY_COORDS(players.user())
+        local MyPos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED())
         local Allpeds = entities.get_all_peds_as_handles()
         for i = 1, #Allpeds do
-            local veh = Allpeds[i]
-            local pedCoords = ENTITY.GET_ENTITY_COORDS(veh)
+            local pedCoords = ENTITY.GET_ENTITY_COORDS(Allpeds[i])
             local pPos = v3(pedCoords.x, pedCoords.y, pedCoords.z+1)
-            local distanceToPlayer = MyPos:distance(pPos)
-            if distanceToPlayer then
+            local dx = pedCoords.x - MyPos.x
+            local dy = pedCoords.y - MyPos.y
+            local dz = pedCoords.z - MyPos.z
+            local distance = math.sqrt(dx * dx + dy * dy + dz * dz)
                 local success, pos = project_3d_coord(pedCoords)
                 if success then
-                    local speed = ENTITY.GET_ENTITY_SPEED(veh)
-                    local speedText = "速度 : " .. Round(speed * 2.23694, 2) .. " 公里/每小时" 
-                    local vehGodText = "哈希值 : " .. tostring(util.joaat(Allpeds[i]))
-                    local healthText = "健康值 : " .. tostring(entities.get_health(Allpeds[i]))
-                    HUD.SET_TEXT_SCALE(0.5, 0.2)
-                    HUD.SET_TEXT_FONT(5)
-                    HUD.SET_TEXT_CENTRE(1)
-                    HUD.SET_TEXT_OUTLINE(0)
-                    HUD.SET_TEXT_COLOUR(200, 100, 255, 255)
-                    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("NPC : " .. "\n" .. speedText .. "\n" .. vehGodText .. "\n" .. healthText)
-                    HUD.END_TEXT_COMMAND_DISPLAY_TEXT(pos.x, pos.y, 0)
-                end
+                local speed = ENTITY.GET_ENTITY_SPEED(Allpeds[i])
+                local distances = MyPos:magnitude(pedCoords)
+                local distanceText = "距离 : " .. Round(distance, 2) .. " 米"
+                local vehnameText = "名字 : " .. tostring(util.reverse_joaat(ENTITY.GET_ENTITY_MODEL(Allpeds[i])))
+                local speedText = "速度 : " .. Round(speed * 2.23694, 2) .. " 公里/每小时" 
+                local vehGodText = "哈希值 : " .. tostring(util.joaat(Allpeds[i]))
+                local healthText = "健康值 : " .. tostring(entities.get_health(Allpeds[i]))
+                HUD.SET_TEXT_SCALE(0.5, 0.2)
+                HUD.SET_TEXT_FONT(5)
+                HUD.SET_TEXT_CENTRE(1)
+                HUD.SET_TEXT_OUTLINE(0)
+                HUD.SET_TEXT_COLOUR(200, 100, 255, 255)
+                util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("人物信息 : "  .. "\n" .. vehnameText .. "\n" .. speedText .. "\n" .. vehGodText .. "\n" .. healthText .. "\n" ..distanceText)
+                HUD.END_TEXT_COMMAND_DISPLAY_TEXT(pos.x, pos.y, 0)
             end
         end
     end
     gt = false
 end)
-
 
 GTTG(espinfo, "近距离NPC透视", {}, "", function(g)
     gt = g
@@ -1021,13 +1016,107 @@ all_female_sex_voicenames = {
     "S_F_Y_HOOKER_03_BLACK_FULL_01",
     "S_F_Y_HOOKER_03_BLACK_FULL_03",
 }
- female_speeches = {
+female_speeches = {
     "SEX_GENERIC_FEM",
     "SEX_HJ",
     "SEX_ORAL_FEM",
     "SEX_CLIMAX",
     "SEX_GENERIC"
 }
+
+myc = GT(helperingame, "服装与风格")
+
+GTTG(myc, "没有血迹",{""}, "",function(f) gt=f while gt do wait(100) PED.CLEAR_PED_BLOOD_DAMAGE(PLAYER.PLAYER_PED_ID()) end gt=false end)
+
+GTAC(myc, "随机服装",{""}, "",function() wait(100) PED.SET_PED_RANDOM_COMPONENT_VARIATION(PLAYER.PLAYER_PED_ID(), true) end)
+
+GTTG(myc, "循环随机服装",{"会引发XE事件"}, "",function(f) gt=f while gt do wait(100) PED.SET_PED_RANDOM_COMPONENT_VARIATION(PLAYER.PLAYER_PED_ID(), true) end gt=false end)
+
+GTLP(myc, '随机海滩服装', {}, '', function (f)
+    wipe_outfit(players.user_ped())
+    random_tropical_outfit(players.user_ped())
+    wait(100)
+end)
+
+GTAC(myc, '让自己赤脚', {}, '', function (f)
+barefoot(players.user_ped())
+end)
+
+dancd = GT(myc, '走路风格', {}, '')
+for _, v in ipairs(dicdd) do 
+dancd:action("选择风格: " .. v, {},"", function(f)
+my_ped = players.user_ped()
+STREAMING.HAS_ANIM_SET_LOADED(v)
+STREAMING.REQUEST_ANIM_SET(v)
+PED.SET_PED_MOVEMENT_CLIPSET(my_ped,v,0x3E800000)
+end)
+end
+
+GTTG(helperingame, '国家分类显示', {}, '', function (f)
+    local guojia = {[0] = "英国",[1] = "法国",[2] = "德国",[3] = "意大利",[4] = "西班牙",[5] = "葡萄牙",[6] = "波兰",[7] = "俄罗斯",[8] = "韩国",[9] = "台湾/香港",[10] = "日本",[11] = "西班牙",[12] = "中国"}
+    local playerCategories = {} 
+    gt = f
+    local allPlayers = players.list()
+        for i = 1, #allPlayers do
+            local player = allPlayers[i]
+                local language = players.get_language(player)
+                    local country = guojia[language]
+                       if not playerCategories[country] then
+                    playerCategories[country] = {}
+                end
+        table.insert(playerCategories[country], player)
+    end
+    while gt do
+       wait()
+    for country, playersInCategory in pairs(playerCategories) do
+    local pos = v2() pos.x = 0.85 pos.y = 0.020
+    local displayText = function(text, x, y)
+        HUD.SET_TEXT_SCALE(0.5, 0.28)
+        HUD.SET_TEXT_FONT(1)
+        HUD.SET_TEXT_COLOUR(255, 182, 193, 255)
+        HUD.SET_TEXT_CENTRE(false)
+        HUD.SET_TEXT_OUTLINE(true)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(text)
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(pos.x, pos.y, 0)
+    end
+        displayText("~italic~国家显示: \n" .. country .. "玩家: " .. #playersInCategory, pos.x, pos.y)
+           end
+               end
+        gt = false
+end)
+
+cam_rot_z=100
+cam_rot_y=100
+
+GTluaScript.slider(helperingame, '镜头高度', {"movz"}, '默认为50,设置好高度再开启',1,200,100,1, function(gx)
+cam_rot_z = (gx * 1)
+end)
+
+GTluaScript.slider(helperingame, '三维偏移', {"movy"}, '默认为100,设置好高度再开启',1,100,100,1, function(gx)
+    cam_rot_y = (gx * 1)
+end)
+
+GTTG(helperingame, "观看镜头", {}, "", function(on)
+    if on then
+        enableFreecam()
+    else
+        disableFreecam()
+    end
+end)
+
+helperingame:toggle("玩家头部全局显示", {},"", function(f)
+    gt = f
+    while gt do
+        wait(0)
+            for pid = 0, 31 do
+                 if pid ~= players.user() and players.exists(pid) then
+                     pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+                     WIRI_GRAPHICS.DRAW_MARKER(2, pos.x, pos.y, pos.z+1.5, 0, 0, 0, 0, 180, 0, 1, 1, 1, 255, 0, 255, 255, false, true, 2, true, 0, 0, false)
+                 end
+            end
+        end
+    gt = false
+end)
 
 GTTG(helperingame, "三维准星", {}, "", function(gt)
     local cam = {}
@@ -1552,6 +1641,74 @@ GTLP(aimkrma, "爆炸", {}, "", function()
     end
 end)
 
+GTTG(funfeatures_self, "刀客",{""}, "",function(on)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
+    local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_cs_katana_01"), pos.x, pos.y, pos.z, true, true, false)
+    local taidao2 = OBJECT.CREATE_OBJECT(util.joaat("prop_cs_katana_01"), pos.x, pos.y, pos.z, true, true, false)
+    local taidao3 = OBJECT.CREATE_OBJECT(util.joaat("prop_cs_katana_01"), pos.x, pos.y, pos.z, true, true, false)
+    local taidao4 = OBJECT.CREATE_OBJECT(util.joaat("prop_cs_katana_01"), pos.x, pos.y, pos.z, true, true, false)
+    local taidao5 = OBJECT.CREATE_OBJECT(util.joaat("prop_cs_katana_01"), pos.x, pos.y, pos.z, true, true, false)
+    local taidao6 = OBJECT.CREATE_OBJECT(1467525553, pos.x, pos.y, pos.z, true, true, false)
+    if on then
+    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
+    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), false, false, false, false)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.03, 0, 0, -80, 0.0, 0, true, true, true, true, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao2, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 18905), 0.12, 0, 0.02, -100, 0, 0, true, true, true, true, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao3, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 0x5c01), 0.52, -0.15, 0.1, 0, -120, 0, true, true, true, true, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao4, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 0x5c01), 0.52, -0.15, -0.1, 0, 60, 180, true, true, true, true, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao5, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 0x192a), -0.2, 0.2, 0.12, 90, 0, 45, true, true, true, true, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao6, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 0x5c57), 0, 0.05, -0.12, -90, 0, 10, true, true, true, true, 0, true)
+    else
+    WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+    local count = 0
+		for k,ent in pairs(entities.get_all_objects_as_handles()) do
+			ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+			entities.delete_by_handle(ent)
+		count = count + 1
+			wait()
+		end
+    end
+end)
+
+GTTG(funfeatures_self, "双枪", {}, "不可发射子弹", function(on)
+    gt=on
+    Mypos = function()
+        return ENTITY.GET_ENTITY_COORDS(players.user())
+    end
+        local dictionary = "weap_xs_weapons"
+        local ptfx_name = "bullet_tracer_xs_sr"
+    local myr = players.user_ped()
+    while not STREAMING.HAS_ANIM_DICT_LOADED("anim@veh@armordillo@turret@base") do 
+         STREAMING.REQUEST_ANIM_DICT("anim@veh@armordillo@turret@base")
+         wait()
+    end
+    if gt then
+    local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(),true)
+    guitar = OBJECT.CREATE_OBJECT(1467525553, pos.x, pos.y, pos.z, true, true, false)
+    guitars = OBJECT.CREATE_OBJECT(1467525553, pos.x, pos.y, pos.z, true, true, false)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(players.user_ped())
+    TASK.TASK_PLAY_ANIM(myr, "anim@veh@armordillo@turret@base", "sit_aim_down", 10, 3, -1, 51, 5, false, false, false)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(guitar, players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), 18905), 0.16, 0.031, -0.004, -90.0, 15.7399, -5.0, 0, 1, 1, 1, 0, 1)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(guitars, players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), 57005),  0.15, 0.021, -0.004, -70.0, -5.0, -21.0, 0, 1, 1, 1, 0, 1)
+    PED.SET_ENABLE_HANDCUFFS(players.user_ped(),gt)
+    while gt do
+    wait()
+    request_ptfx_asset_lasereyes(dictionary)
+    GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(ptfx_name, guitar, 0.0, 0.0, 0.04, 0, 92, 0, 0.5, 0, 0, 0)
+    request_ptfx_asset_lasereyes(dictionary)
+    GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(ptfx_name, guitars, 0.0, 0.0, 0.04, -90, 92, 0, 0.5, 0, 0, 0)
+    end
+    else
+    TASK.CLEAR_PED_TASKS_IMMEDIATELY(myr)
+    PED.SET_ENABLE_HANDCUFFS(myr, false)
+    ENTITY.DETACH_ENTITY(guitar, 1, 1)
+    ENTITY.DETACH_ENTITY(guitars, 1, 1)
+    end
+    gt = false
+end)
+
 smalldido = GT(funfeatures_self, "小叮当")
 
 GTAC(smalldido, '挂起小叮当', {}, '', function (g)
@@ -1776,12 +1933,16 @@ GTLP(funfeatures_self, "瞄准方框", {}, "只对人物有效", function(toggle
     rrren(true)
 end)
 
-GTLP(funfeatures_self, '起飞', {}, '按住空格+W鼠标控制方向', function ()
+GTLP(funfeatures_self, '起飞', {}, '按住空格+W鼠标控制方向,空格+SHIFT加速', function ()
     if PAD.IS_CONTROL_PRESSED(0, 22) then
-    cam_pos = CAM.GET_GAMEPLAY_CAM_ROT(0)
-    ENTITY.SET_ENTITY_ROTATION(players.user_ped(), cam_pos.x, cam_pos.y, cam_pos.z, 1, true)
+        cam_pos = CAM.GET_GAMEPLAY_CAM_ROT(0)
+        ENTITY.SET_ENTITY_ROTATION(players.user_ped(), cam_pos.x, cam_pos.y, cam_pos.z, 1, true)
     local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 0.5, 0.1)
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(),pos.x,pos.y,pos.z,true, false, false)
+    if PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 then
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 2, 0.1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(),pos.x,pos.y,pos.z,true, false, false)
+    end
     end
 end)
 
@@ -6443,6 +6604,19 @@ affects = {}
 
 newptfx = GT(texiao, "近期更新", {}, "部分特效需成为[战局脚本主机]\n成为后战局玩家即可看见您的特效\n\n<如何成为战局脚本主机?>\n本体菜单 >> 线上 >> 战局选项 >> 成为战局脚本主机")
 
+GTTG(newptfx, "电疗",{""}, "",function(state)
+    local boneIdx = { 0x796e,0x6f06,0xeb95,0xe39f,0xca72,0x192A,  0xffa, 0xfa11, 0x83c,   0x512d, 0x58b7, 0xbb,0xb3fe,0x3fcf,0x5c01,0x60f0,0x60f1,0x60f2,0x6e5c,0x29d2,0xeeeb,0xfcd9,0xe0fd,0x5c57,0x192a,0x2e28,0x62ac,0x8b93,0xb4a0,0x6b52,0x8b93,0xf9bb,0x9000,0xb1c5,0x9d4d,0xdd1c}
+    if state then
+    for _, boneIds in ipairs(boneIdx) do
+    request_ptfx_asset("scr_reconstructionaccident")
+        GRAPHICS.USE_PARTICLE_FX_ASSET("scr_reconstructionaccident")
+        GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("scr_sparking_generator", players.user_ped(), 0, 0, 0, 0, 0 , 0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneIds), 2, false, false, false, 0, 0, 0, 0)
+    end
+    else
+        GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(players.user_ped())
+    end
+end)
+
 GTLP(newptfx, '闪电侠', {}, '', function (g)
     local function colour(r, g, b, a)
       return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
@@ -8931,16 +9105,6 @@ end)
 
 GTLP(selflist, "行动无声", {}, "", function()
     PLAYER.SET_PLAYER_NOISE_MULTIPLIER(PLAYER.PLAYER_ID(), 0.0)
-end)
-
-GTLP(selflist, '随机海滩服装', {}, '', function (f)
-    wipe_outfit(players.user_ped())
-    random_tropical_outfit(players.user_ped())
-    wait(100)
-end)
-
-GTAC(selflist, '让自己赤脚', {}, '', function (f)
-barefoot(players.user_ped())
 end)
 
 GTAC(selflist, '罪人', {}, '', function (f)

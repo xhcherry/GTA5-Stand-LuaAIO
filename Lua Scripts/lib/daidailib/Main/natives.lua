@@ -4,6 +4,7 @@ AUDIO1={
     ["SET_PED_AUDIO_FOOTSTEP_LOUD"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_bool(toggle);native_invoker.end_call("0653B735BFBDFE87");end,
 }
 VEHICLE1={
+	["_SET_HYDRAULIC_WHEEL_STATE_TRANSITION"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[int]] wheelId,--[[int]] state,--[[float]] value,--[[Any (int)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_int(wheelId)native_invoker.push_arg_int(state)native_invoker.push_arg_float(value)native_invoker.push_arg_int(p4)native_invoker.end_call_2(0xC24075310A8B9CD1)end,
     ["_SET_VEHICLE_CAN_BE_LOCKED_ON"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] canBeLockedOn,--[[BOOL (bool)]] unk)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(canBeLockedOn)native_invoker.push_arg_bool(unk)native_invoker.end_call_2(0x1DDA078D12879EEE)end,
     ["_SET_VEHICLE_REDUCE_TRACTION"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[int]] val)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_int(val)native_invoker.end_call_2(0x6DEE944E1EE90CFB)end,
     ["_SET_VEHICLE_CONTROLS_INVERTED"]=function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] state)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_bool(state);native_invoker.end_call("5B91B229243351A8");end,

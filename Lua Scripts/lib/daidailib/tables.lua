@@ -1,5 +1,60 @@
 
 
+----附加实体枪
+Objn = {
+    '义警',
+    '斜面魔宝',
+    '乔氏 尖锥魅影',
+    'BR8',
+    '袒胸女性',
+    '裸体教徒',
+    '丁卡 微托经典版',
+    '太空码头工',
+    '天煞',
+    '假阳具',
+    '圣诞树',
+    '黄色油桶',
+    '圣诞怪兽',
+    '兔子',
+    '兽人',
+}
+Objl = {
+    'vigilante',
+    'dune4',
+    'phantom2',
+    'openwheel1',
+    'a_f_y_topless_01',
+    'a_m_m_acult_01',
+    'veto',
+    'dune2',
+    'lazer',
+    'prop_cs_dildo_01',
+    'xm_prop_x17_xmas_tree_int',
+    'prop_barrel_03d',
+    'U_M_M_YuleMonster',
+    'A_C_Rabbit_02',
+    'IG_Furry',
+}
+
+----移除所有摄像头
+CamList = {
+    MISC.GET_HASH_KEY("prop_cctv_cam_01a"),
+    MISC.GET_HASH_KEY("prop_cctv_cam_01b"),
+    MISC.GET_HASH_KEY("prop_cctv_cam_02a"),
+    MISC.GET_HASH_KEY("prop_cctv_cam_03a"),
+    MISC.GET_HASH_KEY("prop_cctv_cam_04a"),
+    MISC.GET_HASH_KEY("prop_cctv_cam_04c"),
+    MISC.GET_HASH_KEY("prop_cctv_cam_05a"),
+    MISC.GET_HASH_KEY("prop_cctv_cam_06a"),
+    MISC.GET_HASH_KEY("prop_cctv_cam_07a"),
+    MISC.GET_HASH_KEY("prop_cs_cctv"),
+    MISC.GET_HASH_KEY("p_cctv_s"),
+    MISC.GET_HASH_KEY("hei_prop_bank_cctv_01"),
+    MISC.GET_HASH_KEY("hei_prop_bank_cctv_02"),
+    MISC.GET_HASH_KEY("ch_prop_ch_cctv_cam_02a"),
+    MISC.GET_HASH_KEY("xm_prop_x17_server_farm_cctv_01"),
+}
+
 
 ----冰淇凌盛宴
 ice_entity_name = {"钻石圣诞树","宝石圣诞树","五角星圣诞树","啤酒桶杯"}
@@ -30,13 +85,14 @@ station_name = {
 
 ----预设模型
 my_model_list = {
-    {"小狗戴恩", util.joaat("ig_furry")},
-    {"太空游骑兵", util.joaat("u_m_y_rsranger_01")},
-    {"圣诞怪兽", util.joaat("u_m_m_yulemonster")},
+    {"小狗戴恩", "1344679353"},
+    {"太空游骑兵", "1011059922"},
+    {"圣诞怪兽", "-751898707"},
     {"莱斯特", "2013139108"},
-    {"麦克", util.joaat("player_zero")},
+    {"麦克", "225514697"},
     {"富兰克林", "2602752943"},
     {"崔佛", "-1686040670"},
+    {"丧尸", "-1404353274"},
     {"埃万重甲", "2431602996"},
     {"太空人", "3887273010"},
     {"宇航员", "-407694286"},

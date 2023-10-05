@@ -209,22 +209,70 @@ function createOnMessageCallback(config, translateTextCB)
     end
 end
 
+menu.divider(chat_transl, "国内线路")
+local translateOn1 = false
+auto_toggle1 = menu.toggle(chat_transl, "全自动翻译", {},"自动识别语言并翻译", function(on)
+    translateOn1 = on
+    if on then
+        menu.set_value(auto_toggle, false)
+    end
+end)
+chat.on_message(function(sender, reserved, text, team_chat, networked, is_auto)
+    if translateOn1 then
+        if not botSend then
+            async_http.init("api.gumengya.com","/Api/Translate?format=json&text=" ..url_encode(text) .. "&from=auto&to=auto",function(body, header_fields, status_code)
+                local tab = StrToTable(body)
+                if status_code == 200 and tab.code == "200" then
+                    if tab.data.from ~= tab.data.to then--判断源语言是否=目标语言
+                        local senderName = players.get_name(sender)
+                        botSend = true
+                        LOG("[Sakura翻译]: " ..string.format('["%s"]', text).." ⇒ ".. string.format('["%s"]', tab.data.result))
+                        --[[ chat.send_message(senderName .. " : " .. tab.data.result, false, false, true)
+                        sfchat.ADD_MESSAGE(senderName, tab.data.result, "全部", false, transl_text_col) ]]
 
+                        local translatedMsgLocation = config.translatedMsgLocation
+                        if (translatedMsgLocation == 1) then--"团队聊天未联网"
+                            sfchat.ADD_MESSAGE(senderName, tab.data.result, "团队(未联网)", false, transl_text_col)
+                        end
+                        if (translatedMsgLocation == 2) then--"团队聊天已联网"
+                            botSend = true
+                            chat.send_message(senderName .. " : " .. tab.data.result, true, false, true)
+                            sfchat.ADD_MESSAGE(senderName, tab.data.result, "团队", false, transl_text_col)
+                        end
+                        if (translatedMsgLocation == 3) then--"全球聊天未联网",
+                            sfchat.ADD_MESSAGE(senderName, tab.data.result, "全部(未联网)", false, transl_text_col)
+                        end
+                        if (translatedMsgLocation == 4) then--"全球聊天已联网"
+                            botSend = true
+                            chat.send_message(senderName .. " : " .. tab.data.result, false, false, true)
+                            sfchat.ADD_MESSAGE(senderName, tab.data.result, "全部", false, transl_text_col)
+                        end
+                        if (translatedMsgLocation == 5) then--通知
+                            notification("~y~~bold~"..senderName .. " : " .. tab.data.result, math.random(0, 200))
+                        end
+                    end
+                end
+            end,function()
+                util.toast("翻译出错啦")
+            end)
+            async_http.dispatch()
+        end
+        botSend = false
+    end
+end)
 
+menu.divider(chat_transl, "谷歌线路")
 
-
-local auto_toggle = menu.toggle(chat_transl, "开启", {},"翻译器将监听传入的消息并进行翻译", function(on)
+auto_toggle = menu.toggle(chat_transl, "开启", {},"翻译器将监听传入的消息并进行翻译", function(on)
     config.translateOn = on
+    if on then
+        menu.set_value(auto_toggle1, false)
+    end
 end)
 
 menu.toggle(chat_transl, "翻译自己", {}, "翻译您自己发送的消息", function(on)
     config.translateSelf = on
 end,true)
-
-local TranslatedMsgLocationOptions = {"团队聊天未联网","团队聊天已联网","全球聊天未联网","全球聊天已联网","通知"}
-menu.list_select(chat_transl, "翻译位置", {},"选择翻译的位置", TranslatedMsgLocationOptions, 5, function(index, option, prevIndex, clickType)
-    config.translatedMsgLocation = index
-end)
 
 local blacklistMenu = menu.list(chat_transl, "翻译语言黑名单", {},"在列表中开启的语言的消息将被忽略")
     for i, langKey in ipairs(LangKeyList) do
@@ -239,6 +287,8 @@ menu.list_select(chat_transl, "目标语言", {}, "",LangNameList, 1, function(i
 end)
 
 menu.action(chat_transl, "发送翻译文本", {}, "会禁用自动翻译开关", function()
+    menu.set_value(auto_toggle, false)
+    menu.set_value(auto_toggle1, false)
     local label = util.register_label("输入文本")
 	local input = get_input_from_screen_keyboard(label, 254, "")
     if input == "" then return end
@@ -258,7 +308,6 @@ menu.action(chat_transl, "发送翻译文本", {}, "会禁用自动翻译开关"
                 translation = translation:gsub(" <code> 0 </code> ", "\n")
                 translation = translation:gsub("<code>0</code>", "\n")
                 translation = translation:gsub("\\(.)", "%1")
-                menu.set_value(auto_toggle, false)
                 chat.send_message(translation,false,true,true)
             end
         end,function()
@@ -267,7 +316,12 @@ menu.action(chat_transl, "发送翻译文本", {}, "会禁用自动翻译开关"
     async_http.dispatch()
 end)
 
-local common_settings = menu.list(chat_transl, "通用设置", {},"")
+menu.divider(chat_transl, "通用设置")
+    local common_settings = menu.list(chat_transl, "设置", {},"")
+    local TranslatedMsgLocationOptions = {"团队聊天未联网","团队聊天已联网","全球聊天未联网","全球聊天已联网","通知"}
+    menu.list_select(common_settings, "翻译位置", {},"选择翻译的位置", TranslatedMsgLocationOptions, 5, function(index, option, prevIndex, clickType)
+        config.translatedMsgLocation = index
+    end)
     local trans_col_name = {"纯白","白色","黑色","灰色","浅灰色","暗灰色","红色","浅红色","暗红色","蓝色","浅蓝色","暗蓝色","黄色","浅黄色","暗黄色","橙色","浅橙色","暗橙色","绿色","浅绿色","暗绿色",}
     menu.list_select(common_settings, '翻译文本颜色', {''}, '', trans_col_name, 2, function (c)
         transl_text_col = c - 1

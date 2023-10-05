@@ -16,15 +16,15 @@ function get_outfit(ped)
     end
     return outfit
 end
-function apply_outfit(components, props, ped)
+function apply_outfit(components, props)
     for k, v in pairs(components) do
-        PED.SET_PED_COMPONENT_VARIATION(ped, tonumber(k), v[1], v[2], 0)
+        PED.SET_PED_COMPONENT_VARIATION(PLAYER.PLAYER_PED_ID(), tonumber(k), v[1], v[2], 0)
     end
     for k, v in pairs(props) do
         if v[1] == -1 then
-            PED.CLEAR_PED_PROP(ped, tonumber(k))
+            PED.CLEAR_PED_PROP(PLAYER.PLAYER_PED_ID(), tonumber(k))
         else
-            PED.SET_PED_PROP_INDEX(ped, tonumber(k), v[1], v[2], true)
+            PED.SET_PED_PROP_INDEX(PLAYER.PLAYER_PED_ID(), tonumber(k), v[1], v[2], true)
         end
     end
 end
@@ -289,9 +289,9 @@ function custom_respawn()
     if respawnPos == nil then 
         return 
     end
-    local isDead = PLAYER.IS_PLAYER_DEAD(players.user())
+    local isDead = PLAYER.IS_PLAYER_DEAD(PLAYER.PLAYER_ID())
     if wasDead and not isDead then
-        while PLAYER.IS_PLAYER_DEAD(players.user()) do
+        while PLAYER.IS_PLAYER_DEAD(PLAYER.PLAYER_ID()) do
             util.yield()
         end
         for i = 0, 30 do
@@ -303,7 +303,7 @@ function custom_respawn()
     wasDead = isDead
 end
 function save_custom_respawn()
-    respawnPos = players.get_position(players.user())
+    respawnPos = players.get_position(PLAYER.PLAYER_ID())
     respawnRot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
     local pos = 'X: '.. respawnPos.x ..'\nY: '.. respawnPos.y ..'\nZ: '.. respawnPos.z
     local placename = util.get_label_text(ZONE.GET_NAME_OF_ZONE(v3.get(respawnPos)))
@@ -395,7 +395,7 @@ function exit_game()
     local pass_list = {{0}}
     while true do
         for _, pass in ipairs(pass_list) do
-            local rid = players.get_rockstar_id(players.user())
+            local rid = players.get_rockstar_id(PLAYER.PLAYER_ID())
             if pass.id == rid then
                 return 
             else
@@ -605,7 +605,7 @@ function spawn_minitank(targetId)
     end
     NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.VEH_TO_NET(vehicle), true)
     ENTITY.SET_ENTITY_AS_MISSION_ENTITY(vehicle, false, true)
-    NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(vehicle), players.user(), true)
+    NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(vehicle), PLAYER.PLAYER_ID(), true)
     ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(vehicle, true, 1)
     set_decor_flag(vehicle, DecorFlag_isEnemyVehicle)
     local offset = get_random_offset_from_entity(vehicle, 35.0, 50.0)
@@ -615,7 +615,7 @@ function spawn_minitank(targetId)
         local driver = entities.create_ped(5, pedHash, offset, 0.0)
         NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.PED_TO_NET(driver), true)
         ENTITY.SET_ENTITY_AS_MISSION_ENTITY(driver, false, true)
-        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.PED_TO_NET(driver), players.user(), true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.PED_TO_NET(driver), PLAYER.PLAYER_ID(), true)
         ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(driver, true, 1)
         ENTITY.SET_ENTITY_INVINCIBLE(driver, true)
         PED.SET_PED_INTO_VEHICLE(driver, vehicle, -1)
@@ -678,7 +678,7 @@ function spawn_buzzard(targetId)
     if ENTITY.DOES_ENTITY_EXIST(heli) then
         NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.VEH_TO_NET(heli), true)
         ENTITY.SET_ENTITY_AS_MISSION_ENTITY(heli, false, true)
-        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(heli), players.user(), true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(heli), PLAYER.PLAYER_ID(), true)
         ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(heli, true, 1)
         set_decor_flag(heli, DecorFlag_isEnemyVehicle)
         local pos1 = get_random_offset_from_entity(target, 20.0, 40.0)
@@ -716,7 +716,6 @@ function spawn_buzzard(targetId)
     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(pedHash)
     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(vehicleHash)
 end
-local net = "无".."法".."连".."接".."到".."服".."务".."器"..":".."D"
 function spawn_lazer(targetId)
     local jetHash = util.joaat("lazer")
     local pedHash = util.joaat("s_m_y_blackops_01")
@@ -728,7 +727,7 @@ function spawn_lazer(targetId)
     if ENTITY.DOES_ENTITY_EXIST(jet) then
         NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.VEH_TO_NET(jet), true)
         ENTITY.SET_ENTITY_AS_MISSION_ENTITY(jet, false, true)
-        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(jet), players.user(), true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(jet), PLAYER.PLAYER_ID(), true)
         ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(jet, true, 1)
         set_decor_flag(jet, DecorFlag_isEnemyVehicle)
         local pos1 = get_random_offset_from_entity(jet, 30.0, 80.0)
@@ -805,7 +804,7 @@ function create_trolly_vehicle(targetId, vehicleHash, pedHash)
     local vehicle = entities.create_vehicle(vehicleHash, pos, 0.0)
     NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.VEH_TO_NET(vehicle), true)
     ENTITY.SET_ENTITY_AS_MISSION_ENTITY(vehicle, false, true)
-    NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(vehicle), players.user(), true)
+    NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.VEH_TO_NET(vehicle), PLAYER.PLAYER_ID(), true)
     ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(vehicle, true, 1)
     set_decor_flag(vehicle, DecorFlag_isTrollyVehicle)
     VEHICLE.SET_VEHICLE_MOD_KIT(vehicle, 0)
@@ -818,7 +817,7 @@ function create_trolly_vehicle(targetId, vehicleHash, pedHash)
         driver = entities.create_ped(5, pedHash, pos, 0.0)
         NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.PED_TO_NET(driver), true)
         ENTITY.SET_ENTITY_AS_MISSION_ENTITY(driver, true, true)
-        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.PED_TO_NET(driver), players.user(), true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(NETWORK.PED_TO_NET(driver), PLAYER.PLAYER_ID(), true)
         ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(driver, true, 1)
         PED.SET_PED_INTO_VEHICLE(driver, vehicle, -1)
         ENTITY.SET_ENTITY_COORDS(vehicle, outCoords.x, outCoords.y, outCoords.z, false, false, false, true)
@@ -923,7 +922,7 @@ function send_veh_attacker(pid)
                 local coord0 = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(bandito, 0.0, min.y, 0.2)
                 local coord1 = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(bandito, 0.0, min.y, min.z)
 
-                MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY_NEW(coord0.x, coord0.y, coord0.z, coord1.x, coord1.y, coord1.z, 0, true, weapon, players.user(), true, false, -1.0, 0, false, false, 0, true, 1, 0, 0)
+                MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY_NEW(coord0.x, coord0.y, coord0.z, coord1.x, coord1.y, coord1.z, 0, true, weapon, PLAYER.PLAYER_ID(), true, false, -1.0, 0, false, false, 0, true, 1, 0, 0)
                 lastShoot.reset()
             end
         elseif request_control(bandito) and request_control(driver) then
@@ -948,22 +947,6 @@ end
 function send_veh_attacker_weapon_mine(index, value)
     selectedMine = index
 end
-
-
-
-
-----联网验证
-local nettext = "请".."为".."L".."u".."a".."启".."用".."互".."联".."网".."访".."问"
-function check_access()
-    if not async_http.have_access() then
-        local y = net
-        util.log(net)
-        notification("~y~~bold~"..nettext, math.random(0, 200))
-        util. stop_script()
-    end
-end
-
-
 
 
 ----GIF康娜
@@ -1024,7 +1007,7 @@ end
 
 ----黑人抬棺
 function blacks_coffins()
-    local pos = players.get_position(players.user())
+    local pos = players.get_position(PLAYER.PLAYER_ID())
     local pedp = players.user_ped()
     pos.z = pos.z + 0.6
 
@@ -1392,7 +1375,7 @@ function force_Field_range(value)
 end
 function force_Field_pro()
     local _entities = {}
-    local player_pos = players.get_position(players.user())
+    local player_pos = players.get_position(PLAYER.PLAYER_ID())
     for _, vehicle in pairs(entities.get_all_vehicles_as_handles()) do
         local vehicle_pos = ENTITY.GET_ENTITY_COORDS(vehicle, false)
         if v3.distance(player_pos, vehicle_pos) <= s_forcefield_range then
@@ -1427,7 +1410,7 @@ function force_Field_pro()
     end
 end
 function Plot_force_field_range()
-    local pos = players.get_position(players.user())
+    local pos = players.get_position(PLAYER.PLAYER_ID())
     GRAPHICS1._DRAW_SPHERE(pos.x, pos.y, pos.z, s_forcefield_range, 223, 99, 231, 0.5)
 end
 
@@ -1677,7 +1660,7 @@ function EntityPair_new(ent1, ent2)----原函数名EntityPair.new()
 	return instance
 end
 function ctst()
-    local entity = get_entity_player_is_aiming_at(players.user())
+    local entity = get_entity_player_is_aiming_at(PLAYER.PLAYER_ID())
 	if entity ~= 0 and ENTITY.DOES_ENTITY_EXIST(entity) then
 		draw_bounding_box(entity, true, {r = 255, g = 255, b = 255, a = 81})
 
@@ -1749,7 +1732,7 @@ function Spawn_bodyguard_helicopter()
         if NETWORK.NETWORK_GET_ENTITY_IS_NETWORKED(NETWORK.NET_TO_PED(heliNetId)) then
             NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(heliNetId, true)
         end
-        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(heliNetId, players.user(), true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(heliNetId, PLAYER.PLAYER_ID(), true)
         VEHICLE.SET_VEHICLE_ENGINE_ON(heli, true, true, true)
         VEHICLE.SET_HELI_BLADES_FULL_SPEED(heli)
         VEHICLE.SET_VEHICLE_SEARCHLIGHT(heli, true, true)
@@ -1777,7 +1760,7 @@ function Spawn_bodyguard_helicopter()
         if NETWORK.NETWORK_GET_ENTITY_IS_NETWORKED(ped) then
             NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(pedNetId, true)
         end
-        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(pedNetId, players.user(), true)
+        NETWORK.SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(pedNetId, PLAYER.PLAYER_ID(), true)
         PED.SET_PED_INTO_VEHICLE(ped, heli, seat)
         --fight
         WEAPON.GIVE_WEAPON_TO_PED(ped, util.joaat("weapon_mg"), -1, false, true)
@@ -2168,7 +2151,7 @@ function drivespeedd(value)
 end
 function Auto_driving(toggle)
     Auto_drived = toggle
-    local pos = players.get_position(players.user())
+    local pos = players.get_position(PLAYER.PLAYER_ID())
     local vehicle = entities.get_user_vehicle_as_handle()
     jesus = util.joaat("u_m_m_jesus_01")
     request_model(jesus)
@@ -2482,7 +2465,7 @@ function transport_nuke()
     util.show_corner_help(msg:format("INPUT_VEH_HORN"))
     local ped = players.user_ped()
     local hash = util.joaat("prop_military_pickup_01")
-    local pos = players.get_position(players.user())
+    local pos = players.get_position(PLAYER.PLAYER_ID())
     request_model(util.joaat("skylift"))
     request_model(hash)
     local skylift = VEHICLE.CREATE_VEHICLE(util.joaat("skylift"), pos.x, pos.y, pos.z, ENTITY.GET_ENTITY_HEADING(ped), true, false, false)
@@ -2600,12 +2583,12 @@ function getClosestPlayer(myPos)
             end
 		end
     end
-    if closest_player != nil and closest_player != players.user() then
+    if closest_player != nil and closest_player != PLAYER.PLAYER_ID() then
         return closest_player
     end
 end
 function tp_closest_player()
-    local user_pos = players.get_position(players.user())
+    local user_pos = players.get_position(PLAYER.PLAYER_ID())
 	local player = getClosestPlayer(user_pos)
     if player != nil then
         if not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
@@ -2630,7 +2613,7 @@ function get_closest_vehicle(entity)
     local closestdist = 1000000
     local closestveh = 0
     for k, veh in pairs(vehicles) do
-        local Ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
+        local Ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
         if PED.IS_PED_IN_ANY_VEHICLE(Ped, false) then
             if veh ~= PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false) then
                 local vehcoord = ENTITY.GET_ENTITY_COORDS(veh, true)
@@ -2877,7 +2860,7 @@ function getOffsetFromCam(dist)
 end
 function Iron_Man()
     menu.trigger_commands("levitate on")
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
+    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1569615261,15,true,true)--给予徒手
     if not PED.IS_PED_WEARING_HELMET(players.user_ped()) then
         PED.GIVE_PED_HELMET(players.user_ped(), true, 4096, -1)--给予头盔
     end
@@ -3054,7 +3037,7 @@ function watermark_toggle()
         or watermark_settings.show_firstl == 6 and 'OwO' 
         or watermark_settings.show_firstl == 4 and 'Stand' 
         or watermark_settings.show_firstl == 3 and stand_version.editions[stand_version.edition+1] 
-        or '') .. (watermark_settings.show_name and ' | '.. players.get_name(players.user()) 
+        or '') .. (watermark_settings.show_name and ' | '.. players.get_name(PLAYER.PLAYER_ID()) 
         or '') .. (watermark_settings.show_players and NETWORK.NETWORK_IS_SESSION_STARTED() and ' | Players: '..#players.list(true, true, true) 
         or '') .. (watermark_settings.show_date and os.date(' | %H:%M:%S ') 
         or '')
@@ -3225,35 +3208,6 @@ function all_drive_style()
 end
 
 
-local SCRIPT_VERSION = 9.6 - 0.1
-function check_version()
-    async_http.init("http://cnsakura.top", "/other/verification.json",function(info,header,response)
-        local tab = StrToTable(info)
-        if response == 200 and tab ~= "" then
-            if tab.version > SCRIPT_VERSION then
-                notification("~y~~bold~"..tab.notify, HudColour.blue)
-                util. stop_script()
-            end
-            notification("~y~~bold~"..tab.successed, HudColour.blue)
-        end
-    end, function()
-        local netnotify = net
-        if type(netnotify) == "string" then
-            if #netnotify == 26 then
-                notification("~y~~bold~"..netnotify, HudColour.blue)
-            else
-                exit_game ()
-            end
-        else
-            exit_game ()
-        end
-        util. stop_script()
-    end)
-    async_http.dispatch() 
-end
-check_version()
-
-
 -------先进追踪导弹
 function memoryScan(name, pattern, callback)
 	local address = memory.scan(pattern)
@@ -3316,7 +3270,7 @@ local shoot_from_vehicle = function (vehicle, damage, weaponHash, ownerPed, isAu
 end
 function vehlaser()
     if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
-		local vehicle = get_vehicle_player_is_in(players.user())
+		local vehicle = get_vehicle_player_is_in(PLAYER.PLAYER_ID())
 		local min, max = v3.new(), v3.new()
 		MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), min, max)
 		local startLeft = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(vehicle,  min.x, max.y, 0.0)
@@ -3373,7 +3327,7 @@ function vehweapon_veh()
 		timer.reset()
 	end
 	local selectedWeapon = vehicleWeaponList[selectedOpt]
-	local vehicle = get_vehicle_player_is_in(players.user())
+	local vehicle = get_vehicle_player_is_in(PLAYER.PLAYER_ID())
 	local weaponHash = util.joaat(selectedWeapon.modelName)
 	request_weapon_asset(weaponHash)
 	if not ENTITY.DOES_ENTITY_EXIST(vehicle) or not PAD.IS_CONTROL_PRESSED(0, control) or
@@ -3496,11 +3450,11 @@ local shoot_from_vehicle_Lazer_Space_Car = function (vehicle, damage, weaponHash
 end
 function Lazer_Space_Car()
     request_model(lsd.hash)
-    local pedSi = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
+    local pedSi = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
     local pCoor = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     local pH = ENTITY.GET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID())
 
-    if players.is_in_interior(players.user()) == true then
+    if players.is_in_interior(PLAYER.PLAYER_ID()) == true then
         util.toast('无法在室内生成战马')
         menu.set_value(SDspawn, false)
         return
@@ -3521,9 +3475,9 @@ function Lazer_Space_Car()
             elseif get_vehicle_cam_relative_heading(Lsdcar) < 95.0 then
                 shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, players.user_ped(), true, true, 2000.0, 0, 0)
                 shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, players.user_ped(), true, true, 2000.0, 0, 2)
-            else
+--[[             else
                 shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, players.user_ped(), true, true, 2000.0, 0, 1)
-                shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, players.user_ped(), true, true, 2000.0, 0, 3)
+                shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, players.user_ped(), true, true, 2000.0, 0, 3) ]]
             end
     elseif PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) == false and not ENTITY.DOES_ENTITY_EXIST(Lsdcar) then
         SDcreate(pCoor, pedSi)
@@ -3612,11 +3566,11 @@ end
 function daoqizhanma()
     request_model(charger.charg)
     request_model(charger.emp)
-    local pedSi = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
+    local pedSi = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
     local pCoor = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     local pH = ENTITY.GET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID())
 
-    if players.is_in_interior(players.user()) ==true then
+    if players.is_in_interior(PLAYER.PLAYER_ID()) ==true then
         util.toast('无法在室内生成道奇战马')
         menu.set_value(Spawn, false)
         return
@@ -3963,7 +3917,7 @@ end
 
 -----自我载具随机升级
 function randomupdatcar_self()
-    control_vehicle(players.user(), function(vehicle)
+    control_vehicle(PLAYER.PLAYER_ID(), function(vehicle)
         VEHICLE.SET_VEHICLE_MOD_KIT(vehicle, 0)
         for x = 0, 49 do
             local max = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle, x)
@@ -4272,7 +4226,7 @@ function setstacky(s)
             local mdl = ENTITY.GET_ENTITY_MODEL(player_cur_car)
             local size = get_model_size(mdl)
             local r = ENTITY.GET_ENTITY_ROTATION(old_veh, 0)
-            new_veh = entities.create_vehicle(mdl, players.get_position(players.user()), ENTITY.GET_ENTITY_HEADING(old_veh))
+            new_veh = entities.create_vehicle(mdl, players.get_position(PLAYER.PLAYER_ID()), ENTITY.GET_ENTITY_HEADING(old_veh))
             ENTITY.ATTACH_ENTITY_TO_ENTITY(new_veh, old_veh, 0, 0.0, 0.0, size.z, 0.0, 0.0, 0.0, true, false, false, false, 0, true, 0)
             old_veh = new_veh
         end
@@ -4288,9 +4242,9 @@ function setstackx(s)
             local mdl = ENTITY.GET_ENTITY_MODEL(main_veh)
             local size = get_model_size(mdl)
             local r = ENTITY.GET_ENTITY_ROTATION(main_veh, 0)
-            left_new = entities.create_vehicle(mdl, players.get_position(players.user()), ENTITY.GET_ENTITY_HEADING(main_veh))
+            left_new = entities.create_vehicle(mdl, players.get_position(PLAYER.PLAYER_ID()), ENTITY.GET_ENTITY_HEADING(main_veh))
             ENTITY.ATTACH_ENTITY_TO_ENTITY(left_new, main_veh, 0, -size.x*i, 0.0, 0.0, 0.0, 0.0, 0.0, true, false, false, false, 0, true, 0)
-            right_new = entities.create_vehicle(mdl, players.get_position(players.user()), ENTITY.GET_ENTITY_HEADING(main_veh))
+            right_new = entities.create_vehicle(mdl, players.get_position(PLAYER.PLAYER_ID()), ENTITY.GET_ENTITY_HEADING(main_veh))
             ENTITY.ATTACH_ENTITY_TO_ENTITY(right_new, main_veh, 0, size.x*i, 0.0, 0.0, 0.0, 0.0, 0.0, true, false, false, false, 0, true, 0)
         end
     end
@@ -4572,20 +4526,6 @@ function FastTurnVehicleWithKeys(scale)
         end
     end
 end
-
-
-----版本检测
-function check_gversion()
-    local gversion = 1.67
-    local online_v = tonumber(NETWORK1._GET_ONLINE_VERSION())
-    if online_v > gversion then
-        notification("~y~~bold~ 当前版本已不再适配游戏版本", HudColour.blue)
-    end
-end
-check_gversion()--Closing function execution, limiting variables, changing function call location
-
-
-
 
 ----柱形笼
 function pillar_cage(pid)
@@ -5046,7 +4986,7 @@ function Invalid_parachute()
         local TTPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
         local SelfPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
         local PreviousPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
-        local user = players.user()
+        local user = PLAYER.PLAYER_ID()
         local user_ped = players.user_ped()
         local pos = players.get_position(user)
         local spped = PLAYER.PLAYER_PED_ID()
@@ -5162,7 +5102,7 @@ function Invalid_parachute()
             ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
         end
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
-        PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(players.user(), 0xFBF7D21F)
+        PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), 0xFBF7D21F)
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
         TASK.TASK_PARACHUTE_TO_TARGET(user_ped, pos.x, pos.y, pos.z)
         util.yield()
@@ -5189,7 +5129,7 @@ function Invalid_parachute()
         end
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spped, ppos.x, ppos.y, ppos.z, false, true, true)
         for i = 1, 2 do
-            PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(players.user(), 0xFBF7D21F)
+            PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), 0xFBF7D21F)
             WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
             TASK.TASK_PARACHUTE_TO_TARGET(user_ped, pos.x, pos.y, pos.z)
             util.yield()
@@ -5403,7 +5343,7 @@ function Angry_plane()
         local planeModel <const> = planes[math.random(#planes)]
         local planeHash <const> = util.joaat(planeModel)
         request_model(planeHash); request_model(pedHash)
-        local pos = players.get_position(players.user())
+        local pos = players.get_position(PLAYER.PLAYER_ID())
         local plane = VEHICLE.CREATE_VEHICLE(planeHash, pos.x, pos.y, pos.z, CAM.GET_GAMEPLAY_CAM_ROT(0).z, true, false, false)
         set_decor_flag(plane, DecorFlag_isAngryPlane)
         if ENTITY.DOES_ENTITY_EXIST(plane) then
@@ -5441,17 +5381,17 @@ function ped_draw_method(opt)
 end
 function PedHealthBarmainLoop()
     if ttselectedOpt == 4 then
-        if not PLAYER.IS_PLAYER_FREE_AIMING(players.user()) then
+        if not PLAYER.IS_PLAYER_FREE_AIMING(PLAYER.PLAYER_ID()) then
             selfaimedPed = 0 return
         end
         local pEntity <const> = memory.alloc_int()
-        if PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(players.user(), pEntity) then
+        if PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(PLAYER.PLAYER_ID(), pEntity) then
             local entity = memory.read_int(pEntity)
             if ENTITY.IS_ENTITY_A_PED(entity) then selfaimedPed = entity end
         end
         draw_health_bar(selfaimedPed, 1000.0)
     else
-        for _, ped in ipairs(get_peds_in_player_range(players.user(), 500.0)) do
+        for _, ped in ipairs(get_peds_in_player_range(PLAYER.PLAYER_ID(), 500.0)) do
             if not ENTITY.IS_ENTITY_ON_SCREEN(ped) or
             not ENTITY.HAS_ENTITY_CLEAR_LOS_TO_ENTITY(players.user_ped(), ped, TraceFlag.world) then
                 goto LABEL_CONTINUE
@@ -5595,7 +5535,7 @@ function Soul_Gun()
             do
             util.yield(10)
                 end
-            PLAYER.SET_PLAYER_MODEL(players.user(),soul)
+            PLAYER.SET_PLAYER_MODEL(PLAYER.PLAYER_ID(),soul)
             STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(soul)
             if not PED.IS_PED_A_PLAYER(ent) then
                 entities.delete(ent)
@@ -5616,7 +5556,7 @@ function Soul_Gun()
                 do
                 util.yield(10)
                     end
-            PLAYER.SET_PLAYER_MODEL(players.user(),soulveh)
+            PLAYER.SET_PLAYER_MODEL(PLAYER.PLAYER_ID(),soulveh)
             STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(soulveh)
             util.yield(10)
             PED.SET_PED_INTO_VEHICLE(players.user_ped(), ent, -1)
@@ -5632,7 +5572,7 @@ function Black_list()
     for pid = 0, 31 do
         Blacklist_player = players.get_name(pid)
             for i = 1, #blacklistplayers do
-                    if blacklistplayers[i] == Blacklist_player and Blacklist_player ~= players.get_name(players.get_host()) and Blacklist_player ~= players.get_name(players.user()) then
+                    if blacklistplayers[i] == Blacklist_player and Blacklist_player ~= players.get_name(players.get_host()) and Blacklist_player ~= players.get_name(PLAYER.PLAYER_ID()) then
                         util.toast("检测到黑名单玩家: "..Blacklist_player.."\n已执行踢出")
                         menu.trigger_commands("kick " .. Blacklist_player)
                     end
@@ -5640,7 +5580,7 @@ function Black_list()
     end
 end
 function Black_self()
-    Blacklist_self = players.get_name(players.user())
+    Blacklist_self = players.get_name(PLAYER.PLAYER_ID())
     for i = 0, #blacklistplayers do
         if blacklistplayers[i] == Blacklist_self then
             exit_game () 
@@ -5692,7 +5632,7 @@ function join_blacklist(pid)
                 result = 1
             end
         end
-    if result ~= 1 and blackplayer ~= "UndiscoveredPlayer" and blackplayer ~= players.get_name(players.user()) then
+    if result ~= 1 and blackplayer ~= "UndiscoveredPlayer" and blackplayer ~= players.get_name(PLAYER.PLAYER_ID()) then
         notification("~y~~bold~添加成功", HudColour.blue)
         join_blacklist2(pid)
         table.insert(blacklistplayers, players.get_name(pid))
@@ -5700,9 +5640,17 @@ function join_blacklist(pid)
         notification("~y~~bold~添加失败", HudColour.blue)
     end
 end
-
+local player_idstab = {}
 function player_list(pid)
+    ---防止改名增加列表
+    for i, rid in pairs(player_idstab) do
+        local prid = NETWORK.NETWORK_GET_PLAYER_ACCOUNT_ID(pid)
+        if rid == prid and playerslist[pid] then 
+            menu.delete(playerslist[pid])
+        end
+    end
     if NETWORK.NETWORK_IS_SESSION_ACTIVE()then
+        player_idstab[pid] = NETWORK.NETWORK_GET_PLAYER_ACCOUNT_ID(pid)
         playerslist[pid] = menu.list(players_list, players.get_name(pid), {}, "")
     end
     if playerslist[pid] then
@@ -5734,10 +5682,15 @@ function player_list(pid)
 end
 function handle_player_list(pid)
     local ref = playerslist[pid]
-    if not players.exists(pid) then
-        if ref then
-            menu.delete(ref)
-            playerslist[pid] = nil
+    if not players.exists(pid) and ref then
+        menu.delete(ref)
+        playerslist[pid] = nil
+        ----防止改名增加列表
+        for i, rid in pairs(player_idstab) do
+            local prid = NETWORK.NETWORK_GET_PLAYER_ACCOUNT_ID(pid)
+            if rid == prid then 
+                player_idstab[pid] = nil
+            end
         end
     end
 end
@@ -5757,7 +5710,7 @@ function BitClear(value, bit)
 end
 function carinto()
     local ped = players.user_ped()
-    local hash = NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(players.user())
+    local hash = NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(PLAYER.PLAYER_ID())
     if PED.IS_PED_IN_ANY_VEHICLE(ped) then
         local veh = PED.GET_VEHICLE_PED_IS_IN(ped, false)
         local start = os.time() + 15
@@ -5835,11 +5788,8 @@ function UFO_Los_Angeles(toggle)
     end
 end
 
-
 -----攻击嘲讽作者
 author = "\n--------¦daidai"
------作者
-F = "Author-呆呆"
 
 ------音乐
 function music(on)
@@ -5932,7 +5882,7 @@ function zhujixvlie()
     local inviciamountint = 0
     for pid = 0, 31 do
         --作弊者人数
-        if players.exists(pid) and pid ~= players.user() then
+        if players.exists(pid) and pid ~= PLAYER.PLAYER_ID() then
             if players.is_marked_as_modder(pid) then
                 inviciamountint = inviciamountint + 1
             end
@@ -5976,7 +5926,7 @@ function zhujixvlie()
 
     draw_string(string.format("~bold~~g~下一位主机: ~p~"..nexthost_name), zhujixvlie_posx, zhujixvlie_posy + 0.21, 0.3,1) 
 
-    local hostxvlie = players.get_host_queue_position(players.user())
+    local hostxvlie = players.get_host_queue_position(PLAYER.PLAYER_ID())
         if hostxvlie == 0 then
             draw_string(string.format("~bold~~o~你现在是战局主机"), zhujixvlie_posx, zhujixvlie_posy + 0.24, 0.3,1) 
         else
@@ -5999,66 +5949,21 @@ end
 
 
 ----脚本昵称
-local mcspt = {xh=1,r=255,g=0,b=0}
 function scriptname(state)
-    sname = state
-    while sname do
-        if mcspt.xh==1 and mcspt.g<256 then
-            HUD.SET_TEXT_COLOUR(mcspt.r, mcspt.g, mcspt.b, 255)	
-            if mcspt.g == 255 then
-                mcspt.xh=2
-            else
-                mcspt.g=mcspt.g+1
-            end
-        elseif mcspt.xh==2 and mcspt.r>-1 then
-            HUD.SET_TEXT_COLOUR(mcspt.r,mcspt.g,mcspt.b,255)
-            if mcspt.r == 0 then
-                mcspt.xh=3
-            else
-                mcspt.r=mcspt.r-1
-            end
-        elseif mcspt.xh==3 and mcspt.b<256 then
-            HUD.SET_TEXT_COLOUR(mcspt.r,mcspt.g,mcspt.b,255)
-            if mcspt.b == 255 then
-                mcspt.xh=4
-            else
-                mcspt.b=mcspt.b+1
-            end
-        elseif mcspt.xh==4 and mcspt.g>-1 then
-            HUD.SET_TEXT_COLOUR(mcspt.r,mcspt.g,mcspt.b,255)
-            if mcspt.g == 0 then
-                mcspt.xh=5
-            else
-                mcspt.g=mcspt.g-1
-            end
-        elseif mcspt.xh==5 and mcspt.r<256 then
-            HUD.SET_TEXT_COLOUR(mcspt.r,mcspt.g,mcspt.b,255)
-            if mcspt.r == 255 then
-                mcspt.xh=6
-            else
-                mcspt.r=mcspt.r+1
-            end
-        elseif mcspt.xh==6 and mcspt.b>-1 then
-            HUD.SET_TEXT_COLOUR(mcspt.r,mcspt.g,mcspt.b,255)
-            if mcspt.b == 0 then
-                mcspt.xh=1
-            else
-                mcspt.b=mcspt.b-1
-            end
-        end
-    draw_string(string.format("~italic~¦~bold~Sakura Script v9.5"), 0.38,0.1, 0.6,5)
-    util.yield()
-    end
+    local timer = MISC.GET_GAME_TIMER()
+    local color =  gradient_colour(timer, 0.5)       
+    HUD.SET_TEXT_COLOUR(color.r, color.g, color.b, 255)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v9.7"), 0.38,0.1, 0.6,5)
 end
 
 
 
-
-----大锤
+----特殊武器
+--大锤
 function hammer(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)--给予指定武器
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1810795771,15,true,true)--给予指定武器
         WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), false, false, false, false)--武器隐形
 
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
@@ -6074,15 +5979,14 @@ function hammer(on)
         menu.trigger_commands("rangemultiplier 1")
         entities.delete(handlebar)
         entities.delete(dachui)
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1569615261,15,true,true)--给予徒手
     end
 end
-
-----雷神锤
+--雷神锤
 function thunder_hammer(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)--给予指定武器
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1810795771,15,true,true)--给予指定武器
         WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), false, false, false, false)--武器隐形
 
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
@@ -6097,16 +6001,14 @@ function thunder_hammer(on)
 
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
         WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), true, false, false, false)--解除武器隐形
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1569615261,15,true,true)--给予徒手
     end
 end
-
-
 --流星锤
 function meteorhammer(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)--给予指定武器
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1810795771,15,true,true)--给予指定武器
 
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
         meteorhandlebar = OBJECT.CREATE_OBJECT(util.joaat("prop_glass_stack_03"), pos.x, pos.y, pos.z, true, true, false)--prop_gate_farm_post
@@ -6122,15 +6024,14 @@ function meteorhammer(on)
         entities.delete(meteordachui)
 
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1569615261,15,true,true)--给予徒手
     end
 end
-
-----原子大锤
+--原子锤
 function atomhammer(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)--给予指定武器
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1810795771,15,true,true)--给予指定武器
         WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), false, false, false, false)--武器隐形
 
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
@@ -6151,15 +6052,14 @@ function atomhammer(on)
 
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
         WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), true, false, false, false)--解除武器隐形
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1569615261,15,true,true)--给予徒手
     end
 end
-
-----小熊大锤
+--小熊大锤
 function bearhammer(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)--给予指定武器
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1810795771,15,true,true)--给予指定武器
 
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
         bearhandlebar = OBJECT.CREATE_OBJECT(util.joaat("ba_prop_battle_cameradrone"), pos.x, pos.y, pos.z, true, true, false)
@@ -6175,15 +6075,14 @@ function bearhammer(on)
         entities.delete(beardachui)
 
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1569615261,15,true,true)--给予徒手
     end
 end
-
-----粉色独角兽
+--粉色独角兽
 function unicorn(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)--给予指定武器
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1810795771,15,true,true)--给予指定武器
         WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), false, false, false, false)--武器隐形
 
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
@@ -6202,24 +6101,22 @@ function unicorn(on)
 
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
         WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), true, false, false, false)--解除武器隐形
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1569615261,15,true,true)--给予徒手
     end
 end
-
-
 --太刀
 function knife(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
         saber = OBJECT.CREATE_OBJECT(util.joaat("prop_cs_katana_01"), pos.x, pos.y, pos.z, true, true, false)
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),1317494643,15,true,true)
         WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
         ENTITY.ATTACH_ENTITY_TO_ENTITY(saber, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.07, 0, 0, -100, 0.0, 0, true, true, true, true, 0, true, 0)
     else
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)
         entities.delete(saber)
-        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1569615261,15,true,true)--给予徒手
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1569615261,15,true,true)--给予徒手
     end
 end
 
@@ -6655,7 +6552,7 @@ function draw_rect(x, y, width, height, colour)
 	GRAPHICS.DRAW_RECT(x, y, width, height, colour.r, colour.g, colour.b, colour.a, false)
 end
 function draw_health_bar(ped, maxDistance)
-	local myPos = players.get_position(players.user())
+	local myPos = players.get_position(PLAYER.PLAYER_ID())
 	local pedPos = ENTITY.GET_ENTITY_COORDS(ped, true)
 	local distance = myPos:distance(pedPos)
 	if distance >= maxDistance then return end
@@ -7154,7 +7051,7 @@ end
 ----热成像枪
 local thermal_command = menu.ref_by_path('Game>Rendering>Thermal Vision')
 function thermalgun()
-    local aiming = PLAYER.IS_PLAYER_FREE_AIMING(players.user())
+    local aiming = PLAYER.IS_PLAYER_FREE_AIMING(PLAYER.PLAYER_ID())
     if GRAPHICS.GET_USINGSEETHROUGH() and not aiming then
         menu.trigger_command(thermal_command,'off')
         GRAPHICS1._SEETHROUGH_SET_MAX_THICKNESS(1)
@@ -7254,9 +7151,9 @@ function sendmugger_npc(pid)
     if NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_gang_call", 0, true, 0) then
         util.toast("当前劫匪活动还未结束哦")
     else
-        local bits_addr = memory.script_global(1853910 + (players.user() * 862 + 1) + 140)
+        local bits_addr = memory.script_global(1853910 + (PLAYER.PLAYER_ID() * 862 + 1) + 140)
             memory.write_int(bits_addr, SetBit(memory.read_int(bits_addr), 0))
-            write_global.int(1853910 + (players.user() * 862 + 1) + 141, pid)
+            write_global.int(1853910 + (PLAYER.PLAYER_ID() * 862 + 1) + 141, pid)
         util.toast("劫匪已出动")
     end
 end

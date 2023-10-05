@@ -42,7 +42,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '9.26'
+GT_version = '10.1'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -50,7 +50,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("重新添加>自我选项>自我娱乐>霹雳舞\n新增>自我选项>自我娱乐>起飞\n新增>自我选项>自我娱乐>小叮当\n新增>小叮当>挂起小叮当\n新增>小叮当>清除小叮当\n新增>自我选项>随机海滩服装\n新增>自我选项>让自己赤脚\n新增>自我选项>罪人\n新增>武器选项>瞎打枪\n新增>特效选项>闪电侠\n新增>特效选项>星光尾拖\n新增>特效选项>尾拖蓝\n新增>特效选项>尾拖绿\n新增>特效选项>尾拖黄\n新增>特效选项>尾拖白\n新增>恶搞选项>天基炮玩家\n新增>战局选项>战局载具恶搞>冻结车辆与实体\n新增>战局选项>战局载具恶搞>车辆漏油\n新增>娱乐选项>黑洞控制\n新增>娱乐选项>骑在附近NPC头上\n新增>娱乐选项>XX附近NPC\n新增>其他选项>脚本运行时长\n新增>Lua脚本/主菜单/其他选项>重新启动脚本(很多人催的东西)\n其他的一些改进与修复\nVersion: "..GT_version)
+    notification("修复了在106.8无法启动脚本\n新增>自我选项>自我娱乐>双枪\n新增>自我选项>自我娱乐>刀客\n新增>自我选项>特效选项>电疗\n新增>自我选项>增强选项>国家分类显示\n新增>自我选项>增强选项>玩家头部全局显示\n新增>自我选项>增强选项>观看镜头/高度/偏移\n新增>自我选项>增强选项>服装与风格\n存在以下新增选项:\n#没有血迹\n#随机服装\n#循环随机服装\n#随机海滩服装\n#让自己赤脚\n#走路风格\n更新>玩家选项>定位透视信息>载具/NPC\n更新>自我选项>自我娱乐>起飞\n其他的一些改进与修复\nVersion: "..GT_version)
 end
 --
 
@@ -62,8 +62,7 @@ mename = PLAYER.GET_PLAYER_NAME(players.user())
 grouplink = "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566"
 Name_info = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
 util.show_corner_help("~b~~h~GRANDTOURINGVIP\n~q~~h~欢迎 "..Name_info)
-util.toast("\n版本 " .. GT_version .. " 欢迎 ".. Name_info.."\n加入群聊可获得最新版本\n"..checkme())
---
+--[[
 util.create_thread(function ()
     local fr = soup.FileReader(filesystem.scripts_dir() .. 'GTLuaScript\\gt\\GT.wav')
     local wav = soup.audWav(fr)
@@ -73,8 +72,8 @@ util.create_thread(function ()
     mix.stop_playback_when_done = true
     mix:setOutput(pb)
     mix:playSound(wav)
-    while pb:isPlaying() do util.yield() end
-end)
+    while pb:isPlaying() do wait(1000) end
+end)]]
 --
 function toFloat(num)
 return (num / 10) * 10
@@ -9837,6 +9836,87 @@ function random_golf_outfit(freemode_ped)
         PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 99, get_random_drawable_variation(freemode_ped, 6, 99), 0)
     end
 end
+--
+function enableFreecam()
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(players.user()))
+    freecam_player_cam = CAM.CREATE_CAM_WITH_PARAMS("DEFAULT_SCRIPTED_CAMERA", pos.x, pos.y, pos.z, CAM.GET_GAMEPLAY_CAM_ROT().y-cam_rot_y, CAM.GET_GAMEPLAY_CAM_ROT().y, CAM.GET_GAMEPLAY_CAM_ROT().z, cam_rot_z, true, true)
+    CAM.SET_CAM_ACTIVE(freecam_player_cam, true)
+    CAM.RENDER_SCRIPT_CAMS(true, true, 1000, true, true, 0)
+    while true do
+        pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(players.user()))
+        CAM.SET_CAM_COORD(freecam_player_cam, pos.x, pos.y, pos.z+10)
+        wait(0)
+    end
+end
+
+function disableFreecam()
+    if freecam_player_cam ~= nil then
+        CAM.SET_CAM_ACTIVE(freecam_player_cam, false)
+        CAM.DESTROY_CAM(freecam_player_cam, true)
+        CAM.RENDER_SCRIPT_CAMS(false, true, 1000, true, true, 0)
+        freecam_player_cam = nil
+    end
+end
+--
+project_3d_coord = function (coord)
+    local x_ptr, y_ptr = memory.alloc_int(), memory.alloc_int()
+    local status = GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(coord.x, coord.y, coord.z, x_ptr, y_ptr)
+    local x, y = memory.read_float(x_ptr), memory.read_float(y_ptr)
+    return status, v2(x, y)
+end
+
+Round = function(num, dp)
+    local mult = 10^(dp or 0)
+    return ((num * mult + 0.5) // 1) / mult 
+end
+--
+dicdd={
+    "ANIM_GROUP_MOVE_BALLISTIC",
+    "ANIM_GROUP_MOVE_LEMAR_ALLEY",
+    "clipset@move@trash_fast_turn",
+    "FEMALE_FAST_RUNNER",
+    "missfbi4prepp1_garbageman",
+    "move_characters@franklin@fire",
+    "move_characters@Jimmy@slow@",
+    "move_characters@michael@fire",
+    "move_f@flee@a",
+    "move_f@scared",
+    "move_f@sexy@a",
+    "move_heist_lester",
+    "move_injured_generic",
+    "move_lester_CaneUp",
+    "move_m@bag",
+    "MOVE_M@BAIL_BOND_NOT_TAZERED",
+    "MOVE_M@BAIL_BOND_TAZERED",
+    "move_m@brave",
+    "move_m@casual@d",
+    "move_m@drunk@moderatedrunk",
+    "MOVE_M@DRUNK@MODERATEDRUNK",
+    "MOVE_M@DRUNK@MODERATEDRUNK_HEAD_UP",
+    "MOVE_M@DRUNK@SLIGHTLYDRUNK",
+    "MOVE_M@DRUNK@VERYDRUNK",
+    "move_m@fire",
+    "move_m@gangster@var_e",
+    "move_m@gangster@var_f",
+    "move_m@gangster@var_i",
+    "move_m@JOG@",
+    "MOVE_M@PRISON_GAURD",
+    "MOVE_P_M_ONE",
+    "MOVE_P_M_ONE_BRIEFCASE",
+    "move_p_m_zero_janitor",
+    "move_p_m_zero_slow",
+    "move_ped_bucket",
+    "move_ped_crouched",
+    "move_ped_mop",
+    "MOVE_M@FEMME@",
+    "MOVE_F@FEMME@",
+    "MOVE_M@GANGSTER@NG",
+    "MOVE_F@GANGSTER@NG",
+    "MOVE_M@POSH@",
+    "MOVE_F@POSH@",
+    "MOVE_M@TOUGH_GUY@",
+    "MOVE_F@TOUGH_GUY@",
+}
 ------------------------------------
 -------------玩家崩溃---------------
 ------------------------------------
