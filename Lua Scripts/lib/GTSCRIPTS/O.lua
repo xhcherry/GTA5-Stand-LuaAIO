@@ -1331,17 +1331,7 @@ function is_phone_open()
 end
 
 
----@param name string
----@param pattern string
----@param callback fun(address: integer)
-function memory_scan(name, pattern, callback)
-	local address = memory.scan(pattern)
 
-	if address == NULL then error("Failed to find " .. name) end
-
-	callback(address)
-	--util.log("Found %s", name)
-end
 
 --------------------------
 -- TABLE
@@ -1553,7 +1543,7 @@ local orgLog = util.log
 ---@param ... any
 util.log = function (format, ...)
 	local strg = type(format) ~= "string" and tostring(format) or format:format(...)
-	orgLog("[GTVIP] " .. strg)
+	orgLog("[GRANDTOURINGVIP] " .. strg)
 end
 
 function draw_debug_text(...)

@@ -1,15 +1,16 @@
 devid = {
-    {playerrid = "Robert.Dougl61"},
+    {playerrid = "Samantha.V"},
     {playerrid = "RhymeBear"},
     {playerrid = "BabyDone"},
     {playerrid = "Twelve___12"},
     {playerrid = "SmallGodGirlo3o"},
     {playerrid = "bavt4afe"},
     {playerrid = "Brook-Hill"},
+    {playerrid = "Samantha.V"}
 }
 spid = {
     {playerid = "xybl0206"},
-    {playerid = "RhymeBear"},
+    --{playerid = "RhymeBear"},
     {playerid = "kuznetsov-1987"},
     {playerid = "Cheng1073"},
     {playerid = "GZYSGDSZ"},
@@ -382,4 +383,11 @@ spid = {
     {playerid = "SocialClub-vip"},
     {playerid = "YimMenu_vip"},
     {playerid = "2Take1Menu-VIP"},
+    {playerid = "CityResidents"},
+    {playerid = "wjh070817"},
+    {playerid = "HoarahLouxElden"},
+    {playerid = "18iouo"},
+    {playerid = "BIGOLD_QINSHOU"},
+    {playerid = "hekuan798"},
+    {playerid = "Alone_Nami"},
 }

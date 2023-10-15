@@ -1,6 +1,6 @@
 --[[   To everyone who uses Heist Control.lua
 
-    Developed and maintenanced by IceDoomfist#0001 on Discord
+    Developed and maintenanced by @icedoomfist on Discord
     This script is only compatible with Stand Lua API: https://stand.gg/
 
     Stand Heist Control contains some global, local variables and stats from Heist Control V2 & Master Unlocker Lua Scripts for 2Take1 and UnknownCheats
@@ -38,9 +38,8 @@
 
     --- Important
 
-        HC_VERSION = "V 3.3.7"
+        HC_VERSION = "V 3.3.8"
         CODED_GTAO_VERSION = 1.67
-        SUPPORTED_STAND_VERSION = "101"  --  Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
 
     ---
 
@@ -59,7 +58,6 @@
             Setting = FolderDirs.Setting .. "Setting.txt",
             Log = FolderDirs.Setting .. "Log.txt",
         }
-
         LangDirs = {
             Custom = FolderDirs.Lang .. "Custom.txt",
             Chinese = FolderDirs.Lang .. "Chinese.txt",
@@ -548,7 +546,7 @@
         function GET_CURSOR_POSITION()
             local Text = menu.get_active_list_cursor_text(true, true) -- '2/12' format
             local i = string.find(Text, "/")
-            return tonumber(string.sub(Text, 0, i - 1)) -- return '2'
+            return tonumber(string.sub(Text, 0, i - 1)) -- Returns '2'
         end
 
         function IS_HELP_MSG_DISPLAYED(label) -- Credit goes to jerry123#4508
@@ -707,16 +705,6 @@
 
         if READ_SETTING("Timer Color") == "Stand" then
             WRITE_SETTING("Timer Color Code", GET_STAND_STATE("AR Colour"))
-        end
-
-        if soup.version_compare(menu.get_version().version, SUPPORTED_STAND_VERSION) < 0 then
-            ERROR_LOG
-            (
-                TRANSLATE("Your current Stand version isn't compatible with current Heist Control version. Please update Stand to use it.") .. "\n\n" ..
-                TRANSLATE("- Current your Heist Control version:") .. " " .. HC_VERSION .. "\n" .. 
-                TRANSLATE("- At least required Stand version:") .. " " .. SUPPORTED_STAND_VERSION .. "\n" ..
-                TRANSLATE("- Current your Stand version:") .. " " .. CURRENT_STAND_VERSION
-            )
         end
 
         if SCRIPT_MANUAL_START and not SCRIPT_SILENT_START then
@@ -3083,31 +3071,6 @@ INFOS = menu.list(Heist_Control, TRANSLATE("Settings And About HC"), {"hcinfo"},
 
     ---
 
-    menu.list_action(CASINO_HEIST, TRANSLATE("Casino Story Missions"), {}, "", {
-        { TRANSLATE("Loose Cheng"), {}, "" },
-        { TRANSLATE("House Keeping"), {}, "" },
-        { TRANSLATE("Strong Arm Tactics"), {}, "" },
-        { TRANSLATE("Play to Win"), {}, "" },
-        { TRANSLATE("Bad Beat"), {}, "" },
-        { TRANSLATE("Cashing Out"), {}, "" },
-    }, function(index)
-        if index == 1 then
-            STAT_SET_INT("VCM_FLOW_PROGRESS", 1048576)
-        elseif index == 2 then
-            STAT_SET_INT("VCM_FLOW_PROGRESS", 1310785)
-        elseif index == 3 then
-            STAT_SET_INT("VCM_FLOW_PROGRESS", 1310915)
-        elseif index == 4 then
-            STAT_SET_INT("VCM_FLOW_PROGRESS", 1311175)
-        elseif index == 5 then
-            STAT_SET_INT("VCM_FLOW_PROGRESS", 1311695)
-        elseif index == 6 then
-            STAT_SET_INT("VCM_FLOW_PROGRESS", 1312735)
-        end
-
-        STAT_SET_INT("VCM_STORY_PROGRESS", index - 1)
-    end)
-
     CASINO_MORE = menu.list(CASINO_HEIST, TRANSLATE("Others"), {}, "", function(); end)
 
         menu.textslider_stateful(CASINO_MORE, TRANSLATE("Load & Unload - All Boards"), {}, "", {
@@ -3466,6 +3429,7 @@ INFOS = menu.list(Heist_Control, TRANSLATE("Settings And About HC"), {"hcinfo"},
         end)
 
     ---
+
 
     menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Bypass Minimum And Maximum Percentage"), {}, IS_WORKING(true) .. TRANSLATE("Only works if you are host of the heist.") .. "\n\n" .. TRANSLATE("It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts."), function()
         SET_INT_GLOBAL(262145 + 9256, 100) -- MAX_HEIST_CUT_AMOUNT, Default: 70(%), https://www.unknowncheats.me/forum/3664875-post95.html
@@ -4785,14 +4749,6 @@ INFOS = menu.list(Heist_Control, TRANSLATE("Settings And About HC"), {"hcinfo"},
                     SET_INT_GLOBAL(262145 + 27383, 1) -- -312420223
                 end)
 
-                menu.toggle_loop(TUNABLES_CD, TRANSLATE("Kosatka Missiles"), {}, IS_WORKING(true) .. TRANSLATE("Also will increase Kosatka missiles distance."), function()
-                    SET_INT_GLOBAL(262145 + 30394, 0) -- IH_SUBMARINE_MISSILES_COOLDOWN
-                    SET_INT_GLOBAL(262145 + 30395, 99999) -- IH_SUBMARINE_MISSILES_DISTANCE
-                end, function()
-                    SET_INT_GLOBAL(262145 + 30394, 60000)
-                    SET_INT_GLOBAL(262145 + 30395, 4000)
-                end)
-
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Dax Job"), {}, TRANSLATE("Note that Dax Job means from cellphone"), function() -- https://www.unknowncheats.me/forum/3629824-post2716.html
                     STAT_SET_INT("XM22JUGGALOWORKCDTIMER", -1)
                 end)
@@ -4966,7 +4922,7 @@ INFOS = menu.list(Heist_Control, TRANSLATE("Settings And About HC"), {"hcinfo"},
 
     ---
 
-    INSTANT_FINISH = menu.list(TOOLS, "快速完成", {"hcinsfin"}, TRANSLATE("Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you."), function(); end)
+    INSTANT_FINISH = menu.list(TOOLS, TRANSLATE("Instant Finish Heists & Others"), {"hcinsfin"}, TRANSLATE("Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you."), function(); end)
 
         menu.divider(INSTANT_FINISH, TRANSLATE("Heists"))
 
@@ -5621,6 +5577,29 @@ INFOS = menu.list(Heist_Control, TRANSLATE("Settings And About HC"), {"hcinfo"},
                 ---
 
             ---
+
+            CREW_LEVEL_EDITOR = menu.list(PRESET_STAT_EDITOR, TRANSLATE("Crew Level"), {}, "", function(); end)
+
+                for i = 0, 4 do
+                    menu.divider(CREW_LEVEL_EDITOR, TRANSLATE("Crew") .. " " .. i)
+
+                        CREW_RP = menu.readonly(CREW_LEVEL_EDITOR, TRANSLATE("Crew RP"))
+                        CREW_ID = menu.readonly(CREW_LEVEL_EDITOR, TRANSLATE("Crew ID"))
+                        CREW_CURRENT = menu.readonly(CREW_LEVEL_EDITOR, TRANSLATE("Current Crew Level"))
+                        CREW_LEVEL = menu.slider(CREW_LEVEL_EDITOR, TRANSLATE("Choose Crew Level"), { "hccrewlevel" .. i }, "", 1, 8000, 1, 1, function(); end)
+                        menu.action(CREW_LEVEL_EDITOR, TRANSLATE("Set Crew Level"), { "hcsetcrewlevel" .. i }, "", function()
+                            local RpForRank = util.get_rp_required_for_rank(menu.get_value(CREW_LEVEL))
+                            STAT_SET_INT("MPPLY_CREW_LOCAL_XP_" .. i, RpForRank)
+                        end)
+
+                        menu.set_value(CREW_RP, STAT_GET_INT("MPPLY_CREW_LOCAL_XP_" .. i))
+                        menu.set_value(CREW_ID, STAT_GET_INT("MPPLY_CREW_" .. i .. "_ID"))
+                        menu.set_value(CREW_CURRENT, STAT_GET_INT("MPPLY_CURRENT_CREW_RANK"))
+
+                    ---
+                end
+
+            ---
             
         ---
 
@@ -5895,7 +5874,7 @@ INFOS = menu.list(Heist_Control, TRANSLATE("Settings And About HC"), {"hcinfo"},
                                 if Contents[idx2+1] ~= nil then
                                     if not string.startswith(Contents[idx2+1], "$MP") then
                                         local _, i = string.find(file_content, "$MPPLY_")
-                                        local Stat = string.sub(file_content, i + 1, string.len(file_content))
+                                        local Stat = string.sub(file_content, i - 5, string.len(file_content))
                                         Stat = string.upper(Stat)
                                         HelpTexts.MPPLY = HelpTexts.MPPLY + 1
                                         table.insert(Stats, { Stat, Contents[idx2+1] })

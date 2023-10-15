@@ -1169,10 +1169,6 @@ function get_ground_z(pos)
 end
 
 
----@param windowName string #Must be a label
----@param maxInput integer
----@param defaultText string
----@return string
 function get_input_from_screen_keyboard(windowName, maxInput, defaultText)
 	MISC.DISPLAY_ONSCREEN_KEYBOARD(0, windowName, "", defaultText, "", "", "", maxInput);
 	while MISC.UPDATE_ONSCREEN_KEYBOARD() == 0 do

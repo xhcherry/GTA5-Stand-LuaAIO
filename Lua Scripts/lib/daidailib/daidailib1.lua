@@ -146,7 +146,7 @@ function address_from_pointer_chain(address, offsets)
 end
 function readWeaponAddress(storeTable, offset, stopIfModified)
     if util.is_session_transition_active() then return 0 end
-    local userPed = players.user_ped()
+    local userPed = PLAYER.PLAYER_PED_ID()
     local weaponHash, vehicleWeapon = getWeaponHash(userPed)
     if stopIfModified and storeTable[weaponHash] then return 0 end
     local pointer = (vehicleWeapon and 0x70 or 0x20)
@@ -174,7 +174,7 @@ end
 modifiedRange = {}
 function maxrange()
     if util.is_session_transition_active() then return end
-    local userPed = players.user_ped()
+    local userPed = PLAYER.PLAYER_PED_ID()
     local weaponHash, vehicleWeapon = getWeaponHash(userPed)
     if modifiedRange[weaponHash] then return end
     local pointer = (vehicleWeapon and 0x70 or 0x20)
@@ -214,10 +214,10 @@ modifiedSpinup = {
     [2] = {hash = util.joaat('weapon_rayminigun')},
 }
 function nospinup()
-    local weaponHash = WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped())
+    local weaponHash = WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.PLAYER_PED_ID())
     for i = 1, #modifiedSpinup do
         if weaponHash == modifiedSpinup[i].hash then
-            modifiedSpinup[i].address = address_from_pointer_chain(entities.handle_to_pointer(players.user_ped()), {0x10B8, 0x20, 0x144})
+            modifiedSpinup[i].address = address_from_pointer_chain(entities.handle_to_pointer(PLAYER.PLAYER_PED_ID()), {0x10B8, 0x20, 0x144})
             if modifiedSpinup[i].address == 0 then return end
             memory.write_float(modifiedSpinup[i].address, 0)
         end
@@ -295,8 +295,8 @@ function custom_respawn()
             util.yield()
         end
         for i = 0, 30 do
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), respawnPos.x, respawnPos.y, respawnPos.z, false, false, false)
-            ENTITY.SET_ENTITY_ROTATION(players.user_ped(), respawnRot.x, respawnRot.y, respawnRot.z, 2, true)
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), respawnPos.x, respawnPos.y, respawnPos.z, false, false, false)
+            ENTITY.SET_ENTITY_ROTATION(PLAYER.PLAYER_PED_ID(), respawnRot.x, respawnRot.y, respawnRot.z, 2, true)
             util.yield()
         end
     end
@@ -304,7 +304,7 @@ function custom_respawn()
 end
 function save_custom_respawn()
     respawnPos = players.get_position(PLAYER.PLAYER_ID())
-    respawnRot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+    respawnRot = ENTITY.GET_ENTITY_ROTATION(PLAYER.PLAYER_PED_ID(), 2)
     local pos = 'X: '.. respawnPos.x ..'\nY: '.. respawnPos.y ..'\nZ: '.. respawnPos.z
     local placename = util.get_label_text(ZONE.GET_NAME_OF_ZONE(v3.get(respawnPos)))
     menu.set_menu_name(custom_respawn_location, '更新位置(' .. placename..")")
@@ -315,16 +315,16 @@ end
 
 ----笨拙
 function clumsy()
-    if PED.IS_PED_RAGDOLL(players.user_ped()) then 
+    if PED.IS_PED_RAGDOLL(PLAYER.PLAYER_PED_ID()) then 
         util.yield(3000) 
         return 
     end
-    PED.SET_PED_RAGDOLL_ON_COLLISION(players.user_ped(), true)
+    PED.SET_PED_RAGDOLL_ON_COLLISION(PLAYER.PLAYER_PED_ID(), true)
 end
 ----摔倒
 function stumble()
-    local vector = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
-    PED.SET_PED_TO_RAGDOLL_WITH_FALL(players.user_ped(), 1500, 2000, 2, vector.x, -vector.y, vector.z, 1, 0, 0, 0, 0, 0, 0)
+    local vector = ENTITY.GET_ENTITY_FORWARD_VECTOR(PLAYER.PLAYER_PED_ID())
+    PED.SET_PED_TO_RAGDOLL_WITH_FALL(PLAYER.PLAYER_PED_ID(), 1500, 2000, 2, vector.x, -vector.y, vector.z, 1, 0, 0, 0, 0, 0, 0)
 end
 
 
@@ -1008,7 +1008,7 @@ end
 ----黑人抬棺
 function blacks_coffins()
     local pos = players.get_position(PLAYER.PLAYER_ID())
-    local pedp = players.user_ped()
+    local pedp = PLAYER.PLAYER_PED_ID()
     pos.z = pos.z + 0.6
 
     local coffin = OBJECT.CREATE_OBJECT(2193278353, pos.x, pos.y, pos.z, true, false)
@@ -1139,13 +1139,13 @@ function veh_fly_stop(on)
     vehfly.stop = not on
 end
 function veh_fly()
-    local curcar = PED.GET_VEHICLE_PED_IS_IN(players.user_ped())
+    local curcar = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID())
     if vehfly.coll then
         ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(curcar , false, true)
     else 
         ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(curcar , true, true) 
     end
-    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) then
+    if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID()) then
         if curcar ~= 0 then
             vehflight(curcar, vehfly.speed)
         end
@@ -1155,7 +1155,7 @@ function veh_fly()
     end
 end
 function close_veh_fly()
-    local curcar = PED.GET_VEHICLE_PED_IS_IN(players.user_ped())
+    local curcar = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID())
     NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(curcar)
     ENTITY.FREEZE_ENTITY_POSITION(curcar, false)
     ENTITY.SET_ENTITY_HAS_GRAVITY(curcar, true)
@@ -1341,7 +1341,7 @@ end
 
 ----罪城的水
 function VicecityWater()
-    if ENTITY.IS_ENTITY_IN_WATER(players.user_ped()) and not PED.IS_PED_DEAD_OR_DYING(players.user_ped()) then
+    if ENTITY.IS_ENTITY_IN_WATER(PLAYER.PLAYER_PED_ID()) and not PED.IS_PED_DEAD_OR_DYING(PLAYER.PLAYER_PED_ID()) then
         menu.trigger_commands("ewo")
     end
 end
@@ -1350,12 +1350,12 @@ end
 ----力场
 function force_Field(on)
     local mdl = util.joaat("p_spinning_anus_s")
-    local playerpos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), false)
+    local playerpos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)
     request_model(mdl)
     if on then
         obj = entities.create_object(mdl, playerpos)
         ENTITY.SET_ENTITY_VISIBLE(obj, false)
-        ENTITY.ATTACH_ENTITY_TO_ENTITY(obj, players.user_ped(), 0, 0, 0, 0, 0, 0, 0, false, false, true, false, 0, false, 0)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(obj, PLAYER.PLAYER_PED_ID(), 0, 0, 0, 0, 0, 0, 0, false, false, true, false, 0, false, 0)
     else
         if obj ~= nil then 
             entities.delete(obj)
@@ -1389,7 +1389,7 @@ function force_Field_pro()
         end
     end
     for _, entity in pairs(_entities) do
-        local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), true)
+        local player_vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), true)
         local entity_type = ENTITY.GET_ENTITY_TYPE(entity)
         if NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity) and player_vehicle ~= entity then
             if entity_type == 1 then
@@ -1418,7 +1418,7 @@ end
 
 ----堆叠行人
 function stack_npc()
-    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    local c = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     all_peds = entities.get_all_peds_as_handles()
     local last_ped = 0
     local last_ped_ht = 0
@@ -1456,7 +1456,7 @@ function Vehicle_Rain()
                     entities.delete(veh)
                 end
             end
-            if vhp_bars and get_distance_between_entities(players.user_ped(), veh) < 200.0 and not ENTITY.IS_ENTITY_DEAD(veh, false) and ENTITY.IS_ENTITY_ON_SCREEN(veh) then
+            if vhp_bars and get_distance_between_entities(PLAYER.PLAYER_PED_ID(), veh) < 200.0 and not ENTITY.IS_ENTITY_DEAD(veh, false) and ENTITY.IS_ENTITY_ON_SCREEN(veh) then
                 local modelHash = ENTITY.GET_ENTITY_MODEL(veh)
                 local min, max = v3.new(), v3.new()
                 MISC.GET_MODEL_DIMENSIONS(modelHash, min, max)
@@ -1523,7 +1523,7 @@ function Vehicle_Rain()
                 end
                 if rain_vehicles then 
                     if not ENTITY.IS_ENTITY_IN_AIR(veh) then 
-                        local ped_c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+                        local ped_c = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
                         ped_c.x = ped_c.x + math.random(-50, 50)
                         ped_c.y = ped_c.y + math.random(-50, 50)
                         ped_c.z = ped_c.z + math.random(100, 120)
@@ -1551,9 +1551,9 @@ function Npc_Rain()
                     local hdl = pid_to_handle(pid)
                     if (kill_aura_friends and not NETWORK.NETWORK_IS_FRIEND(hdl)) or not kill_aura_friends then
                         target = ENTITY.GET_ENTITY_COORDS(ped, false)
-                        m_coords = ENTITY.GET_ENTITY_COORDS(players.user_ped(), false)
+                        m_coords = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)
                         if MISC.GET_DISTANCE_BETWEEN_COORDS(m_coords.x, m_coords.y, m_coords.z, target.x, target.y, target.z, true) < kill_aura_dist and ENTITY.GET_ENTITY_HEALTH(ped) > 0 then
-                            MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(target['x'], target['y'], target['z'], target['x'], target['y'], target['z']+0.1, 300.0, true, 100416529, players.user_ped(), true, false, 100.0)
+                            MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(target['x'], target['y'], target['z'], target['x'], target['y'], target['z']+0.1, 300.0, true, 100416529, PLAYER.PLAYER_PED_ID(), true, false, 100.0)
                         end
                     end
                 end
@@ -1561,7 +1561,7 @@ function Npc_Rain()
             if not PED.IS_PED_A_PLAYER(ped) then
                 if rain_peds then 
                     if not ENTITY.IS_ENTITY_IN_AIR(ped) then 
-                        local ped_c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+                        local ped_c = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
                         ped_c.x = ped_c.x + math.random(-50, 50)
                         ped_c.y = ped_c.y + math.random(-50, 50)
                         ped_c.z = ped_c.z + math.random(50, 100)
@@ -1600,7 +1600,7 @@ end
 function Dominoes()
     local hash = util.joaat("prop_boogieboard_01")
     request_model(hash)
-    local last_ent = players.user_ped()
+    local last_ent = PLAYER.PLAYER_PED_ID()
     for i= 2, 25 do 
         local c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(last_ent, 0, i, 0)
         local d = entities.create_object(hash, c)
@@ -1664,7 +1664,7 @@ function ctst()
 	if entity ~= 0 and ENTITY.DOES_ENTITY_EXIST(entity) then
 		draw_bounding_box(entity, true, {r = 255, g = 255, b = 255, a = 81})
 
-		if PED.IS_PED_SHOOTING(players.user_ped()) and
+		if PED.IS_PED_SHOOTING(PLAYER.PLAYER_PED_ID()) and
 		not (shotEntities[1] and shotEntities[1] == entity) then
 			counter = counter + 1
 			shotEntities[counter] = entity
@@ -1717,12 +1717,12 @@ end
 function Spawn_bodyguard_helicopter()
     local heli_hash = util.joaat(bodyguard_heli.name)
     local ped_hash = util.joaat("s_m_y_blackops_01")
-    local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     pos.x = pos.x + math.random(-10, 10)
     pos.y = pos.y + math.random(-10, 10)
     pos.z = pos.z + 30
     requestModels(ped_hash, heli_hash)
-    relationship:friendly(players.user_ped())
+    relationship:friendly(PLAYER.PLAYER_PED_ID())
     local heli = entities.create_vehicle(heli_hash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
     if not ENTITY.DOES_ENTITY_EXIST(heli) then
         util.toast("Failed to create vehicle. Please try again")
@@ -1746,7 +1746,7 @@ function Spawn_bodyguard_helicopter()
     local pilot = entities.create_ped(29, ped_hash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
     PED.SET_PED_INTO_VEHICLE(pilot, heli, -1)
     PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(pilot, true)
-    TASK.TASK_HELI_MISSION(pilot, heli, 0, players.user_ped(), 0.0, 0.0, 0.0, 23, 80.0, 50.0, -1.0, 0, 10, -1.0, 0)
+    TASK.TASK_HELI_MISSION(pilot, heli, 0, PLAYER.PLAYER_PED_ID(), 0.0, 0.0, 0.0, 23, 80.0, 50.0, -1.0, 0, 10, -1.0, 0)
     PED.SET_PED_KEEP_TASK(pilot, true)
     --health
     PED.SET_PED_MAX_HEALTH(pilot, 1000)
@@ -1933,10 +1933,10 @@ function Laser_cannon()
             Lasersound:stop()
         end
     elseif timer.elapsed() > 100 then
-        local pos = PED.GET_PED_BONE_COORDS(players.user_ped(), 0x322C, 0.0, 0.0, 0.0)
+        local pos = PED.GET_PED_BONE_COORDS(PLAYER.PLAYER_PED_ID(), 0x322C, 0.0, 0.0, 0.0)
         local offset = get_offset_from_cam(80)
         if  Lasersound:hasFinished() then
-            Lasersound:playFromEntity(players.user_ped())
+            Lasersound:playFromEntity(PLAYER.PLAYER_PED_ID())
             AUDIO.SET_VARIABLE_ON_SOUND(Lasersound.Id, "fireRate", 10.0)
         end
         MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(
@@ -1944,7 +1944,7 @@ function Laser_cannon()
             offset.x, offset.y, offset.z,
             200,
             true,
-            Laserhash, players.user_ped(), true, true, -1.0
+            Laserhash, PLAYER.PLAYER_PED_ID(), true, true, -1.0
         )
         timer.reset()
     end
@@ -2156,21 +2156,41 @@ function Auto_driving(toggle)
     jesus = util.joaat("u_m_m_jesus_01")
     request_model(jesus)
     if Auto_drived then
-        if not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then 
-			util.toast(lang.get_localised(-474174214))
+        if not PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID(), false) then 
+			util.toast("请先进入载具")
             menu.set_value(jesus_toggle, false)
-        util.stop_thread() end
+            return
+        elseif VEHICLE.GET_VEHICLE_MODEL_NUMBER_OF_SEATS(ENTITY.GET_ENTITY_MODEL(vehicle)) < 2 then
+            util.toast("自动驾驶仅适用于多座位载具")
+            menu.set_value(jesus_toggle, false)
+            return
+        end
         
         jesus_ped = entities.create_ped(26, jesus, pos, 0)
         ENTITY.SET_ENTITY_INVINCIBLE(jesus_ped, true)
-        PED.SET_PED_INTO_VEHICLE(players.user_ped(), vehicle, -2)
+        ENTITY.SET_ENTITY_VISIBLE(jesus_ped, false--[[ toggle ]], false)
+        PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), vehicle, -2)
         PED.SET_PED_INTO_VEHICLE(jesus_ped, vehicle, -1)
         PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(jesus_ped, true)
         PED.SET_PED_KEEP_TASK(jesus_ped, true)
 
         if HUD.IS_WAYPOINT_ACTIVE() then
             local waypoint = HUD.GET_BLIP_COORDS(HUD.GET_FIRST_BLIP_INFO_ID(8))
-            TASK1.TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE(jesus_ped, vehicle, waypoint, drivespeed, drivestyle, 0.0)
+            if VEHICLE.IS_THIS_MODEL_A_HELI(ENTITY.GET_ENTITY_MODEL(vehicle)) then--直升机
+                PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(jesus_ped, true)
+                TASK.TASK_HELI_MISSION(jesus_ped, vehicle, 0, 0, waypoint.x, waypoint.y, waypoint.z, 4, 80.0, 50.0, -1.0, 900.0, 500.0, 0, 0)
+                PED.SET_PED_KEEP_TASK(jesus_ped, true)
+            elseif VEHICLE.IS_THIS_MODEL_A_PLANE(ENTITY.GET_ENTITY_MODEL(vehicle)) then--飞机
+                PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(jesus_ped, true)
+                TASK.TASK_PLANE_MISSION(jesus_ped, vehicle, 0, 0, waypoint.x, waypoint.y, waypoint.z, 4, 80.0, 50.0, -1.0, 900.0,500.0, true)
+                PED.SET_PED_KEEP_TASK(jesus_ped, true)
+            elseif VEHICLE.IS_THIS_MODEL_A_BOAT(ENTITY.GET_ENTITY_MODEL(vehicle)) then--船
+                PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(jesus_ped, true)
+                TASK.TASK_BOAT_MISSION(jesus_ped, vehicle, 0, 0, waypoint.x, waypoint.y, waypoint.z, 4, drivespeed, drivestyle, 0, 0)
+                PED.SET_PED_KEEP_TASK(jesus_ped, true)
+            else--车
+                TASK1.TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE(jesus_ped, vehicle, waypoint, drivespeed, drivestyle, 0.0)
+            end
                 while Auto_drived do
                     if not HUD.IS_WAYPOINT_ACTIVE() then
                         util.toast("自动驾驶结束")
@@ -2186,7 +2206,9 @@ function Auto_driving(toggle)
     else
         if jesus_ped ~= nil then 
             entities.delete(jesus_ped)
-            PED.SET_PED_INTO_VEHICLE(players.user_ped(), vehicle, -1)
+            if ENTITY.GET_ENTITY_HEALTH(vehicle) > 0 and PED.IS_PED_IN_VEHICLE(PLAYER.PLAYER_PED_ID(), vehicle, false) then
+                PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), vehicle, -1)
+            end
         end
     end
     while Auto_drived do
@@ -2201,7 +2223,7 @@ end
 
 -----特斯拉自动驾驶
 function Tesla_Autopilot(toggled)
-    local player = players.user_ped()
+    local player = PLAYER.PLAYER_PED_ID()
     local playerpos = ENTITY.GET_ENTITY_COORDS(player, false)
     local tesla_ai = util.joaat("u_m_y_baygor")
     local tesla = util.joaat("raiden")
@@ -2247,7 +2269,7 @@ function selectedOptt(index)
 end
 function vehicle_effectt()
     local effect = veffects[selectedOpt]
-    local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+    local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
     if ENTITY.DOES_ENTITY_EXIST(vehicle) and not ENTITY.IS_ENTITY_DEAD(vehicle, false) and
         VEHICLE.IS_VEHICLE_DRIVEABLE(vehicle, false) and timer.elapsed() > effect[4] then
             request_fx_asset(effect[1])
@@ -2287,13 +2309,13 @@ end
 ------天基炮
 function nuclear_weapon1()
     local last_hit_coords = v3.new()
-	if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), last_hit_coords) then
+	if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(PLAYER.PLAYER_PED_ID(), last_hit_coords) then
         request_ptfx_asset("scr_xm_orbital")
         GRAPHICS.USE_PARTICLE_FX_ASSET("scr_xm_orbital")
         FIRE.ADD_EXPLOSION(last_hit_coords.x, last_hit_coords.y, last_hit_coords.z, 59, 1, true, false, 1.0, false)
         GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("scr_xm_orbital_blast", last_hit_coords.x, last_hit_coords.y, last_hit_coords.z, 0, 180, 0, 1.0, true, true, true)
         for i = 1, 4 do
-            AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "DLC_XM_Explosions_Orbital_Cannon", players.user_ped(), 0, true, 0)
+            AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "DLC_XM_Explosions_Orbital_Cannon", PLAYER.PLAYER_PED_ID(), 0, true, 0)
         end
 	end
 end
@@ -2344,7 +2366,7 @@ function create_nuke_explosion(Position)
     end
     nuke_expl1(Position)
 	for i = 1, 4 do
-		AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "DLC_XM_Explosions_Orbital_Cannon", players.user_ped(), 0, true, 0)
+		AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "DLC_XM_Explosions_Orbital_Cannon", PLAYER.PLAYER_PED_ID(), 0, true, 0)
 	end
     for count = 1, 2 do
         if count == 1 then
@@ -2380,7 +2402,7 @@ function create_nuke_explosion(Position)
 	end
 	local peds = entities.get_all_peds_as_handles()
 	for _, ped in pairs(peds) do
-		if get_distance_between(ped, Position) > 200 and get_distance_between(ped, Position) < 400 and ped ~= players.user_ped() then
+		if get_distance_between(ped, Position) > 200 and get_distance_between(ped, Position) < 400 and ped ~= PLAYER.PLAYER_PED_ID() then
 			local ped_pos = ENTITY.GET_ENTITY_COORDS(ped)
 			FIRE.ADD_EXPLOSION(ped_pos.x, ped_pos.y, ped_pos.z, 3, 1.0, true, true, 0.1, false)
 		end
@@ -2395,10 +2417,10 @@ function create_nuke_explosion(Position)
 	end
 end
 function nuclear_weapon2()
-    if PED.IS_PED_SHOOTING(players.user_ped()) then
+    if PED.IS_PED_SHOOTING(PLAYER.PLAYER_PED_ID()) then
 		local hash = util.joaat("prop_military_pickup_01")
 		request_model(hash)
-		local player_pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0.0, 5.0, 3.0)
+		local player_pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), 0.0, 5.0, 3.0)
 		local dir = {}
 		local c2 = {}
 		c2 = get_offset_from_gameplay_camera(1000)
@@ -2406,7 +2428,7 @@ function nuclear_weapon2()
 		dir.y = (c2.y - player_pos.y) * 1000
 		dir.z = (c2.z - player_pos.z) * 1000
 		local nuke = OBJECT.CREATE_OBJECT_NO_OFFSET(hash, player_pos.x, player_pos.y, player_pos.z, true, false, false)
-		ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(nuke, players.user_ped(), false)
+		ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(nuke, PLAYER.PLAYER_PED_ID(), false)
 		ENTITY.APPLY_FORCE_TO_ENTITY(nuke, 0, dir.x, dir.y, dir.z, 0.0, 0.0, 0.0, 0, true, false, true, false, true)
 		ENTITY.SET_ENTITY_HAS_GRAVITY(nuke, true)
 		while not ENTITY.HAS_ENTITY_COLLIDED_WITH_ANYTHING(nuke) and not ENTITY.IS_ENTITY_IN_WATER(nuke) do
@@ -2463,7 +2485,7 @@ end
 function transport_nuke()
     local msg = "~y~按 ~%s~ 投掷核弹"
     util.show_corner_help(msg:format("INPUT_VEH_HORN"))
-    local ped = players.user_ped()
+    local ped = PLAYER.PLAYER_PED_ID()
     local hash = util.joaat("prop_military_pickup_01")
     local pos = players.get_position(PLAYER.PLAYER_ID())
     request_model(util.joaat("skylift"))
@@ -2511,22 +2533,22 @@ end
 local i_forward = 360
 function forward_roll()
     has_anim_dict_loaded("misschinese2_crystalmaze")
-    TASK.TASK_PLAY_ANIM(players.user_ped(), "misschinese2_crystalmaze", "2int_loop_a_taotranslator", 8.0, 8.0, -1, 0, 0.0, 0, 0, 0)
+    TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), "misschinese2_crystalmaze", "2int_loop_a_taotranslator", 8.0, 8.0, -1, 0, 0.0, 0, 0, 0)
     local cam_rot = CAM.GET_GAMEPLAY_CAM_ROT(0)
-    local user_rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 0)
-    local fwd_vect = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
-    local speed = ENTITY.GET_ENTITY_SPEED(players.user_ped()) * 2.236936
-    PED.SET_PED_CAN_RAGDOLL(players.user_ped(), false)
-    ENTITY.SET_ENTITY_ROTATION(players.user_ped(), i_forward, user_rot.y, cam_rot.z, 2, true)
+    local user_rot = ENTITY.GET_ENTITY_ROTATION(PLAYER.PLAYER_PED_ID(), 0)
+    local fwd_vect = ENTITY.GET_ENTITY_FORWARD_VECTOR(PLAYER.PLAYER_PED_ID())
+    local speed = ENTITY.GET_ENTITY_SPEED(PLAYER.PLAYER_PED_ID()) * 2.236936
+    PED.SET_PED_CAN_RAGDOLL(PLAYER.PLAYER_PED_ID(), false)
+    ENTITY.SET_ENTITY_ROTATION(PLAYER.PLAYER_PED_ID(), i_forward, user_rot.y, cam_rot.z, 2, true)
     if speed <= 70 then
-        ENTITY.APPLY_FORCE_TO_ENTITY(players.user_ped(), 3, fwd_vect.x, fwd_vect.y, 0.0, 0.0, 0.0, 0.0, 0.0, false, false, true, false, false)
+        ENTITY.APPLY_FORCE_TO_ENTITY(PLAYER.PLAYER_PED_ID(), 3, fwd_vect.x, fwd_vect.y, 0.0, 0.0, 0.0, 0.0, 0.0, false, false, true, false, false)
     end
     if i_forward <= 0 then i_forward = 360 else i_forward = i_forward - 6 end 
 end
 function end_forward_roll()
     util.yield(100)
-    PED.SET_PED_CAN_RAGDOLL(players.user_ped(), true)
-    TASK.STOP_ANIM_TASK(players.user_ped(), "misschinese2_crystalmaze", "2int_loop_a_taotranslator", 1)
+    PED.SET_PED_CAN_RAGDOLL(PLAYER.PLAYER_PED_ID(), true)
+    TASK.STOP_ANIM_TASK(PLAYER.PLAYER_PED_ID(), "misschinese2_crystalmaze", "2int_loop_a_taotranslator", 1)
 end
 ----街舞
 local rotation = 0
@@ -2546,9 +2568,9 @@ function breakdance()
         dict = "missheist_agency2ahands_up"
         name = "handsup_loop"
     end
-    ENTITY.SET_ENTITY_ROTATION(players.user_ped(), 180, 0, rotation, 1, true)
+    ENTITY.SET_ENTITY_ROTATION(PLAYER.PLAYER_PED_ID(), 180, 0, rotation, 1, true)
     has_anim_dict_loaded(dict)
-    TASK.TASK_PLAY_ANIM(players.user_ped(), dict, name, 8.0, 0, -1, 0, 0.0, 0, 0, 0)
+    TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), dict, name, 8.0, 0, -1, 0, 0.0, 0, 0, 0)
     rotation = rotation + 5
     if loop_count < 1000 then
         loop_count = loop_count + 1
@@ -2558,7 +2580,7 @@ function breakdance()
 end
 function end_breakdance()
     util.yield(100)
-    TASK.STOP_ANIM_TASK(players.user_ped(), dict, name, 1)
+    TASK.STOP_ANIM_TASK(PLAYER.PLAYER_PED_ID(), dict, name, 1)
 end
 
 
@@ -2567,7 +2589,7 @@ end
 function getClosestPlayer(myPos)
     local closestDist = 999999999999
     local closest_player = nil
-    local myVehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+    local myVehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
     if myVehicle == 0 then
         myVehicle = 1
     end
@@ -2576,7 +2598,7 @@ function getClosestPlayer(myPos)
 		if not ENTITY.IS_ENTITY_DEAD(ped) then
             local playerpos = players.get_position(pid)
             local dist = myPos:distance(playerpos)
-            local playerVehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+            local playerVehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
             if (dist < closestDist) and (playerVehicle != myVehicle) and not players.is_in_interior(pid) then
                 closestDist = dist
                 closest_player = pid
@@ -2591,12 +2613,12 @@ function tp_closest_player()
     local user_pos = players.get_position(PLAYER.PLAYER_ID())
 	local player = getClosestPlayer(user_pos)
     if player != nil then
-        if not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
+        if not PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID(), false) then
             local player_pos = players.get_position(player)
-            ENTITY.SET_ENTITY_COORDS(players.user_ped(), player_pos.x, player_pos.y, player_pos.z, false, false, false, false)
+            ENTITY.SET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), player_pos.x, player_pos.y, player_pos.z, false, false, false, false)
         else
             local player_pos = players.get_position(player)
-            local user_vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+            local user_vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
             if user_vehicle != 0 then
                 ENTITY.SET_ENTITY_COORDS(user_vehicle, player_pos.x, player_pos.y, player_pos.z, false, false, false, false)
             end
@@ -2635,18 +2657,18 @@ function get_closest_vehicle(entity)
     return closestveh
 end
 function tp_closest_vehicle()
-    local closestveh = get_closest_vehicle(players.user_ped())
+    local closestveh = get_closest_vehicle(PLAYER.PLAYER_PED_ID())
     local driver = VEHICLE.GET_PED_IN_VEHICLE_SEAT(closestveh, -1)
     if VEHICLE.IS_VEHICLE_SEAT_FREE(closestveh, -1) then
-        PED.SET_PED_INTO_VEHICLE(players.user_ped(), closestveh, -1)
+        PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), closestveh, -1)
     else
         if not PED.IS_PED_A_PLAYER(driver) then
             entities.delete(driver)
-            PED.SET_PED_INTO_VEHICLE(players.user_ped(), closestveh, -1)
+            PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), closestveh, -1)
         elseif VEHICLE.ARE_ANY_VEHICLE_SEATS_FREE(closestveh) then
             for i = 0, 10 do
                 if VEHICLE.IS_VEHICLE_SEAT_FREE(closestveh, i) then
-                    PED.SET_PED_INTO_VEHICLE(players.user_ped(), closestveh, i)
+                    PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), closestveh, i)
                     break
                 end
             end
@@ -2685,37 +2707,25 @@ end
 
 
 
---火翅膀
-function fireWing_v1(toggle)
+----火翅膀
+function fireWing(toggle)
     local fireWingr = 25;local fireWingg = 0;local fireWingb = 50
     if toggle then
-        ENTITY.SET_ENTITY_PROOFS(PLAYER.PLAYER_PED_ID(), false, true, false, false, false, false, 1, false)
-        if ptfxEgg == nil then
-            local eggHash = 1803116220
-            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)
-            ptfxEgg = create_object(eggHash, pos.x, pos.y, pos.z)
-            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-        end
         for i = 1, #fireWings do
             request_ptfx_asset('weap_xs_vehicle_weapons')
             GRAPHICS.USE_PARTICLE_FX_ASSET('weap_xs_vehicle_weapons')
-            fireWings[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('muz_xs_turret_flamethrower_looping', ptfxEgg, 0, 0, 0.1, fireWings[i].pos[1], 0, fireWings[i].pos[2], 1, false, false, false)
+            fireWings[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('muz_xs_turret_flamethrower_looping', PLAYER.PLAYER_PED_ID(), 0, 0, 0.1, fireWings[i].pos[1], 0, fireWings[i].pos[2], 1, false, false, false)
             util.create_tick_handler(function()
-                local rot = ENTITY.GET_ENTITY_ROTATION(PLAYER.PLAYER_PED_ID(), 2)
-                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, PLAYER.PLAYER_PED_ID(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
                 for i = 1, #fireWings do
                     GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWings[i].ptfx, 0.3)
-                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWings[i].ptfx, fireWingr, fireWingg,fireWingb)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWings[i].ptfx, fireWingr, fireWingg, fireWingb, false)
                     fireWingr = fireWingr + 0.145
-                        if fireWingr > 0.96 then
-                            fireWingg = fireWingg + 5
-                            fireWingb = fireWingb +6
-                            fireWingr = 0.001
-                        end
+                    if fireWingr > 0.96 then
+                        fireWingg = fireWingg + 5
+                        fireWingb = fireWingb +6
+                        fireWingr = 0.001
+                    end
                 end
-                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
             end)				
         end			
     else
@@ -2724,57 +2734,31 @@ function fireWing_v1(toggle)
                 GRAPHICS.REMOVE_PARTICLE_FX(fireWings[i].ptfx, true)
                 fireWings[i].ptfx = nil
             end
-            if ptfxEgg then
-                entities.delete_by_handle(ptfxEgg)
-                ptfxEgg = nil
-            end
         end
         STREAMING.REMOVE_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
     end
 end
-
---------彩色翅膀
-function fireWingv2_color(newColour)
-    fireWing_v2color = newColour
-end
-function fireWing_v2(toggle)
+----彩色翅膀
+function colorful_fireWing(toggle)
     if toggle then
-        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-        if ptfxEgg == nil then
-            local eggHash = 1803116220
-            request_model(eggHash)
-            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-            ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-        end
         for i = 1, #fireWings do
-            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('weap_xs_vehicle_weapons') do
-                STREAMING.REQUEST_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
-                util.yield()
-            end
+            request_ptfx_asset('weap_xs_vehicle_weapons')
             GRAPHICS.USE_PARTICLE_FX_ASSET('weap_xs_vehicle_weapons')
-            fireWings[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('muz_xs_turret_flamethrower_looping', ptfxEgg, 0, 0, 0.1, fireWings[i].pos[1], 0, fireWings[i].pos[2], 1, false, false, false, 0, 0, 0, 0)
-            local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-            ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false, 0)
-            ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true) 		
-        end
-        while fireWings[1].ptfx do
-            for i = 1, #fireWings do
-                GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWings[i].ptfx, 0.3)
-                GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWings[i].ptfx, fireWing_v2color.r, fireWing_v2color.g, fireWing_v2color.b, 0)
-            end	
-            util.yield()
-        end
+            fireWings[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('muz_xs_turret_flamethrower_looping', PLAYER.PLAYER_PED_ID(), 0, 0, 0.1, fireWings[i].pos[1], 0, fireWings[i].pos[2], 1, false, false, false)
+            util.create_tick_handler(function()
+                for i = 1, #fireWings do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWings[i].ptfx, 0.3)
+                    local timer = MISC.GET_GAME_TIMER()
+                    local colorful_color = gradient_colour(timer, 1)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWings[i].ptfx, colorful_color.r/255, colorful_color.g/255, colorful_color.b/255, false)
+                end
+            end)				
+        end			
     else
         for i = 1, #fireWings do
             if fireWings[i].ptfx then
                 GRAPHICS.REMOVE_PARTICLE_FX(fireWings[i].ptfx, true)
                 fireWings[i].ptfx = nil
-            end
-            if ptfxEgg then
-                entities.delete(ptfxEgg)
-                ptfxEgg = nil
             end
         end
         STREAMING.REMOVE_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
@@ -2838,7 +2822,7 @@ function GET_INT_LOCAL(Script, Local)
     end
 end
 function TELEPORT(X, Y, Z)
-    PED.SET_PED_COORDS_KEEP_VEHICLE(players.user_ped(), X, Y, Z)
+    PED.SET_PED_COORDS_KEEP_VEHICLE(PLAYER.PLAYER_PED_ID(), X, Y, Z)
 end
 
 
@@ -2861,8 +2845,8 @@ end
 function Iron_Man()
     menu.trigger_commands("levitate on")
     WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1569615261,15,true,true)--给予徒手
-    if not PED.IS_PED_WEARING_HELMET(players.user_ped()) then
-        PED.GIVE_PED_HELMET(players.user_ped(), true, 4096, -1)--给予头盔
+    if not PED.IS_PED_WEARING_HELMET(PLAYER.PLAYER_PED_ID()) then
+        PED.GIVE_PED_HELMET(PLAYER.PLAYER_PED_ID(), true, 4096, -1)--给予头盔
     end
     local context = CAM1._GET_CAM_ACTIVE_VIEW_MODE_CONTEXT()
     if startViewMode == nil then
@@ -2905,23 +2889,23 @@ function Iron_Man()
         end
     elseif JSkey.is_disabled_control_pressed(0, 'INPUT_AIM') then
         hash = util.joaat('WEAPON_RAYPISTOL')
-        if not WEAPON.HAS_PED_GOT_WEAPON(players.user_ped(), hash, false) then
-            WEAPON.GIVE_WEAPON_TO_PED(players.user_ped(), hash, 9999, false, false)
+        if not WEAPON.HAS_PED_GOT_WEAPON(PLAYER.PLAYER_PED_ID(), hash, false) then
+            WEAPON.GIVE_WEAPON_TO_PED(PLAYER.PLAYER_PED_ID(), hash, 9999, false, false)
         end
     else
         hash = util.joaat('WEAPON_RPG')
-        if not WEAPON.HAS_PED_GOT_WEAPON(players.user_ped(), hash, false) then
-            WEAPON.GIVE_WEAPON_TO_PED(players.user_ped(), hash, 9999, false, false)
+        if not WEAPON.HAS_PED_GOT_WEAPON(PLAYER.PLAYER_PED_ID(), hash, false) then
+            WEAPON.GIVE_WEAPON_TO_PED(PLAYER.PLAYER_PED_ID(), hash, 9999, false, false)
         end
         a.x = a.x + math.random(0, 100) / 100
         a.y = a.y + math.random(0, 100) / 100
         a.z = a.z + math.random(0, 100) / 100
     end
-    WEAPON.SET_CURRENT_PED_WEAPON(players.user_ped(), util.joaat('WEAPON_UNARMED'), true)
+    WEAPON.SET_CURRENT_PED_WEAPON(PLAYER.PLAYER_PED_ID(), util.joaat('WEAPON_UNARMED'), true)
     MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(a.x, a.y, a.z,b.x, b.y, b.z,200,true,hash,PLAYER.PLAYER_PED_ID(),true, true, -1.0)
 end
 function Iron_Man_stop()
-    PED.REMOVE_PED_HELMET(players.user_ped(), true)--移除头盔
+    PED.REMOVE_PED_HELMET(PLAYER.PLAYER_PED_ID(), true)--移除头盔
     HUD1._HUD_WEAPON_WHEEL_IGNORE_CONTROL_INPUT(false)
     local pScaleform = memory.alloc_int()
     memory.write_int(pScaleform, scope_scaleform)
@@ -3158,15 +3142,15 @@ function all_drive_style()
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, 0, 0, 0, false, false, false)
     end
     if walkonwater then
-        vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-        local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0.0, 2.0, 0.0)
+        vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
+        local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), 0.0, 2.0, 0.0)
         -- we need to offset this because otherwise the player keeps diving off the thing, like a fucking dumbass
         -- ht isnt actually used here, but im allocating some memory anyways to prevent a possible crash, probably. idk im no computer engineer
         local ht = memory.alloc(4)
         -- this is better than ENTITY.IS_ENTITY_IN_WATER because it can detect if a player is actually above water without them even being "in" it
         if WATER.GET_WATER_HEIGHT(pos['x'], pos['y'], pos['z'], ht) then
             ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], memory.read_float(ht), false, false, false)
-            ENTITY.SET_ENTITY_HEADING(dow_block, ENTITY.GET_ENTITY_HEADING(players.user_ped()))
+            ENTITY.SET_ENTITY_HEADING(dow_block, ENTITY.GET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID()))
         end
     end
     if driveonwater then
@@ -3269,7 +3253,7 @@ local shoot_from_vehicle = function (vehicle, damage, weaponHash, ownerPed, isAu
 	)
 end
 function vehlaser()
-    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
+    if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID(), false) then
 		local vehicle = get_vehicle_player_is_in(PLAYER.PLAYER_ID())
 		local min, max = v3.new(), v3.new()
 		MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), min, max)
@@ -3334,12 +3318,12 @@ function vehweapon_veh()
 	timer.elapsed() < selectedWeapon.timeBetweenShots then
 		return
 	elseif get_vehicle_cam_relative_heading(vehicle) < 95.0 then
-		shoot_from_vehicle(vehicle, 200, weaponHash, players.user_ped(), true, true, 2000.0, 0, 0)
-		shoot_from_vehicle(vehicle, 200, weaponHash, players.user_ped(), true, true, 2000.0, 0, 2)
+		shoot_from_vehicle(vehicle, 200, weaponHash, PLAYER.PLAYER_PED_ID(), true, true, 2000.0, 0, 0)
+		shoot_from_vehicle(vehicle, 200, weaponHash, PLAYER.PLAYER_PED_ID(), true, true, 2000.0, 0, 2)
 		timer.reset()
 	else
-		shoot_from_vehicle(vehicle, 200, weaponHash, players.user_ped(), true, true, 2000.0, 0, 1)
-		shoot_from_vehicle(vehicle, 200, weaponHash, players.user_ped(), true, true, 2000.0, 0, 3)
+		shoot_from_vehicle(vehicle, 200, weaponHash, PLAYER.PLAYER_PED_ID(), true, true, 2000.0, 0, 1)
+		shoot_from_vehicle(vehicle, 200, weaponHash, PLAYER.PLAYER_PED_ID(), true, true, 2000.0, 0, 3)
 		timer.reset()
 	end
 end
@@ -3403,7 +3387,7 @@ function SDcreate(pCoor, pedSi)
     ENTITY.SET_ENTITY_HEADING(Lsdcar, CV)
 
     util.create_tick_handler(function ()
-        if PED.IS_PED_IN_VEHICLE(players.user_ped(), Lsdcar, false) ==true then
+        if PED.IS_PED_IN_VEHICLE(PLAYER.PLAYER_PED_ID(), Lsdcar, false) ==true then
         VEHICLE.SET_VEHICLE_DIRT_LEVEL(Lsdcar, 0)
         ENTITY.SET_ENTITY_INVINCIBLE(Lsdcar, true)
         VEHICLE.SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(Lsdcar, false)
@@ -3451,7 +3435,7 @@ end
 function Lazer_Space_Car()
     request_model(lsd.hash)
     local pedSi = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
-    local pCoor = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    local pCoor = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local pH = ENTITY.GET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID())
 
     if players.is_in_interior(PLAYER.PLAYER_ID()) == true then
@@ -3459,7 +3443,7 @@ function Lazer_Space_Car()
         menu.set_value(SDspawn, false)
         return
     end
-    if PED.IS_PED_IN_VEHICLE(players.user_ped(), Lsdcar, true) == false and PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) == true then
+    if PED.IS_PED_IN_VEHICLE(PLAYER.PLAYER_PED_ID(), Lsdcar, true) == false and PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID()) == true then
         local curcar = entities.get_user_vehicle_as_handle()
         ENTITY.SET_ENTITY_AS_MISSION_ENTITY(curcar)
         entities.delete(curcar)
@@ -3467,22 +3451,22 @@ function Lazer_Space_Car()
             for i = 1, 1 do
                 SDcreate(pCoor, pedSi)
             end
-    elseif PED.IS_PED_IN_VEHICLE(players.user_ped(), Lsdcar, true) == true then
+    elseif PED.IS_PED_IN_VEHICLE(PLAYER.PLAYER_PED_ID(), Lsdcar, true) == true then
         local weap = util.joaat(lsd.weap)
         request_weapon_asset(weap)
             if not ENTITY.DOES_ENTITY_EXIST(Lsdcar) or not PAD.IS_CONTROL_PRESSED(0, 86) then
                 return
             elseif get_vehicle_cam_relative_heading(Lsdcar) < 95.0 then
-                shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, players.user_ped(), true, true, 2000.0, 0, 0)
-                shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, players.user_ped(), true, true, 2000.0, 0, 2)
+                shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, PLAYER.PLAYER_PED_ID(), true, true, 2000.0, 0, 0)
+                shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, PLAYER.PLAYER_PED_ID(), true, true, 2000.0, 0, 2)
 --[[             else
-                shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, players.user_ped(), true, true, 2000.0, 0, 1)
-                shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, players.user_ped(), true, true, 2000.0, 0, 3) ]]
+                shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, PLAYER.PLAYER_PED_ID(), true, true, 2000.0, 0, 1)
+                shoot_from_vehicle_Lazer_Space_Car(Lsdcar, 200, weap, PLAYER.PLAYER_PED_ID(), true, true, 2000.0, 0, 3) ]]
             end
-    elseif PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) == false and not ENTITY.DOES_ENTITY_EXIST(Lsdcar) then
+    elseif PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID()) == false and not ENTITY.DOES_ENTITY_EXIST(Lsdcar) then
         SDcreate(pCoor, pedSi)
     end
-    if PED.IS_PED_GETTING_INTO_A_VEHICLE(players.user_ped()) == false and PED.IS_PED_IN_VEHICLE(players.user_ped(), Lsdcar , false) == false then
+    if PED.IS_PED_GETTING_INTO_A_VEHICLE(PLAYER.PLAYER_PED_ID()) == false and PED.IS_PED_IN_VEHICLE(PLAYER.PLAYER_PED_ID(), Lsdcar , false) == false then
         util.toast('已离开战马，战马已被删除')
         menu.set_value(SDspawn, false)
         STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(lsd.hash)
@@ -3549,13 +3533,13 @@ function Ccreate(pCoor, pedSi)
         util.yield()
     function Magout()
         if  PAD.IS_CONTROL_PRESSED(0, 86) then
-            local car = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+            local car = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
             FIRE.ADD_EXPLOSION(car.x, car.y, car.z, 81, 5000.0, false, true, 0.0, magval_style)
         end
         util.yield()
     end
         util.create_tick_handler(function ()
-            if PED.IS_PED_IN_VEHICLE(players.user_ped(), FFchar, false) ==true then
+            if PED.IS_PED_IN_VEHICLE(PLAYER.PLAYER_PED_ID(), FFchar, false) ==true then
                 VEHICLE.SET_VEHICLE_DIRT_LEVEL(FFchar, 0)
                 ENTITY.SET_ENTITY_INVINCIBLE(FFchar, true)
                 VEHICLE.SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(FFchar, false)
@@ -3567,7 +3551,7 @@ function daoqizhanma()
     request_model(charger.charg)
     request_model(charger.emp)
     local pedSi = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
-    local pCoor = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    local pCoor = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local pH = ENTITY.GET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID())
 
     if players.is_in_interior(PLAYER.PLAYER_ID()) ==true then
@@ -3575,18 +3559,18 @@ function daoqizhanma()
         menu.set_value(Spawn, false)
         return
     end
-    if PED.IS_PED_IN_VEHICLE(players.user_ped(), FFchar, true) == false and PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) == true then
+    if PED.IS_PED_IN_VEHICLE(PLAYER.PLAYER_PED_ID(), FFchar, true) == false and PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID()) == true then
         local curcar = entities.get_user_vehicle_as_handle()
         ENTITY.SET_ENTITY_AS_MISSION_ENTITY(curcar)
         entities.delete(curcar)
         util.toast('已为您更换新的')
         Ccreate(pCoor, pedSi)
-    elseif PED.IS_PED_IN_VEHICLE(players.user_ped(), FFchar, true) ==true then
+    elseif PED.IS_PED_IN_VEHICLE(PLAYER.PLAYER_PED_ID(), FFchar, true) ==true then
         Magout()
-    elseif PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) == false then
+    elseif PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID()) == false then
         Ccreate(pCoor, pedSi)
     end
-    if PED.IS_PED_GETTING_INTO_A_VEHICLE(players.user_ped()) ==false and PED.IS_PED_IN_VEHICLE(players.user_ped(), FFchar , false) ==false then
+    if PED.IS_PED_GETTING_INTO_A_VEHICLE(PLAYER.PLAYER_PED_ID()) ==false and PED.IS_PED_IN_VEHICLE(PLAYER.PLAYER_PED_ID(), FFchar , false) ==false then
         util.toast('已离开战马,战马已被删除')
         menu.set_value(Spawn, false)
         ENTITY.SET_ENTITY_AS_MISSION_ENTITY(FFchar)
@@ -3650,7 +3634,7 @@ ped_health_selector = {
 }
 function clear_all_peds()
     for _, ped in ipairs(entities.get_all_peds_as_handles()) do
-        if ped ~= players.user_ped() and not PED.IS_PED_A_PLAYER(ped) then
+        if ped ~= PLAYER.PLAYER_PED_ID() and not PED.IS_PED_A_PLAYER(ped) then
             entities.delete(ped)
             util.yield()
         end
@@ -3658,7 +3642,7 @@ function clear_all_peds()
 end
 function clear_dead_peds()
     for _, ped in ipairs(entities.get_all_peds_as_handles()) do
-        if ped ~= players.user_ped() and not PED.IS_PED_A_PLAYER(ped) and ENTITY.IS_ENTITY_DEAD(ped) then
+        if ped ~= PLAYER.PLAYER_PED_ID() and not PED.IS_PED_A_PLAYER(ped) and ENTITY.IS_ENTITY_DEAD(ped) then
             entities.delete(ped)
         end               
     end
@@ -3697,7 +3681,7 @@ function create_ped_simple_2d(health)
     return target_ped
 end
 function teleport_to_lab()
-    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), shoot_pos.x, shoot_pos.y+20, shoot_pos.z + 2, 0, 0, 1)
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), shoot_pos.x, shoot_pos.y+20, shoot_pos.z + 2, 0, 0, 1)
 end
 function toint(n)
     local s = tostring(n)
@@ -3718,7 +3702,7 @@ objects = {}
 function load_lab()
     objects = {}
     prop_hash = util.joaat("stt_prop_stunt_bblock_huge_03")
-    ped_shoot_pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
+    ped_shoot_pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), true)
     STREAMING.REQUEST_MODEL(prop_hash)
 	
     local object = OBJECT.CREATE_OBJECT_NO_OFFSET(prop_hash, shoot_pos.x, shoot_pos.y, shoot_pos.z, true, true, false)
@@ -3755,7 +3739,7 @@ function Clean_training_ground()
     TELEPORT(-1314, -3057, 13)
     util.yield(500)
         for _, ped in ipairs(entities.get_all_peds_as_handles()) do
-            if ped ~= players.user_ped() and not PED.IS_PED_A_PLAYER(ped) then
+            if ped ~= PLAYER.PLAYER_PED_ID() and not PED.IS_PED_A_PLAYER(ped) then
                 entities.delete(ped)
             end
         end
@@ -4130,7 +4114,7 @@ end
 function chaojiqingchu()
     local cleanse_entitycount = 0
     for _, ped in pairs(entities.get_all_peds_as_handles()) do
-        if ped ~= players.user_ped() and not PED.IS_PED_A_PLAYER(ped) and NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ped) and (not NETWORK.NETWORK_IS_ACTIVITY_SESSION() or NETWORK.NETWORK_IS_ACTIVITY_SESSION() and not ENTITY.IS_ENTITY_A_MISSION_ENTITY(ped)) then
+        if ped ~= PLAYER.PLAYER_PED_ID() and not PED.IS_PED_A_PLAYER(ped) and NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(ped) and (not NETWORK.NETWORK_IS_ACTIVITY_SESSION() or NETWORK.NETWORK_IS_ACTIVITY_SESSION() and not ENTITY.IS_ENTITY_A_MISSION_ENTITY(ped)) then
             entities.delete(ped)
             cleanse_entitycount = cleanse_entitycount + 1
             util.yield_once()
@@ -4139,7 +4123,7 @@ function chaojiqingchu()
     util.toast("已清除 " .. cleanse_entitycount .. " Peds")
     cleanse_entitycount = 0
     for _, vehicle in ipairs(entities.get_all_vehicles_as_handles()) do
-        if vehicle ~= PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false) and DECORATOR.DECOR_GET_INT(vehicle, "Player_Vehicle") == 0 and NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(vehicle) then
+        if vehicle ~= PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false) and DECORATOR.DECOR_GET_INT(vehicle, "Player_Vehicle") == 0 and NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(vehicle) then
             entities.delete(vehicle)
             cleanse_entitycount = cleanse_entitycount + 1
             util.yield_once()
@@ -4166,7 +4150,7 @@ function chaojiqingchu()
         PHYSICS.DELETE_ROPE(temp)
     end
     util.toast("已清除所有绳索")
-    local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     MISC.CLEAR_AREA_OF_PROJECTILES(pos.x, pos.y, pos.z, 400, 0)
     util.toast("已清除所有投掷物")
 end
@@ -4279,28 +4263,28 @@ local entity_held = 0
 local are_hands_up = false
 local ped_held = 0
 function throwvehs()
-    if PAD.IS_CONTROL_JUST_RELEASED(38, 38) and not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true)  then
+    if PAD.IS_CONTROL_JUST_RELEASED(38, 38) and not PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID(), true)  then
         if entity_held == 0 then
             if not are_hands_up then 
-                local closest = get_closest_veh(ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+                local closest = get_closest_veh(ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID()))
                 local veh = closest[1]
                 if veh ~= nil then 
                     local dist = closest[2]
                     if dist <= 5 then 
                         request_anim_dict("missminuteman_1ig_2")
-                        TASK.TASK_PLAY_ANIM(players.user_ped(), "missminuteman_1ig_2", "handsup_enter", 8.0, 0.0, -1, 50, 0, false, false, false)
+                        TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), "missminuteman_1ig_2", "handsup_enter", 8.0, 0.0, -1, 50, 0, false, false, false)
                         util.yield(500)
                         are_hands_up = true
                         ENTITY.SET_ENTITY_ALPHA(veh, 100)
-                        ENTITY.SET_ENTITY_HEADING(veh, ENTITY.GET_ENTITY_HEADING(players.user_ped()))
+                        ENTITY.SET_ENTITY_HEADING(veh, ENTITY.GET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID()))
                         ENTITY.SET_ENTITY_INVINCIBLE(veh, true)
                         request_control_of_entity_once(veh)
-                        ENTITY.ATTACH_ENTITY_TO_ENTITY(veh, players.user_ped(), 0, 0, 0, get_model_size(ENTITY.GET_ENTITY_MODEL(veh)).z / 2, 180, 180, -180, true, false, true, false, 0, true, 0)
+                        ENTITY.ATTACH_ENTITY_TO_ENTITY(veh, PLAYER.PLAYER_PED_ID(), 0, 0, 0, get_model_size(ENTITY.GET_ENTITY_MODEL(veh)).z / 2, 180, 180, -180, true, false, true, false, 0, true, 0)
                         entity_held = veh
                     end 
                 end
             else
-                TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
+                TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
                 are_hands_up = false
             end
         else
@@ -4310,13 +4294,13 @@ function throwvehs()
                 VEHICLE.SET_VEHICLE_OUT_OF_CONTROL(entity_held, true, true)
                 ENTITY.SET_ENTITY_ALPHA(entity_held, 255)
                 ENTITY.SET_ENTITY_INVINCIBLE(entity_held, false)
-                TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
-                ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
-                ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(entity_held, players.user_ped(), false)
+                TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
+                ENTITY.FREEZE_ENTITY_POSITION(PLAYER.PLAYER_PED_ID(), true)
+                ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(entity_held, PLAYER.PLAYER_PED_ID(), false)
                 request_anim_dict("melee@unarmed@streamed_core")
-                TASK.TASK_PLAY_ANIM(players.user_ped(), "melee@unarmed@streamed_core", "heavy_punch_a", 8.0, 8.0, -1, 0, 0.3, false, false, false)
+                TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), "melee@unarmed@streamed_core", "heavy_punch_a", 8.0, 8.0, -1, 0, 0.3, false, false, false)
                 util.yield(500)
-                ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
+                ENTITY.FREEZE_ENTITY_POSITION(PLAYER.PLAYER_PED_ID(), false)
                 entity_held = 0
                 are_hands_up = false
             end
@@ -4342,29 +4326,29 @@ function get_closest_ped_new(coords)
     end
 end
 function throwpeds()
-    if PAD.IS_CONTROL_JUST_RELEASED(38, 38) and not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+    if PAD.IS_CONTROL_JUST_RELEASED(38, 38) and not PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID(), true) then
         if entity_held == 0 then
             if not are_hands_up then 
-                local closest = get_closest_ped_new(ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+                local closest = get_closest_ped_new(ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID()))
                 if closest ~= nil then
                     local ped = closest[1]
                     if ped ~= nil then
                         local dist = closest[2]
                         if dist <= 5 then 
                             request_anim_dict("missminuteman_1ig_2")
-                            TASK.TASK_PLAY_ANIM(players.user_ped(), "missminuteman_1ig_2", "handsup_enter", 8.0, 0.0, -1, 50, 0, false, false, false)
+                            TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), "missminuteman_1ig_2", "handsup_enter", 8.0, 0.0, -1, 50, 0, false, false, false)
                             util.yield(500)
                             are_hands_up = true
                             ENTITY.SET_ENTITY_ALPHA(ped, 100)
-                            ENTITY.SET_ENTITY_HEADING(ped, ENTITY.GET_ENTITY_HEADING(players.user_ped()))
+                            ENTITY.SET_ENTITY_HEADING(ped, ENTITY.GET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID()))
                             request_control_of_entity_once(ped)
-                            ENTITY.ATTACH_ENTITY_TO_ENTITY(ped, players.user_ped(), 0, 0, 0, 1.3, 180, 180, -180, true, false, true, true, 0, true, 0)
+                            ENTITY.ATTACH_ENTITY_TO_ENTITY(ped, PLAYER.PLAYER_PED_ID(), 0, 0, 0, 1.3, 180, 180, -180, true, false, true, true, 0, true, 0)
                             entity_held = ped
                         end 
                     end
                 end
             else
-                TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
+                TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
                 are_hands_up = false
             end
         else
@@ -4376,13 +4360,13 @@ function throwpeds()
                 ENTITY.SET_ENTITY_MAX_SPEED(entity_held, 100.0)
                 ENTITY.APPLY_FORCE_TO_ENTITY(entity_held, 1, 0, 100, 0, 0, 0, 0, 0, true, false, true, false, false)
                 AUDIO.PLAY_PAIN(entity_held, 7, 0, 0)
-                TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
-                ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
-                ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(entity_held, players.user_ped(), false)
+                TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
+                ENTITY.FREEZE_ENTITY_POSITION(PLAYER.PLAYER_PED_ID(), true)
+                ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(entity_held, PLAYER.PLAYER_PED_ID(), false)
                 request_anim_dict("melee@unarmed@streamed_core")
-                TASK.TASK_PLAY_ANIM(players.user_ped(), "melee@unarmed@streamed_core", "heavy_punch_a", 8.0, 8.0, -1, 0, 0.3, false, false, false)
+                TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), "melee@unarmed@streamed_core", "heavy_punch_a", 8.0, 8.0, -1, 0, 0.3, false, false, false)
                 util.yield(500)
-                ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
+                ENTITY.FREEZE_ENTITY_POSITION(PLAYER.PLAYER_PED_ID(), false)
                 entity_held = 0
                 are_hands_up = false
             end
@@ -4411,7 +4395,7 @@ function summ_car(index, value)
         util.remove_blip(taxi_blip)
         entities.delete(taxi_ped)
     end 
-    local plyr = players.user_ped()
+    local plyr = PLAYER.PLAYER_PED_ID()
     local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(plyr, 0.0, 5.0, 0.0)
     request_model(vhash)
     request_model(phash)
@@ -4431,7 +4415,7 @@ function summ_car(index, value)
     VEHICLE.SET_VEHICLE_EXCLUSIVE_DRIVER(taxi_veh, taxi_ped, -1)
     PED.SET_PED_INTO_VEHICLE(taxi_ped, taxi_veh, -1)
     ENTITY.SET_ENTITY_INVINCIBLE(taxi_ped, true)
-    PED.SET_PED_INTO_VEHICLE(players.user_ped(), taxi_veh, 0)
+    PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), taxi_veh, 0)
     util.toast("您的司机已创建！")
 end
 function summ_car_topoint()
@@ -4448,7 +4432,7 @@ function summ_car_tp()
     if taxi_ped == 0 then
         util.toast("你没有生成司机.")
     else
-        PED.SET_PED_INTO_VEHICLE(players.user_ped(), taxi_veh, 0)
+        PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), taxi_veh, 0)
     end
 end
 function summ_car_bmob()
@@ -4779,25 +4763,21 @@ function Celestial_Fighter(pid)
     local hash = util.joaat("lazer")
     request_model(hash)
     request_model(-163714847)
-    for i=1, num_attackers do
-        coords.x = coords.x + i*2
-        coords.y = coords.y + i*2
-        local jet = entities.create_vehicle(hash, coords, 0.0)
-        VEHICLE.CONTROL_LANDING_GEAR(jet, 3)
-        VEHICLE.SET_HELI_BLADES_FULL_SPEED(jet)
-        VEHICLE.SET_VEHICLE_FORWARD_SPEED(jet, VEHICLE.GET_VEHICLE_ESTIMATED_MAX_SPEED(jet))
-        if godmodeatk then
-            ENTITY.SET_ENTITY_INVINCIBLE(jet, true)
-        end
-        local pilot = entities.create_ped(28, -163714847, coords, 30.0)
-        PED.SET_PED_COMBAT_ATTRIBUTES(pilot, 5, true)
-        PED.SET_PED_COMBAT_ATTRIBUTES(pilot, 46, true)
-        PED.SET_PED_INTO_VEHICLE(pilot, jet, -1)
-        TASK.TASK_PLANE_MISSION(pilot, jet, 0, target_ped, 0, 0, 0, 6, 0.0, 0, 0.0, 50.0, 40.0)
-        TASK.TASK_COMBAT_PED(pilot, target_ped, 0, 16)
-        PED.SET_PED_ACCURACY(pilot, 100.0)
-        PED.SET_PED_COMBAT_ABILITY(pilot, 2)
-    end
+    coords.x = coords.x + 2
+    coords.y = coords.y + 2
+    local jet = entities.create_vehicle(hash, coords, 0.0)
+    VEHICLE.CONTROL_LANDING_GEAR(jet, 3)
+    VEHICLE.SET_HELI_BLADES_FULL_SPEED(jet)
+    VEHICLE.SET_VEHICLE_FORWARD_SPEED(jet, VEHICLE.GET_VEHICLE_ESTIMATED_MAX_SPEED(jet))
+    ENTITY.SET_ENTITY_INVINCIBLE(jet, true)
+    local pilot = entities.create_ped(28, -163714847, coords, 30.0)
+    PED.SET_PED_COMBAT_ATTRIBUTES(pilot, 5, true)
+    PED.SET_PED_COMBAT_ATTRIBUTES(pilot, 46, true)
+    PED.SET_PED_INTO_VEHICLE(pilot, jet, -1)
+    TASK.TASK_PLANE_MISSION(pilot, jet, 0, target_ped, 0, 0, 0, 6, 0.0, 0, 0.0, 50.0, 40.0)
+    TASK.TASK_COMBAT_PED(pilot, target_ped, 0, 16)
+    PED.SET_PED_ACCURACY(pilot, 100.0)
+    PED.SET_PED_COMBAT_ABILITY(pilot, 2)
 end
 
 
@@ -4987,7 +4967,7 @@ function Invalid_parachute()
         local SelfPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
         local PreviousPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
         local user = PLAYER.PLAYER_ID()
-        local user_ped = players.user_ped()
+        local user_ped = PLAYER.PLAYER_PED_ID()
         local pos = players.get_position(user)
         local spped = PLAYER.PLAYER_PED_ID()
         local ppos = ENTITY.GET_ENTITY_COORDS(spped, true)
@@ -5289,10 +5269,10 @@ end
 
 ----大烟花
 function big_fireworks()
-    local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), false)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)
     local hash = util.joaat("weapon_firework")
     request_weapon_asset(hash)
-    WEAPON.GIVE_WEAPON_TO_PED(players.user_ped(), hash, 120, true, false)
+    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.PLAYER_PED_ID(), hash, 120, true, false)
 
     MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x-90-math.random(0, 40), pos.y-90, pos.z, pos.x-90-math.random(0, 40), pos.y-90, pos.z+20, 200, false, hash, 0, true, false, 150)
     util.yield(500)
@@ -5350,7 +5330,7 @@ function Angry_plane()
             NETWORK.SET_NETWORK_ID_CAN_MIGRATE(NETWORK.VEH_TO_NET(plane), false)
             local pilot = entities.create_ped(26, pedHash, pos, 0)
             PED.SET_PED_INTO_VEHICLE(pilot, plane, -1)
-            pos = get_random_offset_from_entity(players.user_ped(), 50.0, 150.0)
+            pos = get_random_offset_from_entity(PLAYER.PLAYER_PED_ID(), 50.0, 150.0)
             pos.z = pos.z + 75.0
             ENTITY.SET_ENTITY_COORDS(plane, pos.x, pos.y, pos.z, false, false, false, false)
             local theta = random_float(0, 2 * math.pi)
@@ -5359,7 +5339,7 @@ function Angry_plane()
             VEHICLE.SET_HELI_BLADES_FULL_SPEED(plane)
             VEHICLE.CONTROL_LANDING_GEAR(plane, 3)
             VEHICLE.SET_VEHICLE_FORCE_AFTERBURNER(plane, true)
-            TASK.TASK_PLANE_MISSION(pilot, plane, 0, players.user_ped(), 0.0, 0.0, 0.0, 6, 100.0, 0.0, 0.0, 80.0, 50.0, false)
+            TASK.TASK_PLANE_MISSION(pilot, plane, 0, PLAYER.PLAYER_PED_ID(), 0.0, 0.0, 0.0, 6, 100.0, 0.0, 0.0, 80.0, 50.0, false)
             numPlanes = numPlanes + 1
             timer.reset()
         end
@@ -5393,7 +5373,7 @@ function PedHealthBarmainLoop()
     else
         for _, ped in ipairs(get_peds_in_player_range(PLAYER.PLAYER_ID(), 500.0)) do
             if not ENTITY.IS_ENTITY_ON_SCREEN(ped) or
-            not ENTITY.HAS_ENTITY_CLEAR_LOS_TO_ENTITY(players.user_ped(), ped, TraceFlag.world) then
+            not ENTITY.HAS_ENTITY_CLEAR_LOS_TO_ENTITY(PLAYER.PLAYER_PED_ID(), ped, TraceFlag.world) then
                 goto LABEL_CONTINUE
             end
             if (ttselectedOpt == 1 and not PED.IS_PED_A_PLAYER(ped)) or
@@ -5410,15 +5390,15 @@ end
 function Play_guitar(on)
     request_anim_dict("amb@world_human_musician@guitar@male@idle_a")
     if on then
-    local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(),true)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
     guitar = OBJECT.CREATE_OBJECT(util.joaat("prop_acc_guitar_01"), pos.x, pos.y, pos.z, true, true, false)
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(players.user_ped())
-    TASK.TASK_PLAY_ANIM(players.user_ped(), "amb@world_human_musician@guitar@male@idle_a", "idle_b", 3, 3, -1, 51, 0, false, false, false) --play anim 
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(guitar, players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), 24818), -0.1,0.31,0.1,0.0,20.0,150.0, false, true, false, true, 1, true, 0)
-    PED.SET_ENABLE_HANDCUFFS(players.user_ped(),on)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(PLAYER.PLAYER_PED_ID())
+    TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), "amb@world_human_musician@guitar@male@idle_a", "idle_b", 3, 3, -1, 51, 0, false, false, false) --play anim 
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(guitar, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 24818), -0.1,0.31,0.1,0.0,20.0,150.0, false, true, false, true, 1, true, 0)
+    PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(),on)
     else
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
-        PED.SET_ENABLE_HANDCUFFS(players.user_ped(),off)
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
+        PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(),off)
         entities.delete(guitar)
     end
 end
@@ -5426,15 +5406,15 @@ end
 function Palm_spin_ball(on)
     request_anim_dict("anim@mp_player_intincarfreakoutstd@ps@")
     if on then
-    local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(),true)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
     guitar = OBJECT.CREATE_OBJECT(util.joaat("prop_bowling_ball"), pos.x, pos.y, pos.z, true, true, false)
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(players.user_ped())
-    TASK.TASK_PLAY_ANIM(players.user_ped(), "anim@mp_player_intincarfreakoutstd@ps@", "idle_a_fp", 10, 3, -1, 51, 5, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(guitar, players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), 24818), 0.30,0.53,0,0.2,70,340, false, true, false, true, 1, true, 0)
-    PED.SET_ENABLE_HANDCUFFS(players.user_ped(),on)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(PLAYER.PLAYER_PED_ID())
+    TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), "anim@mp_player_intincarfreakoutstd@ps@", "idle_a_fp", 10, 3, -1, 51, 5, false, false, false)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(guitar, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 24818), 0.30,0.53,0,0.2,70,340, false, true, false, true, 1, true, 0)
+    PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(),on)
     else
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
-        PED.SET_ENABLE_HANDCUFFS(players.user_ped(),off)
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
+        PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(),off)
         entities.delete(guitar)
     end
 end
@@ -5442,15 +5422,15 @@ end
 function seek_help(on)
     request_anim_dict("amb@world_human_bum_freeway@male@base")
     if on then
-    local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(),true)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
     beggers = OBJECT.CREATE_OBJECT(util.joaat("prop_beggers_sign_03"), pos.x, pos.y, pos.z, true, true, false)
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(players.user_ped())
-    TASK.TASK_PLAY_ANIM(players.user_ped(), "amb@world_human_bum_freeway@male@base", "base", 3, 3, -1, 51, 0, false, false, false) --play anim 
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(beggers, players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), 58868), 0.19,0.18,0.0,5.0,0.0,40.0, false, true, false, true, 1, true, 0)
-    PED.SET_ENABLE_HANDCUFFS(players.user_ped(),on)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(PLAYER.PLAYER_PED_ID())
+    TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), "amb@world_human_bum_freeway@male@base", "base", 3, 3, -1, 51, 0, false, false, false) --play anim 
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(beggers, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 58868), 0.19,0.18,0.0,5.0,0.0,40.0, false, true, false, true, 1, true, 0)
+    PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(),on)
     else
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
-        PED.SET_ENABLE_HANDCUFFS(players.user_ped(),off)
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
+        PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(),off)
         entities.delete(beggers)
     end
 end
@@ -5458,15 +5438,15 @@ end
 function offer_flower(on)
     request_anim_dict("anim@heists@humane_labs@finale@keycards")
     if on then
-    local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(),true)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
     rose = OBJECT.CREATE_OBJECT(util.joaat("prop_single_rose"), pos.x, pos.y, pos.z, true, true, false)
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(players.user_ped())
-    TASK.TASK_PLAY_ANIM(players.user_ped(), "anim@heists@humane_labs@finale@keycards", "ped_a_enter_loop", 3, 3, -1, 51, 0, false, false, false) --play anim 
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(rose, players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), 18905), 0.13,0.15,0.0,-100.0,0.0,-20.0, false, true, false, true, 1, true, 0)
-    PED.SET_ENABLE_HANDCUFFS(players.user_ped(),on)
+    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(PLAYER.PLAYER_PED_ID())
+    TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), "anim@heists@humane_labs@finale@keycards", "ped_a_enter_loop", 3, 3, -1, 51, 0, false, false, false) --play anim 
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(rose, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 18905), 0.13,0.15,0.0,-100.0,0.0,-20.0, false, true, false, true, 1, true, 0)
+    PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(),on)
     else
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
-        PED.SET_ENABLE_HANDCUFFS(players.user_ped(),off)
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
+        PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(),off)
         entities.delete(rose)
     end
 end
@@ -5477,11 +5457,11 @@ end
 function Out_body(toggle)
     if toggle then
         all_peds = entities.get_all_peds_as_handles()
-        user_ped = players.user_ped()
+        user_ped = PLAYER.PLAYER_PED_ID()
         clone = PED.CLONE_PED(user_ped,true, true, true)
         pos = ENTITY.GET_ENTITY_COORDS(clone, false)
         ENTITY.SET_ENTITY_COORDS(user_ped, pos.x-2, pos.y, pos.z)
-        ENTITY.SET_ENTITY_ALPHA(players.user_ped(), 87, false)
+        ENTITY.SET_ENTITY_ALPHA(PLAYER.PLAYER_PED_ID(), 87, false)
         ENTITY.SET_ENTITY_INVINCIBLE(clone,true)
         menu.trigger_commands("invisibility remote")
         request_anim_dict("move_crawl")
@@ -5521,10 +5501,10 @@ end
 ---转魂
 function Soul_Gun()
     local ent = get_aim_info()['ent']
-    if PED.IS_PED_SHOOTING(players.user_ped()) then
+    if PED.IS_PED_SHOOTING(PLAYER.PLAYER_PED_ID()) then
         if ENTITY.IS_ENTITY_A_PED(ent) then
             pos = ENTITY.GET_ENTITY_COORDS(ent, false)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), pos.x, pos.y, pos.z, false, false, false)
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos.x, pos.y, pos.z, false, false, false)
             if PED.IS_PED_A_PLAYER(ent) then
                 local pid = NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(ent)
                 menu.trigger_commands("copyoutfit " .. players.get_name(pid))
@@ -5559,7 +5539,7 @@ function Soul_Gun()
             PLAYER.SET_PLAYER_MODEL(PLAYER.PLAYER_ID(),soulveh)
             STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(soulveh)
             util.yield(10)
-            PED.SET_PED_INTO_VEHICLE(players.user_ped(), ent, -1)
+            PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), ent, -1)
             menu.trigger_commands("allguns")
             end
         end
@@ -5593,7 +5573,7 @@ end
 local impactCords = v3.new()
 local blocks = {}
 function xxxminecraftgun()
-    if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), impactCords) then
+    if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(PLAYER.PLAYER_PED_ID(), impactCords) then
         local hash = util.joaat('prop_mb_sandblock_01')
         request_model(hash)
         blocks[#blocks + 1] = entities.create_object(hash, impactCords)
@@ -5709,7 +5689,7 @@ function BitClear(value, bit)
     return value & ~(1 << bit)
 end
 function carinto()
-    local ped = players.user_ped()
+    local ped = PLAYER.PLAYER_PED_ID()
     local hash = NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(PLAYER.PLAYER_ID())
     if PED.IS_PED_IN_ANY_VEHICLE(ped) then
         local veh = PED.GET_VEHICLE_PED_IS_IN(ped, false)
@@ -5760,7 +5740,7 @@ end
 local ufo = util.joaat("sum_prop_dufocore_01a")
 local dufo = util.joaat("imp_prop_ship_01a")
 function UFO_Los_Angeles(toggle)
-    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    local c = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local r = ufonum[math.random(#ufonum)]
     c.x = math.random(0.0,1.0) >= 0.5 and c.x + r + 5 or c.x - r - 5 --set x coords
     c.y = math.random(0.0,1.0) >= 0.5 and c.y + r + 5 or c.y - r - 5 --set y coords
@@ -5888,8 +5868,8 @@ function zhujixvlie()
             end
         end
         --载具时速
-        local ent1e = players.user_ped()
-        local ent2e = PED.GET_VEHICLE_PED_IS_USING(players.user_ped())
+        local ent1e = PLAYER.PLAYER_PED_ID()
+        local ent2e = PED.GET_VEHICLE_PED_IS_USING(PLAYER.PLAYER_PED_ID())
             if PED.IS_PED_IN_ANY_VEHICLE(ent1e,true) then
                 ente = ent2e----载具内
             else
@@ -5953,7 +5933,7 @@ function scriptname(state)
     local timer = MISC.GET_GAME_TIMER()
     local color =  gradient_colour(timer, 0.5)       
     HUD.SET_TEXT_COLOUR(color.r, color.g, color.b, 255)
-    draw_string(string.format("~italic~¦~bold~Sakura Script v9.7"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v9.9"), 0.38,0.1, 0.6,5)
 end
 
 
@@ -5964,7 +5944,7 @@ function hammer(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
         WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1810795771,15,true,true)--给予指定武器
-        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), false, false, false, false)--武器隐形
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), false, false, false, false)--武器隐形
 
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
         handlebar = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_02a"), pos.x, pos.y, pos.z, true, true, false)--大锤手柄
@@ -5987,7 +5967,7 @@ function thunder_hammer(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
         WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1810795771,15,true,true)--给予指定武器
-        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), false, false, false, false)--武器隐形
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), false, false, false, false)--武器隐形
 
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
         thunderlebar = OBJECT.CREATE_OBJECT(-1924271972, pos.x, pos.y, pos.z, true, true, false)--大锤手柄
@@ -6000,7 +5980,7 @@ function thunder_hammer(on)
         entities.delete(thunderlebar)
 
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
-        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), true, false, false, false)--解除武器隐形
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), true, false, false, false)--解除武器隐形
         WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1569615261,15,true,true)--给予徒手
     end
 end
@@ -6032,7 +6012,7 @@ function atomhammer(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
         WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1810795771,15,true,true)--给予指定武器
-        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), false, false, false, false)--武器隐形
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), false, false, false, false)--武器隐形
 
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
         atomhandlebar = OBJECT.CREATE_OBJECT(util.joaat("prop_bollard_04"), pos.x, pos.y, pos.z, true, true, false)
@@ -6051,7 +6031,7 @@ function atomhammer(on)
         entities.delete(atomdachui1)
 
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
-        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), true, false, false, false)--解除武器隐形
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), true, false, false, false)--解除武器隐形
         WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1569615261,15,true,true)--给予徒手
     end
 end
@@ -6083,7 +6063,7 @@ function unicorn(on)
     if on then
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),false)--禁止切换武器
         WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1810795771,15,true,true)--给予指定武器
-        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), false, false, false, false)--武器隐形
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), false, false, false, false)--武器隐形
 
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),true)
         unicornhandlebar = OBJECT.CREATE_OBJECT(util.joaat("ba_prop_battle_cameradrone"), pos.x, pos.y, pos.z, true, true, false)
@@ -6100,7 +6080,7 @@ function unicorn(on)
         entities.delete(unicorndachui)
 
         PED.SET_PED_CAN_SWITCH_WEAPON(PLAYER.PLAYER_PED_ID(),true)--解除禁止切换武器
-        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), true, false, false, false)--解除武器隐形
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), true, false, false, false)--解除武器隐形
         WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1569615261,15,true,true)--给予徒手
     end
 end
@@ -6164,14 +6144,14 @@ flameThrower = {
 }
 function flamegun()
     local JSkey = require 'lib.daidailib.JSkeyLib'
-    if WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped()) != 1119849093 or not JSkey.is_control_pressed(2, 'INPUT_AIM') then
+    if WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.PLAYER_PED_ID()) != 1119849093 or not JSkey.is_control_pressed(2, 'INPUT_AIM') then
         if not flameThrower.ptfx then return end
         GRAPHICS.REMOVE_PARTICLE_FX(flameThrower.ptfx, true)
         STREAMING.REMOVE_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
         flameThrower.ptfx = nil
         return
     end
-    PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), true)
+    PLAYER.DISABLE_PLAYER_FIRING(PLAYER.PLAYER_PED_ID(), true)
     while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('weap_xs_vehicle_weapons') do
         STREAMING.REQUEST_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
         util.yield()
@@ -6180,12 +6160,12 @@ function flamegun()
     if flameThrower.ptfx == nil then
         flameThrower.ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(
                 'muz_xs_turret_flamethrower_looping',
-                WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(players.user_ped(), 0),
+                WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(PLAYER.PLAYER_PED_ID(), 0),
                 0.8, 0, 0, 0, 0, 270,
-                ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(players.user_ped(), 0), 'Gun_Nuzzle'),
+                ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(PLAYER.PLAYER_PED_ID(), 0), 'Gun_Nuzzle'),
                 0.5, false, false, false, 0, 0, 0, 0
             )
-        GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(flameThrower.ptfx, flameThrower.colour.r, flameThrower.colour.g, flameThrower.colour.b, 0)
+        GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(flameThrower.ptfx, flameThrower.colour.r, flameThrower.colour.g, flameThrower.colour.b, false)
     end
 end
 
@@ -6201,10 +6181,10 @@ function Fire_Fist(on)
         for _, boneId in ipairs(bones) do
         request_ptfx_asset("core")
         GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("fire_wrecked_plane_cockpit", players.user_ped(), 0, 0, 0, 0, 0 , 0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.35, false, false, false, 0, 0, 0, 0)
+        GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("fire_wrecked_plane_cockpit", PLAYER.PLAYER_PED_ID(), 0, 0, 0, 0, 0 , 0,PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), boneId), 0.35, false, false, false, 0, 0, 0, 0)
         end
     else
-        GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(players.user_ped())
+        GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(PLAYER.PLAYER_PED_ID())
     end
 end
 function Blood_Fist(on)
@@ -6212,10 +6192,10 @@ function Blood_Fist(on)
         for _, boneId in ipairs(bones) do
         request_ptfx_asset("core")
         GRAPHICS.USE_PARTICLE_FX_ASSET("core")
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("scrape_blood_car", players.user_ped(), 0, 0, 0, 0, 0 , 0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.35, false, false, false, 0, 0, 0, 0)
+        GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("scrape_blood_car", PLAYER.PLAYER_PED_ID(), 0, 0, 0, 0, 0 , 0,PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), boneId), 0.35, false, false, false, 0, 0, 0, 0)
         end
     else
-        GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(players.user_ped())
+        GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(PLAYER.PLAYER_PED_ID())
     end
 end
 function Raiden_Fist(on)
@@ -6223,10 +6203,10 @@ function Raiden_Fist(on)
         for _, boneId in ipairs(bones) do
         request_ptfx_asset("scr_reconstructionaccident")
         GRAPHICS.USE_PARTICLE_FX_ASSET("scr_reconstructionaccident")
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("scr_sparking_generator", players.user_ped(), 0, 0, 0, 0, 0 , 0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 2, false, false, false, 0, 0, 0, 0)
+        GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("scr_sparking_generator", PLAYER.PLAYER_PED_ID(), 0, 0, 0, 0, 0 , 0,PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), boneId), 2, false, false, false, 0, 0, 0, 0)
         end
     else
-        GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(players.user_ped())
+        GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(PLAYER.PLAYER_PED_ID())
     end
 end
 
@@ -6236,7 +6216,7 @@ end
 function entity_limit()
     local ped_count = 0
     for _, ped in pairs(entities.get_all_peds_as_handles()) do
-        if ped ~= players.user_ped() then
+        if ped ~= PLAYER.PLAYER_PED_ID() then
             ped_count += 1
         end
         if ped_count >= ped_limit then
@@ -6284,10 +6264,10 @@ function get_offset_from_gameplay_camera(distance)
 end
 shootent = -422877666
 function eentity_gun()
-    if PED.IS_PED_SHOOTING(players.user_ped()) then
+    if PED.IS_PED_SHOOTING(PLAYER.PLAYER_PED_ID()) then
         local hash = shootent
         request_model(hash)
-        local c1 = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0.0, 5.0, 0.0)
+        local c1 = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), 0.0, 5.0, 0.0)
         local res = raycast_gameplay_cam(-1, 1000.0)
         local dir = {}
         local c2 = {}
@@ -6303,7 +6283,7 @@ function eentity_gun()
             dir['z'] = (c2['z'] - c1['z'])*1000
         end
         local ent = OBJECT.CREATE_OBJECT_NO_OFFSET(hash, c1['x'], c1['y'], c1['z'], true, false, false)
-        ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(ent, players.user_ped(), false)
+        ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(ent, PLAYER.PLAYER_PED_ID(), false)
         ENTITY.APPLY_FORCE_TO_ENTITY(ent, 0, dir['x'], dir['y'], dir['z'], 0.0, 0.0, 0.0, 0, true, false, true, false, true)
     end
 end
@@ -6326,7 +6306,7 @@ local nitro_duration = 2000
 local nitro_power = 2000
 function nnitrogen_acceleration()
     local player_cur_car = entities.get_user_vehicle_as_handle()
-    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) and player_cur_car ~= 0 then
+    if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID(), true) and player_cur_car ~= 0 then
         if PAD.IS_CONTROL_JUST_PRESSED(357, 357) then --x
             request_ptfx_asset('veh_xs_vehicle_mods')
             GRAPHICS.USE_PARTICLE_FX_ASSET('veh_xs_vehicle_mods')
@@ -7006,7 +6986,7 @@ end
 ----飞天扫把
 function flying_broom(on)
     if on then 
-        local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), false)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)
         local broomstick = util.joaat("prop_tool_broom")
         local oppressor = util.joaat("oppressor2")
         request_model(broomstick)
@@ -7014,7 +6994,7 @@ function flying_broom(on)
         obj = entities.create_object(broomstick, pos)
         veh = entities.create_vehicle(oppressor, pos, 0)
         ENTITY.SET_ENTITY_VISIBLE(veh, false, false)
-        PED.SET_PED_INTO_VEHICLE(players.user_ped(), veh, -1)
+        PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), veh, -1)
         ENTITY.ATTACH_ENTITY_TO_ENTITY(obj, veh, 0, 0, 0, 0.3, -80.0, 0, 0, true, false, false, false, 0, true, 0) -- thanks to chaos mod for doing the annoying rotation work for me :P
     else
         entities.delete(obj)
@@ -7167,10 +7147,10 @@ local cum = util.joaat("p_oil_slick_01")
 local anim2 = "trev_jerking_off_loop"
 local anim = "shit_loop_trev"
 function personlshit()
-    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    local c = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     c.z = c.z - 1
     request_anim_dict(agroup)
-    TASK.TASK_PLAY_ANIM(players.user_ped(), agroup, anim, 8.0, 8.0, 3000, 0, 0, true, true, true) --play anim
+    TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), agroup, anim, 8.0, 8.0, 3000, 0, 0, true, true, true) --play anim
     util.yield(1000)
     local shit = create_object(mshit, c.x, c.y, c.z) --spawn shit
     util.yield(60000)
@@ -7180,7 +7160,7 @@ end
 function personlhitplane() 
     local c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), 0, 1, 0)
     request_anim_dict(agroup2)
-    TASK.TASK_PLAY_ANIM(players.user_ped(), agroup2, anim2, 8.0, 8.0, 5000, 1, 0, true, true, true) --play anim
+    TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), agroup2, anim2, 8.0, 8.0, 5000, 1, 0, true, true, true) --play anim
     util.yield(4500)
     local cum = create_object(cum, c.x, c.y, c.z - 1) --spawn cum
     util.yield(60000)
@@ -7194,7 +7174,7 @@ local detonate_radius = 2
 function autoExplodeStickys(ped)
     local pos = ENTITY.GET_ENTITY_COORDS(ped, true)
     if MISC.IS_PROJECTILE_TYPE_WITHIN_DISTANCE(pos.x, pos.y, pos.z, util.joaat('weapon_stickybomb'), detonate_radius, true) then
-        WEAPON.EXPLODE_PROJECTILES(players.user_ped(), util.joaat('weapon_stickybomb'))
+        WEAPON.EXPLODE_PROJECTILES(PLAYER.PLAYER_PED_ID(), util.joaat('weapon_stickybomb'))
     end
 end
 function proxyStickys()
@@ -7222,8 +7202,8 @@ function vehicle_speedometer(state)
     speedm = state  
     while speedm do
         local ent
-            local ent1 = players.user_ped()
-            local ent2 = PED.GET_VEHICLE_PED_IS_USING(players.user_ped())
+            local ent1 = PLAYER.PLAYER_PED_ID()
+            local ent2 = PED.GET_VEHICLE_PED_IS_USING(PLAYER.PLAYER_PED_ID())
             if PED.IS_PED_IN_ANY_VEHICLE(ent1,true) then
                 ent = ent2
             else
@@ -7241,15 +7221,15 @@ end
 local fallTimeout = false
 function tripped1(toggle)
     if toggle then
-        local vector = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
-        PED.SET_PED_TO_RAGDOLL_WITH_FALL(players.user_ped(), 1500, 2000, 2, vector.x, -vector.y, vector.z, 1, 0, 0, 0, 0, 0, 0)
+        local vector = ENTITY.GET_ENTITY_FORWARD_VECTOR(PLAYER.PLAYER_PED_ID())
+        PED.SET_PED_TO_RAGDOLL_WITH_FALL(PLAYER.PLAYER_PED_ID(), 1500, 2000, 2, vector.x, -vector.y, vector.z, 1, 0, 0, 0, 0, 0, 0)
     end
     fallTimeout = toggle
     while fallTimeout do
-        PED.RESET_PED_RAGDOLL_TIMER(players.user_ped())
+        PED.RESET_PED_RAGDOLL_TIMER(PLAYER.PLAYER_PED_ID())
         util.yield_once()
     end
 end
 function tripped2()
-    PED.SET_PED_TO_RAGDOLL(players.user_ped(), 2000, 2000, 0, true, true, true)
+    PED.SET_PED_TO_RAGDOLL(PLAYER.PLAYER_PED_ID(), 2000, 2000, 0, true, true, true)
 end

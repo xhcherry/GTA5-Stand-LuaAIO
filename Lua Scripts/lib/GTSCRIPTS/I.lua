@@ -312,8 +312,8 @@ menu.on_blur(posYslider, function()
     posYslider_show = false
 end)
 
-local blipsize = 0.0035
-local blipsizeslider = menu.slider(player_info, "光标大小", {}, "默认为 35", 1, 100, blipsize*10000, 1, function(size)
+local blipsize = 0.0185
+local blipsizeslider = menu.slider(player_info, "光标大小", {}, "默认为 35", 1, 1000, blipsize*10000, 1, function(size)
     blipsize = size/10000
 end)
 
@@ -573,7 +573,7 @@ util.create_tick_handler(function()
 
             --im not happy about this code tbh to many fucked up numbers for me and i just copied this shit from InfOverlay from lev maybe if u read this i havnt changed it since its been added but if u dont then its better :D
             --map--
-            local mapsizeX, mapsizeY = 0.14416506, 0.3864867
+            local mapsizeX, mapsizeY = 0.16416506, 0.4064867
             directx.draw_texture(map, mapsizeX/2, mapsizeY, 0.5, 0.5, mapposX, mapposY, 0.0, colors.map)
 
             --blip--

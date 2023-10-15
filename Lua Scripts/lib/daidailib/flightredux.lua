@@ -1,36 +1,15 @@
-local aalib = require("aalib")
-local PlaySound = aalib.play_sound
-local SND_ASYNC<const> = 0x0001
-local SND_FILENAME<const> = 0x00020000
+
 
 local store_dir = filesystem.scripts_dir() .. '\\daidaiScript\\' .. '\\flightredux\\'
-sound_selection_dirterrain = store_dir .. '\\terrain.txt'
-sound_selection_dirmissile = store_dir .. '\\missile.txt'
+local sound_terrain = store_dir .. '\\terrain.wav'
+local sound_missile = store_dir .. '\\missile.wav'
 
-fp = io.open(sound_selection_dirterrain, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-
-fp = io.open(sound_selection_dirmissile, 'r')
-local file_selectionmissile = fp:read('*a')
-fp:close()
-
---音频文件
-local sound_location = store_dir .. '\\' .. file_selection
-local sound_locationmissile = store_dir .. '\\' .. file_selectionmissile
-
-local hhud_dir = filesystem.scripts_dir() .. '\\daidaiScript\\' .. '\\flightredux\\'
-if not filesystem.scripts_dir(hhud_dir_dir) then
-    util.toast("警告:资源目录丢失")
-end
-
-local trajectory_icon = directx.create_texture(hhud_dir .. 'trajectory.png')
-local altimeter_outline = directx.create_texture(hhud_dir .. 'altimeter.png') 
-local boresight = directx.create_texture(hhud_dir .. 'boresight.png') 
-local line = directx.create_texture(hhud_dir .. 'line.png')
-local circle = directx.create_texture(hhud_dir .. 'circle.png')
-local contact = directx.create_texture(hhud_dir.. 'contact.png')
-
+local trajectory_icon = directx.create_texture(store_dir .. 'trajectory.png')
+local altimeter_outline = directx.create_texture(store_dir .. 'altimeter.png') 
+local boresight = directx.create_texture(store_dir .. 'boresight.png') 
+local line = directx.create_texture(store_dir .. 'line.png')
+local circle = directx.create_texture(store_dir .. 'circle.png')
+local contact = directx.create_texture(store_dir.. 'contact.png')
 
 local hud_green = {
     r = 0, 
@@ -324,7 +303,7 @@ menu.toggle_loop(planehud, "飞机HUD", {}, "", function()
 
                     end
                     if play_sound_this_frame then 
-                        PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
+                        AUDIO.PLAY_SOUND_FRONTEND(-1, "5_SEC_WARNING", "HUD_MINI_GAME_SOUNDSET", true)
                     end
                     break
                 case "SINK RATE":
@@ -336,7 +315,7 @@ menu.toggle_loop(planehud, "飞机HUD", {}, "", function()
                 case "MISSILE": 
                     directx.draw_text(0.5, 0.9, "MISSILE", 5, 3, hud_red, false)
                     if play_sound_this_frame then 
-                        PlaySound(sound_locationmissile, SND_FILENAME | SND_ASYNC)
+                        AUDIO.PLAY_SOUND_FRONTEND(-1, "5_SEC_WARNING", "HUD_MINI_GAME_SOUNDSET", true)
                     end
             end
         end 

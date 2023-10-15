@@ -136,7 +136,7 @@ function load_weapon()
         local loadout = dofile(filesystem.store_dir() .."SakuraConfig/loadouts/" .. selected_loadout .. ".lua")
         --require("store.SakuraConfig.loadouts." .. selected_loadout)
         for w_hash, attach_dict in loadout do
-            WEAPON.GIVE_WEAPON_TO_PED(player, w_hash, 10, false, false)
+            WEAPON.GIVE_WEAPON_TO_PED(player, w_hash, 9999, false, false)
             WEAPON.SET_PED_AMMO(player, w_hash, 9999, false)--补充弹药不完全(MK2卡宾步枪,)
             if attach_dict.attachments ~= nil then
                 for _, hash in attach_dict.attachments do

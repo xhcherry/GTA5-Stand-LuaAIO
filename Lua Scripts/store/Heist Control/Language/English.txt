@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 07/08/2023 10:39:18 PM
-# Heist Control Version: V 3.3.3
+# Generated Date: 10/08/2023 08:01:37 PM
+# Heist Control Version: V 3.3.8
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -110,13 +110,6 @@ Yohan Blair = Yohan Blair
 0 - Strongest Guards = 0 - Strongest Guards
 3 - Weakest Guards = 3 - Weakest Guards
 Remove Drills = Remove Drills
-Casino Story Missions = Casino Story Missions
-Loose Cheng = Loose Cheng
-House Keeping = House Keeping
-Strong Arm Tactics = Strong Arm Tactics
-Play to Win = Play to Win
-Bad Beat = Bad Beat
-Cashing Out = Cashing Out
 The Data Breaches ACT I = The Data Breaches ACT I
 The Bogdan Problem ACT II = The Bogdan Problem ACT II
 The Doomsday Scenario ACT III = The Doomsday Scenario ACT III
@@ -249,7 +242,6 @@ Light Blue = Light Blue
 Text Color = Text Color
 About HC = About HC
 Join Discord Server! = Join Discord Server!
-Youtube = Youtube
 Changelog = Changelog
 Credits = Credits
 Translators = Translators
@@ -384,7 +376,6 @@ Buying And Selling = Buying And Selling
 Air-Freight Cargo = Air-Freight Cargo
 Client Jobs = Client Jobs
 Spin Lucky Wheel = Spin Lucky Wheel
-Kosatka Missiles = Kosatka Missiles
 Dax Job = Dax Job
 Note that Dax Job means from cellphone = Note that Dax Job means from cellphone
 CEO Vehicles = CEO Vehicles
@@ -458,7 +449,6 @@ This action will take a few seconds. Please wait for it patiently, don't press m
 Notification's Style = Notification's Style
 Type = Type
 Heist Control for 2Take1 Developer. He allowed me to use his code. HC wouldn't exist without his help. Serious thanks to him! = Heist Control for 2Take1 Developer. He allowed me to use his code. HC wouldn't exist without his help. Serious thanks to him!
-Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D = Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D
 If you want to know what was changed in the latest version, click me! = If you want to know what was changed in the latest version, click me!
 When using this method, the percentage and final payment will be random! = When using this method, the percentage and final payment will be random!
 Works On Both: Fingerprint and Keypad = Works On Both: Fingerprint and Keypad
@@ -479,10 +469,6 @@ All = All
 One Line = One Line
 HC Logo image file doesn't exist. = HC Logo image file doesn't exist.
 Native file for HC doesn't exist. = Native file for HC doesn't exist.
-Your current Stand version isn't compatible with current Heist Control version. Please update Stand to use it. = Your current Stand version isn't compatible with current Heist Control version. Please update Stand to use it.
-- Current your Heist Control version: = - Current your Heist Control version:
-- At least required Stand version: = - At least required Stand version:
-- Current your Stand version: = - Current your Stand version:
 You should enable the preset until the end of the heist! = You should enable the preset until the end of the heist!
 - How to change the line color: Stand > Settings > Appearance > Colours > HUD Colour = - How to change the line color: Stand > Settings > Appearance > Colours > HUD Colour
 - How to change the AR Beacon color: Stand > Settings > Appearance > Colours > AR Colour = - How to change the AR Beacon color: Stand > Settings > Appearance > Colours > AR Colour
@@ -491,7 +477,6 @@ Refresh Kosatka Planning Table = Refresh Kosatka Planning Table
 You can update changed cayo perico heist stats in the Kosatka by refreshing it. = You can update changed cayo perico heist stats in the Kosatka by refreshing it.
 - Knife + Pipe Bomb = - Knife + Pipe Bomb
 - Assault Rifle Mk2 + Pistol Mk2 = - Assault Rifle Mk2 + Pistol Mk2
-Entrance and Exit will be selected 'Staff Lobby' and Buyer will be selected 'Low' by HC. But, selected Buyer won't be visible at the board somehow, don't change those options when you are before launching the heist. = Entrance and Exit will be selected 'Staff Lobby' and Buyer will be selected 'Low' by HC. But, selected Buyer won't be visible at the board somehow, don't change those options when you are before launching the heist.
 Please don't forget that buyer should be selected 'Low'! Otherwise, won't get money. = Please don't forget that buyer should be selected 'Low'! Otherwise, won't get money.
 Makes Forced Able To Launch = Makes Forced Able To Launch
 Refresh Arcade Boards = Refresh Arcade Boards
@@ -539,7 +524,6 @@ Max payout for this heist = Max payout for this heist
 - Fleeca Heist: Under $15.000.000 per run = - Fleeca Heist: Under $15.000.000 per run
 Enabling one of these presets will complete all of setups, and set as max payout, $2.55 Millions. It will be affected to all of heist players. = Enabling one of these presets will complete all of setups, and set as max payout, $2.55 Millions. It will be affected to all of heist players.
 Recommended = Recommended
-There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.55M) by only getting it. = There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.55M) by only getting it.
 This feature has been controlled by another feature. = This feature has been controlled by another feature.
 Select Primary Target = Select Primary Target
 Teleport Places = Teleport Places
@@ -666,7 +650,6 @@ The Contract DLC = The Contract DLC
 Unlocks almost of unlockable stuffs related the heist like clothing, etc. = Unlocks almost of unlockable stuffs related the heist like clothing, etc.
 Independence's Day = Independence's Day
 Unlock Lots of Hats And Shirts = Unlock Lots of Hats And Shirts
-Also will increase Kosatka missiles distance. = Also will increase Kosatka missiles distance.
 Auto Refill Snacks & Armours = Auto Refill Snacks & Armours
 Delete This File = Delete This File
 Do you sure delete this file? It cannot be recovered! = Do you sure delete this file? It cannot be recovered!
@@ -695,3 +678,13 @@ If you have any questions regarding Heist Control? Joining it will help you so m
 - Post a suggestion or an issue to improve Heist Control. = - Post a suggestion or an issue to improve Heist Control.
 Please download the latest version of Heist Control or wait for Heist Control's developer patching. = Please download the latest version of Heist Control or wait for Heist Control's developer patching.
 Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support! = Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support!
+There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.45M) by only getting it. = There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.45M) by only getting it.
+Note that works on best when you are alone in your session. = Note that works on best when you are alone in your session.
+Note that you shouldn't enable this feature while playing the Casino Heist: Because due to synced with payout for it = Note that you shouldn't enable this feature while playing the Casino Heist: Because due to synced with payout for it
+Crew Level = Crew Level
+Crew = Crew
+Crew RP = Crew RP
+Crew ID = Crew ID
+Current Crew Level = Current Crew Level
+Choose Crew Level = Choose Crew Level
+Set Crew Level = Set Crew Level

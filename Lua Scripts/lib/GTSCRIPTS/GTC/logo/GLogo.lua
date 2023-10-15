@@ -15,10 +15,9 @@
        \ \__\ \ \__\\ _\\ \__\ \__\ \__\\ \__\____\_\  \ \_______\ \__\ \__\   \ \__\ \ \_______\ \_______\       \ \__\   \ \__\\ _\\ \_______\ \__\    \ \__\           \ \________\     \ \__\    
         \|__|  \|__|\|__|\|__|\|__|\|__| \|__|\_________\|_______|\|__|\|__|    \|__|  \|_______|\|_______|        \|__|    \|__|\|__|\|_______|\|__|     \|__|            \|________|      \|__|  
 --]]
-os.require "lib.GTSCRIPTS.W"
-os.require "lib.GTSCRIPTS.O" 
-os.require "lib.GTSCRIPTS.T"
-os.require "lib.GTSCRIPTS.GTW.hbcheck"
+require "lib.GTSCRIPTS.W"
+require "lib.GTSCRIPTS.O" 
+require "lib.GTSCRIPTS.T"
 scaleform = require('lib.GTSCRIPTS.Z')
 --sf = scaleform('instructional_buttons')
 translations = {}
@@ -42,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '10.1'
+GT_version = '10.13'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -50,31 +49,23 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("修复了在106.8无法启动脚本\n新增>自我选项>自我娱乐>双枪\n新增>自我选项>自我娱乐>刀客\n新增>自我选项>特效选项>电疗\n新增>自我选项>增强选项>国家分类显示\n新增>自我选项>增强选项>玩家头部全局显示\n新增>自我选项>增强选项>观看镜头/高度/偏移\n新增>自我选项>增强选项>服装与风格\n存在以下新增选项:\n#没有血迹\n#随机服装\n#循环随机服装\n#随机海滩服装\n#让自己赤脚\n#走路风格\n更新>玩家选项>定位透视信息>载具/NPC\n更新>自我选项>自我娱乐>起飞\n其他的一些改进与修复\nVersion: "..GT_version)
+    notification("聊天选项>聊天翻译现在重做并可以正常使用\n着重修复自崩问题，主要针对重复开关脚本导致的自崩，现在应该变得稳定\n解压密码，现在变更为脚本启动时输入密码，皇榜用户不需要输入密码\n更新了任务功能\n新增>恶搞选项>近期更新>传送到佩里科岛\n新增>恶搞选项>近期更新>传送到海滩\n修复部分UFO功能无效\nVersion: "..GT_version)
 end
 --
-
+pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
+if filesystem.exists(pathld) then
+    require "lib.GTSCRIPTS.GTW.display"
+else
+    gtoast("未检测到文件")
+end
 --
+loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
 coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
 bbtxt = "https://jq.qq.com/?_wv=1027&k=U3XOlyOF"
 bbtct = "[点击此处加入官方群聊中进行询问]\n\n*加载脚本显示(请稍等...):#网络问题\n#建议更换您的节点/模式或加速器\n\n*加载脚本提示缺少(not found)文件,\n 或加载脚本提示缺少(no file)文件: #请重新安装脚本及脚本依赖文件\n#建议使用<丢丢原装lua>覆盖lua文件\n其他疑问与发现请联系开发人员,非常感谢您的支持儿,祝您游戏愉快儿~"
-mename = PLAYER.GET_PLAYER_NAME(players.user())
 grouplink = "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566"
-Name_info = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
-util.show_corner_help("~b~~h~GRANDTOURINGVIP\n~q~~h~欢迎 "..Name_info)
---[[
-util.create_thread(function ()
-    local fr = soup.FileReader(filesystem.scripts_dir() .. 'GTLuaScript\\gt\\GT.wav')
-    local wav = soup.audWav(fr)
-    local dev = soup.audDevice.getDefault()
-    local pb = dev:open(wav.channels)
-    local mix = soup.audMixer()
-    mix.stop_playback_when_done = true
-    mix:setOutput(pb)
-    mix:playSound(wav)
-    while pb:isPlaying() do wait(1000) end
-end)]]
---
+gtoast("GRANDTOURINGVIP!\n版本 " .. GT_version .. " 欢迎 ".."\n加入群聊可获得最新版本")
+
 function toFloat(num)
 return (num / 10) * 10
 end
@@ -161,6 +152,7 @@ if SCRIPT_MANUAL_START then
 end
 
 function do_label_preset(label, text)
+    --log("Setting up label present for label " .. label .. " with text " .. text)
     menu.trigger_commands("addlabel " .. label)
     local prep = "edit" .. string.gsub(label, "_", "") .. " " .. text
     menu.trigger_commands(prep)
@@ -286,6 +278,54 @@ sixteenth = 16
 MOD_HORN = 14
 
 horn_on = false
+
+dicdd={
+"ANIM_GROUP_MOVE_BALLISTIC",
+"ANIM_GROUP_MOVE_LEMAR_ALLEY",
+"clipset@move@trash_fast_turn",
+"FEMALE_FAST_RUNNER",
+"missfbi4prepp1_garbageman",
+"move_characters@franklin@fire",
+"move_characters@Jimmy@slow@",
+"move_characters@michael@fire",
+"move_f@flee@a",
+"move_f@scared",
+"move_f@sexy@a",
+"move_heist_lester",
+"move_injured_generic",
+"move_lester_CaneUp",
+"move_m@bag",
+"MOVE_M@BAIL_BOND_NOT_TAZERED",
+"MOVE_M@BAIL_BOND_TAZERED",
+"move_m@brave",
+"move_m@casual@d",
+"move_m@drunk@moderatedrunk",
+"MOVE_M@DRUNK@MODERATEDRUNK",
+"MOVE_M@DRUNK@MODERATEDRUNK_HEAD_UP",
+"MOVE_M@DRUNK@SLIGHTLYDRUNK",
+"MOVE_M@DRUNK@VERYDRUNK",
+"move_m@fire",
+"move_m@gangster@var_e",
+"move_m@gangster@var_f",
+"move_m@gangster@var_i",
+"move_m@JOG@",
+"MOVE_M@PRISON_GAURD",
+"MOVE_P_M_ONE",
+"MOVE_P_M_ONE_BRIEFCASE",
+"move_p_m_zero_janitor",
+"move_p_m_zero_slow",
+"move_ped_bucket",
+"move_ped_crouched",
+"move_ped_mop",
+"MOVE_M@FEMME@",
+"MOVE_F@FEMME@",
+"MOVE_M@GANGSTER@NG",
+"MOVE_F@GANGSTER@NG",
+"MOVE_M@POSH@",
+"MOVE_F@POSH@",
+"MOVE_M@TOUGH_GUY@",
+"MOVE_F@TOUGH_GUY@",
+}
 
 songs = {
     {
@@ -1505,6 +1545,101 @@ function addBlipForEntity(entity, blipSprite, colour)
     end)
     return blip
 end
+--服装
+function barefoot(freemode_ped)
+    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 35, 0, 0)
+    else
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 34, 0, 0)
+    end
+end
+
+function wipe_outfit(freemode_ped)
+    local hair = PED.GET_PED_DRAWABLE_VARIATION(freemode_ped, 2)
+    local hair_tex = PED.GET_PED_TEXTURE_VARIATION(freemode_ped, 2)
+
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 1, 0, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 2, hair, hair_tex, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 0, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 9, 0, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 7, 0, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, 0, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 8, 15, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 0, 0, 0)
+    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 0, 0, 0) 
+    PED.CLEAR_ALL_PED_PROPS(freemode_ped)
+end
+
+function shirtless(freemode_ped)
+    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 15, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, 15, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 8, 14, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 7, 0, 0, 0)
+    else
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 15, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, 15, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 8, 15, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 7, 0, 0, 0)
+    end
+end
+
+function get_random_drawable_variation(freemode_ped, component, drawable)
+    return math.random(0, PED.GET_NUMBER_OF_PED_TEXTURE_VARIATIONS(freemode_ped, component, drawable))-1
+end
+
+function barefoot(freemode_ped)
+    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 35, 0, 0)
+    else
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 34, 0, 0)
+    end
+end
+
+function random_tropical_outfit(freemode_ped)
+    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 11, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 44, 269, get_random_drawable_variation(freemode_ped, 44, 269), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 137, get_random_drawable_variation(freemode_ped, 4, 137), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, select(math.random(1, 2), 15, 16),get_random_drawable_variation(freemode_ped, 6, select(math.random(1, 2), 15, 16)), 0)
+        
+        if (math.random(0, 15) == 5) then
+            barefoot(freemode_ped)
+        elseif (math.random(0, 15) == 9) then
+            shirtless(freemode_ped)
+        elseif (math.random(0, 15) == 11) then
+            shirtless(freemode_ped)
+            barefoot(freemode_ped)
+        end
+    else
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 44, 260, get_random_drawable_variation(freemode_ped, 44, 260), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 15, get_random_drawable_variation(freemode_ped, 4, 15), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 16, get_random_drawable_variation(freemode_ped, 6, 16), 0)
+
+        if (math.random(0, 15) == 5) then
+            barefoot(freemode_ped)
+        elseif (math.random(0, 15) == 9) then
+            shirtless(freemode_ped)
+        elseif (math.random(0, 15) == 11) then
+            shirtless(freemode_ped)
+            barefoot(freemode_ped)
+        end
+    end
+end
+
+function random_golf_outfit(freemode_ped)
+    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 14, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, math.random(400, 401), get_random_drawable_variation(freemode_ped, 11, math.random(400, 401)), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 137, get_random_drawable_variation(freemode_ped, 4, 137), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 103, get_random_drawable_variation(freemode_ped, 6, 103), 0)
+    else
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 0, 0, 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, math.random(382, 383), get_random_drawable_variation(freemode_ped, 11, math.random(382, 383)), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 12, select(math.random(1, 5), 0, 4, 5, 7, 12), 0)
+        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 99, get_random_drawable_variation(freemode_ped, 6, 99), 0)
+    end
+end
 --获取信息
 function intToIp(num)
     ip = ""
@@ -1866,7 +2001,7 @@ function notification(input)
 
     for _, id in ipairs(spid) do 
         if name == id.playerid then 
-            local combinedText = "GRANDTOURINGVIP\n" .. checkme()
+            local combinedText = "GRANDTOURINGVIP\n"..checkme()
             combinedText = combinedText:gsub("\n%s*", "\n") -- 移除换行后的空格
             mayonotification.notify(combinedText, input)
             shouldCallNotify = true  -- 设置标志以在 for 循环中调用
@@ -1875,7 +2010,7 @@ function notification(input)
 
     for _, id in ipairs(devid) do 
         if name == id.playerrid then 
-            local combinedText = "GRANDTOURINGVIP\n" .. checkme()
+            local combinedText = "GRANDTOURINGVIP\n"..checkme()
             combinedText = combinedText:gsub("\n%s*", "\n") -- 移除换行后的空格
             mayonotification.notify(combinedText, input)
             shouldCallNotify = true  -- 设置标志以在 for 循环中调用
@@ -5683,14 +5818,14 @@ function firewing(toggle)
 
             util.create_tick_handler(function()
                 local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-                --ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-                --ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
                 for i = 1, #fireWings do
-                    --GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE("weap_xs_vehicle_weapons", fireWingsSettings.scale)
-                    --GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWings[i].ptfx, fireWingsSettings.colour.r, fireWingsSettings.colour.g, fireWingsSettings.colour.b)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE("weap_xs_vehicle_weapons", fireWingsSettings.scale)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWings[i].ptfx, fireWingsSettings.colour.r, fireWingsSettings.colour.g, fireWingsSettings.colour.b)
                 end
 
-                --ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
                 return fireWingsSettings.on
             end)
         end
@@ -6438,7 +6573,7 @@ function fingergun()
         local weapon_name = data[2]
         local projectile = util.joaat(weapon_name)
         while not WEAPON.HAS_WEAPON_ASSET_LOADED(projectile) do
-            --WEAPON.REQUEST_WEAPON_ASSET(projectile, 31, false)
+            WEAPON.REQUEST_WEAPON_ASSET(projectile, 31, false)
             wait(10)
         end
         menu.toggle(finger_thing, name, {}, "", function(state)
@@ -6777,18 +6912,8 @@ function get_sub_handling_array(handlingData)
 	return arr
 end
 
-local GetVehicleModelInfo = 0
----@diagnostic disable-next-line: undefined-global
-memory_scan("GVMI", "48 89 5C 24 ? 57 48 83 EC 20 8B 8A ? ? ? ? 48 8B DA", function (address)
-	GetVehicleModelInfo = memory.rip(address + 0x2A)
-end)
 
 
-local GetHandlingDataFromIndex = 0
----@diagnostic disable-next-line: undefined-global
-memory_scan("GHDFI", "40 53 48 83 EC 30 48 8D 54 24 ? 0F 29 74 24 ?", function (address)
-	GetHandlingDataFromIndex = memory.rip(address + 0x37)
-end)
 
 valiases_spawn = {}
 function veh_spawn_see()
@@ -7535,14 +7660,6 @@ function Vspawn(mod, pCoor, pedSi, plate)
     Vmod(vmod, plate)
     local CV = CAM.GET_GAMEPLAY_CAM_RELATIVE_HEADING()
     ENTITY.SET_ENTITY_HEADING(vmod, CV)
-end
-
-function get_vehicle_model_info(modelHash)
-	return util.call_foreign_function(GetVehicleModelInfo, modelHash, NULL)
-end
-
-function get_vehicle_model_handling_data(modelInfo)
-	return util.call_foreign_function(GetHandlingDataFromIndex, memory.read_uint(modelInfo + 0x4B8))
 end
 
 local taxi_ped = 0
@@ -8675,7 +8792,7 @@ util.create_tick_handler(function()
     
     local i = 0
     while i < 300 do
-        local combinedText = "~h~~r~∑~y~G~g~R~q~A~p~N~f~D~p~T~g~O~b~U~q~R~p~I~k~N~g~G~p~V~y~I~g~P~r~∑~r~\n~h~~g~[".. PLAYER.GET_PLAYER_NAME(players.user()).. "]~y~VIP∑\n"..checkme()
+        local combinedText = "~h~~r~∑~y~G~g~R~q~A~p~N~f~D~p~T~g~O~b~U~q~R~p~I~k~N~g~G~p~V~y~I~g~P~r~∑~r~\n~h~~g~[".. PLAYER.GET_PLAYER_NAME(players.user()).. "]~y~VIP∑"
         combinedText = combinedText:gsub("\n%s*", "\n") -- 移除换行后的空格
         
         GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(alert_screen, "SHOW_SHARD_WASTED_MP_MESSAGE")
@@ -8692,7 +8809,7 @@ util.create_tick_handler(function()
     
     local i = 0
     while i < 300 do
-        local combinedText = "~h~~r~∑~y~G~g~R~q~A~p~N~f~D~p~T~g~O~b~U~q~R~p~I~k~N~g~G~p~V~y~I~g~P~r~∑~r~\n~h~~g~[".. PLAYER.GET_PLAYER_NAME(players.user()).. "]~y~VIP∑\n"..checkme()
+        local combinedText = "~h~~r~∑~y~G~g~R~q~A~p~N~f~D~p~T~g~O~b~U~q~R~p~I~k~N~g~G~p~V~y~I~g~P~r~∑~r~\n~h~~g~[".. PLAYER.GET_PLAYER_NAME(players.user()).. "]~y~VIP∑"
         combinedText = combinedText:gsub("\n%s*", "\n") -- 移除换行后的空格
         
         GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(alert_screen, "SHOW_SHARD_WASTED_MP_MESSAGE")
@@ -9727,196 +9844,6 @@ function rrren(on)
         end
     end
 end
---
-function ptfx_looped(ptfx, entity, offset, rot, scale)
-	GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(ptfx, entity, offset.x, offset.y, offset.z, rot.x, rot.y, rot.z, scale)
-end
-
-function attachPTFX(entity,dict,ptfx,scale,offset,rot)
-  GRAPHICS.USE_PARTICLE_FX_ASSET(dict)
-  while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(dict) do
-    STREAMING.REQUEST_NAMED_PTFX_ASSET(dict)
-    wait(0)
-    return HANDLER_CONTINUE 
-  end
-  ptfx_looped(ptfx,entity,offset,rot,scale)
-end
---
-function barefoot(freemode_ped)
-    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 35, 0, 0)
-    else
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 34, 0, 0)
-    end
-end
-
-function wipe_outfit(freemode_ped)
-    local hair = PED.GET_PED_DRAWABLE_VARIATION(freemode_ped, 2)
-    local hair_tex = PED.GET_PED_TEXTURE_VARIATION(freemode_ped, 2)
-
-    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 1, 0, 0, 0)
-    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 2, hair, hair_tex, 0)
-    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 0, 0, 0)
-    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 9, 0, 0, 0)
-    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 7, 0, 0, 0)
-    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, 0, 0, 0)
-    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 8, 15, 0, 0)
-    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 0, 0, 0)
-    PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 0, 0, 0) 
-    PED.CLEAR_ALL_PED_PROPS(freemode_ped)
-end
-
-function shirtless(freemode_ped)
-    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 15, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, 15, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 8, 14, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 7, 0, 0, 0)
-    else
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 15, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, 15, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 8, 15, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 7, 0, 0, 0)
-    end
-end
-
-function get_random_drawable_variation(freemode_ped, component, drawable)
-    return math.random(0, PED.GET_NUMBER_OF_PED_TEXTURE_VARIATIONS(freemode_ped, component, drawable))-1
-end
-
-function barefoot(freemode_ped)
-    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 35, 0, 0)
-    else
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 34, 0, 0)
-    end
-end
-
-function random_tropical_outfit(freemode_ped)
-    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 11, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 44, 269, get_random_drawable_variation(freemode_ped, 44, 269), 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 137, get_random_drawable_variation(freemode_ped, 4, 137), 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, select(math.random(1, 2), 15, 16),get_random_drawable_variation(freemode_ped, 6, select(math.random(1, 2), 15, 16)), 0)
-        
-        if (math.random(0, 15) == 5) then
-            barefoot(freemode_ped)
-        elseif (math.random(0, 15) == 9) then
-            shirtless(freemode_ped)
-        elseif (math.random(0, 15) == 11) then
-            shirtless(freemode_ped)
-            barefoot(freemode_ped)
-        end
-    else
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 44, 260, get_random_drawable_variation(freemode_ped, 44, 260), 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 15, get_random_drawable_variation(freemode_ped, 4, 15), 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 16, get_random_drawable_variation(freemode_ped, 6, 16), 0)
-
-        if (math.random(0, 15) == 5) then
-            barefoot(freemode_ped)
-        elseif (math.random(0, 15) == 9) then
-            shirtless(freemode_ped)
-        elseif (math.random(0, 15) == 11) then
-            shirtless(freemode_ped)
-            barefoot(freemode_ped)
-        end
-    end
-end
-
-function random_golf_outfit(freemode_ped)
-    if (ENTITY.GET_ENTITY_MODEL(freemode_ped) == util.joaat("mp_f_freemode_01")) then
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 14, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, math.random(400, 401), get_random_drawable_variation(freemode_ped, 11, math.random(400, 401)), 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 137, get_random_drawable_variation(freemode_ped, 4, 137), 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 103, get_random_drawable_variation(freemode_ped, 6, 103), 0)
-    else
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 3, 0, 0, 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 11, math.random(382, 383), get_random_drawable_variation(freemode_ped, 11, math.random(382, 383)), 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 4, 12, select(math.random(1, 5), 0, 4, 5, 7, 12), 0)
-        PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 6, 99, get_random_drawable_variation(freemode_ped, 6, 99), 0)
-    end
-end
---
-function enableFreecam()
-    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(players.user()))
-    freecam_player_cam = CAM.CREATE_CAM_WITH_PARAMS("DEFAULT_SCRIPTED_CAMERA", pos.x, pos.y, pos.z, CAM.GET_GAMEPLAY_CAM_ROT().y-cam_rot_y, CAM.GET_GAMEPLAY_CAM_ROT().y, CAM.GET_GAMEPLAY_CAM_ROT().z, cam_rot_z, true, true)
-    CAM.SET_CAM_ACTIVE(freecam_player_cam, true)
-    CAM.RENDER_SCRIPT_CAMS(true, true, 1000, true, true, 0)
-    while true do
-        pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(players.user()))
-        CAM.SET_CAM_COORD(freecam_player_cam, pos.x, pos.y, pos.z+10)
-        wait(0)
-    end
-end
-
-function disableFreecam()
-    if freecam_player_cam ~= nil then
-        CAM.SET_CAM_ACTIVE(freecam_player_cam, false)
-        CAM.DESTROY_CAM(freecam_player_cam, true)
-        CAM.RENDER_SCRIPT_CAMS(false, true, 1000, true, true, 0)
-        freecam_player_cam = nil
-    end
-end
---
-project_3d_coord = function (coord)
-    local x_ptr, y_ptr = memory.alloc_int(), memory.alloc_int()
-    local status = GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(coord.x, coord.y, coord.z, x_ptr, y_ptr)
-    local x, y = memory.read_float(x_ptr), memory.read_float(y_ptr)
-    return status, v2(x, y)
-end
-
-Round = function(num, dp)
-    local mult = 10^(dp or 0)
-    return ((num * mult + 0.5) // 1) / mult 
-end
---
-dicdd={
-    "ANIM_GROUP_MOVE_BALLISTIC",
-    "ANIM_GROUP_MOVE_LEMAR_ALLEY",
-    "clipset@move@trash_fast_turn",
-    "FEMALE_FAST_RUNNER",
-    "missfbi4prepp1_garbageman",
-    "move_characters@franklin@fire",
-    "move_characters@Jimmy@slow@",
-    "move_characters@michael@fire",
-    "move_f@flee@a",
-    "move_f@scared",
-    "move_f@sexy@a",
-    "move_heist_lester",
-    "move_injured_generic",
-    "move_lester_CaneUp",
-    "move_m@bag",
-    "MOVE_M@BAIL_BOND_NOT_TAZERED",
-    "MOVE_M@BAIL_BOND_TAZERED",
-    "move_m@brave",
-    "move_m@casual@d",
-    "move_m@drunk@moderatedrunk",
-    "MOVE_M@DRUNK@MODERATEDRUNK",
-    "MOVE_M@DRUNK@MODERATEDRUNK_HEAD_UP",
-    "MOVE_M@DRUNK@SLIGHTLYDRUNK",
-    "MOVE_M@DRUNK@VERYDRUNK",
-    "move_m@fire",
-    "move_m@gangster@var_e",
-    "move_m@gangster@var_f",
-    "move_m@gangster@var_i",
-    "move_m@JOG@",
-    "MOVE_M@PRISON_GAURD",
-    "MOVE_P_M_ONE",
-    "MOVE_P_M_ONE_BRIEFCASE",
-    "move_p_m_zero_janitor",
-    "move_p_m_zero_slow",
-    "move_ped_bucket",
-    "move_ped_crouched",
-    "move_ped_mop",
-    "MOVE_M@FEMME@",
-    "MOVE_F@FEMME@",
-    "MOVE_M@GANGSTER@NG",
-    "MOVE_F@GANGSTER@NG",
-    "MOVE_M@POSH@",
-    "MOVE_F@POSH@",
-    "MOVE_M@TOUGH_GUY@",
-    "MOVE_F@TOUGH_GUY@",
-}
 ------------------------------------
 -------------玩家崩溃---------------
 ------------------------------------
@@ -20110,7 +20037,7 @@ function xianshijiaoben(state)
             color = colorLocked and lockedColor or { r = mcr, g = mcg, b = mcb }
             HUD.SET_TEXT_COLOUR(color.r, color.g, color.b, 255)
             draw_name(string.format("~italic~~h~\n"..checkme()), jiaoben_x + 0.015, jiaoben_y + 0.0575, jiaoben_dx - 0.2, 2)
-            
+ 
             wait()
         end    
     end)
@@ -23229,6 +23156,50 @@ function start_silent_aimbot()
         wait()
     end
 end)
+end
+
+function baocun()
+    local success, errorMsg = pcall(function()
+        gtoast("保存完成")
+        todaysdate = os.date("%Y/%m/%d")
+        local zjxlxs = menu.get_value(zjxlbc)--主机序列
+        local wjlxs1 = menu.get_value(wjlxs)--玩家栏
+        local stcxs1 = menu.get_value(stcxs)--实体池
+        local gjflxs1 = menu.get_value(gjflxs)--国家分类
+        local ajxs1 = menu.get_value(ajxs)--按键显示
+        local gtscriptname1 = menu.get_value(gtscriptname)--脚本名称
+        local yxscxs1 = menu.get_value(yxscxs)--脚本运行时长
+        local vzbxs1 = menu.get_value(vzbxs)--坐标显示
+        local xssjxs1 = menu.get_value(xssjxs)--显示时间
+        local xssjrq1 = menu.get_value(xssjrq)--显示riqi
+        local configStr = "--保存日期:" .. tostring(todaysdate)
+        local configStr1 = "\nzjxlxs = " .. tostring(zjxlxs)
+        local configStr2 = "\nwjlxs1 = " .. tostring(wjlxs1)
+        local configStr3 = "\nstcxs1 = " .. tostring(stcxs1)
+        local configStr4 = "\ngjflxs1 = " .. tostring(gjflxs1)
+        local configStr5 = "\najxs1 = " .. tostring(ajxs1)
+        local configStr6 = "\ngtscriptname1 = " .. tostring(gtscriptname1)
+        local configStr7 = "\nyxscxs1 = " .. tostring(yxscxs1)
+        local configStr8 = "\nvzbxs1 = " .. tostring(vzbxs1)
+        local configStr9 = "\nxssjxs1 = " .. tostring(xssjxs1)
+        local configStr10 = "\nxssjrq1 = " .. tostring(xssjrq1)
+        local file = io.open(pathld, 'w')
+        file:write(configStr)
+        file:write(configStr1)
+        file:write(configStr2)
+        file:write(configStr3)
+        file:write(configStr4)
+        file:write(configStr5)
+        file:write(configStr6)
+        file:write(configStr7)
+        file:write(configStr8)
+        file:write(configStr9)
+        file:write(configStr10)
+        file:close()
+    end)
+    if not success then
+        gtoast("保存失败")
+    end
 end
 
 VEH_MISSILE_SPEED = 10000

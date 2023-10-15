@@ -2,24 +2,6 @@
 
 menu.toggle(Advanced_chat, "开启", {}, "", function(on)
     conditional_coloring = on
-   --[[  while conditional_coloring == true do
-        --输入文本
-        if PAD.IS_CONTROL_PRESSED(0,245) then--全部聊天
-            local label = util.register_label("输入文本")
-            local input = get_input_from_screen_keyboard(label, 254, "")
-            if input ~= nil and input ~= "" then
-                chat.send_message(input,false,true,true)
-            end
-        elseif PAD.IS_CONTROL_PRESSED(0,246) then--团队聊天
-            local label = util.register_label("输入文本")
-            local input = get_input_from_screen_keyboard(label, 254, "")
-            if input ~= nil and input ~= "" then
-                chat.send_message(input,true,true,true)
-            end
-        end
-        HUD.MP_TEXT_CHAT_DISABLE(true)
-        util.yield()
-    end ]]
 end)
 
 local change_color = menu.list(Advanced_chat, "更改颜色", {}, "")
@@ -27,7 +9,7 @@ local tags_root = menu.list(Advanced_chat, "标签", {}, "根据某些标准给�
 local general_settings = menu.list(Advanced_chat, "通用设置", {}, "最大聊天时长等")
 
 local max_chat_len = 254
-menu.slider(general_settings, "最大聊天时长", {}, "超出此范围的任何内容都将自动被修剪,不适用于您的聊天.", 1, 254, 254, 1, function(value)
+menu.slider(general_settings, "最大聊天长度", {}, "超出此范围的任何内容都将自动被修剪,不适用于您的聊天.", 1, 254, 254, 1, function(value)
     max_chat_len = value
 end)
 
@@ -183,6 +165,6 @@ chat.on_message(function(sender, reserved, text, team_chat, networked, is_auto)
         for _, chat in pairs(message_history) do
             sfchat.ADD_MESSAGE(chat.name, chat.text, chat.tag, chat.networked, chat.color)
         end
-        sfchat.showFeed()
+        sfchat.showFeed()--显示聊天记录
     end
 end)

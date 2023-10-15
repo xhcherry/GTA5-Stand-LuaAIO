@@ -28,7 +28,7 @@ menu.slider(ZT, "选项分离高度", {""}, "", 0, 16, 1, 1, function(val) sep_h
 
 local last_slot
 local def_height = 32/1080
-util.create_tick_handler(function()
+menu.toggle_loop(ZT,"开启/关闭", {}, "", function()
 local list_h = menu.get_value(list_height)/1080
 local tab_h = menu.get_value(tab_height)/1080
 local bg_clr = {

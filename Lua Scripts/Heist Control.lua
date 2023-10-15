@@ -1,6 +1,6 @@
 --[[   To everyone who uses Heist Control.lua
 
-    Developed and maintenanced by IceDoomfist#0001 on Discord
+    Developed and maintenanced by @icedoomfist on Discord
     This script is only compatible with Stand Lua API: https://stand.gg/
 
     Stand Heist Control contains some global, local variables and stats from Heist Control V2 & Master Unlocker Lua Scripts for 2Take1 and UnknownCheats
@@ -38,9 +38,8 @@
 
     --- Important
 
-        HC_VERSION = "V 3.3.7"
+        HC_VERSION = "V 3.3.8"
         CODED_GTAO_VERSION = 1.67
-        SUPPORTED_STAND_VERSION = "101"  --  Stand 101 | https://stand.gg/help/changelog | Not mentioned in the Changelog: 'menu.hyperlink' only accepts http and https links due to security issues
 
     ---
 
@@ -551,7 +550,7 @@
         function GET_CURSOR_POSITION()
             local Text = menu.get_active_list_cursor_text(true, true) -- '2/12' format
             local i = string.find(Text, "/")
-            return tonumber(string.sub(Text, 0, i - 1)) -- return '2'
+            return tonumber(string.sub(Text, 0, i - 1)) -- Returns '2'
         end
 
         function IS_HELP_MSG_DISPLAYED(label) -- Credit goes to jerry123#4508
@@ -715,16 +714,6 @@
             ERROR_LOG(TRANSLATE("Native file for HC doesn't exist.") .. "\n\n" .. TRANSLATE("Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support!"))
         end
 
-        if soup.version_compare(menu.get_version().version, SUPPORTED_STAND_VERSION) < 0 then
-            ERROR_LOG
-            (
-                TRANSLATE("Your current Stand version isn't compatible with current Heist Control version. Please update Stand to use it.") .. "\n\n" ..
-                TRANSLATE("- Current your Heist Control version:") .. " " .. HC_VERSION .. "\n" .. 
-                TRANSLATE("- At least required Stand version:") .. " " .. SUPPORTED_STAND_VERSION .. "\n" ..
-                TRANSLATE("- Current your Stand version:") .. " " .. CURRENT_STAND_VERSION
-            )
-        end
-
         if SCRIPT_MANUAL_START and not SCRIPT_SILENT_START then
             SHOW_IMG("HC Banner.png", 2.5)
 
@@ -760,7 +749,7 @@
         LS_ROBBERY = menu.list(menu.my_root(), TRANSLATE("LS Tuners Robbery"), {"hcls"}, "", function(); end)
         ULP_MISSIONS = menu.list(menu.my_root(), TRANSLATE("ULP Missions"), {"hculp"}, "", function(); end)
         TH_CONTRACT = menu.list(menu.my_root(), TRANSLATE("The Contract: Agency"), {"hcagc"}, "", function(); end)
-        MASTER_UNLOCKR = menu.list(menu.my_root(), TRANSLATE("Master Unlocker"), {"hcmu"}, "", function(); end)
+        MASTER_UNLOCKER = menu.list(menu.my_root(), TRANSLATE("Master Unlocker"), {"hcmu"}, "", function(); end)
         TOOLS = menu.list(menu.my_root(), TRANSLATE("Tools"), {"hctool"}, "", function(); end)
         INFOS = menu.list(menu.my_root(), TRANSLATE("Settings And About HC"), {"hcinfo"}, "", function(); end)
 
@@ -3090,31 +3079,6 @@
 
     ---
 
-    menu.list_action(CASINO_HEIST, TRANSLATE("Casino Story Missions"), {}, "", {
-        { TRANSLATE("Loose Cheng"), {}, "" },
-        { TRANSLATE("House Keeping"), {}, "" },
-        { TRANSLATE("Strong Arm Tactics"), {}, "" },
-        { TRANSLATE("Play to Win"), {}, "" },
-        { TRANSLATE("Bad Beat"), {}, "" },
-        { TRANSLATE("Cashing Out"), {}, "" },
-    }, function(index)
-        if index == 1 then
-            STAT_SET_INT("VCM_FLOW_PROGRESS", 1048576)
-        elseif index == 2 then
-            STAT_SET_INT("VCM_FLOW_PROGRESS", 1310785)
-        elseif index == 3 then
-            STAT_SET_INT("VCM_FLOW_PROGRESS", 1310915)
-        elseif index == 4 then
-            STAT_SET_INT("VCM_FLOW_PROGRESS", 1311175)
-        elseif index == 5 then
-            STAT_SET_INT("VCM_FLOW_PROGRESS", 1311695)
-        elseif index == 6 then
-            STAT_SET_INT("VCM_FLOW_PROGRESS", 1312735)
-        end
-
-        STAT_SET_INT("VCM_STORY_PROGRESS", index - 1)
-    end)
-
     CASINO_MORE = menu.list(CASINO_HEIST, TRANSLATE("Others"), {}, "", function(); end)
 
         menu.textslider_stateful(CASINO_MORE, TRANSLATE("Load & Unload - All Boards"), {}, "", {
@@ -3474,6 +3438,7 @@
 
     ---
 
+
     menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Bypass Minimum And Maximum Percentage"), {}, IS_WORKING(true) .. TRANSLATE("Only works if you are host of the heist.") .. "\n\n" .. TRANSLATE("It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts."), function()
         SET_INT_GLOBAL(262145 + 9256, 100) -- MAX_HEIST_CUT_AMOUNT, Default: 70(%), https://www.unknowncheats.me/forum/3664875-post95.html
         SET_INT_GLOBAL(262145 + 9358, 0) -- MEMBER_MIN_HEIST_FINALE_TAKE_PERCENTAGE, Default: 15(%)
@@ -3711,7 +3676,7 @@
 
 --- Master Unlocker
 
-    DLC_UNLOCKER = menu.list(MASTER_UNLOCKR, TRANSLATE("DLCs"), {}, "", function(); end)
+    DLC_UNLOCKER = menu.list(MASTER_UNLOCKER, TRANSLATE("DLCs"), {}, "", function(); end)
 
         ARENA_TOOL = menu.list(DLC_UNLOCKER, TRANSLATE("Arena Wars DLC"), {}, "", function(); end)
 
@@ -3939,7 +3904,7 @@
 
     ---
 
-    UNLOCKER_BUILDING = menu.list(MASTER_UNLOCKR, TRANSLATE("Buildings"), {}, "", function(); end)
+    UNLOCKER_BUILDING = menu.list(MASTER_UNLOCKER, TRANSLATE("Buildings"), {}, "", function(); end)
 
         menu.action(UNLOCKER_BUILDING, TRANSLATE("Skip Nightclub Setups"), {}, TRANSLATE("Skip all of setups when you buy a Nightclub first: Equipment, Staff, and Collect DJ") .. "\n\n" .. TRANSLATE("Change your session to apply!"), function() -- https://www.unknowncheats.me/forum/3735297-post3416.html
             SET_PACKED_STAT_BOOL_CODE(18161, true)
@@ -4095,7 +4060,7 @@
 
     ---
 
-    UNLOCKER_HEISTS = menu.list(MASTER_UNLOCKR, TRANSLATE("Heists"), {}, TRANSLATE("Unlocks almost of unlockable stuffs related the heist like clothing, etc."), function(); end)
+    UNLOCKER_HEISTS = menu.list(MASTER_UNLOCKER, TRANSLATE("Heists"), {}, TRANSLATE("Unlocks almost of unlockable stuffs related the heist like clothing, etc."), function(); end)
 
         menu.action(UNLOCKER_HEISTS, TRANSLATE("Cayo Perico Heist"), {}, IS_WORKING(false), function()
             STAT_SET_INT("AWD_LOSTANDFOUND", 500000)
@@ -4381,7 +4346,7 @@
 
     ---
 
-    UNLOCKER_MISSIONS = menu.list(MASTER_UNLOCKR, TRANSLATE("Missions"), {}, "", function(); end)
+    UNLOCKER_MISSIONS = menu.list(MASTER_UNLOCKER, TRANSLATE("Missions"), {}, "", function(); end)
 
         menu.action(UNLOCKER_MISSIONS, TRANSLATE("Unlock Taxi Missions"), {}, IS_WORKING(false), function() -- https://github.com/ImSapphire/unlock_drug_war_content/blob/main/unlock_drug_war_content.lua
             SET_INT_GLOBAL(262145 + 34019, 1) -- XM22_TAXI_DRIVER_ENABLE
@@ -4420,7 +4385,7 @@
 
     ---
 
-    UNLOCKER_ANNIVERSARY = menu.list(MASTER_UNLOCKR, TRANSLATE("Special Anniversaries"), {}, "", function(); end)
+    UNLOCKER_ANNIVERSARY = menu.list(MASTER_UNLOCKER, TRANSLATE("Special Anniversaries"), {}, "", function(); end)
 
         XMAS_FEATURES = menu.list(UNLOCKER_ANNIVERSARY, TRANSLATE("Christmas"), {}, "", function(); end)
 
@@ -4473,7 +4438,7 @@
 
     ---
 
-    UNLOCKER_SHIRT_HAT = menu.list(MASTER_UNLOCKR, TRANSLATE("Clothes"), {}, "", function(); end)
+    UNLOCKER_SHIRT_HAT = menu.list(MASTER_UNLOCKER, TRANSLATE("Clothes"), {}, "", function(); end)
     
         menu.action(UNLOCKER_SHIRT_HAT, TRANSLATE("Unlock Lots of Hats And Shirts"), {}, IS_WORKING(true) .. TRANSLATE("500+ unlocks are included, try and see how many clothes would be unlocked."), function()
             SET_PACKED_INT_GLOBAL(12127, 12136, 1) -- DLC_SHIRT_MELTDOWN, DLC_SHIRT_CAPOLAVORO
@@ -4559,7 +4524,7 @@
 
     ---
 
-    UNLOCKER_TATTOO = menu.list(MASTER_UNLOCKR, TRANSLATE("Tattoos"), {}, "", function(); end)
+    UNLOCKER_TATTOO = menu.list(MASTER_UNLOCKER, TRANSLATE("Tattoos"), {}, "", function(); end)
 
         menu.action(UNLOCKER_TATTOO, TRANSLATE("Unlock Some Tattoos"), {}, "", function()
             -- https://www.unknowncheats.me/forum/3252891-post942.html
@@ -4602,7 +4567,7 @@
 
     ---
 
-    UNLOCKER_VEHICLE = menu.list(MASTER_UNLOCKR, TRANSLATE("Vehicles"), {}, "", function(); end)
+    UNLOCKER_VEHICLE = menu.list(MASTER_UNLOCKER, TRANSLATE("Vehicles"), {}, "", function(); end)
 
         menu.action(UNLOCKER_VEHICLE, TRANSLATE("Unlock Some Trade Prices"), {}, "", function()
             STAT_SET_INT("GANGOPS_FLOW_BITSET_MISS0", -1)
@@ -4651,7 +4616,7 @@
 
     ---
 
-    SPECIAL_WEAPON = menu.list(MASTER_UNLOCKR, TRANSLATE("Weapons"), {}, "", function(); end)
+    SPECIAL_WEAPON = menu.list(MASTER_UNLOCKER, TRANSLATE("Weapons"), {}, "", function(); end)
 
         menu.action(SPECIAL_WEAPON, TRANSLATE("Service Carbine"), {}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3488328-post27.html
             SET_INT_GLOBAL(262145 + 33084, 1) -- UNLOCK_SERVICE_CARBINE_FOR_PURCHASE
@@ -4681,14 +4646,14 @@
 
     ---
 
-    menu.action(MASTER_UNLOCKR, TRANSLATE("Vanilla Unicorn Award"), {}, "", function()
+    menu.action(MASTER_UNLOCKER, TRANSLATE("Vanilla Unicorn Award"), {}, "", function()
         for i = 0, 25, 5 do
             STAT_SET_INT("LAP_DANCED_BOUGHT", i)
         end
         STAT_SET_INT("PROSTITUTES_FREQUENTED", 1000)
     end)
 
-    menu.action(MASTER_UNLOCKR, TRANSLATE("Returning Player Bonus"), {}, IS_WORKING(false), function()
+    menu.action(MASTER_UNLOCKER, TRANSLATE("Returning Player Bonus"), {}, IS_WORKING(false), function()
         SET_INT_GLOBAL(103796, 1) -- freemode.c
         SET_INT_GLOBAL(152686, 2) -- freemode.c
     end)
@@ -4790,14 +4755,6 @@
                     STAT_SET_INT("LUCKY_WHEEL_NUM_SPIN", 0)
                     SET_INT_GLOBAL(262145 + 27382, 1) -- 9960150
                     SET_INT_GLOBAL(262145 + 27383, 1) -- -312420223
-                end)
-
-                menu.toggle_loop(TUNABLES_CD, TRANSLATE("Kosatka Missiles"), {}, IS_WORKING(true) .. TRANSLATE("Also will increase Kosatka missiles distance."), function()
-                    SET_INT_GLOBAL(262145 + 30394, 0) -- IH_SUBMARINE_MISSILES_COOLDOWN
-                    SET_INT_GLOBAL(262145 + 30395, 99999) -- IH_SUBMARINE_MISSILES_DISTANCE
-                end, function()
-                    SET_INT_GLOBAL(262145 + 30394, 60000)
-                    SET_INT_GLOBAL(262145 + 30395, 4000)
                 end)
 
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Dax Job"), {}, TRANSLATE("Note that Dax Job means from cellphone"), function() -- https://www.unknowncheats.me/forum/3629824-post2716.html
@@ -5628,6 +5585,29 @@
                 ---
 
             ---
+
+            CREW_LEVEL_EDITOR = menu.list(PRESET_STAT_EDITOR, TRANSLATE("Crew Level"), {}, "", function(); end)
+
+                for i = 0, 4 do
+                    menu.divider(CREW_LEVEL_EDITOR, TRANSLATE("Crew") .. " " .. i)
+
+                        CREW_RP = menu.readonly(CREW_LEVEL_EDITOR, TRANSLATE("Crew RP"))
+                        CREW_ID = menu.readonly(CREW_LEVEL_EDITOR, TRANSLATE("Crew ID"))
+                        CREW_CURRENT = menu.readonly(CREW_LEVEL_EDITOR, TRANSLATE("Current Crew Level"))
+                        CREW_LEVEL = menu.slider(CREW_LEVEL_EDITOR, TRANSLATE("Choose Crew Level"), { "hccrewlevel" .. i }, "", 1, 8000, 1, 1, function(); end)
+                        menu.action(CREW_LEVEL_EDITOR, TRANSLATE("Set Crew Level"), { "hcsetcrewlevel" .. i }, "", function()
+                            local RpForRank = util.get_rp_required_for_rank(menu.get_value(CREW_LEVEL))
+                            STAT_SET_INT("MPPLY_CREW_LOCAL_XP_" .. i, RpForRank)
+                        end)
+
+                        menu.set_value(CREW_RP, STAT_GET_INT("MPPLY_CREW_LOCAL_XP_" .. i))
+                        menu.set_value(CREW_ID, STAT_GET_INT("MPPLY_CREW_" .. i .. "_ID"))
+                        menu.set_value(CREW_CURRENT, STAT_GET_INT("MPPLY_CURRENT_CREW_RANK"))
+
+                    ---
+                end
+
+            ---
             
         ---
 
@@ -5902,7 +5882,7 @@
                                 if Contents[idx2+1] ~= nil then
                                     if not string.startswith(Contents[idx2+1], "$MP") then
                                         local _, i = string.find(file_content, "$MPPLY_")
-                                        local Stat = string.sub(file_content, i + 1, string.len(file_content))
+                                        local Stat = string.sub(file_content, i - 5, string.len(file_content))
                                         Stat = string.upper(Stat)
                                         HelpTexts.MPPLY = HelpTexts.MPPLY + 1
                                         table.insert(Stats, { Stat, Contents[idx2+1] })
