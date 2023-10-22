@@ -1,4 +1,4 @@
-util.require_natives(1660775568)
+
 logo = directx.create_texture(filesystem.scripts_dir() .. '/resources/YMIMG/'..'Bodycam.png')
 local aalib = require("aalib")
 local PlaySound = aalib.play_sound

@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '10.13'
+GT_version = '10.20'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("聊天选项>聊天翻译现在重做并可以正常使用\n着重修复自崩问题，主要针对重复开关脚本导致的自崩，现在应该变得稳定\n解压密码，现在变更为脚本启动时输入密码，皇榜用户不需要输入密码\n更新了任务功能\n新增>恶搞选项>近期更新>传送到佩里科岛\n新增>恶搞选项>近期更新>传送到海滩\n修复部分UFO功能无效\nVersion: "..GT_version)
+    notification("降低了脚本大小\n优化了玩家信息栏显示的效果\n许多细节的改进\nVersion: "..GT_version)
 end
 --
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
@@ -64,7 +64,6 @@ coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩
 bbtxt = "https://jq.qq.com/?_wv=1027&k=U3XOlyOF"
 bbtct = "[点击此处加入官方群聊中进行询问]\n\n*加载脚本显示(请稍等...):#网络问题\n#建议更换您的节点/模式或加速器\n\n*加载脚本提示缺少(not found)文件,\n 或加载脚本提示缺少(no file)文件: #请重新安装脚本及脚本依赖文件\n#建议使用<丢丢原装lua>覆盖lua文件\n其他疑问与发现请联系开发人员,非常感谢您的支持儿,祝您游戏愉快儿~"
 grouplink = "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566"
-gtoast("GRANDTOURINGVIP!\n版本 " .. GT_version .. " 欢迎 ".."\n加入群聊可获得最新版本")
 
 function toFloat(num)
 return (num / 10) * 10

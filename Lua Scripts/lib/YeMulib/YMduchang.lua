@@ -3,7 +3,7 @@
 -- 翻译 By 呆呆
 
 
-util.require_natives(1663599433)
+
 local SCRIPT_VERSION = "0.16.1"
 
 local config = {

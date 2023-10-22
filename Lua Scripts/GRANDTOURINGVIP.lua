@@ -5,11 +5,10 @@
 ██║   ██║██╔══██╗██╔══██║██║╚██╗██║██║  ██║   ██║   ██║   ██║██║   ██║██╔══██╗██║██║╚██╗██║██║   ██║╚██╗ ██╔╝██║██╔═══╝ 
 ╚██████╔╝██║  ██║██║  ██║██║ ╚████║██████╔╝   ██║   ╚██████╔╝╚██████╔╝██║  ██║██║██║ ╚████║╚██████╔╝ ╚████╔╝ ██║██║     
  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝    ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝      
-STRING ERROR~~~]] 
-require "lib.GTSCRIPTS.V"
+STRING ERROR~~~]]
+require "lib.GTSCRIPTS.V" 
 require "lib.GTSCRIPTS.G"
 require "lib.GTSCRIPTS.GTA.list"
 menu.trigger_commands("luagrandtouringvip")
-
 loadgtsc.visible = false
 loadgt()

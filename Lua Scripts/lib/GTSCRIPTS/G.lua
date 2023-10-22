@@ -8,14 +8,14 @@
 GRANDTOURINGVIP™ Copyright© 2023
 Author: GT
 Developer: Respect
-Manager: Strawbetter
+Manager: Strawbetter / SmallGodGirl
 All rights reserved.]] 
+--require "lib.GTSCRIPTS.V" 
 function loadgt() 
-    require "lib.GTSCRIPTS.V" 
+    require "lib.GTSCRIPTS.GTC.logo.GLogo"  
     require "lib.GTSCRIPTS.O"  
     require "lib.GTSCRIPTS.W"  
     require ('lib/GTSCRIPTS/T') 
-    require "lib.GTSCRIPTS.GTC.logo.GLogo"  
     require "lib.GTSCRIPTS.GTW.fixnative"
     K = require 'lib.GTSCRIPTS.K' 
     local scaleForm = require'lib.GTSCRIPTS.Z' 
@@ -42,7 +42,7 @@ end)
 
 function restartscript() 
     package.loaded["lib.GTSCRIPTS.GTC.logo.GLogo"] = nil 
-    package.loaded["lib.GTSCRIPTS.V"] = nil 
+    package.loaded["lib.GTSCRIPTS.V"] = nil
     wait()
     util.restart_script() 
 end
@@ -104,7 +104,7 @@ end
 if SCRIPT_MANUAL_START then
 menu.trigger_commands("gtluascript")
 end
-
+util.toast("\n版本 " .. GT_version .. " 欢迎 ".."\n加入群聊可获得最新版本")
 local function newnotify(title, subtitle, msg, iconname, intcolor)
 WIRI_HUD.BEGIN_TEXT_COMMAND_THEFEED_POST("STRING") 
 WIRI_HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(msg) 
@@ -14930,7 +14930,7 @@ GTTG(allcrash, "魔怔之力", {"evilpower"}, "当播放完聊天框内容后自
     end
 end)
 
-crewlist = GT(onlinemode, "设置帮会等级")
+crewlist = GT(onlinemode, "设置帮会等级", {}, "帮会0是你的活跃帮会")
 for i = 0, 4, 1 do
     i = tostring(i)
     local crew_level_stat = "MPPLY_CREW_LOCAL_XP_" .. i
@@ -18188,21 +18188,49 @@ end)
 GTluaScript.slider(clearAreaTools, "清理区域范围", {"cleararearange"}, "", 1, 10000, 100, 50, function (value)
     CLEAR_AREA_RANGE = value
 end)
+--
+util.create_thread(function ()
+    local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
+
+    for _, id in ipairs(spid) do
+        if name == id.playerid then
+            authvalue = "皇榜用户: "..name
+            authinfo = imhb
+            break
+        end
+    end
+
+    if authvalue ~= "皇榜用户: "..name then
+        authvalue = "立刻加入皇榜"
+    end
+    if authinfo ~= imhb then 
+        authinfo = hbinfo
+    end 
+end)
+
+hblink = GTAC(G, ">>"..authvalue, {}, authinfo, function ()
+end)
 
 restartgt = GTAC(G, ">>重新启动脚本", {}, "", function ()
     restartscript()
 end)
-myString = "关于如何更新脚本到最新版,您可加入群聊(651502721) 关于脚本的基本功能疑问,您可直接加入群聊获得帮助(716431566) 若要购买其他菜单,您可在经销商列表中找到各个经销商 若要获取一对一的帮助,您可联系我们的经理草莓姐姐(1104626388)"
+
+myString = "关于更新脚本到最新版,您可加入群聊(651502721)下载新版GTLua 关于脚本的基本功能疑问,您可直接加入聊天群获得帮助(716431566) 购买其他菜单,您可在经销商列表中找到各个经销商(您可以选择xgmenu.me/symenu.shop) 获取1v1的帮助,您可联系管理员草莓酱(1104626388)"
 GTAC(other_options,"获取技术支持",{},myString,function()end)
-blackweb = GT(other_options, "经销商(非脚本)", {}, "你可以在此找到经过GTVIP团队认证的经销商")
+blackweb = GT(other_options, "菜单经销卡网", {}, "你可以在此找到经过GTVIP团队认证的经销商 GTVIP团队将宣传你的卡网 任何卡网拥有者都可免费加入此列表，只要你是GTVIP的用户，且为正规类型，联系QQ(820104093)")
 GTD(blackweb,"经销商列表")
 GTH(blackweb, "沙耶的小店", "https://symenu.shop", "")
 GTH(blackweb, "西瓜 XiGua Store", "https://xgmenu.me", "")
 
-zhujixianshi = GT(other_options, "显示选项")
-zanzhuzx = GT(other_options, "致谢人员")
 minimap = GT(other_options, "小地图")
 misclightmenu = GT(other_options, "追光灯")
+WaterMark = GT(other_options, "信息栏", {""}, "非常好看且实用的信息显示~")
+rainbowinfo = GTAC(WaterMark, "开启信息显示", {""}, "开启该功能选项在最下方", function()
+dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\GTW\\WM.lua")
+GTLuaScript.delete(rainbowinfo)
+end)
+zhujixianshi = GT(other_options, "显示选项", {}, "在这里修改各种显示在屏幕中的元素")
+zanzhuzx = GT(other_options, "致谢人员")
 
 baocunanjain=GTTG(zhujixianshi, "[按F8保存设置]", {""}, "",function(f)
 gt=f
@@ -18763,12 +18791,6 @@ while gt do
 gt = false
 end)
 
-WaterMark = GT(other_options, "信息栏", {""}, "非常好看且实用的信息显示~")
-rainbowinfo = GTAC(WaterMark, "开启信息显示", {""}, "开启该功能选项在最下方", function()
-dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\GTW\\WM.lua")
-GTLuaScript.delete(rainbowinfo)
-end)
-
 startTime = os.clock() yxscxs=GTTG(zhujixianshi, '脚本运行时长', {""}, '', function (on) gt=on while gt do wait() local endTime = os.clock() local duration = endTime - startTime local hours = math.floor(duration / 3600) local minutes = math.floor((duration % 3600) / 60) local seconds = math.floor(duration % 60) if seconds >= 60 then minutes = minutes + 1 seconds = 0 end formattedTime = string.format("~h~您已使用:")
 if minutes >= 60 then hours = hours + 1 minutes = 0 end
 if duration > 7200 then edTime = "~h~~r~\n您已过度疲劳游戏\n请合理安排时间游戏!" HUD.SET_TEXT_SCALE(0.5, 0.40) HUD.SET_TEXT_FONT(1) HUD.SET_TEXT_COLOUR(255, 182, 193, 255) HUD.SET_TEXT_CENTRE(1) HUD.SET_TEXT_OUTLINE(1) util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(edTime) HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.08, 0.01, 0) end
@@ -19164,8 +19186,7 @@ wait()
 end
 end)
 
-zaxiang = GT(other_options, "杂项功能")
-menu.link(other_options, menu.ref_by_path("Stand>Profiles"), true)
+zaxiang = GT(other_options, "其他功能")
 
 ZT = GT(zaxiang, "动态主题", {"sszt"}, "")
 util.require_no_lag"lib.GTSCRIPTS.GTW.ZT"
@@ -19942,7 +19963,7 @@ GTAC(updates, "测试崩溃", {}, "", function()
     STREAMING.REQUEST_MODEL(0x78BC1A3C)
     STREAMING.REQUEST_MODEL(0x15F27762)
     STREAMING.REQUEST_MODEL(0x0E512E79)
-    for i=0, 10 do
+    for i = 0, 10 do
     local allpeds = entities.get_all_peds_as_handles()
     local allvehicles = entities.get_all_vehicles_as_handles()
     local allobjects = entities.get_all_objects_as_handles()
@@ -19950,20 +19971,20 @@ GTAC(updates, "测试崩溃", {}, "", function()
     local vehicle_1=CreateVehicle(0x78BC1A3C, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
     local vehicle_2=CreateVehicle(0x15F27762, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
     local vehicle_3=CreateVehicle(0x0E512E79, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
-			for i = 0, 49 do
-				local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_1, i) - 1
-				VEHICLE.SET_VEHICLE_MOD(vehicle_1, i, mod, true)
-				VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_1, mod, true)
-				local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_2, i) - 1
-				VEHICLE.SET_VEHICLE_MOD(vehicle_2, i, mod, true)
-				VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_2, mod, true)
-				local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_3, i) - 1
-				VEHICLE.SET_VEHICLE_MOD(vehicle_3, i, mod, true)
-				VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_3, mod, true)
-				local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_4, i) - 1
-				VEHICLE.SET_VEHICLE_MOD(vehicle_4, i, mod, true)
-				VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_4, mod, true)
-			end
+    for i = 0, 49 do
+        local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_1, i) - 1
+        VEHICLE.SET_VEHICLE_MOD(vehicle_1, i, mod, true)
+        VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_1, mod, true)
+        local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_2, i) - 1
+        VEHICLE.SET_VEHICLE_MOD(vehicle_2, i, mod, true)
+        VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_2, mod, true)
+        local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_3, i) - 1
+        VEHICLE.SET_VEHICLE_MOD(vehicle_3, i, mod, true)
+        VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_3, mod, true)
+        local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_4, i) - 1
+        VEHICLE.SET_VEHICLE_MOD(vehicle_4, i, mod, true)
+        VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_4, mod, true)
+    end
     for i = 1, #allpeds do
         if allpeds[i] ~= ownped then
             ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allpeds[i], ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).x,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).y,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z)
@@ -19985,7 +20006,7 @@ GTAC(updates, "测试崩溃", {}, "", function()
 end)
 
 standbk = GT(PlayerMainMenu, "渲染器崩溃", {}, "")
-GTTG(standbk, "全部类型", {"togglescenariocrashes"}, "It's risky to spectate using this but your call", function(on_toggle)
+GTTG(standbk, "全部类型", {""}, "", function(on_toggle)
 if on_toggle then
     wait()
     menu.trigger_commands("hunhezaiju" .. PLAYER.GET_PLAYER_NAME(PlayerID))
@@ -35578,9 +35599,9 @@ end
 end)
 
 require "lib.GTSCRIPTS.GTA.hbl"
-sponsor = GT(zanzhuzx, '皇榜人员', {}, '功德无量，爱心支持')
+sponsor = GT(zanzhuzx, 'VIP人员', {}, '功德无量，爱心支持')
 for _, v in ipairs(hb_id) do 
-    GTD(sponsor, "皇榜会员: "..v.name, function() 
+    GTD(sponsor, "VIP会员: "..v.name, function() 
     end)
 end
 GTD(sponsor, "...未完待续...", function() 
@@ -35607,7 +35628,7 @@ gtdev = GTLP(zanzhuzx, "开发", {"respect"}, "", function()
     draw_name(string.format("~italic~~bold~~y~Developer Updates For"), 0.25,0.370, 2,2)
     draw_name(string.format("~italic~~bold~&#8721;"), 0.27,0.50, 1.1,5)
     draw_name(string.format("~italic~~bold~~b~GRANDTOURINGVIP YYDS"), 0.30,0.480, 2,2)
-    draw_name(string.format("~italic~~bold~~q~Made With Love For Everyone"), 0.26,0.600, 1,1)
+    draw_name(string.format("~italic~~bold~~q~Made With Love For Everyone / Create Everything"), 0.26,0.600, 1,1)
 end)
 
 GTLP(zanzhuzx, "致谢名单", {""}, "GRANDTOURING董事会", function()

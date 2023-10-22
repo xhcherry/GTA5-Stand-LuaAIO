@@ -1,18 +1,15 @@
 require "lib.GTSCRIPTS.GTA.list"
-imhb = "您已经是皇榜成员\n以下特权已激活:\n战局横幅提示(其他GTVIP用户)\n免疫GTVIP用户脚本攻击\nVIP特有脚本名称显示\n可被选中为随机幸运人\n立即加入皇榜群聊(637302053)"
-hbinfo = "加入皇榜可享受以下特权:\n战局横幅提示(其他GTVIP用户)\n免疫其他GTVIP用户的脚本攻击\n立刻加入VIP群聊\n抢先在VIP群聊体验新版本\n若您是卡网经销商,可免费加入GTVIP认证经销商列表\n加入群聊(716431566),联系群主加入皇榜"
-admindev = "您是高级管理或者开发者的其中一员"
+imhb = "您已经是皇榜成员\n以下特权已激活:\n战局横幅提示(其他GTVIP用户)\n免疫GTVIP用户脚本攻击\nVIP特有脚本名称显示\n可被选中为随机幸运人\n即将推出新的VIP功能\n立即加入皇榜群聊(637302053)"
+hbinfo = "加入皇榜可享受以下特权:\n战局横幅提示(其他GTVIP用户)\n免疫其他GTVIP用户的脚本攻击\n获得VIP功能与立刻加入VIP群聊 若您是卡网经销商,可免费加入GTVIP认证经销商列表\n联系QQ(1114983012/820104093)"
 function checkme()
-    local vipme = " GTLua Royal VIP"
+    local vipme = "  Royal VIP "..GT_version
     local standard = "   Version: "..GT_version
     local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
     
     if name == "RhymeBear" then
-        return "Strawberry Sister"
+        return "Full Autumn M416"
     elseif name == "RcktaR" then
         return "    qianzongGol"
-    elseif name == "shenshen1314" then
-        return "  Cute ShenShen"
     elseif name == "zqxhnb" then
         return "  Huntsman VIP"
     elseif name == "Cheng1073" then 
@@ -130,4 +127,3 @@ for _, id in ipairs(spid) do
         end
     end
 end
---

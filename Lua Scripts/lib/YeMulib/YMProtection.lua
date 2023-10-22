@@ -1,8 +1,7 @@
 -- Author: Rostal
 -- Last edit date: 2022/8/1
 
-util.require_natives("natives-1651208000")
-util.require_natives("natives-1640181023")
+
 
 --- --- --- Functions --- --- ---
 

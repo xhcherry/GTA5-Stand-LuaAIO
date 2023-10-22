@@ -1,5 +1,4 @@
 --credut to abuazizv for the orginal rebound lua
-util.require_natives(1663599433)
 --shameless skidded from MB
 local function SetGlobalInt(address, value)
     memory.write_int(memory.script_global(address), value)

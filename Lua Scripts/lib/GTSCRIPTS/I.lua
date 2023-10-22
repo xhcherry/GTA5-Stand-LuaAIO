@@ -312,8 +312,8 @@ menu.on_blur(posYslider, function()
     posYslider_show = false
 end)
 
-local blipsize = 0.0185
-local blipsizeslider = menu.slider(player_info, "光标大小", {}, "默认为 35", 1, 1000, blipsize*10000, 1, function(size)
+local blipsize = 0.0040
+local blipsizeslider = menu.slider(player_info, "光标大小", {"blipsize"}, "默认为40", 1, 1000, blipsize*10000, 1, function(size)
     blipsize = size/10000
 end)
 

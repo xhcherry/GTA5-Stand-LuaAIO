@@ -2,7 +2,7 @@
 require "lib.YeMulib.YeMulib"
 Version5 = 6.2
 local net = "夜幕LUA暂时无法连接到服务器！"
-local aalib = require("aalib")
+--[[ local aalib = require("aalib")
 local PlaySound = aalib.play_sound
 local SND_ASYNC<const> = 0x0001
 local SND_FILENAME<const> = 0x00020000
@@ -14,13 +14,13 @@ if not filesystem.is_dir(store_dir) then
 end
 fp = io.open(sound_selection_dir, 'r')
 local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
+fp:close() ]]
+--[[ local sound_location = store_dir .. '\\' .. file_selection
 if not filesystem.exists(sound_location) then
     util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
 else
     PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
+end ]]
 util.keep_running()
 util.show_corner_help("~bold~~y~欢迎使用夜幕LUA 此版本号为：~o~" .. Version5 ..  "~g~‹\n ~b~祝你玩的开心！")
 if SCRIPT_MANUAL_START then
@@ -295,10 +295,9 @@ local colors = {
     }
     function notification(message, color)
         local picture = "CHAR_SOCIAL_CLUB"
-        GRAPHICS.REQUEST_STREAMED_TEXTURE_DICT(picture, 0)
-        while not GRAPHICS.HAS_STREAMED_TEXTURE_DICT_LOADED(picture) do
-            util.yield()
-        end
+        util.spoof_script("main_persistent", function()
+            GRAPHICS.REQUEST_STREAMED_TEXTURE_DICT(picture, 0)
+        end)
         util.BEGIN_TEXT_COMMAND_THEFEED_POST(message)
         title = "夜幕LUA"
         if color == colors.red or color == colors.red then

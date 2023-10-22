@@ -5,7 +5,6 @@ Credits:
 
 Script created by ICYPhoenix#0727 and Ren#5219
 ]]
---util.require_natives(1651208000)
 local IS_RELEASE_VERSION <const> = false
 local IS_BETA_VERSION <const> = false
 local IGNORE_VERSION_DIFFERENCE <const> = false

@@ -2047,8 +2047,6 @@ end
 
 
 return json end)
-util.keep_running()
-util.require_natives("1676318796")
 json = require "src.lib.external.json"
 polyglotUtils = require "src.lib.utils"
 LOC = require "src.lib.localization"

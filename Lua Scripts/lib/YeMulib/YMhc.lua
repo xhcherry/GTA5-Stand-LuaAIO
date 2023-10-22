@@ -222,7 +222,7 @@
     
     --- Folders and Log Functions
 
-        util.require_natives(1681379138)
+
 
         for _, folder in pairs(FolderDirs) do
             if not filesystem.exists(folder) then
@@ -249,7 +249,7 @@
             LOG("Heist Control Version: " .. HC_VERSION)
             LOG("| Heist Control - ERROR | " .. error_message .. "\n")
             util.toast("Heist Control | ERROR " .. "\n\n" .. error_message)
-            util.yield_once()
+            util.yield()
             util.stop_script()
         end
 
@@ -501,7 +501,7 @@
 
         function IS_WORKING(is_add_new_line)
             local State = "" -- If global and local variables have been changed due to the GTAO update then
-            local Version = tonumber(NETWORK.GET_ONLINE_VERSION())
+            local Version = tonumber(NETWORK._GET_ONLINE_VERSION())
             if util.is_session_started() then -- Because unable to get local variable in story mode
                 if GET_INT_LOCAL("freemode", 3651) ~= util.joaat("lr_prop_carkey_fob") then -- freemode.c, joaat("lr_prop_carkey_fob")
                     State = TRANSLATE("[NOT WORKING]") .. "\n" .. TRANSLATE("- This feature isn't working due to the latest GTA Online patch:") .. " " .. Version .. ", " .. TRANSLATE("Please download the latest version of Heist Control or wait for Heist Control's developer patching.")
@@ -731,7 +731,7 @@
 
         if SCRIPT_MANUAL_START and not SCRIPT_SILENT_START then
 
-            local LatestGTAO = tonumber(NETWORK.GET_ONLINE_VERSION())
+            local LatestGTAO = tonumber(NETWORK._GET_ONLINE_VERSION())
             if CODED_GTAO_VERSION ~= LatestGTAO then
                 local State = TRANSLATE("But, all features of HC should work!")
                 if IS_WORKING(false) ~= "" then

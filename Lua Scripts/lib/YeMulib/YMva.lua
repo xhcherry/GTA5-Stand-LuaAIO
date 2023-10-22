@@ -1,4 +1,4 @@
-util.require_natives("1627063482")
+
 local fpCarFov = 80
 local fpFootFov = 90
 local tpCarFov = 80

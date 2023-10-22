@@ -1,5 +1,4 @@
-util.keep_running()
-util.require_natives(1663599433)
+
 local root = heidong
 local yourself
 local yourselfCoord = {x=0,y=0,z=0}
