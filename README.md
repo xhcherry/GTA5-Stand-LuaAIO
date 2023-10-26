@@ -3,6 +3,7 @@
 [![Page Views Count](https://badges.toozhao.com/badges/01H69JD1N3ZWV3EDK36V3F5DJK/green.svg)](https://badges.toozhao.com/stats/01H69JD1N3ZWV3EDK36V3F5DJK "Get your own page views count badge on badges.toozhao.com")
 
 GTA5 Mod Stand Lua All in One；含综合、任务、crash、模组、娱乐，恶搞等多种standlua于一体的存储库
+加入此仓库的[discord](https://discord.gg/wDcY8FFnt5)(新建的，人少，大家多多支持，方便发更新公告)
 
 ### 合集优势
 1.免去单独下载每个lua的繁琐步骤，所有lua都已经拖入整个压缩包，解压即可使用
