@@ -191,6 +191,21 @@ function entity_control_ped(menu_parent, ped)
         util.toast("Done")
     end)
 
+    menu.action(menu_parent, "复制PED服饰", {}, "", function()
+        local model = ENTITY.GET_ENTITY_MODEL(ped)
+        local outfit = get_outfit(ped)
+        if model ~= ENTITY.GET_ENTITY_MODEL(PLAYER.PLAYER_PED_ID()) then
+            change_model(PLAYER.PLAYER_ID(), model)
+            PED1._SET_PED_EYE_COLOR(PLAYER.PLAYER_ID(), PED1._GET_PED_EYE_COLOR(ped))
+            for i = 0, 12 do
+                PED.SET_PED_HEAD_OVERLAY(PLAYER.PLAYER_PED_ID(), i, PED1._GET_PED_HEAD_OVERLAY_VALUE(ped, i), 1)
+            end
+            apply_outfit(outfit.components, outfit.props)
+        else
+            apply_outfit(outfit.components, outfit.props)
+        end
+    end)
+
 end
 
 --- VEHICLE entity type functions ---

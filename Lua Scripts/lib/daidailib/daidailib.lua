@@ -30,10 +30,10 @@ function PlaySound(dir)--dir-指向绝对文件(local dir = filesystem.scripts_d
     local pb = dev:open(wav.channels)
     local mix = soup.audMixer()
 
-    mix.stop_playback_when_done = true
+    mix.stop_playback_when_done = false
     mix:setOutput(pb)
     mix:playSound(wav)
-    while pb:isPlaying() do util.yield() end
+    while pb:isPlaying() do util.yield(10) end
 end
 
 ----通知
@@ -392,6 +392,17 @@ function is_entity_on_water(ent)
     return WATER.GET_WATER_HEIGHT(pos.x, pos.y, pos.z, ht)--(ENTITY.IS_ENTITY_IN_WATER(ent)判断实体是否在水中/水上返回false)
 end
 
+
+----随机字符串
+function random_string(length)
+    local name = ""
+    local string = "abcdefghijklmnopqrstuvwxyzABCEDFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    for i = 1, length do 
+        name = name .. string[math.random(#string)]  
+    end
+    return name
+end
+
 ----字符串转变为 table表
 function StrToTable(str)
     if type(str) ~= "string" then
@@ -467,7 +478,33 @@ end
 
 
 
-
+----加载主题
+function load_theme(toggled)
+    menu_theme = toggled
+    if menu_theme then
+        if filesystem.exists(filesystem.stand_dir() .. "/Profiles/Sakura.txt") then
+            menu.trigger_commands("backgroundopacity 0")
+            menu.trigger_commands("backgroundred 0")
+            menu.trigger_commands("backgroundgreen 0")
+            menu.trigger_commands("backgroundblue 0")
+            menu.trigger_commands("blur 0")
+            local frame = directx.create_texture(filesystem.resources_dir() .. "/SakuraImg/Themes/IMG.jpg")
+            while menu_theme do
+                local menu_x, menu_y, menu_width, menu_height = menu.get_main_view_position_and_size()
+                if menu.is_open() then
+                    directx.draw_texture(frame, menu_width/2, menu_height/2, 0, 0, menu_x+0.003, menu_y-0.0247, 0, 1, 1, 1, 1)
+                end
+                util.yield()
+            end
+        else
+            util.toast("未安装主题文件,请先使用安装器安装")
+        end
+    else
+        if filesystem.exists(filesystem.stand_dir() .. "/Profiles/Sakura.txt") then
+            menu.trigger_commands("loadSakura")
+        end
+    end
+end
 
 
 
@@ -718,6 +755,12 @@ function landing_on_player(pid)
     end
 end
 
+----设置导航点
+function set_waypoint(pid)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid), false)
+    HUD.SET_NEW_WAYPOINT(pos.x, pos.y)
+end
+
 
 ----保存玩家信息
 local SaveProfile = {
@@ -751,7 +794,7 @@ function get_player_crew(pid)
     end
     return crew
 end
-function save_p_info(pid)
+function save_player_info(pid)
     local info = setmetatable({}, SaveProfile)
     info.name = PLAYER.GET_PLAYER_NAME(pid)
     info.rid = players.get_rockstar_id(pid)
@@ -813,6 +856,54 @@ function massacre_vehicle(pid)
             util.yield(1)
         end
         util.yield(1)
+    end
+end
+
+----鱼雨
+local fish_tab = {}
+function fish_rain()
+    local hashes = {util.joaat('a_c_fish'), util.joaat('a_c_stingray')}
+    local fish_hash = hashes[math.random(#hashes)]
+    local c = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)
+    c.x = c.x + math.random(-30, 30)
+    c.y = c.y + math.random(-30, 30)
+    c.z = c.z + 50
+    fish_tab[#fish_tab + 1] = create_ped(28, fish_hash, c.x, c.y, c.z, math.random(270))
+    ENTITY.SET_ENTITY_HEALTH(fish_tab[#fish_tab + 1], 0.0, 1)
+    ENTITY.APPLY_FORCE_TO_ENTITY(fish_tab[#fish_tab + 1], 1, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0, false, false, true, false, true)
+    if #fish_tab > 40 then
+        entities.delete(fish_tab[1])
+        table.remove(fish_tab, 1)
+    end
+    util.yield(200)
+end
+
+----反向驾驶
+function force_npc_reverse_travel()
+    for entities.get_all_peds_as_handles() as ped do
+        if not PED.IS_PED_A_PLAYER(ped) then 
+            local veh = PED.GET_VEHICLE_PED_IS_IN(ped, true)
+            if veh ~= 0 and VEHICLE.GET_PED_IN_VEHICLE_SEAT(veh, -1) == ped then 
+                request_control(ped)
+                TASK.SET_DRIVE_TASK_DRIVING_STYLE(ped, 1471)
+            end
+        end
+    end
+end
+
+----911事件
+function attacks_911()
+    local pos = {x = -914.1707, y = -1164.9396, z=250}
+    local plane_hash = util.joaat('jet')
+    request_model(plane_hash)
+    local plane = create_vehicle(plane_hash, pos.x, pos.y, pos.z, -68)
+    VEHICLE.SET_HELI_BLADES_FULL_SPEED(plane)
+    VEHICLE.SET_VEHICLE_ENGINE_ON(plane, true, true, false)
+    VEHICLE.CONTROL_LANDING_GEAR(plane, 3)
+    VEHICLE.SET_PLANE_TURBULENCE_MULTIPLIER(plane, 0.0)
+    for i=1, 5 do 
+        VEHICLE.SET_VEHICLE_FORWARD_SPEED(plane, 150.0)
+        util.yield(1000)
     end
 end
 
@@ -965,8 +1056,6 @@ local gauge_bg = directx.create_texture(filesystem.resources_dir() .. '\\SakuraI
 local needle = directx.create_texture(filesystem.resources_dir() .. '\\SakuraImg\\speedometer\\' .. '/needle.png')--指针图标
 local kph_label = directx.create_texture(filesystem.resources_dir() .. '\\SakuraImg\\speedometer\\' .. '/kph_label.png') --单位
 
-local texture_width = 0.08
-local texture_height = 0.08
 local carposX = 0.84
 local carposY = 0.75
 function speedometer_X(x)
@@ -984,12 +1073,14 @@ function speedometer()
 
         ----根据汽车的速度和最大速度计算打捆针的旋转
         local needle_rotation = (rpm / 1)/1.485  - 0.170
-        local gear_pos_x = carposX - 0.0001
-        local gear_pos_y = carposY - 0.005
         local gear = entities.get_current_gear(car_ptr)
-        directx.draw_texture(gauge_bg, texture_width, texture_height, 0.5, 0.5, carposX, carposY - 0.004, 0, 1.0, 1.0, 1.0, 1.0)
-        directx.draw_texture(needle, texture_width, texture_height, 0.5, 0.5, carposX, carposY, needle_rotation, 1.0, 1.0, 1.0, 0.5)
-        directx.draw_texture(gears[gear], texture_width, texture_height, 0.5, 0.5, gear_pos_x, gear_pos_y, 0, 1, 1, 1, 1)
+        directx.draw_texture(gauge_bg, 0.08, 0.08, 0.5, 0.5, carposX, carposY - 0.004, 0, 1.0, 1.0, 1.0, 1.0)
+        directx.draw_texture(needle, 0.08, 0.08, 0.5, 0.5, carposX, carposY, needle_rotation, 1.0, 1.0, 1.0, 0.5)
+        if gear < 8 then--gtav 载具默认最高挡位7,但第三方辅助可以修改其值,即造成got nil
+            directx.draw_texture(gears[gear], 0.08, 0.08, 0.5, 0.5, carposX - 0.0001, carposY - 0.005, 0, 1, 1, 1, 1)
+        else
+            directx.draw_texture(gears[7], 0.08, 0.08, 0.5, 0.5, carposX - 0.0001, carposY - 0.005, 0, 1, 1, 1, 1)
+        end
 
         ----速度
         local speed = math.ceil(ENTITY.GET_ENTITY_SPEED(car) * 3.6)
@@ -1437,11 +1528,12 @@ function UFO_gravitation(pid)
     local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local vehicle = PED.GET_VEHICLE_PED_IS_IN(player, false)
 
-    if PED.IS_PED_IN_VEHICLE(player, vehicle, false) then 
-        caremp(pid)
+    if PED.IS_PED_IN_VEHICLE(player, vehicle, false) then
+        request_control(vehicle)
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid), false)
+        VEHICLE.BRING_VEHICLE_TO_HALT(vehicle, 0.0, 1, false)
+        FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 83, 100.0, false, true, 0.0)
         util.yield(1000)
-        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle)
-        VEHICLE.BRING_VEHICLE_TO_HALT(vehicle, 3, 4, false)
         VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, false, true, true)
         ENTITY.APPLY_FORCE_TO_ENTITY(vehicle, 1, 0.0, 0.0, 65, 0.0, 0.0, 0.0, 1, false, true, true, true, true)
         util.yield(6000)
@@ -1489,6 +1581,7 @@ end
 function Custom_teleport()
     local label = util.register_label("输入坐标(x,y,z),以','分开")
 	local input = get_input_from_screen_keyboard(label, 15, "")
+    if input == "" then return end
     local tab = string.split(input,",")
     for i = 1, 3 do
         tab[i] = tonumber(tab[i])
@@ -1933,6 +2026,52 @@ function cat_bomb(pid)
         AUDIO.PLAY_PAIN(cat, 7, 0)
     end
 end
+
+
+----绘制玩家模型
+local cur_rot = 0
+local cur_focused_player = nil
+local cur_clone = 0
+function create_player_clone(pid)
+    local new_ped = PED.CLONE_PED(PLAYER.GET_PLAYER_PED(pid), false, false, true)
+    ENTITY.FREEZE_ENTITY_POSITION(new_ped, true)
+    ENTITY.SET_ENTITY_INVINCIBLE(new_ped, true)
+    PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(new_ped, true)
+    TASK.TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(new_ped, true)
+    ENTITY.SET_ENTITY_COORDS(new_ped, 0, 0, -50, true, true, true, false)
+    ENTITY.SET_ENTITY_ALPHA(new_ped, 200, false)
+    ENTITY.SET_ENTITY_COLLISION(new_ped, false, true)
+    return new_ped
+end
+function Draw_player_model()
+    local focused = players.get_focused()
+    if (focused[1] ~= nil and focused[2] == nil) and menu.is_open() then
+        local pid = focused[1]
+        if pid ~= cur_focused_player then
+            if cur_clone ~= 0 then
+                entities.delete(cur_clone)
+            end
+            cur_focused_player = pid
+            cur_clone = create_player_clone(pid)
+        end
+        local offset = get_offset_from_gameplay_camera(3.0)--从相机获取偏移量
+        ENTITY.SET_ENTITY_COORDS(cur_clone, offset.x, offset.y, offset.z-1, true, true, true, false)
+        ENTITY.SET_ENTITY_ROTATION(cur_clone, 0, 0, cur_rot, 0, true)
+        util.draw_box(v3.new(offset.x, offset.y, offset.z + 0.1), v3.new(0, 0, cur_rot), v3.new(1, 1, 2), 255, 255, 255, 50)
+        if cur_rot >= 360 then
+            cur_rot = 0 
+        else 
+            cur_rot += 1
+        end
+    else
+        if cur_focused_player ~= nil then
+            entities.delete(cur_clone)
+            cur_clone = 0
+            cur_focused_player = nil
+        end
+    end
+end
+
 
 
 
@@ -2806,6 +2945,32 @@ function targeted_loop_strike()
         end
         entities.delete(bomb)
         executeNuke(waypointPos)
+    end
+end
+
+----指示灯
+function pilot_lamp()
+    if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID(), false) then
+        show_button()
+        sf.SET_DATA_SLOT(0,PAD.GET_CONTROL_INSTRUCTIONAL_BUTTONS_STRING(0, 35, true), '右转灯')
+        sf.SET_DATA_SLOT(1,PAD.GET_CONTROL_INSTRUCTIONAL_BUTTONS_STRING(0, 130, true), '双闪灯')
+        sf.SET_DATA_SLOT(2,PAD.GET_CONTROL_INSTRUCTIONAL_BUTTONS_STRING(0, 34, true), '左转灯')
+        show_button2()
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
+        local left = PAD.IS_CONTROL_PRESSED(34, 34)--174[A]
+        local right = PAD.IS_CONTROL_PRESSED(35, 35)--175[D]
+        local rear = PAD.IS_CONTROL_PRESSED(130, 130)--173[S]
+        if left and not right and not rear then
+            VEHICLE.SET_VEHICLE_INDICATOR_LIGHTS(vehicle, 1, true)
+        elseif right and not left and not rear then
+            VEHICLE.SET_VEHICLE_INDICATOR_LIGHTS(vehicle, 0, true)
+        elseif rear and not left and not right then
+            VEHICLE.SET_VEHICLE_INDICATOR_LIGHTS(vehicle, 1, true)
+            VEHICLE.SET_VEHICLE_INDICATOR_LIGHTS(vehicle, 0, true)
+        else
+            VEHICLE.SET_VEHICLE_INDICATOR_LIGHTS(vehicle, 0, false)
+            VEHICLE.SET_VEHICLE_INDICATOR_LIGHTS(vehicle, 1, false)
+        end
     end
 end
 
@@ -5224,7 +5389,28 @@ function qzd()
     end
 end
 
+----B-11攻击
+local B11plane = {}
+function B11_attack(pid)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid), false)
+    local drive_ped = {}
+    if ENTITY.DOES_ENTITY_EXIST(B11plane[1]) then return end
+    for i = 1, 30 do
+        B11plane[i] = create_vehicle(1692272545, pos.x+math.random(-100, 100), pos.y+math.random(-100, 100), pos.z+200, math.random(0, 360))
 
+        ENTITY.SET_ENTITY_INVINCIBLE(B11plane[i],true)
+        ENTITY.SET_ENTITY_COLLISION(B11plane[i], false, true)
+
+        local blip = HUD.ADD_BLIP_FOR_ENTITY(B11plane[i])
+        HUD.SET_BLIP_COLOUR(blip, 1)--设置颜色
+
+        drive_ped[i] = PED.CREATE_RANDOM_PED_AS_DRIVER(B11plane[i], 1)
+        VEHICLE.SET_VEHICLE_ENGINE_ON(drive_ped[i], true, true, 0)
+        VEHICLE.SET_VEHICLE_FORWARD_SPEED(B11plane[i], 100 / 3.6)
+
+        TASK.TASK_COMBAT_PED(drive_ped[i], PLAYER.GET_PLAYER_PED(pid), 0, 16)
+    end
+end
 
 
 ------轰炸区
@@ -5507,28 +5693,40 @@ function blockfireeffect()
     FIRE.STOP_ENTITY_FIRE(PLAYER.PLAYER_PED_ID())
 end
 
+----派遣劫匪
+function sendmugger_npc(pid)--gpbd_fm_1(全局名)
+    if NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_gang_call", 0, true, 0) then
+        util.toast("当前劫匪活动还未结束哦")
+    else
+        local global = 1853988       --https://github.com/YimMenu/YimMenu/blob/master/src/core/scr_globals.hpp
+        local bits_addr = memory.script_global(global + (PLAYER.PLAYER_ID() * 862 + 1) + 140)
+            memory.write_int(bits_addr, SetBit(memory.read_int(bits_addr), 0))
+            write_global.int(global + (PLAYER.PLAYER_ID() * 862 + 1) + 141, pid)
+        util.toast("劫匪已出动")
+    end
+end
+----拦截劫匪
+function block_mugger()
+    if NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_gang_call", 0, true, 0) then
+        local sender = memory.read_int(memory.script_local("am_gang_call", 286))
+        local target = memory.script_local("am_gang_call", 288) --return players_ID
+        
+        local netId = memory.read_int(memory.script_local("am_gang_call", 63 + 10 + (0 * 7 + 1)))
+        if NETWORK.NETWORK_DOES_NETWORK_ID_EXIST(netId) and target == PLAYER.PLAYER_ID() then
+            local mugger = NETWORK.NET_TO_PED(netId)
+            entities.delete(mugger)
+            util.toast("劫匪来自: " .. PLAYER.GET_PLAYER_NAME(sender))
+        end
+    end
+end
 -----劫匪检测
-local notified = false
 function show_mugger()
 	if NETWORK.NETWORK_IS_SESSION_ACTIVE() and NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_gang_call", 0, true, 0) then
-		util.spoof_script("am_gang_call", function()
-			local netId	= memory.read_int(memory.script_local("am_gang_call", 63 + 10 + (0 * 7 + 1)))
-			if NETWORK.NETWORK_DOES_NETWORK_ID_EXIST(netId) and
-			not ENTITY.IS_ENTITY_DEAD(NETWORK.NET_TO_PED(netId), false) then
-				local mugger = NETWORK.NET_TO_PED(netId)
-				draw_bounding_box(mugger, true, {r = 255, g = 0, b = 0, a = 80})
-			end
-
-			local p_sender = memory.script_local("am_gang_call", 287)
-			if not notified and p_sender ~= 0 and memory.read_int(p_sender) ~= PLAYER.PLAYER_ID() and
-			NETWORK.NETWORK_IS_PLAYER_ACTIVE(memory.read_int(p_sender)) then
-				local sender = memory.read_int(p_sender)
-				util.toast("给你发送了一个劫匪")
-				notified = true
-			end
-		end)
-	elseif notified then
-		notified = false
+        local netId	= memory.read_int(memory.script_local("am_gang_call", 62 + 10 + (0 * 7 + 1)))
+        if NETWORK.NETWORK_DOES_NETWORK_ID_EXIST(netId) and not ENTITY.IS_ENTITY_DEAD(NETWORK.NET_TO_PED(netId), false) then
+            local mugger = NETWORK.NET_TO_PED(netId)
+            draw_bounding_box(mugger, true, {r = 255, g = 0, b = 0, a = 80})
+        end
 	end
 end
 
@@ -6050,70 +6248,27 @@ function custom_alert(l1) -- totally not skidded from lancescript
     end
 end
 
------------线上请求服务-------------
---即时纳米无人机
-function CanSpawnNanoDrone()
-	return BitTest(read_global.int(1962996), 23)
+----请求纳米无人机
+function RequestNanoDrone()
+    local global = 1963795 --RequestNanoDrone --https://github.com/4d72526f626f74/MrRobot/blob/main/MrRobot/utils/script_globals
+    local address = memory.script_global(global)
+    memory.write_int(address, memory.read_int(address) | 0x1C00000)
+    --https://github.com/4d72526f626f74/MrRobot/blob/3186d22dbcf5093f72e8a8a6a479bf37e858e616/MrRobot/modules/online#L723
 end
-function CanUseDrone()
-	if not NETWORK.NETWORK_IS_PLAYER_ACTIVE(PLAYER.PLAYER_ID()) then
-		return false
-	end
-	if util.is_session_transition_active() then
-		return false
-	end
-	if players.is_in_interior(PLAYER.PLAYER_ID()) then
-		return false
-	end
-	if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID(), false) then
-		return false
-	end
-	if PED.IS_PED_IN_ANY_TRAIN(PLAYER.PLAYER_PED_ID()) or
-	PLAYER.IS_PLAYER_RIDING_TRAIN(PLAYER.PLAYER_ID()) then
-		return false
-	end
-	if PED.IS_PED_FALLING(PLAYER.PLAYER_PED_ID()) then
-		return false
-	end
-	if ENTITY.GET_ENTITY_SUBMERGED_LEVEL(PLAYER.PLAYER_PED_ID()) > 0.3 then
-		return false
-	end
-	if ENTITY.IS_ENTITY_IN_AIR(PLAYER.PLAYER_PED_ID()) then
-		return false
-	end
-	if PED.IS_PED_ON_VEHICLE(PLAYER.PLAYER_PED_ID()) then
-		return false
-	end
-	return true
-end
-function nanodrone()
-    local p_bits = memory.script_global(1962996)
-    local bits = memory.read_int(p_bits)
-    TASK.CLEAR_PED_TASKS(PLAYER.PLAYER_PED_ID())
-    memory.write_int(p_bits, SetBit(bits, 24))
-    if not CanSpawnNanoDrone() then 
-        memory.write_int(p_bits, SetBit(bits, 23)) 
-    end
-end
---请求豪华直升机
-function Luxury_Helicopter()
-	if NETWORK.NETWORK_IS_SESSION_ACTIVE() and not NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_heli_taxi", -1, true, 0) then
-        write_global.int(2793044 + 888, 1)
-        write_global.int(2793044 + 895, 1)
-    end
-end
------------
 
 
----------自动接受并加入游戏
+----自动加入游戏
 function autoaccept()
-    local message_hash = Jinx.GET_WARNING_SCREEN_MESSAGE_HASH()
-    if message_hash == 15890625 or message_hash == -398982408 or message_hash == -587688989 then
-        PAD.SET_CONTROL_VALUE_NEXT_FRAME(2, 201, 1.0)
-        util.yield(200)
+    local message_hash = HUD.GET_WARNING_SCREEN_MESSAGE_HASH()
+    local paused = HUD.IS_PAUSE_MENU_ACTIVE()
+    for invite_string as hash do
+        if message_hash == MISC.GET_HASH_KEY(hash) and not paused then
+            PAD.SET_CONTROL_VALUE_NEXT_FRAME(2, 201, 1.0)
+            yield(25)
+        end
     end
 end
----------自动获取主机
+----自动获取主机
 function autogethost()
     if not (players.get_host() == PLAYER.PLAYER_ID()) and not util.is_session_transition_active() then
         if not (PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**") then
@@ -6958,6 +7113,7 @@ function firebreathxxx(toggle)
         fireBreathSettings.ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE('muz_xs_turret_flamethrower_looping', PLAYER.PLAYER_PED_ID(), 0, 0.12, 0.58, 30, 0, 0, 0x8b93, fireBreathSettings.scale, false, false, false, 0, 0, 0, 0)
         GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireBreathSettings.ptfx, fireBreathSettings.colour.r, fireBreathSettings.colour.g, fireBreathSettings.colour.b, false)
     else
+        GRAPHICS.STOP_PARTICLE_FX_LOOPED(fireBreathSettings.ptfx, false)
         GRAPHICS.REMOVE_PARTICLE_FX(fireBreathSettings.ptfx, true)
         STREAMING.REMOVE_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
     end
@@ -7553,10 +7709,6 @@ end
 
 
 
-
-function is_player_pointing()
-	return read_global.int(4521801 + 930) == 3
-end
 function get_offset_from_cam(dist)
 	local rot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
 	local pos = CAM.GET_FINAL_RENDERED_CAM_COORD()
@@ -7637,6 +7789,9 @@ end
 ----神指
 local targetEntity = NULL
 local explosionProof = false
+function is_player_pointing()
+	return read_global.int(4521801 + 930) == 3
+end
 function godfinger()
    ------准星
     HUD.SET_TEXT_SCALE(1.0,0.5)

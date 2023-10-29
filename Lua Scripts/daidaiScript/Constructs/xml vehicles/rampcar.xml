@@ -1,60 +1,54 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<Vehicle menyoo_ver="1.4.0">
-	<ModelHash>0x5e4327c8</ModelHash>
-	<InitialHandle>54904</InitialHandle>
+<?xml version="1.0"?>
+<Vehicle menyoo_ver="0.999874b">
+	<ModelHash>0x9cf21e0f</ModelHash>
+	<InitialHandle>771355</InitialHandle>
 	<VehicleProperties>
 		<Colours>
-			<Primary>160</Primary>
-			<Secondary>160</Secondary>
-			<Pearl>160</Pearl>
-			<Rim>160</Rim>
+			<Primary>117</Primary>
+			<Secondary>0</Secondary>
+			<Pearl>18</Pearl>
+			<Rim>0</Rim>
 			<Mod1_a>6</Mod1_a>
 			<Mod1_b>-1</Mod1_b>
 			<Mod1_c>-1</Mod1_c>
 			<Mod2_a>6</Mod2_a>
 			<Mod2_b>-1</Mod2_b>
-			<IsPrimaryColourCustom>true</IsPrimaryColourCustom>
-			<Cust1_R>65</Cust1_R>
-			<Cust1_G>57</Cust1_G>
-			<Cust1_B>230</Cust1_B>
-			<IsSecondaryColourCustom>true</IsSecondaryColourCustom>
-			<Cust2_R>65</Cust2_R>
-			<Cust2_G>57</Cust2_G>
-			<Cust2_B>230</Cust2_B>
-			<tyreSmoke_R>65</tyreSmoke_R>
-			<tyreSmoke_G>57</tyreSmoke_G>
-			<tyreSmoke_B>230</tyreSmoke_B>
+			<IsPrimaryColourCustom>false</IsPrimaryColourCustom>
+			<IsSecondaryColourCustom>false</IsSecondaryColourCustom>
+			<tyreSmoke_R>255</tyreSmoke_R>
+			<tyreSmoke_G>255</tyreSmoke_G>
+			<tyreSmoke_B>255</tyreSmoke_B>
 			<LrInterior>0</LrInterior>
 			<LrDashboard>0</LrDashboard>
-			<LrXenonHeadlights>0</LrXenonHeadlights>
 		</Colours>
-		<Livery>1</Livery>
-		<NumberPlateText>84MOW340</NumberPlateText>
-		<NumberPlateIndex>5</NumberPlateIndex>
-		<WheelType>7</WheelType>
+		<Livery>-1</Livery>
+		<NumberPlateText>09CAQ135</NumberPlateText>
+		<NumberPlateIndex>0</NumberPlateIndex>
+		<WheelType>4</WheelType>
 		<WheelsInvisible>false</WheelsInvisible>
-		<EngineSoundName></EngineSoundName>
-		<WindowTint>5</WindowTint>
+		<EngineSoundName />
+		<WindowTint>-1</WindowTint>
 		<BulletProofTyres>true</BulletProofTyres>
-		<DirtLevel>0.45860219</DirtLevel>
+		<DirtLevel>0.00158590742</DirtLevel>
 		<PaintFade>0.298039228</PaintFade>
 		<RoofState>0</RoofState>
 		<SirenActive>false</SirenActive>
 		<EngineOn>true</EngineOn>
-		<EngineHealth>1000</EngineHealth>
-		<LightsOn>true</LightsOn>
+		<EngineHealth>10000</EngineHealth>
+		<LightsOn>false</LightsOn>
 		<IsRadioLoud>0</IsRadioLoud>
-		<LockStatus>1</LockStatus>
 		<Neons>
-			<Left>true</Left>
-			<Right>true</Right>
-			<Front>true</Front>
-			<Back>true</Back>
-			<R>65</R>
-			<G>57</G>
-			<B>230</B>
+			<Left>false</Left>
+			<Right>false</Right>
+			<Front>false</Front>
+			<Back>false</Back>
+			<R>255</R>
+			<G>0</G>
+			<B>255</B>
 		</Neons>
-		<ModExtras />
+		<ModExtras>
+			<_2>true</_2>
+		</ModExtras>
 		<Mods>
 			<_0>-1,0</_0>
 			<_1>-1,0</_1>
@@ -70,16 +64,16 @@
 			<_11>3,0</_11>
 			<_12>2,0</_12>
 			<_13>2,0</_13>
-			<_14>30,0</_14>
+			<_14>-1,0</_14>
 			<_15>3,0</_15>
 			<_16>4,0</_16>
-			<_17>true</_17>
+			<_17>false</_17>
 			<_18>true</_18>
-			<_19>true</_19>
-			<_20>true</_20>
-			<_21>true</_21>
+			<_19>false</_19>
+			<_20>false</_20>
+			<_21>false</_21>
 			<_22>true</_22>
-			<_23>39,1</_23>
+			<_23>1,0</_23>
 			<_24>-1,0</_24>
 			<_25>-1,0</_25>
 			<_26>-1,0</_26>
@@ -135,37 +129,40 @@
 			<_7>false</_7>
 			<_8>false</_8>
 		</TyresBursted>
+		<RpmMultiplier>1</RpmMultiplier>
+		<TorqueMultiplier>1</TorqueMultiplier>
+		<HeadlightIntensity>1</HeadlightIntensity>
 	</VehicleProperties>
 	<OpacityLevel>255</OpacityLevel>
 	<LodDistance>16960</LodDistance>
 	<IsVisible>true</IsVisible>
 	<IsDriverVisible>true</IsDriverVisible>
 	<MaxHealth>1000</MaxHealth>
-	<Health>1000</Health>
+	<Health>10000</Health>
 	<HasGravity>true</HasGravity>
 	<IsOnFire>false</IsOnFire>
-	<IsInvincible>true</IsInvincible>
-	<IsBulletProof>false</IsBulletProof>
-	<IsExplosionProof>false</IsExplosionProof>
-	<IsFireProof>false</IsFireProof>
-	<IsMeleeProof>false</IsMeleeProof>
+	<IsInvincible>false</IsInvincible>
+	<IsBulletProof>true</IsBulletProof>
+	<IsExplosionProof>true</IsExplosionProof>
+	<IsFireProof>true</IsFireProof>
+	<IsMeleeProof>true</IsMeleeProof>
 	<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
-	<SpoonerAttachments SetAttachmentsPersistentAndAddToSpoonerDatabase="false" StartTaskSequencesOnLoad="true">
+	<SpoonerAttachments SetAttachmentsPersistentAndAddToSpoonerDatabase="true" StartTaskSequencesOnLoad="true">
 		<Attachment>
-			<ModelHash>0x162a902d</ModelHash>
+			<ModelHash>0xaef01947</ModelHash>
 			<Type>3</Type>
 			<Dynamic>false</Dynamic>
 			<FrozenPos>true</FrozenPos>
-			<HashName>stt_prop_ramp_jump_xxl</HashName>
-			<InitialHandle>134004</InitialHandle>
+			<HashName>lts_prop_lts_ramp_01</HashName>
+			<InitialHandle>231458</InitialHandle>
 			<ObjectProperties>
 				<TextureVariation>0</TextureVariation>
 			</ObjectProperties>
-			<OpacityLevel>255</OpacityLevel>
+			<OpacityLevel>89</OpacityLevel>
 			<LodDistance>16960</LodDistance>
-			<IsVisible>true</IsVisible>
+			<IsVisible>false</IsVisible>
 			<MaxHealth>1000</MaxHealth>
-			<Health>0</Health>
+			<Health>1000</Health>
 			<HasGravity>true</HasGravity>
 			<IsOnFire>false</IsOnFire>
 			<IsInvincible>false</IsInvincible>
@@ -176,22 +173,495 @@
 			<IsMeleeProof>false</IsMeleeProof>
 			<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
 			<PositionRotation>
-				<X>-1239.427</X>
-				<Y>-3058.66382</Y>
-				<Z>12.6233826</Z>
-				<Pitch>1.26158035</Pitch>
-				<Roll>-8.28338432</Roll>
-				<Yaw>90.8941193</Yaw>
+				<X>-727.155029</X>
+				<Y>-159.675583</Y>
+				<Z>35.9595451</Z>
+				<Pitch>0.475448906</Pitch>
+				<Roll>0.927569389</Roll>
+				<Yaw>-126.880157</Yaw>
 			</PositionRotation>
 			<Attachment isAttached="true">
-				<AttachedTo>54904</AttachedTo>
-				<BoneIndex>1</BoneIndex>
-				<X>-2.38418579e-07</X>
-				<Y>-7.00000095</Y>
-				<Z>-1.00000012</Z>
-				<Pitch>1.00000012</Pitch>
-				<Roll>-10.000001</Roll>
-				<Yaw>88.0000076</Yaw>
+				<AttachedTo>771355</AttachedTo>
+				<BoneIndex>0</BoneIndex>
+				<X>0</X>
+				<Y>5.99999666</Y>
+				<Z>-0.399999976</Z>
+				<Pitch>-0.0999999642</Pitch>
+				<Roll>0</Roll>
+				<Yaw>179.999985</Yaw>
+			</Attachment>
+		</Attachment>
+		<Attachment>
+			<ModelHash>0xaef01947</ModelHash>
+			<Type>3</Type>
+			<Dynamic>false</Dynamic>
+			<FrozenPos>true</FrozenPos>
+			<HashName>lts_prop_lts_ramp_01</HashName>
+			<InitialHandle>263966</InitialHandle>
+			<ObjectProperties>
+				<TextureVariation>0</TextureVariation>
+			</ObjectProperties>
+			<OpacityLevel>89</OpacityLevel>
+			<LodDistance>16960</LodDistance>
+			<IsVisible>false</IsVisible>
+			<MaxHealth>1000</MaxHealth>
+			<Health>1000</Health>
+			<HasGravity>true</HasGravity>
+			<IsOnFire>false</IsOnFire>
+			<IsInvincible>false</IsInvincible>
+			<IsBulletProof>false</IsBulletProof>
+			<IsCollisionProof>false</IsCollisionProof>
+			<IsExplosionProof>false</IsExplosionProof>
+			<IsFireProof>false</IsFireProof>
+			<IsMeleeProof>false</IsMeleeProof>
+			<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+			<PositionRotation>
+				<X>-724.288391</X>
+				<Y>-161.841049</Y>
+				<Z>36.7155685</Z>
+				<Pitch>5.27481508</Pitch>
+				<Roll>0.931482673</Roll>
+				<Yaw>-126.958099</Yaw>
+			</PositionRotation>
+			<Attachment isAttached="true">
+				<AttachedTo>771355</AttachedTo>
+				<BoneIndex>0</BoneIndex>
+				<X>0</X>
+				<Y>2.4000001</Y>
+				<Z>0.319999933</Z>
+				<Pitch>4.6999979</Pitch>
+				<Roll>0</Roll>
+				<Yaw>179.999985</Yaw>
+			</Attachment>
+		</Attachment>
+		<Attachment>
+			<ModelHash>0x1e75866e</ModelHash>
+			<Type>3</Type>
+			<Dynamic>false</Dynamic>
+			<FrozenPos>true</FrozenPos>
+			<HashName>prop_container_01h</HashName>
+			<InitialHandle>178988</InitialHandle>
+			<ObjectProperties>
+				<TextureVariation>0</TextureVariation>
+			</ObjectProperties>
+			<OpacityLevel>255</OpacityLevel>
+			<LodDistance>16960</LodDistance>
+			<IsVisible>false</IsVisible>
+			<MaxHealth>1000</MaxHealth>
+			<Health>1000</Health>
+			<HasGravity>true</HasGravity>
+			<IsOnFire>false</IsOnFire>
+			<IsInvincible>false</IsInvincible>
+			<IsBulletProof>false</IsBulletProof>
+			<IsCollisionProof>false</IsCollisionProof>
+			<IsExplosionProof>false</IsExplosionProof>
+			<IsFireProof>false</IsFireProof>
+			<IsMeleeProof>false</IsMeleeProof>
+			<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+			<PositionRotation>
+				<X>-726.145874</X>
+				<Y>-160.376495</Y>
+				<Z>33.1921005</Z>
+				<Pitch>-13.9736605</Pitch>
+				<Roll>-0.955825806</Roll>
+				<Yaw>52.8967323</Yaw>
+			</PositionRotation>
+			<Attachment isAttached="true">
+				<AttachedTo>771355</AttachedTo>
+				<BoneIndex>0</BoneIndex>
+				<X>0</X>
+				<Y>4.79999781</Y>
+				<Z>-3.17999911</Z>
+				<Pitch>-13.4000149</Pitch>
+				<Roll>0</Roll>
+				<Yaw>0</Yaw>
+			</Attachment>
+		</Attachment>
+		<Attachment>
+			<ModelHash>0xc13a16f0</ModelHash>
+			<Type>3</Type>
+			<Dynamic>false</Dynamic>
+			<FrozenPos>true</FrozenPos>
+			<HashName>prop_ld_balcfnc_02a</HashName>
+			<InitialHandle>520244</InitialHandle>
+			<ObjectProperties>
+				<TextureVariation>2</TextureVariation>
+			</ObjectProperties>
+			<OpacityLevel>255</OpacityLevel>
+			<LodDistance>16960</LodDistance>
+			<IsVisible>true</IsVisible>
+			<MaxHealth>1000</MaxHealth>
+			<Health>1000</Health>
+			<HasGravity>true</HasGravity>
+			<IsOnFire>false</IsOnFire>
+			<IsInvincible>false</IsInvincible>
+			<IsBulletProof>false</IsBulletProof>
+			<IsCollisionProof>true</IsCollisionProof>
+			<IsExplosionProof>false</IsExplosionProof>
+			<IsFireProof>false</IsFireProof>
+			<IsMeleeProof>false</IsMeleeProof>
+			<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+			<PositionRotation>
+				<X>-722.853638</X>
+				<Y>-162.923233</Y>
+				<Z>37.0135956</Z>
+				<Pitch>68.4055176</Pitch>
+				<Roll>-92.5208893</Roll>
+				<Yaw>55.4717216</Yaw>
+			</PositionRotation>
+			<Attachment isAttached="true">
+				<AttachedTo>771355</AttachedTo>
+				<BoneIndex>0</BoneIndex>
+				<X>0</X>
+				<Y>0.599999964</Y>
+				<Z>0.599999964</Z>
+				<Pitch>68.9999924</Pitch>
+				<Roll>-89.9999924</Roll>
+				<Yaw>0</Yaw>
+			</Attachment>
+		</Attachment>
+		<Attachment>
+			<ModelHash>0xc13a16f0</ModelHash>
+			<Type>3</Type>
+			<Dynamic>false</Dynamic>
+			<FrozenPos>true</FrozenPos>
+			<HashName>prop_ld_balcfnc_02a</HashName>
+			<InitialHandle>321335</InitialHandle>
+			<ObjectProperties>
+				<TextureVariation>0</TextureVariation>
+			</ObjectProperties>
+			<OpacityLevel>255</OpacityLevel>
+			<LodDistance>16960</LodDistance>
+			<IsVisible>true</IsVisible>
+			<MaxHealth>1000</MaxHealth>
+			<Health>1000</Health>
+			<HasGravity>true</HasGravity>
+			<IsOnFire>false</IsOnFire>
+			<IsInvincible>false</IsInvincible>
+			<IsBulletProof>false</IsBulletProof>
+			<IsCollisionProof>true</IsCollisionProof>
+			<IsExplosionProof>false</IsExplosionProof>
+			<IsFireProof>false</IsFireProof>
+			<IsMeleeProof>false</IsMeleeProof>
+			<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+			<PositionRotation>
+				<X>-723.726379</X>
+				<Y>-162.260315</Y>
+				<Z>36.602623</Z>
+				<Pitch>68.4055176</Pitch>
+				<Roll>-92.5208893</Roll>
+				<Yaw>55.4717216</Yaw>
+			</PositionRotation>
+			<Attachment isAttached="true">
+				<AttachedTo>771355</AttachedTo>
+				<BoneIndex>0</BoneIndex>
+				<X>0</X>
+				<Y>1.70000017</Y>
+				<Z>0.199999988</Z>
+				<Pitch>68.9999924</Pitch>
+				<Roll>-89.9999924</Roll>
+				<Yaw>0</Yaw>
+			</Attachment>
+		</Attachment>
+		<Attachment>
+			<ModelHash>0xc13a16f0</ModelHash>
+			<Type>3</Type>
+			<Dynamic>false</Dynamic>
+			<FrozenPos>true</FrozenPos>
+			<HashName>prop_ld_balcfnc_02a</HashName>
+			<InitialHandle>109367</InitialHandle>
+			<ObjectProperties>
+				<TextureVariation>0</TextureVariation>
+			</ObjectProperties>
+			<OpacityLevel>255</OpacityLevel>
+			<LodDistance>16960</LodDistance>
+			<IsVisible>true</IsVisible>
+			<MaxHealth>1000</MaxHealth>
+			<Health>1000</Health>
+			<HasGravity>true</HasGravity>
+			<IsOnFire>false</IsOnFire>
+			<IsInvincible>false</IsInvincible>
+			<IsBulletProof>false</IsBulletProof>
+			<IsCollisionProof>true</IsCollisionProof>
+			<IsExplosionProof>false</IsExplosionProof>
+			<IsFireProof>false</IsFireProof>
+			<IsMeleeProof>false</IsMeleeProof>
+			<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+			<PositionRotation>
+				<X>-724.360901</X>
+				<Y>-161.778122</Y>
+				<Z>36.2946396</Z>
+				<Pitch>70.4033966</Pitch>
+				<Roll>-92.7664108</Roll>
+				<Yaw>55.7339592</Yaw>
+			</PositionRotation>
+			<Attachment isAttached="true">
+				<AttachedTo>771355</AttachedTo>
+				<BoneIndex>0</BoneIndex>
+				<X>0</X>
+				<Y>2.49999976</Y>
+				<Z>-0.099999994</Z>
+				<Pitch>70.9999924</Pitch>
+				<Roll>-89.9999924</Roll>
+				<Yaw>0</Yaw>
+			</Attachment>
+		</Attachment>
+		<Attachment>
+			<ModelHash>0xc13a16f0</ModelHash>
+			<Type>3</Type>
+			<Dynamic>false</Dynamic>
+			<FrozenPos>true</FrozenPos>
+			<HashName>prop_ld_balcfnc_02a</HashName>
+			<InitialHandle>256824</InitialHandle>
+			<ObjectProperties>
+				<TextureVariation>2</TextureVariation>
+			</ObjectProperties>
+			<OpacityLevel>255</OpacityLevel>
+			<LodDistance>16960</LodDistance>
+			<IsVisible>true</IsVisible>
+			<MaxHealth>1000</MaxHealth>
+			<Health>1000</Health>
+			<HasGravity>true</HasGravity>
+			<IsOnFire>false</IsOnFire>
+			<IsInvincible>false</IsInvincible>
+			<IsBulletProof>false</IsBulletProof>
+			<IsCollisionProof>true</IsCollisionProof>
+			<IsExplosionProof>false</IsExplosionProof>
+			<IsFireProof>false</IsFireProof>
+			<IsMeleeProof>false</IsMeleeProof>
+			<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+			<PositionRotation>
+				<X>-722.973633</X>
+				<Y>-163.083206</Y>
+				<Z>37.0103607</Z>
+				<Pitch>68.4055176</Pitch>
+				<Roll>-92.5208893</Roll>
+				<Yaw>55.4717216</Yaw>
+			</PositionRotation>
+			<Attachment isAttached="true">
+				<AttachedTo>771355</AttachedTo>
+				<BoneIndex>0</BoneIndex>
+				<X>-0.199999988</X>
+				<Y>0.599999964</Y>
+				<Z>0.599999964</Z>
+				<Pitch>68.9999924</Pitch>
+				<Roll>-89.9999924</Roll>
+				<Yaw>0</Yaw>
+			</Attachment>
+		</Attachment>
+		<Attachment>
+			<ModelHash>0xc13a16f0</ModelHash>
+			<Type>3</Type>
+			<Dynamic>false</Dynamic>
+			<FrozenPos>true</FrozenPos>
+			<HashName>prop_ld_balcfnc_02a</HashName>
+			<InitialHandle>505914</InitialHandle>
+			<ObjectProperties>
+				<TextureVariation>2</TextureVariation>
+			</ObjectProperties>
+			<OpacityLevel>255</OpacityLevel>
+			<LodDistance>16960</LodDistance>
+			<IsVisible>true</IsVisible>
+			<MaxHealth>1000</MaxHealth>
+			<Health>1000</Health>
+			<HasGravity>true</HasGravity>
+			<IsOnFire>false</IsOnFire>
+			<IsInvincible>false</IsInvincible>
+			<IsBulletProof>false</IsBulletProof>
+			<IsCollisionProof>true</IsCollisionProof>
+			<IsExplosionProof>false</IsExplosionProof>
+			<IsFireProof>false</IsFireProof>
+			<IsMeleeProof>false</IsMeleeProof>
+			<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+			<PositionRotation>
+				<X>-722.733643</X>
+				<Y>-162.76326</Y>
+				<Z>37.0168343</Z>
+				<Pitch>68.4055176</Pitch>
+				<Roll>-92.5208893</Roll>
+				<Yaw>55.4717216</Yaw>
+			</PositionRotation>
+			<Attachment isAttached="true">
+				<AttachedTo>771355</AttachedTo>
+				<BoneIndex>0</BoneIndex>
+				<X>0.199999988</X>
+				<Y>0.599999964</Y>
+				<Z>0.599999964</Z>
+				<Pitch>68.9999924</Pitch>
+				<Roll>-89.9999924</Roll>
+				<Yaw>0</Yaw>
+			</Attachment>
+		</Attachment>
+		<Attachment>
+			<ModelHash>0xc13a16f0</ModelHash>
+			<Type>3</Type>
+			<Dynamic>false</Dynamic>
+			<FrozenPos>true</FrozenPos>
+			<HashName>prop_ld_balcfnc_02a</HashName>
+			<InitialHandle>625972</InitialHandle>
+			<ObjectProperties>
+				<TextureVariation>0</TextureVariation>
+			</ObjectProperties>
+			<OpacityLevel>255</OpacityLevel>
+			<LodDistance>16960</LodDistance>
+			<IsVisible>true</IsVisible>
+			<MaxHealth>1000</MaxHealth>
+			<Health>1000</Health>
+			<HasGravity>true</HasGravity>
+			<IsOnFire>false</IsOnFire>
+			<IsInvincible>false</IsInvincible>
+			<IsBulletProof>false</IsBulletProof>
+			<IsCollisionProof>true</IsCollisionProof>
+			<IsExplosionProof>false</IsExplosionProof>
+			<IsFireProof>false</IsFireProof>
+			<IsMeleeProof>false</IsMeleeProof>
+			<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+			<PositionRotation>
+				<X>-723.846375</X>
+				<Y>-162.420288</Y>
+				<Z>36.5993843</Z>
+				<Pitch>68.4055176</Pitch>
+				<Roll>-92.5208893</Roll>
+				<Yaw>55.4717216</Yaw>
+			</PositionRotation>
+			<Attachment isAttached="true">
+				<AttachedTo>771355</AttachedTo>
+				<BoneIndex>0</BoneIndex>
+				<X>-0.199999988</X>
+				<Y>1.70000017</Y>
+				<Z>0.199999988</Z>
+				<Pitch>68.9999924</Pitch>
+				<Roll>-89.9999924</Roll>
+				<Yaw>0</Yaw>
+			</Attachment>
+		</Attachment>
+		<Attachment>
+			<ModelHash>0xc13a16f0</ModelHash>
+			<Type>3</Type>
+			<Dynamic>false</Dynamic>
+			<FrozenPos>true</FrozenPos>
+			<HashName>prop_ld_balcfnc_02a</HashName>
+			<InitialHandle>427316</InitialHandle>
+			<ObjectProperties>
+				<TextureVariation>0</TextureVariation>
+			</ObjectProperties>
+			<OpacityLevel>255</OpacityLevel>
+			<LodDistance>16960</LodDistance>
+			<IsVisible>true</IsVisible>
+			<MaxHealth>1000</MaxHealth>
+			<Health>1000</Health>
+			<HasGravity>true</HasGravity>
+			<IsOnFire>false</IsOnFire>
+			<IsInvincible>false</IsInvincible>
+			<IsBulletProof>false</IsBulletProof>
+			<IsCollisionProof>true</IsCollisionProof>
+			<IsExplosionProof>false</IsExplosionProof>
+			<IsFireProof>false</IsFireProof>
+			<IsMeleeProof>false</IsMeleeProof>
+			<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+			<PositionRotation>
+				<X>-723.606384</X>
+				<Y>-162.100342</Y>
+				<Z>36.6058578</Z>
+				<Pitch>68.4055176</Pitch>
+				<Roll>-92.5208893</Roll>
+				<Yaw>55.4717216</Yaw>
+			</PositionRotation>
+			<Attachment isAttached="true">
+				<AttachedTo>771355</AttachedTo>
+				<BoneIndex>0</BoneIndex>
+				<X>0.199999988</X>
+				<Y>1.70000017</Y>
+				<Z>0.199999988</Z>
+				<Pitch>68.9999924</Pitch>
+				<Roll>-89.9999924</Roll>
+				<Yaw>0</Yaw>
+			</Attachment>
+		</Attachment>
+		<Attachment>
+			<ModelHash>0xc13a16f0</ModelHash>
+			<Type>3</Type>
+			<Dynamic>false</Dynamic>
+			<FrozenPos>true</FrozenPos>
+			<HashName>prop_ld_balcfnc_02a</HashName>
+			<InitialHandle>478262</InitialHandle>
+			<ObjectProperties>
+				<TextureVariation>0</TextureVariation>
+			</ObjectProperties>
+			<OpacityLevel>255</OpacityLevel>
+			<LodDistance>16960</LodDistance>
+			<IsVisible>true</IsVisible>
+			<MaxHealth>1000</MaxHealth>
+			<Health>1000</Health>
+			<HasGravity>true</HasGravity>
+			<IsOnFire>false</IsOnFire>
+			<IsInvincible>false</IsInvincible>
+			<IsBulletProof>false</IsBulletProof>
+			<IsCollisionProof>true</IsCollisionProof>
+			<IsExplosionProof>false</IsExplosionProof>
+			<IsFireProof>false</IsFireProof>
+			<IsMeleeProof>false</IsMeleeProof>
+			<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+			<PositionRotation>
+				<X>-724.240906</X>
+				<Y>-161.618149</Y>
+				<Z>36.2978783</Z>
+				<Pitch>70.4033966</Pitch>
+				<Roll>-92.7664108</Roll>
+				<Yaw>55.7339592</Yaw>
+			</PositionRotation>
+			<Attachment isAttached="true">
+				<AttachedTo>771355</AttachedTo>
+				<BoneIndex>0</BoneIndex>
+				<X>0.199999988</X>
+				<Y>2.49999976</Y>
+				<Z>-0.099999994</Z>
+				<Pitch>70.9999924</Pitch>
+				<Roll>-89.9999924</Roll>
+				<Yaw>0</Yaw>
+			</Attachment>
+		</Attachment>
+		<Attachment>
+			<ModelHash>0xc13a16f0</ModelHash>
+			<Type>3</Type>
+			<Dynamic>false</Dynamic>
+			<FrozenPos>true</FrozenPos>
+			<HashName>prop_ld_balcfnc_02a</HashName>
+			<InitialHandle>645942</InitialHandle>
+			<ObjectProperties>
+				<TextureVariation>0</TextureVariation>
+			</ObjectProperties>
+			<OpacityLevel>255</OpacityLevel>
+			<LodDistance>16960</LodDistance>
+			<IsVisible>true</IsVisible>
+			<MaxHealth>1000</MaxHealth>
+			<Health>1000</Health>
+			<HasGravity>true</HasGravity>
+			<IsOnFire>false</IsOnFire>
+			<IsInvincible>false</IsInvincible>
+			<IsBulletProof>false</IsBulletProof>
+			<IsCollisionProof>true</IsCollisionProof>
+			<IsExplosionProof>false</IsExplosionProof>
+			<IsFireProof>false</IsFireProof>
+			<IsMeleeProof>false</IsMeleeProof>
+			<IsOnlyDamagedByPlayer>false</IsOnlyDamagedByPlayer>
+			<PositionRotation>
+				<X>-724.480896</X>
+				<Y>-161.93811</Y>
+				<Z>36.2914047</Z>
+				<Pitch>70.4033966</Pitch>
+				<Roll>-92.7664108</Roll>
+				<Yaw>55.7339592</Yaw>
+			</PositionRotation>
+			<Attachment isAttached="true">
+				<AttachedTo>771355</AttachedTo>
+				<BoneIndex>0</BoneIndex>
+				<X>-0.199999988</X>
+				<Y>2.49999976</Y>
+				<Z>-0.099999994</Z>
+				<Pitch>70.9999924</Pitch>
+				<Roll>-89.9999924</Roll>
+				<Yaw>0</Yaw>
 			</Attachment>
 		</Attachment>
 	</SpoonerAttachments>

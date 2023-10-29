@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '10.20'
+GT_version = '10.28'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("降低了脚本大小\n优化了玩家信息栏显示的效果\n许多细节的改进\nVersion: "..GT_version)
+    notification("新增>战局选项>全局事件>警察屏蔽所有玩家\n新增>战局选项>全局事件>所有NPC屏蔽玩家\n修复了在玩家页签中可能会重复出现多个脚本选项\n修复了一些用户启动脚本时有可能会异常关闭\n其他的一些改进与修复\nVersion: "..GT_version)
 end
 --
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'

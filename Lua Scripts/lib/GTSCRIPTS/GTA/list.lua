@@ -1,3 +1,6 @@
+--私自改皇榜，只会起到自慰的效果
+--只有你一个人能显示，别人并不会显示你的“虚假皇榜”
+--你绝对不想在脚本里面自慰，对吧
 devid = {
     {playerrid = "Samantha.V"},
     {playerrid = "RhymeBear"},
@@ -401,7 +404,7 @@ spid = {
     {playerid = "bilal255"},
     {playerid = "JiuRanYo"},
     {playerid = "MAILCHBW"},
-    {playerid = "lukydog_y"},
+    {playerid = "Lukydog_y"},
     {playerid = "huajikexing"},
     {playerid = "huajikehen"},
     {playerid = "huajikebang"},
@@ -414,5 +417,22 @@ spid = {
     {playerid = "ikunboompp"},
     {playerid = "markxstar"},
     {playerid = "LiangLambor86"},
-    {playerid = "EGOIST_7"},
+    {playerid = "Xxynn052"},
+    {playerid = "Ferrari_Rafah"},
+    {playerid = "1129448724"},
+    {playerid = "Rassdhl"},
+    {playerid = "masledix"},
+    {playerid = "chengyin10086"},
+    {playerid = "ailuopeisjia"},
+    {playerid = "weigedageda"},
+    {playerid = "guchengkiam"},
+    {playerid = "xuanling335711"},
+    {playerid = "Highwind-LZ"},
+    {playerid = "JRH-Anxxk"},
+    {playerid = "bilal22520"},
+    {playerid = "aswqam"},
+    {playerid = "hunpoyooo"},
+    {playerid = "myrdok87"},
+    {playerid = "huajixin"},
+    {playerid = "huajikeai"},
 }

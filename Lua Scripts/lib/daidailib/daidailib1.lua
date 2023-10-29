@@ -37,7 +37,7 @@ function copy_outfit(pid)
         change_model(PLAYER.PLAYER_ID(), model)
         PED1._SET_PED_EYE_COLOR(PLAYER.PLAYER_ID(), PED1._GET_PED_EYE_COLOR(ped))
         for i = 0, 12 do
-            PED.SET_PED_HEAD_OVERLAY(PLAYER.PLAYER_PED_ID(), i, PED1._GET_PED_HEAD_OVERLAY_VALUE(ped, i), 1)
+            PED.SET_PED_HEAD_OVERLAY(PLAYER.PLAYER_PED_ID(), i, PED1._GET_PED_HEAD_OVERLAY_VALUE(ped, i), 0)
         end
         apply_outfit(outfit.components, outfit.props)
     else
@@ -1007,31 +1007,34 @@ end
 
 ----黑人抬棺
 function blacks_coffins()
+    local ped = {}
     local pos = players.get_position(PLAYER.PLAYER_ID())
-    local pedp = PLAYER.PLAYER_PED_ID()
     pos.z = pos.z + 0.6
 
-    local coffin = OBJECT.CREATE_OBJECT(2193278353, pos.x, pos.y, pos.z, true, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(coffin, pedp, 0, 0, 0, 0.8, 0.0, 0, 0.0, true, true, false, true, 0, true, 0)
+    local coffin = create_object(2193278353, pos.x, pos.y, pos.z)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(coffin, PLAYER.PLAYER_PED_ID(), 0, 0, 0, 0.8, 0.0, 0, 0.0, true, true, false, true, 0, true, 0)
 
-    local npc1 = create_ped(26,0x9B22DBAF, pos.x, pos.y, pos.z, 0)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(npc1,coffin, 0, 0.55,0,-0.6,0.0,0,0.0, true, true, false, true, 0, true, 0)
-    ENTITY.FREEZE_ENTITY_POSITION(npc1, true)
-    local npc2 = create_ped(26,0x9B22DBAF, pos.x, pos.y, pos.z, 0)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(npc2,coffin, 0, -0.55,0,-0.6,0.0,0,0.0, true, true, false, true, 0, true, 0)
-    ENTITY.FREEZE_ENTITY_POSITION(npc2, true)
-    local npc3 = create_ped(26,0x9B22DBAF, pos.x, pos.y, pos.z, 0)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(npc3,coffin, 0, 0.55,0.5,-0.6,0.0,0,0.0, true, true, false, true, 0, true, 0)
-    ENTITY.FREEZE_ENTITY_POSITION(npc3, true)
-    local npc4 = create_ped(26,0x9B22DBAF, pos.x, pos.y, pos.z, 0)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(npc4,coffin, 0, -0.55,0.5,-0.6,0.0,0,0.0, true, true, false, true, 0, true, 0)
-    ENTITY.FREEZE_ENTITY_POSITION(npc4, true)
-    local npc5 = create_ped(26,0x9B22DBAF, pos.x, pos.y, pos.z, 0)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(npc5,coffin, 0, 0.55,-0.5,-0.6,0.0,0,0.0, true, true, false, true, 0, true, 0)
-    ENTITY.FREEZE_ENTITY_POSITION(npc5, true)
-    local npc6 = create_ped(26,0x9B22DBAF, pos.x, pos.y, pos.z, 0)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(npc6,coffin, 0, -0.55,-0.5,-0.6,0.0,0,0.0, true, true, false, true, 0, true, 0)
-    ENTITY.FREEZE_ENTITY_POSITION(npc6, true)
+    ped[1] = create_ped(26,0x9B22DBAF, pos.x, pos.y, pos.z, 0)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(ped[1],coffin, 0, 0.55,0,-0.6,0.0,0,0.0, true, true, false, true, 0, true, 0)
+    ENTITY.FREEZE_ENTITY_POSITION(ped[1], true)
+    ped[2] = create_ped(26,0x9B22DBAF, pos.x, pos.y, pos.z, 0)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(ped[2],coffin, 0, -0.55,0,-0.6,0.0,0,0.0, true, true, false, true, 0, true, 0)
+    ENTITY.FREEZE_ENTITY_POSITION(ped[2], true)
+    ped[3] = create_ped(26,0x9B22DBAF, pos.x, pos.y, pos.z, 0)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(ped[3],coffin, 0, 0.55,0.5,-0.6,0.0,0,0.0, true, true, false, true, 0, true, 0)
+    ENTITY.FREEZE_ENTITY_POSITION(ped[3], true)
+    ped[4] = create_ped(26,0x9B22DBAF, pos.x, pos.y, pos.z, 0)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(ped[4],coffin, 0, -0.55,0.5,-0.6,0.0,0,0.0, true, true, false, true, 0, true, 0)
+    ENTITY.FREEZE_ENTITY_POSITION(ped[4], true)
+    ped[5] = create_ped(26,0x9B22DBAF, pos.x, pos.y, pos.z, 0)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(ped[5],coffin, 0, 0.55,-0.5,-0.6,0.0,0,0.0, true, true, false, true, 0, true, 0)
+    ENTITY.FREEZE_ENTITY_POSITION(ped[5], true)
+    ped[6] = create_ped(26,0x9B22DBAF, pos.x, pos.y, pos.z, 0)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(ped[6],coffin, 0, -0.55,-0.5,-0.6,0.0,0,0.0, true, true, false, true, 0, true, 0)
+    ENTITY.FREEZE_ENTITY_POSITION(ped[6], true)
+    for k, v in ipairs(ped) do
+        calm_ped(v, true)
+    end
 end
 
 
@@ -2731,7 +2734,8 @@ function fireWing(toggle)
     else
         for i = 1, #fireWings do
             if fireWings[i].ptfx then
-                GRAPHICS.REMOVE_PARTICLE_FX(fireWings[i].ptfx, true)
+                GRAPHICS.STOP_PARTICLE_FX_LOOPED(fireWings[i].ptfx, false)
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWings[i].ptfx, false)
                 fireWings[i].ptfx = nil
             end
         end
@@ -2757,7 +2761,8 @@ function colorful_fireWing(toggle)
     else
         for i = 1, #fireWings do
             if fireWings[i].ptfx then
-                GRAPHICS.REMOVE_PARTICLE_FX(fireWings[i].ptfx, true)
+                GRAPHICS.STOP_PARTICLE_FX_LOOPED(fireWings[i].ptfx, false)
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWings[i].ptfx, false)
                 fireWings[i].ptfx = nil
             end
         end
@@ -2863,13 +2868,19 @@ function Iron_Man()
     if not PAD.IS_USING_KEYBOARD_AND_MOUSE(0) then
         barrageInput = 'INPUT_COVER'
     end
-    memory.write_int(memory.script_global(1649593 + 1163), 1)
+    --[[ memory.write_int(memory.script_global(1649593 + 1163), 1)
     sf.CLEAR_ALL()
     sf.TOGGLE_MOUSE_BUTTONS(false)
     sf.SET_DATA_SLOT(2, JSkey.get_control_instructional_button(0, 'INPUT_ATTACK'), '机炮')
     sf.SET_DATA_SLOT(1, JSkey.get_control_instructional_button(0, 'INPUT_AIM'), '原子枪')
     sf.SET_DATA_SLOT(0, JSkey.get_control_instructional_button(0, barrageInput), '火箭弹')
-    sf.DRAW_INSTRUCTIONAL_BUTTONS()
+    sf.DRAW_INSTRUCTIONAL_BUTTONS() ]]
+    show_button()
+    sf.SET_DATA_SLOT(0,PAD.GET_CONTROL_INSTRUCTIONAL_BUTTONS_STRING(0, 46, true), '火箭弹')
+    sf.SET_DATA_SLOT(1,PAD.GET_CONTROL_INSTRUCTIONAL_BUTTONS_STRING(0, 25, true), '原子枪')
+    sf.SET_DATA_SLOT(2,PAD.GET_CONTROL_INSTRUCTIONAL_BUTTONS_STRING(0, 18, true), '机炮')
+    show_button2()
+
     JSkey.disable_control_action(2, 'INPUT_VEH_MOUSE_CONTROL_OVERRIDE')
     JSkey.disable_control_action(2, 'INPUT_VEH_FLY_MOUSE_CONTROL_OVERRIDE')
     JSkey.disable_control_action(2, 'INPUT_VEH_SUB_MOUSE_CONTROL_OVERRIDE')
@@ -2924,7 +2935,7 @@ end
 local log_dir = filesystem.stand_dir() .. '\\Log.txt'
 local full_stdout = ""
 local disp_stdout = ""
-local max_chars = 200
+local max_chars = 110
 local max_lines = 25
 local font_size = 0.45
 function console_max_chars(s)
@@ -5569,10 +5580,10 @@ function Black_self()
 end
 
 
------实体枪2
+-----实体枪
 local impactCords = v3.new()
 local blocks = {}
-function xxxminecraftgun()
+function minecraftgun()
     if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(PLAYER.PLAYER_PED_ID(), impactCords) then
         local hash = util.joaat('prop_mb_sandblock_01')
         request_model(hash)
@@ -5679,15 +5690,6 @@ end
 
 
 ----允许当前车辆进入车库
-function BitTest(value, bit)
-    return value & (1 << bit) ~= 0
-end
-function BitSet(value, bit)
-    return value | (1 << bit)
-end
-function BitClear(value, bit)
-    return value & ~(1 << bit)
-end
 function carinto()
     local ped = PLAYER.PLAYER_PED_ID()
     local hash = NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(PLAYER.PLAYER_ID())
@@ -5699,8 +5701,8 @@ function carinto()
             if hash ~= 0 then
                 memory.write_int(memory.script_global(78558), 0)
                 local bitset = DECORATOR.DECOR_GET_INT(veh, "MPBitset")
-                bitset = BitClear(bitset, 3)
-                bitset = BitSet(bitset, 24)
+                bitset = MISC.CLEAR_BIT(bitset, 3)
+                bitset = MISC.SET_BIT(bitset, 24)
                 DECORATOR.DECOR_SET_INT(veh, "MPBitset", bitset)
                 DECORATOR.DECOR_SET_INT(veh, "Previous_Owner", 0)
                 DECORATOR.DECOR_SET_INT(veh, "PV_Slot", 0)
@@ -5774,16 +5776,13 @@ author = "\n--------¦daidai"
 ------音乐
 function music(on)
 	if on then
-        menu.trigger_commands("ipod on")
-        AUDIO.SET_RADIO_TO_STATION_NAME("RADIO_19_USER")
-----AUDIO.SET_RADIO_TO_STATION_NAME(AUDIO.GET_RADIO_STATION_NAME("16"))
-        menu.trigger_commands("closeradio off")
-        util.yield(500)
-		menu.trigger_commands("lockradio on")
+        AUDIO.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY(true)--强制打开电台
+        AUDIO.SET_RADIO_TO_STATION_NAME("RADIO_19_USER")--设置电台频道
+        --AUDIO.LOCK_RADIO_STATION("RADIO_19_USER",false)--禁用电台
+        --AUDIO.FREEZE_RADIO_STATION(AUDIO.GET_PLAYER_RADIO_STATION_INDEX())
     else
-        menu.trigger_commands("ipod off")
+        AUDIO.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY(false)
         AUDIO.SET_RADIO_TO_STATION_NAME("OFF")
-		menu.trigger_commands("lockradio off")
     end
 end
 
@@ -5933,7 +5932,7 @@ function scriptname(state)
     local timer = MISC.GET_GAME_TIMER()
     local color =  gradient_colour(timer, 0.5)       
     HUD.SET_TEXT_COLOUR(color.r, color.g, color.b, 255)
-    draw_string(string.format("~italic~¦~bold~Sakura Script v9.9"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v10"), 0.38,0.1, 0.6,5)
 end
 
 
@@ -6146,7 +6145,7 @@ function flamegun()
     local JSkey = require 'lib.daidailib.JSkeyLib'
     if WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.PLAYER_PED_ID()) != 1119849093 or not JSkey.is_control_pressed(2, 'INPUT_AIM') then
         if not flameThrower.ptfx then return end
-        GRAPHICS.REMOVE_PARTICLE_FX(flameThrower.ptfx, true)
+        GRAPHICS.REMOVE_PARTICLE_FX(flameThrower.ptfx, false)
         STREAMING.REMOVE_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
         flameThrower.ptfx = nil
         return
@@ -6970,9 +6969,21 @@ end
 
 
 ----索赔载具
+function bitTest(addr, offset)
+    return (memory.read_int(addr) & (1 << offset)) ~= 0
+end
 function reclaimVehicles()
-    notification("~bold~~y~全部索赔完成", HudColour.blue)
-	for k, v in menu.get_children(menu.ref_by_path("Vehicle>Personal Vehicles")) do
+    local count = memory.read_int(memory.script_global(1586488)) --vehicle_global = 1586488 --https://github.com/YimMenu/YimMenu/blob/master/src/core/scr_globals.hpp
+    for i = 0, count do
+        local canFix = (bitTest(memory.script_global(1586488 + 1 + (i * 142) + 103), 1) and bitTest(memory.script_global(1586488 + 1 + (i * 142) + 103), 2))
+        if canFix then
+            MISC.CLEAR_BIT(memory.script_global(1586488 + 1 + (i * 142) + 103), 1)
+            MISC.CLEAR_BIT(memory.script_global(1586488 + 1 + (i * 142) + 103), 3)
+            MISC.CLEAR_BIT(memory.script_global(1586488 + 1 + (i * 142) + 103), 16)
+            notification("~bold~~y~索赔完成", HudColour.blue)
+        end
+    end
+    --[[ for k, v in menu.get_children(menu.ref_by_path("Vehicle>Personal Vehicles")) do
         for k1, v1 in v.command_names do
             if v1 ~= "findpv" then
                 if v1 == "pv2" then
@@ -6980,7 +6991,7 @@ function reclaimVehicles()
                 end
             end
         end
-	end
+	end]]
 end
 
 ----飞天扫把
@@ -7008,21 +7019,53 @@ function detach_all_entities()
     local objs = entities.get_all_objects_as_handles()
     local peds = entities.get_all_peds_as_handles()
     for k,v in pairs(vehs) do
-        if ENTITY.IS_ENTITY_ATTACHED_TO_ANY_PED(v) then
-            request_control_of_entity(v)
+        if ENTITY.IS_ENTITY_ATTACHED(v) then
+            request_control(v)
             ENTITY.DETACH_ENTITY(v, false, false)
+            ENTITY.SET_ENTITY_COLLISION(v, false, true)
         end
     end
     for k,v in pairs(objs) do
-        if ENTITY.IS_ENTITY_ATTACHED_TO_ANY_PED(v) then
-            request_control_of_entity(v)
+        if ENTITY.IS_ENTITY_ATTACHED(v) then
+            request_control(v)
             ENTITY.DETACH_ENTITY(v, false, false)
+            ENTITY.SET_ENTITY_COLLISION(v, false, true)
         end
     end
     for k,v in pairs(peds) do
-        if ENTITY.IS_ENTITY_ATTACHED_TO_ANY_PED(v) then
-            request_control_of_entity(v)
+        if ENTITY.IS_ENTITY_ATTACHED(v) then
+            request_control(v)
             ENTITY.DETACH_ENTITY(v, false, false)
+            ENTITY.SET_ENTITY_COLLISION(v, false, true)
+        end
+    end
+end
+
+----阻止附加模型
+function Block_attached_models()
+    local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
+    local vehs = entities.get_all_vehicles_as_handles()
+    local objs = entities.get_all_objects_as_handles()
+    local peds = entities.get_all_peds_as_handles()
+    for k,v in pairs(vehs) do
+        if ENTITY.IS_ENTITY_ATTACHED_TO_ENTITY(v, vehicle) then
+            request_control(v)
+            ENTITY.DETACH_ENTITY(v, false, false)
+            ENTITY.SET_ENTITY_COLLISION(v, false, true)
+        end
+    end
+    for k,v in pairs(objs) do
+        if ENTITY.IS_ENTITY_ATTACHED_TO_ENTITY(v, vehicle) then
+            request_control(v)
+            ENTITY.DETACH_ENTITY(v, false, false)
+            ENTITY.SET_ENTITY_COLLISION(v, false, true)
+        end
+    end
+    for k,v in pairs(peds) do
+        if ENTITY.IS_ENTITY_ATTACHED_TO_ENTITY(v, vehicle) then
+            request_control(v)
+            ENTITY.DETACH_ENTITY(v, false, false)
+            ENTITY.SET_ENTITY_COLLISION(v, false, true)
         end
     end
 end
@@ -7124,18 +7167,6 @@ function personllight()
         0.0, 0.0, 0.0,
         1.0,
         false, false, false)
-end
-
-----派遣劫匪
-function sendmugger_npc(pid)
-    if NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_gang_call", 0, true, 0) then
-        util.toast("当前劫匪活动还未结束哦")
-    else
-        local bits_addr = memory.script_global(1853910 + (PLAYER.PLAYER_ID() * 862 + 1) + 140)
-            memory.write_int(bits_addr, SetBit(memory.read_int(bits_addr), 0))
-            write_global.int(1853910 + (PLAYER.PLAYER_ID() * 862 + 1) + 141, pid)
-        util.toast("劫匪已出动")
-    end
 end
 
 

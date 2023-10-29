@@ -1,3 +1,0 @@
-colorselec = 215
-teamchatlabel = "翻译"
-allchatlabel = "翻译"

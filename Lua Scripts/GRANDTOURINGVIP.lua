@@ -6,9 +6,10 @@
 ╚██████╔╝██║  ██║██║  ██║██║ ╚████║██████╔╝   ██║   ╚██████╔╝╚██████╔╝██║  ██║██║██║ ╚████║╚██████╔╝ ╚████╔╝ ██║██║     
  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝    ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝      
 STRING ERROR~~~]]
-require "lib.GTSCRIPTS.V" 
-require "lib.GTSCRIPTS.G"
-require "lib.GTSCRIPTS.GTA.list"
-menu.trigger_commands("luagrandtouringvip")
-loadgtsc.visible = false
-loadgt()
+local ms = {"lib.GTSCRIPTS.V","lib.GTSCRIPTS.G","lib.GTSCRIPTS.GTA.list"}
+for _, m in ipairs(ms) do
+	if not package.loaded[m] then
+		package.loaded[m] = require(m)
+	end
+end
+skp()

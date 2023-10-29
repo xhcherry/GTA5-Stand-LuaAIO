@@ -1663,23 +1663,7 @@ end)
 --     end)
 chat.on_message(polyglotChat.createOnMessageCallback(polyglotTranslation.translateText))
 
----@param pId integer
-local networkPlayerMenuPopulate = function(pId)
-    menu.divider(menu.player_root(pId), SCRIPT_NAME)
-
-    menu.action(menu.player_root(pId), LOC.sendMessage, {}, LOC.sendMessageD, function(on_click)
-        local text = polyglotUtils.get_input_from_screen_keyboard(CustomLabels.InputMessage, 100, "")
-        if text == "" then return end
-        polyglotChat.sendPrivateMessage(text, pId, polyglotTranslation.translateText)
-        -- , function(on_command)
-        --     local myText = on_command
-        --     polyglotChat.sendMessage(myText, polyglotTranslation.translateText)
-    end)
-    -- TODO auto detect player language as target language
-end
-players.on_join(networkPlayerMenuPopulate)
-players.dispatch_on_join()
- end)
+end)
 package.preload['src.lib.external.json'] = (function (...)
 					local _ENV = _ENV;
 					local function module(name, ...)
