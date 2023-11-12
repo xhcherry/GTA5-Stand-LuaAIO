@@ -135,17 +135,22 @@ function createGoogleTranslateCall(config)
             source = "input",
             q = url_encode(text),
         }
+        --https://translate.googleapis.com/translate_a/t?sl=auto&client=dict%2Dchrome%2Dex&tl=zh%2Dcn&q=test&dj=1&source=input&dt=t
+        --https://translate.googleapis.com/translate_a/t?sl=auto&client=dict%2Dchrome%2Dex&tl=zh%2Dcn&q=test&dj=1&source=input&dt=t
         async_http.init("translate.googleapis.com", "/translate_a/t?" .. tableToUrlParams(params),function(body, header_fields, status_code)
+            util.toast("连接成功")
                 if status_code == 200 and body ~= "" then
                     local translation, sourceLang = body:match('%[%["(.-)","(.-)"%]%]')
                     translation = translation:gsub("\\u(%x%x%x%x)", unicode_escape)
                     translation = translation:gsub(" <code> 0 </code> ", "\n")
                     translation = translation:gsub("<code>0</code>", "\n")
                     translation = translation:gsub("\\(.)", "%1")
+                    util.toast(translation)
                     onSuccess(translation, sourceLang)
                 end
             end,function()
                 util.toast("翻译超时啦")
+                LOG("翻译超时啦")
             end)
         async_http.dispatch()
     end
@@ -211,6 +216,8 @@ function createOnMessageCallback(config, translateTextCB)
     end
 end
 
+
+
 menu.divider(chat_transl, "国内线路")
 menu.toggle(chat_transl, "全自动翻译", {},"自动识别语言并翻译\n仅支持中英互译,遇到其他语言可能乱码", function(on)
     config.Auto_translate = on
@@ -234,6 +241,7 @@ menu.toggle_loop(chat_transl, "发送翻译文本", {}, "仅使用T or Y即可�
             end
         end,function()
             util.toast("翻译超时啦")
+            LOG("翻译超时啦")
         end)
         async_http.dispatch()
         util.yield(1)
@@ -277,6 +285,7 @@ chat.on_message(function(sender, reserved, text, team_chat, networked, is_auto)
                     end
                 end,function()
                     util.toast("翻译超时啦")
+                    LOG("翻译超时啦")
                 end)
                 async_http.dispatch()
             end
@@ -331,6 +340,7 @@ menu.toggle_loop(chat_transl, "发送翻译文本", {}, "仅使用T or Y即可�
                 end
             end,function()
                 util.toast("翻译超时啦")
+                LOG("翻译超时啦")
             end)
         async_http.dispatch()
         util.yield(1)

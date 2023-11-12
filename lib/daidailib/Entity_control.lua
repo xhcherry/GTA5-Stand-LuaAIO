@@ -22,9 +22,11 @@ end)
         clearTableValue(control_ent_menu_list, menu_parent)
         clearTableValue(control_ent_list, ent)
     end)
-    --- ---
+    
+    
+    
+----默认部分
     menu.divider(menu_parent, "Entity")
-
     menu.toggle(menu_parent, "无敌", {}, "", function(toggle)
         ENTITY.SET_ENTITY_INVINCIBLE(ent, toggle)
         ENTITY.SET_ENTITY_PROOFS(ent, toggle, toggle, toggle, toggle, toggle, toggle, toggle, toggle)
@@ -50,17 +52,14 @@ end)
         local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ent, 0.0, value, 0.0)
         ENTITY.SET_ENTITY_COORDS(ent, coords.x, coords.y, coords.z, true, false, false, false)
     end)
-
     menu.click_slider(menu_parent, "左/右移动", {}, "", -100, 100, 0, 1, function(value)
         local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ent, value, 0.0, 0.0)
         ENTITY.SET_ENTITY_COORDS(ent, coords.x, coords.y, coords.z, true, false, false, false)
     end)
-
     menu.click_slider(menu_parent, "上/下移动", {}, "", -100, 100, 0, 1, function(value)
         local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ent, 0.0, 0.0, value)
         ENTITY.SET_ENTITY_COORDS(ent, coords.x, coords.y, coords.z, true, false, false, false)
     end)
-
     menu.click_slider(menu_parent, "朝向", {}, "", -360, 360, 0, 10, function(value)
         local head = ENTITY.GET_ENTITY_HEADING(ent)
         ENTITY.SET_ENTITY_HEADING(ent, head + value)
@@ -71,74 +70,22 @@ end)
         local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0.0, value, 0.0)
         ENTITY.SET_ENTITY_COORDS(ent, coords.x, coords.y, coords.z, true, false, false, false)
     end)
-
     menu.toggle_loop(menu_parent, "锁定传送在我头上", {}, "", function()
         local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0.0, 0.0, 2.0)
         ENTITY.SET_ENTITY_COORDS(ent, coords.x, coords.y, coords.z, true, false, false, false)
     end)
-
     menu.action(menu_parent, "离我的距离", {}, "", function()
         local my_pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
         local ent_pos = ENTITY.GET_ENTITY_COORDS(ent)
         distance = math.ceil(MISC.GET_DISTANCE_BETWEEN_COORDS(my_pos.x, my_pos.y, my_pos.z, ent_pos.x, ent_pos.y, ent_pos.z))
         util.toast(distance)
     end)
-
     menu.click_slider(menu_parent, "最大速度", { "control_ent_max_speed" }, "", 0.0, 1000.0, 30.0, 10.0, function(value)
         ENTITY.SET_ENTITY_MAX_SPEED(ent, value)
     end)
 
 end
 
---- VEHICLE entity type functions ---
-function entity_control_vehicle(menu_parent, vehicle)
-    menu.divider(menu_parent, "Vehicle")
-
-    menu.action(menu_parent, "踢出载具内NPC", {}, "", function()
-        local seats = VEHICLE.GET_VEHICLE_MODEL_NUMBER_OF_SEATS(vehicle)
-        for k = -1, seats do
-            local ped = VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehicle, k)
-            if ped > 0 then
-                PED.SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(ped, KNOCKOFFVEHICLE_EASY)
-                PED.KNOCK_PED_OFF_VEHICLE(ped)
-            end
-        end
-    end)
-
-    menu.action(menu_parent, "拆下车门", {}, "", function()
-        for i = 0, 3 do
-            VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehicle, i, false)
-        end
-    end)
-
-    menu.toggle(menu_parent, "车门开关", {}, "", function(toggle)
-        if toggle then
-            for i = 0, 3 do
-                VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle, i, false, false)
-            end
-        else
-            VEHICLE.SET_VEHICLE_DOORS_SHUT(vehicle, false)
-        end
-    end)
-
-    menu.toggle(menu_parent, "车门锁", {}, "", function(toggle)
-        if toggle then
-            VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle, 2)
-        else
-            VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle, 1)
-            VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_PLAYER(vehicle, players.user(), false)
-        end
-    end)
-
-    menu.click_slider(menu_parent, "向前的速度", { "control_veh_forward_speed" }, "", 0.0, 1000.0, 30.0, 10.0, function(value)
-        VEHICLE.SET_VEHICLE_FORWARD_SPEED(vehicle, value)
-    end)
-
-    menu.action(menu_parent, "修复载具", {}, "", function()
-        VEHICLE.SET_VEHICLE_FIXED(vehicle)
-        VEHICLE.SET_VEHICLE_ENGINE_HEALTH(vehicle, 1000.0)
-    end)
-end
 
 --- PED entity type functions ---
 function entity_control_ped(menu_parent, ped)
@@ -212,6 +159,10 @@ end
 function entity_control_vehicle(menu_parent, vehicle)
     menu.divider(menu_parent, "Vehicle")
 
+    menu.action(menu_parent, "驾驶载具", {}, "", function()
+        drive_vehicle(vehicle)
+    end)
+
     menu.action(menu_parent, "踢出载具内NPC", {}, "", function()
         local seats = VEHICLE.GET_VEHICLE_MODEL_NUMBER_OF_SEATS(vehicle)
         for k = -1, seats do
@@ -257,6 +208,11 @@ function entity_control_vehicle(menu_parent, vehicle)
         VEHICLE.SET_VEHICLE_ENGINE_HEALTH(vehicle, 1000.0)
     end)
 end
+
+
+
+
+
 
 -- 所有控制的实体
 control_ent_list = {}
