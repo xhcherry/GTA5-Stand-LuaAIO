@@ -1,4 +1,30 @@
 
+--脚本全局值
+Global_Base = {----https://github.com/CrazyZhang666/GTA5OnlineTools/blob/9260e13791e067c9ef98566e43e16f8e171175be/GTA5Core/Features/Online.cs#L495
+    Default = 2794162, -- util.joaat("CHARACTER_APPEARANCE_CHARGE")
+    gooch = 1890378, --gooch test(from yimmenu)古奇击杀
+    SessionSwitchType = 1575020, --NETWORK::NETWORK_SESSION_SET_UNIQUE_CREW_LIMIT(1)
+    SessionSwitchState = 1574589,
+    gpbd_fm_3 = 1895156,
+
+    --Vehicle Menus Globals
+    oVMYCar = 2794162,
+}
+--战局名 & id
+session_name = {
+    {name = "公共战局",session_id = 0},
+    {name = "创建公共战局",session_id = 1},
+    {name = "私人帮会战局",session_id = 2},
+    {name = "帮会战局",session_id = 3},
+    {name = "私人好友战局",session_id = 6},
+    {name = "加入好友",session_id = 9},
+    {name = "单人战局",session_id = 10},
+    {name = "仅限邀请战局",session_id = 11},
+    {name = "加入帮会伙伴",session_id = 12}
+}
+
+
+--自动加入游戏
 invite_string = {
     "NT_INV",
     "NT_INV_FREE",
@@ -208,6 +234,7 @@ station_name = {
 
 ----预设模型
 my_model_list = {
+    {"消防员", "-1229853272"},
     {"小狗戴恩", "1344679353"},
     {"太空游骑兵", "1011059922"},
     {"圣诞怪兽", "-751898707"},
@@ -1450,13 +1477,14 @@ disguise_names = {
 
 ----防笼子
 cageModels = {
-    -251167274,
-    -1603817716,
-    1089807209,
-    -37176073,
-    684586828,
-    238789712,
-    4022605402,
+    MISC.GET_HASH_KEY('v_ret_fh_doorframe'),
+    MISC.GET_HASH_KEY('hei_prop_station_gate'),
+    MISC.GET_HASH_KEY('p_v_43_safe_s'),
+    MISC.GET_HASH_KEY('prop_logpile_01'),
+    MISC.GET_HASH_KEY('prop_cs_dumpster_01a'),
+    MISC.GET_HASH_KEY('prop_xmas_tree_int'),
+    MISC.GET_HASH_KEY('prop_food_van_01'),
+    MISC.GET_HASH_KEY('prop_test_elevator'),
     MISC.GET_HASH_KEY('u_m_m_jesus_01'),
     MISC.GET_HASH_KEY("ig_lestercrest"),
     MISC.GET_HASH_KEY("player_two"),

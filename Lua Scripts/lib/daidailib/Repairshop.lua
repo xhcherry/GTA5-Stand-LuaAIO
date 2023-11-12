@@ -1280,56 +1280,62 @@ menu.colour(plighm, 'RGB 霓虹色', {'rgbsc'}, '选择霓虹灯的颜色更改�
     pnrgb.color = ncolor
 end)
 
-menu.list_select(pwmenu, '本尼斯定制', {''}, '将车轮更换为 Bennys Bespoke 车轮', Bbw, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 9, wheel)
-end)
-menu.list_select(pwmenu, '本尼原件', {''}, '将车轮更换为 Bennys Originals 车轮', Bow, 1,function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 8, wheel)
-end)
-menu.list_select(pwmenu, '自行车', {''}, '将车轮改为自行车（摩托车）车轮', Bw, 1,function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 6, wheel)
-end)
-menu.list_select(pwmenu, '高端', {''}, '将车轮更改为高端车轮', Hew, 1,function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 7, wheel)
-end)
-menu.list_select(pwmenu, '低骑者', {''}, '将车轮更改为 Lowrider 车轮', Lw, 1,function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 2, wheel)
-    
-end)
-menu.list_select(pwmenu, '肌肉', {''}, '将轮子改为肌肉轮', Mw, 1,function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 1, wheel)
-end)
-menu.list_select(pwmenu, '越野', {''}, '将车轮更改为越野车轮', Orw, 1,function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 4, wheel)
-end)
-menu.list_select(pwmenu, '赛车（一级方程式车轮）', {''}, '将车轮更改为赛车（一级方程式车轮）车轮', Rw, 1,function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 10, wheel)
-end)
-menu.list_select(pwmenu, '运动', {''}, '将车轮更改为运动车轮', Spw, 1,function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 0, wheel)
-end)
-menu.list_select(pwmenu, '街道', {''}, '将车轮更改为街道车轮', Stw, 1,function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 11, wheel)
-end)
-menu.list_select(pwmenu, '越野车', {''}, '将车轮改为 SUV 车轮', Suw, 1,function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 3, wheel)
-end)
-menu.list_select(pwmenu, '曲目', {''}, '将轮子更改为履带轮', Trw, 1,function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 12, wheel)
-end)
-menu.list_select(pwmenu, '调谐器', {''}, '将车轮更改为调谐器车轮', Tuw, 1,function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 5, wheel)
+
+local pwmenu_style = menu.list(pwmenu, '车轮样式', {}, '')
+    menu.list_select(pwmenu_style, '本尼斯定制', {''}, '将车轮更换为 Bennys Bespoke 车轮', Bbw, 1, function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 9, wheel)
+    end)
+    menu.list_select(pwmenu_style, '本尼原件', {''}, '将车轮更换为 Bennys Originals 车轮', Bow, 1,function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 8, wheel)
+    end)
+    menu.list_select(pwmenu_style, '自行车', {''}, '将车轮改为自行车（摩托车）车轮', Bw, 1,function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 6, wheel)
+    end)
+    menu.list_select(pwmenu_style, '高端', {''}, '将车轮更改为高端车轮', Hew, 1,function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 7, wheel)
+    end)
+    menu.list_select(pwmenu_style, '低骑者', {''}, '将车轮更改为 Lowrider 车轮', Lw, 1,function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 2, wheel)
+        
+    end)
+    menu.list_select(pwmenu_style, '肌肉', {''}, '将轮子改为肌肉轮', Mw, 1,function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 1, wheel)
+    end)
+    menu.list_select(pwmenu_style, '越野', {''}, '将车轮更改为越野车轮', Orw, 1,function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 4, wheel)
+    end)
+    menu.list_select(pwmenu_style, '赛车（一级方程式车轮）', {''}, '将车轮更改为赛车（一级方程式车轮）车轮', Rw, 1,function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 10, wheel)
+    end)
+    menu.list_select(pwmenu_style, '运动', {''}, '将车轮更改为运动车轮', Spw, 1,function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 0, wheel)
+    end)
+    menu.list_select(pwmenu_style, '街道', {''}, '将车轮更改为街道车轮', Stw, 1,function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 11, wheel)
+    end)
+    menu.list_select(pwmenu_style, '越野车', {''}, '将车轮改为 SUV 车轮', Suw, 1,function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 3, wheel)
+    end)
+    menu.list_select(pwmenu_style, '曲目', {''}, '将轮子更改为履带轮', Trw, 1,function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 12, wheel)
+    end)
+    menu.list_select(pwmenu_style, '调谐器', {''}, '将车轮更改为调谐器车轮', Tuw, 1,function(w)
+        local wheel = w - 1
+        Changewheel(players.user(), 5, wheel)
+    end)
+menu.toggle(pwmenu, "防弹轮胎", {}, "", function(toggled)
+    local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
+    VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle, not toggled)
 end)

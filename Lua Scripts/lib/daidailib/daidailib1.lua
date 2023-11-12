@@ -499,7 +499,7 @@ function towcarpro(pid, index, value)
     local last_veh = PED.GET_VEHICLE_PED_IS_IN(player_ped, true)
     local cur_veh = PED.GET_VEHICLE_PED_IS_IN(player_ped, false)
     if last_veh ~= 0 then
-        request_control_of_entity(last_veh)
+        request_control(last_veh)
         tow_hash = -1323100960
         request_model(tow_hash)
         tower_hash = 0x9C9EFFD8
@@ -517,7 +517,7 @@ function towcarpro(pid, index, value)
         ENTITY.SET_ENTITY_HEADING(towtruck, hdg)
         ENTITY.SET_ENTITY_INVINCIBLE(towtruck,true)
         PED.SET_PED_INTO_VEHICLE(tower, towtruck, -1)
-        request_control_of_entity(last_veh)
+        request_control(last_veh)
         VEHICLE.ATTACH_VEHICLE_TO_TOW_TRUCK(towtruck, last_veh, false, 0, 0, 0)
         TASK.TASK_VEHICLE_DRIVE_TO_COORD(tower, towtruck, math.random(1000), math.random(1000), math.random(100), 100, 1, ENTITY.GET_ENTITY_MODEL(last_veh), 4, 5, 0)
     end
@@ -1427,7 +1427,7 @@ function stack_npc()
     local last_ped_ht = 0
     for k,ped in pairs(all_peds) do
         if not PED.IS_PED_A_PLAYER(ped) and not PED.IS_PED_FATALLY_INJURED(ped) then
-            request_control_of_entity(ped)
+            request_control(ped)
             if PED.IS_PED_IN_ANY_VEHICLE(ped, true) then
                 TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped)
                 TASK.TASK_LEAVE_ANY_VEHICLE(ped, 0, 16)
@@ -1724,7 +1724,7 @@ function Spawn_bodyguard_helicopter()
     pos.x = pos.x + math.random(-10, 10)
     pos.y = pos.y + math.random(-10, 10)
     pos.z = pos.z + 30
-    requestModels(ped_hash, heli_hash)
+    request_models(ped_hash, heli_hash)
     relationship:friendly(PLAYER.PLAYER_PED_ID())
     local heli = entities.create_vehicle(heli_hash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
     if not ENTITY.DOES_ENTITY_EXIST(heli) then
@@ -2234,7 +2234,8 @@ function Tesla_Autopilot(toggled)
     request_model(tesla)
     if toggled then     
         if PED.IS_PED_IN_ANY_VEHICLE(player, true) then
-            menu.trigger_commands("deletevehicle")
+            local vehicle = PED.GET_VEHICLE_PED_IS_IN(player, false)
+            entities.delete(vehicle)
         end
         tesla_ai_ped = entities.create_ped(26, tesla_ai, playerpos, 0)
         tesla_vehicle = entities.create_vehicle(tesla, playerpos, 0)
@@ -2993,7 +2994,7 @@ end
 
 
 
---------添加水印
+--------游戏水印
 local icon = directx.create_texture(filesystem.resources_dir() .. 'SakuraImg\\watermark\\icon.jpg')
 function watermark_x(x_)
     watermark_pos.x = x_ / 10000
@@ -3037,7 +3038,7 @@ function watermark_toggle()
         or '') .. (watermark_settings.show_date and os.date(' | %H:%M:%S ') 
         or '')
 
-    local tx_size = directx.get_text_size(wm_text, 0.5)
+    local tx_size = directx.get_text_size(wm_text, 0.52)
 
     directx.draw_rect(
         watermark_pos.x + watermark_settings.add_x * 0.5, 
@@ -3186,13 +3187,13 @@ function all_drive_style()
                 ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], doa_ht, false, false, false)
                 ENTITY.SET_ENTITY_HEADING(dow_block, ENTITY.GET_ENTITY_HEADING(car_hdl))
             end
-            if PAD.IS_CONTROL_PRESSED(22, 22) then
+            if PAD.IS_CONTROL_PRESSED(0, 22) then
                 doa_ht = doa_ht + 0.1
                 ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], doa_ht, false, false, false)
                 ENTITY.SET_ENTITY_COORDS(player_cur_car, pos['x'], pos['y'], doa_ht + 1, false, false, false)
                 ENTITY.SET_ENTITY_HEADING(dow_block, ENTITY.GET_ENTITY_HEADING(car_hdl) )
             end
-            if PAD.IS_CONTROL_PRESSED(36, 36) then
+            if PAD.IS_CONTROL_PRESSED(0, 36) then
                 doa_ht = doa_ht - 0.1
                 ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], doa_ht, false, false, false)
                 ENTITY.SET_ENTITY_COORDS(player_cur_car, pos['x'], pos['y'], doa_ht + 1, false, false, false)
@@ -4021,89 +4022,59 @@ end)
 
 
 -----清理实体
-function Clean_up_entities(on_change)
-    if on_change == 1 then
-        local count = 0
+function clean_select_entities(val)
+    if val == 1 then
         for k,ent in pairs(entities.get_all_peds_as_handles()) do
             if not PED.IS_PED_A_PLAYER(ent) then
                 ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
                 entities.delete(ent)
-                util.yield()
-                count = count + 1
             end
         end
-            util.toast("NPC清除完成")
-        end
-        if on_change == 2 then
-            local count = 0
-            for k, ent in pairs(entities.get_all_vehicles_as_handles()) do
-                local PedInSeat = VEHICLE.GET_PED_IN_VEHICLE_SEAT(ent, -1, false)
-                if not PED.IS_PED_A_PLAYER(PedInSeat) then
-                    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-                    entities.delete(ent)
-                    util.yield()
-                    count = count + 1
-                end
-            end
-            util.toast("载具清除完成")
-            return
-        end
-        if on_change == 3 then
-            local count = 0
-            for k,ent in pairs(entities.get_all_objects_as_handles()) do
+        util.toast("NPC清除完成")
+        return
+    end
+    if val == 2 then
+        for k, ent in pairs(entities.get_all_vehicles_as_handles()) do
+            local PedInSeat = VEHICLE.GET_PED_IN_VEHICLE_SEAT(ent, -1, false)
+            if not PED.IS_PED_A_PLAYER(PedInSeat) then
                 ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
                 entities.delete(ent)
-                count = count + 1
-                util.yield()
             end
-            util.toast("实体已清除")
-            return
         end
-        if on_change == 4 then
-            local count = 0
-            for k,ent in pairs(entities.get_all_pickups_as_handles()) do
-                ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-                entities.delete(ent)
-                count = count + 1
-                util.yield()
-            end
-            util.toast("拾取物已清除")
-            return
+        util.toast("载具清除完成")
+        return
+    end
+    if val == 3 then
+        for k,ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete(ent)
         end
-        if on_change == 5 then
-            local count = 0
-            for k,ent in pairs(entities.get_all_peds_as_handles()) do
-                if not PED.IS_PED_A_PLAYER(ent) then
-                    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-                    entities.delete(ent)
-                    util.yield()
-                    count = count + 1
-                end
-            end
-            for k, ent in pairs(entities.get_all_vehicles_as_handles()) do
-                local PedInSeat = VEHICLE.GET_PED_IN_VEHICLE_SEAT(ent, -1, false)
-                if not PED.IS_PED_A_PLAYER(PedInSeat) then
-                    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-                    entities.delete(ent)
-                    util.yield()
-                    count = count + 1
-                end
-            end
-            for k,ent in pairs(entities.get_all_objects_as_handles()) do
-                ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-                entities.delete(ent)
-                count = count + 1
-                util.yield()
-            end
-            for k,ent in pairs(entities.get_all_pickups_as_handles()) do
-                ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-                entities.delete(ent)
-                count = count + 1
-                util.yield()
-            end
-            util.toast("清理完成")
-            return
+        util.toast("物体已清除")
+        return
+    end
+    if val == 4 then
+        for k,ent in pairs(entities.get_all_pickups_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete(ent)
         end
+        util.toast("拾取物已清除")
+        return
+    end
+    if val == 5 then
+        local temp = memory.alloc(4)
+        for i = 0, 100 do
+            memory.write_int(temp, i)
+            PHYSICS.DELETE_ROPE(temp)
+        end
+        util.toast("绳索已清除")
+        return
+    end
+    if val == 6 then
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)
+        MISC.CLEAR_AREA_OF_PROJECTILES(pos.x, pos.y, pos.z, 400, 0)
+        util.toast("投掷物已清除")
+        return
+    end
 end
 ------普通清除
 function Normal_clearance()
@@ -4522,18 +4493,32 @@ function FastTurnVehicleWithKeys(scale)
     end
 end
 
+
+----试验升降机
+function test_elevator(pid)
+    local hash = util.joaat('prop_test_elevator')
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid), false)
+    for i = 0, 90, 90 do
+        local cage = create_object(hash, pos.x, pos.y, pos.z)
+        ENTITY.SET_ENTITY_HEADING(cage, i)
+        ENTITY.SET_ENTITY_INVINCIBLE(cage,true)
+        ENTITY.FREEZE_ENTITY_POSITION(cage, true)
+    end
+end
 ----柱形笼
 function pillar_cage(pid)
     local hash = util.joaat('v_ret_fh_doorframe')
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid), false)
-    for i = 0, 240, 60 do
-        local pt = create_object(hash, pos.x, pos.y, pos.z-1)
-        ENTITY.SET_ENTITY_HEADING(pt, i)
+    for i = 0, 135, 45 do
+        local cage = create_object(hash, pos.x, pos.y, pos.z)
+        ENTITY.SET_ENTITY_HEADING(cage, i)
+        ENTITY.SET_ENTITY_INVINCIBLE(cage,true)
+        ENTITY.FREEZE_ENTITY_POSITION(cage, true)
     end
 end
 
 ----栅栏
-function fence_lz(pid)
+function fence_cage(pid)
     local objHash = util.joaat("prop_fnclink_03e")
     request_model(objHash)
     local pos = players.get_position(pid)
@@ -4552,6 +4537,50 @@ function fence_lz(pid)
     for i = 1, 4 do ENTITY.FREEZE_ENTITY_POSITION(object[i], true) end
     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(objHash)
 end
+
+----地狱笼子
+function hell_cage(pid)
+    local objHash = util.joaat("hei_prop_station_gate")
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid), false)
+    pos.z = pos.z - 1.0
+    local object = {}
+
+    object[1] = create_object(objHash, pos.x + 2.75, pos.y + 2.75, pos.z)
+    object[2] = create_object(objHash, pos.x + 2.75, pos.y + 2.75, pos.z + 2)
+    object[3] = create_object(objHash, pos.x + 2.75, pos.y - 2.75, pos.z)
+    object[4] = create_object(objHash, pos.x + 2.75, pos.y - 2.75, pos.z + 2)
+    object[5] = create_object(objHash, pos.x + 2.75, pos.y - 2.75, pos.z)
+    object[6] = create_object(objHash, pos.x + 2.75, pos.y - 2.75, pos.z + 2)
+    local rot5 = ENTITY.GET_ENTITY_ROTATION(object[5], 2)
+    ENTITY.SET_ENTITY_ROTATION(object[5], rot5.x, rot5.y, -90.0, 2, true)
+    ENTITY.SET_ENTITY_ROTATION(object[6], rot5.x, rot5.y, -90.0, 2, true)
+
+    object[7] = create_object(objHash, pos.x - 2.75, pos.y - 2.75, pos.z)
+    object[8] = create_object(objHash, pos.x - 2.75, pos.y - 2.75, pos.z + 2)
+    local rot7 = ENTITY.GET_ENTITY_ROTATION(object[7], 2)
+    ENTITY.SET_ENTITY_ROTATION(object[7], rot7.x, rot7.y, -90.0, 2, true)
+    ENTITY.SET_ENTITY_ROTATION(object[8], rot7.x, rot7.y, -90.0, 2, true)
+
+    object[9] = create_object(objHash, pos.x, pos.y + 2.75, pos.z + 5)
+    local rot9 = ENTITY.GET_ENTITY_ROTATION(object[9], 2)
+    ENTITY.SET_ENTITY_ROTATION(object[9], 90, 90, rot9.z, 2, true)
+
+    object[10] = create_object(objHash, pos.x, pos.y + 2.75, pos.z + 5)
+    local rot10 = ENTITY.GET_ENTITY_ROTATION(object[9], 2)
+    ENTITY.SET_ENTITY_ROTATION(object[10], -90, -90, rot10.z, 2, true)
+
+    object[11] = create_object(objHash, pos.x, pos.y + 2.75, pos.z)
+    ENTITY.SET_ENTITY_ROTATION(object[11], 90, 90, rot9.z, 2, true)
+
+    object[12] = create_object(objHash, pos.x, pos.y + 2.75, pos.z)
+    ENTITY.SET_ENTITY_ROTATION(object[12], -90, -90, rot10.z, 2, true)
+
+    for i = 1, 12 do
+        ENTITY.FREEZE_ENTITY_POSITION(object[i], true)
+        ENTITY.SET_ENTITY_VISIBLE(object[i], true)
+    end
+end
+
 ----可移动笼子
 function kidnapplayer(pid, index, value)
     local p_hash = util.joaat("s_m_y_factory_01")
@@ -4752,7 +4781,7 @@ function Rampage_plane_cage(pid)
     end
 end
 ----支柱笼子
-function pillar_cage(pid)
+function rub_cage(pid)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
     local hash = 2063962179
 	pos.z = pos.z - 1
@@ -5633,15 +5662,17 @@ function join_blacklist(pid)
 end
 local player_idstab = {}
 function player_list(pid)
-    ---防止改名增加列表
-    for i, rid in pairs(player_idstab) do
-        local prid = NETWORK.NETWORK_GET_PLAYER_ACCOUNT_ID(pid)
-        if rid == prid and playerslist[pid] then 
-            menu.delete(playerslist[pid])
-        end
-    end
     if NETWORK.NETWORK_IS_SESSION_ACTIVE()then
+        ---防止改名增加列表
         player_idstab[pid] = NETWORK.NETWORK_GET_PLAYER_ACCOUNT_ID(pid)
+        for i, rid in pairs(player_idstab) do
+            local prid = NETWORK.NETWORK_GET_PLAYER_ACCOUNT_ID(pid)
+            if rid == prid and playerslist[pid] ~= nil and PLAYER.GET_PLAYER_PED(pid) ~= 0 then 
+                menu.delete(playerslist[pid])
+                playerslist[pid] = nil
+            end
+        end
+
         playerslist[pid] = menu.list(players_list, players.get_name(pid), {}, "")
     end
     if playerslist[pid] then
@@ -5656,12 +5687,14 @@ function player_list(pid)
             menu.trigger_commands("kick " .. players.get_name(pid))
         end)
         local mark = 0 --未标记
-        menu.action(playerslist[pid],"标记玩家",{},"标记或者取消标记玩家",function()
+        menu.action(playerslist[pid],"标记玩家",{},"标记或者取消标记玩家\n标记后会超时玩家",function()
             if mark == 0 then
                 menu.set_menu_name(playerslist[pid], players.get_name(pid).." [标记]")
+                menu.trigger_commands("timeout " .. players.get_name(pid) .. " on")
                 mark = 1
             else
                 menu.set_menu_name(playerslist[pid], players.get_name(pid))
+                menu.trigger_commands("timeout " .. players.get_name(pid) .. " off")
                 mark = 0
             end
         end)
@@ -5699,10 +5732,10 @@ function carinto()
         if veh ~= 0 then
             local spawned_model = util.reverse_joaat(ENTITY.GET_ENTITY_MODEL(veh))
             if hash ~= 0 then
-                memory.write_int(memory.script_global(78558), 0)
+                memory.write_int(memory.script_global(78558), 0) --previous_owner_check  https://github.com/4d72526f626f74/Stand-Recovery/blob/b56238d95013f7ffad7bd3c36513d4b35e6fc93d/recovery/script.lua
                 local bitset = DECORATOR.DECOR_GET_INT(veh, "MPBitset")
-                bitset = MISC.CLEAR_BIT(bitset, 3)
-                bitset = MISC.SET_BIT(bitset, 24)
+                bitset = ClearBit(bitset, 3)
+                bitset = SetBit(bitset, 24)
                 DECORATOR.DECOR_SET_INT(veh, "MPBitset", bitset)
                 DECORATOR.DECOR_SET_INT(veh, "Previous_Owner", 0)
                 DECORATOR.DECOR_SET_INT(veh, "PV_Slot", 0)
@@ -5932,7 +5965,7 @@ function scriptname(state)
     local timer = MISC.GET_GAME_TIMER()
     local color =  gradient_colour(timer, 0.5)       
     HUD.SET_TEXT_COLOUR(color.r, color.g, color.b, 255)
-    draw_string(string.format("~italic~¦~bold~Sakura Script v10"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v10.1"), 0.38,0.1, 0.6,5)
 end
 
 
@@ -7090,7 +7123,7 @@ function thermalgun()
 end
 
 
---幽灵战车
+--恶灵骑士
 function elqss(on)
     if on then
         notification("~bold~~y~按E使用战车技能", HudColour.blue)
@@ -7111,7 +7144,7 @@ function elqss(on)
         SYSTEM.WAIT(500)
         PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), ghost_car, -1)
         while ghost_car do
-            if PAD.IS_CONTROL_PRESSED(46,46) then
+            if PAD.IS_CONTROL_PRESSED(0,46) then
                 local titlle = "weap_xs_vehicle_weapons"
                 local hashid = "muz_xs_turret_flamethrower_looping"
                 request_ptfx_asset(titlle)
@@ -7184,8 +7217,6 @@ function personlshit()
     TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), agroup, anim, 8.0, 8.0, 3000, 0, 0, true, true, true) --play anim
     util.yield(1000)
     local shit = create_object(mshit, c.x, c.y, c.z) --spawn shit
-    util.yield(60000)
-    entities.delete(shit) --delete shit
 end
 --打飞机
 function personlhitplane() 
@@ -7194,8 +7225,6 @@ function personlhitplane()
     TASK.TASK_PLAY_ANIM(PLAYER.PLAYER_PED_ID(), agroup2, anim2, 8.0, 8.0, 5000, 1, 0, true, true, true) --play anim
     util.yield(4500)
     local cum = create_object(cum, c.x, c.y, c.z - 1) --spawn cum
-    util.yield(60000)
-    entities.delete(cum) --delete cum
 end
 
 

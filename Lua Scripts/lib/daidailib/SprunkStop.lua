@@ -190,13 +190,6 @@ for _, sprunk_vehicle in pairs(sprunk_vehicles) do
     end
 end
 
-function load_hash(hash)
-    STREAMING.REQUEST_MODEL(hash)
-    while not STREAMING.HAS_MODEL_LOADED(hash) do
-        util.yield()
-    end
-end
-
 function show_busyspinner(text)
     HUD.BEGIN_TEXT_COMMAND_BUSYSPINNER_ON("STRING")
     HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text)
@@ -266,7 +259,7 @@ function spawn_vehicle_for_player(pid, model_name)
     if not STREAMING.IS_MODEL_VALID(model) or not STREAMING.IS_MODEL_A_VEHICLE(model) then
         return
     else
-        load_hash(model)
+        request_model(model)
         local target_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
         local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(target_ped, 0.0, 4.0, 0.5)
         local heading = ENTITY.GET_ENTITY_HEADING(target_ped)
@@ -314,7 +307,7 @@ end
 
 function spawn_object_at_pos(pos, model, ttl)
     local pickup_hash = util.joaat(model)
-    load_hash(pickup_hash)
+    request_model(pickup_hash)
     local pickup_pos = v3.new(pos.x, pos.y, pos.z)
     local pickup = entities.create_object(pickup_hash, pickup_pos)
     ENTITY.SET_ENTITY_COLLISION(pickup, true, true)
@@ -532,8 +525,8 @@ function spawn_sprunk_blimp(pid)
 
     local vehicle_hash = util.joaat('blimp3')
     local ped_hash = util.joaat("s_m_m_pilot_01")
-    load_hash(vehicle_hash)
-    load_hash(ped_hash)
+    request_model(vehicle_hash)
+    request_model(ped_hash)
 
     local target_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(

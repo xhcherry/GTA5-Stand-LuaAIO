@@ -3361,9 +3361,10 @@ end
 
 menus.loaded_constructs = menu.list(module_list, t("Loaded Constructs").." ("..#spawned_constructs..")", {}, t("View and edit already loaded constructs"))
 
-menu.action(menus.loaded_constructs, t("删除所构造体"), {}, "", function()
+menu.action(menus.loaded_constructs, "删除所有构造体", {}, "", function()
     delete_all_constructs()
 end)
+menu.divider(menus.loaded_constructs,"构造体列表")
 menus.refresh_loaded_constructs = function()
     menu.set_menu_name(menus.loaded_constructs, t("Loaded Constructs").." ("..#spawned_constructs..")")
 end
