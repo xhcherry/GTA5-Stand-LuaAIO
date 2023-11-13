@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '10.28'
+GT_version = '11.12'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("新增>战局选项>全局事件>警察屏蔽所有玩家\n新增>战局选项>全局事件>所有NPC屏蔽玩家\n修复了在玩家页签中可能会重复出现多个脚本选项\n修复了一些用户启动脚本时有可能会异常关闭\n其他的一些改进与修复\nVersion: "..GT_version)
+    notification("nil")
 end
 --
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
@@ -10077,7 +10077,6 @@ function ogcrash(PlayerID)
     menu.trigger_commands("choke".. PLAYER.GET_PLAYER_NAME(PlayerID))
     menu.trigger_commands("steamroll".. PLAYER.GET_PLAYER_NAME(PlayerID))
     menu.trigger_commands("rainbowpapaw".. PLAYER.GET_PLAYER_NAME(PlayerID))
-    menu.trigger_commands("brotakecc".. PLAYER.GET_PLAYER_NAME(PlayerID))
     menu.trigger_commands("toggleyulemonster".. PLAYER.GET_PLAYER_NAME(pid) .. " on")
     wait(1000)
     menu.trigger_commands("toggleyulemonster".. PLAYER.GET_PLAYER_NAME(pid) .. " off")
@@ -11263,96 +11262,6 @@ function gtcrash(PlayerID)
             wait(2500)
             util.toast("成功移除此玩家")
         end
-    end
-end
-
-function mixx_crash(PlayerID)
-    if nicecrash_v1 then
-        menu.trigger_commands("nicecrash " .. players.get_name(PlayerID) .. " 1")
-    end
-    if nicecrash_v2 then
-        menu.trigger_commands("nicecrash " .. players.get_name(PlayerID) .. " 2")
-    end
-    if nicecrash_v3 then
-        menu.trigger_commands("nicecrash " .. players.get_name(PlayerID) .. " 3")
-    end
-    if inshell_v1 then
-        menu.trigger_commands("inshell " .. players.get_name(PlayerID))
-    end
-    if proluna_v1 then
-        menu.trigger_commands("proluna " .. players.get_name(PlayerID))
-    end
-    if grief_v1 then
-        menu.trigger_commands("grief " .. players.get_name(PlayerID))
-    end
-    if nature_v1 then
-        menu.trigger_commands("nature " .. players.get_name(PlayerID))
-    end
-    if nature_v2 then
-        menu.trigger_commands("hiroshima " .. players.get_name(PlayerID))
-    end
-    if sweetcrash_v1 then
-        menu.trigger_commands("sweetcrash " .. players.get_name(PlayerID))
-    end
-    if cps_v1 then
-        menu.trigger_commands("cps " .. players.get_name(PlayerID))
-    end
-    if lestercrestcrash_v1 then
-        menu.trigger_commands("lestercrestcrash " .. players.get_name(PlayerID))
-    end
-    if dongge_v1 then
-        menu.trigger_commands("dongge " .. players.get_name(PlayerID))
-    end
-    if planecrash_v1 then 
-        menu.trigger_commands("planecrash " .. players.get_name(PlayerID))
-    end
-    if wenyi_v1 then
-        menu.trigger_commands("wenyi " .. players.get_name(PlayerID))
-    end
-    if wade_v1 then
-        menu.trigger_commands("wade " .. players.get_name(PlayerID))
-    end
-    if OXCrash_v1 then
-        menu.trigger_commands("OXCrash " .. players.get_name(PlayerID))
-    end
-    if soundcrash_v1 then
-        menu.trigger_commands("soundcrash " .. players.get_name(PlayerID) .. " 1")
-    end
-    if soundcrash_v2 then
-        menu.trigger_commands("soundcrash " .. players.get_name(PlayerID) .. " 2")
-    end
-    if invalidmodelcrash_v1 then
-        menu.trigger_commands("invalidmodelcrash " .. players.get_name(PlayerID))
-    end
-    if xxx5gcrash_v1 then
-        menu.trigger_commands("5gcrash " .. players.get_name(PlayerID))
-    end
-    if dick_v1 then
-        menu.trigger_commands("dick " .. players.get_name(PlayerID))
-    end
-    if ChernobogCrash_v1 then
-        menu.trigger_commands("ChernobogCrash " .. players.get_name(PlayerID) .. " 1")
-    end
-    if ChernobogCrash_v2 then
-        menu.trigger_commands("ChernobogCrash " .. players.get_name(PlayerID) .. " 2")
-    end
-    if huntercrash_v1 then
-        menu.trigger_commands("huntercrash " .. players.get_name(PlayerID) .. " 2")
-    end
-    if scriptevent_v1 then
-        menu.trigger_commands("scriptevent " .. players.get_name(PlayerID) .. " 2")
-    end
-    if invalidclothes_v1 then
-        menu.trigger_commands("invalidclothesv1 " .. players.get_name(PlayerID) .. " 2")
-    end
-    if invalidclothes_v2 then
-        menu.trigger_commands("invalidclothesv2 " .. players.get_name(PlayerID) .. " 2")
-    end
-    if dh_v1 then
-        menu.trigger_commands("dh " .. players.get_name(PlayerID) .. " 2")
-    end
-    if tuoche_v1 then
-        menu.trigger_commands("tuoche " .. players.get_name(PlayerID) .. " 2")
     end
 end
 --aio崩溃
