@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '11.18'
+GT_version = '12.01'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("更新攻击嘲讽，可直接输入中文\n更新恶搞选项>近期更新>分离车轮\n更新了国家分类显示，更多可调项目\n重增>恶搞选项>附加选项>附加车辆\n新增>战局选项>线上检查>聊天记录\n新增>战局选项>线上检查>检查打字\n新增>战局选项>线上检查>事件通知\n新增>世界选项>烟花选项>海滩烟花秀\n新增>聊天选项>公屏内容>R星聊天\n新增>自我选项>增强选项>CTRL+X自爆\n新增>自我选项>自我娱乐>搭火箭")
+    notification("更新了火车选项\n更新了国家分类显示\n新增>其他选项>显示选项>实体池显示\n新增>恶搞选项>近期更新>载具跳舞\n新增>恶搞选项>近期更新>轰炸机\n新增>自我选项>增强选项>看门狗[New]\n新增>武器选项>滑稽枪械>人物恶搞枪[火]\n新增>武器选项>滑稽枪械>人物恶搞枪[水]\n其他的一些改进与修复\n添加了新的皇榜成员")
 end
 --
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
@@ -8637,6 +8637,52 @@ end
 
 --杂项
 --原创功能 缝合死妈
+function renwuegaoqiang1()
+    sheji=GTTG(weaponfun, '人物恶搞枪[火]', {''}, '只适用于人物跟玩家,载具内的对象不起效果', function(ak)
+    wuqi = ak
+        while wuqi do
+            wait()
+               if PED.IS_PED_SHOOTING(players.user_ped(players.user())) then
+                  local controls_entity_aimed_at = ent_func.get_entity_player_is_aiming_at(players.user())
+                      if ENTITY.IS_ENTITY_A_PED(controls_entity_aimed_at) or PED.IS_PED_A_PLAYER(controls_entity_aimed_at)  then
+                      util.create_thread(function()
+                          while wuqi do
+                             wait()
+                             FIRE.ADD_EXPLOSION(ENTITY.GET_ENTITY_COORDS(controls_entity_aimed_at).x,
+                          ENTITY.GET_ENTITY_COORDS(controls_entity_aimed_at).y,
+                      ENTITY.GET_ENTITY_COORDS(controls_entity_aimed_at).z-0.5, 12,1, true, false,0, true)
+                      end
+                  end)
+               end
+            end
+        end
+        wuqi = false
+    end)
+end
+    
+function renwuegaoqiang2()
+    GTTG(weaponfun, '人物恶搞枪[水]', {''}, '只适用于人物跟玩家,载具内的对象不起效果', function(ak)
+    wuqi = ak
+        while wuqi do
+            wait()
+               if PED.IS_PED_SHOOTING(players.user_ped(players.user())) then
+                  local controls_entity_aimed_at = ent_func.get_entity_player_is_aiming_at(players.user())
+                      if ENTITY.IS_ENTITY_A_PED(controls_entity_aimed_at) or PED.IS_PED_A_PLAYER(controls_entity_aimed_at)  then
+                      util.create_thread(function()
+                          while wuqi do
+                             wait()
+                             FIRE.ADD_EXPLOSION(ENTITY.GET_ENTITY_COORDS(controls_entity_aimed_at).x,
+                          ENTITY.GET_ENTITY_COORDS(controls_entity_aimed_at).y,
+                      ENTITY.GET_ENTITY_COORDS(controls_entity_aimed_at).z-0.5, 13,1, true, false,0, true)
+                      end
+                  end)
+               end
+            end
+        end
+        wuqi = false
+    end)
+end    
+
 function hengfugt(f)
     starttime = os.time()
     local startX = -0.5
@@ -24864,6 +24910,54 @@ local playerMain = GT(GTluaScript.player_root(pid), "恶搞选项", {"GTTrolling
 end)
 
 local updatetroll = GT(playerMain, "近期更新", {}, "")
+
+GTTG(updatetroll,"载具跳舞", {}, "使对方车辆一直弹跳", function(tw)
+    tiaowu=tw
+        while tiaowu do
+            request_control(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)))
+            local vehicle_velocity = ENTITY.GET_ENTITY_VELOCITY(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)))
+            ENTITY.SET_ENTITY_VELOCITY(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)),vehicle_velocity.x, vehicle_velocity.y, vehicle_velocity.z + 3.5)
+            wait(1000)
+        end
+    tiaowu=false
+end)
+
+function hongzhaji()
+    weapon_Type = {
+    {"烟花", "weapon_firework"}, 
+    {"原子能枪", "weapon_raypistol"},
+    {"邪恶冥王", "weapon_raycarbine"},
+    {"电磁步枪", "weapon_railgun"},
+    {"红色激光", "vehicle_weapon_enemy_laser"},
+    {"绿色激光", "vehicle_weapon_player_laser"},
+    {"天煞机炮", "vehicle_weapon_player_lazer"},
+    {"火箭炮", "weapon_rpg"},
+    {"制导火箭发射器", "weapon_hominglauncher"},
+    {"紧凑型电磁脉冲发射器", "weapon_emplauncher"},
+    {"信号弹", "weapon_flaregun"},
+    {"霰弹枪", "weapon_bullpupshotgun"},
+    {"电击枪", "weapon_stungun"},
+    {"催泪瓦斯", "weapon_smokegrenade"}
+    }
+
+  hongzha=GT(updatetroll, "轰炸机", {}, "各种武器轰炸")
+  for id, data in pairs(weapon_Type) do
+  local name = data[1]
+  local weapon_name = data[2]
+  GTLP(hongzha,name, {""}, "", function()
+     local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+     local pos = ENTITY.GET_ENTITY_COORDS(ped)
+        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z + 5, pos.x, pos.y, pos.z, 0, true, util.joaat(weapon_name), players.user_ped(), true, true, 0)
+		MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x-1, pos.y, pos.z + 5, pos.x, pos.y, pos.z, 0, true, util.joaat(weapon_name), players.user_ped(), true, true, 0)
+		MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x+1, pos.y, pos.z + 5, pos.x, pos.y, pos.z, 0, true, util.joaat(weapon_name), players.user_ped(), true, true, 0)
+		MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x-2, pos.y, pos.z + 5, pos.x, pos.y, pos.z, 0, true, util.joaat(weapon_name), players.user_ped(), true, true, 0)
+		MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x+3, pos.y, pos.z + 5, pos.x, pos.y, pos.z, 0, true, util.joaat(weapon_name), players.user_ped(), true, true, 0)
+		MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x-4, pos.y, pos.z + 5, pos.x, pos.y, pos.z, 0, true, util.joaat(weapon_name), players.user_ped(), true, true, 0)
+		MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x+4, pos.y, pos.z + 5, pos.x, pos.y, pos.z, 0, true, util.joaat(weapon_name), players.user_ped(), true, true, 0)
+  end)
+  end
+end
+hongzhaji()
 
 local tp_timer2 = 0
 updatetroll:action("传送到佩里科岛", {}, "目标需要拥有一个CEO组织", function()

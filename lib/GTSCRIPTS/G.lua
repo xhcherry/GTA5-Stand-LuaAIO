@@ -1292,7 +1292,7 @@ GTAC(renwuxuanxiang, "随机服装",{""}, "",function() wait(100) PED.SET_PED_RA
 
 GTTG(renwuxuanxiang, "循环随机服装",{"会引发XE事件"}, "",function(f) gt=f while gt do wait(100) PED.SET_PED_RANDOM_COMPONENT_VARIATION(PLAYER.PLAYER_PED_ID(), true) end gt=false end)
 
-GTTG(funfeatures_self,"搭火箭",{},"", function(t)
+GTTG(funfeatures,"搭火箭",{},"", function(t)
     local bones <const> = {0x3779,0xCC4D}
         gt=t
             if gt then
@@ -1314,10 +1314,10 @@ GTTG(funfeatures_self,"搭火箭",{},"", function(t)
     else
     GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(players.user_ped())
         entities.delete_by_handle(obj)
-        entities.delete_by_handle(veh)
-        end
-    gt=false
-end)
+            entities.delete_by_handle(veh)
+            end
+        gt=false
+    end)
 
 GTTG(funfeatures_self, '骑在NPC头上', {""}, '', function (on)
     if on then
@@ -3688,15 +3688,8 @@ end
 
 util.keep_running()
 
-watch_dog = GT(helperingame, "看门狗2.0", {}, "", function(); end)
-Dog = GTAC(watch_dog, "加载看门狗2.0", {""}, "看门狗2.0", function()
-    newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;","~h~~r~正在加载看门狗2.0,请稍等", "CHAR_CHOP", 140)
-    GTLuaScript.delete(Dog)
-wait(3000)
-
+watch_dog = GT(helperingame, "看门狗[New]", {}, "", function(); end)
 dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\D.lua")
-
-end)
 
 local myroot = GT(helperingame, "宠物选项", {}, "", function(); end)
 local allpetsroot = GT(myroot, "所有宠物", {}, "")
@@ -10189,7 +10182,10 @@ end)
 GTLuaScript.slider_float(super_xray, "视野", {"tpslider"}, "", 100, 36000, 1000, 100, function (s)
     xray.fov = s*.01
 end)
-
+    
+renwuegaoqiang1()
+renwuegaoqiang2()
+    
 GTTG(weaponfun, '钞票枪', {}, '', function (f)
     gt = f
     while gt do
@@ -13161,6 +13157,7 @@ util.on_stop(function()
 end)
 
 local bodyguardMenu <const> = BodyguardMenu.new(funfeatures, "保镖选项", {})
+
 
 GTluaScript.click_slider(visuals, "醉酒模式", {}, "", 0, 5, 1, 1, function(val)
     drunkmode(val)
@@ -17260,72 +17257,107 @@ end))
 
 local trainsasd = GT(lobbyFeats, '火车选项', {''}, '')
 
-local trainsStopped = false
-local function stopTrain(train)
-    util.create_thread(function()
-        while trainsStopped do
-            VEHICLE.SET_TRAIN_SPEED(train, -0.05)
-            wait()
+local get_control_of_entity = function(h, t)
+    if not h then
+        return
+    end
+    if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(h) then
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(h)
+        local time = util.current_time_millis() + t
+        while ENTITY.IS_AN_ENTITY(h) and not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(h) and time > util.current_time_millis() do
+            wait(5)
         end
-        VEHICLE.SET_RENDER_TRAIN_AS_DERAILED(train, false)
-    end)
+    end
+    return NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(h)
 end
 
-GTTG(trainsasd, '火车脱轨', {'JSderail'}, '令所有火车脱轨并停止', function(toggle)
-    local vehPointers = entities.get_all_vehicles_as_pointers()
-    trainsStopped = toggle
-    for i = 1, #vehPointers do
-        local vehHash = entities.get_model_hash(vehPointers[i])
-        if VEHICLE.GET_VEHICLE_CLASS_FROM_NAME(vehHash) == 21 then
-            local trainHandle = entities.pointer_to_handle(vehPointers[i])
-            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(trainHandle)
-            VEHICLE.SET_RENDER_TRAIN_AS_DERAILED(trainHandle, true)
-            stopTrain(trainHandle)
+    function is_player_driving_train(pid)
+        if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED(pid), true) and
+            int_to_uint(ENTITY.GET_ENTITY_MODEL(veh)) == 1030400667 or
+            int_to_uint(ENTITY.GET_ENTITY_MODEL(veh)) then
+            return true
+        else
+            return false
         end
     end
-end)
 
-GTAC(trainsasd, '删除火车', {'JSdeleteTrain'}, '反火车选项', function()
-    VEHICLE.DELETE_ALL_TRAINS()
-end)
+    traincontrol = GT(trainsasd,"火车控制", {}, '')
 
-local markedTrains = {}
-local markedTrainBlips = {}
-GTLP(trainsasd, '标记附近的火车', {'JSnoMapNotifications'}, '用紫色光点标记附近的火车', function()
-    local vehPointers = entities.get_all_vehicles_as_pointers()
-    removeValues(vehPointers, markedTrains)
-
-    for i = 1, #vehPointers do
-        local vehHash = entities.get_model_hash(vehPointers[i])
-        if VEHICLE.GET_VEHICLE_CLASS_FROM_NAME(vehHash) == 21 then
-            if notifications then
-                util.toast('Marked train')
+    getintotrain = GTAC(traincontrol,"进入火车/电车", {}, '', function(k)
+        pedmy = players.user_ped(players.user())
+        veh = entities.get_all_vehicles_as_handles()
+        for i = 1, #veh do
+            get_control_of_entity(veh[i], 300)
+            entityhash = return int_to_uint(ENTITY.GET_ENTITY_MODEL(veh[i]))
+            if entityhash == 868868440 then
+                PED.SET_PED_INTO_VEHICLE(pedmy, veh[i], -1)
+            else
+                util.toast("附加没有电车")
             end
-            table.insert(markedTrains, vehPointers[i])
-            local blip = HUD.ADD_BLIP_FOR_ENTITY(entities.pointer_to_handle(vehPointers[i]))
-            HUD.SET_BLIP_COLOUR(blip, 58)
-            table.insert(markedTrainBlips, blip)
+            wait(1)
+            if entityhash == 1030400667 then
+                PED.SET_PED_INTO_VEHICLE(pedmy, veh[i], -1)
+            else
+                util.toast("附加没有火车")
+            end
         end
-    end
-    wait(100)
-end, function()
-    for i = #markedTrainBlips, 1, -1 do
-        util.remove_blip(markedTrainBlips[i])
-        markedTrainBlips[i] = nil
-        markedTrains[i] = nil
-    end
-end)
+    end)
 
-GTAC(trainsasd, "寻找列车",{""}, "", function()
-    for _, veh in pairs(entities.get_all_vehicles_as_pointers()) do 
-        if entities.get_model_hash(veh) == util.joaat("freight") then
-            local c = entities.get_position(veh)
-            ENTITY.SET_ENTITY_COORDS(players.user_ped(), c.x, c.y, c.z)
-            return 
+    GTTG(traincontrol,"火车控制器", {}, '', function(f)
+        if f then
+            local TrainSpeed = 10.0
+            while f do
+                wait(10)
+                if is_player_driving_train(players.user()) then
+                    local New_Request = false
+                    if PAD.IS_DISABLED_CONTROL_PRESSED(2, 32) then
+                        TrainSpeed = TrainSpeed + 1.0
+                        New_Request = true
+                    end
+                    if PAD.IS_DISABLED_CONTROL_PRESSED(2, 33) then
+                        TrainSpeed = TrainSpeed - 1.0
+                        New_Request = true
+                    end
+                    if New_Request then
+                        VEHICLE.SET_TRAIN_SPEED(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED()),TrainSpeed)
+                        VEHICLE.SET_TRAIN_CRUISE_SPEED(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED()),TrainSpeed)
+                    end
+                end
+            end
         end
-    end
-    util.toast("找不到火车")
-end)
+    end)
+
+    GTTG(traincontrol,"停止火车", {}, '', function(f)
+        while f do
+            wait(0)
+            if is_player_driving_train(players.user()) then
+                VEHICLE.SET_TRAIN_SPEED(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED()), 0.0)
+                VEHICLE.SET_TRAIN_CRUISE_SPEED(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED()), 0.0)
+            end
+        end
+    end)
+
+    GTAC(traincontrol,"强制离开火车", {}, '', function(f)
+        if is_player_driving_train(players.user()) then
+            TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped(players.user()))
+        end
+    end)
+
+    GTAC(traincontrol,"删除所有火车", {},'', function(f)
+        VEHICLE.DELETE_ALL_TRAINS()
+    end)
+
+    GTAC(traincontrol,"火车脱轨",{},'', function(f)
+        if is_player_driving_train(players.user()) then
+            if f then
+                VEHICLE.SET_RENDER_TRAIN_AS_DERAILED(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED()), true)
+            end
+            if not f then
+                VEHICLE.SET_RENDER_TRAIN_AS_DERAILED(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED()), false)
+            end
+        end
+    end)
+
 
 
 fireworks_root = GT(lobbyFeats, "烟花选项", {}, "")
@@ -18422,6 +18454,40 @@ gt=false
 end)
 menu.set_value(baocunanjain, true)
 
+stcxs=GTTG(zhujixianshi, "实体池显示", {}, "", function(ft)
+    local shiti_x = 0.80 local shiti_y = 0.018 local settings = {add_x = 0.0005,add_y = 0.0}
+        stc = ft
+        while stc do
+            wait()
+    local fullVersion = menu.get_version()["version"]
+    local ModderCount = 0
+    local MyPed = players.user_ped(players.user())
+    local MyPos = ENTITY.GET_ENTITY_COORDS(MyPed)
+    for i = 0, 31 do
+        if players.is_marked_as_modder(i, -1) then
+            ModderCount = ModderCount + 1
+        end
+    end
+       directx.draw_rect(shiti_x + settings.add_x, shiti_y,0.171, 0.03 + settings.add_y,1, 1, 1, 1)
+       directx.draw_rect(shiti_x + settings.add_x, shiti_y+0.261,0.171, 0.02 + settings.add_y,1, 1, 1, 1)
+       directx.draw_rect(shiti_x + settings.add_x, shiti_y+0.020,0.171, 0.26 + settings.add_y,0, 0, 0, 0.08)
+       directx.draw_text(shiti_x+0.035, shiti_y+0.005, "GRANDTOURINGVIP", ALIGN_TOP_LEFT, 0.6,0, 1, 1, 1)
+       directx.draw_text(shiti_x+0.004, shiti_y+0.030, "模型:"..memory.read_int(pedInterface + 0x0110).."/"..memory.read_int(pedInterface + 0x0108), ALIGN_TOP_LEFT, 0.6,0, 1, 0, 1)
+       directx.draw_text(shiti_x+0.004, shiti_y+0.050, "载具:"..memory.read_int(vehInterface + 0x0190).."/"..memory.read_int(vehInterface + 0x0188), ALIGN_TOP_LEFT, 0.6,0, 0, 1, 1)
+       directx.draw_text(shiti_x+0.004, shiti_y+0.070, "实体:"..memory.read_int(objectInterface + 0x0168).."/"..memory.read_int(objectInterface + 0x0160), ALIGN_TOP_LEFT, 0.6,1, 0, 0, 1)
+       directx.draw_text(shiti_x+0.004, shiti_y+0.090, "拾取物:"..memory.read_int(pickupInterface + 0x0110).."/"..memory.read_int(pickupInterface + 0x0108), ALIGN_TOP_LEFT, 0.6,0.4, 0.1, 1, 1)
+       directx.draw_text(shiti_x+0.004, shiti_y+0.110, "所有实体:"..memory.read_int(pedInterface + 0x0110)+memory.read_int(vehInterface + 0x0190)+memory.read_int(objectInterface + 0x0168)+memory.read_int(pickupInterface + 0x0110).."/"..memory.read_int(pedInterface + 0x0108)+memory.read_int(vehInterface + 0x0188)+memory.read_int(objectInterface + 0x0160)+memory.read_int(pickupInterface + 0x0108), ALIGN_TOP_LEFT, 0.6,1, 0.5, 0.5, 1)
+       directx.draw_text(shiti_x+0.004, shiti_y+0.130, "作弊者:"..ModderCount, ALIGN_TOP_LEFT, 0.6,1, 0.5, 0, 1)
+       directx.draw_text(shiti_x+0.004, shiti_y+0.150, "人数:"..#players.list(), ALIGN_TOP_LEFT, 0.6,0.3, 0.2, 0.5, 1)
+       directx.draw_text(shiti_x+0.004, shiti_y+0.170, "血量:"..ENTITY.GET_ENTITY_HEALTH(PLAYER.GET_PLAYER_PED()), ALIGN_TOP_LEFT, 0.6,1, 0, 0, 1)
+       directx.draw_text(shiti_x+0.004, shiti_y+0.190, "护甲:"..PED.GET_PED_ARMOUR(PLAYER.GET_PLAYER_PED()), ALIGN_TOP_LEFT, 0.6,0, 0.3, 0.5, 1)
+       directx.draw_text(shiti_x+0.004, shiti_y+0.210, "坐标:".. string.format("\n%.5f, %.5f, %.5f", MyPos.x, MyPos.y, MyPos.z), ALIGN_TOP_LEFT, 0.6,0, 1, 0, 1)
+       directx.draw_text(shiti_x+0.004, shiti_y+0.260, "STAND版本:"..fullVersion.."             GTA在线版本:"..NETWORK.GET_ONLINE_VERSION(), ALIGN_TOP_LEFT, 0.5,0, 0, 0, 1)
+       end
+       stc=false
+    end)
+    menu.set_value(stcxs, stcxs1)
+
 playerdis = GT(zhujixianshi, "显示玩家栏")
 
 map_name_type = v2()
@@ -18916,16 +18982,16 @@ GTTG(espinfo, "NPC透视框", {}, "", function(g)
         gt = false
     end)
 
-gjfl=GT(zhujixianshi, '国家分类显示', {}, '')
+    gjfl=GT(zhujixianshi, '国家分类显示', {}, '')
 gjposx=0.85
 gjposy=0.020
 gjposr=255
 gjposg=182
 gjposb=193
 gjposa=255
-gjflxs=GTTG(gjfl, '显示/关闭', {}, '', function (f)
-gt = f
-while gt do
+gjflxs=GTTG(gjfl, '显示/关闭', {}, '', function (fl)
+gtf = fl
+while gtf do
     wait()
 local guojia = {[0] = "英国",[1] = "法国",[2] = "德国",[3] = "意大利",[4] = "西班牙",[5] = "葡萄牙",[6] = "波兰",[7] = "俄罗斯",[8] = "韩国",[9] = "台湾/香港",[10] = "日本",[11] = "西班牙",[12] = "中国"}
 local playerCategories = {} 
@@ -18958,8 +19024,9 @@ local currentY = pos.y
          end
       end 
    end  
-gt = false
+gtf = false
 end)
+
 menu.set_value(gjflxs, gjflxs1)
 
 GTluaScript.slider(gjfl, '国家分类显示 X轴', {}, '',1, 900, 160, 20, function(x_x)
@@ -19071,65 +19138,7 @@ if seconds > 0 or (hours == 0 and minutes == 0) then formattedTime = formattedTi
 end HUD.SET_TEXT_SCALE(0.5, 0.40) HUD.SET_TEXT_FONT(1) HUD.SET_TEXT_COLOUR(255, 182, 193, 255) HUD.SET_TEXT_CENTRE(1) HUD.SET_TEXT_OUTLINE(1) util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(formattedTime) HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.08, 0.01, 0) end gt = false end)
 menu.set_value(yxscxs, yxscxs1)
 
-stcxs=GTLP(zhujixianshi, "实体池显示", {}, "", function(toggle)
-    local fullVersion = menu.get_version()["version"]
-    local width = window_width
-    local height = window_height
-    local function colour(r, g, b, a)
-        return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
-    end
-    local border_color_left = colour(0, 255, 255, 255)
-    local border_color_right = colour(255, 0, 0, 255)
-    local border_color_a= colour(100, 50, 50, 255)
-    local border_color_b= colour(60, 70, 150, 255)
-    local border_color_c= colour(0, 0, 0, 200)
-    local window_xx = 0.66
-    local window_yy = 0.026
-    local window_width = 0.12
-    local window_height = 0.128
-    directx.draw_line(
-        window_xx, window_yy,
-        window_xx + window_width, window_yy,
-        border_color_left, border_color_right
-    )
-    directx.draw_line(
-        window_xx, window_yy,
-        window_xx, window_yy + window_height,
-        border_color_left, border_color_right
-    )
-    directx.draw_line(
-        window_xx + window_width, window_yy,
-        window_xx + window_width, window_yy + window_height,
-        border_color_right,border_color_left
-    )
-    directx.draw_line(
-        window_xx, window_yy + window_height,
-        window_xx + window_width, window_yy + window_height,
-        border_color_left, border_color_right
-    )
-    local rect_x = window_xx + 0.0006
-    local rect_y = window_yy + 0.0010
-    local rect_width = window_width - 0.6618
-    local rect_height = window_height - 0.05
-    directx.draw_rect(rect_x, rect_y, rect_x + rect_width, rect_y + rect_height+0.0220,border_color_b, border_color_a)
-    local rect_xx = 0.6695
-    local rect_yy = 0.04
-    local rect_widthx = 0.101
-    local rect_heighty = 0.102
-    local rgb = {colorr=255, colorg=0, colorb=255, colorta=255}
-    directx.draw_rect(rect_xx, rect_yy, rect_widthx, rect_heighty,border_color_c)
-    local text_scale = 0.5
-    local text = ("ID:".. PLAYER.GET_PLAYER_NAME(players.user()).."      人数:"..#players.list().."\n".."PED:"..memory.read_int(pedInterface + 0x0110).."/"..memory.read_int(pedInterface + 0x0108).."".."\n".."载具:"..memory.read_int(vehInterface + 0x0190).."/"..memory.read_int(vehInterface + 0x0188).."\n".."实体:"..memory.read_int(objectInterface + 0x0168).."/"..memory.read_int(objectInterface + 0x0160).."\n".."拾取物:"..memory.read_int(pickupInterface + 0x0110).."/"..memory.read_int(pickupInterface + 0x0108))
-    directx.draw_text(
-        window_xx+0.009, window_yy+0.013, text, ALIGN_TOP_LEFT, text_scale,
-        colour(255, 100, 50, 255)
-    )
-    directx.draw_text(
-        window_xx+0.003, window_yy+0.0015,"游戏在线版本:"..NETWORK.GET_ONLINE_VERSION().."            STAND版本:"..fullVersion, ALIGN_TOP_LEFT, 0.35,
-        colour(255, 255, 0, 255)
-    )
-end)
-menu.set_value(stcxs, stcxs1)
+
 vzbxs=GTTG(zhujixianshi, '坐标显示', {}, '', function (f)
     gt = f
     while gt do
