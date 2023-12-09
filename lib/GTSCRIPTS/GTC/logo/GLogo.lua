@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '12.01'
+GT_version = '12.10'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("更新了火车选项\n更新了国家分类显示\n新增>其他选项>显示选项>实体池显示\n新增>恶搞选项>近期更新>载具跳舞\n新增>恶搞选项>近期更新>轰炸机\n新增>自我选项>增强选项>看门狗[New]\n新增>武器选项>滑稽枪械>人物恶搞枪[火]\n新增>武器选项>滑稽枪械>人物恶搞枪[水]\n其他的一些改进与修复\n添加了新的皇榜成员")
+    notification("修复了在线上开启脚本报错问题\n修复了模组选项为空白\n添加了新的皇榜成员")
 end
 --
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
@@ -8683,6 +8683,108 @@ function renwuegaoqiang2()
     end)
 end    
 
+--至臻横幅
+function sxgt(f)
+    starttime = os.time()
+    local rainbowr = 255
+    local rainbowg = 255
+    local rainbowb = 255
+
+    local startX = -0.5
+    local endX = 0.5
+    local speed = 0.001
+    hfgt = f
+    while hfgt do
+        wait()
+        startX = startX + speed
+        endX = endX + speed
+        if startX >= 0.5 then
+            startX = -0.5
+            endX = 0.5
+        end
+        rainbowr = rainbowr + math.random(0, 8)
+        rainbowg = rainbowg + math.random(0, 8)
+        rainbowb = rainbowb + math.random(0, 8)
+        if rainbowr > 255 then
+        rainbowr = rainbowr - 255
+        end
+        if rainbowg > 255 then
+        rainbowg = rainbowg - 255
+        end
+        if rainbowb > 255 then
+        rainbowb = rainbowb - 255
+        end
+
+        local time = os.clock() * 3
+        local r = math.floor(127 + 127 * math.sin(time))
+        local g = math.floor(127 + 127 * math.sin(time + 2))
+        local b = math.floor(127 + 127 * math.sin(time + 4))
+        GRAPHICS.DRAW_RECT(.5, .37, 1, 0.01, r, g, b, 200)
+
+        local time = os.clock() * 5
+        local r = math.floor(127 + 127 * math.sin(time))
+        local g = math.floor(127 + 127 * math.sin(time + 2))
+        local b = math.floor(127 + 127 * math.sin(time + 4))
+        GRAPHICS.DRAW_RECT(.5, .38, 1, 0.01, r, g, b, 200)
+
+        local time = os.clock() * 7
+        local r = math.floor(127 + 127 * math.sin(time))
+        local g = math.floor(127 + 127 * math.sin(time + 2))
+        local b = math.floor(127 + 127 * math.sin(time + 4))
+        GRAPHICS.DRAW_RECT(.5, .39, 1, 0.01, r, g, b, 200)
+
+        local time = os.clock() * 9
+        local r = math.floor(127 + 127 * math.sin(time))
+        local g = math.floor(127 + 127 * math.sin(time + 2))
+        local b = math.floor(127 + 127 * math.sin(time + 4))
+        GRAPHICS.DRAW_RECT(.5, .40, 1, 0.01, r, g, b, 200)
+
+        local time = os.clock() * 12
+        local r = math.floor(127 + 127 * math.sin(time))
+        local g = math.floor(127 + 127 * math.sin(time + 2))
+        local b = math.floor(127 + 127 * math.sin(time + 4))
+        GRAPHICS.DRAW_RECT(.5, .41, 1, 0.01, r, g, b, 200)
+
+        local time = os.clock() * 15
+        local r = math.floor(127 + 127 * math.sin(time))
+        local g = math.floor(127 + 127 * math.sin(time + 2))
+        local b = math.floor(127 + 127 * math.sin(time + 4))
+
+        GRAPHICS.DRAW_RECT(.5, .42, 1, 0.01, r, g, b, 200)
+
+        local time = os.clock() * 17
+        local r = math.floor(127 + 127 * math.sin(time))
+        local g = math.floor(127 + 127 * math.sin(time + 2))
+        local b = math.floor(127 + 127 * math.sin(time + 4))
+        GRAPHICS.DRAW_RECT(.5, .43, 1, 0.01, r, g, b, 200)
+
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.085, 0.10)
+        HUD.SET_TEXT_SCALE(0.5, 0.4)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
+
+        if playeridx == "hinrcituqzQZ" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 清歌 正在该战局")
+        elseif playeridx == "RhymeBear" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 菲奥娜King 正在该战局")
+        elseif playeridx == "chen_you123" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 辰悠 正在该战局")
+        elseif playeridx == "rudan891018" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 湾湾 正在该战局")
+        elseif playeridx == "An_owQ" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 船船 正在该战局")
+        end
+
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.380)
+        if os.time() - starttime >= 7 then
+            hfgt = false
+            return
+        end
+    end
+end
+
 function hengfugt(f)
     starttime = os.time()
     local startX = -0.5
@@ -8715,12 +8817,13 @@ function hengfugt(f)
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.480)
 
         if os.time() - starttime >= 7 then
-        hfgt = false
-        return
+            hfgt = false
+            return
         end
-        end
-        --hfgt = false
     end
+end
+
+
 --开发横幅
 function devhengfu(f)
     starttime = os.time()
@@ -8779,6 +8882,7 @@ function driveitgun()
 	end
 	memory.free(entitodrive)
 end
+
 --启动页面3
 function huanyingjiemian(f) 
     local rainbowr = 255
@@ -23119,6 +23223,61 @@ GTROOT = GTD(GTluaScript.player_root(PlayerID), "GRANDTOURINGVIP")
 
 GT = GTluaScript.list
 
+local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
+for _,id in ipairs(spid) do
+    if name == id.playerid then
+        HbMainMenu = GT(GTLuaScript.player_root(PlayerID), "皇榜专属", {}, "请注意,此选项允许两个相同的皇榜用户互相攻击 我们正在考虑是否也将这一选项列为皇榜免疫")
+        tobe = GTD(HbMainMenu, "将在来年一月开放更多功能!")
+
+        tcr = GTAC(HbMainMenu, "戏命师", {}, "我于杀戮之中绽放\n亦如黎明中的花朵", function()
+            STREAMING.REQUEST_MODEL(0x78BC1A3C)
+            STREAMING.REQUEST_MODEL(0x15F27762)
+            STREAMING.REQUEST_MODEL(0x0E512E79)
+            for i = 0, 10 do
+            local allpeds = entities.get_all_peds_as_handles()
+            local allvehicles = entities.get_all_vehicles_as_handles()
+            local allobjects = entities.get_all_objects_as_handles()
+            local ownped = players.user_ped(players.user())
+            local vehicle_1=CreateVehicle(0x78BC1A3C, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
+            local vehicle_2=CreateVehicle(0x15F27762, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
+            local vehicle_3=CreateVehicle(0x0E512E79, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
+            for i = 0, 49 do
+                local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_1, i) - 1
+                VEHICLE.SET_VEHICLE_MOD(vehicle_1, i, mod, true)
+                VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_1, mod, true)
+                local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_2, i) - 1
+                VEHICLE.SET_VEHICLE_MOD(vehicle_2, i, mod, true)
+                VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_2, mod, true)
+                local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_3, i) - 1
+                VEHICLE.SET_VEHICLE_MOD(vehicle_3, i, mod, true)
+                VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_3, mod, true)
+                local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_4, i) - 1
+                VEHICLE.SET_VEHICLE_MOD(vehicle_4, i, mod, true)
+                VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_4, mod, true)
+            end
+            for i = 1, #allpeds do
+                if allpeds[i] ~= ownped then
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allpeds[i], ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).x,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).y,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z)
+                end
+            end
+            for i = 1, #allvehicles do
+                if allvehicles[i] ~= ownvehicle then
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allvehicles[i], ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).x,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).y,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z)
+                    VEHICLE.SET_VEHICLE_ON_GROUND_PROPERLY(allvehicles[i],1)
+                    VEHICLE.SET_TAXI_LIGHTS(allvehicles[i])
+                end
+            end
+            for i = 1, #allobjects do
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allobjects[i], ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).x,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).y,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z)
+            end
+            wait(400)
+            end
+            PED.RESURRECT_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
+        end)
+
+    end
+end
+
 PlayerMainMenu2 = GT(GTLuaScript.player_root(PlayerID), "踢出选项", {"GTKick"}, "赤诚相见,别来无恙", function()
     for pid = 0, 32 do
         if players.exists(pid) then
@@ -23282,53 +23441,6 @@ PlayerMainMenu = GT(GTLuaScript.player_root(PlayerID), "崩溃选项", {"GTCrash
 end)
 
 updates = GT(PlayerMainMenu, "近期更新", {}, "#此选项的崩溃为中等强度及以上\n#请您不要观看并且远离崩溃对象\n#切记:请不要无脑使用,否则玩火自焚\n#注意:崩溃需要您自行研究,切莫魔怔\n\n<建议1> #偷偷告诉您,附加黑洞效果更佳喔~\n<建议2> #针对主流菜单的情况下,其实踢出是最优选择喔~")
-
-tcr = GTAC(updates, "测试崩溃", {}, "", function()
-    STREAMING.REQUEST_MODEL(0x78BC1A3C)
-    STREAMING.REQUEST_MODEL(0x15F27762)
-    STREAMING.REQUEST_MODEL(0x0E512E79)
-    for i = 0, 10 do
-    local allpeds = entities.get_all_peds_as_handles()
-    local allvehicles = entities.get_all_vehicles_as_handles()
-    local allobjects = entities.get_all_objects_as_handles()
-    local ownped = players.user_ped(players.user())
-    local vehicle_1=CreateVehicle(0x78BC1A3C, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
-    local vehicle_2=CreateVehicle(0x15F27762, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
-    local vehicle_3=CreateVehicle(0x0E512E79, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
-    for i = 0, 49 do
-        local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_1, i) - 1
-        VEHICLE.SET_VEHICLE_MOD(vehicle_1, i, mod, true)
-        VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_1, mod, true)
-        local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_2, i) - 1
-        VEHICLE.SET_VEHICLE_MOD(vehicle_2, i, mod, true)
-        VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_2, mod, true)
-        local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_3, i) - 1
-        VEHICLE.SET_VEHICLE_MOD(vehicle_3, i, mod, true)
-        VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_3, mod, true)
-        local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_4, i) - 1
-        VEHICLE.SET_VEHICLE_MOD(vehicle_4, i, mod, true)
-        VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_4, mod, true)
-    end
-    for i = 1, #allpeds do
-        if allpeds[i] ~= ownped then
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allpeds[i], ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).x,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).y,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z)
-        end
-    end
-    for i = 1, #allvehicles do
-        if allvehicles[i] ~= ownvehicle then
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allvehicles[i], ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).x,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).y,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z)
-            VEHICLE.SET_VEHICLE_ON_GROUND_PROPERLY(allvehicles[i],1)
-            VEHICLE.SET_TAXI_LIGHTS(allvehicles[i])
-        end
-    end
-    for i = 1, #allobjects do
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allobjects[i], ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).x,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).y,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z)
-    end
-    wait(400)
-    end
-    PED.RESURRECT_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
-end)
-tcr.visible = false
 
 local guibengs = menu.list(PlayerMainMenu, "各种鬼崩", {}, "")
 
@@ -30567,6 +30679,7 @@ function baocun()
         local vzbxs1 = menu.get_value(vzbxs)--坐标显示
         local xssjxs1 = menu.get_value(xssjxs)--显示时间
         local xssjrq1 = menu.get_value(xssjrq)--显示riqi
+        local liaotianjilu1 = menu.get_value(liaotianjilu)--聊天记录
         local configStr = "--保存日期:" .. tostring(todaysdate)
         local configStr1 = "\nzjxlxs = " .. tostring(zjxlxs)
         local configStr2 = "\nwjlxs1 = " .. tostring(wjlxs1)
@@ -30578,6 +30691,7 @@ function baocun()
         local configStr8 = "\nvzbxs1 = " .. tostring(vzbxs1)
         local configStr9 = "\nxssjxs1 = " .. tostring(xssjxs1)
         local configStr10 = "\nxssjrq1 = " .. tostring(xssjrq1)
+        local configStr11 = "\nliaotianjilu1 = " .. tostring(liaotianjilu1)
         local file = io.open(pathld, 'w')
         file:write(configStr)
         file:write(configStr1)
@@ -30590,6 +30704,7 @@ function baocun()
         file:write(configStr8)
         file:write(configStr9)
         file:write(configStr10)
+        file:write(configStr11)
         file:close()
     end)
     if not success then

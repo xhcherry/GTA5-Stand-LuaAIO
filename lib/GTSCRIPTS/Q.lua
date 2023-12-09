@@ -2495,7 +2495,7 @@ end
 -- End Debug Shit
 --------------------------
 
-util.create_tick_handler(function()
+--[[util.create_tick_handler(function()
     prefix = "MP" .. util.get_char_slot() .. "_" -- update our prefix live incase the user switches characters while script is running
 
     if IsInSession() then
@@ -2516,4 +2516,4 @@ util.create_tick_handler(function()
         FixNCHubCapacities()
     end
     return true
-end)
+end)]]
