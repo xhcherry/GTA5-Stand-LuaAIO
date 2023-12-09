@@ -5,6 +5,7 @@ Global_Base = {----https://github.com/CrazyZhang666/GTA5OnlineTools/blob/9260e13
     gooch = 1890378, --gooch test(from yimmenu)古奇击杀
     SessionSwitchType = 1575020, --NETWORK::NETWORK_SESSION_SET_UNIQUE_CREW_LIMIT(1)
     SessionSwitchState = 1574589,
+    gpbd_fm_1 = 1853988, --派遣劫匪
     gpbd_fm_3 = 1895156,
 
     --Vehicle Menus Globals
@@ -36,7 +37,12 @@ invite_string = {
     "NT_INV_SP_SAVE",
 }
 
+----获取导弹
+obj_pp = {"prop_cs_dildo_01", "prop_ld_bomb_01", "prop_sam_01" ,"h4_prop_h4_airmissile_01a"}
+opt_pp = {"小导弹", "中导弹", "大导弹", "航空导弹", "移除导弹"}
 
+----载具附加
+veh_attach_options = {"附加到他载具上", "他的载具附加到我的载具", "我的载具附加到他的载具", "分离载具"}
 
 ----武器表
 weapon_list = {
@@ -235,6 +241,7 @@ station_name = {
 ----预设模型
 my_model_list = {
     {"消防员", "-1229853272"},
+    {"警察", "1581098148"},
     {"小狗戴恩", "1344679353"},
     {"太空游骑兵", "1011059922"},
     {"圣诞怪兽", "-751898707"},
@@ -312,9 +319,24 @@ ownedprops = {
 ----发送妓女
 custom_hooker_options = {"克隆玩家", "莱斯特", "特蕾西", "贝克女士", "裸女"}
 
+----粒子枪
+particle_gun_name ={
+    "小丑出现",
+    "小丑死亡",
+    "鬼火",
+    "灭火器",
+}
+particle_gun_fx = {
+    {lib = 'scr_rcbarry2', name = 'scr_clown_appears'},
+    {lib = 'scr_rcbarry2', name = 'scr_clown_death'},
+    {lib = 'core', name = 'ent_sht_petrol_fire'},
+    {lib = 'core', name = 'ent_sht_extinguisher'},
+}
+
 
 ----娱乐粒子效果
 funptfxlist = {
+    "小丑出现",
     "糖块",
     "金属碎片",
     "火焰",
@@ -337,6 +359,7 @@ funptfxlist = {
     "光遇"
 }
 funptfx = {
+    {"scr_rcbarry2","scr_clown_appears","5"},
     {"core","ent_dst_gen_gobstop","5"},
     {"core","ent_brk_metal_frag","5"},
     {"core","ent_sht_flame","5"},
@@ -360,7 +383,15 @@ funptfx = {
 }
 
 
-
+-----北杨克顿
+North_Yankton = {
+    "plg_01", "prologue01", "prologue01_lod", "prologue01c", "prologue01c_lod", "prologue01d", "prologue01d_lod", "prologue01e", "prologue01e_lod", "prologue01f", "prologue01f_lod", "prologue01g",
+    "prologue01h", "prologue01h_lod", "prologue01i", "prologue01i_lod", "prologue01j", "prologue01j_lod", "prologue01k", "prologue01k_lod", "prologue01z", "prologue01z_lod", "plg_02", "prologue02", "prologue02_lod", 
+    "plg_03", "prologue03", "prologue03_lod", "prologue03b", "prologue03b_lod", "prologue03_grv_dug", "prologue03_grv_dug_lod", "prologue_grv_torch", "plg_04", "prologue04", "prologue04_lod", "prologue04b", 
+    "prologue04b_lod", "prologue04_cover", "des_protree_end", "des_protree_start", "des_protree_start_lod", "plg_05", "prologue05", "prologue05_lod", "prologue05b", "prologue05b_lod", "plg_06", "prologue06", 
+    "prologue06_lod", "prologue06b", "prologue06b_lod", "prologue06_int", "prologue06_int_lod", "prologue06_pannel", "prologue06_pannel_lod", "prologue_m2_door", "prologue_m2_door_lod", "plg_occl_00", "prologue_occl", 
+    "plg_rd", "prologuerd", "prologuerdb", "prologuerd_lod"
+}
 
 
 ----粒子效果轰炸
@@ -734,80 +765,93 @@ vect = {
 
 ----给予爆炸子弹
 explosion_names = {
-    "关闭",
+    "默认",
     "手榴弹",
     "榴弹发射器",
     "粘性炸弹",
-    "莫洛托夫",
-    "火箭",
-    "坦克炮",
-    "辛烷",
-    "车辆",
-    "飞机",
-    "汽油泵",
-    "自行车",--no.12
+    "燃烧瓶",
+    "火箭弹",
+    "坦克炮弹",
+    "火球爆炸",
+    "汽车爆炸",
+    "飞机爆炸",
+    "加油站爆炸",
+    "摩托车爆炸",--no.12
     "蒸汽",
     "火焰",
     "消火栓",
     "煤气罐",
-    "船",
-    "船舶被毁",
-    "卡车",
-    "子弹",
-    "烟雾弹外壳",
+    "小艇",
+    "船只",
+    "卡车爆炸",
+    "MK2爆炸子弹",
+    "烟雾弹发射器",
     "烟雾弹",
     "毒气弹",
     "信号弹",
     "气体罐",
     "灭火器",
-    "可编程增效",
-    "火车",
-    "桶",
+    "可调榴弹",
+    "火车爆炸",
+    "油桶",
     "丙烷",
-    "软式小型飞船",
+    "飞艇",
     "火焰爆炸",
-    "油轮",
-    "飞机火箭",
-    "车辆的子弹",
-    "天然气油轮",
+    "油罐车",
+    "飞机导弹",
+    "汽车导弹",
+    "然油泵",
     "鸟屎",
-    "轨道炮",
-    "软式小型飞船 2",
+    "电磁步枪",
+    "飞艇爆炸2",
     "烟花",
     "雪球",
-    "接近我的",
-    "瓦尔基里的大炮",
-    "防空",
-    "管道炸弹",
-    "我的载具",
-    "爆炸弹药",
-    "APC外壳",
+    "地雷",
+    "女武神机炮",
+    "游艇防御",
+    "爆破桶",
+    "汽车炸弹",
+    "MK2定向炸弹",
+    "APC炮弹",
     "集束炸弹",
-    "气体爆炸",
-    "燃烧弹",
-    "标准炸弹",
+    "飞机瓦斯",
+    "飞机燃烧弹",
+    "飞机炸弹",
     "鱼雷",
     "水下鱼雷",
-    "邦布什卡大炮",
-    "二次炸弹集群",
-    "猎人弹幕",
-    "猎人大炮",
+    "邦布须卡炮",
+    "第二集束炸弹",
+    "猎杀者连发导弹",
+    "FH-1猎杀者机炮",
     "流氓大炮",
-    "水下煤矿",
+    "水下地雷",
+    "天基炮",
     "轨道炮",
-    "宽标准炸弹",
-    "爆炸弹药猎枪",
-    "压迫者mk2",
-    "动能砂浆",
-    "动能车辆",
-    "电磁脉冲车辆",
-    "斯派克车辆",
-    "车辆光滑",
-    "车辆沥青",
-    "无人机",
-    "雷枪",
-    "埋藏矿井",
-    "脚本导弹",
+    "MK2爆炸子弹霰弹枪",
+    "MK2导弹",
+    "武装坦帕迫击炮",
+    "追踪地雷",
+    "电磁脉冲地雷",
+    "尖刺式地雷",
+    "感应式地雷",
+    "定时地雷",
+    "无人机爆炸",
+    "原子能枪",
+    "跳雷",
+    "脚本化导弹",
+    "RC坦克火箭",
+    "爆炸水",
+    "二次爆炸水",
+    "灭火器1",
+    "灭火器2",
+    "灭火器3",
+    "灭火器4",
+    "灭火器5",
+    "大脚本导弹",
+    "潜艇导弹",
+    "EMP发射器",
+    "轨道炮MX3",
+    "无伤害爆炸",
 }
 
 
@@ -1055,7 +1099,55 @@ stand_version = {
 
 
 ------附加国旗
-flags_fmt = {}
+country_flags_name = {
+    "阿根廷", 
+    "澳大利亚", 
+    "奥地利", 
+    "比利时", 
+    "巴西", 
+    "加拿大", 
+    "中国", 
+    "哥伦比亚", 
+    "克罗地亚", 
+    "捷克", 
+    "丹麦", 
+    "英国", 
+    "欧盟", 
+    "芬兰", 
+    "法国", 
+    "德国", 
+    "匈牙利", 
+    "爱尔兰", 
+    "以色列", 
+    "意大利", 
+    "牙买加", 
+    "日本", 
+    "列支敦士登", 
+    "马耳他", 
+    "墨西哥", 
+    "荷兰", 
+    "纽西兰", 
+    "尼日利亚联邦", 
+    "挪威", 
+    "巴勒斯坦", 
+    "波兰", 
+    "葡萄牙", 
+    "波多黎各", 
+    "俄罗斯联邦", 
+    "苏格兰", 
+    "黑旗", 
+    "斯洛伐克", 
+    "斯洛文尼亚", 
+    "南非", 
+    "韩国", 
+    "西班牙", 
+    "瑞典", 
+    "瑞士", 
+    "土耳其", 
+    "英国", 
+    "美国", 
+    "威尔士"
+}
 country_flags = {
     "apa_prop_flag_argentina", 
     "apa_prop_flag_australia", 

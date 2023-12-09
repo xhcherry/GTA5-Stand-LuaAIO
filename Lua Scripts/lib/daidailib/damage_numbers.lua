@@ -605,3 +605,27 @@ function damage_numbers()
         end
     end
 end
+
+
+menu.toggle_loop(damage_numbers_list, "伤害数字", {}, "", function()
+    damage_numbers()
+end)
+menu.toggle(damage_numbers_list, "包括车辆", {}, "", function (value)
+    damage_numbers_target_vehicles = value
+end,true)
+menu.slider(damage_numbers_list, "数字尺寸", {}, "", 1, 100, 7, 1, function (value)
+    damage_numbers_text_size = value * 0.1
+end)
+damage_numbers_colours_list = menu.list(damage_numbers_list, "颜色设置")
+    menu.rainbow(menu.colour(damage_numbers_colours_list, "射击默认颜色", {"damagenumcolour"}, "默认命中的颜色", damage_numbers_health_colour, true, function (value)
+        damage_numbers_health_colour = value
+    end))
+    menu.rainbow(menu.colour(damage_numbers_colours_list, "射击暴击颜色", {"damagenumcritcolour"}, "暴击颜色", damage_numbers_crit_colour, true, function (value)
+        damage_numbers_crit_colour = value
+    end))
+    menu.rainbow(menu.colour(damage_numbers_colours_list, "射击盔甲颜色", {"damagenumarmourcolour"}, "盔甲颜色", damage_numbers_armour_colour, true, function (value)
+        damage_numbers_armour_colour = value
+    end))
+    menu.rainbow(menu.colour(damage_numbers_colours_list, "射击载具颜色", {"damagenumvehiclecolour"}, "载具颜色", damage_numbers_vehicle_colour, true, function (value)
+        damage_numbers_vehicle_colour = value
+    end))

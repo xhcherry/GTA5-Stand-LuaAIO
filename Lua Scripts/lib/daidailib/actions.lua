@@ -813,7 +813,7 @@ function _play_animation(ped, group, animation, flags, duration, props)
             while not STREAMING.HAS_MODEL_LOADED(hash) do
                 util.yield()
             end
-            local object = entities.create_object(hash, pos)
+            local object = create_object(hash, pos.x,pos.y,pos.z)
             animAttachments[object] = propData.DeleteOnEnd ~= nil
             ENTITY.ATTACH_ENTITY_TO_ENTITY(
                 object, ped, boneIndex,

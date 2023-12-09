@@ -344,19 +344,20 @@ parse = function(str, idx)
   if f then
     return f(str, idx)
   end
-  decode_error(str, idx, "unexpected character '" .. chr .. "'")
+  --decode_error(str, idx, "unexpected character '" .. chr .. "'")
 end
 
 
 function json.decode(str)
-  if type(str) ~= "string" then
-    error("expected argument of type string, got " .. type(str))
+  if type(str) ~= "string" or str == nil then
+    return
   end
   local res, idx = parse(str, next_char(str, 1, space_chars, true))
   idx = next_char(str, idx, space_chars, true)
-  if idx <= #str then
+  --[[ if idx <= #str then
     decode_error(str, idx, "trailing garbage")
-  end
+    return 0
+  end ]]
   return res
 end
 

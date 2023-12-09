@@ -2,12 +2,12 @@ require "lib.GTSCRIPTS.GTA.list"
 imhb = "您已经是皇榜成员\n以下特权已激活:\n战局横幅提示(其他GTVIP用户)\n免疫GTVIP用户脚本攻击\nVIP特有脚本名称显示\n可被选中为随机幸运人\n即将推出新的VIP功能\n立即加入皇榜群聊(637302053)"
 hbinfo = "加入皇榜可享受以下特权:\n战局横幅提示(其他GTVIP用户)\n免疫其他GTVIP用户的脚本攻击\n获得VIP功能与立刻加入VIP群聊 若您是卡网经销商,可免费加入GTVIP认证经销商列表\n联系QQ(1114983012/820104093)"
 function checkme()
-    local vipme = "  Royal VIP "..GT_version
+    local vipme = "GTLua Pro Edition"
     local standard = "   Version: "..GT_version
     local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
     
     if name == "RhymeBear" then
-        return "Full Autumn M416"
+        return "  7SkyK1ng 05L5"
     elseif name == "RcktaR" then
         return "    qianzongGol"
     elseif name == "zqxhnb" then
@@ -34,6 +34,8 @@ function checkme()
         return " Twelve 12 Baby"
     elseif name == "Brook-Hill" then 
         return "Strawberry Sister"
+    elseif name == "05L5" then
+        return "  7SkyK1ng 05L5"
     else
         for _, id in ipairs(spid) do
             if name == id.playerid then

@@ -1,7 +1,7 @@
 ------- 实体控制枪 -------
 function entity_control_all(menu_parent, ent)
     menu.action(menu_parent, "检测该实体是否存在", {}, "", function()
-        if ENTITY.DOES_ENTITY_EXIST(ent or 0) then
+        if ENTITY.DOES_ENTITY_EXIST(ent) then
             util.toast("实体存在")
         else
             util.toast("该实体已经不存在，已为你删除此纪录！")
@@ -10,13 +10,13 @@ function entity_control_all(menu_parent, ent)
             clearTableValue(control_ent_list, ent)
         end
     end)
-menu.action(menu_parent, "删除此实体", {}, "", function()
+    menu.action(menu_parent, "删除此实体", {}, "", function()
         entities.delete(ent)
-end)
+    end)
     local module_hash = ENTITY.GET_ENTITY_MODEL(ent)
-        menu.readonly(menu_parent, "实体hash: ", module_hash)
-        menu.readonly(menu_parent, "实体名称: ", util.reverse_joaat(module_hash))
-        menu.readonly(menu_parent, "所选武器hash: ", WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.PLAYER_PED_ID()))
+    menu.readonly(menu_parent, "实体hash: ", module_hash)
+    menu.readonly(menu_parent, "实体名称: ", util.reverse_joaat(module_hash))
+    menu.readonly(menu_parent, "所选武器hash: ", WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.PLAYER_PED_ID()))
     menu.action(menu_parent, "删除此条实体记录", {}, "", function()
         menu.delete(menu_parent)
         clearTableValue(control_ent_menu_list, menu_parent)
@@ -40,7 +40,7 @@ end)
         util.toast("当前血量: " .. ENTITY.GET_ENTITY_HEALTH(ent))
     end)
     local control_ent_health = 1000
-    menu.slider(menu_parent, "血量", {"control_ent_health"}, "", 0, 30000, 1000, 100, function(value)
+    menu.slider(menu_parent, "血量数值", {"control_ent_health"}, "", 0, 30000, 1000, 100, function(value)
         control_ent_health = value
     end)
     menu.action(menu_parent, "设置血量", {}, "", function()
@@ -254,8 +254,10 @@ function clearTableValue(t, value)
 end
 
 function entitycontrol()
+    --绘制准心
+    front_sight("·")
     local ent = GetEntity_PlayerIsAimingAt(players.user())
-    if ent ~= NULL and ENTITY.DOES_ENTITY_EXIST(ent or 0) then
+    if ent ~= NULL and ENTITY.DOES_ENTITY_EXIST(ent) then
         if not isInTable(control_ent_list, ent) then
             table.insert(control_ent_list, ent)
             ---
@@ -297,3 +299,12 @@ function clearcontrollog()
     -- 所有控制实体的menu.list
     control_ent_menu_list = {}
 end
+
+----menu
+menu.toggle_loop(entity_control, "开启", {}, "", function()
+    entitycontrol()
+end)
+menu.action(entity_control, "清除记录的实体", {}, "", function()
+    clearcontrollog()
+end)
+menu.divider(entity_control, "实体列表")

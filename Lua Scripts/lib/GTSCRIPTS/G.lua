@@ -274,12 +274,19 @@ spo = GTTG(players_root, "SPO", {"spcheck"}, "", function(f)
             playerid = players.get_name(pid)
             for _, id in ipairs(spid) do
                 if playerid == id.playerid and not notified_sp[id.playerid] then
-                    if pid then
-                        util.show_corner_help("~h~~q~GRANDTOURINGVIP 温馨提示 ~p~皇榜人员 ".. playerid .."\n~y~当前正在该战局")
-                        util.toast("\nGTVIP皇榜人员 ".. playerid .." 当前正在该战局")
-                        hengfugt(f)
-                        wait(1000)
-                        notified_sp[id.playerid] = true
+                    if playerid ~= "An_owQ" 
+                    and playerid ~= "hinrcituqzQZ" 
+                    and playerid ~= "rudan891018" 
+                    and playerid ~= "chen_you123" 
+                    and playerid ~= "RhymeBear" 
+                    then
+                        if pid then
+                            util.show_corner_help("~h~~q~GRANDTOURINGVIP 温馨提示 ~p~皇榜人员 ".. playerid .."\n~p~当前正在该战局")
+                            util.toast("\nGTVIP皇榜人员 ".. playerid .." 当前正在该战局")
+                            hengfugt(f)
+                            wait(1000)
+                            notified_sp[id.playerid] = true
+                        end
                     end
                 end
             end
@@ -290,6 +297,33 @@ end)
 
 menu.trigger_commands("spcheck on")
 menu.set_visible(spo, false)
+
+--至臻
+require "lib.GTSCRIPTS.GTA.list"
+notified_sx = {}
+sxo = GTTG(players_root, "SXO", {"sxcheck"}, "", function(f)
+    spgt = f
+    while spgt do
+        for pid = 0, 32 do
+            playeridx = players.get_name(pid)
+            for _, id in ipairs(sxid) do
+                if playeridx == id.playeridx and not notified_sx[id.playeridx] then
+                    if pid then
+                        util.show_corner_help("~h~~q~GRANDTOURINGVIP 温馨提示 ~y~至臻皇榜 ".. playeridx .."\n~y~当前正在该战局")
+                        util.toast("\nGTVIP至臻皇榜 ".. playeridx .." 当前正在该战局")
+                        sxgt(f)
+                        wait(1000)
+                        notified_sx[id.playeridx] = true
+                    end
+                end
+            end
+        end
+        wait(1000)
+    end
+end)
+
+menu.trigger_commands("sxcheck on")
+menu.set_visible(sxo, false)
 --
 menu.link(players_root, menu.ref_by_path("Online>Rockstar ID Tools"), true)
 
@@ -13418,14 +13452,40 @@ end)
 
     gameplay = GT(custselc,"线上检查")
 
-    GTLP(gameplay, "聊天记录", {}, "", function(g)
-        for chat.get_history() as msg do
-            local str = msg.sender_name.." ["..(msg.team_chat ? "团队" : "所有")..(msg.is_auto ? ", 自由" : "").."] "..msg.contents
-            if msg.time ~= 0 then
-                str = "["..os.date('%H:%M:%S', msg.time).."] "..str
-            end
-            util.draw_debug_text(str)
+    jilux = 0.8
+    jilut = 10
+    liaotianjilu=GTLP(gameplay, "聊天记录", {}, "", function(g)
+    local function displayText(text, x, y)
+        HUD.SET_TEXT_SCALE(0.5, 0.28)
+           HUD.SET_TEXT_FONT(1)
+              HUD.SET_TEXT_COLOUR(20, 150, 90, 255)
+                 HUD.SET_TEXT_CENTRE(false)
+              HUD.SET_TEXT_OUTLINE(true)
+           util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(text)
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(x, y, 0)
+    end
+    l= 0.02  y = 0.01
+    local history = chat.get_history()
+    local startIdx = math.max(#history - jilut, 1)
+
+    for i = startIdx, #history do
+        local msg = history[i]
+           local str = msg.sender_name.." ["..(msg.team_chat and "团队" or "所有")..(msg.is_auto and ", 自由" or "").."] "..msg.contents
+              if msg.time ~= 0 then
+                 str = "["..os.date('%H:%M:%S', msg.time).."] "..str
+              end
+                 displayText(str, jilux, y)
+            y = y + l
         end
+    end)
+    --GTluaScript.set_value(liaotianjilu, false)
+
+    GTluaScript.slider(gameplay, '聊天记录位置', {}, '',1, 900, 720, 20, function(jl)
+	    jilux = jl / 900
+    end)
+
+    GTluaScript.slider(gameplay, '聊天记录条数', {}, '',1, 39, 10, 1, function(jt)
+	    jilut = jt / 1
     end)
     
     GTLP(gameplay, "检查打字", {}, "", function(g)
@@ -18697,6 +18757,7 @@ local speedcalce = speede * 3.6
 myspeed1e = math.ceil(speedcalce)
 end
 inviciamountintt = inviciamountint
+draw_string(string.format("~h~~r~延迟: ~w~%dms", delay), zhuji_x+0.05,zhuji_y+0.0026, zhuji_dx,zhuji_dx)
 draw_string(string.format("~h~~f~FPS: ~w~"..fps), zhuji_x,zhuji_y+0.0026, zhuji_dx,zhuji_dx)
 draw_string(string.format("~h~~y~"..myspeed1e.." ~q~K~g~M~f~/H"), zhuji_x,zhuji_y+0.028, zhuji_dx,zhuji_dx)
 draw_string(string.format("~h~~p~时间:~h~~w~"..os.date("%X")), zhuji_x,zhuji_y+0.055, zhuji_dx,zhuji_dx)
@@ -18733,6 +18794,14 @@ elseif hostxvlie == 0 then
 elseif hostxvlie ~= 0 then 
     draw_string(string.format("~h~~p~主机~f~优先度:~h~~w~ "..hostxvlie), zhuji_x,zhuji_y+0.20, zhuji_dx,zhuji_dx) 
 end	
+end)
+
+util.create_thread(function()
+while true do
+    fps = math.ceil(1/SYSTEM.TIMESTEP())
+    delay = math.ceil(SYSTEM.TIMESTEP() * 1000)
+    wait(1000)
+    end
 end)
 
 util.create_thread(function()
