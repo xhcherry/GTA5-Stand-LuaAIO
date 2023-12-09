@@ -362,7 +362,7 @@ self.mainLoop = function ()
         end
 
         sounds.startUp:play()
-        request_fx_asset(fxAsset)
+        request_ptfx_asset(fxAsset)
         GRAPHICS.USE_PARTICLE_FX_ASSET(fxAsset)
         effects.missile_trail = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(
             "scr_xs_guided_missile_trail", object, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, false, false, false, 0, 0, 0, 0

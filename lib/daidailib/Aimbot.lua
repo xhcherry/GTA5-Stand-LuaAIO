@@ -127,7 +127,7 @@ end
 
 
 
-menu.toggle_loop(silent_aimbotroot, "开启", {}, "", function(toggle)
+menu.toggle_loop(silent_aimbotroot, "开启自瞄", {}, "", function(toggle)
     local target = get_aimbot_target()
     if target ~= 0 then
         local t_pos = PED.GET_PED_BONE_COORDS(target, 31086, 0.01, 0, 0)
@@ -146,6 +146,23 @@ menu.toggle_loop(silent_aimbotroot, "开启", {}, "", function(toggle)
             end
             local veh = PED.GET_VEHICLE_PED_IS_IN(target, false)
             MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(t_pos['x'], t_pos['y'], t_pos['z'], t_pos2['x'], t_pos2['y'], t_pos2['z'], dmg, true, wep, players.user_ped(), true, false, 10000, veh, 0)
+        end
+    end
+end)
+menu.toggle_loop(silent_aimbotroot, "自动扳机", {}, "瞄准玩家时自动开枪", function()
+    local wpn = WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.PLAYER_PED_ID())
+    local dmg = SYSTEM.ROUND(WEAPON.GET_WEAPON_DAMAGE(wpn, 0))
+    local delay = WEAPON1.GET_WEAPON_TIME_BETWEEN_SHOTS(wpn)
+    local wpnEnt = WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(PLAYER.PLAYER_PED_ID(), 0)
+    local wpnCoords = ENTITY1.GET_ENTITY_BONE_POSTION(wpnEnt, ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(wpnEnt, "gun_muzzle"))
+    for _, pid in ipairs(players.list(false, true, true)) do
+        local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        boneIndex = bones[math.random(#bones)]
+        local pos = PED.GET_PED_BONE_COORDS(ped, boneIndex, 0.0, 0.0, 0.0)
+        if PLAYER.IS_PLAYER_FREE_AIMING_AT_ENTITY(PLAYER.PLAYER_ID(), ped) and not PED.IS_PED_RELOADING(PLAYER.PLAYER_PED_ID()) then
+            MISC1.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(wpnCoords, pos, dmg, true, wpn, PLAYER.PLAYER_PED_ID(), true, false)
+            PAD2.SET_CONTROL_VALUE_NEXT_FRAME(0, 24, 1.0)
+            util.yield(delay * 1000)
         end
     end
 end)

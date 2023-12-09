@@ -1,7 +1,7 @@
 local policified_vehicles = {}
 local police_toggle = false
 
-function attach_attachment(attachment)
+local function attach_attachment(attachment)
     if attachment.children == nil then
         attachment.children = {}
     end
@@ -12,11 +12,9 @@ function attach_attachment(attachment)
         attachment.handle = entities.create_vehicle(util.joaat(attachment.model), { x = 0, y = 0, z = 0 }, heading)
     end
     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(util.joaat(attachment.model))
-    if attachment.flash_start_on ~= nil then
-        ENTITY.SET_ENTITY_VISIBLE(attachment.handle, attachment.flash_start_on, 0)
-    end
     ENTITY.SET_ENTITY_INVINCIBLE(attachment.handle, true)
     ENTITY.SET_ENTITY_VISIBLE(attachment.handle, false, 0)
+    ENTITY.SET_ENTITY_ALPHA(attachment.handle, 0, false)
     ENTITY.SET_ENTITY_HAS_GRAVITY(attachment.handle, false)
     if attachment.parent.handle == attachment.handle then
         ENTITY.SET_ENTITY_ROTATION(attachment.handle, 0, 0, 0)
@@ -25,16 +23,13 @@ function attach_attachment(attachment)
     end
     return attachment
 end
-function attach_attachment_with_children(new_attachment, child_counter)
+local function attach_attachment_with_children(new_attachment, child_counter)
     if child_counter == nil then child_counter = 0 end
     child_counter = child_counter + 1
     new_attachment.name = new_attachment.model
     local attachment = attach_attachment(new_attachment)
     if attachment.children then
         for _, child_attachment in pairs(attachment.children) do
-            if child_attachment.flash_model then
-                child_attachment.flash_start_on = (not child_attachment.parent.flash_start_on)
-            end
             attach_attachment_with_children(child_attachment, child_counter)
         end
     end
@@ -43,7 +38,7 @@ function attach_attachment_with_children(new_attachment, child_counter)
     end
     return attachment
 end
-function refresh_invis_police_sirens(policified_vehicle)
+local function refresh_invis_police_sirens(policified_vehicle)
     for _, child_attachment in policified_vehicle.children do
         if child_attachment ~= child_attachment.root then
             entities.delete(child_attachment.handle)
@@ -56,7 +51,7 @@ function refresh_invis_police_sirens(policified_vehicle)
         model = policified_vehicle.options.siren_attachment.model,
     })
 end
-function refresh_siren_status(policified_vehicle)
+local function refresh_siren_status(policified_vehicle)
 
         VEHICLE.SET_VEHICLE_HAS_MUTED_SIRENS(policified_vehicle.handle, false)
         VEHICLE.SET_VEHICLE_SIREN(policified_vehicle.handle, true)
@@ -78,7 +73,7 @@ local siren_types = {
     { "消防车", {}, "消防车发出的警报声", "firetruk", }
 }
 local siren_type = siren_types[1]
-function policify_vehicle(vehicle)
+local function policify_vehicle(vehicle)
     local policified_vehicle = {
         children = {},
         options = {

@@ -92,7 +92,7 @@ end
 Sound = {Id = -1, name = "", reference = ""}
 Sound.__index = Sound
 
----@alias nullptr 0
+---@alias nullptr 
 
 ---@param name string|nullptr
 ---@param reference string|nullptr
@@ -731,37 +731,36 @@ end
 ---@param colour integer
 ---@return integer
 function get_hud_colour_from_org_colour(colour)
-	switch colour do
-		case 0:
-			return 192
-		case 1:
-			return 193
-		case 2:
-			return 194
-		case 3:
-			return 195
-		case 4:
-			return 196
-		case 5:
-			return 197
-		case 6:
-			return 198
-		case 7:
-			return 199
-		case 8:
-			return 200
-		case 9:
-			return 201
-		case 10:
-			return 202
-		case 11:
-			return 203
-		case 12:
-			return 204
-		case 13:
-			return 205
-		case 14:
-			return 206
+	if colour == 0 then
+		return 192
+	elseif colour == 1 then
+		return 193
+	elseif colour == 2 then
+		return 194
+	elseif colour == 3 then
+		return 195
+	elseif colour == 4 then
+		return 196
+	elseif colour == 5 then
+		return 197
+	elseif colour == 6 then
+		return 198
+	elseif colour == 7 then
+		return 199
+	elseif colour == 8 then
+		return 200
+	elseif colour == 9 then
+		return 201
+	elseif colour == 10 then
+		return 202
+	elseif colour == 11 then
+		return 203
+	elseif colour == 12 then
+		return 204
+	elseif colour == 13 then
+		return 205
+	elseif colour == 14 then
+		return 206
 	end
 	return 1
 end
@@ -882,36 +881,6 @@ end
 --------------------------
 -- STREAMING
 --------------------------
-
----@param model integer
-function request_model(model)
-	STREAMING.REQUEST_MODEL(model)
-	while not STREAMING.HAS_MODEL_LOADED(model) do util.yield_once() end
-end
-
-
----@param asset string
-function request_fx_asset(asset)
-	STREAMING.REQUEST_NAMED_PTFX_ASSET(asset)
-	while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(asset) do util.yield_once() end
-end
-
-
----@param hash integer
-function request_weapon_asset(hash)
-	WEAPON.REQUEST_WEAPON_ASSET(hash, 31, 0)
-	while not WEAPON.HAS_WEAPON_ASSET_LOADED(hash) do util.yield_once() end
-end
-
-
----Credits to aaron
----@param textureDict string
-function request_streamed_texture_dict(textureDict)
-	util.spoof_script("main_persistent", function()
-		GRAPHICS.REQUEST_STREAMED_TEXTURE_DICT(textureDict, false)
-	end)
-end
-
 
 ---@param textureDict string
 function set_streamed_texture_dict_as_no_longer_needed(textureDict)
