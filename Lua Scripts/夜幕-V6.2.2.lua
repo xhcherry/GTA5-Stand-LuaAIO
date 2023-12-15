@@ -26,7 +26,7 @@ if not filesystem.is_dir(resources_dir) then
     util.toast("资源目录丢失,请确保已正确安装YeMulib")
     util.stop_script()
 end
-ocoded_for = 1.67
+ocoded_for = 1.68
 verbose = false
 online_v = tonumber(NETWORK._GET_ONLINE_VERSION())
 if online_v > ocoded_for then
@@ -43,7 +43,7 @@ Version = 6.2
 local TIANXIA = "欢迎使用夜幕-V" .. Version ..  ""
 local JIAOBEN = "夜幕脚本"
 local introduce = "欢迎使用夜幕LUA"
-date = "2023.8.8"
+date = "2023.12.16"
 wait = util.yield
 joaat = util.joaat
 alloc = memory.alloc
@@ -7310,7 +7310,7 @@ end)
 menu.action(flyxuanxiang, "打开降落伞", {}, "滑翔的乐趣", function()
 	PED.FORCE_PED_TO_OPEN_PARACHUTE(PLAYER.GET_PLAYER_PED(players.user()))
 end)
-Heist_Control = menu.list(zidongrenwu, "第一任务选项HC(V3.3.6)")
+
  require "lib.YeMulib.YMhc"
 baoguo = menu.list(zidongrenwu,"武器厢型车传送", {},"一键传送到对应位置！~")
 zhaobaoguo = menu.action(baoguo, "加载厢型车地点传送选项", {""}, "寻找厢型车！", function()
