@@ -1,0 +1,14 @@
+{
+  "name": "小星星",
+  "description": "英国摇篮曲\n编码者：Hexarobi",
+  "target_version": 1.2,
+  "bpm": 90,
+  "notes": [
+    "C", "C", "G", "G", "A", "A", {"pitch": "G", "length": 0.5}, "rest",
+    "F", "F", "E", "E", "D", "D", {"pitch": "C", "length": 0.5}, "rest",
+    "G", "G", "F", "F", "E", "E", {"pitch": "D", "length": 0.5}, "rest",
+    "G", "G", "F", "F", "E", "E", {"pitch": "D", "length": 0.5}, "rest",
+    "C", "C", "G", "G", "A", "A", {"pitch": "G", "length": 0.5}, "rest",
+    "F", "F", "E", "E", "D", "D", {"pitch": "C", "length": 0.5}, "rest"
+  ]
+}

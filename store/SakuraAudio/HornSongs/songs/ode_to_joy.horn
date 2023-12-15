@@ -1,0 +1,16 @@
+{
+  "name": "第九号交响曲",
+  "description": "贝多芬 D小调 第九号交响曲\n编码者：Hexarobi",
+  "target_version": 1.2,
+  "bpm": 100,
+  "notes": [
+    "E", "E", "F", "G", "G", "F", "E", "D",
+    "C", "C", "D", "E", "E", "D", {"pitch": "D", "length": 0.5}, "rest",
+    "E", "E", "F", "G", "G", "F", "E", "D",
+    "C", "C", "D", "E", "D", "C", {"pitch": "C", "length": 0.5}, "rest",
+    "D", "D", "E", "C", "D", "F", "E", "C",
+    "D", "F", "E", "D", "C", "D", {"pitch": "G", "length": 0.5}, "rest",
+    "E", "E", "F", "G", "G", "F", "E", "D",
+    "C", "C", "D", "E", "D", "C", {"pitch": "C", "length": 0.5}, "rest"
+  ]
+}

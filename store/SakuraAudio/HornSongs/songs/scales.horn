@@ -1,0 +1,10 @@
+{
+  "name": "基础乐理",
+  "description": "基础乐理\n编码者：Hexarobi",
+  "target_version": 1.2,
+  "bpm": 100,
+  "notes": [
+    "C", "D", "E", "F", "G", "A", "B", "C2", "rest",
+    "C2", "B", "A", "G", "F", "E", "D", "C", "rest"
+  ]
+}

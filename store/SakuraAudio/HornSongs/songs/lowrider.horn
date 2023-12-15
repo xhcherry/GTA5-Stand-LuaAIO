@@ -1,0 +1,18 @@
+{
+  "name": "Low Rider",
+  "description": "Low Rider by War\nEncoded by Hexarobi",
+  "target_version": 1.2,
+  "bpm": 100,
+  "notes": [
+    {"pitch": "B", "length": 0.35, "beat_length": 0.45},
+    {"pitch": "B", "length": 0.35, "beat_length": 0.45},
+    {"pitch": "B", "length": 0.35, "beat_length": 0.45},
+    {"pitch": "B", "length": 0.35, "beat_length": 0.45},
+    {"pitch": "B", "length": 0.5, "beat_length": 1},
+    {"pitch": "C2", "length": 0.5, "beat_length": 1},
+    {"pitch": "D", "length": 0.5, "beat_length": 2}, 
+    {"pitch": "G", "length": 0.25, "beat_length": 0.5},
+    {"pitch": "B", "length": 0.25, "beat_length": 0.5},
+    "C2", "B", "G",
+  ]
+}
