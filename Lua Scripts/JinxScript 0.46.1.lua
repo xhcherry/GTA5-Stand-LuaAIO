@@ -3192,36 +3192,39 @@ end)
 util.create_thread(function()
     while true do
         if tp_thing then
-    if NETWORK_IS_ACTIVITY_SESSION() then continue end
-    for players.list_except(true) as pid do
-        util.create_thread(function()
-            local ped = GET_PLAYER_PED_SCRIPT_INDEX(pid)
-            local veh = GET_VEHICLE_PED_IS_IN(ped) == entities.get_user_vehicle_as_handle()
-            local old_pos = players.get_position(pid)
-            local old_interior = GET_INTERIOR_FROM_PLAYER(pid)
-            yield(100)
-            local cur_interior = GET_INTERIOR_FROM_PLAYER(pid)
-            local cur_pos = players.get_position(pid)
-            local my_pos = players.get_position(players.user())
-            local distance_between_tp = v3.distance(old_pos, cur_pos)
-            local vehicle = GET_VEHICLE_PED_IS_USING(ped)
-            local driver = NETWORK_GET_PLAYER_INDEX_FROM_PED(GET_PED_IN_VEHICLE_SEAT(vehicle, -1))
-            if not IS_PLAYER_IN_INTERIOR(pid) and not veh and pid != players.user() then
-                if distance_between_tp > 20.0 and old_interior == cur_interior and pid != players.user() and driver != players.user() then
-                    if IS_PED_IN_ANY_VEHICLE(ped) and v3.distance(cur_pos, my_pos) < 10.0 then
-                        if not IsDetectionPresent(driver, "传送") then
-                            players.add_detection(driver, "传送", TOAST_ALL, 75)
-                        end
-                    else
-                        if not IsDetectionPresent(pid, "传送") and v3.distance(cur_pos, my_pos) < 5.0 then
-                            players.add_detection(pid, "传送", TOAST_ALL, 75)
+            if NETWORK_IS_ACTIVITY_SESSION() then continue end
+            for players.list_except(true) as pid do
+                util.create_thread(function()
+                    local ped = GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                    local veh = GET_VEHICLE_PED_IS_IN(ped) == entities.get_user_vehicle_as_handle()
+                    local old_pos = players.get_position(pid)
+                    local old_interior = GET_INTERIOR_FROM_PLAYER(pid)
+                    yield(100)
+                    local cur_interior = GET_INTERIOR_FROM_PLAYER(pid)
+                    local cur_pos = players.get_position(pid)
+                    local my_pos = players.get_position(players.user())
+                    local distance_between_tp = v3.distance(old_pos, cur_pos)
+                    local vehicle = GET_VEHICLE_PED_IS_USING(ped)
+                    local driver = NETWORK_GET_PLAYER_INDEX_FROM_PED(GET_PED_IN_VEHICLE_SEAT(vehicle, -1))
+                    if not IS_PLAYER_IN_INTERIOR(pid) and not veh and pid != players.user() then
+                        if distance_between_tp > 20.0 and old_interior == cur_interior and pid != players.user() and driver != players.user() then
+                            if IS_PED_IN_ANY_VEHICLE(ped) and v3.distance(cur_pos, my_pos) < 10.0 then
+                                if not IsDetectionPresent(driver, "传送") then
+                                    players.add_detection(driver, "传送", TOAST_ALL, 75)
+                                end
+                            else
+                                if not IsDetectionPresent(pid, "传送") and v3.distance(cur_pos, my_pos) < 5.0 then
+                                    players.add_detection(pid, "传送", TOAST_ALL, 75)
+                                end
+                            end
                         end
                     end
-                end
+                end)
             end
-        end)
+        end
+        yield(100)
     end
-    yield(100)
+    yield()
 end)
 
 modder_detections:toggle_loop("检测加速", {}, "", function()
