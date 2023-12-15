@@ -2471,7 +2471,8 @@ if not IS_RELEASE_VERSION then
     end)
 
     local MBDebug_CEO = menu.list(MBDebug, "CEO Shit", {"mbdebugceo"})
-    for slot = 0, 4 do
+    
+    --[[for slot = 0, 4 do
         local property_id = GetWarehousePropertyFromSlot(slot)
         if property_id ~= 0 then
             local property_name = WarehousePropertyInfo[property_id].name
@@ -2479,7 +2480,7 @@ if not IS_RELEASE_VERSION then
         else
             MenuCurrentWarehouses[slot] = {MenuLabels.SPECIALCARGONOWAREHOUSE, {"warehouse".."invalid"}, MenuLabels.SPECIALCARGONOWAREHOUSE_DESC}
         end
-    end
+    end]]
 
     for slot = 0, 4 do
         local warehouse_list = menu.list(MBDebug_CEO, "Slot "..slot)

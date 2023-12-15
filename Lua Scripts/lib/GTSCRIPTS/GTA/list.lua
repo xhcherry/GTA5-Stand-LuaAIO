@@ -29,7 +29,9 @@ sxid = {{
 }, {
     playeridx = "chen_you123"
 }, {
-    playeridx = "An_owQ"
+    playeridx = "Last100million"
+}, {
+    playeridx = "FallenMountain"
 }}
 
 spid = {{
@@ -1132,5 +1134,29 @@ spid = {{
     playerid = "China-N_Jingluo"
 }, {
     playerid = "China-N_DuoLa"
+}, {
+    playerid = "A10713174188"
+}, {
+    playerid = "ttttttjh1"
+}, {
+    playerid = "_OnmeKyetk_leIN"
+}, {
+    playerid = "Xinzhangzhang"
+}, {
+    playerid = "zhoushian"
+}, {
+    playerid = "MengLi_104"
+}, {
+    playerid = "CET-qiqi"
+}, {
+    playerid = "ET-liumang"
+}, {
+    playerid = "erpirula77"
+}, {
+    playerid = "Dengshao1989"
+}, {
+    playerid = "SanQiu-YiNuan"
+}, {
+    playerid = "CharlieTT"
 },
 }
