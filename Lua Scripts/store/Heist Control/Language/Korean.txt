@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 07/08/2023 10:32:24 PM
-# Heist Control Version: V 3.3.3
+# Generated Date: 12/16/2023 12:48:55 AM
+# Heist Control Version: V 3.3.9
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -110,13 +110,6 @@ Yohan Blair = 요한 블레어
 0 - Strongest Guards = 0 - 가장 강한 경비
 3 - Weakest Guards = 3 - 가장 약한 경비
 Remove Drills = 드릴 제거
-Casino Story Missions = 카지노 스토리 미션
-Loose Cheng = 사라진 쳉
-House Keeping = 하우스키핑
-Strong Arm Tactics = 강압적 전략
-Play to Win = 분노의 필승
-Bad Beat = 재수 없는 상황
-Cashing Out = 유종의 미
 The Data Breaches ACT I = 정보 약탈
 The Bogdan Problem ACT II = 보그단 문제
 The Doomsday Scenario ACT III = 심판의 날
@@ -250,7 +243,6 @@ Light Blue = 라이트 블루
 Text Color = 글씨 색
 About HC = 헤이스트 컨트롤에 대해
 Join Discord Server! = 디스코드 서버 가입!
-Youtube = 유튜브
 Changelog = 업데이트 로그
 Credits = 크레딧
 Translators = 번역가
@@ -259,7 +251,6 @@ Maintains HC's translation = 헤이스트 컨트롤 번역 유지
 - This feature isn't working due to the latest GTA Online patch: = - 이 기능은 최근 GTA 온라인 패치로 인해 작동하지 않습니다:
 Please re-enable 'Stand > Lua Scripts > Repository > Heist Control' to fix! = 고치기 위해서 'Stand > Lua 스크립트 > 저장소 > Heist Control'을 다시 활성화해주세요!
 Except [NOT WORKING] features should work! = [작동 안함] 기능을 제외하고는 작동해야 합니다!
-But, all features of HC should work! = 그렇지만, 헤이스트 컨트롤의 모든 기능이 작동해야 합니다!
 Coded GTA Online Version: = 코드된 GTA 온라인 버전:
 Current GTA Online Version: = 현재 GTA 온라인 버전:
 ULP Missions = ULP 미션
@@ -340,7 +331,6 @@ Remove EMP Mines = EMP 폭탄 제거
 Unlock All Doomsday Heists = 모든 심판의 날 습격 잠금 해제
 Complete All Setup = 모든 준비 작업 끝내기
 Skip Drilling = 드릴질 건너뛰기
-Modify Contracts payout - $1 Million = 계약 % 수정 - $100만
 Complete The Preps = 준비 작업 끝내기
 Reset The Preps = 준비 작업 초기화
 Reset The Contracts = 계약 초기화
@@ -385,7 +375,6 @@ Buying And Selling = 구매 및 판매
 Air-Freight Cargo = 항공 수송 화물
 Client Jobs = 클라이언트 작업 (테러바이트)
 Spin Lucky Wheel = 럭키 휠 돌리기
-Kosatka Missiles = 코사트카 미사일
 Dax Job = Dax 임무
 Note that Dax Job means from cellphone = 휴대 전화에서의 Dax 임무를 뜻하는 것입니다.
 CEO Vehicles = CEO 차량
@@ -399,7 +388,6 @@ Remove Cooldown Buy Chips = 칩 구매 쿨타임 제거
 If you enable this, able to buy over 20K or 50K chips by removing cooldown time. = 이 기능을 활성화하면, 쿨타임을 제거해서 2만 또는 5만 개 칩을 다시 구매할 수 있게 됩니다.
 Get Visitor Bonus Again = 방문자 보너스 다시 얻기
 Disable Transaction Errors = 거래 오류 화면 비활성화
-This can be used to remove transaction errors while you are doing special cargo money loop in Musiness Banager Lua. = 이 기능은 Musiness Banager Lua 스크립트에 있는 스패셜 카고 루프를 사용하며 생기는 거래 오류 화면을 방지하는 데에 쓰일 수 있습니다.
 Infinite Stone Hatchet's Power = 무한 돌 도끼 파워
 7 Years GTA Online Playtime = GTA 온라인 플레이 시간 7년 
 Make your account look like you've played GTA Online for 7 years. = 자신의 계정이 GTA 온라인을 7년 동안 플레이한 것 같이 만듭니다.
@@ -458,13 +446,11 @@ This action will take a few seconds. Please wait for it patiently, don't press m
 Notification's Style = 알림 스타일
 Type = 종류
 Heist Control for 2Take1 Developer. He allowed me to use his code. HC wouldn't exist without his help. Serious thanks to him! = 2Take1용 헤이스트 컨트롤 개발자. 그는 제가 그의 코드를 사용할 수 있도록 허용해줬습니다. 헤이스트 컨트롤은 그의 도움 없이는 존재하지 않았을 것입니다. 정말로 그에게 감사합니다!
-Videos related to HC's tutorial are uploaded here, subscribe to the channel to show your support :D = 헤이스트 컨트롤의 튜토리얼에 대한 영상들이 여기에 업로드되며, 채널을 구독하여 개발자를 도와주세요 :D
 If you want to know what was changed in the latest version, click me! = 최신 버전에서 무엇이 바뀌었는지 알고 싶으면, 클릭하세요!
 When using this method, the percentage and final payment will be random! = 이 방식을 쓸 때에는, %와 피날레의 돈이 랜덤입니다!
 Works On Both: Fingerprint and Keypad = 지문과 키패드 해킹 모두 작동합니다.
 Choose Masks = 마스크 선택
 Setup: Server Farm (Lester) = 준비 작업: 서버 팜 (레스터)
-Always keep this option enabled before starting a contract = 항상 이 옵션을 계약을 시작하기 전에 활성화하셔야 합니다.
 Note: You may need to keep activating to use some of Independence Day's contents. = 참고: 몇몇 독립기념일 컨텐츠를 사용하기 위해서는 계속 활성화 해야할 지도 모릅니다.
 Tattoos = 타투
 Unlock Some Tattoos = 몇몇 타투 잠금 해제
@@ -479,10 +465,6 @@ All = 모두
 One Line = 한 줄
 HC Logo image file doesn't exist. = HC 로고 이미지 파일이 존재하지 않습니다.
 Native file for HC doesn't exist. = 헤이스트 컨트롤을 위한 Native 파일이 존재하지 않습니다.
-Your current Stand version isn't compatible with current Heist Control version. Please update Stand to use it. = 현재 Stand 버전이 현재 헤이스트 컨트롤 버전과 호환되지 않습니다. 사용하기 위해서는 Stand를 업데이트하여야 합니다.
-- Current your Heist Control version: = - 현재 헤이스트 컨트롤 버전:
-- At least required Stand version: = - 최소 요구되는 Stand 버전:
-- Current your Stand version: = - 현재 Stand 버전:
 You should enable the preset until the end of the heist! = 습격이 끝날 때까지 설정된 습격을 활성화하고 있어야 합니다!
 - How to change the line color: Stand > Settings > Appearance > Colours > HUD Colour = - 선 색상 바꾸는 법: Stand > 설정 > 외모 > 색상 > HUD 색상
 - How to change the AR Beacon color: Stand > Settings > Appearance > Colours > AR Colour = - AR 비컨 색상 바꾸는 법: Stand > 설정 > 외모 > 색상 > AR 색상
@@ -500,9 +482,7 @@ If you changed the Stand's setting while HC is still running, need to restart HC
 Don't forget changing this feature before starting the heist! Otherwise, won't be applied. = 습격 시작 전에 이 기능을 활성화 해야한다는 점을 잊지 마세요! 그렇게 하지 않으면, 적용되지 않을 겁니다.
 - Knife + Pipe Bomb = - 나이프 + 점착 폭탄
 - Assault Rifle Mk2 + Pistol Mk2 = - 어썰트 라이플 Mk2 + 피스톨 Mk2
-Entrance and Exit will be selected 'Staff Lobby' and Buyer will be selected 'Low' by HC. But, selected Buyer won't be visible at the board somehow, don't change those options when you are before launching the heist. = 입구와 출구는 '직원 로비', 바이어 레벨은 '하' 로 헤이스트 컨트롤에 의해 자동으로 선택될 것입니다. 이유는 모르지만 선택된 바이어가 표시되지 않으므로 유의하시고, 습격 시작 전에 바이어를 바꾸지 않도록 유의하세요. 
 Please don't forget that buyer should be selected 'Low'! Otherwise, won't get money. = 바이어 레벨은 '하' 로 선택 되어야 한다는 점을 절대로 잊지 마세요! '하' 로 선택하지 않으면 돈을 받지 못할 것입니다.
-Makes Forced Able To Launch = 강제 습격 시작
 Refresh Arcade Boards = 아케이드 보드 새로 고치기
 You can update casino heist stats while even you in the arcade. = 아케이드 안에 있어도 카지노 습격 Stat을 적용할 수 있게 합니다.
 Change Driver = 운전사 변경
@@ -539,12 +519,10 @@ Max payout for this heist = 이 습격의 최대 돈 양
 - Fleeca Heist: Under $15.000.000 per run = - 플리카 습격: 1회 당 $1500만 이하
 Enabling one of these presets will complete all of setups, and set as max payout, $2.55 Millions. It will be affected to all of heist players. = 이 설정된 습격 중 하나를 활성화 시키면 모든 준비 작업을 끝내고, 최대 돈 액수인 $255만을 얻을 수 있도록 설정해줍니다.
 Recommended = 권장
-There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.55M) by only getting it. = 하나의 주요 목표물만 있을 것이며, 어떤 것을 선택했는지에 따라 목표물이 바뀔 것입니다. 주요 목표물 하나만 얻는 것만으로 습격의 모든 플레이어가 최대 돈 액수인 $255만을 얻을 수 있게 해줍니다.
 This feature has been controlled by another feature. = 이 기능은 다른 기능에 의해 컨트롤 되어 왔습니다.
 Select Primary Target = 주요 목표물 선택
 Teleport Places = 순간 이동 장소
 Kosatka: Heist Board = 코사트카: 습격 보드
-When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout. = 플레이어 %를 선택하는 보드에 있을 때, 이 기능은 심지어 다른 플레이어가 시작할 준비가 되지 않았음에도 강제로 습격을 시작하도록 해줍니다. 참고로 돈과 관련된 시각적 버그가 있을 수 있습니다.
 Entrance Of Your Arcade = 아케이드 입구
 Note that works perfectly when no other players are in your session. = 참고로 자신의 세션에 다른 플레이어가 없을 때 완벽하게 작동합니다.
 Please go out of the current interior to use this feature. = 이 기능을 사용하기 위해서는 현재 건물 안에서 나가야만 합니다.
@@ -583,7 +561,6 @@ Close = 닫기
 The Contract DLC = 청부 계약 DLC
 Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader. = MC 비즈니스 판매 차량을 한 대로 강제로 변경합니다. 판매 미션을 시작하기 전에 한 번 눌러주세요. 자신이 두목일 때만 작동합니다.
 The best way to remove GTA Online banked money up to $2B at once! = 한 번에 GTA 온라인 은행 돈 최대 $20억을 없애기에 최고의 방식입니다!
-Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you. = 즉시 끝내기는 새로운 방식의 기능입니다. 그것 때문에, 대부분의 즉시 끝내기가 왜 작동하지 않는지에 대해 알려지지 않은 상태입니다. 만약에 몇몇 기능이 작동하지 않아도 개발자에게 따지지 말아주세요.
 Note that may works for some of other preps. Only 'Quick Preset' is compatible with Cayo Perico Heist. = 참고로 몇몇 기타 준비 작업에서도 작동할 지도 모릅니다. 카요 페리코 습격에서는 '빠른 설정된 습격' 만 호환됩니다.
 Note that if you don't use Heist Control's automated Casino Heist presets, won't get money. = 참고로 헤이스트 컨트롤의 카지노 습격용 자동화된 습격을 쓰지 않는다면, 돈을 얻지 못할 것입니다.
 Note that you may press multiple times to instant finish the heist. = 참고로 습격을 즉시 끝내기 위해서는 여러 번 눌러야 할지도 모릅니다.
@@ -595,7 +572,6 @@ Biker Business Management = 바이커 비지니스 관리
 Master Control Terminal = 마스터 컨트롤 터미널
 Touchscreen Terminal = 터치 스크린 터미널
 Terrobyte = 테러바이트
-Heist Control will show how much the cooldown time left, and let you know if it passed. = 헤이스트 컨트롤이 쿨타임이 얼마나 남았는지 보여줄 것이며, 쿨타임이 지났으면 알려줄 것입니다.
 Text Position = 글자 위치
 Ignore You = 자신 무시
 Makes hostile peds (Included guards, polices, and gangs) ignore you even saw you. Except for the rare case, they don't shoot to you. = 적대적인 NPC (경비, 경찰 및 갱 포함) 가 심지어 자신을 보았음에도 무시하도록 만듭니다. 일부 희귀한 경우를 제외하면, 그 NPC들이 자신을 쏘지 않을 것입니다.
@@ -669,7 +645,6 @@ Unlocks almost of unlockable stuffs related the heist like clothing, etc. = 습�
 Independence's Day = 독립 기념일
 Unlock Lots of Hats And Shirts = 수 많은 모자 및 셔츠 잠금 해제
 500+ unlocks are included, try and see how many clothes would be unlocked. = 500개가 넘는 잠금 해제들이 포함되어 있으며, 시도해보고 얼마나 많은 의상들이 잠금 해제 되는지 확인해보세요.
-Also will increase Kosatka missiles distance. = 또한 코사트카 미사일 사거리도 증가시킬 것입니다.
 Auto Refill Snacks & Armours = 스낵 및 방탄복 자동 채우기
 Delete This File = 이 파일 삭제
 Do you sure delete this file? It cannot be recovered! = 정말로 이 파일을 삭제하실 건가요? 삭제된 파일은 복구될 수 없습니다!
@@ -684,12 +659,6 @@ Can be used for getting targets slightly more fast. = 목표물들을 조금 더
 If you have any questions regarding Heist Control? Joining it will help you so much! = 헤이스트 컨트롤에 대해 질문할 것이 있나요? 디스코드 서버에 들어오는 것이 많은 것을 도와줄 것입니다!
 - Download sharable customized translations and GTAHaXUI stat files. = - 공유 가능한 커스텀된 번역 파일과 GTAHAxUI용 Stat 파일들을 다운로드 받으세요.
 - Post a suggestion or an issue to improve Heist Control. = - 제안하거나 버그를 제보하여 헤이스트 컨트롤을 향상 시켜 주세요.
-
-
-# Start of newly updated translations.
-# Translate them!
-
-
 Please download the latest version of Heist Control or wait for Heist Control's developer patching. = 헤이스트 컨트롤의 최신 버전을 다운로드하시거나 헤이스트 컨트롤 개발자의 패치를 기다려주세요.
 Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support! = 'Stand > Lua 스크립트 > 저장소 > natives-1681379138' 을 재 활성화시키거나 헤이스트 컨트롤 디스코드 서버에 오셔서 도움을 받으세요!
 Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist. = 이것을 수정하는 것은 습격 보드에 적용되지는 않을 것입니다. 습격이 끝난 후에 적용된 %를 확인 가능합니다.
@@ -701,3 +670,17 @@ Unlock Arcade Awards = 아케이드 보상 잠금 해제
 Trophies, toys, and clothings are included. = 트로피, 장난감, 의상이 포함됩니다.
 Club Work = 클럽 작업
 Taze = 테이저
+But, all features of HC should work without any patches! = 하지만, 헤이스트 컨트롤의 모든 기능은 패치 없이 작동해야만 합니다!
+HC is needed to be patched by the developer. Please be patient. = 헤이스트 컨트롤이 개발자에 의해 패치가 필요한 상태입니다. 차분히 기다려주세요.
+You won't get money if you don't keep money limitation! = 만약 돈 제한 액수를 지키지 않는다면 돈을 받지 못할 것입니다!
+There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.45M) by only getting it. = 주요 목표물만 있을 것이며, 어떤 것에 골랐는지에 따라 바뀔 수 있습니다. 습격 세션의 모든 플에이어가 최대 돈 ($245만) 을 목표물 하나만 얻어서 얻게 될 수 있게 됩니다. 
+Note that works on best when you are alone in your session. = 참고로 세션에 혼자 있을 때에 가장 잘 작동합니다.
+Note that you shouldn't enable this feature while playing the Casino Heist: Because due to synced with payout for it = 이 기능을 카지노 습격할 때는 키면 안됩니다: 왜냐면 돈 액수가 연동되기 때문입니다.
+There is cooldown time when after you do play any heists once. The cooldown time is 20 mins, so this let you know the time passed or not. = 어떤 습격을 하던 한 번 하기만 하면 쿨타임이 있습니다. 쿨타임은 20분이고, 이 기능이 그 시간이 지났는지 안 지났는지에 대해 알려줄 수 있습니다.
+Crew Level = 조직 레벨
+Crew = 조직
+Crew RP = 조직 RP
+Crew ID = 조직 ID
+Current Crew Level = 현재 조직 레벨
+Choose Crew Level = 조직 레벨 선택
+Set Crew Level = 조직 레벨 선택

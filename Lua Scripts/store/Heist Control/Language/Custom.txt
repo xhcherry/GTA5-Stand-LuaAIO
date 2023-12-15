@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 10/08/2023 08:01:50 PM
-# Heist Control Version: V 3.3.8
+# Generated Date: 12/16/2023 12:47:02 AM
+# Heist Control Version: V 3.3.9
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -250,7 +250,6 @@ Maintains HC's translation = Maintains HC's translation
 - This feature isn't working due to the latest GTA Online patch: = - This feature isn't working due to the latest GTA Online patch:
 Please re-enable 'Stand > Lua Scripts > Repository > Heist Control' to fix! = Please re-enable 'Stand > Lua Scripts > Repository > Heist Control' to fix!
 Except [NOT WORKING] features should work! = Except [NOT WORKING] features should work!
-But, all features of HC should work! = But, all features of HC should work!
 Coded GTA Online Version: = Coded GTA Online Version:
 Current GTA Online Version: = Current GTA Online Version:
 ULP Missions = ULP Missions
@@ -331,7 +330,6 @@ Remove EMP Mines = Remove EMP Mines
 Unlock All Doomsday Heists = Unlock All Doomsday Heists
 Complete All Setup = Complete All Setup
 Skip Drilling = Skip Drilling
-Modify Contracts payout - $1 Million = Modify Contracts payout - $1 Million
 Complete The Preps = Complete The Preps
 Reset The Preps = Reset The Preps
 Reset The Contracts = Reset The Contracts
@@ -389,7 +387,6 @@ Remove Cooldown Buy Chips = Remove Cooldown Buy Chips
 If you enable this, able to buy over 20K or 50K chips by removing cooldown time. = If you enable this, able to buy over 20K or 50K chips by removing cooldown time.
 Get Visitor Bonus Again = Get Visitor Bonus Again
 Disable Transaction Errors = Disable Transaction Errors
-This can be used to remove transaction errors while you are doing special cargo money loop in Musiness Banager Lua. = This can be used to remove transaction errors while you are doing special cargo money loop in Musiness Banager Lua.
 Infinite Stone Hatchet's Power = Infinite Stone Hatchet's Power
 7 Years GTA Online Playtime = 7 Years GTA Online Playtime
 Make your account look like you've played GTA Online for 7 years. = Make your account look like you've played GTA Online for 7 years.
@@ -454,7 +451,6 @@ When using this method, the percentage and final payment will be random! = When 
 Works On Both: Fingerprint and Keypad = Works On Both: Fingerprint and Keypad
 Choose Masks = Choose Masks
 Setup: Server Farm (Lester) = Setup: Server Farm (Lester)
-Always keep this option enabled before starting a contract = Always keep this option enabled before starting a contract
 Note: You may need to keep activating to use some of Independence Day's contents. = Note: You may need to keep activating to use some of Independence Day's contents.
 Tattoos = Tattoos
 Unlock Some Tattoos = Unlock Some Tattoos
@@ -478,7 +474,6 @@ You can update changed cayo perico heist stats in the Kosatka by refreshing it. 
 - Knife + Pipe Bomb = - Knife + Pipe Bomb
 - Assault Rifle Mk2 + Pistol Mk2 = - Assault Rifle Mk2 + Pistol Mk2
 Please don't forget that buyer should be selected 'Low'! Otherwise, won't get money. = Please don't forget that buyer should be selected 'Low'! Otherwise, won't get money.
-Makes Forced Able To Launch = Makes Forced Able To Launch
 Refresh Arcade Boards = Refresh Arcade Boards
 You can update casino heist stats while even you in the arcade. = You can update casino heist stats while even you in the arcade.
 Change Driver = Change Driver
@@ -528,7 +523,6 @@ This feature has been controlled by another feature. = This feature has been con
 Select Primary Target = Select Primary Target
 Teleport Places = Teleport Places
 Kosatka: Heist Board = Kosatka: Heist Board
-When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout. = When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout.
 Entrance Of Your Arcade = Entrance Of Your Arcade
 Note that works perfectly when no other players are in your session. = Note that works perfectly when no other players are in your session.
 Please go out of the current interior to use this feature. = Please go out of the current interior to use this feature.
@@ -566,7 +560,6 @@ Open = Open
 Close = Close
 Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader. = Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader.
 The best way to remove GTA Online banked money up to $2B at once! = The best way to remove GTA Online banked money up to $2B at once!
-Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you. = Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you.
 Note that may works for some of other preps. Only 'Quick Preset' is compatible with Cayo Perico Heist. = Note that may works for some of other preps. Only 'Quick Preset' is compatible with Cayo Perico Heist.
 Note that if you don't use Heist Control's automated Casino Heist presets, won't get money. = Note that if you don't use Heist Control's automated Casino Heist presets, won't get money.
 Note that you may press multiple times to instant finish the heist. = Note that you may press multiple times to instant finish the heist.
@@ -578,7 +571,6 @@ Biker Business Management = Biker Business Management
 Master Control Terminal = Master Control Terminal
 Touchscreen Terminal = Touchscreen Terminal
 Terrobyte = Terrobyte
-Heist Control will show how much the cooldown time left, and let you know if it passed. = Heist Control will show how much the cooldown time left, and let you know if it passed.
 Text Position = Text Position
 Ignore You = Ignore You
 Makes hostile peds (Included guards, polices, and gangs) ignore you even saw you. Except for the rare case, they don't shoot to you. = Makes hostile peds (Included guards, polices, and gangs) ignore you even saw you. Except for the rare case, they don't shoot to you.
@@ -688,3 +680,7 @@ Crew ID = Crew ID
 Current Crew Level = Current Crew Level
 Choose Crew Level = Choose Crew Level
 Set Crew Level = Set Crew Level
+But, all features of HC should work without any patches! = But, all features of HC should work without any patches!
+HC is needed to be patched by the developer. Please be patient. = HC is needed to be patched by the developer. Please be patient.
+You won't get money if you don't keep money limitation! = You won't get money if you don't keep money limitation!
+There is cooldown time when after you do play any heists once. The cooldown time is 20 mins, so this let you know the time passed or not. = There is cooldown time when after you do play any heists once. The cooldown time is 20 mins, so this let you know the time passed or not.
