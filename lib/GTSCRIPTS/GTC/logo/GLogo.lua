@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '12.10'
+GT_version = '12.13'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("修复了在线上开启脚本报错问题\n修复了模组选项为空白\n添加了新的皇榜成员")
+    notification("适配Stand 110.10\n适配GTA V3095 1.68\n新增>玩家选项>陀螺发射\n添加了新的皇榜成员")
 end
 --
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
@@ -8767,14 +8767,14 @@ function sxgt(f)
 
         if playeridx == "hinrcituqzQZ" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 清歌 正在该战局")
-        elseif playeridx == "RhymeBear" then
-            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 菲奥娜King 正在该战局")
         elseif playeridx == "chen_you123" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 辰悠 正在该战局")
         elseif playeridx == "rudan891018" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 湾湾 正在该战局")
         elseif playeridx == "An_owQ" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 船船 正在该战局")
+        else
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 "..playeridx.." 正在该战局")
         end
 
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.380)

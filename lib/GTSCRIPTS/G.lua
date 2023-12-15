@@ -274,11 +274,11 @@ spo = GTTG(players_root, "SPO", {"spcheck"}, "", function(f)
             playerid = players.get_name(pid)
             for _, id in ipairs(spid) do
                 if playerid == id.playerid and not notified_sp[id.playerid] then
-                    if playerid ~= "An_owQ" 
+                    if playerid ~= "Last100million" 
+                    and playerid ~= "FallenMountain"
                     and playerid ~= "hinrcituqzQZ" 
                     and playerid ~= "rudan891018" 
                     and playerid ~= "chen_you123" 
-                    and playerid ~= "RhymeBear" 
                     then
                         if pid then
                             util.show_corner_help("~h~~q~GRANDTOURINGVIP 温馨提示 ~p~皇榜人员 ".. playerid .."\n~p~当前正在该战局")
@@ -348,6 +348,23 @@ GTTG(players_root, "玩家加入/离开通知", {}, "", function(g)
         plleave = 0
       end)
   end)
+
+  GTTG(players_root, '陀螺发射', {''}, '', function(cb)
+    chiabng = cb
+        while chiabng do
+            wait()
+                menu.trigger_commands("grace off")
+                menu.trigger_commands("godmode off")
+    local coords = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+                local hy = FIRE.ADD_EXPLOSION(coords.x,coords.y-0.2,coords.z-0.2, 12,1, true, false,0, true)
+            end
+        while not chiabng do
+           menu.trigger_commands("godmode on")
+           menu.trigger_commands("grace on")
+           wait()
+           blockcrasheffect()
+        end
+    end)
 
 GTTG(players_root, "自身血条", {""}, "", function(on)
     local x = 0.085
@@ -13813,24 +13830,24 @@ end
 end)
 
 GTLP(allevent, "全局随机事件", {}, "", function () 
-for pid = 0, 31 do
-    if pid ~= players.user() and players.exists(pid) then
-        local target_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-        local coords = ENTITY.GET_ENTITY_COORDS(target_ped)
-        FIRE.ADD_EXPLOSION(coords['x'], coords['y'], coords['z'], math.random(0, 82), 1.0, true, false,0.0)
+    for pid = 0, 31 do
+        if pid ~= players.user() and players.exists(pid) then
+            local target_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+            local coords = ENTITY.GET_ENTITY_COORDS(target_ped)
+            FIRE.ADD_EXPLOSION(coords['x'], coords['y'], coords['z'], math.random(0, 82), 1.0, true, false,0.0)
+        end
     end
-end
+end)
 
 GTLP(allevent, "混乱车辆", {}, "车辆到处乱窜",function()
     for i, veh in ipairs(entities.get_all_vehicles_as_handles()) do
         NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
         ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(veh, 1, 0.0, 10.0, 0.0, true, true, true, true) 
     end
-end)
+end)    
 
 GTTG(allevent, "暴乱城市", {}, "周围的npc会进入无差别攻击模式！", function(toggle)
     MISC.SET_RIOT_MODE_ENABLED(toggle)
-end)
 end)
 
 GTLP(allevent,  "赌场陷阱", {"trapbase"}, "", function() 
@@ -18755,23 +18772,43 @@ end
 local speede = ENTITY.GET_ENTITY_SPEED(ente)
 local speedcalce = speede * 3.6
 myspeed1e = math.ceil(speedcalce)
+local speede2 = ENTITY.GET_ENTITY_SPEED(ente)
+local speedcalce2 = speede2 * 2.236936
+myspeed1e2 = Round(speedcalce2,1)
 end
 inviciamountintt = inviciamountint
 draw_string(string.format("~h~~r~延迟: ~w~%dms", delay), zhuji_x+0.05,zhuji_y+0.0026, zhuji_dx,zhuji_dx)
-draw_string(string.format("~h~~f~FPS: ~w~"..fps), zhuji_x,zhuji_y+0.0026, zhuji_dx,zhuji_dx)
-draw_string(string.format("~h~~y~"..myspeed1e.." ~q~K~g~M~f~/H"), zhuji_x,zhuji_y+0.028, zhuji_dx,zhuji_dx)
-draw_string(string.format("~h~~p~时间:~h~~w~"..os.date("%X")), zhuji_x,zhuji_y+0.055, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~p~帧率: ~w~"..fps), zhuji_x,zhuji_y+0.0026, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~w~"..myspeed1e.." ~q~公~g~里~f~/小时".."~h~~w~  "..myspeed1e2.." ~y~英~p~里~q~/小时"), zhuji_x,zhuji_y+0.028, zhuji_dx,zhuji_dx)
+draw_string(string.format('~h~~r~时间 ~f~> '.."~h~~p~现实: ~h~~w~"..os.date("%X").."  ~h~~y~游戏:~h~~w~" .. CLOCK.GET_CLOCK_HOURS() .. ":" .. CLOCK.GET_CLOCK_MINUTES()), zhuji_x,zhuji_y+0.055, zhuji_dx,zhuji_dx)
+gongji = 0
+for pid = 0, 31 do
+if players.exists(pid) and pid ~= players.user() then
+local pped = players.user_ped(pid)
+if pped ~= 0 then
+if players.is_marked_as_attacker(pid) then
+gongji = gongji + 1
+end
+end
+end
+end
+
+if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
+draw_string(string.format("~h~~p~处于故事模式"), zhuji_x,zhuji_y+0.085, zhuji_dx,zhuji_dx)
+else
+draw_string(string.format("~h~~r~攻击过你的人: ~h~~w~"..gongji), zhuji_x,zhuji_y+0.112, zhuji_dx,zhuji_dx) 
+end
 
 if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
 draw_string(string.format("~h~~y~处于故事模式"), zhuji_x,zhuji_y+0.085, zhuji_dx,zhuji_dx)
 else
-draw_string(string.format("~h~~y~战局玩家: ~h~~w~"..#players.list()), zhuji_x,zhuji_y+0.085, zhuji_dx,zhuji_dx) 
+draw_string(string.format("~h~~y~玩家 > ~h~~f~人数: ~h~~w~"..#players.list()), zhuji_x,zhuji_y+0.085, zhuji_dx,zhuji_dx) 
 end
 
 if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
 draw_string(string.format("~h~~p~处于故事模式"), zhuji_x,zhuji_y+0.113, zhuji_dx,zhuji_dx)
 else
-draw_string(string.format("~h~~p~作弊玩家: ~h~~r~"..inviciamountintt), zhuji_x,zhuji_y+0.113, zhuji_dx,zhuji_dx) 
+draw_string(string.format(" ~h~~p~挂逼: ~h~~w~"..inviciamountintt), zhuji_x+0.06,zhuji_y+0.085, zhuji_dx,zhuji_dx) 
 end
 
 if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
@@ -18798,8 +18835,7 @@ end)
 
 util.create_thread(function()
 while true do
-    fps = math.ceil(1/SYSTEM.TIMESTEP())
-    delay = math.ceil(SYSTEM.TIMESTEP() * 1000)
+    delay = math.ceil(MISC.GET_FRAME_TIME() * 1000)
     wait(1000)
     end
 end)
