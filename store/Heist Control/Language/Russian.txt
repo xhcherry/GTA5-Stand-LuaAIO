@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 07/12/2023 10:29:43 PM
-# Heist Control Version: V 3.3.4
+# Generated Date: 10/08/2023 06:29:21 PM
+# Heist Control Version: V 3.3.8
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -110,13 +110,6 @@ Yohan Blair = Йохан Блэр
 0 - Strongest Guards = 0 - Самые сильные охранники
 3 - Weakest Guards = 3 - Самые слабые охранники
 Remove Drills = Извлеките сверла
-Casino Story Missions = Сюжетные миссии казино
-Loose Cheng = Спасти чена
-House Keeping = Домоводство
-Strong Arm Tactics = Тактика Сильной Руки
-Play to Win = Играйте, чтобы выиграть
-Bad Beat = Плохой Ритм
-Cashing Out = Обналичивание
 The Data Breaches ACT I = Утечка данных I
 The Bogdan Problem ACT II = Богдан АКТ II
 The Doomsday Scenario ACT III = Сценарий судного дня АКТ III
@@ -383,7 +376,6 @@ Buying And Selling = Покупка и Продажа
 Air-Freight Cargo = Авиаперевозка грузов
 Client Jobs = Клиентские задания
 Spin Lucky Wheel = Вращайте Счастливое колесо
-Kosatka Missiles = Ракеты "Косатка"
 Dax Job = Работа дакса
 Note that Dax Job means from cellphone = Обратите внимание, что задание Дакс означает с мобильного телефона
 CEO Vehicles = CEO Транспорт
@@ -481,10 +473,6 @@ Seems like you need to be a MC President. So, Heist Control made you become MC P
 Seems like you need to be a CEO. So, Heist Control made you become CEO. = Похоже, тебе нужно быть генеральным директором. Итак, контроль за ограблением заставил вас стать генеральным директором.
 HC Logo image file doesn't exist. = Файл изображения логотипа HC не существует.
 Native file for HC doesn't exist. = Собственный файл для HC не существует.
-Your current Stand version isn't compatible with current Heist Control version. Please update Stand to use it. = Ваша текущая версия Stand несовместима с текущей версией Heist Control. Пожалуйста, обновите стенд, чтобы использовать его.
-- Current your Heist Control version: = - Текущая версия вашего средства управления ограблением:
-- At least required Stand version: = - По крайней мере, требуемая версия подставки:
-- Current your Stand version: = - Текущая версия вашего стенда:
 Max payout for this heist = Максимальная выплата за это ограбление
 - Under $2.550.000 per run = - Менее $2.550к за запуск
 - Under $4.100.000 per hour = - Менее 4.100к в час
@@ -493,7 +481,6 @@ Max payout for this heist = Максимальная выплата за это 
 You should enable the preset until the end of the heist! = Вы должны включить предустановку до окончания ограбления!
 Enabling one of these presets will complete all of setups, and set as max payout, $2.55 Millions. It will be affected to all of heist players. = Включение одного из этих пресетов завершит все настройки и установит максимальную выплату в размере 2,55 миллионов долларов. Это затронет всех игроков ограбления.
 Recommended = Рекомендуемый
-There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.55M) by only getting it. = Существует только основная цель, зависит от того, какую вы выбрали. Все игроки, участвующие в сеансе ограбления, могут получить максимальную выплату ($2,55 млн), только получив ее.
 This feature has been controlled by another feature. = Эта функция контролировалась другой функцией.
 Select Primary Target = Выберите основную цель
 Teleport Places = Места телепортации
@@ -519,7 +506,6 @@ Remove All = Удалите все
 - Knife + Pipe Bomb = - Нож + Самодельная бомба
 - Assault Rifle Mk2 + Pistol Mk2 = - Штурмовая винтовка Mk2 + Пистолет Mk2
 Equipment Spawn Location = Место появления оборудования
-Entrance and Exit will be selected 'Staff Lobby' and Buyer will be selected 'Low' by HC. But, selected Buyer won't be visible at the board somehow, don't change those options when you are before launching the heist. = Вход и выход будут выбраны "Лобби для персонала", а покупатель будет выбран "Низкий" HC. Но выбранный покупатель каким-то образом не будет виден на доске, не меняйте эти параметры, когда вы находитесь перед запуском ограбления.
 Please don't forget that buyer should be selected 'Low'! Otherwise, won't get money. = Пожалуйста, не забывайте, что покупатель должен быть выбран "Низким"! В противном случае, вы не получите денег.
 Makes Forced Able To Launch = Позволяет Принудительно Запускать
 When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout. = Когда вы находитесь за доской и выбираете "Игроки вырезаны", эта функция позволит вам принудительно начать, даже если другие игроки не настроены как готовые. Есть визуальная ошибка, связанная с выплатой.
@@ -605,7 +591,6 @@ The Contract DLC = Дополнение к контракту
 Unlocks almost of unlockable stuffs related the heist like clothing, etc. = Разблокирует почти все разблокируемые предметы, связанные с ограблением, такие как одежда и т.д.
 Independence's Day = День независимости
 Unlock Lots of Hats And Shirts = Разблокируйте множество шляп и рубашек
-Also will increase Kosatka missiles distance. = Увеличится дальность ракет "Косатка".
 Auto Refill Snacks & Armours = Автоматическое пополнение закусок и доспехов
 Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader. = Увеличивает количество транспортных средств для продажи MC Business до единицы. Пожалуйста, нажмите один раз, прежде чем начать миссию по продаже. Работает только тогда, когда ты лидер.
 The best way to remove GTA Online banked money up to $2B at once! = Лучший способ снять с банковского счета GTA Online деньги на сумму до 2 миллиардов долларов сразу!
@@ -678,12 +663,6 @@ If you changed the Stand's setting while HC is still running, need to restart HC
 Don't enable both of automated presets at once = Не включайте обе автоматические предустановки одновременно
 Please make sure you can play ULP Missions now! = Пожалуйста, убедитесь что вы можете играть в миссии ULP прямо сейчас!
 Unlock Clothing = Разблокируйте одежду
-
-
-# Start of newly updated translations.
-# Translate them!
-
-
 Please download the latest version of Heist Control or wait for Heist Control's developer patching. = Пожалуйста, скачайте последнюю версию HC или дождитесь обновления разработчика HC.
 Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support! = Пожалуйста, повторно включите "Stand> Lua Scripts > Репозиторий > natives-1681379138" или, пожалуйста, присоединяйтесь к серверу HC DC, чтобы получить поддержку!
 Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist. = Обратите внимание, что изменение этого параметра не будет применено к доске ограблений. Вы можете проверить нанесенный разрез после окончания ограбления.
@@ -699,3 +678,19 @@ Taze = Оцепенение
 If you have any questions regarding Heist Control? Joining it will help you so much! = Если у вас есть какие-либо вопросы относительно HC? Присоединение к нему поможет вам!
 - Download sharable customized translations and GTAHaXUI stat files. = - Загружайте доступные для общего доступа индивидуальные переводы и статистические файлы GTAHaXUI.
 - Post a suggestion or an issue to improve Heist Control. = - Опубликуйте предложение или проблему, чтобы улучшить контроль за кражами.
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.45M) by only getting it. = Существует только основная цель, в зависимости от того, какую вы выбрали. Все игроки, участвующие в сеансе ограбления, могут получить максимальную выплату ($2,45 млн), только получив ее.
+Note that works on best when you are alone in your session. = Обратите внимание, что это лучше всего работает, когда вы на сеансе одни.
+Note that you shouldn't enable this feature while playing the Casino Heist: Because due to synced with payout for it = Обратите внимание, что вам не следует включать эту функцию во время игры в ограбление казино: из-за синхронизации с выплатой за нее
+Crew Level = Crew Level
+Crew = Команда
+Crew RP = Команда RP
+Crew ID = Команда ID
+Current Crew Level = Текущий уровень команды
+Choose Crew Level = Выберите уровень состава
+Set Crew Level = Установите уровень команды
