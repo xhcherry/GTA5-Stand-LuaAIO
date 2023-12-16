@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 07/13/2023 01:07:16 AM
-# Heist Control Version: V 3.3.4
+# Generated Date: 10/08/2023 05:26:06 PM
+# Heist Control Version: V 3.3.8
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -110,13 +110,6 @@ Yohan Blair = Yohan Blair
 0 - Strongest Guards = 0 - Gardes les plus forts 
 3 - Weakest Guards = 3 - Gardes les plus faibles 
 Remove Drills = Retirer les perceuses 
-Casino Story Missions = Missions du casino 
-Loose Cheng = Semez Cheng 
-House Keeping = Entretien de la maison 
-Strong Arm Tactics = Tactiques d'armement renforcées 
-Play to Win = Jouer pour gagner 
-Bad Beat = Mauvais rythme 
-Cashing Out = Encaisser 
 The Data Breaches ACT I = Acte 1 : Fuite de données
 The Bogdan Problem ACT II = Le problème Bogdan ACTE II 
 The Doomsday Scenario ACT III = Le scénario de l'apocalypse ACT III 
@@ -384,7 +377,6 @@ Buying And Selling = Acheter et vendre
 Air-Freight Cargo = Cargaison de fret aérien
 Client Jobs = Missions de Clients
 Spin Lucky Wheel = Faire tourner la Roue de la Fortune
-Kosatka Missiles = Missiles du Kosatka
 Dax Job = Mission de Dax
 Note that Dax Job means from cellphone = Merci de noter que les missions de Dax viennent du tél portable
 CEO Vehicles = Véhicules de PDG
@@ -477,10 +469,6 @@ All = Tout
 One Line = En ligne
 HC Logo image file doesn't exist. = Le fichier image du logo HC n'existe pas.
 Native file for HC doesn't exist. = Le fichier des natives pour HC n'existe pas.
-Your current Stand version isn't compatible with current Heist Control version. Please update Stand to use it. = Votre version actuelle de Stand n'est pas compatible avec la version actuelle de Heist Control. Veuillez mettre à jour Stand pour l'utiliser.
-- Current your Heist Control version: = - Version actuelle de votre Heist Control: 
-- At least required Stand version: = - Requiert à minima Stand version:
-- Current your Stand version: = - Votre version Stand actuelle:
 You should enable the preset until the end of the heist! = Vous devez activer les préréglages jusqu'à la fin du Braquage !
 - How to change the line color: Stand > Settings > Appearance > Colours > HUD Colour = - Comment modifier la couleur de la ligne : Stand > Paramètres > Apparence > Couleurs > Couleur HUD
 - How to change the AR Beacon color: Stand > Settings > Appearance > Colours > AR Colour = - Comment modifier la couleur de la balise AR : Stand > Paramètres > Apparence > Couleurs > Couleur AR
@@ -498,7 +486,6 @@ If you changed the Stand's setting while HC is still running, need to restart HC
 Don't forget changing this feature before starting the heist! Otherwise, won't be applied. = N'oubliez pas de modifier cette option avant de commencer le Braquage ! Sinon, elle ne sera pas activée.
 - Knife + Pipe Bomb = - Couteau + Bombe artisanale
 - Assault Rifle Mk2 + Pistol Mk2 = - Fusil d'assaut Mk2 + Pistolet Mk2
-Entrance and Exit will be selected 'Staff Lobby' and Buyer will be selected 'Low' by HC. But, selected Buyer won't be visible at the board somehow, don't change those options when you are before launching the heist. = L'entrée et la sortie du Personnel + l'Acheteur Amateur seront sélectionnés automatiquement par HC. Toutefois, l'acheteur sélectionné ne sera pas parfois visible sur le tableau, malgré cela, ne modifiez pas ces options avant de lancer le Braquage.
 Please don't forget that buyer should be selected 'Low'! Otherwise, won't get money. = N'oubliez pas que l'acheteur amateur doit être sélectionné ! Sinon, vous ne recevrez pas d'argent.
 Makes Forced Able To Launch = Force le lancement
 Refresh Arcade Boards = Rafraîchir les Tableaux de l'Arcade
@@ -536,7 +523,6 @@ Max payout for this heist = Paiement maximal pour ce braquage
 - Under $3.650.000 per run = - Moins de 3 650 000 $ par braquage
 Enabling one of these presets will complete all of setups, and set as max payout, $2.55 Millions. It will be affected to all of heist players. = Activer l'un de ces préréglages terminera toutes les préparations et définira un paiement maximal de 2,55 millions de dollars. Cela affectera tous les joueurs invités dans le braquage.
 Recommended = Recommandé
-There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.55M) by only getting it. = Il n'y a qu'une seule cible principale, en fonction de l'option que vous avez choisie. Tous les joueurs du braquage peuvent obtenir le paiement maximal (2,55 millions de dollars).
 This feature has been controlled by another feature. = Cette fonctionnalité est contrôlée par une autre option.
 Select Primary Target = Sélectionner la cible principale
 Teleport Places = Lieux de Téléportation
@@ -664,7 +650,6 @@ Remove Security Mission Cooldown = Supprimer la temporisation des missions de s�
 Unlocks almost of unlockable stuffs related the heist like clothing, etc. = Débloque presque tout ce qui peut être débloqué en relation avec le braquage, comme les vêtements, etc.
 Independence's Day = Jour de l'Indépendance
 Unlock Lots of Hats And Shirts = Débloquer beaucoup de chapeaux et de tee-shirts
-Also will increase Kosatka missiles distance. = Augmentera également la portée des missiles du Kosatka.
 Auto Refill Snacks & Armours = Recharge automatique des snacks et armures
 Delete This File = Supprimer ce fichier
 Do you sure delete this file? It cannot be recovered! = Êtes-vous sûr de vouloir supprimer ce fichier ? Il ne pourra pas être récupéré !
@@ -693,3 +678,13 @@ Please download the latest version of Heist Control or wait for Heist Control's 
 Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support! = Veuillez réactiver 'Stand > Lua Scripts > Repository > natives-1681379138' ou rejoignez le discord HC pour obtenir de l'aide !
 Unlock Arcade Awards = Débloquer les récompenses de l'arcade
 Club Work = Missions de Club  
+There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.45M) by only getting it. = Il n'y a qu'une seule cible principale, qui dépend de celle que vous avez choisie. Tous les joueurs de la session de braquage peuvent obtenir le gain maximum (2,45 millions de dollars) en ne choissant que cette cible.
+Note that works on best when you are alone in your session. = Merci de note que les résultats sont meilleurs lorsque vous êtes seul dans votre session.
+Note that you shouldn't enable this feature while playing the Casino Heist: Because due to synced with payout for it = Veuillez note que vous ne devez pas activer cette fonction lorsque vous jouez au Bracage du Casino, à cause la synchronisation avec le paiement.
+Crew Level = Niveau de Crew
+Crew = Crew
+Crew RP = RP Crew
+Crew ID = ID de Crew
+Current Crew Level = Niveau actuel de Crew
+Choose Crew Level = Choisir le niveau de Crew
+Set Crew Level = Régler le niveau de Crew
