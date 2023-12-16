@@ -1158,5 +1158,45 @@ spid = {{
     playerid = "SanQiu-YiNuan"
 }, {
     playerid = "CharlieTT"
+}, {
+    playerid = "Sausage_Pie"
+}, {
+    playerid = "BryceO_o"
+}, {
+    playerid = "Koo-JCJKTL"
+}, {
+    playerid = "3ThreeQQQ"
+}, {
+    playerid = "swithhh66"
+}, {
+    playerid = "PeachZhou"
+}, {
+    playerid = "12TRAVEL17"
+}, {
+    playerid = "Chenxiaoyi4O8"
+}, {
+    playerid = "Raginglu"
+}, {
+    playerid = "XiaoYuXin_qwq"
+}, {
+    playerid = "Locune"
+}, {
+    playerid = "walker57923"
+}, {
+    playerid = "tangmaomao9"
+}, {
+    playerid = "shenlongdouluo"
+}, {
+    playerid = "Shuaiyy123"
+}, {
+    playerid = "NYNYNYNY1126"
+}, {
+    playerid = "TaPAngQA"
+}, {
+    playerid = "diandian2022"
+}, {
+    playerid = "XIMCHUIB"
+}, {
+    playerid = "John-Wick-AC"
 },
 }

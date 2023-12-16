@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '12.13'
+GT_version = '12.16'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("适配Stand 110.10\n适配GTA V3095 1.68\n新增>玩家选项>陀螺发射\n添加了新的皇榜成员")
+    notification("更新任务功能，现可正常使用\n更新主机序列，添加更多类别\n新增>玩家选项>玩家信息窗口\n新增>玩家选项>玩家预览\n新增>玩家选项>健康显示\n为这些新增功能添加了保存配置\n添加了新的皇榜成员\n改进了脚本运行稳定性")
 end
 --
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
@@ -30665,6 +30665,142 @@ players.add_command_hook(playerActionsSetup)
 
 end
 
+function VehicleGears()
+    if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED(), true) then
+        local veh = PED.GET_VEHICLE_PED_IS_USING(PLAYER.GET_PLAYER_PED())
+        local VehCGear = entities.get_current_gear(entities.handle_to_pointer(veh))
+        local vecs = ENTITY.GET_ENTITY_SPEED_VECTOR(veh, true)
+    if VehCGear == 0 and vecs.y < 0 then 
+        return "~y~R"
+    elseif vecs.x == 0 and vecs.y == 0 and vecs.z == 0 then
+    return "~r~P"
+    else
+       return "~w~"..VehCGear
+       end
+    else
+        return "~y~不在车内"
+    end
+end
+
+function VehicleInfo()
+if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED(), true) then
+   local veh = PED.GET_VEHICLE_PED_IS_USING(PLAYER.GET_PLAYER_PED())
+   local VehBrand = util.get_label_text(VEHICLE._GET_MAKE_NAME_FROM_VEHICLE_MODEL(ENTITY.GET_ENTITY_MODEL(veh))) or ""
+   local VehModel = util.get_label_text(ENTITY.GET_ENTITY_MODEL(veh))
+return "~w~ " .. VehBrand .. " " .. VehModel
+   else
+return "~y~ 不在车内"
+   end
+end
+
+--
+
+function check(toggle)
+    if toggle then
+        return "~g~连接"
+    else
+        return "~r~断开"
+    end
+end
+
+function check_host(toggle)
+    if toggle then
+        return "~r~是"
+    else
+        return "~g~否"
+    end
+end
+
+function check_script_host(toggle)
+    if toggle then
+        return "~r~是"
+    else
+        return "~g~否"
+    end
+end
+
+function check_org(toggle)
+    if toggle == -1 then
+        return "没有"
+    elseif toggle == 0 then
+        return "保镖事务所"
+    else
+        return "摩托帮"
+    end
+end
+
+function check_cat(toggle)
+    if toggle == nil or toggle == "NULL" or toggle == 0 or toggle == " " then
+        return "不在车内"
+    else
+        return toggle
+    end
+end
+
+function check_distance(mypos, playerpos)
+    local distance = math.floor(MISC.GET_DISTANCE_BETWEEN_COORDS(playerpos.x, playerpos.y, playerpos.z, mypos.x, mypos.y, mypos.z))
+        if distance == nil or distance == "NULL" or distance == 0 or distance == " " then
+            return "自己"
+        else
+            return distance .. "m"
+        end
+end
+
+all_weapons = {}
+temp_weapons = util.get_weapons()
+for a,b in pairs(temp_weapons) do
+    all_weapons[#all_weapons + 1] = {hash = b['hash'], label_key = b['label_key']}
+end
+function get_weapon_name(hash) 
+    for k,v in pairs(all_weapons) do 
+        if v.hash == hash then 
+            return util.get_label_text(v.label_key)
+        end
+    end
+    return '徒手'
+end
+
+function formatMoney(money)
+    if money >= 1000 and money < 999950 then
+        return round(money / 1000, 1) .. "K"
+    elseif money >= 999950 and money < 999999950 then
+        return round(money / 1000000, 1) .. "M"
+    elseif money >= 999999950 then
+        return round(money / 1000000000, 1) .. "B"
+    else return money
+    end
+end
+
+function get_prostitutes(pid)
+    return memory.read_int(memory.script_global(1853910 + 1 + (pid * 862) + 205 + 54))
+end
+
+function t_b()
+local focused = players.get_focused()
+local pid = focused[1]
+   if players.is_in_interior(pid) then
+       return "~r~室内"
+   else
+       return "~g~室外"
+   end 
+end
+--
+function p_to_d(pid)
+    return PLAYER.GET_PLAYER_PED(pid)
+end 
+
+function player_clone(pid)
+    local new_ped = PED.CLONE_PED(p_to_d(pid), false, false, true)
+    ENTITY.FREEZE_ENTITY_POSITION(new_ped, true)
+    ENTITY.SET_ENTITY_INVINCIBLE(new_ped, true)
+    PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(new_ped, true)
+    TASK.TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(new_ped, true)
+    ENTITY.SET_ENTITY_COORDS(new_ped, 0, 0, 0, true, true, true, false)
+    ENTITY.SET_ENTITY_ALPHA(new_ped, 255, false)
+    ENTITY.SET_ENTITY_COLLISION(new_ped, false, false)
+    return new_ped
+end
+--
 function baocun()
     local success, errorMsg = pcall(function()
         gtoast("保存完成")
@@ -30680,6 +30816,9 @@ function baocun()
         local xssjxs1 = menu.get_value(xssjxs)--显示时间
         local xssjrq1 = menu.get_value(xssjrq)--显示riqi
         local liaotianjilu1 = menu.get_value(liaotianjilu)--聊天记录
+        local wanjialist1 = menu.get_value(wanjialist)--玩家信息窗口
+        local liulanwj1 = menu.get_value(liulanwj)--玩家浏览
+        local jiankang1 = menu.get_value(jiankang)--健康显示
         local configStr = "--保存日期:" .. tostring(todaysdate)
         local configStr1 = "\nzjxlxs = " .. tostring(zjxlxs)
         local configStr2 = "\nwjlxs1 = " .. tostring(wjlxs1)
@@ -30692,6 +30831,9 @@ function baocun()
         local configStr9 = "\nxssjxs1 = " .. tostring(xssjxs1)
         local configStr10 = "\nxssjrq1 = " .. tostring(xssjrq1)
         local configStr11 = "\nliaotianjilu1 = " .. tostring(liaotianjilu1)
+        local configStr12 = "\nwanjialist1 = " .. tostring(wanjialist1)
+        local configStr13 = "\nliulanwj1 = " .. tostring(liulanwj1)
+        local configStr14 = "\njiankang1 = " .. tostring(jiankang1)
         local file = io.open(pathld, 'w')
         file:write(configStr)
         file:write(configStr1)
@@ -30705,12 +30847,16 @@ function baocun()
         file:write(configStr9)
         file:write(configStr10)
         file:write(configStr11)
+        file:write(configStr12)
+        file:write(configStr13)
+        file:write(configStr14)
         file:close()
     end)
     if not success then
         gtoast("保存失败")
     end
 end
+
 
 VEH_MISSILE_SPEED = 10000
 
