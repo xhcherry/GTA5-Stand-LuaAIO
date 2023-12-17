@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 12/16/2023 12:47:16 AM
-# Heist Control Version: V 3.3.9
+# Generated Date: 12/16/2023 07:25:10 PM
+# Heist Control Version: V 3.3.10
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -684,3 +684,5 @@ But, all features of HC should work without any patches! = But, all features of 
 HC is needed to be patched by the developer. Please be patient. = HC is needed to be patched by the developer. Please be patient.
 You won't get money if you don't keep money limitation! = You won't get money if you don't keep money limitation!
 There is cooldown time when after you do play any heists once. The cooldown time is 20 mins, so this let you know the time passed or not. = There is cooldown time when after you do play any heists once. The cooldown time is 20 mins, so this let you know the time passed or not.
+Modify Contracts payout - $1 Million = Modify Contracts payout - $1 Million
+Always keep this option enabled before starting a contract = Always keep this option enabled before starting a contract

@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 10/08/2023 05:26:06 PM
-# Heist Control Version: V 3.3.8
+# Generated Date: 12/15/2023 10:33:11 PM
+# Heist Control Version: V 3.3.9
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -251,7 +251,6 @@ Maintains HC's translation = Mantiennent la traduction de HC
 - This feature isn't working due to the latest GTA Online patch: = - Cette fonctionnalité est inactive en raison du dernier patch de GTA Online :
 Please re-enable 'Stand > Lua Scripts > Repository > Heist Control' to fix! = Merci de cocher 'Stand > Lua Scripts > Repository > Heist Control' pour résoudre le pb!
 Except [NOT WORKING] features should work! = Toutes les options sauf [DESACTIVE] doivent fonctionner !
-But, all features of HC should work! = Mias toutes les options du HC doivent fonctionner
 Coded GTA Online Version: = Version codée de GTA Online:
 Current GTA Online Version: = Version courante de GTA Online:
 ULP Missions = Missions ULP 
@@ -332,7 +331,6 @@ Remove EMP Mines = Enlever les mines EMP
 Unlock All Doomsday Heists = Débloquer Tous Braquages de Fin du Monde
 Complete All Setup = Terminer Missions Initiales
 Skip Drilling = Passer Perçage
-Modify Contracts payout - $1 Million = Modifier Paiement Contrats - 1 m$
 Complete The Preps = Terminer Preps
 Reset The Preps = Réinit Preps
 Reset The Contracts = Réinit Contrats
@@ -390,7 +388,6 @@ Remove Cooldown Buy Chips = Supprimer temporisation pour Acheter des jetons
 If you enable this, able to buy over 20K or 50K chips by removing cooldown time. = Si vous activez cette fonction, vous pourrez acheter plus de 20 000 ou 50 000 jetons en supprimant le temps de recharge.
 Get Visitor Bonus Again = Obtenez à nouveau le bonus visiteur
 Disable Transaction Errors = Désactiver les erreurs de transaction
-This can be used to remove transaction errors while you are doing special cargo money loop in Musiness Banager Lua. = Ceci peut être utilisé pour supprimer les erreurs de transaction pendant que vous faites une boucle spéciale d'argent (Cargo Loop) dans le LUA Musiness Banager.
 Infinite Stone Hatchet's Power = Pouvoir Infini de la hachette en pierre 
 7 Years GTA Online Playtime = 7 ans de jeu en ligne sur GTA
 Make your account look like you've played GTA Online for 7 years. = Faites en sorte que votre compte donne l'impression que vous jouez à GTA Online depuis 7 ans.
@@ -454,7 +451,6 @@ When using this method, the percentage and final payment will be random! = En ut
 Works On Both: Fingerprint and Keypad = Fonctionne sur les deux : empreinte digitale et clavier.
 Choose Masks = Choisissez les masques
 Setup: Server Farm (Lester) = Init : Parc de serveurs (Lester)
-Always keep this option enabled before starting a contract = Toujours garder cette Option activée avant de commencer un contrat
 Note: You may need to keep activating to use some of Independence Day's contents. = Remarque : il se peut que vous deviez continuer de garder cette option Activée pour utiliser certains contenus de l'Independence Day.
 Tattoos = Tatouages
 Unlock Some Tattoos = Débloquez quelques tatouages
@@ -487,7 +483,6 @@ Don't forget changing this feature before starting the heist! Otherwise, won't b
 - Knife + Pipe Bomb = - Couteau + Bombe artisanale
 - Assault Rifle Mk2 + Pistol Mk2 = - Fusil d'assaut Mk2 + Pistolet Mk2
 Please don't forget that buyer should be selected 'Low'! Otherwise, won't get money. = N'oubliez pas que l'acheteur amateur doit être sélectionné ! Sinon, vous ne recevrez pas d'argent.
-Makes Forced Able To Launch = Force le lancement
 Refresh Arcade Boards = Rafraîchir les Tableaux de l'Arcade
 You can update casino heist stats while even you in the arcade. = Vous pouvez mettre à jour les stats du Braquage du casino tout en vous rendant dans l'arcade.
 Change Driver = Changez de conducteur
@@ -527,7 +522,6 @@ This feature has been controlled by another feature. = Cette fonctionnalité est
 Select Primary Target = Sélectionner la cible principale
 Teleport Places = Lieux de Téléportation
 Kosatka: Heist Board = Kosatka : Ecran de braquage
-When you are at the board you select players cut, this feature will allow you forced start even other players don't set as ready. There's visual bug related the payout. = Lorsque vous êtes sur le tableau où vous choisissez la part de chaque joueur, cette option vous permettra de forcer le démarrage même si les autres joueurs ne sont pas prêts. Il y a un bug visuel lié au paiement.
 Entrance Of Your Arcade = Entrée de votre Arcade
 You should in your arcade to use this teleport! = Vous devez être dans votre Arcade pour utiliser cette téléportation !
 Entry Disguise = Déguisement à l'Entrée
@@ -557,7 +551,6 @@ Open = Ouvrir
 Close = Fermer
 Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader. = Force le nombre de véhicules de vente du Club de Motards à 1. Veuillez cliquer une fois avant de commencer la mission de vente. Ne fonctionne que lorsque vous êtes le Président.
 The best way to remove GTA Online banked money up to $2B at once! = La meilleure façon de retirer jusqu'à 2 milliards de dollars de la banque de GTA Online en une seule fois !
-Instant finishes are pretty new features. Due to that, most of them aren't known how they don't work. Please don't complain to me if one of them don't work to you. = Les Braquages Instantanés sont des options assez récentes. Par conséquent, la plupart d'entre elles fonctionnent ... ou pas :) . S'il vous plaît, ne vous plaignez pas à moi si l'une d'elles ne fonctionne pas pour vous.
 Note that may works for some of other preps. Only 'Quick Preset' is compatible with Cayo Perico Heist. = Notez que cela peut fonctionner pour certaines des autres préparations. Seul le 'Préréglage rapide' est compatible avec le Braquage de Cayo Perico.
 Note that if you don't use Heist Control's automated Casino Heist presets, won't get money. = Notez que si vous n'utilisez pas les paramètres automatisés de Heist Control pour le Braquage du Casino, vous ne gagnerez pas d'argent.
 Note that you may press multiple times to instant finish the heist. = Notez que vous pouvez appuyer plusieurs fois pour terminer instantanément le braquage.
@@ -569,7 +562,6 @@ Biker Business Management = Gestion des Business de motards
 Master Control Terminal = Terminal de contrôle principal
 Touchscreen Terminal = Terminal à écran tactile
 Terrobyte = Terrorbyte
-Heist Control will show how much the cooldown time left, and let you know if it passed. = Heist Control montrera la durée restante de temporisation, et vous avertira quand ce sera terminé.
 Text Position = Position du texte
 Ignore You = Vous Ignorer
 Makes hostile peds (Included guards, polices, and gangs) ignore you even saw you. Except for the rare case, they don't shoot to you. = Fait en sorte que les piétons hostiles (y compris les gardes, les policiers et les gangs) vous ignorent même s'ils vous voient. Sauf dans de rares cas, ils ne vous tirent pas dessus.
@@ -688,3 +680,13 @@ Crew ID = ID de Crew
 Current Crew Level = Niveau actuel de Crew
 Choose Crew Level = Choisir le niveau de Crew
 Set Crew Level = Régler le niveau de Crew
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+But, all features of HC should work without any patches! = Cependant toutes les options du HC devraient fonctionner sans aucun correctif !
+HC is needed to be patched by the developer. Please be patient. = Le HC doit être corrigé par le développeur. Veuillez patienter.
+You won't get money if you don't keep money limitation! = Vous ne gagnerez pas d'argent si vous n'en respectez pas les limites!
+There is cooldown time when after you do play any heists once. The cooldown time is 20 mins, so this let you know the time passed or not. = Il y a une temporisation de 20 minutes lorsque vous faites un braquage. Cette option vous permet de savoir si le temps est écoulé ou non.
