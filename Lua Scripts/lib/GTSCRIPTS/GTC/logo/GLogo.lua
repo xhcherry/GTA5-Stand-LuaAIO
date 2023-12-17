@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '12.16'
+GT_version = '12.17'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("更新任务功能，现可正常使用\n更新主机序列，添加更多类别\n新增>玩家选项>玩家信息窗口\n新增>玩家选项>玩家预览\n新增>玩家选项>健康显示\n为这些新增功能添加了保存配置\n添加了新的皇榜成员\n改进了脚本运行稳定性")
+    notification("修复主机序列在多人战局出现的错误\n改进脚本运行稳定性\n玩家信息窗口现在可以移动位置\n优化任务选项和模组选项还有自动产业加载失败的问题\n添加了新的皇榜成员")
 end
 --
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
@@ -30662,18 +30662,18 @@ end
     end	
 
 players.add_command_hook(playerActionsSetup)
-
 end
 
 function VehicleGears()
-    if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED(), true) then
-        local veh = PED.GET_VEHICLE_PED_IS_USING(PLAYER.GET_PLAYER_PED())
-        local VehCGear = entities.get_current_gear(entities.handle_to_pointer(veh))
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        veh = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local addr = entities.handle_to_pointer(veh)
+        local VehCGear = entities.get_current_gear(addr)
         local vecs = ENTITY.GET_ENTITY_SPEED_VECTOR(veh, true)
     if VehCGear == 0 and vecs.y < 0 then 
         return "~y~R"
     elseif vecs.x == 0 and vecs.y == 0 and vecs.z == 0 then
-    return "~r~P"
+        return "~r~P"
     else
        return "~w~"..VehCGear
        end
@@ -30683,8 +30683,8 @@ function VehicleGears()
 end
 
 function VehicleInfo()
-if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED(), true) then
-   local veh = PED.GET_VEHICLE_PED_IS_USING(PLAYER.GET_PLAYER_PED())
+if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+   local veh = PED.GET_VEHICLE_PED_IS_USING(players.user_ped())
    local VehBrand = util.get_label_text(VEHICLE._GET_MAKE_NAME_FROM_VEHICLE_MODEL(ENTITY.GET_ENTITY_MODEL(veh))) or ""
    local VehModel = util.get_label_text(ENTITY.GET_ENTITY_MODEL(veh))
 return "~w~ " .. VehBrand .. " " .. VehModel

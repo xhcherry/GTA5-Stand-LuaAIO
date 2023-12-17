@@ -38,7 +38,7 @@
 
     --- Important
 
-        HC_VERSION = "V 3.3.9"
+        HC_VERSION = "V 3.3.10"
         CODED_GTAO_VERSION = 1.68
 
     ---
@@ -176,6 +176,9 @@
         function SET_INT_TUNABLE_GLOBAL(hash, value)
             memory.write_int(memory.script_global(262145 + memory.tunable_offset(hash)), value)
         end
+        function SET_FLOAT_GLOBAL(global, value)
+            memory.write_float(memory.script_global(global), value)
+        end
         function SET_FLOAT_TUNABLE_GLOBAL(hash, value)
             memory.write_float(memory.script_global(262145 + memory.tunable_offset(hash)), value)
         end
@@ -184,7 +187,12 @@
             return memory.read_int(memory.script_global(global))
         end
 
-        function SET_PACKED_INT_GLOBAL(start_hash, end_hash, value)
+        function SET_PACKED_INT_GLOBAL(start_global, end_global, value)
+            for i = start_global, end_global do
+                SET_INT_GLOBAL(262145 + i, value)
+            end
+        end
+        function SET_PACKED_INT_TUNABLE_GLOBAL(start_hash, end_hash, value)
             for i = memory.tunable_offset(start_hash), memory.tunable_offset(end_hash) do
                 SET_INT_GLOBAL(262145 + i, value)
             end
@@ -763,6 +771,14 @@
 
         menu.divider(CAYO_PRESETS, TRANSLATE("Recommended"))
 
+            QuickPresetTunables = {
+                memory.tunable_offset("IH_PRIMARY_TARGET_VALUE_SAPPHIRE_PANTHER_STATUE"),
+                memory.tunable_offset("IH_PRIMARY_TARGET_VALUE_MADRAZO_FILES"),
+                memory.tunable_offset("IH_PRIMARY_TARGET_VALUE_PINK_DIAMOND"),
+                memory.tunable_offset("IH_PRIMARY_TARGET_VALUE_BEARER_BONDS"),
+                memory.tunable_offset("IH_PRIMARY_TARGET_VALUE_PEARL_NECKLACE"),
+                memory.tunable_offset("IH_PRIMARY_TARGET_VALUE_TEQUILA"),
+            }
             QUICK_PRESET = menu.toggle(CAYO_PRESETS, TRANSLATE("Quick Preset (1 - 4P)"), {"hccpquick"}, IS_WORKING(true) .. TRANSLATE("There is only a primary target, depends on which you selected. All players of the heist session can get the max payout ($2.45M) by only getting it."), function()
                 if menu.get_value(QUICK_PRESET) then
                     menu.trigger_commands("hccprefreshboard")
@@ -832,12 +848,12 @@
 
                     local Value = menu.get_value(QUICK_PRESET_TARGET)
                     local CPTargets = { -- { stat_set_int, set_int_global }
-                        { 5, 262145 + memory.tunable_offset("IH_PRIMARY_TARGET_VALUE_SAPPHIRE_PANTHER_STATUE") },
-                        { 4, 262145 + memory.tunable_offset("IH_PRIMARY_TARGET_VALUE_MADRAZO_FILES") },
-                        { 3, 262145 + memory.tunable_offset("IH_PRIMARY_TARGET_VALUE_PINK_DIAMOND") },
-                        { 2, 262145 + memory.tunable_offset("IH_PRIMARY_TARGET_VALUE_BEARER_BONDS") },
-                        { 1, 262145 + memory.tunable_offset("IH_PRIMARY_TARGET_VALUE_PEARL_NECKLACE") },
-                        { 0, 262145 + memory.tunable_offset("IH_PRIMARY_TARGET_VALUE_TEQUILA") },
+                        { 5, 262145 + QuickPresetTunables[1] },
+                        { 4, 262145 + QuickPresetTunables[2] },
+                        { 3, 262145 + QuickPresetTunables[3] },
+                        { 2, 262145 + QuickPresetTunables[4] },
+                        { 1, 262145 + QuickPresetTunables[5] },
+                        { 0, 262145 + QuickPresetTunables[6] },
                     }
                     STAT_SET_INT("H4CNF_TARGET", CPTargets[Value][1])
                     SET_INT_GLOBAL(CPTargets[Value][2], 2455000)
@@ -1794,12 +1810,16 @@
             SET_INT_LOCAL("fm_mission_controller_2020", 1721, 0)
         end)
 
+        CPRemFeeTunables = {
+            memory.tunable_offset(902085532),
+            memory.tunable_offset(-1135949374),
+        }
         CP_REM_FEE = menu.toggle_loop(PERICO_ADV, TRANSLATE("Remove The Fencing Fee And Pavel's Cut"), {"hccpremfee"}, TRANSLATE("(Local)") .. "\n\n" .. TRANSLATE("You should enable the preset until the end of the heist!"), function()
-            SET_FLOAT_TUNABLE_GLOBAL(902085532, 0)
-            SET_FLOAT_TUNABLE_GLOBAL(-1135949374, 0)
+            SET_FLOAT_GLOBAL(262145 + CPRemFeeTunables[1], 0)
+            SET_FLOAT_GLOBAL(262145 + CPRemFeeTunables[2], 0)
         end, function()
-            SET_FLOAT_TUNABLE_GLOBAL(902085532, -0.1)
-            SET_FLOAT_TUNABLE_GLOBAL(-1135949374, -0.02)
+            SET_FLOAT_GLOBAL(262145 + CPRemFeeTunables[1], -0.1)
+            SET_FLOAT_GLOBAL(262145 + CPRemFeeTunables[2], -0.02)
         end)
 
         menu.action(PERICO_ADV, TRANSLATE("Obtain The Primary Target"), {"hccpfintar"}, IS_WORKING(true) .. "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Compound") .. " > " .. TRANSLATE("Primary Target") .. ")", function() -- https://www.unknowncheats.me/forum/3418914-post13398.html
@@ -2245,6 +2265,10 @@
 
 --- Diamond Casino Heist
 
+    CasinoPresetTunables = {
+        memory.tunable_offset(1277889925),
+        memory.tunable_offset(-582734553),
+    }
     CASINO_PRESETS = menu.list(CASINO_HEIST, TRANSLATE("Automated Presets"), {}, TRANSLATE("Please don't forget that buyer should be selected 'Low'! Otherwise, won't get money."), function(); end)
 
         CASINO_PRESETS_DIAMOND = menu.list(CASINO_PRESETS, TRANSLATE("Diamonds"), {}, TRANSLATE("If the Heist Planning (Board 3) is empty, then please re-enable the preset that you enabled!"), function(); end)
@@ -2294,7 +2318,7 @@
                 end
 
                 while menu.get_value(DIAMOND_SS) do
-                    SET_INT_TUNABLE_GLOBAL(1277889925, 1410065408)
+                    SET_INT_GLOBAL(262145 + CasinoPresetTunables[1], 1410065408)
                     for i = 1, #ForCasinoPresets do
                         menu.set_value(ForCasinoPresets[i][1], ForCasinoPresets[i][2])
                     end
@@ -2348,7 +2372,7 @@
                 end
 
                 while menu.get_value(DIAMOND_BA) do
-                    SET_INT_TUNABLE_GLOBAL(1277889925, 1410065408)
+                    SET_INT_GLOBAL(262145 + CasinoPresetTunables[1], 1410065408)
                     for i = 1, #ForCasinoPresets do
                         menu.set_value(ForCasinoPresets[i][1], ForCasinoPresets[i][2])
                     end
@@ -2402,7 +2426,7 @@
                 end
 
                 while menu.get_value(DIAMOND_AA) do
-                    SET_INT_TUNABLE_GLOBAL(1277889925, 1410065408)
+                    SET_INT_GLOBAL(262145 + CasinoPresetTunables[1], 1410065408)
                     for i = 1, #ForCasinoPresets do
                         menu.set_value(ForCasinoPresets[i][1], ForCasinoPresets[i][2])
                     end
@@ -2460,7 +2484,7 @@
                 end
 
                 while menu.get_value(GOLD_SS) do
-                    SET_INT_TUNABLE_GLOBAL(-582734553, 1410065408)
+                    SET_INT_GLOBAL(262145 + CasinoPresetTunables[2], 1410065408)
                     for i = 1, #ForCasinoPresets do
                         menu.set_value(ForCasinoPresets[i][1], ForCasinoPresets[i][2])
                     end
@@ -2514,7 +2538,7 @@
                 end
 
                 while menu.get_value(GOLD_BA) do
-                    SET_INT_TUNABLE_GLOBAL(-582734553, 1410065408)
+                    SET_INT_GLOBAL(262145 + CasinoPresetTunables[2], 1410065408)
                     for i = 1, #ForCasinoPresets do
                         menu.set_value(ForCasinoPresets[i][1], ForCasinoPresets[i][2])
                     end
@@ -2567,7 +2591,7 @@
                 end
 
                 while menu.get_value(GOLD_AA) do
-                    SET_INT_TUNABLE_GLOBAL(-582734553, 1410065408)
+                    SET_INT_GLOBAL(262145 + CasinoPresetTunables[2], 1410065408)
                     for i = 1, #ForCasinoPresets do
                         menu.set_value(ForCasinoPresets[i][1], ForCasinoPresets[i][2])
                     end
@@ -2656,7 +2680,7 @@
         end)
 
         menu.action(CAH_ADVCED, TRANSLATE("Skip Drilling The Vault Door"), {"hccahinsvault"}, IS_WORKING(false), function() -- https://www.unknowncheats.me/forum/3418914-post13398.html
-            SET_INT_LOCAL("fm_mission_controller", 10107 + 7, GET_INT_LOCAL("fm_mission_controller", 10101 + 37))
+            SET_INT_LOCAL("fm_mission_controller", 10107 + 7, GET_INT_LOCAL("fm_mission_controller", 10107 + 37))
         end)
 
         menu.action(CAH_ADVCED, TRANSLATE("Refresh Arcade Boards"), {"hccahrefreshboards"}, TRANSLATE("You can update casino heist stats while even you in the arcade."), function()
@@ -3343,12 +3367,16 @@
 
         ---
 
+        DoomsBypassMinMaxTunables = {
+            memory.tunable_offset(-2020782937),
+            memory.tunable_offset(944111042),
+        }
         menu.toggle_loop(DOOMS_PLAYER_CUT, TRANSLATE("Bypass Minimum And Maximum Percentage"), {}, TRANSLATE("Only works if you are host of the heist.") .. "\n\n" .. TRANSLATE("It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts."), function()
-            SET_INT_TUNABLE_GLOBAL(-2020782937, 0) -- https://www.unknowncheats.me/forum/3732338-post132.html
-            SET_INT_TUNABLE_GLOBAL(944111042, 100)
+            SET_INT_GLOBAL(262145 + DoomsBypassMinMaxTunables[1], 0) -- https://www.unknowncheats.me/forum/3732338-post132.html
+            SET_INT_GLOBAL(262145 + DoomsBypassMinMaxTunables[2], 100)
         end, function()
-            SET_INT_TUNABLE_GLOBAL(-2020782937, 15)
-            SET_INT_TUNABLE_GLOBAL(944111042, 85)
+            SET_INT_GLOBAL(262145 + DoomsBypassMinMaxTunables[1], 15)
+            SET_INT_GLOBAL(262145 + DoomsBypassMinMaxTunables[2], 85)
         end)
 
     ---
@@ -3420,11 +3448,19 @@
 
     ---
 
-
+    FleecaBypassMinMaxTunables = {
+        memory.tunable_offset("MAX_HEIST_CUT_AMOUNT"),
+        memory.tunable_offset("MEMBER_MIN_HEIST_FINALE_TAKE_PERCENTAGE"),
+        memory.tunable_offset("LEADER_MIN_HEIST_FINALE_TAKE_PERCENTAGE"),
+    }
     menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Bypass Minimum And Maximum Percentage"), {}, TRANSLATE("Only works if you are host of the heist.") .. "\n\n" .. TRANSLATE("It allows you set 0 ~ 100(%) by modifying the heist board, ignores all of restrictions modifying cuts."), function()
-        SET_INT_TUNABLE_GLOBAL("MAX_HEIST_CUT_AMOUNT", 100) -- Default: 70(%), https://www.unknowncheats.me/forum/3664875-post95.html
-        SET_INT_TUNABLE_GLOBAL("MEMBER_MIN_HEIST_FINALE_TAKE_PERCENTAGE", 0) -- Default: 15(%)
-        SET_INT_TUNABLE_GLOBAL("LEADER_MIN_HEIST_FINALE_TAKE_PERCENTAGE", 0) -- Default: 15(%)
+        SET_INT_GLOBAL(262145 + FleecaBypassMinMaxTunables[1], 100) -- https://www.unknowncheats.me/forum/3664875-post95.html
+        SET_INT_GLOBAL(262145 + FleecaBypassMinMaxTunables[2], 0)
+        SET_INT_GLOBAL(262145 + FleecaBypassMinMaxTunables[3], 0)
+    end, function()
+        SET_INT_GLOBAL(262145 + FleecaBypassMinMaxTunables[1], 70)
+        SET_INT_GLOBAL(262145 + FleecaBypassMinMaxTunables[2], 15)
+        SET_INT_GLOBAL(262145 + FleecaBypassMinMaxTunables[3], 15)
     end)
 
     menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Complete All Setup"), {}, TRANSLATE("Works on all of the classic heists. You need to activate this until first setup mission is ended."), function()
@@ -3435,6 +3471,42 @@
 
 
 --- LS Robbery
+
+    LSRob1MTunables = {
+        memory.tunable_offset("TUNER_ROBBERY_GOON_CASH_REWARD"),
+        memory.tunable_offset("TUNER_ROBBERY_LEADER_CASH_REWARD0"),
+        memory.tunable_offset("TUNER_ROBBERY_LEADER_CASH_REWARD1"),
+        memory.tunable_offset("TUNER_ROBBERY_LEADER_CASH_REWARD2"),
+        memory.tunable_offset("TUNER_ROBBERY_LEADER_CASH_REWARD3"),
+        memory.tunable_offset("TUNER_ROBBERY_LEADER_CASH_REWARD4"),
+        memory.tunable_offset("TUNER_ROBBERY_LEADER_CASH_REWARD5"),
+        memory.tunable_offset("TUNER_ROBBERY_LEADER_CASH_REWARD6"),
+        memory.tunable_offset("TUNER_ROBBERY_LEADER_CASH_REWARD7"),
+        memory.tunable_offset("TUNER_ROBBERY_CONTACT_FEE"),
+    }
+    menu.toggle_loop(LS_ROBBERY, TRANSLATE("Modify Contracts payout - $1 Million"), {"hcls1m"}, IS_WORKING(true) .. TRANSLATE("(Local)") .. "\n\n" .. TRANSLATE("Always keep this option enabled before starting a contract"), function()
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[1], 1000000) -- TUNER_ROBBERY_GOON_CASH_REWARD
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[2] + 0, 1000000) -- TUNER_ROBBERY_LEADER_CASH_REWARD0
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[3] + 1, 1000000) -- TUNER_ROBBERY_LEADER_CASH_REWARD1
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[4] + 2, 1000000) -- TUNER_ROBBERY_LEADER_CASH_REWARD2
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[5] + 3, 1000000) -- TUNER_ROBBERY_LEADER_CASH_REWARD3
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[6] + 4, 1000000) -- TUNER_ROBBERY_LEADER_CASH_REWARD4
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[7] + 5, 1000000) -- TUNER_ROBBERY_LEADER_CASH_REWARD5
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[8] + 6, 1000000) -- TUNER_ROBBERY_LEADER_CASH_REWARD6
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[9] + 7, 1000000) -- TUNER_ROBBERY_LEADER_CASH_REWARD7
+        SET_FLOAT_GLOBAL(262145 + LSRob1MTunables[10], 0) -- TUNER_ROBBERY_CONTACT_FEE
+    end, function()
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[1], 50000)
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[2] + 0, 300000)
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[3] + 1, 185000)
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[4] + 2, 178000)
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[5] + 3, 172000)
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[6] + 4, 175000)
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[7] + 5, 182000)
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[8] + 6, 180000)
+        SET_INT_GLOBAL(262145 + LSRob1MTunables[9] + 7, 170000)
+        SET_FLOAT_GLOBAL(262145 + LSRob1MTunables[10], 0.1)
+    end)
 
     menu.action(LS_ROBBERY, TRANSLATE("Union Depository"), {"hclsunion"}, "", function()
         STAT_SET_INT("TUNER_GEN_BS", 12543)
@@ -3593,24 +3665,34 @@
             STAT_SET_INT("FIXER_STORY_COOLDOWN", -1)
         end)
 
+        TH2MTunables = {
+            memory.tunable_offset("FIXER_FINALE_LEADER_CASH_REWARD")
+        }
         menu.toggle_loop(TH_CONTRACT, TRANSLATE("Modify Finale's Payout (2 Million)"), {"hcagc2m"}, TRANSLATE("(Local)"), function()
-            SET_INT_TUNABLE_GLOBAL("FIXER_FINALE_LEADER_CASH_REWARD", 2000000)
+            SET_INT_GLOBAL(262145 + TH2MTunables[1], 2000000)
         end, function()
-            SET_INT_TUNABLE_GLOBAL("FIXER_FINALE_LEADER_CASH_REWARD", 1000000)
+            SET_INT_GLOBAL(262145 + TH2MTunables[1], 1000000)
         end)
 
+        THContractRemCooldownTunables= {
+            memory.tunable_offset("FIXER_SECURITY_CONTRACT_COOLDOWN_TIME"),
+            memory.tunable_offset(-2036534141),
+        }
         menu.toggle_loop(TH_CONTRACT, TRANSLATE("Remove Contracts & Payphone Hits Cooldown"), {"hcagcremcontractcool"}, TRANSLATE("Make sure it's enabled before starting any contracts or hits."), function() -- Credit goes to Da Chaos#9262
-            SET_INT_TUNABLE_GLOBAL("FIXER_SECURITY_CONTRACT_COOLDOWN_TIME", 0) 
-            SET_INT_TUNABLE_GLOBAL(-2036534141, 0)
+            SET_INT_GLOBAL(262145 + THContractRemCooldownTunables[1], 0) 
+            SET_INT_GLOBAL(262145 + THContractRemCooldownTunables[2], 0)
         end, function()
-            SET_INT_TUNABLE_GLOBAL("FIXER_SECURITY_CONTRACT_COOLDOWN_TIME", 300000)
-            SET_INT_TUNABLE_GLOBAL(-2036534141, 500)
+            SET_INT_GLOBAL(262145 + THContractRemCooldownTunables[1], 300000)
+            SET_INT_GLOBAL(262145 + THContractRemCooldownTunables[2], 500)
         end)
 
+        THSecurityRemCooldownTunables = {
+            memory.tunable_offset(1872071131),
+        }
         menu.toggle_loop(TH_CONTRACT, TRANSLATE("Remove Security Mission Cooldown"), {"hcagcremsecuritycool"}, "", function()
-            SET_INT_TUNABLE_GLOBAL(1872071131, 0)
+            SET_INT_GLOBAL(262145 + THSecurityRemCooldownTunables[1], 0)
         end, function()
-            SET_INT_TUNABLE_GLOBAL(1872071131, 1200000)
+            SET_INT_GLOBAL(262145 + THSecurityRemCooldownTunables[1], 1200000)
         end)
 
         menu.textslider(TH_CONTRACT, TRANSLATE("Remote Access: Agency App"), {"hcappagency"}, TRANSLATE("Note that you don't have the app, some of functions won't work."), {
@@ -3760,7 +3842,7 @@
             end)
 
             menu.action(ARENA_TOOL, TRANSLATE("Unlock Clothing"), {}, "", function()
-                SET_PACKED_INT_GLOBAL("ENABLE_LOGIN_ALBANY_LOGO_WHITE_SHIRT", "ENABLE_LOGIN_DECLASSE_LADY_BLACK_SHIRT", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("ENABLE_LOGIN_ALBANY_LOGO_WHITE_SHIRT", "ENABLE_LOGIN_DECLASSE_LADY_BLACK_SHIRT", 1)
             end)
 
         ---
@@ -3777,7 +3859,7 @@
             end)
 
             menu.action(SUMMER2020, TRANSLATE("Unlock Clothing"), {}, "", function()
-                SET_PACKED_INT_GLOBAL("ENABLE_LOGIN_BCTR_AGED_TEE", "ENABLE_LOGIN_LEMON_SPORTS_TRACK_TOP", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("ENABLE_LOGIN_BCTR_AGED_TEE", "ENABLE_LOGIN_LEMON_SPORTS_TRACK_TOP", 1)
             end)
 
         ---
@@ -3816,10 +3898,10 @@
         CONTRACT_DLC = menu.list(DLC_UNLOCKER, TRANSLATE("The Contract DLC"), {}, "", function(); end)
 
             menu.action(CONTRACT_DLC, TRANSLATE("Unlock Animal Masks"), {}, "", function()
-                SET_PACKED_INT_GLOBAL("FIXER_LOGIN_AWARD_FISHMASK_1", "FIXER_LOGIN_AWARD_SEALMASK_4", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("FIXER_LOGIN_AWARD_FISHMASK_1", "FIXER_LOGIN_AWARD_SEALMASK_4", 1)
             end)
             menu.action(CONTRACT_DLC, TRANSLATE("Unlock DJ Pooh Shirts"), {}, "", function()
-                SET_PACKED_INT_GLOBAL("FIXER_LOGIN_DJ_POOH_ORANGE", "FIXER_LOGIN_DJ_POOH_BLUE", 1) 
+                SET_PACKED_INT_TUNABLE_GLOBAL("FIXER_LOGIN_DJ_POOH_ORANGE", "FIXER_LOGIN_DJ_POOH_BLUE", 1) 
             end)
 
         ---
@@ -3827,27 +3909,27 @@
         CRIMINAL_DLC = menu.list(DLC_UNLOCKER, TRANSLATE("The Criminal Enterprises DLC"), {}, "", function(); end) -- https://www.unknowncheats.me/forum/3492512-post53.html
             
             menu.action(CRIMINAL_DLC, TRANSLATE("Jackets / Sweaters / Hoodies / Shirts"), {}, "", function()
-                SET_PACKED_INT_GLOBAL(-1967834023, -1263992372, 1) 
-                SET_PACKED_INT_GLOBAL(-206691492, -1577621449, 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL(-1967834023, -1263992372, 1) 
+                SET_PACKED_INT_TUNABLE_GLOBAL(-206691492, -1577621449, 1)
             end)
             menu.action(CRIMINAL_DLC, TRANSLATE("Pants / Caps / Hats"), {}, "", function()
-                SET_PACKED_INT_GLOBAL(638571354, 96152168, 1)
-                SET_PACKED_INT_GLOBAL(-2120678580, -1003907171, 1)
-                SET_PACKED_INT_GLOBAL(191276118, -1484490421, 1)
-                SET_PACKED_INT_GLOBAL("SUM2_CHRISTMAS_BEERHAT_LEMON", "SUM2_CHRISTMAS_BEERHAT_RED_REINDEER", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL(638571354, 96152168, 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL(-2120678580, -1003907171, 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL(191276118, -1484490421, 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("SUM2_CHRISTMAS_BEERHAT_LEMON", "SUM2_CHRISTMAS_BEERHAT_RED_REINDEER", 1)
                 SET_INT_TUNABLE_GLOBAL(-339902614, 1)
             end)
             menu.action(CRIMINAL_DLC, TRANSLATE("Earphones / Masks / Tech Demon"), {}, "", function()
-                SET_PACKED_INT_GLOBAL(-889497715, -1162924007, 1)
-                SET_PACKED_INT_GLOBAL(1096886904, -359187968, 1)
-                SET_PACKED_INT_GLOBAL(190205845, -171130807, 1)
-                SET_PACKED_INT_GLOBAL(1424509866, -1677619307, 1)
-                SET_PACKED_INT_GLOBAL(-1285035231, -1792568167, 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL(-889497715, -1162924007, 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL(1096886904, -359187968, 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL(190205845, -171130807, 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL(1424509866, -1677619307, 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL(-1285035231, -1792568167, 1)
                 SET_INT_TUNABLE_GLOBAL(505550305, 1)
             end)
             menu.action(CRIMINAL_DLC, TRANSLATE("Shoes (Sliders) / Tiger"), {}, "", function()
-                SET_PACKED_INT_GLOBAL(467678514, 169972145, 1)
-                SET_PACKED_INT_GLOBAL(245491514, -141827484, 1) 
+                SET_PACKED_INT_TUNABLE_GLOBAL(467678514, 169972145, 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL(245491514, -141827484, 1) 
             end)
             
         ---
@@ -3855,7 +3937,7 @@
         DRUG_WAR = menu.list(DLC_UNLOCKER, TRANSLATE("Drug War DLC"), {}, "", function(); end)
 
             menu.action(DRUG_WAR, TRANSLATE("Unlock Clothing"), {}, "", function() -- https://www.unknowncheats.me/forum/3635453-post69.html
-                SET_PACKED_INT_GLOBAL("EVENT_LOGIN_DLC22022_ICE_VINYL_JACKET_3", "PURPLE_SNAKESKIN_MOTOR_HELMET", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("EVENT_LOGIN_DLC22022_ICE_VINYL_JACKET_3", "PURPLE_SNAKESKIN_MOTOR_HELMET", 1)
             end)
 
         ---
@@ -3988,11 +4070,11 @@
             STAT_SET_BOOL("IAP_GOLD_TANK", true)
             STAT_SET_BOOL("SCGW_WON_NO_DEATHS", true)
 
-            SET_PACKED_INT_GLOBAL("STREET_CRIMES_BOXART_TEE", "RED_FAME_OR_SHAME_KRONOS", 1) -- For Clothing
+            SET_PACKED_INT_TUNABLE_GLOBAL("STREET_CRIMES_BOXART_TEE", "RED_FAME_OR_SHAME_KRONOS", 1) -- For Clothing
         end)
 
         menu.action(UNLOCKER_BUILDING, TRANSLATE("Casino Store Ace Masks"), {}, TRANSLATE("Make sure click before buying. When you change your session, will be changed to non-unlocked status."), function()
-            SET_PACKED_INT_GLOBAL("VC_ACE_OF_SPADES", "VC_ACE_OF_DIAMONDS", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("VC_ACE_OF_SPADES", "VC_ACE_OF_DIAMONDS", 1)
         end)
 
         menu.action(UNLOCKER_BUILDING, TRANSLATE("Add Cosmetic Decorations To The Office/MC"), {}, TRANSLATE("To apply, sell special crate or vehicle cargo and change your session!"), function()
@@ -4055,11 +4137,11 @@
             STAT_SET_BOOL("COMPLETE_H4_F_USING_ANNIH", true)
             STAT_SET_BOOL("COMPLETE_H4_F_USING_ALKONOS", true)
             STAT_SET_BOOL("COMPLETE_H4_F_USING_PATROLB", true)
-            SET_PACKED_INT_GLOBAL("TOPS_ISLAND_HEIST_EVENT_JACKET_1", "PANTS_BIGNESS_TIE_DYE_SWEAT_PANTS", 1)
-            SET_PACKED_INT_GLOBAL("ACCESSORIES_GLOW_BRACELET_1", "ACCESSORIES_GLOW_NECKLACE_16", 1)
-            SET_PACKED_INT_GLOBAL("HEIST4_FESTIVE_MASK_0", "HEIST4_FESTIVE_MASK_19", 1)
-            SET_PACKED_INT_GLOBAL("ACCESSORIES_SUNGLASSES_1_0", "ACCESSORIES_SUNGLASSES_3_11", 1)
-            SET_PACKED_INT_GLOBAL("PALMS_TRAX_EVENT_TEE_1", "STILL_SLIPPING_EVENT_TEE_2", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("TOPS_ISLAND_HEIST_EVENT_JACKET_1", "PANTS_BIGNESS_TIE_DYE_SWEAT_PANTS", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("ACCESSORIES_GLOW_BRACELET_1", "ACCESSORIES_GLOW_NECKLACE_16", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("HEIST4_FESTIVE_MASK_0", "HEIST4_FESTIVE_MASK_19", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("ACCESSORIES_SUNGLASSES_1_0", "ACCESSORIES_SUNGLASSES_3_11", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("PALMS_TRAX_EVENT_TEE_1", "STILL_SLIPPING_EVENT_TEE_2", 1)
         end)
 
         menu.action(UNLOCKER_HEISTS, TRANSLATE("Diamond Casino Heist"), {}, "", function()
@@ -4347,9 +4429,15 @@
 
         XMAS_FEATURES = menu.list(UNLOCKER_ANNIVERSARY, TRANSLATE("Christmas"), {}, "", function(); end)
 
+            BypassXMASTunables = {
+                memory.tunable_offset("DISABLE_SNOWBALLS"),
+                memory.tunable_offset("ENABLE_CLEAR_STRUCT_ON_TRAN_FAIL"),
+                memory.tunable_offset("MAX_NUMBER_OF_SNOWBALLS"),
+                memory.tunable_offset("PICK_UP_NUMBER_OF_SNOWBALLS"),
+            }
             menu.toggle_loop(XMAS_FEATURES, TRANSLATE("Bypass Christmas Clothing"), {}, TRANSLATE("You must keep this feature enabled in order to wear it!"), function()
-                SET_PACKED_INT_GLOBAL("DISABLE_SNOWBALLS", "ENABLE_CLEAR_STRUCT_ON_TRAN_FAIL", 0)
-                SET_PACKED_INT_GLOBAL("MAX_NUMBER_OF_SNOWBALLS", "PICK_UP_NUMBER_OF_SNOWBALLS", 7)
+                SET_PACKED_INT_GLOBAL(BypassXMASTunables[1], BypassXMASTunables[2], 0)
+                SET_PACKED_INT_GLOBAL(BypassXMASTunables[3], BypassXMASTunables[4], 7)
             end)
             
             menu.action(XMAS_FEATURES, TRANSLATE("Unlock Christmas Liveries"), {}, "", function()
@@ -4359,18 +4447,18 @@
             end)
 
             menu.action(XMAS_FEATURES, TRANSLATE("Unlock Christmas Content"), {}, "", function()
-                SET_PACKED_INT_GLOBAL("DISABLE_SNOWBALLS", "PICK_UP_NUMBER_OF_SNOWBALLS", 1)
-                SET_PACKED_INT_GLOBAL("TOGGLE_CHRISTMAS_EVE_GIFT", "TOGGLE_NEW_YEARS_DAY_GIFT", 1)
-                SET_PACKED_INT_GLOBAL("XMAS2015_VEHICLE", "XMAS2015_MASKS", 1)
-                SET_PACKED_INT_GLOBAL("TOGGLE_2015_CHRISTMAS_EVE_GIFT", "TOGGLE_2015_CHRISTMAS_DAY_GIFT", 1)
-                SET_PACKED_INT_GLOBAL("TOGGLE_2016_CHRISTMAS_EVE_GIFT", "TOGGLE_2016_CHRISTMAS_DAY_GIFT", 1)
-                SET_PACKED_INT_GLOBAL(1840129338, -495986083, 1)
-                SET_PACKED_INT_GLOBAL(-101086705, "TOGGLE_2017_CHRISTMAS_DAY_GIFT", 1)
-                SET_PACKED_INT_GLOBAL("XMASDAYGIFT2018_CAR", "XMASDAYGIFT2018_CAR2", 1)
-                SET_PACKED_INT_GLOBAL("TOGGLE_2018_CHRISTMAS_EVE_GIFT", "TOGGLE_2018_CHRISTMAS_DAY_GIFT", 1)
-                SET_PACKED_INT_GLOBAL("TOGGLE_2019_CHRISTMAS_EVE_GIFT", "TOGGLE_2019_CHRISTMAS_DAY_GIFT", 1)
-                SET_PACKED_INT_GLOBAL("TOGGLE_2021_CHRISTMAS_GIFT", "TOGGLE_2021_NEW_YEARS_GIFT", 1)
-                SET_PACKED_INT_GLOBAL("XMASGIFTS2022", "NEWYEARSGIFTS2022", 1) -- https://www.unknowncheats.me/forum/3630405-post34.html (2022)
+                SET_PACKED_INT_TUNABLE_GLOBAL("DISABLE_SNOWBALLS", "PICK_UP_NUMBER_OF_SNOWBALLS", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("TOGGLE_CHRISTMAS_EVE_GIFT", "TOGGLE_NEW_YEARS_DAY_GIFT", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("XMAS2015_VEHICLE", "XMAS2015_MASKS", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("TOGGLE_2015_CHRISTMAS_EVE_GIFT", "TOGGLE_2015_CHRISTMAS_DAY_GIFT", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("TOGGLE_2016_CHRISTMAS_EVE_GIFT", "TOGGLE_2016_CHRISTMAS_DAY_GIFT", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL(1840129338, -495986083, 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL(-101086705, "TOGGLE_2017_CHRISTMAS_DAY_GIFT", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("XMASDAYGIFT2018_CAR", "XMASDAYGIFT2018_CAR2", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("TOGGLE_2018_CHRISTMAS_EVE_GIFT", "TOGGLE_2018_CHRISTMAS_DAY_GIFT", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("TOGGLE_2019_CHRISTMAS_EVE_GIFT", "TOGGLE_2019_CHRISTMAS_DAY_GIFT", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("TOGGLE_2021_CHRISTMAS_GIFT", "TOGGLE_2021_NEW_YEARS_GIFT", 1)
+                SET_PACKED_INT_TUNABLE_GLOBAL("XMASGIFTS2022", "NEWYEARSGIFTS2022", 1) -- https://www.unknowncheats.me/forum/3630405-post34.html (2022)
                 SET_INT_TUNABLE_GLOBAL("TOGGLE_XMAS_CONTENT", 1)
                 SET_INT_TUNABLE_GLOBAL("TOGGLE_GIFT_TO_PLAYER_WHEN_LOGGING_ON", 1)
                 SET_INT_TUNABLE_GLOBAL("XMAS2015_PYJAMAS", 1)
@@ -4382,15 +4470,22 @@
 
         ---
 
+        IndependenceTunables = {
+            memory.tunable_offset("INDEPENDENCE_DAY_DEACTIVATE_FIREWORKS_LAUNCHER"),
+            memory.tunable_offset("TOGGLE_ACTIVATE_MONSTER_TRUCK"),
+            memory.tunable_offset("UNLOCKINDEPENDENCE_BEER_HAT_1"),
+            memory.tunable_offset("UNLOCKINDEPENDENCE_STATUE_HAPPINESS_SHIRT"),
+            memory.tunable_offset("TOGGLE_ACTIVATE_INDEPENDENCE_PACK"),
+        }
         menu.toggle_loop(UNLOCKER_ANNIVERSARY, TRANSLATE("Independence's Day"), {}, TRANSLATE("Note: You may need to keep activating to use some of Independence Day's contents."), function()
-            SET_PACKED_INT_GLOBAL("INDEPENDENCE_DAY_DEACTIVATE_FIREWORKS_LAUNCHER", "TOGGLE_ACTIVATE_MONSTER_TRUCK", 1)
-            SET_PACKED_INT_GLOBAL("UNLOCKINDEPENDENCE_BEER_HAT_1", "UNLOCKINDEPENDENCE_STATUE_HAPPINESS_SHIRT", 1)
-            SET_INT_TUNABLE_GLOBAL("TOGGLE_ACTIVATE_INDEPENDENCE_PACK", 1)
+            SET_PACKED_INT_GLOBAL(IndependenceTunables[1], IndependenceTunables[2], 1)
+            SET_PACKED_INT_GLOBAL(IndependenceTunables[3], IndependenceTunables[4], 1)
+            SET_INT_GLOBAL(262145 + IndependenceTunables[5], 1)
         end)
 
         menu.action(UNLOCKER_ANNIVERSARY, TRANSLATE("Valentine's Day"), {}, "", function()
-            SET_PACKED_INT_GLOBAL("TURN_ON_VALENTINE_WEAPON", "TURN_ON_VALENTINE_CLOTHING", 1)
-            SET_PACKED_INT_GLOBAL("TURN_ON_VALENTINE_2016_CLOTHING", "TURN_ON_VALENTINE_2016_VEHICLE", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("TURN_ON_VALENTINE_WEAPON", "TURN_ON_VALENTINE_CLOTHING", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("TURN_ON_VALENTINE_2016_CLOTHING", "TURN_ON_VALENTINE_2016_VEHICLE", 1)
             SET_INT_TUNABLE_GLOBAL("TURN_ON_VALENTINES_EVENT", 1)
         end)
 
@@ -4399,20 +4494,20 @@
     UNLOCKER_SHIRT_HAT = menu.list(MASTER_UNLOCKER, TRANSLATE("Clothes"), {}, "", function(); end)
     
         menu.action(UNLOCKER_SHIRT_HAT, TRANSLATE("Unlock Lots of Hats And Shirts"), {}, TRANSLATE("500+ unlocks are included, try and see how many clothes would be unlocked."), function()
-            SET_PACKED_INT_GLOBAL("DLC_SHIRT_MELTDOWN", "DLC_SHIRT_CAPOLAVORO", 1)
-            SET_PACKED_INT_GLOBAL("AWARD_LOW_HATS_MAGNETICS_SCRIPT", "AWARD_LOW_TSHIRT_VAMPIRES_ON_THE_BEACH", 1)
-            SET_PACKED_INT_GLOBAL("ACCOUNTANTSHIRTEVENT", "CRESTTSHIRTEVENT", 1)
-            SET_PACKED_INT_GLOBAL("AWARD_JUMPSUIT_WHITE", "AWARD_JUMPSUIT_SILVER", 1)
-            SET_PACKED_INT_GLOBAL("TSHIRT_WESTERN_BIG_LOGO_WHITE", 310744591, 1)
-            SET_PACKED_INT_GLOBAL("AWARD_BLACK_AMMUNATION_CAP", "AWARD_RSTAR_LOGO_WHITE", 1)
-            SET_PACKED_INT_GLOBAL("AWARD_EMOTION_983_TSHIRT", "AWARD_FAKE_VAPID_TSHIRT", 1)
-            SET_PACKED_INT_GLOBAL("MAISONETTE_LOS_SANTOS_TSHIRT", "TONYS_FUN_HOUSE_TSHIRT", 1)
-            SET_PACKED_INT_GLOBAL("AWARD_LS_UR", "AWARD_BLAINE_COUNTY_RADIO", 1)
-            SET_PACKED_INT_GLOBAL(-726113206, -1910486921, 1)
-            SET_PACKED_INT_GLOBAL(-1344369866, 1799248495, 1)
-            SET_PACKED_INT_GLOBAL(760292630, 1007326524, 1)
-            SET_PACKED_INT_GLOBAL("HATS_ISLAND_HEIST_EVENT_HAT_1", "HATS_ISLAND_HEIST_EVENT_HAT_5", 1)
-            SET_PACKED_INT_GLOBAL("FIXER_LOGIN_DJ_POOH_ORANGE", "FIXER_LOGIN_DJ_POOH_BLUE", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("DLC_SHIRT_MELTDOWN", "DLC_SHIRT_CAPOLAVORO", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("AWARD_LOW_HATS_MAGNETICS_SCRIPT", "AWARD_LOW_TSHIRT_VAMPIRES_ON_THE_BEACH", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("ACCOUNTANTSHIRTEVENT", "CRESTTSHIRTEVENT", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("AWARD_JUMPSUIT_WHITE", "AWARD_JUMPSUIT_SILVER", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("TSHIRT_WESTERN_BIG_LOGO_WHITE", 310744591, 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("AWARD_BLACK_AMMUNATION_CAP", "AWARD_RSTAR_LOGO_WHITE", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("AWARD_EMOTION_983_TSHIRT", "AWARD_FAKE_VAPID_TSHIRT", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("MAISONETTE_LOS_SANTOS_TSHIRT", "TONYS_FUN_HOUSE_TSHIRT", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("AWARD_LS_UR", "AWARD_BLAINE_COUNTY_RADIO", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL(-726113206, -1910486921, 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL(-1344369866, 1799248495, 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL(760292630, 1007326524, 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("HATS_ISLAND_HEIST_EVENT_HAT_1", "HATS_ISLAND_HEIST_EVENT_HAT_5", 1)
+            SET_PACKED_INT_TUNABLE_GLOBAL("FIXER_LOGIN_DJ_POOH_ORANGE", "FIXER_LOGIN_DJ_POOH_BLUE", 1)
             SET_INT_TUNABLE_GLOBAL("ENABLE_RACE_CREATOR_JUBILEE", 1)
 
             -- https://www.unknowncheats.me/forum/grand-theft-auto-v/461672-gtahax-1-57-external-thread-3-a-23.html
@@ -4627,102 +4722,146 @@
 
             menu.divider(TUNABLES_CD, TRANSLATE("Supplies' Delay"))
 
+                MCCooldownTunables = {
+                    memory.tunable_offset("BIKER_PURCHASE_SUPPLIES_DELAY"),
+                }
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("MC Business"), {}, "", function()
-                    SET_INT_TUNABLE_GLOBAL("BIKER_PURCHASE_SUPPLIES_DELAY", 0)
+                    SET_INT_GLOBAL(262145 + MCCooldownTunables[1], 0)
                 end, function()
-                    SET_INT_TUNABLE_GLOBAL("BIKER_PURCHASE_SUPPLIES_DELAY", 600)
+                    SET_INT_GLOBAL(262145 + MCCooldownTunables[1], 600)
                 end)
                 
+                BunkerCooldownTunables = {
+                    memory.tunable_offset("GR_PURCHASE_SUPPLIES_DELAY"),
+                }
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Bunker"), {}, "", function()
-                    SET_INT_TUNABLE_GLOBAL("GR_PURCHASE_SUPPLIES_DELAY", 0)
+                    SET_INT_GLOBAL(262145 + BunkerCooldownTunables[1], 0)
                 end, function()
-                    SET_INT_TUNABLE_GLOBAL("GR_PURCHASE_SUPPLIES_DELAY", 600)
+                    SET_INT_GLOBAL(262145 + BunkerCooldownTunables[1], 600)
                 end)
 
             ---
 
             menu.divider(TUNABLES_CD, TRANSLATE("Buying And Selling"))
 
+                SCCooldownTunables = {
+                    memory.tunable_offset("EXEC_BUY_COOLDOWN"),
+                    memory.tunable_offset("EXEC_SELL_COOLDOWN"),
+                }
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Special Cargo"), {}, "", function() 
-                    SET_INT_TUNABLE_GLOBAL("EXEC_BUY_COOLDOWN", 0)
-                    SET_INT_TUNABLE_GLOBAL("EXEC_SELL_COOLDOWN", 0)
+                    SET_INT_GLOBAL(262145 + SCCooldownTunables[1], 0)
+                    SET_INT_GLOBAL(262145 + SCCooldownTunables[2], 0)
                 end, function()
-                    SET_INT_TUNABLE_GLOBAL("EXEC_BUY_COOLDOWN", 300000)
-                    SET_INT_TUNABLE_GLOBAL("EXEC_SELL_COOLDOWN", 1800000)
+                    SET_INT_GLOBAL(262145 + SCCooldownTunables[1], 300000)
+                    SET_INT_GLOBAL(262145 + SCCooldownTunables[2], 1800000)
                 end)
 
+                VCCooldownTunables = {
+                    memory.tunable_offset("IMPEXP_STEAL_COOLDOWN"),
+                    memory.tunable_offset(1001423248),
+                    memory.tunable_offset(240134765),
+                    memory.tunable_offset(1915379148),
+                    memory.tunable_offset(-824005590),
+                }
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Vehicle Cargo"), {}, "", function()
-                    SET_INT_TUNABLE_GLOBAL("IMPEXP_STEAL_COOLDOWN", 0)
-                    SET_INT_TUNABLE_GLOBAL(1001423248, 0) -- 1 Vehicle
-                    SET_INT_TUNABLE_GLOBAL(240134765, 0) -- 2 Vehicles
-                    SET_INT_TUNABLE_GLOBAL(1915379148, 0) -- 3 Vehicles
-                    SET_INT_TUNABLE_GLOBAL(-824005590, 0) -- 4 Vehicles
+                    SET_INT_GLOBAL(262145 + VCCooldownTunables[1], 0)
+                    SET_INT_GLOBAL(262145 + VCCooldownTunables[2], 0) -- 1 Vehicle
+                    SET_INT_GLOBAL(262145 + VCCooldownTunables[3], 0) -- 2 Vehicles
+                    SET_INT_GLOBAL(262145 + VCCooldownTunables[4], 0) -- 3 Vehicles
+                    SET_INT_GLOBAL(262145 + VCCooldownTunables[5], 0) -- 4 Vehicles
                 end, function()
-                    SET_INT_TUNABLE_GLOBAL("IMPEXP_STEAL_COOLDOWN", 180000)
-                    SET_INT_TUNABLE_GLOBAL(1001423248, 1200000)
-                    SET_INT_TUNABLE_GLOBAL(240134765, 1680000)
-                    SET_INT_TUNABLE_GLOBAL(1915379148, 2340000)
-                    SET_INT_TUNABLE_GLOBAL(-824005590, 2880000)
+                    SET_INT_GLOBAL(262145 + VCCooldownTunables[1], 180000)
+                    SET_INT_GLOBAL(262145 + VCCooldownTunables[2], 1200000)
+                    SET_INT_GLOBAL(262145 + VCCooldownTunables[3], 1680000)
+                    SET_INT_GLOBAL(262145 + VCCooldownTunables[4], 2340000)
+                    SET_INT_GLOBAL(262145 + VCCooldownTunables[5], 2880000)
                 end)
 
+                AFCCooldownTunables = {
+                    memory.tunable_offset("SMUG_STEAL_EASY_COOLDOWN_TIMER"),
+                    memory.tunable_offset("SMUG_STEAL_MED_COOLDOWN_TIMER"),
+                    memory.tunable_offset("SMUG_STEAL_HARD_COOLDOWN_TIMER"),
+                    memory.tunable_offset(1722502526),
+                    memory.tunable_offset(-1091356151),
+                }
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Air-Freight Cargo"), {}, "", function()
-                    SET_INT_TUNABLE_GLOBAL("SMUG_STEAL_EASY_COOLDOWN_TIMER", 0) -- Tobacco, Counterfeit Goods
-                    SET_INT_TUNABLE_GLOBAL("SMUG_STEAL_MED_COOLDOWN_TIMER", 0) -- Animal Materials, Art, Jewelry
-                    SET_INT_TUNABLE_GLOBAL("SMUG_STEAL_HARD_COOLDOWN_TIMER", 0) -- Narcotics, Chemicals, Medical Supplies
-                    SET_INT_TUNABLE_GLOBAL(1722502526, 0) -- Additional Time per Player
-                    SET_INT_TUNABLE_GLOBAL(-1091356151, 0) -- Sale
+                    SET_INT_GLOBAL(262145 + AFCCooldownTunables[1], 0) -- Tobacco, Counterfeit Goods
+                    SET_INT_GLOBAL(262145 + AFCCooldownTunables[2], 0) -- Animal Materials, Art, Jewelry
+                    SET_INT_GLOBAL(262145 + AFCCooldownTunables[3], 0) -- Narcotics, Chemicals, Medical Supplies
+                    SET_INT_GLOBAL(262145 + AFCCooldownTunables[4], 0) -- Additional Time per Player
+                    SET_INT_GLOBAL(262145 + AFCCooldownTunables[5], 0) -- Sale
                 end, function()
-                    SET_INT_TUNABLE_GLOBAL("SMUG_STEAL_EASY_COOLDOWN_TIMER", 120000)
-                    SET_INT_TUNABLE_GLOBAL("SMUG_STEAL_MED_COOLDOWN_TIMER", 180000)
-                    SET_INT_TUNABLE_GLOBAL("SMUG_STEAL_HARD_COOLDOWN_TIMER", 240000)
-                    SET_INT_TUNABLE_GLOBAL(1722502526, 60000)
-                    SET_INT_TUNABLE_GLOBAL(-1091356151, 2000)
+                    SET_INT_GLOBAL(262145 + AFCCooldownTunables[1], 120000)
+                    SET_INT_GLOBAL(262145 + AFCCooldownTunables[2], 180000)
+                    SET_INT_GLOBAL(262145 + AFCCooldownTunables[3], 240000)
+                    SET_INT_GLOBAL(262145 + AFCCooldownTunables[4], 60000)
+                    SET_INT_GLOBAL(262145 + AFCCooldownTunables[5], 2000)
                 end)
 
             ---
 
             menu.divider(TUNABLES_CD, TRANSLATE("Others"))
 
+                CJCooldownTunables = {
+                    memory.tunable_offset(-926426916),
+                    memory.tunable_offset(1733390598),
+                    memory.tunable_offset(724724668),
+                    memory.tunable_offset(846317886),
+                    memory.tunable_offset(443623246),
+                    memory.tunable_offset(-1203647122),
+                    memory.tunable_offset(-1963126951),
+                }
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Client Jobs"), {}, "", function()
-                    SET_INT_TUNABLE_GLOBAL(-926426916, 0) -- Between Jobs
-                    SET_INT_TUNABLE_GLOBAL(1733390598, 0) -- Robbery in Progress
-                    SET_INT_TUNABLE_GLOBAL(724724668, 0) -- Data Sweep
-                    SET_INT_TUNABLE_GLOBAL(846317886, 0) -- Targeted Data
-                    SET_INT_TUNABLE_GLOBAL(443623246, 0) -- Diamond Shopping
-                    SET_INT_TUNABLE_GLOBAL(-1203647122, 0) -- Collectors Pieces, https://www.unknowncheats.me/forum/3496393-post32.html
-                    SET_INT_TUNABLE_GLOBAL(-1963126951, 0) -- Deal Breaker, https://www.unknowncheats.me/forum/3496393-post32.html
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[1], 0) -- Between Jobs
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[2], 0) -- Robbery in Progress
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[3], 0) -- Data Sweep
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[4], 0) -- Targeted Data
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[5], 0) -- Diamond Shopping
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[6], 0) -- Collectors Pieces, https://www.unknowncheats.me/forum/3496393-post32.html
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[7], 0) -- Deal Breaker, https://www.unknowncheats.me/forum/3496393-post32.html
                 end, function()
-                    SET_INT_TUNABLE_GLOBAL(-926426916, 300000)
-                    SET_INT_TUNABLE_GLOBAL(1733390598, 1800000)
-                    SET_INT_TUNABLE_GLOBAL(724724668, 1800000)
-                    SET_INT_TUNABLE_GLOBAL(846317886, 1800000)
-                    SET_INT_TUNABLE_GLOBAL(443623246, 1800000)
-                    SET_INT_TUNABLE_GLOBAL(-1203647122, 600000)
-                    SET_INT_TUNABLE_GLOBAL(-1963126951, 600000)
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[1], 300000)
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[2], 1800000)
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[3], 1800000)
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[4], 1800000)
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[5], 1800000)
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[6], 600000)
+                    SET_INT_GLOBAL(262145 + CJCooldownTunables[7], 600000)
                 end)
 
+                CWCooldownTunables = {
+                    memory.tunable_offset("GB_COOLDOWN_UNTIL_NEXT_BOSS_WORK"),
+                    memory.tunable_offset(1107909355),
+                }
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Club Work"), {}, "", function()
-                    SET_INT_TUNABLE_GLOBAL("GB_COOLDOWN_UNTIL_NEXT_BOSS_WORK", 0)
-                    SET_INT_TUNABLE_GLOBAL(1107909355, 0)
+                    SET_INT_GLOBAL(262145 + CWCooldownTunables[1], 0)
+                    SET_INT_GLOBAL(262145 + CWCooldownTunables[2], 0)
                 end, function()
-                    SET_INT_TUNABLE_GLOBAL("GB_COOLDOWN_UNTIL_NEXT_BOSS_WORK", 300000)
-                    SET_INT_TUNABLE_GLOBAL(1107909355, 180000)
+                    SET_INT_GLOBAL(262145 + CWCooldownTunables[1], 300000)
+                    SET_INT_GLOBAL(262145 + CWCooldownTunables[2], 180000)
                 end)
 
+                SLWCooldownTunables = {
+                    memory.tunable_offset(9960150),
+                    memory.tunable_offset(-312420223),
+                }
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Spin Lucky Wheel"), {}, "", function() -- https://www.unknowncheats.me/forum/3531489-post51.html
                     STAT_SET_INT("LUCKY_WHEEL_NUM_SPIN", 0)
-                    SET_INT_TUNABLE_GLOBAL(9960150, 1)
-                    SET_INT_TUNABLE_GLOBAL(-312420223, 1)
+                    SET_INT_GLOBAL(262145 + SLWCooldownTunables[1], 1)
+                    SET_INT_GLOBAL(262145 + SLWCooldownTunables[2], 1)
                 end)
 
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("Dax Job"), {}, TRANSLATE("Note that Dax Job means from cellphone"), function() -- https://www.unknowncheats.me/forum/3629824-post2716.html
                     STAT_SET_INT("XM22JUGGALOWORKCDTIMER", -1)
                 end)
 
+                CeoVehCooldownTunables = {
+                    memory.tunable_offset("GB_CALL_VEHICLE_COOLDOWN"),
+                }
                 menu.toggle_loop(TUNABLES_CD, TRANSLATE("CEO Vehicles"), {}, "", function() -- Credit goes to Professor#4478's Kiddions Lua
-                    SET_INT_TUNABLE_GLOBAL("GB_CALL_VEHICLE_COOLDOWN", 0)
+                    SET_INT_GLOBAL(262145 + CeoVehCooldownTunables[1], 0)
                 end, function()
-                    SET_INT_TUNABLE_GLOBAL("GB_CALL_VEHICLE_COOLDOWN", 120000)
+                    SET_INT_GLOBAL(262145 + CeoVehCooldownTunables[1], 120000)
                 end)
 
             ---
@@ -4735,50 +4874,62 @@
 
             menu.divider(TUNABLES_MUT, "XP & AP")
 
+                XPnAPTunables = {
+                    memory.tunable_offset("XP_MULTIPLIER"),
+                    memory.tunable_offset("AP_MULTIPLIER"),
+                }
                 menu.toggle_loop(TUNABLES_MUT, "XP", {}, "", function()
-                    SET_FLOAT_TUNABLE_GLOBAL("XP_MULTIPLIER", menu.get_value(MUT_INPUT) / 100)
+                    SET_FLOAT_GLOBAL(262145 + XPnAPTunables[1], menu.get_value(MUT_INPUT) / 100)
                 end, function()
-                    SET_FLOAT_TUNABLE_GLOBAL("XP_MULTIPLIER", menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + XPnAPTunables[1], menu.get_default_state(MUT_INPUT))
                 end)
                 menu.toggle_loop(TUNABLES_MUT, "AP", {}, "", function()
-                    SET_FLOAT_TUNABLE_GLOBAL("AP_MULTIPLIER", menu.get_value(MUT_INPUT) / 100)
+                    SET_FLOAT_GLOBAL(262145 + XPnAPTunables[2], menu.get_value(MUT_INPUT) / 100)
                 end, function()
-                    SET_FLOAT_TUNABLE_GLOBAL("AP_MULTIPLIER", menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + XPnAPTunables[2], menu.get_default_state(MUT_INPUT))
                 end)
 
             ---
 
             menu.divider(TUNABLES_MUT, TRANSLATE("LS Car Meet"))
 
+                LSCMTunables = {
+                    memory.tunable_offset("TUNER_STREET_RACE_PLACE_XP_MULTIPLIER"),
+                    memory.tunable_offset("TUNER_PURSUIT_RACE_PLACE_XP_MULTIPLIER"),
+                    memory.tunable_offset("TUNER_CHECKPOINT_RACE_PLACE_XP_MULTIPLIER"),
+                    memory.tunable_offset("TUNER_HEADTOHEAD_RACE_PLACE_XP_MULTIPLIER"),
+                    memory.tunable_offset("TUNER_CARCLUB_VISITS_STREAK_XP_MULTIPLIER"),
+                    memory.tunable_offset("TUNER_CARCLUB_TIME_XP_MULTIPLIER"),
+                }
                 menu.toggle_loop(TUNABLES_MUT, TRANSLATE("Street Race"), {}, "", function()
-                    SET_FLOAT_TUNABLE_GLOBAL("TUNER_STREET_RACE_PLACE_XP_MULTIPLIER", menu.get_value(MUT_INPUT) / 100)
+                    SET_FLOAT_GLOBAL(262145 + LSCMTunables[1], menu.get_value(MUT_INPUT) / 100)
                 end, function()
-                    SET_FLOAT_TUNABLE_GLOBAL("TUNER_STREET_RACE_PLACE_XP_MULTIPLIER", menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + LSCMTunables[1], menu.get_default_state(MUT_INPUT))
                 end)
                 menu.toggle_loop(TUNABLES_MUT, TRANSLATE("Pursuit Race"), {}, "", function()
-                    SET_FLOAT_TUNABLE_GLOBAL("TUNER_PURSUIT_RACE_PLACE_XP_MULTIPLIER", menu.get_value(MUT_INPUT) / 100)
+                    SET_FLOAT_GLOBAL(262145 + LSCMTunables[2], menu.get_value(MUT_INPUT) / 100)
                 end, function()
-                    SET_FLOAT_TUNABLE_GLOBAL("TUNER_PURSUIT_RACE_PLACE_XP_MULTIPLIER", menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + LSCMTunables[2], menu.get_default_state(MUT_INPUT))
                 end)
                 menu.toggle_loop(TUNABLES_MUT, TRANSLATE("Scramble"), {}, "", function()
-                    SET_FLOAT_TUNABLE_GLOBAL("TUNER_CHECKPOINT_RACE_PLACE_XP_MULTIPLIER", menu.get_value(MUT_INPUT) / 100)
+                    SET_FLOAT_GLOBAL(262145 + LSCMTunables[3], menu.get_value(MUT_INPUT) / 100)
                 end, function()
-                    SET_FLOAT_TUNABLE_GLOBAL("TUNER_CHECKPOINT_RACE_PLACE_XP_MULTIPLIER", menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + LSCMTunables[3], menu.get_default_state(MUT_INPUT))
                 end)
                 menu.toggle_loop(TUNABLES_MUT, TRANSLATE("Head 2 Head"), {}, "", function()
-                    SET_FLOAT_TUNABLE_GLOBAL("TUNER_HEADTOHEAD_RACE_PLACE_XP_MULTIPLIER", menu.get_value(MUT_INPUT) / 100)
+                    SET_FLOAT_GLOBAL(262145 + LSCMTunables[4], menu.get_value(MUT_INPUT) / 100)
                 end, function()
-                    SET_FLOAT_TUNABLE_GLOBAL("TUNER_HEADTOHEAD_RACE_PLACE_XP_MULTIPLIER", menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + LSCMTunables[4], menu.get_default_state(MUT_INPUT))
                 end)
                 menu.toggle_loop(TUNABLES_MUT, TRANSLATE("LS Car Meet"), {}, "", function()
-                    SET_FLOAT_TUNABLE_GLOBAL("TUNER_CARCLUB_VISITS_STREAK_XP_MULTIPLIER", menu.get_value(MUT_INPUT) / 100)
+                    SET_FLOAT_GLOBAL(262145 + LSCMTunables[5], menu.get_value(MUT_INPUT) / 100)
                 end, function()
-                    SET_FLOAT_TUNABLE_GLOBAL("TUNER_CARCLUB_VISITS_STREAK_XP_MULTIPLIER", menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + LSCMTunables[5], menu.get_default_state(MUT_INPUT))
                 end)
                 menu.toggle_loop(TUNABLES_MUT, TRANSLATE("LS Car Meet's Track"), {}, "", function()
-                    SET_FLOAT_TUNABLE_GLOBAL("TUNER_CARCLUB_TIME_XP_MULTIPLIER", menu.get_value(MUT_INPUT) / 100) 
+                    SET_FLOAT_GLOBAL(262145 + LSCMTunables[6], menu.get_value(MUT_INPUT) / 100) 
                 end, function()
-                    SET_FLOAT_TUNABLE_GLOBAL("TUNER_CARCLUB_TIME_XP_MULTIPLIER", menu.get_default_state(MUT_INPUT))
+                    SET_FLOAT_GLOBAL(262145 + LSCMTunables[6], menu.get_default_state(MUT_INPUT))
                 end)
 
             ---
@@ -4817,22 +4968,23 @@
 
         TUNABLES_OTH = menu.list(TUNABLES, TRANSLATE("Others"), {}, "", function(); end)
 
+            MOSFHTunables = {
+                memory.tunable_offset("PSANDQS_HEALTH_REPLENISH_MULTIPLIER"),
+                memory.tunable_offset("EGOCHASER_HEALTH_REPLENISH_MULTIPLIER"),
+                memory.tunable_offset("METEORITE_HEALTH_REPLENISH_MULTIPLIER"),
+                memory.tunable_offset("REDWOOD_HEALTH_DEPLETE_MULTIPLIER"),
+                memory.tunable_offset("ORANGOTANG_HEALTH_REPLENISH_MULTIPLIER"),
+                memory.tunable_offset("BOURGEOIX_HEALTH_REPLENISH_MULTIPLIER"),
+                memory.tunable_offset("SPRUNK_HEALTH_REPLENISH_MULTIPLIER"),
+            }
             menu.toggle_loop(TUNABLES_OTH, TRANSLATE("Make One Snack Full Health"), {}, TRANSLATE("Whatever you use a snack, will make you full health."), function()
-                SET_FLOAT_TUNABLE_GLOBAL("PSANDQS_HEALTH_REPLENISH_MULTIPLIER", 99999)
-                SET_FLOAT_TUNABLE_GLOBAL("EGOCHASER_HEALTH_REPLENISH_MULTIPLIER", 99999)
-                SET_FLOAT_TUNABLE_GLOBAL("METEORITE_HEALTH_REPLENISH_MULTIPLIER", 99999)
-                SET_FLOAT_TUNABLE_GLOBAL("REDWOOD_HEALTH_DEPLETE_MULTIPLIER", 99999)
-                SET_FLOAT_TUNABLE_GLOBAL("ORANGOTANG_HEALTH_REPLENISH_MULTIPLIER", 99999)
-                SET_FLOAT_TUNABLE_GLOBAL("BOURGEOIX_HEALTH_REPLENISH_MULTIPLIER", 99999)
-                SET_FLOAT_TUNABLE_GLOBAL("SPRUNK_HEALTH_REPLENISH_MULTIPLIER", 99999)
+                for i = 1, 7 do
+                    SET_FLOAT_GLOBAL(262145 + MOSFHTunables[i], 99999)
+                end
             end, function()
-                SET_FLOAT_TUNABLE_GLOBAL("PSANDQS_HEALTH_REPLENISH_MULTIPLIER", 1)
-                SET_FLOAT_TUNABLE_GLOBAL("EGOCHASER_HEALTH_REPLENISH_MULTIPLIER", 1)
-                SET_FLOAT_TUNABLE_GLOBAL("METEORITE_HEALTH_REPLENISH_MULTIPLIER", 1)
-                SET_FLOAT_TUNABLE_GLOBAL("REDWOOD_HEALTH_DEPLETE_MULTIPLIER", 1)
-                SET_FLOAT_TUNABLE_GLOBAL("ORANGOTANG_HEALTH_REPLENISH_MULTIPLIER", 1)
-                SET_FLOAT_TUNABLE_GLOBAL("BOURGEOIX_HEALTH_REPLENISH_MULTIPLIER", 1)
-                SET_FLOAT_TUNABLE_GLOBAL("SPRUNK_HEALTH_REPLENISH_MULTIPLIER", 1)
+                for i = 1, 7 do
+                    SET_FLOAT_GLOBAL(262145 + MOSFHTunables[i], 1)
+                end
             end)
 
             menu.toggle_loop(TUNABLES_OTH, TRANSLATE("Auto Refill Snacks & Armours"), {}, "", function()
@@ -4848,20 +5000,28 @@
                 end
             end)
 
+            ISHPTunables = {
+                memory.tunable_offset("BB_HATCHET_RAMPAGE_DURATION_MAX"),
+                memory.tunable_offset("BB_HATCHET_RAMPAGE_DURATION_EXTENSION"),
+                memory.tunable_offset("BB_HATCHET_RAMPAGE_COOLDOWN"),
+                memory.tunable_offset("BB_HATCHET_RAMPAGE_DAMAGE_RECIEVED"),
+                memory.tunable_offset("BB_HATCHET_RAMPAGE_HEALTH_REGEN_RATE"),
+                memory.tunable_offset("BB_HATCHET_RAMPAGE_HEALTH_REGEN_MAX"),
+            }
             menu.toggle_loop(TUNABLES_OTH, TRANSLATE("Infinite Stone Hatchet's Power"), {}, "", function() -- https://www.unknowncheats.me/forum/3484239-post11.html
-                SET_INT_TUNABLE_GLOBAL("BB_HATCHET_RAMPAGE_DURATION_MAX", 99999) -- Duration
-                SET_INT_TUNABLE_GLOBAL("BB_HATCHET_RAMPAGE_DURATION_EXTENSION", 99999) -- Added Duration per Kill
-                SET_INT_TUNABLE_GLOBAL("BB_HATCHET_RAMPAGE_COOLDOWN", 0) -- Cooldown
-                SET_FLOAT_TUNABLE_GLOBAL("BB_HATCHET_RAMPAGE_DAMAGE_RECIEVED", 99999) -- Weapon Defense
-                SET_FLOAT_TUNABLE_GLOBAL("BB_HATCHET_RAMPAGE_HEALTH_REGEN_RATE", 99999) -- Health Recharge Multiplier
-                SET_FLOAT_TUNABLE_GLOBAL("BB_HATCHET_RAMPAGE_HEALTH_REGEN_MAX", 99999) -- Health Recharge Limit
+                SET_INT_GLOBAL(262145 + ISHPTunables[1], 99999) -- Duration
+                SET_INT_GLOBAL(262145 + ISHPTunables[2], 99999) -- Added Duration per Kill
+                SET_INT_GLOBAL(262145 + ISHPTunables[3], 0) -- Cooldown
+                SET_FLOAT_GLOBAL(262145 + ISHPTunables[4], 99999) -- Weapon Defense
+                SET_FLOAT_GLOBAL(262145 + ISHPTunables[5], 99999) -- Health Recharge Multiplier
+                SET_FLOAT_GLOBAL(262145 + ISHPTunables[6], 99999) -- Health Recharge Limit
             end, function()
-                SET_INT_TUNABLE_GLOBAL("BB_HATCHET_RAMPAGE_DURATION_MAX", 12000)
-                SET_INT_TUNABLE_GLOBAL("BB_HATCHET_RAMPAGE_DURATION_EXTENSION", 6000)
-                SET_INT_TUNABLE_GLOBAL("BB_HATCHET_RAMPAGE_COOLDOWN", 60000)
-                SET_FLOAT_TUNABLE_GLOBAL("BB_HATCHET_RAMPAGE_DAMAGE_RECIEVED", 0.5)
-                SET_FLOAT_TUNABLE_GLOBAL("BB_HATCHET_RAMPAGE_HEALTH_REGEN_RATE", 2)
-                SET_FLOAT_TUNABLE_GLOBAL("BB_HATCHET_RAMPAGE_HEALTH_REGEN_MAX", 1)
+                SET_INT_GLOBAL(262145 + ISHPTunables[1], 12000)
+                SET_INT_GLOBAL(262145 + ISHPTunables[2], 6000)
+                SET_INT_GLOBAL(262145 + ISHPTunables[3], 60000)
+                SET_FLOAT_GLOBAL(262145 + ISHPTunables[4], 0.5)
+                SET_FLOAT_GLOBAL(262145 + ISHPTunables[5], 2)
+                SET_FLOAT_GLOBAL(262145 + ISHPTunables[6], 1)
             end)
 
             menu.action(TUNABLES_OTH, TRANSLATE("Single MC Vehicle Sell"), {}, IS_WORKING(true) .. TRANSLATE("Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader."), function()

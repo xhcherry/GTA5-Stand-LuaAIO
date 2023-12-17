@@ -32,7 +32,14 @@ sxid = {{
     playeridx = "Last100million"
 }, {
     playeridx = "FallenMountain"
-}}
+}, {
+    playeridx = "Lil_Windows_XP"
+}, {
+    playeridx = "Dreams_dog"
+}, {
+    playeridx = "bilal22520"
+},
+}
 
 spid = {{
     playerid = "xybl0206"
@@ -1198,5 +1205,31 @@ spid = {{
     playerid = "XIMCHUIB"
 }, {
     playerid = "John-Wick-AC"
+}, {
+    playerid = "bloodKBT"
+}, {
+    playerid = "haley_theemperor"
+}, {
+    playerid = "zihao1237"
+}, {
+    playerid = "zhuichenstand"
+}, {
+    playerid = "Visionary_1"
+}, {
+    playerid = "Peikea"
+}, {
+    playerid = "TN-OVO"
+}, {
+    playerid = "HHHHHZ9000"
+}, {
+    playerid = "XXS227"
+}, {
+    playerid = "404Not-Fonud"
+}, {
+    playerid = "sjssjsjs"
+}, {
+    playerid = "Walker57923"
+}, {
+    playerid = "YULUOQIANXUN"
 },
 }
