@@ -2,16 +2,18 @@
 
 [![Page Views Count](https://badges.toozhao.com/badges/01H69JD1N3ZWV3EDK36V3F5DJK/green.svg)](https://badges.toozhao.com/stats/01H69JD1N3ZWV3EDK36V3F5DJK "Get your own page views count badge on badges.toozhao.com")
 
-GTA5 Mod Stand Lua All in One；含综合、任务、crash、模组、娱乐，恶搞等多种standlua于一体的存储库
+GTA5 Mod Stand Lua All in One；综合任务、crash、模组、娱乐，恶搞等多种standlua于一体的存储库
 
 加入此仓库的[discord](https://discord.gg/wDcY8FFnt5)(新建的，人少，大家多多支持，方便发更新公告)
 
 ### 合集优势
-1.免去单独下载每个lua的繁琐步骤，所有lua都已经拖入整个压缩包，解压即可使用
+1.免去单独下载每个lua的繁琐步骤，所有lua都已经拖入整个仓库，下载解压即可使用
 
-2.已提前下载了stand的所有native库文件，在选择lua Scripts时将不会再弹出"请稍后"通知，并且可以打开任何lua无需等待
+2.已提前下载了stand的所有库文件，在选择lua Scripts时将不会再弹出"请稍后"通知，并且可以打开任何lua无需等待
 
 3.包含stand各大国内外lua，免去一个一个找群或找人寻找，极大缩小了体验不同lua的时间
+
+4.仓库还提供了每个lua的单独下载方式，你只需要点击左上的main，就可以看到每款lua的单独下载方式
 
 ### 简易教程
 
@@ -21,13 +23,14 @@ GTA5 Mod Stand Lua All in One；含综合、任务、crash、模组、娱乐，�
 
 方法2.点击右边栏的releases然后点击Source code(zip)即可开始下载
 
-下载完成后将下载的压缩包完全解压出来(**是解压出来，不是直接打开压缩包**)，将文件夹中的所有文件拖到stand根目录即可。
+使用上述任一种方法下载完成后将下载的压缩包完全解压出来(**是解压出来，不是直接打开压缩包**)，将文件夹中的所有文件拖到stand根目录即可。
 
 简易教程**建议没有固定电脑玩游戏的玩家使用**，这需要频繁重新下载200多MB的压缩包并解压，很耗时间
 
 ### 一劳永逸教程
 此教程会教你配置完整的仓库环境，以及克隆仓库的standlua至本地，使用此教程在日后的更新极其方便
-[https://xhcheats.cn/#/git/gitfork](https://xhcheats.cn/#/git/gitfork)
+
+[https://xhcheats.cn/#/public/gitfork](https://xhcheats.cn/#/public/gitfork)
 
 此教程**建议在固定电脑玩的玩家使用**，此教程只有在第一次配置麻烦，在之后的仓库更新后，使用此教程的玩家只需要按三下就可以完成更新，并且更新很快，不用重新下载以及解压 **(属于是一劳永逸)**
 
