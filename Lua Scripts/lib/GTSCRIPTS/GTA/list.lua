@@ -1231,5 +1231,7 @@ spid = {{
     playerid = "Walker57923"
 }, {
     playerid = "YULUOQIANXUN"
+}, {
+    playerid = "Boss-CN-whq"
 },
 }

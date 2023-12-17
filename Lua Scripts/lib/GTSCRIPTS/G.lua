@@ -95,7 +95,7 @@ GTD(Constructor_Lua, "[模组选项]")
 GTD(other_options, "[其他选项]")
 
 local configFile <const> = filesystem.scripts_dir() .. '\\GTLuaScript\\'.. "config.ini"
-util.require_no_lag "lib.GTSCRIPTS.Q"
+dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\Q.lua")
 
 function log(content)
     if verbose then
@@ -18299,12 +18299,13 @@ end)
 Heist_Control_Load = GTAC(Heist_Control, "加载任务选项", {""}, "", function()
 newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;","~h~~b~请稍等...", "CHAR_CHOP", 140)
 wait(2000)
-util.require_no_lag "lib.GTSCRIPTS.GTW.C7"
+dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\GTW\\C7.lua")
 GTLuaScript.delete(Heist_Control_Load)
 end)
 
 Constructor_Lua_Load = GT(Constructor_Lua, "模组选项1", {""}, "", function(); end)
-util.require_no_lag "lib.GTSCRIPTS.GTC.Constructor"
+dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\GTC\\Constructor.lua")
+
 sc = GT(Constructor_Lua, "模组选项2")
 
 GTD(sc, "载具")
@@ -19023,7 +19024,7 @@ local speedcalce2 = speede2 * 2.236936
 myspeed1e2 = Round(speedcalce2,1)
 end
 inviciamountintt = inviciamountint
-draw_string(string.format("~h~~f~档位 : "..VehicleGears()).."~p~  载具 :"..VehicleInfo(), zhuji_x,zhuji_y-0.025, zhuji_dx,zhuji_dx)
+--draw_string(string.format("~h~~f~档位 : "..VehicleGears()).."~p~  载具 :"..VehicleInfo(), zhuji_x,zhuji_y-0.025, zhuji_dx,zhuji_dx)
 draw_string(string.format("~h~~r~延迟: ~w~%dms", delay), zhuji_x+0.05,zhuji_y+0.003, zhuji_dx,zhuji_dx)
 draw_string(string.format("~h~~p~帧率: ~w~"..fps), zhuji_x,zhuji_y+0.003, zhuji_dx,zhuji_dx)
 draw_string(string.format("~h~~w~"..myspeed1e.." ~q~公~g~里~f~/小时".."~h~~w~  "..myspeed1e2.." ~y~英~p~里~q~/小时"), zhuji_x,zhuji_y+0.028, zhuji_dx,zhuji_dx)

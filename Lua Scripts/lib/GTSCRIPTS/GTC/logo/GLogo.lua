@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '12.17'
+GT_version = '12.17 R2'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("修复主机序列在多人战局出现的错误\n改进脚本运行稳定性\n玩家信息窗口现在可以移动位置\n优化任务选项和模组选项还有自动产业加载失败的问题\n添加了新的皇榜成员")
+    notification("再次修复任务选项无法加载\n再次修复模组选项无法加载\n再次修复主机序列的错误")
 end
 --
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
