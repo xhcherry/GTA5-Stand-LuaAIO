@@ -1,5 +1,7 @@
--- To require this file, use util.require_natives("1681379138")
--- Note that any given version of the natives library may not be compatible with any given script.
+-- DONT RENAME THIS FILE
+-- This should be natives-1676318796.lua wherein 1676318796 represents the version.
+-- Any given version may not be compatible with any given script using this library.
+-- Additionally, you should bundle the version of this library that you are developing against with your script, so "installing" your script is a simple drag & drop operation.
 
 SYSTEM={
 	-- Pauses execution of the current script, please note this behavior is only seen when called from one of the game script files(ysc). In order to wait an asi script use "static void WAIT(DWORD time);" found in main.h
@@ -7478,10 +7480,10 @@ NETWORK={
 	["IS_NETWORK_ID_OWNED_BY_PARTICIPANT"]=--[[BOOL (bool)]] function(--[[int]] netId)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.end_call_2(0xA1607996431332DF)return native_invoker.get_return_value_bool()end,
 	["SET_REMOTE_PLAYER_VISIBLE_IN_CUTSCENE"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] locallyVisible)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(locallyVisible)native_invoker.end_call_2(0x96320E6549DAE7B4)end,
 	["SET_LOCAL_PLAYER_VISIBLE_IN_CUTSCENE"]=--[[void]] function(--[[BOOL (bool)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xD1065D68947E7B6E)end,
-	["SET_LOCAL_PLAYER_INVISIBLE_LOCALLY"]=--[[void]] function(--[[BOOL (bool)]] bIncludePlayersVehicle)native_invoker.begin_call()native_invoker.push_arg_bool(bIncludePlayersVehicle)native_invoker.end_call_2(0xE5F773C1A1D9D168)end,
-	["SET_LOCAL_PLAYER_VISIBLE_LOCALLY"]=--[[void]] function(--[[BOOL (bool)]] bIncludePlayersVehicle)native_invoker.begin_call()native_invoker.push_arg_bool(bIncludePlayersVehicle)native_invoker.end_call_2(0x7619364C82D3BF14)end,
-	["SET_PLAYER_INVISIBLE_LOCALLY"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] bIncludePlayersVehicle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(bIncludePlayersVehicle)native_invoker.end_call_2(0x12B37D54667DB0B8)end,
-	["SET_PLAYER_VISIBLE_LOCALLY"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] bIncludePlayersVehicle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(bIncludePlayersVehicle)native_invoker.end_call_2(0xFAA10F1FAFB11AF2)end,
+	["SET_LOCAL_PLAYER_INVISIBLE_LOCALLY"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0xE5F773C1A1D9D168)end,
+	["SET_LOCAL_PLAYER_VISIBLE_LOCALLY"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x7619364C82D3BF14)end,
+	["SET_PLAYER_INVISIBLE_LOCALLY"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x12B37D54667DB0B8)end,
+	["SET_PLAYER_VISIBLE_LOCALLY"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xFAA10F1FAFB11AF2)end,
 	-- Hardcoded to not work in SP.
 	["FADE_OUT_LOCAL_PLAYER"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x416DBD4CD6ED8DD2)end,
 	-- normal - transition like when your coming out of LSC
@@ -8757,7 +8759,8 @@ PED={
 	-- Returns true/false if the ped is/isn't humanoid.
 	["IS_PED_HUMAN"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xB980061DA992779D)return native_invoker.get_return_value_bool()end,
 	-- Gets the vehicle the specified Ped is in. Returns 0 if the ped is/was not in a vehicle.
-	["GET_VEHICLE_PED_IS_IN"]=--[[Vehicle (int)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] includeEntering)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(includeEntering)native_invoker.end_call_2(0x9A9112A0FE9A4713)return native_invoker.get_return_value_int()end,
+	-- If the Ped is not in a vehicle and includeLastVehicle is true, the vehicle they were last in is returned.
+	["GET_VEHICLE_PED_IS_IN"]=--[[Vehicle (int)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] includeLastVehicle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(includeLastVehicle)native_invoker.end_call_2(0x9A9112A0FE9A4713)return native_invoker.get_return_value_int()end,
 	-- Resets the value for the last vehicle driven by the Ped.
 	["RESET_PED_LAST_VEHICLE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xBB8DE8CF6A8DD8BB)end,
 	["SET_PED_DENSITY_MULTIPLIER_THIS_FRAME"]=--[[void]] function(--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0x95E3D6257B166CF2)end,
@@ -14464,8 +14467,7 @@ VEHICLE={
 	["GET_SUBMARINE_IS_UNDER_DESIGN_DEPTH"]=--[[BOOL (bool)]] function(--[[Vehicle (int)]] submarine)native_invoker.begin_call()native_invoker.push_arg_int(submarine)native_invoker.end_call_2(0x3E71D0B300B7AA79)return native_invoker.get_return_value_bool()end,
 	["GET_SUBMARINE_NUMBER_OF_AIR_LEAKS"]=--[[int]] function(--[[Vehicle (int)]] submarine)native_invoker.begin_call()native_invoker.push_arg_int(submarine)native_invoker.end_call_2(0x093D6DDCA5B8FBAE)return native_invoker.get_return_value_int()end,
 	["SET_BOAT_IGNORE_LAND_PROBES"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xED5EDE9E676643C9)end,
-	-- Use the vehicle bounds (instead of viewport) when deciding if a vehicle is sufficiently above the water (waterheight.dat), bypassing wave simulation checks
-	["_SET_BOUNDS_AFFECT_WATER_PROBES"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x85FC953F6C6CBDE1)end,
+	["_0x85FC953F6C6CBDE1"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x85FC953F6C6CBDE1)end,
 	["SET_BOAT_ANCHOR"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x75DBEC174AEEAD10)end,
 	["CAN_ANCHOR_BOAT_HERE"]=--[[BOOL (bool)]] function(--[[Vehicle (int)]] vehicle)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.end_call_2(0x26C10ECBDA5D043B)return native_invoker.get_return_value_bool()end,
 	["CAN_ANCHOR_BOAT_HERE_IGNORE_PLAYERS"]=--[[BOOL (bool)]] function(--[[Vehicle (int)]] vehicle)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.end_call_2(0x24F4121D07579880)return native_invoker.get_return_value_bool()end,

@@ -1,8 +1,11 @@
--- To require this file, use util.require_natives("1681379138.uno")
--- Note that any given version of the natives library may not be compatible with any given script.
+-- DONT RENAME THIS FILE
+-- This should be natives-1676318796-uno.lua wherein 1676318796-uno represents the version.
+-- Any given version may not be compatible with any given script using this library.
+-- Additionally, you should bundle the version of this library that you are developing against with your script, so "installing" your script is a simple drag & drop operation.
 
 -- This is the uno version; the differences are:
--- - No type safety, so you can't pass an integer for a float/number parameter.
+-- - Slimmer file, so faster to load, but also no comments, argument types, or argument names.
+-- - No type hinting, so you can't pass an integer for a float/number parameter.
 -- - v3 instances will be pushed as 3 floats instead of a pointer unless memory.addrof is used.
 -- Despite only using 1 C call per invoke, performance is about equal.
 
@@ -5786,7 +5789,7 @@ VEHICLE={
 	["GET_SUBMARINE_IS_UNDER_DESIGN_DEPTH"]=function(...)return native_invoker.uno_bool(0x3E71D0B300B7AA79,...)end,
 	["GET_SUBMARINE_NUMBER_OF_AIR_LEAKS"]=function(...)return native_invoker.uno_int(0x093D6DDCA5B8FBAE,...)end,
 	["SET_BOAT_IGNORE_LAND_PROBES"]=function(...)return native_invoker.uno_void(0xED5EDE9E676643C9,...)end,
-	["_SET_BOUNDS_AFFECT_WATER_PROBES"]=function(...)return native_invoker.uno_void(0x85FC953F6C6CBDE1,...)end,
+	["_0x85FC953F6C6CBDE1"]=function(...)return native_invoker.uno_void(0x85FC953F6C6CBDE1,...)end,
 	["SET_BOAT_ANCHOR"]=function(...)return native_invoker.uno_void(0x75DBEC174AEEAD10,...)end,
 	["CAN_ANCHOR_BOAT_HERE"]=function(...)return native_invoker.uno_bool(0x26C10ECBDA5D043B,...)end,
 	["CAN_ANCHOR_BOAT_HERE_IGNORE_PLAYERS"]=function(...)return native_invoker.uno_bool(0x24F4121D07579880,...)end,

@@ -1,8 +1,11 @@
--- To require this file, use util.require_natives("1681379138.uno")
--- Note that any given version of the natives library may not be compatible with any given script.
+-- DONT RENAME THIS FILE
+-- This should be natives-1672190175-uno.lua wherein 1672190175-uno represents the version.
+-- Any given version may not be compatible with any given script using this library.
+-- Additionally, you should bundle the version of this library that you are developing against with your script, so "installing" your script is a simple drag & drop operation.
 
 -- This is the uno version; the differences are:
--- - No type safety, so you can't pass an integer for a float/number parameter.
+-- - Slimmer file, so faster to load, but also no comments, argument types, or argument names.
+-- - No type hinting, so you can't pass an integer for a float/number parameter.
 -- - v3 instances will be pushed as 3 floats instead of a pointer unless memory.addrof is used.
 -- Despite only using 1 C call per invoke, performance is about equal.
 
@@ -684,40 +687,40 @@ DATAFILE={
 	["DATAFILE_DELETE"]=function(...)return native_invoker.uno_void(0x9AB9C1CFC8862DFB,...)end,
 	["DATAFILE_STORE_MISSION_HEADER"]=function(...)return native_invoker.uno_void(0x2ED61456317B8178,...)end,
 	["DATAFILE_FLUSH_MISSION_HEADER"]=function(...)return native_invoker.uno_void(0xC55854C7D7274882,...)end,
-	["DATAFILE_GET_FILE_DICT"]=function(...)return native_invoker.uno_pointer(0x906B778CA1DC72B6,...)end,
+	["DATAFILE_GET_FILE_DICT"]=function(...)return native_invoker.uno_int(0x906B778CA1DC72B6,...)end,
 	["DATAFILE_START_SAVE_TO_CLOUD"]=function(...)return native_invoker.uno_bool(0x83BCCE3224735F05,...)end,
 	["DATAFILE_UPDATE_SAVE_TO_CLOUD"]=function(...)return native_invoker.uno_bool(0x4DFDD9EB705F8140,...)end,
 	["DATAFILE_IS_SAVE_PENDING"]=function(...)return native_invoker.uno_bool(0xBEDB96A7584AA8CF,...)end,
 	["DATAFILE_LOAD_OFFLINE_UGC_FOR_ADDITIONAL_DATA_FILE"]=function(...)return native_invoker.uno_bool(0xA6EEF01087181EDD,...)end,
 	["DATAFILE_DELETE_FOR_ADDITIONAL_DATA_FILE"]=function(...)return native_invoker.uno_void(0x6AD0BD5E087866CB,...)end,
-	["DATAFILE_GET_FILE_DICT_FOR_ADDITIONAL_DATA_FILE"]=function(...)return native_invoker.uno_pointer(0xDBF860CF1DB8E599,...)end,
+	["DATAFILE_GET_FILE_DICT_FOR_ADDITIONAL_DATA_FILE"]=function(...)return native_invoker.uno_int(0xDBF860CF1DB8E599,...)end,
 	["DATADICT_SET_BOOL"]=function(...)return native_invoker.uno_void(0x35124302A556A325,...)end,
 	["DATADICT_SET_INT"]=function(...)return native_invoker.uno_void(0xE7E035450A7948D5,...)end,
 	["DATADICT_SET_FLOAT"]=function(...)return native_invoker.uno_void(0xC27E1CC2D795105E,...)end,
 	["DATADICT_SET_STRING"]=function(...)return native_invoker.uno_void(0x8FF3847DADD8E30C,...)end,
 	["DATADICT_SET_VECTOR"]=function(...)return native_invoker.uno_void(0x4CD49B76338C7DEE,...)end,
-	["DATADICT_CREATE_DICT"]=function(...)return native_invoker.uno_pointer(0xA358F56F10732EE1,...)end,
-	["DATADICT_CREATE_ARRAY"]=function(...)return native_invoker.uno_pointer(0x5B11728527CA6E5F,...)end,
+	["DATADICT_CREATE_DICT"]=function(...)return native_invoker.uno_int(0xA358F56F10732EE1,...)end,
+	["DATADICT_CREATE_ARRAY"]=function(...)return native_invoker.uno_int(0x5B11728527CA6E5F,...)end,
 	["DATADICT_GET_BOOL"]=function(...)return native_invoker.uno_bool(0x1186940ED72FFEEC,...)end,
 	["DATADICT_GET_INT"]=function(...)return native_invoker.uno_int(0x78F06F6B1FB5A80C,...)end,
 	["DATADICT_GET_FLOAT"]=function(...)return native_invoker.uno_float(0x06610343E73B9727,...)end,
 	["DATADICT_GET_STRING"]=function(...)return native_invoker.uno_string(0x3D2FD9E763B24472,...)end,
 	["DATADICT_GET_VECTOR"]=function(...)return native_invoker.uno_vector3(0x46CD3CB66E0825CC,...)end,
-	["DATADICT_GET_DICT"]=function(...)return native_invoker.uno_pointer(0xB6B9DDC412FCEEE2,...)end,
-	["DATADICT_GET_ARRAY"]=function(...)return native_invoker.uno_pointer(0x7A983AA9DA2659ED,...)end,
+	["DATADICT_GET_DICT"]=function(...)return native_invoker.uno_int(0xB6B9DDC412FCEEE2,...)end,
+	["DATADICT_GET_ARRAY"]=function(...)return native_invoker.uno_int(0x7A983AA9DA2659ED,...)end,
 	["DATADICT_GET_TYPE"]=function(...)return native_invoker.uno_int(0x031C55ED33227371,...)end,
 	["DATAARRAY_ADD_BOOL"]=function(...)return native_invoker.uno_void(0xF8B0F5A43E928C76,...)end,
 	["DATAARRAY_ADD_INT"]=function(...)return native_invoker.uno_void(0xCABDB751D86FE93B,...)end,
 	["DATAARRAY_ADD_FLOAT"]=function(...)return native_invoker.uno_void(0x57A995FD75D37F56,...)end,
 	["DATAARRAY_ADD_STRING"]=function(...)return native_invoker.uno_void(0x2F0661C155AEEEAA,...)end,
 	["DATAARRAY_ADD_VECTOR"]=function(...)return native_invoker.uno_void(0x407F8D034F70F0C2,...)end,
-	["DATAARRAY_ADD_DICT"]=function(...)return native_invoker.uno_pointer(0x6889498B3E19C797,...)end,
+	["DATAARRAY_ADD_DICT"]=function(...)return native_invoker.uno_int(0x6889498B3E19C797,...)end,
 	["DATAARRAY_GET_BOOL"]=function(...)return native_invoker.uno_bool(0x50C1B2874E50C114,...)end,
 	["DATAARRAY_GET_INT"]=function(...)return native_invoker.uno_int(0x3E5AE19425CD74BE,...)end,
 	["DATAARRAY_GET_FLOAT"]=function(...)return native_invoker.uno_float(0xC0C527B525D7CFB5,...)end,
 	["DATAARRAY_GET_STRING"]=function(...)return native_invoker.uno_string(0xD3F2FFEB8D836F52,...)end,
 	["DATAARRAY_GET_VECTOR"]=function(...)return native_invoker.uno_vector3(0x8D2064E5B64A628A,...)end,
-	["DATAARRAY_GET_DICT"]=function(...)return native_invoker.uno_pointer(0x8B5FADCC4E3A145F,...)end,
+	["DATAARRAY_GET_DICT"]=function(...)return native_invoker.uno_int(0x8B5FADCC4E3A145F,...)end,
 	["DATAARRAY_GET_COUNT"]=function(...)return native_invoker.uno_int(0x065DB281590CEA2D,...)end,
 	["DATAARRAY_GET_TYPE"]=function(...)return native_invoker.uno_int(0x3A0014ADB172A3C5,...)end,
 }
@@ -5786,7 +5789,7 @@ VEHICLE={
 	["GET_SUBMARINE_IS_UNDER_DESIGN_DEPTH"]=function(...)return native_invoker.uno_bool(0x3E71D0B300B7AA79,...)end,
 	["GET_SUBMARINE_NUMBER_OF_AIR_LEAKS"]=function(...)return native_invoker.uno_int(0x093D6DDCA5B8FBAE,...)end,
 	["SET_BOAT_IGNORE_LAND_PROBES"]=function(...)return native_invoker.uno_void(0xED5EDE9E676643C9,...)end,
-	["_SET_BOUNDS_AFFECT_WATER_PROBES"]=function(...)return native_invoker.uno_void(0x85FC953F6C6CBDE1,...)end,
+	["_0x85FC953F6C6CBDE1"]=function(...)return native_invoker.uno_void(0x85FC953F6C6CBDE1,...)end,
 	["SET_BOAT_ANCHOR"]=function(...)return native_invoker.uno_void(0x75DBEC174AEEAD10,...)end,
 	["CAN_ANCHOR_BOAT_HERE"]=function(...)return native_invoker.uno_bool(0x26C10ECBDA5D043B,...)end,
 	["CAN_ANCHOR_BOAT_HERE_IGNORE_PLAYERS"]=function(...)return native_invoker.uno_bool(0x24F4121D07579880,...)end,
