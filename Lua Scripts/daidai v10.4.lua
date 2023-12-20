@@ -637,7 +637,7 @@ players_list = menu.list(online, "在线玩家", {}, "")
 frendlist = menu.list(online, "好友列表", {}, "",function() get_friend_list() end)
     
 
-new_session = menu.list(online, "新的战局", {}, "")--Update tag1.67
+new_session = menu.list(online, "新的战局", {}, "")--Update tag1.68
     for idx, tab in pairs(session_name) do
         new_session:action(tab.name, {}, "", function()
             --正常切换战局，修改战局类型
@@ -721,11 +721,11 @@ request_services = menu.list(online, "请求服务", {}, "")
     menu.action(request_services, "纳米无人机", {}, "", function()--Update tag1.68
         requestNanoDrone()
     end)
-    menu.action(request_services, "RC匪徒", {}, "", function()--Update tag1.67
-        SET_INT_GLOBAL(Global_Base.Default + 6879, 1)
-    end)
-    menu.action(request_services, "RC坦克", {}, "", function()--Update tag1.67
+    menu.action(request_services, "RC匪徒", {}, "", function()--Update tag1.68
         SET_INT_GLOBAL(Global_Base.Default + 6880, 1)
+    end)
+    menu.action(request_services, "RC坦克", {}, "", function()--Update tag1.68
+        SET_INT_GLOBAL(Global_Base.Default + 6894, 1)
     end)
     --
     menu.action(request_services, "请求出租车", {}, "", function()--Update tag1.68
@@ -772,15 +772,15 @@ online_services = menu.list(online, "线上服务", {}, "")
             end
         end
     end)
-    menu.action(online_services, "免费更改角色外观", {}, "", function()--Update tag1.67
-        SET_INT_GLOBAL(Global_Base.Default + 19290, 1)
+    menu.action(online_services, "免费更改角色外观", {}, "", function()--Update tag1.68
+        SET_INT_GLOBAL(Global_Base.Default + 19320, 1)
     end)
-    menu.action(online_services, "移除恶意玩家(白帽子)", {}, "", function()
+--[[     menu.action(online_services, "移除恶意玩家(白帽子)", {}, "", function()
         STAT_SET_INT(util.joaat("MPPLY_BADSPORT_MESSAGE"), 0)
         STAT_SET_INT(util.joaat("MPPLY_BECAME_BADSPORT_NUM"), 0)
         SET_FLOAT_LOCAL(util.joaat("MPPLY_OVERALL_BADSPORT"), 0, true)
         STAT_SET_BOOL(util.joaat("MPPLY_CHAR_IS_BADSPORT"), false)
-    end)
+    end) ]]
     menu.action(online_services, "随机名字", {}, "", function()
         local name = random_string(math.random(1, 16))
         menu.trigger_commands("spoofedname " .. name)
@@ -987,24 +987,6 @@ menu.toggle_loop(sn, "脚本主机轮盘", {}, "循环给予所有人脚本主�
     for _, pid in ipairs(players.list(false, true, true)) do
         menu.trigger_commands("givesh" .. players.get_name(pid))
         util.yield(1500)
-    end
-end)
-menu.action(sn, "发送到介绍界面", {}, "将战局中的每个人都送到GTAOnline的介绍动画中去.", function()--Update tag1.67
-    for pid = 0, 31 do
-        if pid ~= PLAYER.PLAYER_ID() then
-            local int = memory.read_int(memory.script_global(Global_Base.gpbd_fm_3 + 1 + (pid * 609) + 511)) --Global_Global_Base.gpbd_fm_3[PLAYER::PLAYER_ID() /*609*/].f_511;
-            util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {-366707054, PLAYER.PLAYER_ID(), 20, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
-            util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {1757622014, PLAYER.PLAYER_ID(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
-        end
-    end
-end)
-menu.action(sn, "发送到高尔夫俱乐部", {}, "让战局中所有人都去打高尔夫.", function()--Update tag1.67
-    for pid = 0, 31 do
-        if pid ~= PLAYER.PLAYER_ID() then
-            local int = memory.read_int(memory.script_global(1894573 + 1 + (pid * 608) + 510))
-            util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {-95341040, PLAYER.PLAYER_ID(), 193, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
-            util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {1742713914, PLAYER.PLAYER_ID(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
-        end
     end
 end)
 auto_bounty = menu.list(sn, "全局悬赏", {}, "")
@@ -1915,7 +1897,7 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
         notification("~y~~bold~呼叫ing~", HudColour.blue)
     end)	
     island_casino_Task_setting = menu.list(perrico_island, "任务设定", {}, "")
-        menu.action(island_casino_Task_setting, "跳过准备任务", {}, "", function()--Update tag1.67
+        menu.action(island_casino_Task_setting, "跳过准备任务", {}, "", function()--Update tag1.68
             STAT_SET_INT("H4CNF_TARGET", 5)--主要目标
             STAT_SET_INT("H4_MISSIONS", 65413)--接近载具
             STAT_SET_INT("H4_PROGRESS", 126823)--难度:正常
@@ -1926,27 +1908,23 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
             STAT_SET_INT("H4CNF_ARM_DISRP", 3)
             STAT_SET_INT("H4CNF_HEL_DISRP", 3)
 
-            SET_INT_LOCAL("heist_island_planning", 1526, 2)-------刷新
+            SET_INT_LOCAL("heist_island_planning", 1544, 2)-------刷新https://github.com/atomikfr/CayoPericoHeistAssistant
         end)
-        menu.action(island_casino_Task_setting, "重置面板", {}, "", function()--Update tag1.67
-            STAT_SET_INT("H4_MISSIONS", 0)
-            STAT_SET_INT("H4_PROGRESS", 0)
+        menu.action(island_casino_Task_setting, "重置面板", {}, "", function()--Update tag1.68
+            STAT_SET_INT("H4_MISSIONS", 0) --locked
+            STAT_SET_INT("H4_PROGRESS", 0) --locked
             STAT_SET_INT("H4CNF_APPROACH", 0)
             STAT_SET_INT("H4CNF_BS_ENTR", 0)
             STAT_SET_INT("H4CNF_BS_GEN", 0)
             STAT_SET_INT("H4_PLAYTHROUGH_STATUS", 0)
             STAT_SET_INT("H4CNF_TARGET", -1)
-            SET_INT_LOCAL("heist_island_planning", 1526, 2)-------刷新
+
+            SET_INT_LOCAL("heist_island_planning", 1544, 2)-------刷新
         end)
         
     TELEPORT_island = menu.list(perrico_island, "地点传送", {}, "")    
 	menu.action(TELEPORT_island, "任务面板(虎鲸)", {}, "先呼叫潜艇", function()
-        if STAT_GET_INT("IH_SUB_OWNED") == 0 then
-        else
-            teleport(1561.2369, 385.8771, -49.689915)
-            ENTITY.SET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID(), 175)
-            STAT_SET_INT("H4_PROGRESS", 131055)
-        end
+        PED.SET_PED_COORDS_KEEP_VEHICLE(PLAYER.PLAYER_PED_ID(), 1561.2369, 385.8771, -49.689915)
 	end)
     menu.action(TELEPORT_island, "传送到大门(外侧)", {}, "", function()
         teleport(4974.189, -5703.279, 19.898539)
@@ -1955,8 +1933,7 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
         teleport(4993.189, -5720.279, 19.898539)
     end)
     menu.action(TELEPORT_island, "主要目标", {}, "", function()
-            teleport(5006.7, -5756.2, 14.8)
-            ENTITY.SET_ENTITY_HEADING(PLAYER.PLAYER_PED_ID(), 145)
+        teleport(5006.7, -5756.2, 14.8)
     end)
     menu.action(TELEPORT_island, "次要目标", {}, "", function()
         teleport(4999.764160, -5749.863770, 14.840000)
@@ -1996,13 +1973,13 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
             SET_INT_GLOBAL(1970744 + 831 + 56 + 4, value)
         end)
 
-    menu.list_action(perrico_island, "抢劫难度", {}, "", {{1,"正常"},{2,"困难"}}, function(Index)--Update tag1.67
+    menu.list_action(perrico_island, "抢劫难度", {}, "", {{1,"正常"},{2,"困难"}}, function(Index)--Update tag1.68
         if Index == 1 then
-            STAT_SET_INT("H4_PROGRESS", 126823)
-            SET_INT_LOCAL("heist_island_planning", 1526, 2)--刷新
+            STAT_SET_INT("H4_PROGRESS", 126823) --locked
+            SET_INT_LOCAL("heist_island_planning", 1544, 2)--刷新
         elseif Index == 2 then
             STAT_SET_INT("H4_PROGRESS", 131055)
-            SET_INT_LOCAL("heist_island_planning", 1526, 2)--刷新
+            SET_INT_LOCAL("heist_island_planning", 1544, 2)--刷新
         end
     end)
     menu.toggle_loop(perrico_island, "跳过下水道切割", {}, "", function() 
@@ -2015,18 +1992,18 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
     menu.action(perrico_island, "删除排水管", {}, "", function() 
         DELETE_OBJECT_BY_HASH(-1297635988)
     end)
-    menu.toggle_loop(perrico_island, "跳过指纹锁", {}, "", function() --Update tag1.67
-        if GET_INT_LOCAL("fm_mission_controller_2020", 23669) == 4 then
-            SET_INT_LOCAL("fm_mission_controller_2020", 23669, 5)
+    menu.toggle_loop(perrico_island, "跳过指纹锁", {}, "", function() --Update tag1.68
+        if GET_INT_LOCAL("fm_mission_controller_2020", 24333) == 4 then -- https://www.unknowncheats.me/forum/3418914-post13398.html
+            SET_INT_LOCAL("fm_mission_controller_2020", 24333, 5)
         end
     end)
-    menu.action(perrico_island, "快速切开玻璃", {}, "切割时使用", function()--Update tag1.67
-            SET_FLOAT_LOCAL("fm_mission_controller_2020", 29685 + 3, 100)
+    menu.action(perrico_island, "跳过切割玻璃", {}, "切割时使用", function()--Update tag1.68
+            SET_FLOAT_LOCAL("fm_mission_controller_2020", 30357 + 3, 100)
         end, function()
-            SET_FLOAT_LOCAL("fm_mission_controller_2020", 29685 + 3, 0)
+            SET_FLOAT_LOCAL("fm_mission_controller_2020", 30357 + 3, 0)
     end)
-    menu.toggle_loop(perrico_island, "绕过切割机发热", {}, "切割前开启", function()--Update tag1.67
-        SET_FLOAT_LOCAL("fm_mission_controller_2020", 29685 + 4, 0)
+    menu.toggle_loop(perrico_island, "绕过切割机发热", {}, "切割前开启", function()--Update tag1.68
+        SET_FLOAT_LOCAL("fm_mission_controller_2020", 30357 + 4, 0)
     end)
     menu.action(perrico_island, "杀死队友", {}, "炸死队友,包括自己(无敌可免疫)", function()
         local playerList = getNonWhitelistedPlayers(whitelistListTable, whitelistGroups, whitelistedName)
@@ -2040,20 +2017,17 @@ advanced_options_island = menu.list(perrico_island, "高级选项", {}, "")--佩
     menu.click_slider(advanced_options_island, "增加任务生命数", {}, "只有是战局主机时才会生效", 0, 100, 3, 1, function(value)
         SET_INT_LOCAL("fm_mission_controller_2020", 51905 + 868 + 1, value + 2)
     end)
-    menu.action(advanced_options_island, "快速完成", {}, "", function()--Update tag1.67
+    menu.action(advanced_options_island, "快速完成", {}, "", function()--Update tag1.68
         menu.trigger_commands("scripthost")
-        SET_INT_LOCAL("fm_mission_controller_2020", 45450 + 1, 51338752)
-        SET_INT_LOCAL("fm_mission_controller_2020", 45450 + 1378 + 1, 50)
-    end)
-    menu.action(advanced_options_island, "一键结束动画", {}, "仅限单人上岛使用", function()
-        menu.trigger_commands("skipcutscene")
+        SET_INT_LOCAL("fm_mission_controller_2020", 48513 + 1, 51338752) -- 'fm_mission_controller_2020' instant finish variable?
+        SET_INT_LOCAL("fm_mission_controller_2020", 48513 + 1765 + 1, 50) -- 'fm_mission_controller_2020' instant finish variable?
     end)
         
 
 ------------------赌场选项
 casino = menu.list(Task_robbery, "名钻赌场", {}, "")
     casino_Task_setting = menu.list(casino, "任务设定", {}, "")
-        menu.action(casino_Task_setting, "跳过准备任务", {}, "目标：钻石\n方式:气势汹汹", function()--Update tag(1.67)
+        menu.action(casino_Task_setting, "跳过准备任务", {}, "目标：钻石\n方式:气势汹汹", function()--Update tag(1.68)
             STAT_SET_INT("CAS_HEIST_FLOW", -1)
             STAT_SET_INT("H3_LAST_APPROACH", 0)
             STAT_SET_INT("H3OPT_APPROACH", 3)
@@ -2070,7 +2044,7 @@ casino = menu.list(Task_robbery, "名钻赌场", {}, "")
             STAT_SET_INT("H3OPT_BITSET1", 799)
             STAT_SET_INT("H3OPT_BITSET0", 3670102)
         end)
-        menu.action(casino_Task_setting, "重置面板", {}, "", function()--Update tag(1.67)
+        menu.action(casino_Task_setting, "重置面板", {}, "", function()--Update tag(1.68)
             STAT_SET_INT("H3_LAST_APPROACH", 0)
             STAT_SET_INT("H3OPT_APPROACH", 0)
             STAT_SET_INT("H3_HARD_APPROACH", 0)
@@ -2175,39 +2149,39 @@ casino = menu.list(Task_robbery, "名钻赌场", {}, "")
         menu.click_slider(advanced_options_casino, "增加任务生命数", {}, "只有是战局主机时才会生效", 0, 100, 0, 1, function(value)
             SET_INT_LOCAL("fm_mission_controller", 26136 + 1325 + 1, value)
         end)
-        menu.action(advanced_options_casino, "快速完成", {}, "", function()--Update tag1.67
+        menu.action(advanced_options_casino, "快速完成", {}, "", function()--Update tag1.68
             menu.trigger_commands("scripthost")
-            SET_INT_LOCAL("fm_mission_controller", 19710 + 1741, 80)
-            SET_INT_LOCAL("fm_mission_controller", 19710 + 2686, 10000000)
-            SET_INT_LOCAL("fm_mission_controller", 27473 + 859, 99999)
-            SET_INT_LOCAL("fm_mission_controller", 31587 + 69, 99999)
+            SET_INT_LOCAL("fm_mission_controller", 19728 + 1741, 80) -- Casino Aggressive Kills & Act 3
+            SET_INT_LOCAL("fm_mission_controller", 19728 + 2686, 10000000) -- How much did you take in the casino and pacific standard heist
+            SET_INT_LOCAL("fm_mission_controller", 27489 + 859, 99999) -- 'fm_mission_controller' instant finish variable?
+            SET_INT_LOCAL("fm_mission_controller", 31603 + 69, 99999) -- 'fm_mission_controller' instant finish variable?
         end)
 
 doomsday = menu.list(Task_robbery, "末日豪杰", {}, "")
     doomsday_Task_setting = menu.list(doomsday, "任务设定", {}, "")
-        menu.action(doomsday_Task_setting, "数据泄露 I", {}, "", function()--Update tag1.67
+        menu.action(doomsday_Task_setting, "数据泄露 I", {}, "", function()--Update tag1.68
             STAT_SET_INT("GANGOPS_FLOW_MISSION_PROG", 503)
             STAT_SET_INT("GANGOPS_HEIST_STATUS", -229383)
             STAT_SET_INT("GANGOPS_FLOW_NOTIFICATIONS", 1557)
-            SET_INT_LOCAL("gb_gang_ops_planning", 179, 6)------刷新
+            SET_INT_LOCAL("gb_gang_ops_planning", 182, 6)------刷新
         end)
-        menu.action(doomsday_Task_setting, "波格丹危机 II", {}, "", function()--Update tag1.67
+        menu.action(doomsday_Task_setting, "波格丹危机 II", {}, "", function()--Update tag1.68
             STAT_SET_INT("GANGOPS_FLOW_MISSION_PROG", 240)
             STAT_SET_INT("GANGOPS_HEIST_STATUS", -229378)
             STAT_SET_INT("GANGOPS_FLOW_NOTIFICATIONS", 1557)
-            SET_INT_LOCAL("gb_gang_ops_planning", 179, 6)------刷新
+            SET_INT_LOCAL("gb_gang_ops_planning", 182, 6)------刷新
         end)
-        menu.action(doomsday_Task_setting, "末日降临 III", {}, "", function()--Update tag1.67
+        menu.action(doomsday_Task_setting, "末日降临 III", {}, "", function()--Update tag1.68
             STAT_SET_INT("GANGOPS_FLOW_MISSION_PROG", 16368)
             STAT_SET_INT("GANGOPS_HEIST_STATUS", -229380)
             STAT_SET_INT("GANGOPS_FLOW_NOTIFICATIONS", 1557)
-            SET_INT_LOCAL("gb_gang_ops_planning", 179, 6)------刷新
+            SET_INT_LOCAL("gb_gang_ops_planning", 182, 6)------刷新
         end)
-        menu.action(doomsday_Task_setting, "重置任务面板", {}, "", function()--Update tag1.67
+        menu.action(doomsday_Task_setting, "重置任务面板", {}, "", function()--Update tag1.68
             STAT_SET_INT("GANGOPS_FLOW_MISSION_PROG", 240)
             STAT_SET_INT("GANGOPS_HEIST_STATUS", 0)
             STAT_SET_INT("GANGOPS_FLOW_NOTIFICATIONS", 1557)
-            SET_INT_LOCAL("gb_gang_ops_planning", 179, 6)------刷新
+            SET_INT_LOCAL("gb_gang_ops_planning", 182, 6)------刷新
         end)
         
     doomsday_Task_tp = menu.list(doomsday, "地点传送", {}, "")
@@ -2239,13 +2213,13 @@ doomsday = menu.list(Task_robbery, "末日豪杰", {}, "")
             end)
 
     advanced_options_doomsday = menu.list(doomsday, "高级选项", {}, "")--末日
-        menu.action(advanced_options_doomsday, "快速完成", {}, "末日降临", function()--Update tag1.67
+        menu.action(advanced_options_doomsday, "快速完成", {}, "末日降临", function()--Update tag1.68
             menu.trigger_commands("scripthost")
-            SET_INT_LOCAL("fm_mission_controller", 19710, 12)
-            SET_INT_LOCAL("fm_mission_controller", 19710 + 1741, 150)
-            SET_INT_LOCAL("fm_mission_controller", 27473 + 859, 99999)
-            SET_INT_LOCAL("fm_mission_controller", 31587 + 69, 99999)
-            SET_INT_LOCAL("fm_mission_controller", 31587 + 97, 80)
+            SET_INT_LOCAL("fm_mission_controller", 19728, 12) -- ???, 'fm_mission_controller' instant finish variable?
+            SET_INT_LOCAL("fm_mission_controller", 19728 + 1741, 150) -- Casino Aggressive Kills & Act 3
+            SET_INT_LOCAL("fm_mission_controller", 27489 + 859, 99999) -- 'fm_mission_controller' instant finish variable?
+            SET_INT_LOCAL("fm_mission_controller", 31603 + 69, 99999) -- 'fm_mission_controller' instant finish variable?
+            SET_INT_LOCAL("fm_mission_controller", 31603 + 97, 80) -- Act 1 Kills? Seem not to work
         end)
 -----------
 
@@ -4943,10 +4917,11 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
             TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped)
         end
     end)
-    menu.action(trolling, "无限加载屏幕", {}, "", function()--Update tag1.67
-        util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {1103127469, PLAYER.PLAYER_ID(), 0, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
-    end)--MCTeleport
-
+    menu.toggle_loop(trolling, "黑屏", {}, "", function()--1.68
+        local handle = NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid)
+        util.trigger_script_event(1 << pid, {-1604421397, players.user(), 1, 4, handle, handle, handle, handle, 1, 1})
+        util.yield(10000)
+    end)
     menu.toggle_loop(trolling, "推动玩家", {}, "", function()
         Driving_Player(pid)  
     end)
@@ -4965,32 +4940,26 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
     end)
 
 --发送玩家
-    menu.action(tp_player_trolling, "发送到GTA5介绍界面", {}, "", function()--Update tag(1.67)
-        local int = memory.read_int(memory.script_global(Global_Base.gpbd_fm_3 + 1 + (pid * 609) + 511)) --Global_Global_Base.gpbd_fm_3[PLAYER::PLAYER_ID() /*609*/].f_511;
-        util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {-366707054, PLAYER.PLAYER_ID(), 20, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
-        util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {1757622014, PLAYER.PLAYER_ID(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+    menu.action(tp_player_trolling, "发送到GTA5介绍界面", {}, "", function()--Update tag(1.68)
+        local int = memory.read_int(memory.script_global(1886967 + 1 + (pid * 609) + 511)) --Global_1886967[PLAYER::PLAYER_ID() /*609*/].f_511;
+        util.trigger_script_event(1 << pid, {-366707054, players.user(), 20, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
+        util.trigger_script_event(1 << pid, {1757622014, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
     end)
-    menu.action(tp_player_trolling, "发送到高尔夫", {}, "派遣玩家去打高尔夫.", function()--Update tag(1.67)
-        local int = memory.read_int(memory.script_global(Global_Base.gpbd_fm_3 + 1 + (pid * 609) + 511))
-        util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {-366707054, PLAYER.PLAYER_ID(), 193, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int}) --https://github.com/search?q=repo%3AYimMenu%2FYimMenu+-366707054&type=code
-        util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {1757622014, PLAYER.PLAYER_ID(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+    menu.action(tp_player_trolling, "发送到高尔夫", {}, "派遣玩家去打高尔夫.", function()--Update tag(1.68)
+        local int = memory.read_int(memory.script_global(1886967 + 1 + (pid * 609) + 511))
+        util.trigger_script_event(1 << pid, {-366707054, players.user(), 193, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
+        util.trigger_script_event(1 << pid, {1757622014, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
     end)
-    menu.action(tp_player_trolling, "发送到飞镖", {}, "派遣玩家去玩飞镖", function()--Update tag(1.67)
-        local int = memory.read_int(memory.script_global(Global_Base.gpbd_fm_3 + 1 + (pid * 609) + 511))
-        util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {-366707054, PLAYER.PLAYER_ID(), 192, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
-        util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {1757622014, PLAYER.PLAYER_ID(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+    menu.action(tp_player_trolling, "发送到飞镖", {}, "派遣玩家去玩飞镖", function()--Update tag(1.68)
+        local int = memory.read_int(memory.script_global(1886967 + 1 + (pid * 609) + 511))
+        util.trigger_script_event(1 << pid, {-366707054, players.user(), 192, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
+        util.trigger_script_event(1 << pid, {1757622014, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
     end)
-    menu.action(tp_player_trolling, "强制1V1", {}, "", function()--Update tag(1.67)
-        local int = memory.read_int(memory.script_global(Global_Base.gpbd_fm_3 + 1 + (pid * 609) + 511))
-       util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {-366707054, PLAYER.PLAYER_ID(), 197, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
-       util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {1757622014, PLAYER.PLAYER_ID(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+    menu.action(tp_player_trolling, "强制1V1", {}, "", function()--Update tag(1.68)
+        local int = memory.read_int(memory.script_global(1886967 + 1 + (pid * 609) + 511))
+        util.trigger_script_event(1 << pid, {-366707054, players.user(), 197, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
+        util.trigger_script_event(1 << pid, {1757622014, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
     end)
-    menu.action(tp_player_trolling, "强制传送到佩里科岛", {}, "", function()--Update tag1.67
-        util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {373376135, PLAYER.PLAYER_ID(), 1})
-    end)
-    menu.action(tp_player_trolling, "驾驶摩托车", {}, "", function()--Update tag1.67
-        util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {1103127469, PLAYER.PLAYER_ID(), 1, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
-    end)--MCTeleport
     menu.action(tp_player_trolling, "强制进入自由模式任务", {}, "强制玩家进入自由模式任务", function()
         menu.trigger_commands("mission".. players.get_name(pid))
     end)
