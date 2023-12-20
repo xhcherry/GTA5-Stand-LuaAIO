@@ -2151,10 +2151,11 @@ casino = menu.list(Task_robbery, "名钻赌场", {}, "")
         end)
         menu.action(advanced_options_casino, "快速完成", {}, "", function()--Update tag1.68
             menu.trigger_commands("scripthost")
-            SET_INT_LOCAL("fm_mission_controller", 19728 + 1741, 80) -- Casino Aggressive Kills & Act 3
-            SET_INT_LOCAL("fm_mission_controller", 19728 + 2686, 10000000) -- How much did you take in the casino and pacific standard heist
+            SET_INT_LOCAL("fm_mission_controller", 19728, 12) -- ???, 'fm_mission_controller' instant finish variable?
+            SET_INT_LOCAL("fm_mission_controller", 19728 + 1741, 150) -- Casino Aggressive Kills & Act 3
             SET_INT_LOCAL("fm_mission_controller", 27489 + 859, 99999) -- 'fm_mission_controller' instant finish variable?
             SET_INT_LOCAL("fm_mission_controller", 31603 + 69, 99999) -- 'fm_mission_controller' instant finish variable?
+            SET_INT_LOCAL("fm_mission_controller", 31603 + 97, 80) -- Act 1 Kills? Seem not to work
         end)
 
 doomsday = menu.list(Task_robbery, "末日豪杰", {}, "")
@@ -2215,11 +2216,10 @@ doomsday = menu.list(Task_robbery, "末日豪杰", {}, "")
     advanced_options_doomsday = menu.list(doomsday, "高级选项", {}, "")--末日
         menu.action(advanced_options_doomsday, "快速完成", {}, "末日降临", function()--Update tag1.68
             menu.trigger_commands("scripthost")
-            SET_INT_LOCAL("fm_mission_controller", 19728, 12) -- ???, 'fm_mission_controller' instant finish variable?
-            SET_INT_LOCAL("fm_mission_controller", 19728 + 1741, 150) -- Casino Aggressive Kills & Act 3
+            SET_INT_LOCAL("fm_mission_controller", 19728 + 1741, 80) -- Casino Aggressive Kills & Act 3
+            SET_INT_LOCAL("fm_mission_controller", 19728 + 2686, 10000000) -- How much did you take in the casino and pacific standard heist
             SET_INT_LOCAL("fm_mission_controller", 27489 + 859, 99999) -- 'fm_mission_controller' instant finish variable?
             SET_INT_LOCAL("fm_mission_controller", 31603 + 69, 99999) -- 'fm_mission_controller' instant finish variable?
-            SET_INT_LOCAL("fm_mission_controller", 31603 + 97, 80) -- Act 1 Kills? Seem not to work
         end)
 -----------
 
