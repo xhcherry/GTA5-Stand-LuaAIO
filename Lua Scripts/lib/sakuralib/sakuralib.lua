@@ -2793,7 +2793,7 @@ end
 
 ----端粒枪
 function Telomere_gun()
-    draw_string("~b~已准备就绪", 0.02, 0.05, 0.6, 4)
+    draw_string("~b~已准备就绪", 0.02, 0.05, 0.4, 1)
     if PED.IS_PED_SHOOTING(PLAYER.PLAYER_PED_ID()) then
         local hash = util.joaat("w_lr_firework_rocket")
         local player_pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.PLAYER_PED_ID(), 0.0, 0.5, 0.5)
@@ -2819,7 +2819,7 @@ function Telomere_gun()
         util.yield(200)
         local end_time = os.time() + 4
         while end_time >= os.time() do
-            draw_string("~r~充能中...", 0.02, 0.05, 0.6, 4)
+            draw_string("~r~充能中...", 0.02, 0.05, 0.4, 1)
             PLAYER.DISABLE_PLAYER_FIRING(PLAYER.PLAYER_ID(), true)
             local pos = ENTITY.GET_ENTITY_COORDS(particle_gun_bullet, false)
             FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 5, 1, true, false, 0, false)
@@ -10986,40 +10986,25 @@ end
 function getClosestPlayer(myPos)
     local closestDist = 1000000
     local closest_player = nil
-    local myVehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
-    if myVehicle == 0 then
-        myVehicle = 1
-    end
     for pid = 0, 31 do
-		local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-		if not ENTITY.IS_ENTITY_DEAD(ped) then
-            local playerpos = players.get_position(pid)
+		local ped = PLAYER.GET_PLAYER_PED(pid)
+		if not ENTITY.IS_ENTITY_DEAD(ped) and ped ~= 0 and ped ~= PLAYER.PLAYER_PED_ID() then
+            local playerpos = ENTITY.GET_ENTITY_COORDS(ped, false)
             local dist = myPos:distance(playerpos)
-            local playerVehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
-            if (dist < closestDist) and (playerVehicle ~= myVehicle) and not players.is_in_interior(pid) then
+            if dist < closestDist then
                 closestDist = dist
                 closest_player = pid
             end
 		end
     end
-    if closest_player ~= nil and closest_player ~= PLAYER.PLAYER_ID() then
-        return closest_player
-    end
+    return closest_player
 end
 function tp_closest_player()
-    local user_pos = players.get_position(PLAYER.PLAYER_ID())
-	local player = getClosestPlayer(user_pos)
-    if player ~= nil then
-        if not PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID(), false) then
-            local player_pos = players.get_position(player)
-            ENTITY.SET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), player_pos.x, player_pos.y, player_pos.z, false, false, false, false)
-        else
-            local player_pos = players.get_position(player)
-            local user_vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
-            if user_vehicle ~= 0 then
-                ENTITY.SET_ENTITY_COORDS(user_vehicle, player_pos.x, player_pos.y, player_pos.z, false, false, false, false)
-            end
-        end
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)
+	local player = getClosestPlayer(pos)
+    if PLAYER.GET_PLAYER_PED(player) ~= 0 and player ~= nil then
+        local player_pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(player), false)
+        ENTITY.SET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), player_pos.x, player_pos.y, player_pos.z, false, false, false, false)
     end
 end
 
@@ -13828,49 +13813,30 @@ suijijianqi = function(x)
 end
 
 
----转魂
+---转魂枪
 function Soul_Gun()
-    local ent = get_aim_info()['ent']
+    local ent = get_entity_player_is_aiming_at(PLAYER.PLAYER_ID())
     if PED.IS_PED_SHOOTING(PLAYER.PLAYER_PED_ID()) then
         if ENTITY.IS_ENTITY_A_PED(ent) then
             pos = ENTITY.GET_ENTITY_COORDS(ent, false)
             ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos.x, pos.y, pos.z, false, false, false)
             if PED.IS_PED_A_PLAYER(ent) then
                 local pid = NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(ent)
-                menu.trigger_commands("copyoutfit " .. players.get_name(pid))
+                copy_outfit(pid)
             else
-            local soul = ENTITY.GET_ENTITY_MODEL(ent)
-            STREAMING.REQUEST_MODEL(soul)
-            while(not STREAMING.HAS_MODEL_LOADED(soul))
-            do
-            util.yield(10)
-                end
-            PLAYER.SET_PLAYER_MODEL(PLAYER.PLAYER_ID(),soul)
-            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(soul)
-            if not PED.IS_PED_A_PLAYER(ent) then
+                local soul = ENTITY.GET_ENTITY_MODEL(ent)
+                change_model(PLAYER.PLAYER_ID(), soul)
                 delete_entity(ent)
             end
-            util.yield(10)
-            menu.trigger_commands("allguns")
-        end
-    end
-        if ENTITY.IS_ENTITY_A_VEHICLE(ent) then
+        elseif ENTITY.IS_ENTITY_A_VEHICLE(ent) then
             local driver = VEHICLE.GET_PED_IN_VEHICLE_SEAT(ent, -1)
-        if VEHICLE.GET_VEHICLE_NUMBER_OF_PASSENGERS(ent,true,false) >= 1 then
-            local soulveh = ENTITY.GET_ENTITY_MODEL(driver)
-            if not PED.IS_PED_A_PLAYER(driver) then
-                delete_entity(driver)
+            if VEHICLE.GET_VEHICLE_NUMBER_OF_PASSENGERS(ent,true,false) >= 1 then
+                local soulveh = ENTITY.GET_ENTITY_MODEL(driver)
+                if not PED.IS_PED_A_PLAYER(driver) then
+                    delete_entity(driver)
+                    change_model(PLAYER.PLAYER_ID(), soulveh)
+                    PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), ent, -1)
                 end
-                STREAMING.REQUEST_MODEL(soulveh)
-                while(not STREAMING.HAS_MODEL_LOADED(soulveh))
-                do
-                util.yield(10)
-                    end
-            PLAYER.SET_PLAYER_MODEL(PLAYER.PLAYER_ID(),soulveh)
-            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(soulveh)
-            util.yield(10)
-            PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), ent, -1)
-            menu.trigger_commands("allguns")
             end
         end
     end
@@ -14180,18 +14146,20 @@ function zhujixvlie()
                 inviciamountint = inviciamountint + 1
             end
         end
-        --载具时速
-        local ent1e = PLAYER.PLAYER_PED_ID()
-        local ent2e = PED.GET_VEHICLE_PED_IS_USING(PLAYER.PLAYER_PED_ID())
-            if PED.IS_PED_IN_ANY_VEHICLE(ent1e,true) then
-                ente = ent2e----载具内
-            else
-                ente = ent1e----非载具内
-            end
-        local speede = ENTITY.GET_ENTITY_SPEED(ente)
-        local speedcalce = speede * 3.6
-        myspeed1e = math.ceil(speedcalce)
     end
+
+    --时速
+    local ent1e = PLAYER.PLAYER_PED_ID()
+    local ent2e = PED.GET_VEHICLE_PED_IS_USING(PLAYER.PLAYER_PED_ID())
+        if PED.IS_PED_IN_ANY_VEHICLE(ent1e,true) then
+            ente = ent2e----载具内
+        else
+            ente = ent1e----非载具内
+        end
+    local speede = ENTITY.GET_ENTITY_SPEED(ente)
+    local speedcalce = speede * 3.6
+    myspeed1e = math.ceil(speedcalce)
+    
 
 --~italic~ 斜体
 --~bold~ 加粗
@@ -14242,11 +14210,11 @@ end
 
 
 ----脚本昵称
-function scriptname(state)
+function scriptname()
     local timer = MISC.GET_GAME_TIMER()
     local color =  gradient_colour(timer, 0.5)       
     HUD.SET_TEXT_COLOUR(color.r, color.g, color.b, 255)
-    draw_string(string.format("~italic~¦~bold~Sakura Script v10.3"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v10.4"), 0.38,0.1, 0.6,5)
 end
 
 
