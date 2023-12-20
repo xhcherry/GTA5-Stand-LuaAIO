@@ -3,7 +3,7 @@
 Global_Base = {----https://github.com/CrazyZhang666/GTA5OnlineTools/blob/9260e13791e067c9ef98566e43e16f8e171175be/GTA5Core/Features/Online.cs#L495
     Default = 2738587, --(1.68) --util.joaat("CHARACTER_APPEARANCE_CHARGE")(freemode_global)
     gooch = 1882037, -- (1.68) gooch test(from yimmenu)古奇击杀
-    SessionSwitchType = 1575020, --NETWORK::NETWORK_SESSION_SET_UNIQUE_CREW_LIMIT(1)
+    SessionSwitchType = 1575032, --(1.68) NETWORK::NETWORK_SESSION_SET_UNIQUE_CREW_LIMIT(1)
     SessionSwitchState = 1574589,
     gpbd_fm_1 = 1845263, --派遣劫匪(1.68)
     gpbd_fm_3 = 1886967,--(1.68)
