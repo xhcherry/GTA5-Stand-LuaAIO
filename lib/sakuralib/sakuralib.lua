@@ -10,7 +10,7 @@ json1 = require "lib.sakuralib.Main.pretty.json"
 function LOG(message)
     local dir = filesystem.stand_dir() .. "Sakura.log"
     local file = io.open(dir, "a+")
-    file:write(os.date("[%Y-%m-%d %H:%M:%S]") .. " " .. message .. "\n")
+    file:write(os.date("\n[%Y-%m-%d %H:%M:%S]") .. " " .. message)
     file:close()
 end
 function ERROR_LOG(error_message)
@@ -1061,6 +1061,15 @@ function attacks_911()
         VEHICLE.SET_VEHICLE_FORWARD_SPEED(plane, 150.0)
         util.yield(1000)
     end
+end
+
+----派只雪怪
+function send_snow_monster(pid)
+    local hash = -1931041674
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED(pid), math.random(10), math.random(10), 0)
+    local Peds = create_ped(4, hash, pos.x, pos.y, pos.z, 1.0)
+    ENTITY.SET_ENTITY_INVINCIBLE(Peds,true)
+    TASK.TASK_COMBAT_PED(Peds, PLAYER.GET_PLAYER_PED(pid), 0, 16)
 end
 
 ----消防车攻击
@@ -5458,7 +5467,7 @@ function Attack_ridicule()
     for _, pid in ipairs(players.list(false, true, true)) do
         if players.is_marked_as_attacker(pid,SYSTEM.SHIFT_LEFT(0x03, 1)) or players.is_marked_as_attacker(pid,SYSTEM.SHIFT_LEFT(0x04, 1)) or players.is_marked_as_attacker(pid,SYSTEM.SHIFT_LEFT(0x05, 1)) or players.is_marked_as_attacker(pid,SYSTEM.SHIFT_LEFT(0x0C, 1)) or players.is_marked_as_attacker(pid,SYSTEM.SHIFT_LEFT(0x0D, 1)) or players.is_marked_as_attacker(pid,SYSTEM.SHIFT_LEFT(0x0E, 1)) then
             if not table_find(U_hack_list, pid) then
-                chat.send_message(PLAYER.GET_PLAYER_NAME(pid)..chaofeng..author,false,true,true)
+                chat.send_message(PLAYER.GET_PLAYER_NAME(pid)..chaofeng,false,true,true)
                 table.insert(U_hack_list, pid)
             end
         end
@@ -7503,13 +7512,11 @@ local time = util.current_time_millis() + 2000
 
 ------踢出载具v1
 function kickcar(pid)
-    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-    if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
-        player_veh = PED.GET_VEHICLE_PED_IS_USING(ped)
+    if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED(pid), false) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(pid), false)
+        request_control(vehicle)
         DECORATOR.DECOR_REGISTER("Player_Vehicle", 3)
-        DECORATOR.DECOR_SET_INT(player_veh,"Player_Vehicle", 0)
-    else
-        util.toast("玩家不在车内哦")
+        DECORATOR.DECOR_SET_INT(vehicle,"Player_Vehicle", 0)
     end
 end
 
@@ -7788,8 +7795,6 @@ function isAnyPlayerTargetingEntity(playerPed)
     karma[playerPed] = nil
     return false
 end
-
-----瞄准惩罚
 function playerIsTargetingEntity(playerPed)
     local playerList = getNonWhitelistedPlayers(whitelistListTable, whitelistGroups, whitelistedName)
     for k, playerPid in pairs(playerList) do
@@ -11095,11 +11100,13 @@ function fireWing(toggled)
     if toggled then
         if firewing[1] then return end
         local fireWingr = 255;local fireWingg = 165;local fireWingb = 50
+        local dictionary = "weap_xs_vehicle_weapons"
+        local ptfx_name = "muz_xs_turret_flamethrower_looping_sf"
         for i = 1, #fireWings do
-            request_ptfx_asset('weap_xs_vehicle_weapons')
-            GRAPHICS.USE_PARTICLE_FX_ASSET('weap_xs_vehicle_weapons')
-            firewing[i] = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('muz_xs_turret_flamethrower_looping', PLAYER.PLAYER_PED_ID(), 0, 0, 0.1, fireWings[i].pos[1], 0, fireWings[i].pos[2], 1, false, false, false)
-            GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(firewing[i], 0.3)
+            request_ptfx_asset(dictionary)
+            GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
+            firewing[i] = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(ptfx_name, PLAYER.PLAYER_PED_ID(), 0, 0, 0.1, fireWings[i].pos[1], 0, fireWings[i].pos[2], 0.3, false, false, false)
+            --GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(firewing[i], 0.3)
             GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(firewing[i], fireWingr, fireWingg, fireWingb, false)		
         end			
     else
@@ -11140,6 +11147,26 @@ function colorful_fireWing(toggled)
         end
         GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(PLAYER.PLAYER_PED_ID())
     end
+end
+----xp翅膀
+function xp_fireWing(toggled)
+    xp_toggled = toggled
+    while xp_toggled do
+        local fireWingr = 255;local fireWingg = 165;local fireWingb = 50
+        local dictionary = "core"
+        local ptfx_name = "ent_sht_flame"
+        local pos1 = 65;local pos2 = 75;
+        local posz = {-0.2, -0.2, 0, 0, 0.2, 0.2, 0.4, 0.4, 0.6, 0.6}
+        for i = 1, 8 do
+            request_ptfx_asset(dictionary)
+            GRAPHICS.USE_PARTICLE_FX_ASSET(dictionary)
+            GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(ptfx_name, PLAYER.PLAYER_PED_ID(), 0, 0, posz[i], pos1, 0, pos2, 1, false, false, false)
+            GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(fireWingr, fireWingg, fireWingb)	
+            pos2 = pos2 * -1
+        end
+        util.yield(3500)
+    end
+    GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(PLAYER.PLAYER_PED_ID())
 end
 
 
@@ -13273,168 +13300,166 @@ function rotatePoint(x, y, center, degrees)
     return center.x + new_x, center.y + new_y * 1920 / 1080
 end
 function Invalid_parachute()
-    for pid = 0, 31 do
-        local TTPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-        local SelfPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
-        local PreviousPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
-        local user = PLAYER.PLAYER_ID()
-        local user_ped = PLAYER.PLAYER_PED_ID()
-        local pos = players.get_position(user)
-        local spped = PLAYER.PLAYER_PED_ID()
-        local ppos = ENTITY.GET_ENTITY_COORDS(spped, true)
-        for i = 1, 5 do
-            local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
-            local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
-            PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 200, false, true, true)
-            util.yield(100)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	3235319999)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
-            util.yield(100)
-            delete_entity(Ruiner2)
-        end
-        for i = 1, 10 do
-            local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
-            local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
-            PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 2000, false, true, true)
-            util.yield(120)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	260873931)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
-            util.yield(120)
-            delete_entity(Ruiner2)
-        end
-        for i = 1, 10 do
-            local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
-            local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
-            PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 1000, false, true, true)
-            util.yield(100)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	546252211)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
-            util.yield(100)
-            delete_entity(Ruiner2)
-        end
-        for i = 1, 8 do
-            local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
-            local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
-            PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 800, false, true, true)
-            util.yield(200)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	148511758)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
-            util.yield(200)
-            delete_entity(Ruiner2)
-        end
-        for i = 1, 10 do
-            local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
-            local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
-            PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 500, false, true, true)
-            util.yield(100)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	260873931)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
-            util.yield(100)
-            delete_entity(Ruiner2)
-        end
+    local TTPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0)
+    local SelfPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
+    local PreviousPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
+    local user = PLAYER.PLAYER_ID()
+    local user_ped = PLAYER.PLAYER_PED_ID()
+    local pos = players.get_position(user)
+    local spped = PLAYER.PLAYER_PED_ID()
+    local ppos = ENTITY.GET_ENTITY_COORDS(spped, true)
+    for i = 1, 5 do
+        local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
+        local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
+        PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 200, false, true, true)
+        util.yield(100)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	3235319999)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
+        util.yield(100)
+        delete_entity(Ruiner2)
+    end
+    for i = 1, 10 do
+        local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
+        local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
+        PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 2000, false, true, true)
+        util.yield(120)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	260873931)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
+        util.yield(120)
+        delete_entity(Ruiner2)
+    end
+    for i = 1, 10 do
+        local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
+        local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
+        PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 1000, false, true, true)
+        util.yield(100)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	546252211)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
+        util.yield(100)
+        delete_entity(Ruiner2)
+    end
+    for i = 1, 8 do
+        local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
+        local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
+        PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 800, false, true, true)
         util.yield(200)
-        for i = 1, 5 do
-            local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
-            local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
-            PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 300, false, true, true)
-            util.yield(500)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 1381105889)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
-            util.yield(500)
-            delete_entity(Ruiner2)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	148511758)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
+        util.yield(200)
+        delete_entity(Ruiner2)
+    end
+    for i = 1, 10 do
+        local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
+        local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
+        PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 500, false, true, true)
+        util.yield(100)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	260873931)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
+        util.yield(100)
+        delete_entity(Ruiner2)
+    end
+    util.yield(200)
+    for i = 1, 5 do
+        local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
+        local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
+        PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 300, false, true, true)
+        util.yield(500)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 1381105889)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
+        util.yield(500)
+        delete_entity(Ruiner2)
+    end
+    for i = 1, 25 do
+        local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
+        local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
+        PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 200, false, true, true)
+        util.yield(150)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	1500925016)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
+        util.yield(150)
+        delete_entity(Ruiner2)
+    end
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spped, ppos.x, ppos.y, ppos.z, false, true, true)
+    for n = 0 , 2 do
+        local object_hash = util.joaat("prop_logpile_06b")
+        STREAMING.REQUEST_MODEL(object_hash)
+        while not STREAMING.HAS_MODEL_LOADED(object_hash) do
+        util.yield()
         end
-        for i = 1, 25 do
-            local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
-            local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
-            PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 200, false, true, true)
-            util.yield(150)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	1500925016)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
-            util.yield(150)
-            delete_entity(Ruiner2)
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0,0,100, false, true, true)
+        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 100, false)
+        util.yield(800)
+        for i = 0 , 1 do
+            PED.FORCE_PED_TO_OPEN_PARACHUTE(SelfPlayerPed)
         end
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spped, ppos.x, ppos.y, ppos.z, false, true, true)
-        for n = 0 , 2 do
-            local object_hash = util.joaat("prop_logpile_06b")
-            STREAMING.REQUEST_MODEL(object_hash)
-            while not STREAMING.HAS_MODEL_LOADED(object_hash) do
-            util.yield()
-            end
-            PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0,0,100, false, true, true)
-            WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 100, false)
-            util.yield(800)
-            for i = 0 , 1 do
-                PED.FORCE_PED_TO_OPEN_PARACHUTE(SelfPlayerPed)
-            end
-            util.yield(800)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
-
-            local object_hash2 = util.joaat("prop_beach_parasol_03")
-            STREAMING.REQUEST_MODEL(object_hash2)
-            while not STREAMING.HAS_MODEL_LOADED(object_hash2) do
-            util.yield()
-            end
-            PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash2)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0,0,100, 0, 0, 1)
-            WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 100, false)
-            util.yield(800)
-            for i = 0 , 1 do
-                PED.FORCE_PED_TO_OPEN_PARACHUTE(SelfPlayerPed)
-            end
-            util.yield(800)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
-        end
+        util.yield(800)
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
+
+        local object_hash2 = util.joaat("prop_beach_parasol_03")
+        STREAMING.REQUEST_MODEL(object_hash2)
+        while not STREAMING.HAS_MODEL_LOADED(object_hash2) do
+        util.yield()
+        end
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash2)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0,0,100, 0, 0, 1)
+        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 100, false)
+        util.yield(800)
+        for i = 0 , 1 do
+            PED.FORCE_PED_TO_OPEN_PARACHUTE(SelfPlayerPed)
+        end
+        util.yield(800)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
+    end
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
+    PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), 0xFBF7D21F)
+    WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
+    TASK.TASK_PARACHUTE_TO_TARGET(user_ped, pos.x, pos.y, pos.z)
+    util.yield()
+    TASK.CLEAR_PED_TASKS_IMMEDIATELY(user_ped)
+    util.yield(300)
+    WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
+    PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
+    util.yield(1000)
+    for i = 1, 10 do
+        util.spoof_script("freemode", SYSTEM.WAIT)
+    end
+    ENTITY.SET_ENTITY_HEALTH(user_ped, 0)
+    NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x,pos.y,pos.z, 0, false, false, 0)
+    for i = 1, 2 do
+        local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
+        local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
+        PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 150, false, true, true)
+        util.yield(200)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	1500925016)
+        VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
+        util.yield(200)
+        delete_entity(Ruiner2)
+    end
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spped, ppos.x, ppos.y, ppos.z, false, true, true)
+    for i = 1, 2 do
         PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), 0xFBF7D21F)
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
         TASK.TASK_PARACHUTE_TO_TARGET(user_ped, pos.x, pos.y, pos.z)
         util.yield()
         TASK.CLEAR_PED_TASKS_IMMEDIATELY(user_ped)
-        util.yield(300)
+        util.yield(200)
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
         PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
-        util.yield(1000)
-        for i = 1, 10 do
+        util.yield(4500)
+        for i = 1, 2 do
             util.spoof_script("freemode", SYSTEM.WAIT)
         end
         ENTITY.SET_ENTITY_HEALTH(user_ped, 0)
         NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x,pos.y,pos.z, 0, false, false, 0)
-        for i = 1, 2 do
-            local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(spped, true)
-            local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(TTPed), true)
-            PED.SET_PED_INTO_VEHICLE(spped, Ruiner2, -1)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 150, false, true, true)
-            util.yield(200)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, 	1500925016)
-            VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
-            util.yield(200)
-            delete_entity(Ruiner2)
-        end
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spped, ppos.x, ppos.y, ppos.z, false, true, true)
-        for i = 1, 2 do
-            PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), 0xFBF7D21F)
-            WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
-            TASK.TASK_PARACHUTE_TO_TARGET(user_ped, pos.x, pos.y, pos.z)
-            util.yield()
-            TASK.CLEAR_PED_TASKS_IMMEDIATELY(user_ped)
-            util.yield(200)
-            WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user_ped, 0xFBAB5776, 100, false)
-            PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
-            util.yield(4500)
-            for i = 1, 2 do
-                util.spoof_script("freemode", SYSTEM.WAIT)
-            end
-            ENTITY.SET_ENTITY_HEALTH(user_ped, 0)
-            NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x,pos.y,pos.z, 0, false, false, 0)
-        end
     end
 end
 
@@ -14050,9 +14075,6 @@ function UFO_Los_Angeles(toggle)
     delete_entity(spawnedufo) --delete ufo
 end
 
------攻击嘲讽作者
-author = "\n--------¦Sakura"
-
 ------音乐
 function music(on)
 	if on then
@@ -14214,7 +14236,7 @@ function scriptname()
     local timer = MISC.GET_GAME_TIMER()
     local color =  gradient_colour(timer, 0.5)       
     HUD.SET_TEXT_COLOUR(color.r, color.g, color.b, 255)
-    draw_string(string.format("~italic~¦~bold~Sakura Script v10.4"), 0.38,0.1, 0.6,5)
+    draw_string(string.format("~italic~¦~bold~Sakura Script v10.5"), 0.38,0.1, 0.6,5)
 end
 
 
