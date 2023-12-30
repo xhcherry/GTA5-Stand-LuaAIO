@@ -548,6 +548,9 @@ fire_wings = menu.list(self_option, '翅膀', {})
     menu.toggle(fire_wings, '火翅膀', {}, '2t同款翅膀', function(toggled)
         fireWing(toggled)
     end)
+    menu.toggle(fire_wings, 'XP火翅膀', {}, '', function(toggled)
+        xp_fireWing(toggled)
+    end)
     menu.toggle(fire_wings, '彩色翅膀', {}, '', function(toggled)
         colorful_fireWing(toggled)
     end)
@@ -722,10 +725,10 @@ request_services = menu.list(online, "请求服务", {}, "")
         requestNanoDrone()
     end)
     menu.action(request_services, "RC匪徒", {}, "", function()--Update tag1.68
-        SET_INT_GLOBAL(Global_Base.Default + 6880, 1)
+        SET_INT_GLOBAL(Global_Base.Default + 6918, 1)
     end)
     menu.action(request_services, "RC坦克", {}, "", function()--Update tag1.68
-        SET_INT_GLOBAL(Global_Base.Default + 6894, 1)
+        SET_INT_GLOBAL(Global_Base.Default + 6919, 1)
     end)
     --
     menu.action(request_services, "请求出租车", {}, "", function()--Update tag1.68
@@ -759,9 +762,7 @@ request_services = menu.list(online, "请求服务", {}, "")
         SET_INT_GLOBAL(Global_Base.oVMYCar + 4491, 1)
         --menu.trigger_commands("helipickup")
     end)
-    menu.action(request_services, "请求直升机支援", {}, "", function()
-        menu.trigger_commands("helibackup")
-    end)
+
 
 online_services = menu.list(online, "线上服务", {}, "")
     menu.toggle_loop(online_services, "强制可见", {}, "强制玩家可见", function()
@@ -1895,7 +1896,30 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
     menu.action(perrico_island, "呼叫虎鲸", {}, "", function()--Update tag1.68
         SET_INT_GLOBAL(Global_Base.Default + 960, 1)--Kosatka
         notification("~y~~bold~呼叫ing~", HudColour.blue)
-    end)	
+    end)	   
+    TELEPORT_island = menu.list(perrico_island, "地点传送", {}, "")    
+        menu.action(TELEPORT_island, "任务面板(虎鲸)", {}, "先呼叫潜艇", function()
+            PED.SET_PED_COORDS_KEEP_VEHICLE(PLAYER.PLAYER_PED_ID(), 1561.2369, 385.8771, -49.689915)
+        end)
+        menu.action(TELEPORT_island, "传送到大门(外侧)", {}, "", function()
+            teleport(4974.189, -5703.279, 19.898539)
+        end)
+        menu.action(TELEPORT_island, "传送到大门(内测)", {}, "", function()
+            teleport(4993.189, -5720.279, 19.898539)
+        end)
+        menu.action(TELEPORT_island, "主要目标", {}, "", function()
+            teleport(5006.7, -5756.2, 14.8)
+        end)
+        menu.action(TELEPORT_island, "次要目标", {}, "", function()
+            teleport(4999.764160, -5749.863770, 14.840000)
+        end)
+        menu.action(TELEPORT_island, "机场(逃离)", {}, "", function()
+            teleport(4443.189, -4510.279, 4.898539)
+        end)
+        menu.toggle_loop(TELEPORT_island, "传送到大海", {}, "", function()
+            teleport(3235, -4938, 56)
+            util.yield(1000)
+        end)
     island_casino_Task_setting = menu.list(perrico_island, "任务设定", {}, "")
         menu.action(island_casino_Task_setting, "跳过准备任务", {}, "", function()--Update tag1.68
             STAT_SET_INT("H4CNF_TARGET", 5)--主要目标
@@ -1921,30 +1945,9 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
 
             SET_INT_LOCAL("heist_island_planning", 1544, 2)-------刷新
         end)
-        
-    TELEPORT_island = menu.list(perrico_island, "地点传送", {}, "")    
-	menu.action(TELEPORT_island, "任务面板(虎鲸)", {}, "先呼叫潜艇", function()
-        PED.SET_PED_COORDS_KEEP_VEHICLE(PLAYER.PLAYER_PED_ID(), 1561.2369, 385.8771, -49.689915)
-	end)
-    menu.action(TELEPORT_island, "传送到大门(外侧)", {}, "", function()
-        teleport(4974.189, -5703.279, 19.898539)
-    end)
-    menu.action(TELEPORT_island, "传送到大门(内测)", {}, "", function()
-        teleport(4993.189, -5720.279, 19.898539)
-    end)
-    menu.action(TELEPORT_island, "主要目标", {}, "", function()
-        teleport(5006.7, -5756.2, 14.8)
-    end)
-    menu.action(TELEPORT_island, "次要目标", {}, "", function()
-        teleport(4999.764160, -5749.863770, 14.840000)
-    end)
-    menu.action(TELEPORT_island, "机场(逃离)", {}, "", function()
-        teleport(4443.189, -4510.279, 4.898539)
-    end)
-    menu.toggle_loop(TELEPORT_island, "传送到大海", {}, "", function()
-        teleport(3235, -4938, 56)
-        util.yield(1000)
-    end)
+        menu.action(island_casino_Task_setting, "刷新任务面板", {}, "", function()--Update tag1.68
+            SET_INT_LOCAL("heist_island_planning", 1544, 2)-------刷新https://github.com/atomikfr/CayoPericoHeistAssistant
+        end)
 
     island_cut = menu.list(perrico_island, "分红调整", {}, "分红界面出现时再修改")--佩里科岛
         cayo_cut = menu.list(island_cut, "玩家[1-4]", {}, "")--https://github.com/CrazyZhang666/GTA5OnlineTools/tree/c2bf00804661a81917bd7656f6d306dc591ab795/GTA5MenuExtra/Views/HeistsEditor
@@ -2014,7 +2017,7 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
     end)
 
 advanced_options_island = menu.list(perrico_island, "高级选项", {}, "")--佩里科岛
-    menu.click_slider(advanced_options_island, "增加任务生命数", {}, "只有是战局主机时才会生效", 0, 100, 3, 1, function(value)
+    menu.click_slider(advanced_options_island, "增加任务生命数", {}, "只有是战局主机时才会生效", 0, 100, 3, 1, function(value)--Update tag 1.67
         SET_INT_LOCAL("fm_mission_controller_2020", 51905 + 868 + 1, value + 2)
     end)
     menu.action(advanced_options_island, "快速完成", {}, "", function()--Update tag1.68
@@ -2062,6 +2065,15 @@ casino = menu.list(Task_robbery, "名钻赌场", {}, "")
             STAT_SET_INT("H3OPT_KEYLEVELS", 0)
             STAT_SET_INT("H3OPT_MASKS", 0)
             STAT_SET_INT("H3OPT_BITSET0", 0)
+        end)
+        menu.action(casino_Task_setting, "刷新任务面板", {}, "", function()
+            local Bitset0 = STAT_GET_INT("H3OPT_BITSET0")
+            local Bitset1 = STAT_GET_INT("H3OPT_BITSET1")
+            STAT_SET_INT("H3OPT_BITSET0", math.random(2147483647))
+            STAT_SET_INT("H3OPT_BITSET1", math.random(2147483647))
+            util.yield_once()
+            STAT_SET_INT("H3OPT_BITSET0", Bitset0)
+            STAT_SET_INT("H3OPT_BITSET1", Bitset1)
         end)
     TELEPORT_casino = menu.list(casino, "地点传送", {}, "")
         menu.action(TELEPORT_casino, "计划面板(游戏厅)", {}, "先进游戏厅", function()
@@ -2134,19 +2146,13 @@ casino = menu.list(Task_robbery, "名钻赌场", {}, "")
         end
     end)
     advanced_options_casino = menu.list(casino, "高级选项", {}, "")--赌场
-        menu.action(advanced_options_casino, "强制启动", {}, "当你在计划面板上选择玩家时，这个功能将允许你强制开始，即使其他玩家没有准备好。收入会显示错误", function()
-            for i = 0, 3 do
-                SET_INT_GLOBAL(1971696 + 1497 + 736 + 87 + i, -1) -- Found by me in gb_casino_heist_planning.c
+        menu.toggle_loop(advanced_options_casino, "自动鼠标左键点击", {}, "用于拿取目标财物时",function()
+            if TASK.GET_IS_TASK_ACTIVE(players.user_ped(), 135) then
+                PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 237, 1)
+                util.yield(50)
             end
-            local Bitset0 = STAT_GET_INT("H3OPT_BITSET0")
-            local Bitset1 = STAT_GET_INT("H3OPT_BITSET1")
-            STAT_SET_INT("H3OPT_BITSET0", math.random(2147483647))
-            STAT_SET_INT("H3OPT_BITSET1", math.random(2147483647))
-            util.yield_once()
-            STAT_SET_INT("H3OPT_BITSET0", Bitset0)
-            STAT_SET_INT("H3OPT_BITSET1", Bitset1)
         end)
-        menu.click_slider(advanced_options_casino, "增加任务生命数", {}, "只有是战局主机时才会生效", 0, 100, 0, 1, function(value)
+        menu.click_slider(advanced_options_casino, "增加任务生命数", {}, "只有是战局主机时才会生效", 0, 100, 0, 1, function(value)--Update tag 1.67
             SET_INT_LOCAL("fm_mission_controller", 26136 + 1325 + 1, value)
         end)
         menu.action(advanced_options_casino, "快速完成", {}, "", function()--Update tag1.68
@@ -2350,6 +2356,9 @@ end)
 
 ----武器选项
 weaponsetting = menu.list(weapons, '武器设置', {}, '')
+    menu.action(weaponsetting, "给予所有武器", {}, "", function()
+        give_all_weapon(PLAYER.PLAYER_ID())
+    end)
     menu.action(weaponsetting, "补充弹夹弹药",{}, "",function()
         WEAPON.REFILL_AMMO_INSTANTLY(PLAYER.PLAYER_PED_ID())
     end)
@@ -2412,7 +2421,7 @@ weaponsetting = menu.list(weapons, '武器设置', {}, '')
         zoomaimfov(value)
     end)
 
-weapon_save = menu.list(weapons, '武器编辑', {}, '')
+weapon_save = menu.list(weapons, '武器保存', {}, '')
     dofile(filesystem.scripts_dir() .."lib/sakuralib/CustomWeapon/customweapon.lua")
 
 weapon_hud = menu.list(weapons, '武器HUD', {}, '')
@@ -3375,7 +3384,6 @@ force_field = menu.list(funfeatures, "力场Pro", {}, "")
 menu.action(sk, "无效降落伞", {}, "", function ()
     Invalid_parachute()
 end)
-
 menu.action(sk, "载具伞崩全局", {}, "崩溃全局", function ()
     local Pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), true)
     for pid = 0, 31 do
@@ -4098,7 +4106,7 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
     menu.toggle_loop(classic_trolling, "电击玩家", {}, "", function()
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
         local pos = players.get_position(pid)
-        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z + 1, pos.x, pos.y, pos.z, 1000, true, util.joaat("weapon_stungun"), false, false, true, 1.0)
+        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z + 1, pos.x, pos.y, pos.z, 1000, true, util.joaat("weapon_stungun"), PLAYER.PLAYER_PED_ID(), true, false, 1.0)
     end)
     menu.action(classic_trolling, "核弹1", {}, "", function()----heezy
         nuclear_bomb_player(pid)
@@ -4309,6 +4317,9 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
     end)
 
     ----------NPC恶搞
+    menu.action(npc_trolling, "派只雪怪", {}, "", function()
+        send_snow_monster(pid)
+    end)
     menu.action(npc_trolling, "消防车攻击", {}, "消防车对着玩家一直洒水", function()
         Firetruck_attack(pid)
     end)
@@ -4661,9 +4672,6 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
         end)
         menu.action(kick_car, "踢出载具v2", {}, "从载具里踢出玩家", function()
             menu.trigger_commands("vehkick".. players.get_name(pid))
-        end)
-        menu.action(kick_car, "踢出载具v3", {}, "", function ()
-            TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED(pid))
         end)
 
     menu.action(vehicle_car, "删除载具", {}, "删除此玩家正在驾驶的载具", function()
@@ -5470,7 +5478,7 @@ aimkarma = menu.list(protection, '瞄准惩罚', {}, '对瞄准您的玩家做�
         local userPed = PLAYER.PLAYER_PED_ID()
         if playerIsTargetingEntity(userPed) and karma[userPed] then
             local karmaPid1 = karma[userPed].pid
-            menu.trigger_commands("cage".. players.get_name(karmaPid1))
+            ptlz(karmaPid1)
         end
     end)
     menu.toggle_loop(aimkarma, '射击', {}, '射击瞄准您的玩家.', function()
@@ -5478,6 +5486,14 @@ aimkarma = menu.list(protection, '瞄准惩罚', {}, '对瞄准您的玩家做�
         if isAnyPlayerTargetingEntity(userPed) and karma[userPed] then
             local pos = ENTITY.GET_ENTITY_COORDS(karma[userPed].ped)
             MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z, pos.x, pos.y, pos.z + 0.1, 100, true, 100416529, userPed, true, false, 100.0)
+            util.yield()
+        end
+    end)
+    menu.toggle_loop(aimkarma, '电击', {}, '电击瞄准您的玩家.', function()
+        local userPed = PLAYER.PLAYER_PED_ID()
+        if isAnyPlayerTargetingEntity(userPed) and karma[userPed] then
+            local pos = ENTITY.GET_ENTITY_COORDS(karma[userPed].ped)
+            MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z + 1, pos.x, pos.y, pos.z, 1000, true, util.joaat("weapon_stungun"), PLAYER.PLAYER_PED_ID(), true, false, 1.0)
             util.yield()
         end
     end)

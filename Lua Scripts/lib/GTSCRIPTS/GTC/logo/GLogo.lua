@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '12.17 R2'
+GT_version = '12.30'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("再次修复任务选项无法加载\n再次修复模组选项无法加载\n再次修复主机序列的错误")
+    notification("太多了,请到文件夹更新日志文档查看")
 end
 --
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
@@ -8637,6 +8637,126 @@ end
 
 --杂项
 --原创功能 缝合死妈
+function renderer_triangle(v2_A, v2_B, v2_C, clr)
+	clr.a = 0.15
+    function i(j,k,l)
+        m=(k.y-j.y)*(l.x-k.x)-(k.x-j.x)*(l.y-k.y)
+        if m<0 then return true end
+        return false
+    end
+    if i(v2_A,v2_B,v2_C) then directx.draw_triangle(v2_A.x,v2_A.y,v2_B.x,v2_B.y,v2_C.x,v2_C.y,clr)
+    elseif i(v2_A,v2_C,v2_B) then directx.draw_triangle(v2_A.x,v2_A.y,v2_C.x,v2_C.y,v2_B.x,v2_B.y,clr)
+    elseif i(v2_B,v2_C,v2_A) then directx.draw_triangle(v2_B.x,v2_B.y,v2_C.x,v2_C.y,v2_A.x,v2_A.y,clr)
+    elseif i(v2_B,v2_A,v2_C) then directx.draw_triangle(v2_B.x,v2_B.y,v2_A.x,v2_A.y,v2_C.x,v2_C.y,clr)
+    elseif i(v2_C,v2_A,v2_B) then directx.draw_triangle(v2_C.x,v2_C.y,v2_A.x,v2_A.y,v2_B.x,v2_B.y,clr)
+    else directx.draw_triangle(v2_C.x,v2_C.y,v2_B.x,v2_B.y,v2_A.x,v2_A.y,clr) end
+end
+
+function hsvToRGB(h, s, v)
+    local r, g, b
+   
+    local i = math.floor(h * 6);
+    local f = h * 6 - i;
+    local p = v * (1 - s);
+    local q = v * (1 - f * s);
+    local t = v * (1 - (1 - f) * s);
+   
+    i = i % 6
+   
+    if i == 0 then r, g, b = v, t, p
+    elseif i == 1 then r, g, b = q, v, p
+    elseif i == 2 then r, g, b = p, v, t
+    elseif i == 3 then r, g, b = p, q, v
+    elseif i == 4 then r, g, b = t, p, v
+    elseif i == 5 then r, g, b = v, p, q
+    end
+	return {["r"] = r,["g"] = g,["b"] = b,["a"] = 0.15}
+end
+
+function w2sfunc(vecx,vecy,vecz)
+	xe,ye = memory.alloc(4),memory.alloc(4)
+	result = GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(vecx, vecy, vecz, xe, ye) 
+	e = {['x'] = memory.read_float(xe),['y'] = memory.read_float(ye),['z'] = 0}
+	memory.free(xe)
+	memory.free(ye)
+	if not result then e = {0,0,0} end
+	
+	return e
+end
+
+function world_circle(origin, size)
+    if origin.x == nil then
+        return
+    end
+	origin.z = origin.z + 0.05
+    last_point = nil
+
+    gradient_g = hat_gradient
+    color_g = hat_clr
+    for i = 0, 360, 5 do
+        new_point = {
+            ['x'] = origin.x - (math.sin(math.rad(i)) * size),
+            ['y'] = origin.y - (math.cos(math.rad(i)) * size),
+            ['z'] = origin.z
+        }
+
+        actual_color = color_g
+
+        if (gradient_g) then
+            hue_offset = 0
+
+            hue_offset = (((util.current_time_millis()/500) * (hat_speed * 50)) + i) % 360
+            hue_offset = math.min(360, math.max(0, hue_offset))
+
+            klr = hsvToRGB(hue_offset / 360, 1, 1)
+
+            color_g = klr
+        end
+
+        if last_point ~= nil then 
+            old_screen_point = w2sfunc(last_point.x, last_point.y, last_point.z)
+            new_screen_point = w2sfunc(new_point.x, new_point.y, new_point.z)
+            origin_screen_point = w2sfunc(origin.x, origin.y, origin.z + 0.2)
+
+            if old_screen_point.x ~= nil and new_screen_point.x ~= nil and origin_screen_point.x ~= nil then
+                renderer_triangle({['x'] = old_screen_point.x, ['y'] = old_screen_point.y,['z'] =0}, {['x'] =new_screen_point.x, ['y'] = new_screen_point.y,['z'] =0}, {['x'] = origin_screen_point.x, ['y'] = origin_screen_point.y,['z'] =0}, color_g)     
+                bals = color_g
+				bals.a = 1
+				directx.draw_line(old_screen_point.x, old_screen_point.y, new_screen_point.x, new_screen_point.y, bals)
+            end
+        end
+
+        last_point = new_point
+    end
+end
+
+function run(p)
+	ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(p)
+	e = ENTITY.GET_WORLD_POSITION_OF_ENTITY_BONE(ped,PED.GET_PED_BONE_INDEX(ped,0x796E),0,0,0)
+	world_circle(e, 0.28)
+end
+
+function friend(p)
+	handle_ptr = memory.alloc(52)
+	NETWORK.NETWORK_HANDLE_FROM_PLAYER(p, handle_ptr, 13)
+	yes = NETWORK.NETWORK_IS_FRIEND(handle_ptr)
+	memory.free(handle_ptr)
+	return yes
+end
+--
+function unlock_packed_bools(from, to)
+    for i = from, to do
+        STATS.SET_PACKED_STAT_BOOL_CODE(i, true, util.get_char_slot())
+    end
+end
+
+project_3d_coord = function (coord)
+    local x_ptr, y_ptr = memory.alloc_int(), memory.alloc_int()
+    local status = GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(coord.x, coord.y, coord.z, x_ptr, y_ptr)
+    local x, y = memory.read_float(x_ptr), memory.read_float(y_ptr)
+    return status, v2(x, y)
+end
+
 function renwuegaoqiang1()
     sheji=GTTG(weaponfun, '人物恶搞枪[火]', {''}, '只适用于人物跟玩家,载具内的对象不起效果', function(ak)
     wuqi = ak
@@ -23292,96 +23412,48 @@ PlayerMainMenu2 = GT(GTLuaScript.player_root(PlayerID), "踢出选项", {"GTKick
     end
 end)
 
-GTAC(PlayerMainMenu2, "忧郁踢", {}, "", function ()
-    util.create_thread(function ()
-    local int_min = -2147483647
-    local int_max = 2147483647
-    for i = 1, 15 do
-        util.trigger_script_event(1 << PlayerID, {-1013606569, 8, 5, -995382610, -1005524293, 1105725452, -995382610, -1005524293, 1105725452, -995350040, -1003336651, 1102848299, 0, 0, 0, 0, 0, 0, 5, 1110704128, 1110704128, 0, 0, 0, 5, 131071, 131071, 131071, 0, 0, 5, 0, 0, 0, 0, 0, 1965090280, -1082130432, 0, 0, math.random(int_min, int_max), math.random(int_min, int_max), 
-        math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-        math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-        util.trigger_script_event(1 << PlayerID, {-1013606569, 8, 5, -995382610, -1005524293, 1105725452, -995382610, -1005524293, 1105725452, -995350040, -1003336651, 1102848299, 0, 0, 0, 0, 0, 0, 5, 1110704128, 1110704128, 0, 0, 0, 5, 131071, 131071, 131071, 0, 0, 5, 0, 0, 0, 0, 0, 1965090280, -1082130432, 0, 0})
-    end
-    menu.trigger_commands("givesh" .. players.get_name(PlayerID))
-    util.yield()
-    for i = 1, 15 do
-        util.trigger_script_event(1 << PlayerID, {-1013606569, 8, 5, -995382610, -1005524293, 1105725452, -995382610, -1005524293, 1105725452, -995350040, -1003336651, 1102848299, 0, 0, 0, 0, 0, 0, 5, 1110704128, 1110704128, 0, 0, 0, 5, 131071, 131071, 131071, 0, 0, 5, 0, 0, 0, 0, 0, 1965090280, -1082130432, 0, 0, pid, math.random(int_min, int_max)})
-        util.trigger_script_event(1 << PlayerID, {-1013606569, 8, 5, -995382610, -1005524293, 1105725452, -995382610, -1005524293, 1105725452, -995350040, -1003336651, 1102848299, 0, 0, 0, 0, 0, 0, 5, 1110704128, 1110704128, 0, 0, 0, 5, 131071, 131071, 131071, 0, 0, 5, 0, 0, 0, 0, 0, 1965090280, -1082130432, 0, 0})
-        util.yield(100)
-    end
-end)
-
-util.create_thread(function ()
-    local int_min = -2147483647
-    local int_max = 2147483647
-    for i = 1, 15 do
-        util.trigger_script_event(1 << PlayerID, {-901348601, 6, 0, math.random(int_min, int_max), math.random(int_min, int_max), 
-        math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-        math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-        util.trigger_script_event(1 << PlayerID, {-901348601, 6, 0})
-    end
-    menu.trigger_commands("givesh" .. players.get_name(PlayerID))
-    util.yield()
-    for i = 1, 15 do
-        util.trigger_script_event(1 << PlayerID, {-901348601, 6, 0, PlayerID, math.random(int_min, int_max)})
-        util.trigger_script_event(1 << PlayerID, {-901348601, 6, 0})
-        util.yield(100)
-    end
-end)
-
-util.create_thread(function ()
-    local int_min = -2147483647
-    local int_max = 2147483647
-    for i = 1, 15 do
-        util.trigger_script_event(1 << PlayerID, {-1638522928, 12, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, math.random(int_min, int_max), math.random(int_min, int_max), 
-        math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-        math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-        util.trigger_script_event(1 << PlayerID, {-1638522928, 12, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
-    end
-    menu.trigger_commands("givesh" .. players.get_name(PlayerID))
-    util.yield()
-    for i = 1, 15 do
-        util.trigger_script_event(1 << PlayerID, {-1638522928, 12, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, PlayerID, math.random(int_min, int_max)}) -- S3 Credits to legy
-        util.trigger_script_event(1 << PlayerID, {1017995959, 27, 0})-- S1 Credits to legy
-        util.yield(100)
-    end
-end)
-
-util.create_thread(function ()
-    local int_min = -2147483647
-    local int_max = 2147483647
-    for i = 1, 15 do
-        util.trigger_script_event(1 << PlayerID, {-2026172248, 6, 0, 0, 0, 1, math.random(int_min, int_max), math.random(int_min, int_max), 
-        math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-        math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-        util.trigger_script_event(1 << PlayerID, {-2026172248, 6, 0, 0, 0, 1})
-    end
-    menu.trigger_commands("givesh" .. players.get_name(PlayerID))
-    util.yield()
-    for i = 1, 15 do
-        util.trigger_script_event(1 << PlayerID, {-2026172248, 6, 0, 0, 0, 1, PlayerID, math.random(int_min, int_max)}) -- S3 Credits to legy
-        util.trigger_script_event(1 << PlayerID, {-2026172248, 6, 0, 0, 0, 1})
-        util.yield(100)
-    end
-end)
-
-util.create_thread(function ()
-    local int_min = -2147483647
-    local int_max = 2147483647
-    for i = 1, 15 do
-        util.trigger_script_event(1 << PlayerID, {-642704387, 6, 536247389, -1910234257, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, math.random(int_min, int_max), math.random(int_min, int_max), 
-        math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max),
-        math.random(int_min, int_max), PlayerID, math.random(int_min, int_max), math.random(int_min, int_max), math.random(int_min, int_max)})
-        util.trigger_script_event(1 << PlayerID, {-642704387, 6, 536247389, -1910234257, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1})
-    end
-    menu.trigger_commands("givesh" .. players.get_name(PlayerID))
-    util.yield()
-    for i = 1, 15 do
-        util.trigger_script_event(1 << PlayerID, {-642704387, 6, 536247389, -1910234257, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, PlayerID, math.random(int_min, int_max)}) -- S3 Credits to legy
-        util.trigger_script_event(1 << PlayerID, {-642704387, 6, 536247389, -1910234257, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1})
-        util.yield(100)
-    end
-end)
+function scriptkick(PlayerID)
+    util.trigger_script_event(1 << PlayerID ,{ -642704387, players.user(), 0, 782258655, math.random(-2147483646, 2147483646), 1, 0, 0, 0, 0, 0, PlayerID, 
+    players.user(), math.random(-2147483646, 2147483646), math.random(-2147483646, 2147483646)})
+    util.trigger_script_event(1 << PlayerID ,{-1013606569, players.user(),0})
+    util.trigger_script_event(1 << PlayerID ,{-1091407522, players.user(),0, 1, math.random(-2147483646, 2147483646)})
+    util.trigger_script_event(1 << PlayerID ,{-1101672680, players.user(),0})
+    util.trigger_script_event(1 << PlayerID ,{-1544003568, players.user(),0})
+    util.trigger_script_event(1 << PlayerID ,{-1547064369, players.user(),0, 0, 2147483646})
+    util.trigger_script_event(1 << PlayerID ,{-1604421397, players.user(),0})
+    util.trigger_script_event(1 << PlayerID ,{-1638522928, players.user(),0, math.random(-2147483646, 2147483646), 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1})
+    util.trigger_script_event(1 << PlayerID ,{-1713699293, players.user(),0})
+    util.trigger_script_event(1 << PlayerID ,{-1852117343, players.user(),0})
+    util.trigger_script_event(1 << PlayerID ,{-1986344798, players.user(),0, math.random(-2147483646, 2147483646), 0, 0})
+    util.trigger_script_event(1 << PlayerID ,{-2026172248, players.user(),0, 0, 0, 0, 1})
+    util.trigger_script_event(1 << PlayerID ,{-2051197492, players.user(),0})
+    util.trigger_script_event(1 << PlayerID ,{-2102799478, players.user(),0})
+    util.trigger_script_event(1 << PlayerID ,{-2122488865, players.user(),0, 0, 2147483646})
+    util.trigger_script_event(1 << PlayerID ,{-353458099, players.user(),0})
+    util.trigger_script_event(1 << PlayerID ,{-445044249, players.user(),0, 28, -1, -1})
+    util.trigger_script_event(1 << PlayerID ,{-69240130, players.user(),0, 0, 0, math.random(-2147483646, 2147483646)})
+    util.trigger_script_event(1 << PlayerID ,{-800312339, players.user(),0, 0, math.random(-2147483646, 2147483646)})
+    util.trigger_script_event(1 << PlayerID ,{-901348601, players.user(),0, -1520562907})
+    util.trigger_script_event(1 << PlayerID ,{1214811719, players.user(),0, 1, 1, 1, math.random(-2147483646, 2147483646)})
+    util.trigger_script_event(1 << PlayerID ,{1269949700, players.user(),0, 0, 2147483646})
+    util.trigger_script_event(1 << PlayerID ,{1318264045, players.user(),0, 0, 0, 0, math.random(-2147483646, 2147483646), 0, 0})
+    util.trigger_script_event(1 << PlayerID ,{1450115979, players.user(),0})
+    util.trigger_script_event(1 << PlayerID ,{1504695802, players.user(),0, math.random(-2147483646, 2147483646)})
+    util.trigger_script_event(1 << PlayerID ,{1638329709, players.user(),0, 0, math.random(-2147483646, 2147483646), 0, 0})
+    util.trigger_script_event(1 << PlayerID ,{1925046697, players.user(),0, math.random(-2147483646, 2147483646), 1})
+    util.trigger_script_event(1 << PlayerID ,{1932558939, players.user(),0, 0, math.random(-2147483646, 2147483646)})
+    util.trigger_script_event(1 << PlayerID ,{1980857009, players.user(),0})
+    util.trigger_script_event(1 << PlayerID ,{2079562891, players.user(),0, 0, math.random(-2147483646, 2147483646)})
+    util.trigger_script_event(1 << PlayerID ,{446749111, players.user(),0, math.random(-2147483646, 2147483646), 0})
+    util.trigger_script_event(1 << PlayerID ,{623462469, players.user(),0})
+    util.trigger_script_event(1 << PlayerID ,{630191280, players.user(),0, math.random(-2147483646, 2147483646), math.random(-2147483646, 2147483646), 
+    math.random(-2147483646, 2147483646), 0, 0, math.random(-2147483646, 2147483646), 0})
+    util.trigger_script_event(1 << PlayerID ,{728200248, players.user(),0, math.random(-2147483646, 2147483646), math.random(-2147483646, 2147483646)})
+    util.trigger_script_event(1 << PlayerID ,{921195243, players.user(),0, math.random(-2147483646, 2147483646), 0})
+end
+    
+GTAC(PlayerMainMenu2, "忧郁踢", {}, "", function()
+    scriptkick(PlayerID)
 end)
 
 GTAC(PlayerMainMenu2, "脚本事件踢出", {}, "", function()
@@ -24113,6 +24185,86 @@ anim_request = function(hash)
 end
 
 --
+local spec_if_necessary <const> = {}
+local cam_if_necessary <const> = {}
+function check_player_vehicle_and_spec_if_necessary(PlayerID, callback)
+    if ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)).z == -50 then
+        util.create_thread(function()
+            cam_if_necessary[PlayerID] = CAM.CREATE_CAM("DEFAULT_SCRIPTED_CAMERA", true)
+            CAM.RENDER_SCRIPT_CAMS(true, false, 0, true, true, 0)
+            spec_if_necessary[PlayerID] = true
+            local time <const> = util.current_time_millis() + 5000
+            while time > util.current_time_millis() and spec_if_necessary[PlayerID] do
+                CAM.SET_CAM_ROT(cam_if_necessary[PlayerID], -90.0, 0, ENTITY.GET_ENTITY_HEADING(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)), 2)
+                CAM.SET_CAM_COORD(cam_if_necessary[PlayerID], ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)).x,
+                ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)).y, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)).z + 5)
+                wait()
+            end
+            CAM.DESTROY_CAM(cam_if_necessary[PlayerID], false)
+            CAM.RENDER_SCRIPT_CAMS(false, false, 0, true, true, 0)
+        end, nil)
+        local time <const> = util.current_time_millis() + 5000
+        repeat wait() until time < util.current_time_millis() or ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)).z ~= -50
+    end
+    callback()
+    spec_if_necessary[PlayerID] = false
+end
+
+xmi=GTAC(updates, "小米崩溃", {"xmicrash"}, "", function()
+    local Pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
+    local weapon_ped <const> = Cped(26,util.joaat("A_C_Rat"), Pos, 0)
+    WEAPON.GIVE_WEAPON_TO_PED(weapon_ped, util.joaat("WEAPON_GRENADE"), 1, true, true)
+    local pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
+    TASK.TASK_THROW_PROJECTILE(weapon_ped, pos.x, pos.y, pos.z, 0, false)
+    wait(1000)
+    entities.delete_by_handle(weapon_ped)
+end)
+
+zmi=GTAC(updates, "中米崩溃", {"zmicrash"}, "", function()
+    local pos <const> = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), 0.0, 3.0, 0.0)
+    pos.x = pos.x
+    pos.y = pos.y
+    pos.z = pos.z + 1
+    local ped_crash <const> = Cped(26,util.joaat("S_M_M_Janitor"), pos, 0)
+    local obj_crash <const> = entities.create_object(util.joaat("v_ilev_gunhook"), pos,0)
+    local veh_crash <const> = spawn_vehicle(util.joaat("fixter"), pos, 0)
+    PED.SET_PED_TO_RAGDOLL(ped_crash, 99999, 0, 0, false, false, false)
+    wait(500)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(obj_crash, ped_crash, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(veh_crash, obj_crash, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 0, true)
+    wait(1000)
+    entities.delete_by_handle(ped_crash)
+    entities.delete_by_handle(obj_crash)
+    entities.delete_by_handle(veh_crash)
+end)
+
+dmi=GTAC(updates, "大米崩溃", {"dmicrash"}, "", function()
+    busy(PlayerID)
+    check_player_vehicle_and_spec_if_necessary(PlayerID, function()
+    if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), true) then
+        TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)), 15, 1000)
+        TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)), 16, 1000)
+        TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)), 17, 1000)
+        TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)), 18, 1000)
+    else
+        local PlayerPos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), true)
+        PlayerPos.z = PlayerPos.z-10
+        local adder <const> = spawn_vehicle(util.joaat("adder"), PlayerPos , 0)
+        TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), adder, 15, 1000)
+        TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), adder, 16, 1000)
+        TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), adder, 17, 1000)
+        TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), adder, 18, 1000)
+        wait(1000)
+        entities.delete_by_handle(adder)
+        end
+    end)
+end)
+
+klmi=GTAC(updates, "卡拉米崩溃", {"klmi"}, "", function()
+    menu.trigger_commands("xmicrash" .. PLAYER.GET_PLAYER_NAME(PlayerID))
+    menu.trigger_commands("zmicrash" .. PLAYER.GET_PLAYER_NAME(PlayerID)) 
+    menu.trigger_commands("dmicrash" .. PLAYER.GET_PLAYER_NAME(PlayerID)) 
+end)
 
 GTTG(updates, "Rock崩溃", {"rockcrash"}, "", function(loop)
     huoche = loop
@@ -24626,68 +24778,92 @@ GTAC(updates, 'NSA崩溃', {"nsacrash"}, '', function ()
     plauuepos = nil
     end)
 
-    GTAC(updates, "支离破碎", {"lettingbreak"}, "GRANDTOURINGVIP\n2Take1版本同款崩溃", function(f)
-    local vehs = {}
-    local c = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID))
-    local m = {
-    "dubsta",
-    "astron",
-    "huntley",
-    "patriot",
-    "ingot",
-    "asea",
-    "stratum",
-    "adder",
-    "ninef",
-    "baller",
-    "comet2",
-    "zentorno",
-    "bifta",
-    "akula",
-    "kosatka",
-    }
-    for i=1,#m do
-    local h = util.joaat(m[i])
-    util.toast(h)
-    STREAMING.REQUEST_MODEL(h)
-    while not STREAMING.HAS_MODEL_LOADED(h) do
-    wait(0)
-    end
-    c.z = c.z + 1.0
-    vehs[i] = CreateVehicle(h, c, 0, true, false)
-    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(h)
-    end
-    while f do
-    for i=1,#vehs do
-    ENTITY.SET_ENTITY_VISIBLE(vehs[i], false)
-    VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 0, true)
-    VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 1, true)
-    VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 2, true)
-    VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 3, true)
-    VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 4, true)
-    VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 5, true)
-    VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 6, true)
-    VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 7, true)
-    wait(0)
-    VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 0, false)
-    VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 1, false)
-    VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 2, false)
-    VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 3, false)
-    VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 4, false)
-    VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 5, false)
-    VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 6, false)
-    VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 7, false)
-    end
-    wait(100)
-    for i=1,#vehs do
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehs[i])
-    VEHICLE.SET_VEHICLE_FIXED(vehs[i])
-    end
-    wait(100)
-    end
-    for i=1,#vehs do
-    entities.delete_by_handle(vehs[i])
-    end
+    GTAC(updates, "支离破碎", {"lettingbreak"}, "GRANDTOURINGVIP\n2Take1版本同款崩溃", function(f)--增加部分模型
+        local vehs = {}
+        local c = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID))
+        local m = {
+            "dubsta",
+            "dubsta2",
+            "fq2",
+            "patriot",
+            "radi",
+            "habanero",
+            "landstalker",
+            "serrano",
+            "cavalcade",
+            "rocoto",
+            "GRANGER",
+            "Baller",
+            "gresley",
+            "baller2",
+            "cavalcade2",
+            "MESA",
+            "Seminole",
+            "BjXL",
+            "mesa2",
+            "huntley",
+            "toros",
+            "squaddie",
+            "rebla",
+            "baller3",
+            "baller4",
+            "baller5",
+            "baller6",
+            "xls",
+            "xls2",
+            "contender",
+            "patriot2",
+            "Novak",
+            "landstalker2",
+            "seminole2",
+            "iwagen",
+            "astron",
+            "baller7",
+            "jubilee",
+            "granger2",
+        }
+        for i=1,#m do
+        local h = util.joaat(m[i])
+        util.toast(h)
+        STREAMING.REQUEST_MODEL(h)
+        while not STREAMING.HAS_MODEL_LOADED(h) do
+        wait(0)
+        end
+        c.z = c.z + 1.0
+        vehs[i] = CreateVehicle(h, c, 0, true, false)
+        STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(h)
+        end
+        while f do
+        for i=1,#vehs do
+        ENTITY.SET_ENTITY_VISIBLE(vehs[i], false)
+        VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 0, true)
+        VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 1, true)
+        VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 2, true)
+        VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 3, true)
+        VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 4, true)
+        VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 5, true)
+        VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 6, true)
+        VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehs[i], 7, true)
+        wait(0)
+        VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 0, false)
+        VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 1, false)
+        VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 2, false)
+        VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 3, false)
+        VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 4, false)
+        VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 5, false)
+        VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 6, false)
+        VEHICLE.SET_VEHICLE_DOOR_BROKEN(vehs[i], 7, false)
+        end
+        wait(100)
+        for i=1,#vehs do
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(vehs[i])
+        VEHICLE.SET_VEHICLE_FIXED(vehs[i])
+        end
+        wait(100)
+        end
+        for i=1,#vehs do
+        entities.delete_by_handle(vehs[i])
+        end
     end)
 
     GTAC(updates, '不可饶恕', {"nofuckoff"}, '', function ()
@@ -30015,6 +30191,65 @@ end)
       end)
 
     local pteleportEntities = GT(playerMain, "传送恶搞", {}, "")
+
+    areatp = GT(pteleportEntities,"游戏类型")
+
+    GTAC(areatp, "准备差事界面[新]", {}, "", function()
+        util.trigger_script_event(1 << pid, {936332224, players.user(), pid,1}) 
+        util.trigger_script_event(1 << pid, {3322638238, players.user(), pid,1,0}) 
+        util.trigger_script_event(1 << pid, {259469385, players.user(), pid,0, 1}) 
+        util.trigger_script_event(1 << pid, {2951660482, players.user(), pid, 1, 1, 1, 4694842, 4694842}) 
+    end)
+
+    GTAC(areatp, "虚拟封号[新]", {}, "", function()
+        util.trigger_script_event(1 << pid, {-1773335296, players.user(), pid,4779250843176140801, 85015745547841, 0, 0, 0, 0}) 
+    end)
+
+    GTAC(areatp, "踢出CEO[新]", {}, "", function()
+        util.trigger_script_event(1 << pid, {7311146992008020212, players.user(), pid,7290892836784832513, 28549270386769921, 0}) 
+    end)
+
+    GTAC(areatp, "公寓邀请[新]", {}, "", function()
+        util.trigger_script_event(1 << pid, {-1321657966, players.user(), pid, 1, 0, -1, 1, 115, 0, 0, 0}) 
+    end)
+
+    GTAC(areatp, "传送空中别墅[新]", {}, "", function()
+        util.trigger_script_event(1 << pid, {-1638522928, players.user(), pid, 1, 124, 1, 0, 1, 3297191418, 3298661873, 1085533440, 0, 0, 1, 2123789977, 1, -1}) 
+    end)
+
+    GTAC(areatp, "传送仓库[新]", {}, "", function()
+        util.trigger_script_event(1 << pid, {-1253241415, players.user(), pid, 1, 0, 1, 2}) 
+        util.trigger_script_event(1 << pid, {485477315, players.user(), pid, 1, 1, 0, 2604392559057}) 
+    end)
+
+    GTAC(areatp, "半履战车[任务]", {}, "", function()
+        util.trigger_script_event(1 << pid, {-4035497911, players.user(), pid,1, 1}) 
+    end)
+
+    GTAC(areatp, "撤退政策[任务]", {}, "", function()
+        util.trigger_script_event(1 << pid, {-4035497911, players.user(), pid,1, 2}) 
+    end)
+
+    GTAC(areatp, "离岸之财[任务]", {}, "", function()
+        util.trigger_script_event(1 << pid, {-4035497911, players.user(), pid,1, 3}) 
+    end)
+
+    GTAC(areatp, "行迹败露[任务]", {}, "", function()
+        util.trigger_script_event(1 << pid, {-4035497911, players.user(), pid,1, 4}) 
+    end)
+
+    GTAC(areatp, "猎杀叛徒[任务]", {}, "", function()
+        util.trigger_script_event(1 << pid, {-4035497911, players.user(), pid,1, 5}) 
+    end)
+
+    GTAC(areatp, "数据泄露[任务]", {}, "", function()
+        util.trigger_script_event(1 << pid, {-4035497911, players.user(), pid,1, 6}) 
+    end)
+
+    GTAC(areatp, "工作纠纷[任务]", {}, "", function()
+        util.trigger_script_event(1 << pid, {-4035497911, players.user(), pid,1, 7}) 
+    end)
+    --
     GTAC(pteleportEntities, "传送NPC", {""}, "", function ()
         TpAllPeds(pid)
     end)
@@ -30063,7 +30298,6 @@ end
     local facility = GT(tp_player, "设施", {}, "")
     local warehouse = GT(tp_player, "仓库", {}, "")
     local arcade = GT(tp_player, "游戏厅", {}, "")
-    local cayoperico = GT(tp_player, "传送邀请", {}, "")
 
     local teleports = {
         {name=("花园银行塔"),pos=v3.new(-75.261375,-818.674,326.17517)},
@@ -30507,139 +30741,6 @@ end
             util.trigger_script_event(1 << pid, {-1796714618, pid, 0, 1, id})
         end)
     end
-
-        GTAC(cayoperico, "破坏室内状态", {}, "玩家必须在一个公寓内,可通过重新加入战局取消.", function(s)
-        if players.is_in_interior(pid) then
-            util.trigger_script_event(1 << pid, {629813291, pid, pid, pid, pid, math.random(int_min, int_max), pid})
-        else
-            util.toast("玩家不在室内. :/")
-        end
-    end)
-
-    GTAC(cayoperico, "公寓邀请", {}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {3592101251, players.user(), pid, 1, 0, -1, 4, 127, 0, 0, 0}) 
-    end)
-
-    GTAC(cayoperico, "公寓邀请2", {}, "", function()
-        menu.trigger_commands("givesh" .. players.get_name(pid))
-        menu.trigger_commands("aptme" .. players.get_name(pid))
-    end)
-
-    GTAC(cayoperico, "强制DC动画", {}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {2139870214, players.user(), pid, 2, 0, 0, 4, 0}) 
-    end)
-
-    GTAC(cayoperico, "强制DC动画V2",{}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {2139870214, players.user(), pid, 1}) 
-    end)
-
-    GTAC(cayoperico, "随机任务邀请", {}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {36077543, players.user(), pid, 1,7}) 
-    end)
-
-    GTAC(cayoperico, "自由模式事件(撤退政策)",{}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {2156573948, players.user(), pid, 1, 2}) 
-    end)
-
-    GTAC(cayoperico, "自由模式事件(行迹败露)",{}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {2156573948, players.user(), pid, 1, 4}) 
-    end)
-
-    GTAC(cayoperico, "自由模式事件(猎杀叛徒)",{}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {2156573948, players.user(), pid, 1, 5}) 
-    end)
-
-    GTAC(cayoperico, "自由模式事件(数据泄露)",{}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {2156573948, players.user(), pid, 1, 6}) 
-    end)
-
-    GTAC(cayoperico, "自由模式事件(工作纠纷)",{}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {2156573948, players.user(), pid, 1, 7}) 
-        util.trigger_script_event(1 << pid, {374302127, players.user(), pid, 1})
-        util.trigger_script_event(1 << pid, {2347253207, players.user(), pid, 1, 0})
-    end)
-
-    GTAC(cayoperico, "公寓抢劫事件传送", {}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {-702866045, players.user(), pid, -1, 1, 1, 0, 1, 0}) 
-    end) 
-
-    GTAC(cayoperico, "佩里科岛(有过场动画)", {"tpcayo"}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {-369672308, pid, 0, 0, 0, 0, 0})
-    end)
-
-    GTAC(cayoperico, "佩里科岛(无过场动画)", {"tpcayo2"}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {-369672308, pid, 1, 0, 0, 1, 1})
-    end)
-
-    GTAC(cayoperico, "佩里科岛 v2", {"tpcayo2"}, "已被大部分菜单阻挡", function()
-        util.trigger_script_event(1 << pid, {-369672308, pid, 1, 0, 0, 2, 1})
-    end)
-
-    GTAC(cayoperico, "离开佩里科岛", {"cayoleave"}, "玩家必须在佩里科岛才能触发", function()
-        util.trigger_script_event(1 << pid, {-93722397, pid, 0, 0, 3})
-    end)
-
-    GTAC(cayoperico, "从佩里科岛踢出", {"cayokick"}, "玩家必须在佩里科岛才能触发", function()
-        util.trigger_script_event(1 << pid, {-93722397, pid, 0, 0, 4, 0})
-    end)
-
-        GTAC(cayoperico, "驱逐玩家", {"evict"}, "将玩家踢出室内.", function()
-        if players.is_in_interior(pid) then
-            GTluaScript.trigger_commands("interiorkick" .. players.get_name(pid))
-        else
-            util.toast("玩家不在室内. :/")
-        end
-    end)
-
-    GTAC(cayoperico, "给这傻逼送进监狱", {"arrest"}, "已被大部分菜单阻挡.", function()
-        local my_pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
-        local my_ped = PLAYER.GET_PLAYER_PED(players.user())
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(my_ped, 1628.5234, 2570.5613, 45.56485, true, false, false, false)
-        menu.trigger_commands("givesh " .. players.get_name(pid))
-        menu.trigger_commands("summon " .. players.get_name(pid))
-        menu.trigger_commands("invisibility on")
-        menu.trigger_commands("otr")
-        wait(5000)
-        menu.trigger_commands("invisibility off")
-        menu.trigger_commands("otr")
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(my_ped, my_pos)
-    end)
-
-    GTAC(cayoperico, "传送沙滩", {""}, "", function()
-        util.trigger_script_event(1 << pid, {330622597, pid, 1, 0, 0, 4, 0})
-    end)
-
-    GTAC(cayoperico, "发送到介绍界面", {"intro"}, "让玩家进入《GTA Online》的介绍.", function()
-        local int = memory.read_int(memory.script_global(1894573 + 1 + (pid * 608) + 510))
-        util.trigger_script_event(1 << pid, {-95341040, players.user(), 20, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
-        util.trigger_script_event(1 << pid, {1742713914, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
-    end)
-
-    GTAC(cayoperico, "发送到高尔夫俱乐部", {"golf"}, "派遣玩家去打高尔夫.", function()
-        local int = memory.read_int(memory.script_global(1894573 + 1 + (pid * 608) + 510))
-        util.trigger_script_event(1 << pid, {-95341040, players.user(), 193, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
-        util.trigger_script_event(1 << pid, {1742713914, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
-    end)
-
-    GTAC(cayoperico, "恶心人的自由模式", {"brickfreemode"}, "在他们的自由模式下，他们无法看到玩家列表，无法使用他们的互动菜单，也无法看到大多数的突发事件。.", function()
-        local int = memory.read_int(memory.script_global(1894573 + 1 + (pid * 608) + 510))
-        util.trigger_script_event(1 << pid, {-95341040, players.user(), 194, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
-        util.trigger_script_event(1 << pid, {1742713914, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
-    end)
-    
-    GTAC(cayoperico, "强制1V1", {"1v1"}, "", function()
-        local int = memory.read_int(memory.script_global(1894573 + 1 + (pid * 608) + 510))
-        util.trigger_script_event(1 << pid, {-95341040, players.user(), 197, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
-        util.trigger_script_event(1 << pid, {1742713914, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
-    end)
-
-    GTAC(cayoperico, "破坏室内状态", {}, "可以通过重新加入战局来取消。玩家必须在一个公寓里。适用于大多数菜单.", function()
-        if players.is_in_interior(pid) then
-            util.trigger_script_event(1 << pid, {629813291, players.user(), pid, pid, pid, math.random(int_min, int_max), pid})
-        else
-            util.toast(players.get_name(pid) .. " isn't in an interior. :/")
-        end
-    end)
 
     GTLP(jindianegao, "足迹追踪", {}, "", function()
         local coords = players.get_position(pid)

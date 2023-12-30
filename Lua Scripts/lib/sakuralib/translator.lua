@@ -1,14 +1,14 @@
-local L0_1, L1_1, L2_1, L3_1, L4_1, L5_1, L6_1, L7_1, L8_1, L9_1, L10_1, L11_1, L12_1, L13_1, L14_1, L15_1, L16_1, L17_1, L18_1, L19_1, L20_1, L21_1, L22_1, L23_1, L24_1, L25_1, L26_1, L27_1, L28_1, L29_1, L30_1, L31_1, L32_1, L33_1, L34_1, L35_1, L36_1, L37_1, L38_1, L39_1, L40_1, L41_1, L42_1, L43_1, L44_1, L45_1, L46_1, L47_1, L48_1, L49_1, L50_1, L51_1
-L0_1 = {}
-L0_1.translationMethodIncoming = "Google Translate"
-L0_1.targetLanguageIncoming = "zh-cn"
+local Y0_1, L1_1, L2_1, L3_1, L4_1, L5_1, L6_1, L7_1, L8_1, L9_1, L10_1, L11_1, L12_1, L13_1, L14_1, L15_1, L16_1, L17_1, L18_1, L19_1, L20_1, L21_1, L22_1, L23_1, L24_1, L25_1, L26_1, L27_1, L28_1, L29_1, L30_1, L31_1, L32_1, L33_1, L34_1, L35_1, L36_1, L37_1, L38_1, L39_1, L40_1, L41_1, L42_1, L43_1, L44_1, L45_1, L46_1, L47_1, L48_1, L49_1, L50_1, L51_1
+Y0_1 = {}
+Y0_1.translationMethodIncoming = "Google Translate"
+Y0_1.targetLanguageIncoming = "zh-cn"
 L1_1 = {}
-L0_1.blacklistedLanguages = L1_1
-L0_1.translateOn = false
-L0_1.Auto_translate = false
-L0_1.translateSelf = false
-L0_1.Auto_translate_self = false
-L0_1.translatedMsgLocation = 5
+Y0_1.blacklistedLanguages = L1_1
+Y0_1.translateOn = false
+Y0_1.Auto_translate = false
+Y0_1.translateSelf = false
+Y0_1.Auto_translate_self = false
+Y0_1.translatedMsgLocation = 5
 L1_1 = {}
 L2_1 = {}
 L2_1.Name = "简体中文"
@@ -438,6 +438,11 @@ function L7_1(A0_2)
           L6_4 = L3_4
           L7_4 = L4_4
           L5_4(L6_4, L7_4)
+        else
+          L5_4 = util
+          L5_4 = L5_4.toast
+          L6_4 = "翻译出错啦"
+          L5_4(L6_4)
         end
       else
         L3_4 = util
@@ -447,14 +452,14 @@ function L7_1(A0_2)
       end
     end
     function L8_3()
-      local L0_4, L1_4
-      L0_4 = util
-      L0_4 = L0_4.toast
+      local Y0_4, L1_4
+      Y0_4 = util
+      Y0_4 = Y0_4.toast
       L1_4 = "翻译超时啦"
-      L0_4(L1_4)
-      L0_4 = LOG
+      Y0_4(L1_4)
+      Y0_4 = LOG
       L1_4 = "翻译超时啦"
-      L0_4(L1_4)
+      Y0_4(L1_4)
     end
     L4_3(L5_3, L6_3, L7_3, L8_3)
     L4_3 = async_http
@@ -518,7 +523,7 @@ function L10_1(A0_2, A1_2)
         L9_3 = A0_2.translationMethodIncoming
         L10_3 = A0_2
         function L11_3(A0_4, A1_4)
-          local L2_4, L3_4, L4_4, L5_4, L6_4, L7_4, L8_4, L9_4, L10_4, L11_4
+          local L2_4, L3_4, L4_4, L5_4, L6_4, L7_4, L8_4, L9_4, L10_4, L11_4, L12_4
           L2_4 = players
           L2_4 = L2_4.get_name
           L3_4 = A0_3
@@ -531,19 +536,20 @@ function L10_1(A0_2, A1_2)
             return
           end
           L5_4 = LOG
-          L6_4 = "[谷歌翻译]: "
-          L7_4 = string
-          L7_4 = L7_4.format
-          L8_4 = "[\"%s\"]"
-          L9_4 = A2_3
-          L7_4 = L7_4(L8_4, L9_4)
-          L8_4 = " ⇒ "
-          L9_4 = string
-          L9_4 = L9_4.format
-          L10_4 = "[\"%s\"]"
-          L11_4 = L3_4
-          L9_4 = L9_4(L10_4, L11_4)
-          L6_4 = L6_4 .. L7_4 .. L8_4 .. L9_4
+          L6_4 = "[谷歌翻译] "
+          L7_4 = L2_4
+          L8_4 = string
+          L8_4 = L8_4.format
+          L9_4 = ": [\"%s\"]"
+          L10_4 = A2_3
+          L8_4 = L8_4(L9_4, L10_4)
+          L9_4 = " ⇒ "
+          L10_4 = string
+          L10_4 = L10_4.format
+          L11_4 = "[\"%s\"]"
+          L12_4 = L3_4
+          L10_4 = L10_4(L11_4, L12_4)
+          L6_4 = L6_4 .. L7_4 .. L8_4 .. L9_4 .. L10_4
           L5_4(L6_4)
           if 1 == L4_4 then
             L5_4 = sfchat
@@ -656,7 +662,7 @@ L15_1 = {}
 L16_1 = "自动识别语言并翻译\n仅支持中英互译,遇到其他语言可能乱码"
 function L17_1(A0_2)
   local L1_2
-  L0_1.Auto_translate = A0_2
+  Y0_1.Auto_translate = A0_2
 end
 L12_1(L13_1, L14_1, L15_1, L16_1, L17_1)
 L12_1 = menu
@@ -667,7 +673,7 @@ L15_1 = {}
 L16_1 = "选择是否要翻译自己发送的消息"
 function L17_1(A0_2)
   local L1_2
-  L0_1.Auto_translate_self = A0_2
+  Y0_1.Auto_translate_self = A0_2
 end
 L12_1(L13_1, L14_1, L15_1, L16_1, L17_1)
 L12_1 = menu
@@ -677,28 +683,28 @@ L14_1 = "发送翻译文本"
 L15_1 = {}
 L16_1 = "仅使用T or Y即可键入文本\n当使用此选项时你应该首选关闭翻译自我"
 function L17_1()
-  local L0_2, L1_2, L2_2, L3_2, L4_2, L5_2, L6_2
-  L0_2 = PAD
-  L0_2 = L0_2.IS_CONTROL_PRESSED
+  local Y0_2, L1_2, L2_2, L3_2, L4_2, L5_2, L6_2
+  Y0_2 = PAD
+  Y0_2 = Y0_2.IS_CONTROL_PRESSED
   L1_2 = 0
   L2_2 = 245
-  L0_2 = L0_2(L1_2, L2_2)
-  if not L0_2 then
-    L0_2 = PAD
-    L0_2 = L0_2.IS_CONTROL_PRESSED
+  Y0_2 = Y0_2(L1_2, L2_2)
+  if not Y0_2 then
+    Y0_2 = PAD
+    Y0_2 = Y0_2.IS_CONTROL_PRESSED
     L1_2 = 0
     L2_2 = 246
-    L0_2 = L0_2(L1_2, L2_2)
-    if not L0_2 then
+    Y0_2 = Y0_2(L1_2, L2_2)
+    if not Y0_2 then
       goto lbl_48
     end
   end
-  L0_2 = util
-  L0_2 = L0_2.register_label
+  Y0_2 = util
+  Y0_2 = Y0_2.register_label
   L1_2 = "输入文本"
-  L0_2 = L0_2(L1_2)
+  Y0_2 = Y0_2(L1_2)
   L1_2 = get_input_from_screen_keyboard
-  L2_2 = L0_2
+  L2_2 = Y0_2
   L3_2 = 254
   L4_2 = ""
   L1_2 = L1_2(L2_2, L3_2, L4_2)
@@ -755,14 +761,14 @@ function L17_1()
     end
   end
   function L6_2()
-    local L0_3, L1_3
-    L0_3 = util
-    L0_3 = L0_3.toast
+    local Y0_3, L1_3
+    Y0_3 = util
+    Y0_3 = Y0_3.toast
     L1_3 = "翻译超时啦"
-    L0_3(L1_3)
-    L0_3 = LOG
+    Y0_3(L1_3)
+    Y0_3 = LOG
     L1_3 = "翻译超时啦"
-    L0_3(L1_3)
+    Y0_3(L1_3)
   end
   L2_2(L3_2, L4_2, L5_2, L6_2)
   L2_2 = async_http
@@ -781,11 +787,11 @@ L12_1 = chat
 L12_1 = L12_1.on_message
 function L13_1(A0_2, A1_2, A2_2, A3_2, A4_2, A5_2)
   local L6_2, L7_2, L8_2, L9_2, L10_2
-  L6_2 = L0_1.Auto_translate
+  L6_2 = Y0_1.Auto_translate
   if L6_2 then
     L6_2 = L8_1
     if not L6_2 then
-      L6_2 = L0_1.Auto_translate_self
+      L6_2 = Y0_1.Auto_translate_self
       if not L6_2 then
         L6_2 = players
         L6_2 = L6_2.user
@@ -804,7 +810,7 @@ function L13_1(A0_2, A1_2, A2_2, A3_2, A4_2, A5_2)
         L10_2 = "&from=auto&to=auto"
         L8_2 = L8_2 .. L9_2 .. L10_2
         function L9_2(A0_3, A1_3, A2_3)
-          local L3_3, L4_3, L5_3, L6_3, L7_3, L8_3, L9_3, L10_3, L11_3
+          local L3_3, L4_3, L5_3, L6_3, L7_3, L8_3, L9_3, L10_3, L11_3, L12_3
           if 200 == A2_3 and nil ~= A0_3 then
             L3_3 = StrToTable
             L4_3 = A0_3
@@ -823,22 +829,23 @@ function L13_1(A0_2, A1_2, A2_2, A3_2, A4_2, A5_2)
                 L5_3 = A0_2
                 L4_3 = L4_3(L5_3)
                 L5_3 = LOG
-                L6_3 = "[Sakura翻译]: "
-                L7_3 = string
-                L7_3 = L7_3.format
-                L8_3 = "[\"%s\"]"
-                L9_3 = A2_2
-                L7_3 = L7_3(L8_3, L9_3)
-                L8_3 = " ⇒ "
-                L9_3 = string
-                L9_3 = L9_3.format
-                L10_3 = "[\"%s\"]"
-                L11_3 = L3_3.data
-                L11_3 = L11_3.result
-                L9_3 = L9_3(L10_3, L11_3)
-                L6_3 = L6_3 .. L7_3 .. L8_3 .. L9_3
+                L6_3 = "[Sakura翻译] "
+                L7_3 = L4_3
+                L8_3 = string
+                L8_3 = L8_3.format
+                L9_3 = ": [\"%s\"]"
+                L10_3 = A2_2
+                L8_3 = L8_3(L9_3, L10_3)
+                L9_3 = " ⇒ "
+                L10_3 = string
+                L10_3 = L10_3.format
+                L11_3 = "[\"%s\"]"
+                L12_3 = L3_3.data
+                L12_3 = L12_3.result
+                L10_3 = L10_3(L11_3, L12_3)
+                L6_3 = L6_3 .. L7_3 .. L8_3 .. L9_3 .. L10_3
                 L5_3(L6_3)
-                L5_3 = L0_1.translatedMsgLocation
+                L5_3 = Y0_1.translatedMsgLocation
                 if 1 == L5_3 then
                   L6_3 = sfchat
                   L6_3 = L6_3.ADD_MESSAGE
@@ -935,14 +942,14 @@ function L13_1(A0_2, A1_2, A2_2, A3_2, A4_2, A5_2)
           end
         end
         function L10_2()
-          local L0_3, L1_3
-          L0_3 = util
-          L0_3 = L0_3.toast
+          local Y0_3, L1_3
+          Y0_3 = util
+          Y0_3 = Y0_3.toast
           L1_3 = "翻译超时啦"
-          L0_3(L1_3)
-          L0_3 = LOG
+          Y0_3(L1_3)
+          Y0_3 = LOG
           L1_3 = "翻译超时啦"
-          L0_3(L1_3)
+          Y0_3(L1_3)
         end
         L6_2(L7_2, L8_2, L9_2, L10_2)
         L6_2 = async_http
@@ -963,7 +970,7 @@ L15_1 = {}
 L16_1 = "翻译器将监听传入的消息并进行翻译"
 function L17_1(A0_2)
   local L1_2
-  L0_1.translateOn = A0_2
+  Y0_1.translateOn = A0_2
 end
 L12_1(L13_1, L14_1, L15_1, L16_1, L17_1)
 L12_1 = menu
@@ -974,7 +981,7 @@ L15_1 = {}
 L16_1 = "翻译您自己发送的消息"
 function L17_1(A0_2)
   local L1_2
-  L0_1.translateSelf = A0_2
+  Y0_1.translateSelf = A0_2
 end
 L12_1(L13_1, L14_1, L15_1, L16_1, L17_1)
 L12_1 = menu
@@ -988,7 +995,7 @@ L13_1 = ipairs
 L14_1 = L3_1
 L13_1, L14_1, L15_1, L16_1 = L13_1(L14_1)
 for L17_1, L18_1 in L13_1, L14_1, L15_1, L16_1 do
-  L19_1 = L0_1.blacklistedLanguages
+  L19_1 = Y0_1.blacklistedLanguages
   L19_1[L18_1] = false
   L20_1 = L12_1
   L19_1 = L12_1.toggle
@@ -997,7 +1004,7 @@ for L17_1, L18_1 in L13_1, L14_1, L15_1, L16_1 do
   L23_1 = ""
   function L24_1(A0_2)
     local L1_2, L2_2
-    L1_2 = L0_1.blacklistedLanguages
+    L1_2 = Y0_1.blacklistedLanguages
     L2_2 = L18_1
     L1_2[L2_2] = A0_2
   end
@@ -1016,7 +1023,7 @@ function L20_1(A0_2)
   local L1_2
   L1_2 = L3_1
   L1_2 = L1_2[A0_2]
-  L0_1.targetLanguageIncoming = L1_2
+  Y0_1.targetLanguageIncoming = L1_2
 end
 L13_1(L14_1, L15_1, L16_1, L17_1, L18_1, L19_1, L20_1)
 L13_1 = menu
@@ -1026,28 +1033,28 @@ L15_1 = "发送翻译文本"
 L16_1 = {}
 L17_1 = "仅使用T or Y即可键入文本\n当使用此选项时你应该首选关闭翻译自我"
 function L18_1()
-  local L0_2, L1_2, L2_2, L3_2, L4_2, L5_2, L6_2, L7_2
-  L0_2 = PAD
-  L0_2 = L0_2.IS_CONTROL_PRESSED
+  local Y0_2, L1_2, L2_2, L3_2, L4_2, L5_2, L6_2, L7_2
+  Y0_2 = PAD
+  Y0_2 = Y0_2.IS_CONTROL_PRESSED
   L1_2 = 0
   L2_2 = 245
-  L0_2 = L0_2(L1_2, L2_2)
-  if not L0_2 then
-    L0_2 = PAD
-    L0_2 = L0_2.IS_CONTROL_PRESSED
+  Y0_2 = Y0_2(L1_2, L2_2)
+  if not Y0_2 then
+    Y0_2 = PAD
+    Y0_2 = Y0_2.IS_CONTROL_PRESSED
     L1_2 = 0
     L2_2 = 246
-    L0_2 = L0_2(L1_2, L2_2)
-    if not L0_2 then
+    Y0_2 = Y0_2(L1_2, L2_2)
+    if not Y0_2 then
       goto lbl_60
     end
   end
-  L0_2 = util
-  L0_2 = L0_2.register_label
+  Y0_2 = util
+  Y0_2 = Y0_2.register_label
   L1_2 = "输入文本"
-  L0_2 = L0_2(L1_2)
+  Y0_2 = Y0_2(L1_2)
   L1_2 = get_input_from_screen_keyboard
-  L2_2 = L0_2
+  L2_2 = Y0_2
   L3_2 = 254
   L4_2 = ""
   L1_2 = L1_2(L2_2, L3_2, L4_2)
@@ -1057,7 +1064,7 @@ function L18_1()
   L2_2 = {}
   L2_2.client = "dict-chrome-ex"
   L2_2.sl = "auto"
-  L3_2 = L0_1.targetLanguageIncoming
+  L3_2 = Y0_1.targetLanguageIncoming
   L2_2.tl = L3_2
   L2_2.dt = "t"
   L2_2.dj = "1"
@@ -1081,39 +1088,46 @@ function L18_1()
       L3_3 = A0_3.match
       L5_3 = "%[%[\"(.-)\",\"(.-)\"%]%]"
       L3_3, L4_3 = L3_3(L4_3, L5_3)
-      L6_3 = L3_3
-      L5_3 = L3_3.gsub
-      L7_3 = "\\u(%x%x%x%x)"
-      L8_3 = unicode_escape
-      L5_3 = L5_3(L6_3, L7_3, L8_3)
-      L3_3 = L5_3
-      L6_3 = L3_3
-      L5_3 = L3_3.gsub
-      L7_3 = " <code> 0 </code> "
-      L8_3 = "\n"
-      L5_3 = L5_3(L6_3, L7_3, L8_3)
-      L3_3 = L5_3
-      L6_3 = L3_3
-      L5_3 = L3_3.gsub
-      L7_3 = "<code>0</code>"
-      L8_3 = "\n"
-      L5_3 = L5_3(L6_3, L7_3, L8_3)
-      L3_3 = L5_3
-      L6_3 = L3_3
-      L5_3 = L3_3.gsub
-      L7_3 = "\\(.)"
-      L8_3 = "%1"
-      L5_3 = L5_3(L6_3, L7_3, L8_3)
-      L3_3 = L5_3
-      L5_3 = true
-      L8_1 = L5_3
-      L5_3 = chat
-      L5_3 = L5_3.send_message
-      L6_3 = L3_3
-      L7_3 = false
-      L8_3 = true
-      L9_3 = true
-      L5_3(L6_3, L7_3, L8_3, L9_3)
+      if nil ~= L3_3 and nil ~= L4_3 then
+        L6_3 = L3_3
+        L5_3 = L3_3.gsub
+        L7_3 = "\\u(%x%x%x%x)"
+        L8_3 = unicode_escape
+        L5_3 = L5_3(L6_3, L7_3, L8_3)
+        L3_3 = L5_3
+        L6_3 = L3_3
+        L5_3 = L3_3.gsub
+        L7_3 = " <code> 0 </code> "
+        L8_3 = "\n"
+        L5_3 = L5_3(L6_3, L7_3, L8_3)
+        L3_3 = L5_3
+        L6_3 = L3_3
+        L5_3 = L3_3.gsub
+        L7_3 = "<code>0</code>"
+        L8_3 = "\n"
+        L5_3 = L5_3(L6_3, L7_3, L8_3)
+        L3_3 = L5_3
+        L6_3 = L3_3
+        L5_3 = L3_3.gsub
+        L7_3 = "\\(.)"
+        L8_3 = "%1"
+        L5_3 = L5_3(L6_3, L7_3, L8_3)
+        L3_3 = L5_3
+        L5_3 = true
+        L8_1 = L5_3
+        L5_3 = chat
+        L5_3 = L5_3.send_message
+        L6_3 = L3_3
+        L7_3 = false
+        L8_3 = true
+        L9_3 = true
+        L5_3(L6_3, L7_3, L8_3, L9_3)
+      else
+        L5_3 = util
+        L5_3 = L5_3.toast
+        L6_3 = "翻译出错啦"
+        L5_3(L6_3)
+      end
     else
       L3_3 = util
       L3_3 = L3_3.toast
@@ -1122,14 +1136,14 @@ function L18_1()
     end
   end
   function L7_2()
-    local L0_3, L1_3
-    L0_3 = util
-    L0_3 = L0_3.toast
+    local Y0_3, L1_3
+    Y0_3 = util
+    Y0_3 = Y0_3.toast
     L1_3 = "翻译超时啦"
-    L0_3(L1_3)
-    L0_3 = LOG
+    Y0_3(L1_3)
+    Y0_3 = LOG
     L1_3 = "翻译超时啦"
-    L0_3(L1_3)
+    Y0_3(L1_3)
   end
   L3_2(L4_2, L5_2, L6_2, L7_2)
   L3_2 = async_http
@@ -1196,7 +1210,7 @@ L19_1 = "选择翻译的位置"
 L20_1 = L14_1
 L21_1 = 5
 function L22_1(A0_2, A1_2, A2_2, A3_2)
-  L0_1.translatedMsgLocation = A0_2
+  Y0_1.translatedMsgLocation = A0_2
 end
 L15_1(L16_1, L17_1, L18_1, L19_1, L20_1, L21_1, L22_1)
 L15_1 = {}
@@ -1345,7 +1359,7 @@ L16_1(L17_1, L18_1, L19_1, L20_1, L21_1, L22_1, L23_1)
 L16_1 = chat
 L16_1 = L16_1.on_message
 L17_1 = createOnMessageCallback
-L18_1 = L0_1
+L18_1 = Y0_1
 L19_1 = translateText
 L17_1, L18_1, L19_1, L20_1, L21_1, L22_1, L23_1, L24_1, L25_1, L26_1, L27_1, L28_1, L29_1, L30_1, L31_1, L32_1, L33_1, L34_1, L35_1, L36_1, L37_1, L38_1, L39_1, L40_1, L41_1, L42_1, L43_1, L44_1, L45_1, L46_1, L47_1, L48_1, L49_1, L50_1, L51_1 = L17_1(L18_1, L19_1)
 L16_1(L17_1, L18_1, L19_1, L20_1, L21_1, L22_1, L23_1, L24_1, L25_1, L26_1, L27_1, L28_1, L29_1, L30_1, L31_1, L32_1, L33_1, L34_1, L35_1, L36_1, L37_1, L38_1, L39_1, L40_1, L41_1, L42_1, L43_1, L44_1, L45_1, L46_1, L47_1, L48_1, L49_1, L50_1, L51_1)

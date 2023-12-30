@@ -127,7 +127,7 @@ cheliang = cgou
                   HUD.SET_TEXT_SCALE(1.0,0.4) HUD.SET_TEXT_FONT(0)
                   HUD.SET_TEXT_CENTRE(1) HUD.SET_TEXT_OUTLINE(0)
                   HUD.SET_TEXT_COLOUR(255, 255, 0, 255)
-                  util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("X - 删除  H - 传送到我  G - 爆炸  B - 复制哈希 I - 旋转 L - 冻结 E - 发射 K - 翻转")
+                  util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("X - 删除  H - 传送到我  G - 爆炸  B - 复制哈希 I - 旋转 L - 冻结 E - 往前发射  C - 往后发射 K - 翻转 R - 进入 Z - 卸载")
                   HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.4999,0.8798,0)
                   if PAD.IS_DISABLED_CONTROL_JUST_PRESSED(0, 323) then -- X 删除
                   entities.delete_by_handle(controls_entity_aimed_at)
@@ -144,9 +144,14 @@ cheliang = cgou
                   ENTITY.FREEZE_ENTITY_POSITION(controls_entity_aimed_at, true)
                   elseif PAD.IS_DISABLED_CONTROL_JUST_PRESSED(0, 311) then -- K 翻转
                   ENTITY.SET_ENTITY_ROTATION(controls_entity_aimed_at, 0, 180, 0, 1, true)
-                  elseif util.is_key_down(0x45) then -- E 发射
+                  elseif util.is_key_down(0x45) then -- E 往前发射
                   local Speed = ENTITY.GET_ENTITY_SPEED(controls_entity_aimed_at)
                   ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(controls_entity_aimed_at, 1, 0, 2, (Speed / 10) + 5, 0, true, true, true)
+                  VEHICLE.SET_VEHICLE_FORWARD_SPEED(controls_entity_aimed_at, 100000)
+                  elseif PAD.IS_DISABLED_CONTROL_JUST_PRESSED(0, 324) then -- C 往后发射
+                  local Speed = ENTITY.GET_ENTITY_SPEED(controls_entity_aimed_at)
+                  ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(controls_entity_aimed_at, 1, 0, 2, (Speed / 10) + 5, 0, true, true, true)
+                  VEHICLE.SET_VEHICLE_FORWARD_SPEED(controls_entity_aimed_at, -100000)
                   elseif util.is_key_down(0x49) then -- I 旋转
                   util.create_thread(function()
                   while cheliang do
@@ -154,6 +159,27 @@ cheliang = cgou
                   ENTITY.APPLY_FORCE_TO_ENTITY(controls_entity_aimed_at, 5, 200.0000001, 8207.0, 89207.8207, 10.0, 10.0, 100.0, 10000.0, false, true)
                   end
                   end)
+                  elseif util.is_key_down(0x52) then -- R 进入
+	              if not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
+	           	  local veh =  controls_entity_aimed_at
+		          local ped = VEHICLE.GET_PED_IN_VEHICLE_SEAT(veh, -1, true)
+		          if PED.IS_PED_A_PLAYER(ped) then
+		          else
+		          entities.delete_by_handle(ped)
+			      PED.SET_PED_INTO_VEHICLE(players.user_ped(), veh, -1)
+		          end
+	              end
+                  elseif util.is_key_down(0x5A) then -- Z 卸载
+                  requestControlLoop(controls_entity_aimed_at)
+                  local doors = VEHICLE.GET_NUMBER_OF_VEHICLE_DOORS(controls_entity_aimed_at)
+                  VEHICLE.POP_OUT_VEHICLE_WINDSCREEN(controls_entity_aimed_at)
+                  for i= 0, doors do
+                  VEHICLE.SET_VEHICLE_DOOR_BROKEN(controls_entity_aimed_at, i, false)
+                  entities.detach_wheel(controls_entity_aimed_at, 0)
+                  entities.detach_wheel(controls_entity_aimed_at, 1)
+                  entities.detach_wheel(controls_entity_aimed_at, 2)
+                  entities.detach_wheel(controls_entity_aimed_at, 3)
+                  end
                end
            end
         end

@@ -91,6 +91,9 @@ end
 function entity_control_ped(menu_parent, ped)
     menu.divider(menu_parent, "Ped")
 
+    local ped_type = PED.GET_PED_TYPE(ped)
+    menu.readonly(menu_parent, "PED类型: ", ped_type)
+
     menu.action(menu_parent, "传送到我的载具", {}, "", function()
         local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
         if vehicle then
@@ -104,8 +107,8 @@ function entity_control_ped(menu_parent, ped)
         WEAPON.REMOVE_ALL_PED_WEAPONS(ped)
     end)
 
-    weapon_list = {"微型冲锋枪", "特质卡宾步枪", "突击霰弹枪", "火神机枪", "火箭筒", "电磁步枪"}
-    weapon_list_model = {"WEAPON_MICROSMG", "WEAPON_SPECIALCARBINE", "WEAPON_ASSAULTSHOTGUN", "WEAPON_MINIGUN", "WEAPON_RPG", "WEAPON_RAILGUN"}
+    local weapon_list = {"微型冲锋枪", "特质卡宾步枪", "突击霰弹枪", "火神机枪", "火箭筒", "电磁步枪"}
+    local weapon_list_model = {"WEAPON_MICROSMG", "WEAPON_SPECIALCARBINE", "WEAPON_ASSAULTSHOTGUN", "WEAPON_MINIGUN", "WEAPON_RPG", "WEAPON_RAILGUN"}
     menu.textslider(menu_parent, "给予武器", {}, "", weapon_list, function(value)
         local weaponHash = util.joaat(weapon_list_model[value])
         WEAPON.GIVE_WEAPON_TO_PED(ped, weaponHash, -1, false, true)

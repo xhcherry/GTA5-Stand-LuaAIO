@@ -136,6 +136,7 @@ weapon_list = {
     {name = "重型狙击步枪", hash = 205991906, model_hash = -746966080, max_ammo = 250},
     {name = "微型冲锋枪", hash = 324215364, model_hash = -1056713654, max_ammo = 250},
     {name = "紧凑型榴弹发射器", hash = 125959754, model_hash = -1523553483, max_ammo = 20},
+    {name = "雪球发射器", hash = 62870901, model_hash = 0, max_ammo = 20},
     {name = "机枪", hash = -1660422300, model_hash = -2056364402, max_ammo = 250},
     {name = "战斗斧", hash = -853065399, model_hash = -888555534, max_ammo = 0},
     {name = "紧凑型步枪", hash = 1649403952, model_hash = 1931114084, max_ammo = 250},
