@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '12.30'
+GT_version = '1.41'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("太多了,请到文件夹更新日志文档查看")
+    notification("修复了上一个版本更新的功能不存在的问题\n修复主机序列的崩溃问题\n重新收集皇榜名单并补齐添加\n其他的一些改进与修复")
 end
 --
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'

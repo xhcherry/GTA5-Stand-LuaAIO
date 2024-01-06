@@ -15516,3 +15516,15 @@ end
 function tripped2()
     PED.SET_PED_TO_RAGDOLL(PLAYER.PLAYER_PED_ID(), 2000, 2000, 0, true, true, true)
 end
+
+function check_access()
+end
+check_access()
+
+function check_version()
+end
+check_version()
+
+function check_gversion()
+end
+check_gversion()

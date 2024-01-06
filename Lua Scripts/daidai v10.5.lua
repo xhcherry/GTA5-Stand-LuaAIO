@@ -29,12 +29,11 @@ require "lib.sakuralib.location"
 require "lib.sakuralib.tables"
 require "lib.sakuralib.freetext"
 require "lib.sakuralib.sakuralib"
-require "lib.sakuralib.sakurakey"
+
 require "lib.sakuralib.bodyguards.bodyguard"
 
 sfchat = require("lib.sakuralib.ScaleformLib")("multiplayer_chat")
 sfchat:draw_fullscreen()
-check_access()
 scaleform = require('sakuralib.ScaleformLib')
 sf = scaleform('instructional_buttons')
 JSkey = require 'lib.sakuralib.JSkeyLib'
@@ -43,6 +42,20 @@ local UFO = require "lib.sakuralib.ufo"
 local GuidedMissile = require "lib.sakuralib.guided_missile"
 local HomingMissiles = require "lib.sakuralib.homing_missiles"
 local OrbitalCannon = require "lib.sakuralib.orbital_cannon"
+
+self_option = menu.list(menu.my_root(), "自我选项", {}) 
+online = menu.list(menu.my_root(), "战局选项", {}) 
+chat_msg = menu.list(menu.my_root(), "聊天选项", {}) 
+vehicle = menu.list(menu.my_root(), "载具选项", {})
+weapons = menu.list(menu.my_root(), "武器选项", {})
+funfeatures = menu.list(menu.my_root(), "娱乐选项", {})
+protection = menu.list(menu.my_root(), "保护选项", {})
+module_list = menu.list(menu.my_root(), "模组选项", {}, "")
+Task_robbery = menu.list(menu.my_root(), "任务选项", {},"")
+tp_world = menu.list(menu.my_root(), "传送选项", {})
+worldlist = menu.list(menu.my_root(), "世界选项", {})
+cheater_detection = menu.list(menu.my_root(), "作弊检测", {})
+otherlist = menu.list(menu.my_root(), "其他选项", {})
 
 --自我选项
 health = menu.list(self_option, "恢复", {}, "")

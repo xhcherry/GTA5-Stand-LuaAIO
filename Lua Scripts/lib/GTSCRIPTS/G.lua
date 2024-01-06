@@ -375,11 +375,16 @@ GTLP(toushi, "字体信息", {}, "", function(toggle)
             local distanceText = "距离 : " .. Round(distance, 2) .. " 米"
             local rankText = "等级 : " .. tostring(players.get_rank(pid))
             local tagsText =  players.get_tags_string(pid)
-            directx.draw_text(pos.x, pos.y,"["..tagsText.."]".."\n"..nameText.."\n"..distanceText.."\n"..rankText, 0, 0.45 ,0, 1, 1, 1, true)
+            directx.draw_text(pos.x, pos.y,"["..tagsText.."]".."\n"..nameText.."\n"..distanceText.."\n"..rankText, 0, 0.45 ,toushi_clr, true)
             end
             end
         end
     end
+end)
+
+toushi_clr = {["r"] = 0,["g"] = 1,["b"] = 1,["a"] = 1}
+GTluaScript.colour(toushi, '字体颜色', {}, '', toushi_clr, true, function(colour)
+    toushi_clr = colour
 end)
 
 GTLP(toushi, "透视线", {}, "", function(toggle)
@@ -392,11 +397,16 @@ GTLP(toushi, "透视线", {}, "", function(toggle)
             if success then
             local succes, My_Pos = project_3d_coord(playerCoords)
             if succes then
-            directx.draw_line(My_Pos.x, My_Pos.y,pos.x, pos.y, 0,255, 0, 255)
+            directx.draw_line(My_Pos.x, My_Pos.y,pos.x, pos.y, xian_clr)
             end
             end
         end
     end
+end)
+
+xian_clr = {["r"] = 0,["g"] = 1,["b"] = 0,["a"] = 1}
+GTluaScript.colour(toushi, '线条颜色', {}, '.', xian_clr, true, function(x_clr)
+     xian_clr = x_clr
 end)
 
 GTLP(toushi, "头标", {}, "", function(toggle)
@@ -413,11 +423,16 @@ GTLP(toushi, "头标", {}, "", function(toggle)
               local x1, y1 = pos.x, pos.y + 0.05
              local x2, y2 = pos.x + 0.01, pos.y + 0.01
              local x3, y3 = pos.x - 0.01, pos.y + 0.01
-             directx.draw_triangle(x1, y1, x2, y2, x3, y3, 255, 0, 0, 255)
+             directx.draw_triangle(x1, y1, x2, y2, x3, y3, toub_clr)
             end
             end
         end
     end
+end)
+
+toub_clr = {["r"] = 1,["g"] = 0,["b"] = 0,["a"] = 1}
+GTluaScript.colour(toushi, '线条颜色', {}, '.', toub_clr, true, function(tb_clr)
+     toub_clr = tb_clr
 end)
 --
 local languages = {
@@ -436,71 +451,70 @@ local languages = {
     [12] = "~y~中国"
     }
 
-cur = 0
-wanjialisty = 0.03
-wanjialistsy = 0.33
-wanjialistx = 0.505
-
-wanjiaroot = GT(players_root, "玩家信息窗口")
-
-wanjialist = GTLP(wanjiaroot, "玩家信息窗口", {}, "", function(feat)
-    local focused = players.get_focused()
-    if #focused > 0 and menu.is_open() and (players.get_spectate_target(players.user()) ~= focused[1]) then
-        local pid = focused[1]
-        if pid ~= cur_focused_player then
-            if not cur ~= 0 then
-                entities.delete(cur)
+    cur = 0
+    wanjialisty = 0.03
+    wanjialistsy = 0.33
+    wanjialistx = 0.505
+    wanjiaroot = GT(players_root, "玩家信息窗口")
+    wanjialist = GTLP(wanjiaroot, "开启", {}, "开启/关闭玩家信息窗口", function(feat)
+        local focused = players.get_focused()
+        if #focused > 0 and menu.is_open() and (players.get_spectate_target(players.user()) ~= focused[1]) then
+            local pid = focused[1]
+            if pid ~= cur_focused_player then
+                if not cur ~= 0 then
+                    entities.delete(cur)
+                end
+                cur_focused_player = pid
             end
-            cur_focused_player = pid
+            local mypos, playerpos = players.get_position(players.user()), players.get_position(pid)
+            local sped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+            local health, maxhealth = ENTITY.GET_ENTITY_HEALTH(sped), ENTITY.GET_ENTITY_MAX_HEALTH(sped)
+            local armor, maxarmor = PED.GET_PED_ARMOUR(sped), PLAYER.GET_PLAYER_MAX_ARMOUR(sped)
+            local weapon_hash = WEAPON.GET_SELECTED_PED_WEAPON(sped)
+            local weapon =  get_weapon_name(weapon_hash)
+            local veh = PED.GET_VEHICLE_PED_IS_USING(sped)
+            local speed = ENTITY.GET_ENTITY_SPEED(sped)
+            local kph = speed * 3.6
+            mspeed = kph
+            GRAPHICS.DRAW_RECT(wanjialistx+0.095, wanjialisty+0.30, 0.2, 0.62, 0, 0, 0, 80)
+            draw_string(string.format("~h~~f~检查打字 : ~g~"..check_host(players.is_typing(pid))), wanjialistx, wanjialisty, 0.3,0.3)
+            draw_string(string.format("~h~~f~名称 : ~g~"..players.get_name(pid)), wanjialistx, wanjialisty+0.02, 0.3,0.3)
+            draw_string(string.format("~h~~f~RID : ~y~"..players.get_rockstar_id(pid)), wanjialistx, wanjialisty+0.04, 0.3,0.3)
+            draw_string(string.format("~h~~f~IP地址 : ~g~"..intToIp(players.get_connect_ip(pid))), wanjialistx, wanjialisty+0.06, 0.3,0.3)
+            draw_string(string.format("~h~~f~等级 : ~g~"..players.get_rank(pid)), wanjialistx, wanjialisty+0.08, 0.3,0.3)
+            draw_string(string.format("~h~~f~玩家K/D : ~g~"..round(players.get_kd(pid), 2)), wanjialistx, wanjialisty+0.10, 0.3,0.3)
+            draw_string(string.format("~h~~f~国家 : ~g~"..languages[players.get_language(pid)]), wanjialistx, wanjialisty+0.12, 0.3,0.3)
+            draw_string(string.format("~h~~f~手柄状态 : "..check(players.is_using_controller(pid))), wanjialistx, wanjialisty+0.14, 0.3,0.3)
+            draw_string(string.format("~h~~f~战局主机 : "..check_host(cur_focused_player==players.get_host())), wanjialistx, wanjialisty+0.16, 0.3,0.3)
+            draw_string(string.format("~h~~f~脚本主机 : "..check_script_host(cur_focused_player==players.get_script_host())), wanjialistx, wanjialisty+0.18, 0.3,0.3)
+            draw_string(string.format("~h~~f~主机令牌 : ~g~"..players.get_host_queue_position(pid)), wanjialistx, wanjialisty+0.200, 0.3,0.3)
+            draw_string(string.format("~h~~f~组织 : ~g~"..check_org(players.get_org_type(pid))), wanjialistx, wanjialisty+0.220, 0.3,0.3)
+            draw_string(string.format("~h~~f~距离 : ~g~"..check_distance(mypos, playerpos)), wanjialistx, wanjialisty+0.240, 0.3,0.3)
+            draw_string(string.format("~h~~f~速度 : ~g~"..math.ceil(mspeed).."~h~~f~ km/h"), wanjialistx, wanjialisty+0.260, 0.3,0.3)
+            draw_string(string.format("~h~~f~无敌 : "..check_host(players.is_godmode(pid))), wanjialistx, wanjialisty+0.280, 0.3,0.3)
+            draw_string(string.format("~h~~f~攻击过我 : "..check_host(players.is_marked_as_attacker(pid))), wanjialistx, wanjialisty+0.300, 0.3,0.3)
+            draw_string(string.format("~h~~f~雷达隐藏 : "..check_host(players.is_otr(pid))), wanjialistx, wanjialisty+0.320, 0.3,0.3)
+            draw_string(string.format("~h~~f~载具 : ~g~"..check_cat(util.get_label_text(players.get_vehicle_model(pid)))), wanjialistx, wanjialisty+0.340, 0.3,0.3)
+            draw_string(string.format("~h~~f~作弊者 : "..check_host(players.is_marked_as_modder(pid))), wanjialistx, wanjialisty+0.360, 0.3,0.3)
+            draw_string(string.format("~h~~f~通缉等级 : ~g~"..PLAYER.GET_PLAYER_WANTED_LEVEL(pid)), wanjialistx, wanjialisty+0.380, 0.3,0.3)
+            draw_string(string.format("~h~~f~武器 : ~g~"..weapon), wanjialistx, wanjialisty+0.400, 0.3,0.3)
+            draw_string(string.format("~h~~f~作弊者/管理员 : "..check_host(players.is_marked_as_modder_or_admin(pid))), wanjialistx, wanjialisty+0.420, 0.3,0.3)
+            draw_string(string.format("~h~~f~现金 : ~g~"..formatMoney(players.get_wallet(pid))), wanjialistx, wanjialisty+0.440, 0.3,0.3)
+            draw_string(string.format("~h~~f~银行 : ~g~"..formatMoney(players.get_bank(pid))), wanjialistx, wanjialisty+0.460, 0.3,0.3)
+            draw_string(string.format("~h~~f~坐标 : ~g~"..string.format("%.5f, %.5f, %.5f", playerpos.x, playerpos.y, playerpos.z)), wanjialistx, wanjialisty+0.480, 0.3,0.3)
+            draw_string(string.format("~h~~f~血量 : ~g~"..health.."/"..maxhealth), wanjialistx, wanjialisty+0.500, 0.3,0.3)
+            draw_string(string.format("~h~~f~护甲 : ~g~"..armor.."/"..maxarmor), wanjialistx, wanjialisty+0.520, 0.3,0.3)
+            draw_string(string.format("~h~~f~加速器 : "..check_host(players.is_using_vpn(pid))), wanjialistx, wanjialisty+0.540, 0.3,0.3)
+            draw_string(string.format("~h~~f~室内检查 : ~g~"..t_b()), wanjialistx, wanjialisty+0.560, 0.3,0.3)
+            draw_string(string.format("~h~~f~网络延迟 : ~g~"..string.format("%.0f ", NETWORK.NETWORK_GET_AVERAGE_PING(pid)).."ms"), wanjialistx, wanjialisty+0.580, 0.3,0.3)
+            draw_string(string.format("".."~h~~f~[GRANDTOURINGVIP]"), wanjialistx+0.090, wanjialisty+0.580, 0.3,0.3)
+        else
+            if cur_player ~= nil then
+                cur_player = nil
+            end
         end
-        local mypos, playerpos = players.get_position(players.user()), players.get_position(pid)
-        local sped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-        local health, maxhealth = ENTITY.GET_ENTITY_HEALTH(sped), ENTITY.GET_ENTITY_MAX_HEALTH(sped)
-        local armor, maxarmor = PED.GET_PED_ARMOUR(sped), PLAYER.GET_PLAYER_MAX_ARMOUR(sped)
-        local weapon_hash = WEAPON.GET_SELECTED_PED_WEAPON(sped)
-        local weapon =  get_weapon_name(weapon_hash)
-        local veh = PED.GET_VEHICLE_PED_IS_USING(sped)
-        local speed = ENTITY.GET_ENTITY_SPEED(sped)
-		local kph = speed * 3.6
-		mspeed = kph
-        GRAPHICS.DRAW_RECT(wanjialistx+0.095, wanjialisty+0.30, 0.2, 0.6, 0, 0, 0, 80)
-        draw_string(string.format("~h~~f~玩家信息窗口"), wanjialistx, wanjialisty, 0.3,0.3)
-        draw_string(string.format("~h~~f~名称 : ~w~"..players.get_name(pid)), wanjialistx, wanjialisty+0.02, 0.3,0.3)
-        draw_string(string.format("~h~~f~RID : ~w~"..players.get_rockstar_id(pid)), wanjialistx, wanjialisty+0.04, 0.3,0.3)
-        draw_string(string.format("~h~~f~IP地址 : ~w~"..intToIp(players.get_connect_ip(pid))), wanjialistx, wanjialisty+0.06, 0.3,0.3)
-        draw_string(string.format("~h~~f~等级 : ~w~"..players.get_rank(pid)), wanjialistx, wanjialisty+0.08, 0.3,0.3)
-        draw_string(string.format("~h~~f~玩家K/D : ~w~"..round(players.get_kd(pid), 2)), wanjialistx, wanjialisty+0.10, 0.3,0.3)
-        draw_string(string.format("~h~~f~国家 : ~w~"..languages[players.get_language(pid)]), wanjialistx, wanjialisty+0.12, 0.3,0.3)
-        draw_string(string.format("~h~~f~手柄状态 : "..check(players.is_using_controller(pid))), wanjialistx, wanjialisty+0.14, 0.3,0.3)
-        draw_string(string.format("~h~~f~战局主机 : "..check_host(players.get_host_queue_position(pid))), wanjialistx, wanjialisty+0.16, 0.3,0.3)
-        draw_string(string.format("~h~~f~脚本主机 : "..check_script_host(players.get_script_host(pid))), wanjialistx, wanjialisty+0.18, 0.3,0.3)
-        draw_string(string.format("~h~~f~主机令牌 : ~w~"..players.get_host_queue_position(pid)), wanjialistx, wanjialisty+0.200, 0.3,0.3)
-        draw_string(string.format("~h~~f~组织 : ~w~"..check_org(players.get_org_type(pid))), wanjialistx, wanjialisty+0.220, 0.3,0.3)
-        draw_string(string.format("~h~~f~距离 : ~w~"..check_distance(mypos, playerpos)), wanjialistx, wanjialisty+0.240, 0.3,0.3)
-        draw_string(string.format("~h~~f~速度 : ~w~"..math.ceil(mspeed).."~h~~f~ km/h"), wanjialistx, wanjialisty+0.260, 0.3,0.3)
-        draw_string(string.format("~h~~f~无敌 : "..check_host(players.is_godmode(pid))), wanjialistx, wanjialisty+0.280, 0.3,0.3)
-        draw_string(string.format("~h~~f~攻击过我 : "..check_host(players.is_marked_as_attacker(pid))), wanjialistx, wanjialisty+0.300, 0.3,0.3)
-        draw_string(string.format("~h~~f~雷达隐藏 : "..check_host(players.is_otr(pid))), wanjialistx, wanjialisty+0.320, 0.3,0.3)
-        draw_string(string.format("~h~~f~载具 : ~w~"..check_cat(util.get_label_text(players.get_vehicle_model(pid)))), wanjialistx, wanjialisty+0.340, 0.3,0.3)
-        draw_string(string.format("~h~~f~作弊者 : "..check_host(players.is_marked_as_modder(pid))), wanjialistx, wanjialisty+0.360, 0.3,0.3)
-        draw_string(string.format("~h~~f~通缉等级 : ~w~"..PLAYER.GET_PLAYER_WANTED_LEVEL(pid)), wanjialistx, wanjialisty+0.380, 0.3,0.3)
-        draw_string(string.format("~h~~f~武器 : ~w~"..weapon), wanjialistx, wanjialisty+0.400, 0.3,0.3)
-        draw_string(string.format("~h~~f~作弊者/管理员 : "..check_host(players.is_marked_as_modder_or_admin(pid))), wanjialistx, wanjialisty+0.420, 0.3,0.3)
-        draw_string(string.format("~h~~f~现金 : ~w~"..formatMoney(players.get_wallet(pid))), wanjialistx, wanjialisty+0.440, 0.3,0.3)
-        draw_string(string.format("~h~~f~银行 : ~w~"..formatMoney(players.get_bank(pid))), wanjialistx, wanjialisty+0.460, 0.3,0.3)
-        draw_string(string.format("~h~~f~坐标 : ~w~"..string.format("%.5f, %.5f, %.5f", playerpos.x, playerpos.y, playerpos.z)), wanjialistx, wanjialisty+0.480, 0.3,0.3)
-        draw_string(string.format("~h~~f~血量 : ~w~"..health.."/"..maxhealth), wanjialistx, wanjialisty+0.500, 0.3,0.3)
-        draw_string(string.format("~h~~f~护甲 : ~w~"..armor.."/"..maxarmor), wanjialistx, wanjialisty+0.520, 0.3,0.3)
-        draw_string(string.format("~h~~f~加速器 : "..check_host(players.is_using_vpn(pid))), wanjialistx, wanjialisty+0.540, 0.3,0.3)
-        draw_string(string.format("~h~~f~室内检查 : ~w~"..t_b()), wanjialistx, wanjialisty+0.560, 0.3,0.3)
-        draw_string(string.format("".."~h~~f~[GRANDTOURINGVIP]"), wanjialistx+0.090, wanjialisty+0.560, 0.3,0.3)
-    else
-        if cur_player ~= nil then
-            cur_player = nil
-        end
-    end
-end)
-menu.set_value(wanjialist, wanjialist1)
+    end)
+    menu.set_value(wanjialist, wanjialist1)
 
 GTluaScript.slider(wanjiaroot, '信息窗口 X轴', {'wanjiax'}, '',0, 500, 440, 5, function(jb_x)
     wanjialistx = jb_x / 900
@@ -654,17 +668,123 @@ end)
 menu.set_visible(xuetiao, false)
 menu.set_visible(hujia, false)
 
-jiankang=GTTG(players_root, "健康显示", {""}, "", function(jk)
-c = jk
-    while c do
-       wait()
-           menu.set_value(xuetiao, true) 
-               menu.set_value(hujia, true)
-               end
-           menu.set_value(xuetiao, false) 
-    menu.set_value(hujia, false)
+kuangjia = GTTG(players_root, "框架", {""}, "", function(gg)
+    function textxlcolour(r, g, b, a)
+        return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
+    end
+    
+    local colora = textxlcolour(195, 200, 98, 255)
+    local colorb = textxlcolour(20, 50, 190, 255)
+    ag = gg
+    while ag do
+        wait()
+        directx.draw_line(0.44, 0.04, 0.54, 0.04, colora,colorb)
+        directx.draw_line(0.44, 0.041, 0.54, 0.041, colora,colorb)
+        directx.draw_line(0.44, 0.042, 0.54, 0.042, colora,colorb)
+
+        directx.draw_line(0.54, 0.04, 0.57, 0.020, colorb,colora)
+        directx.draw_line(0.54, 0.041, 0.57, 0.021, colorb,colora)
+        directx.draw_line(0.54, 0.042, 0.57, 0.022, colorb,colora)
+
+        directx.draw_line(0.410, 0.022, 0.44, 0.04, colorb,colora)
+        directx.draw_line(0.410, 0.023, 0.44, 0.041, colorb,colora)
+        directx.draw_line(0.410, 0.024, 0.44, 0.042, colorb,colora)
+
+        directx.draw_line(0.57, 0.020, 0.94, 0.020, colora,colorb)
+        directx.draw_line(0.57, 0.021, 0.94, 0.021, colora,colorb)
+        directx.draw_line(0.57, 0.022, 0.94, 0.022, colora,colorb)
+
+        directx.draw_line(0.410, 0.022, 0.04, 0.022, colorb,colora)
+        directx.draw_line(0.410, 0.023, 0.04, 0.023, colorb,colora)
+        directx.draw_line(0.410, 0.024, 0.04, 0.024, colorb,colora)
+
+        directx.draw_line(0.04, 0.022, 0.02, 0.042, colora,colorb)
+        directx.draw_line(0.04, 0.023, 0.02, 0.043, colora,colorb)
+        directx.draw_line(0.04, 0.024, 0.02, 0.044, colora,colorb)
+
+        directx.draw_line(0.94, 0.020, 0.96, 0.040, colorb,colora)
+        directx.draw_line(0.94, 0.021, 0.96, 0.041, colorb,colora)
+        directx.draw_line(0.94, 0.022, 0.96, 0.042, colorb,colora)
+
+        directx.draw_line(0.9590, 0.040, 0.9590, 0.90, colora,colorb)
+        directx.draw_line(0.9595, 0.040, 0.9595, 0.90, colora,colorb)
+        directx.draw_line(0.960, 0.040, 0.960, 0.90, colora,colorb)
+
+        directx.draw_line(0.0201, 0.0405, 0.0201, 0.75, colorb,colora)
+        directx.draw_line(0.0206, 0.0405, 0.0206, 0.75, colorb,colora)
+        directx.draw_line(0.0211, 0.0405, 0.0211, 0.75, colorb,colora)
+
+        directx.draw_line(0.960, 0.90, 0.932, 0.922, colorb,colora)
+        directx.draw_line(0.960, 0.899, 0.932, 0.921, colorb,colora)
+        directx.draw_line(0.960, 0.898, 0.932, 0.920, colorb,colora)
+
+        directx.draw_line(0.70, 0.922, 0.932, 0.922, colorb,colora)
+        directx.draw_line(0.70, 0.921, 0.932, 0.921, colorb,colora)
+        directx.draw_line(0.70, 0.920, 0.932, 0.920, colorb,colora)
+
+        directx.draw_line(0.77, 0.848, 0.960, 0.848, colora,colorb)
+        directx.draw_line(0.77, 0.849, 0.960, 0.849, colora,colorb)
+        directx.draw_line(0.77, 0.850, 0.960, 0.850, colora,colorb)
+
+        directx.draw_line(0.77, 0.115, 0.960, 0.115, colorb,colora)
+        directx.draw_line(0.77, 0.1155, 0.960, 0.1155, colorb,colora)
+        directx.draw_line(0.77, 0.1160, 0.960, 0.1160, colorb,colora)
+    end
+    ag = false
 end)
-menu.set_value(jiankang, jiankang1)
+menu.set_visible(kuangjia, false)
+
+jiankang=GTTG(players_root, "综合信息[GT]", {""}, "", function(jk)
+    c = jk
+        delay = 0
+        fps = 0
+        local shinei = players.is_in_interior(players.user())
+        while c do
+           wait()
+               local playerpos = players.get_position(players.user())
+               local weapon_hash = WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.GET_PLAYER_PED(players.user()))
+               local weapon =  get_weapon_name(weapon_hash)
+               local speed = ENTITY.GET_ENTITY_SPEED(PLAYER.GET_PLAYER_PED(players.user()))
+               local kph = speed * 3.6
+               mspeed = math.ceil(kph)
+               draw_string(string.format("~h~~f~GRANDTOURINGVIP"), 0.437,0.01, 0.35,0.35)
+               draw_string(string.format("~h~~y~".. CLOCK.GET_CLOCK_HOURS() .. ":" .. CLOCK.GET_CLOCK_MINUTES()), 0.475,0.042, 0.45,0.45)
+               draw_string(string.format("~h~~f~名称 : ~g~"..players.get_name(players.user())), 0.045,0.12, 0.25,0.25)
+               draw_string(string.format("~h~~f~正在打字 : ~w~"..check_host(players.is_typing(players.user()))),0.045,0.14, 0.25,0.25)
+               draw_string(string.format("~h~~f~RID : ~y~"..players.get_rockstar_id(players.user())), 0.045,0.16, 0.25,0.25)
+               draw_string(string.format("~h~~f~IP地址 : ~g~"..intToIp(players.get_connect_ip(players.user()))), 0.045,0.18, 0.25,0.25)
+               draw_string(string.format("~h~~f~等级 : ~g~"..players.get_rank(players.user())), 0.045, 0.20, 0.25,0.25)
+               draw_string(string.format("~h~~f~K/D : ~g~"..round(players.get_kd(players.user()), 2)), 0.045, 0.22, 0.25,0.25)
+               draw_string(string.format("~h~~f~死亡次数 : ~g~"..players.get_deaths(players.user())), 0.045, 0.24, 0.25,0.25)
+               draw_string(string.format("~h~~f~语言 : ~w~"..languages[players.get_language(players.user())]), 0.045, 0.26, 0.25,0.25)
+               draw_string(string.format("~h~~f~手柄状态 : "..check(players.is_using_controller(players.user()))), 0.045, 0.28, 0.25,0.25)
+               draw_string(string.format("~h~~f~战局主机 : "..check_host(players.get_host(players.user()))), 0.045, 0.30, 0.25,0.25)
+               draw_string(string.format("~h~~f~脚本主机 : "..check_script_host(players.get_script_host(players.user()))), 0.045, 0.32, 0.25,0.25)
+               draw_string(string.format("~h~~f~主机令牌 : ~g~"..players.get_host_queue_position(players.user())), 0.045, 0.34, 0.25,0.25)
+               draw_string(string.format("~h~~f~组织 : ~w~"..check_org(players.get_org_type(players.user()))), 0.045, 0.36, 0.25,0.25)
+               draw_string(string.format("~h~~f~载具 : ~w~"..check_cat(util.get_label_text(players.get_vehicle_model(players.user())))), 0.045, 0.38, 0.25,0.25)
+               draw_string(string.format("~h~~f~通缉等级 : ~w~"..PLAYER.GET_PLAYER_WANTED_LEVEL(players.user())), 0.045, 0.40, 0.25,0.25)
+               draw_string(string.format("~h~~f~武器 : ~w~"..weapon), 0.045, 0.42, 0.25,0.25)
+               draw_string(string.format("~h~~f~现金 : ~g~"..formatMoney(players.get_wallet(players.user()))), 0.045, 0.44, 0.25,0.25)
+               draw_string(string.format("~h~~f~银行 : ~y~"..formatMoney(players.get_bank(players.user()))), 0.045, 0.46, 0.25,0.25)
+               draw_string(string.format("~h~~f~坐标 : ~w~"..string.format("\nx:%.5f\ny:%.5f\nz:%.5f", playerpos.x, playerpos.y, playerpos.z)), 0.045, 0.48, 0.25,0.25)
+               draw_string(string.format("~h~~f~加速器 : "..check_host(players.is_using_vpn(players.user()))), 0.045, 0.55, 0.25,0.25)
+               draw_string(string.format("~h~~f~遥控载具 : "..check_host(players.is_using_rc_vehicle(players.user()))), 0.045, 0.57, 0.25,0.25)
+               draw_string(string.format("~h~~f~武器伤害修改 : "..check_host(players.get_melee_weapon_damage_modifier(players.user()))), 0.045, 0.59, 0.25,0.25)
+               draw_string(string.format("~h~~f~SPEED   ~p~~italic~"..mspeed.."~f~/~y~KM"), 0.83, 0.86, 0.45,0.45)
+               draw_string(string.format("~h~~y~TIME ~p~- ~f~~italic~"..os.date("%X")), 0.80, 0.025, 0.40,0.40)
+               draw_string(string.format("~h~~y~DPS  ~p~- ~f~~italic~"..fps.."~r~   "..delay.."ms"), 0.80, 0.055, 0.40,0.40)
+               draw_string(string.format("~h~~y~GAME :~italic~ Grand Theft Auto"), 0.80, 0.085, 0.35,0.35)
+               menu.set_value(xuetiao, true) 
+                   menu.set_value(hujia, true)
+                   menu.set_value(kuangjia, true)
+                   end
+                   menu.set_value(kuangjia, false)
+               menu.set_value(xuetiao, false) 
+        menu.set_value(hujia, false)
+        c = false
+    end)
+    menu.set_value(jiankang, jiankang1)
 
 GTTG(players_root, "玩家加入/离开通知", {}, "", function(g)
     gt = g
@@ -21618,9 +21738,9 @@ end
 end)
 
 require "lib.GTSCRIPTS.GTA.hbl"
-sponsor = GT(zanzhuzx, 'VIP人员', {}, '功德无量，爱心支持')
+sponsor = GT(zanzhuzx, 'Pro级用户', {}, '功德无量，爱心支持')
 for _, v in ipairs(hb_id) do 
-    GTD(sponsor, "VIP会员: "..v.name, function() 
+    GTD(sponsor, "Pro级用户: "..v.name, function() 
     end)
 end
 GTD(sponsor, "...未完待续...", function() 
