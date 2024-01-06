@@ -3,11 +3,11 @@ imhb = "您已经是皇榜成员\n以下特权已激活:\n战局横幅提示(其
 hbinfo = "加入皇榜可享受以下特权:\n战局横幅提示(其他GTVIP用户)\n免疫其他GTVIP用户的脚本攻击\n获得VIP功能与立刻加入VIP群聊 若您是卡网经销商,可免费加入GTVIP认证经销商列表\n联系QQ(1114983012/820104093)"
 function checkme()
     local vipme = "GTLua Pro Edition"
-    local standard = "   Version: "..GT_version
+    local standard = " Version 24: "..GT_version
     local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
     
     if name == "RhymeBear" then
-        return "  7SkyK1ng 05L5"
+        return " Version 24: "..GT_version
     elseif name == "RcktaR" then
         return "    qianzongGol"
     elseif name == "zqxhnb" then

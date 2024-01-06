@@ -38,6 +38,16 @@ sxid = {{
     playeridx = "Dreams_dog"
 }, {
     playeridx = "bilal22520"
+}, {
+    playeridx = "Mag7777V"
+}, {
+    playeridx = "Magicswordstar"
+}, {
+    playeridx = "xyzkzero"
+}, {
+    playeridx = "YuukiAsuna17"
+}, {
+    playeridx = "jinxCore"
 },
 }
 
@@ -1335,5 +1345,65 @@ spid = {{
     playerid = "Miles0209"
 }, {
     playerid = "Cx330zxs"
+}, {
+    playerid = "KeNan___"--
+}, {
+    playerid = "laoloak"
+}, {
+    playerid = "nmsInmsInmsI"
+}, {
+    playerid = "13843437596yang"
+}, {
+    playerid = "XiaoChuan2Take1"
+}, {
+    playerid = "YoungYouSucx"
+}, {
+    playerid = "Niangaomilk"
+}, {
+    playerid = "sssssddd999"
+}, {
+    playerid = "s_ckmyD_ck"
+}, {
+    playerid = "daoyi_mao"
+}, {
+    playerid = "JianGuoTaoHua"
+}, {
+    playerid = "Yiranaizheni"
+}, {
+    playerid = "Wanhuidecongqian"
+}, {
+    playerid = "TANLUO"
+}, {
+    playerid = "PopStar0L"
+}, {
+    playerid = "Qing1314Ning"
+}, {
+    playerid = "Galaxy_MG"
+}, {
+    playerid = "Youkan6666"
+}, {
+    playerid = "Tyrion_K"
+}, {
+    playerid = "liunian5"
+}, {
+    playerid = "--xiaohe--"
+}, {
+    playerid = "gedoumentu"
+}, {
+    playerid = "xiaofeng1217"
+}, {
+    playerid = "yanqiu1337"
+}, {
+    playerid = "2Take1_Stand"
+}, {
+    playerid = "Mag7777V"
+}, {
+    playerid = "Magicswordstar"
+}, {
+    playerid = "xyzkzero"
+}, {
+    playerid = "YuukiAsuna17"
+}, {
+    playerid = "jinxCore"
 },
 }
