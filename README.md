@@ -32,7 +32,7 @@ GTA5 Mod Stand Lua All in One；综合任务、crash、模组、娱乐，恶搞�
 ### 一劳永逸教程
 此教程会教你配置完整的仓库环境，以及克隆仓库的standlua至本地，使用此教程在日后的更新极其方便
 
-[https://xhcheats.cn/#/public/gitfork](https://xhcheats.cn/#/public/gitfork)
+[一次性完成standlua合集仓库的配置教程](https://github.com/xhcherry/GTA5-Stand-LuaAIO/wiki/lua安装教程)
 
 此教程**建议在固定电脑玩的玩家使用**，此教程只有在第一次配置麻烦，在之后的仓库更新后，使用此教程的玩家只需要按三下就可以完成更新，并且更新很快，不用重新下载以及解压 **(属于是一劳永逸)**
 
