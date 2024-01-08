@@ -38,7 +38,7 @@ GTA5 Mod Stand Lua All in One；综合任务、crash、模组、娱乐，恶搞�
 
 使用上述任一种方法下载完成后将下载的压缩包完全解压出来(**是解压出来，不是直接打开压缩包**)，将文件夹中的所有文件拖到stand根目录即可。
 
-简易教程**建议没有固定电脑玩游戏的玩家使用**，这需要频繁重新下载200多MB的压缩包并解压，很耗时间
+简易教程**建议没有固定电脑玩游戏的玩家使用**，这需要频繁重新下载200多MB的压缩包并完全解压，很耗时间
 
 ## 一劳永逸配置lua教程
 此教程会教你配置完整的仓库环境，以及克隆仓库的standlua至本地，使用此教程在日后的更新极其方便
@@ -49,12 +49,14 @@ GTA5 Mod Stand Lua All in One；综合任务、crash、模组、娱乐，恶搞�
 
 ## 提问与解答
 
-如果你有任何关于stand本体或者lua在使用上的问题均可以在issues中询问(上方菜单栏code旁边就是issues)，我都会帮忙解决，要是有好的lua就提交pull request
+如果你有任何关于stand本体或者lua在使用上的问题均可以在[issues](https://github.com/xhcherry/GTA5-Stand-LuaAIO/issues)中提问，有问必答
 
-在此wiki中收录了关于stand的方方面面，以及各种典型问题都会在这里
+你要是有优秀的lua想要加入合集仓库就提交pull request
+
+在此wiki中收录了关于stand的相关内容描述，以及各种典型问题都会在这里
 [https://github.com/xhcherry/GTA5-Stand-LuaAIO/wiki](https://github.com/xhcherry/GTA5-Stand-LuaAIO/wiki)
 
-如果你想与每个lua的官方取得联系，在上面的wiki中已添加所有lua的官方群或邀请链接，鸣谢各位lua作者，请将此仓库分享给你的小伙伴一起增加游戏的娱乐性
+如果你想与每个lua的官方取得联系，在上面的wiki中已添加所有lua的官方群或邀请链接，感谢各位lua作者，请将此仓库分享给你的小伙伴一起增加游戏的娱乐性
 
 ## 仓库目录结构
 

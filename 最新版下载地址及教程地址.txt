@@ -6,8 +6,8 @@ GitHub源仓库及永久下载地址：https://github.com/xhcherry/GTA5-Stand-Lu
 教程：https://github.com/xhcherry/GTA5-Stand-LuaAIO/wiki/lua安装教程
 此教程会教你配置完整的仓库环境，以及克隆仓库的standlua至本地，使用此教程在日后的更新极其方便
 
-stand全方面介绍以及问题收录链接：https://github.com/xhcherry/GTA5-Stand-LuaAIO/wiki
+stand介绍以及问题收录链接：https://github.com/xhcherry/GTA5-Stand-LuaAIO/wiki
 
-如果你也有问题就在仓库页面提交issues，这些问题会被解答并且收录到wiki中
+如果你也有问题就在仓库页面提交issues，提交问题链接：https://github.com/xhcherry/GTA5-Stand-LuaAIO/issues，这些问题会被解答并且收录到wiki中
 
 记得关注仓库哦，每个星期都会更新一次
