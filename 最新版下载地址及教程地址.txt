@@ -11,3 +11,7 @@ stand介绍以及问题收录链接：https://github.com/xhcherry/GTA5-Stand-Lua
 如果你也有问题就在仓库页面提交issues，提交问题链接：https://github.com/xhcherry/GTA5-Stand-LuaAIO/issues，这些问题会被解答并且收录到wiki中
 
 记得关注仓库哦，每个星期都会更新一次
+
+仓库的discord：https://discord.gg/wDcY8FFnt5
+
+QQ群：242429835
