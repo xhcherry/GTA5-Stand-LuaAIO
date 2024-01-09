@@ -6,6 +6,8 @@ GTA5 Mod Stand Lua All in One；综合任务、crash、模组、娱乐，恶搞�
 
 加入此仓库的[discord](https://discord.gg/wDcY8FFnt5)(新建的，人少，大家多多支持，方便发更新公告)
 
+QQ群：242429835(新建的比discord的还新，没人，大家多多加入，方便发更新公告和上传文件，会推出更多好玩的教程)
+
 ## 目录
 
 - [GTA5-Stand-LuaAIO](#gta5-stand-luaaio)
