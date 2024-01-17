@@ -197,8 +197,8 @@ function DrawDirectionalArrowForEntity(entity, hudColour)
             math.cos(camRot.x) * math.sin(elevation) - math.sin(camRot.x) * math.cos(elevation) * math.cos(-azimuth - camRot.z),
             math.sin(-azimuth - camRot.z) * math.cos(elevation)
         )
-        local screenX = 0.5 - math.cos(angle) * 0.19
-        local screenY = 0.5 - math.sin(angle) * 0.19
+        screenX = 0.5 - math.cos(angle) * 0.19
+        screenY = 0.5 - math.sin(angle) * 0.19
         local colourA = GetArrowAlpha(distanceXY)
         GRAPHICS.DRAW_SPRITE("helicopterhud", "hudArrow", screenX, screenY, 0.02, 0.04, math.deg(angle) - 90.0, colour.r, colour.g, colour.b, colourA, false, 0)
     end
@@ -286,9 +286,9 @@ end
 
 
 ---@param state integer
-local SetCannonState = function (state)
+local SetCannonState = function (stated)
     GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SET_STATE")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT(state)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT(stated)
     GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
 end
 

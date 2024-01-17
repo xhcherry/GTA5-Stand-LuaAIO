@@ -298,9 +298,9 @@ function ini.parse(path, options)
 
                     res[k][key] = val
 
-                    if __newindex then
+                    --[[ if __newindex then
                         mt.__newindex = __newindex
-                    end
+                    end ]]
                 end
             })
 

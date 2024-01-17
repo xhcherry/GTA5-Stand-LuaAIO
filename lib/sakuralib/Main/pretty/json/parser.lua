@@ -1,6 +1,6 @@
 -- Copyright (c) 2019, Souche Inc.
 
-local Constant = require "lib.sakuralib.Main.pretty.json.constant"
+local Constant = require "lib.sakuralib.main.pretty.json.constant"
 
 local NULL = Constant.NULL
 local UN_ESC_MAP = Constant.UN_ESC_MAP

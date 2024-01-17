@@ -542,8 +542,8 @@ local image_preview
 
 local function cleanup_previews_tick()
     --debug_log("Cleanup previews tick. Checking "..#spawned_previews.." spawned previews.")
-    constructor_lib.array_remove(spawned_previews, function(t, i)
-        local spawned_preview = t[i]
+    constructor_lib.array_remove(spawned_previews, function(t1, i)
+        local spawned_preview = t1[i]
         if spawned_preview ~= current_preview then
             --debug_log("Removing preview "..tostring(spawned_preview.name))
             constructor_lib.remove_attachment(spawned_preview)
@@ -878,32 +878,32 @@ local free_edit_mode_tick = function()
     local sensitivity = 0.3
     if PAD.IS_DISABLED_CONTROL_PRESSED(2, 32) then
         --local offset = get_offset_from_cam_in_world_coords(cam, {x=1,y=0,z=0})
-        local cam_pos = CAM.GET_CAM_COORD(free_edit_cam, 2)
+        cam_pos = CAM.GET_CAM_COORD(free_edit_cam, 2)
         local new_cam_pos = v3(cam_pos.x + (forward.x * sensitivity), cam_pos.y + (forward.y * sensitivity), cam_pos.z)
         CAM.SET_CAM_COORD(free_edit_cam, new_cam_pos.x, new_cam_pos.y, new_cam_pos.z)
     end
     if PAD.IS_DISABLED_CONTROL_PRESSED(2, 33) then
-        local cam_pos = CAM.GET_CAM_COORD(free_edit_cam, 2)
+        cam_pos = CAM.GET_CAM_COORD(free_edit_cam, 2)
         local new_cam_pos = v3(cam_pos.x - (forward.x * sensitivity), cam_pos.y - (forward.y * sensitivity), cam_pos.z)
         CAM.SET_CAM_COORD(free_edit_cam, new_cam_pos.x, new_cam_pos.y, new_cam_pos.z)
     end
     if PAD.IS_DISABLED_CONTROL_PRESSED(2, 35) then
-        local cam_pos = CAM.GET_CAM_COORD(free_edit_cam, 2)
+        cam_pos = CAM.GET_CAM_COORD(free_edit_cam, 2)
         local new_cam_pos = v3(cam_pos.x + (right.x * sensitivity), cam_pos.y + (right.y * sensitivity), cam_pos.z)
         CAM.SET_CAM_COORD(free_edit_cam, new_cam_pos.x, new_cam_pos.y, new_cam_pos.z)
     end
     if PAD.IS_DISABLED_CONTROL_PRESSED(2, 34) then
-        local cam_pos = CAM.GET_CAM_COORD(free_edit_cam, 2)
+        cam_pos = CAM.GET_CAM_COORD(free_edit_cam, 2)
         local new_cam_pos = v3(cam_pos.x - (right.x * sensitivity), cam_pos.y - (right.y * sensitivity), cam_pos.z)
         CAM.SET_CAM_COORD(free_edit_cam, new_cam_pos.x, new_cam_pos.y, new_cam_pos.z)
     end
     if PAD.IS_DISABLED_CONTROL_PRESSED(2, 22) then
-        local cam_pos = CAM.GET_CAM_COORD(free_edit_cam, 2)
+        cam_pos = CAM.GET_CAM_COORD(free_edit_cam, 2)
         local new_cam_pos = v3(cam_pos.x, cam_pos.y, cam_pos.z + (up.z * sensitivity))
         CAM.SET_CAM_COORD(free_edit_cam, new_cam_pos.x, new_cam_pos.y, new_cam_pos.z)
     end
     if PAD.IS_DISABLED_CONTROL_PRESSED(2, 36) then
-        local cam_pos = CAM.GET_CAM_COORD(free_edit_cam, 2)
+        cam_pos = CAM.GET_CAM_COORD(free_edit_cam, 2)
         local new_cam_pos = v3(cam_pos.x, cam_pos.y, cam_pos.z - (up.z * sensitivity))
         CAM.SET_CAM_COORD(free_edit_cam, new_cam_pos.x, new_cam_pos.y, new_cam_pos.z)
     end
@@ -1143,8 +1143,8 @@ end
 
 constructor.delete_spawned_construct =  function(construct)
     constructor.delete_construct(construct)
-    constructor_lib.array_remove(spawned_constructs, function(t, i)
-        local spawned_construct = t[i]
+    constructor_lib.array_remove(spawned_constructs, function(t1, i)
+        local spawned_construct = t1[i]
         return spawned_construct ~= construct
     end)
     menus.refresh_loaded_constructs()
@@ -1426,7 +1426,7 @@ local function load_construct_plans_files_from_dir(directory)
     local construct_plan_files = {}
     for _, filepath in ipairs(filesystem.list_files(directory)) do
         if filesystem.is_dir(filepath) then
-            local _, dirname = string.match(filepath, "(.-)([^\\/]-%.?)$")
+            local i, dirname = string.match(filepath, "(.-)([^\\/]-%.?)$")
             local dir_file = {
                 is_directory=true,
                 filepath=filepath,
@@ -1435,7 +1435,7 @@ local function load_construct_plans_files_from_dir(directory)
             }
             table.insert(construct_plan_files, dir_file)
         else
-            local _, filename, ext = string.match(filepath, "(.-)([^\\/]-%.?)[.]([^%.\\/]*)$")
+            local i, filename, ext = string.match(filepath, "(.-)([^\\/]-%.?)[.]([^%.\\/]*)$")
             if is_file_type_supported(ext) then
                 local construct_plan_file = {
                     is_directory=false,
@@ -1457,7 +1457,7 @@ local function load_all_construct_plan_files_from_dir(directory)
     local construct_plan_files = load_construct_plans_files_from_dir(directory)
     for _, filepath in ipairs(filesystem.list_files(directory)) do
         if filesystem.is_dir(filepath) then
-            for _, construct_plan_file in pairs(load_all_construct_plan_files_from_dir(filepath)) do
+            for i, construct_plan_file in pairs(load_all_construct_plan_files_from_dir(filepath)) do
                 table.insert(construct_plan_files, construct_plan_file)
             end
         end
@@ -1473,7 +1473,7 @@ local function search_constructs(directory, query, results)
             search_constructs(filepath, query, results)
         else
             if string.match(filepath:lower(), query:lower()) then
-                local _, filename, ext = string.match(filepath, "(.-)([^\\/]-%.?)[.]([^%.\\/]*)$")
+                local i, filename, ext = string.match(filepath, "(.-)([^\\/]-%.?)[.]([^%.\\/]*)$")
                 if is_file_type_supported(ext) then
                     local construct_plan_file = {
                         is_directory=false,
@@ -2570,7 +2570,7 @@ constructor.add_child_attachment_menu = function(attachment)
         attachment.menus.option_bone_index_picker = menu.list(attachment.menus.attachment_options, t("Bone Index Picker"), {}, t("Some common bones can be selected by name"))
         for _, bone_index_category in pairs(constants.bone_index_names) do
             local category_menu = menu.list(attachment.menus.option_bone_index_picker, bone_index_category.name)
-            for _, bone_name in pairs(bone_index_category.bone_names) do
+            for i, bone_name in pairs(bone_index_category.bone_names) do
                 menu.action(category_menu, bone_name, {}, "", function()
                     attachment.options.bone_index = ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(attachment.parent.handle, bone_name)
                     constructor_lib.attach_entity(attachment)

@@ -1,8 +1,8 @@
 -- Copyright (c) 2018, Souche Inc.
 
-local Constant = require "lib.sakuralib.Main.pretty.json.constant"
-local Serializer = require "lib.sakuralib.Main.pretty.json.serializer"
-local Parser = require "lib.sakuralib.Main.pretty.json.parser"
+local Constant = require "lib.sakuralib.main.pretty.json.constant"
+local Serializer = require "lib.sakuralib.main.pretty.json.serializer"
+local Parser = require "lib.sakuralib.main.pretty.json.parser"
 
 local json = {
     _VERSION = "0.1",

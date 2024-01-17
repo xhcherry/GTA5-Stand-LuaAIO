@@ -784,7 +784,7 @@ function Member:save()
 	if not file then
 		return false, errmsg
 	end
-	file:write(json.stringify(self:getInfo(), nil, 0, false))
+	file:write(json1.stringify(self:getInfo(), nil, 0, false))
 	file:close()
 	return true
 end
@@ -982,88 +982,85 @@ end
 
 
 function BodyguardMenu.new(parent, name, command_names)
-local self = setmetatable({}, BodyguardMenu)
-self.ref = menu.list(parent, name, command_names or {}, "", function()
-	self.isOpen = true
-end, function()
-	self.isOpen = false
-end)
-self.group = Group.new()
+	local self = setmetatable({}, BodyguardMenu)
+	self.ref = menu.list(parent, name, command_names or {}, "", function()
+		self.isOpen = true
+	end, function()
+		self.isOpen = false
+	end)
+	self.group = Group.new()
 
-ModelList.new(self.ref, "生成", "", "", PedList, function (caption, model)
-	if self.group:getSize() >= 7 then
-		return notification("你达到了保镖的最大数量", HudColour.red)
+	ModelList.new(self.ref, "生成", "", "", PedList, function (caption, model)
+		if self.group:getSize() >= 7 then
+			return notification("你达到了保镖的最大数量", HudColour.red)
+		end
+		local modelHash = util.joaat(model)
+		request_model(modelHash)
+		local member = Member:createMember(modelHash)
+		self.group:pushMember(member)
+		local weaponHash = self.group.defaults.weaponHash
+		if IsPedAnyAnimal(member.handle) then
+			weaponHash = util.joaat("weapon_animal")
+		end
+		member:giveWeapon(weaponHash)
+		member:createMgr(self.ref, caption)
+		if self.group.defaults.invincible then member:setInvincible(true) end
+	end, false, true)
+
+	menu.action(self.ref, "克隆我自己", {}, "", function ()
+		if self.group:getSize() >= 7 then
+			return notification("你达到了保镖的最大数量", HudColour.red)
+		end
+		local member = Member:createMember()
+		self.group:pushMember(member)
+		local weaponHash = self.group.defaults.weaponHash
+		if IsPedAnyAnimal(member.handle) then
+			weaponHash = util.joaat("weapon_animal")
+		end
+		member:giveWeapon(weaponHash)
+		member:createMgr(self.ref, "克隆")
+		if self.group.defaults.invincible then member:setInvincible(true) end
+	end)
+
+	local saved = FilesList.new(self.ref, "已保存的", daidaiDir .. "bodyguards", "json")
+	saved:addSubOpt("生成", function(cname, ext, path)
+		if self.group:getSize() >= 7 then
+			return notification("你达到了保镖的最大数量", HudColour.red)
+		end
+		local result = get_info_from_jsonfile(path)
+		local modelHash = result.ModelHash
+		request_model(modelHash)
+		local member = Member:createMember(modelHash)
+		self.group:pushMember(member)
+
+		local weaponHash = result.WeaponHash
+		if IsPedAnyAnimal(member.handle) and
+		weaponHash ~= util.joaat("weapon_animal") then
+			weaponHash = util.joaat("weapon_animal")
+		end
+
+		local ok, errmsg = member:setOutfit(result.Outfit)
+		if not ok then
+		notification("%s 有一套无效的衣服: %s", HudColour.red, cname, errmsg)
+		end
+
+		member:giveWeapon(weaponHash)
+		member:createMgr(self.ref, cname)
+		if self.group.defaults.invincible then member:setInvincible(true) end
+	end)
+
+	saved:addSubOpt("删除文件", function (cname, ext, path)
+		os.remove(path)
+		notification("已删除", HudColour.red)
+		saved:reload()
+	end)
+
+	self:createCommands(self.ref)
+	self.divider = menu.divider(self.ref, "已生成的保镖")
+	for _, member in ipairs(self.group.members) do
+		if member.mgr == 0 then member:createMgr(self.ref, "未知") end
 	end
-	local modelHash = util.joaat(model)
-	request_model(modelHash)
-	local member = Member:createMember(modelHash)
-	self.group:pushMember(member)
-	local weaponHash = self.group.defaults.weaponHash
-	if IsPedAnyAnimal(member.handle) then
-		weaponHash = util.joaat("weapon_animal")
-	end
-	member:giveWeapon(weaponHash)
-	member:createMgr(self.ref, caption)
-	if self.group.defaults.invincible then member:setInvincible(true) end
-end, false, true)
-
-menu.action(self.ref, "克隆我自己", {}, "", function ()
-	if self.group:getSize() >= 7 then
-		return notification("你达到了保镖的最大数量", HudColour.red)
-	end
-	local member = Member:createMember()
-	self.group:pushMember(member)
-	local weaponHash = self.group.defaults.weaponHash
-	if IsPedAnyAnimal(member.handle) then
-		weaponHash = util.joaat("weapon_animal")
-	end
-	member:giveWeapon(weaponHash)
-	member:createMgr(self.ref, "克隆")
-	if self.group.defaults.invincible then member:setInvincible(true) end
-end)
-
-local saved = FilesList.new(self.ref, "已保存的", daidaiDir .. "bodyguards", "json")
-
-saved:addSubOpt("生成", function(name, ext, path)
-	if self.group:getSize() >= 7 then
-		return notification("你达到了保镖的最大数量", HudColour.red)
-	end
-	local ok, result = json.parse(path)
-	if not ok then return notification(result, HudColour.red) end
-
-	local modelHash <const> = result.ModelHash
-	request_model(modelHash)
-	local member = Member:createMember(modelHash)
-	self.group:pushMember(member)
-
-	local weaponHash = result.WeaponHash
-	if IsPedAnyAnimal(member.handle) and
-	weaponHash ~= util.joaat("weapon_animal") then
-		weaponHash = util.joaat("weapon_animal")
-	end
-
-	local ok, errmsg = member:setOutfit(result.Outfit)
-	if not ok then
-	notification("%s 有一套无效的衣服: %s", HudColour.red, name, errmsg)
-	end
-
-	member:giveWeapon(weaponHash)
-	member:createMgr(self.ref, name)
-	if self.group.defaults.invincible then member:setInvincible(true) end
-end)
-
-saved:addSubOpt("删除文件", function (name, ext, path)
-	os.remove(path)
-	notification("已删除", HudColour.red)
-	saved:reload()
-end)
-
-self:createCommands(self.ref)
-self.divider = menu.divider(self.ref, "已生成的保镖")
-for _, member in ipairs(self.group.members) do
-	if member.mgr == 0 then member:createMgr(self.ref, "未知") end
-end
-return self
+	return self
 end
 
 

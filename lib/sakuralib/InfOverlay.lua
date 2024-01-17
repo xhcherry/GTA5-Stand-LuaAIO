@@ -122,7 +122,7 @@ end)
 menu.slider(elementdim, '叠加宽度', {}, '文本窗口的宽度减去填充.', 0, 50, 16, 1, function(on_change)
     textw = on_change/100
 end)
-menu.slider(elementdim, '填充', {}, '在信息文本周围填充.', 0, 30, 8, 1, function(on_change)
+menu.slider(elementdim, '尺寸填充', {}, '在信息文本周围填充.', 0, 30, 8, 1, function(on_change)
     padding = on_change/1000
 end)
 menu.slider(elementdim, '间距', {}, '不同元素的间距.', 0, 20, 3, 1, function(on_change)
@@ -163,9 +163,9 @@ menu.slider(infoverlay, '背景模糊', {}, '应用于背景的模糊量.', 0, 1
 end)
 
 --draw functions
-local function draw_rect(rect_x, rect_y, rect_w, rect_h, colour)
+local function draw_rect(rect_x, rect_y, rect_w, rect_h, colourd)
     directx.draw_rect(rect_x, rect_y, rect_w, rect_h, 
-    {r = colour.r * colour.a, g = colour.g * colour.a, b = colour.b * colour.a, a = colour.a})
+    {r = colourd.r * colourd.a, g = colourd.g * colourd.a, b = colourd.b * colourd.a, a = colourd.a})
 end
 
 local function draw_border(x, y, w, h)
@@ -307,7 +307,7 @@ function infoverplaytoggle()
             for k, region in ipairs(regions) do
                 local blurinstance = 1
                 local count = 0
-                for _ in region.content do count = count + 1 end
+                for i in region.content do count = count + 1 end
                 local dictheight = count * (textheight + linespacing) - linespacing + padding * 2
 
                 draw_border(guix + xoffset, playerlisty + yoffset, region.width, dictheight)
@@ -315,7 +315,7 @@ function infoverplaytoggle()
                 draw_rect(guix + xoffset, playerlisty + yoffset, region.width, dictheight, colour.background)
 
                 local linecount = 0
-                for _, v in ipairs(region.content) do
+                for i, v in ipairs(region.content) do
                     directx.draw_text(
                     guix + xoffset + padding/aspectratio - 0.001, 
                     playerlisty + yoffset + padding + linecount * (textheight + linespacing), 
@@ -332,15 +332,15 @@ function infoverplaytoggle()
                     textsize, 
                     colour.info
                     )
-                    linecount += 1
+                    linecount = linecount + 1
                 end
 
-                xoffset += region.width + xspacing
+                xoffset = xoffset + region.width + xspacing
                 if xoffset >= guiw then
-                    yoffset += dictheight + spacing
+                    yoffset = yoffset + dictheight + spacing
                     xoffset = 0
                 end
-                blurinstance += 1
+                blurinstance = blurinstance + 1
             end
 
             --[[

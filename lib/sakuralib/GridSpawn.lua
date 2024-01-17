@@ -261,7 +261,7 @@ local gridarrow_rot = 0
 
 menu.toggle_loop(gridspawn, "网格生成", {}, "", function()
     PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), true)
-    gridarrow_rot += MISC.GET_FRAME_TIME() * 45
+    gridarrow_rot = gridarrow_rot + MISC.GET_FRAME_TIME() * 45
     local camPos = v3.new(CAM.GET_FINAL_RENDERED_CAM_COORD())
     local camRot = v3.new(CAM.GET_FINAL_RENDERED_CAM_ROT(2))
     local dir = v3.toDir(camRot)
@@ -296,7 +296,7 @@ menu.toggle_loop(gridspawn, "网格生成", {}, "", function()
             undo_record[#undo_record+1] = {}
             local new_record = undo_record[#undo_record]
             for _, tbl in pairs(preview_cars) do
-                for _, car in pairs(tbl) do
+                for i, car in pairs(tbl) do
                     local pos = ENTITY.GET_ENTITY_COORDS(car, false)
                     entities.delete(car)
                     local new_car = VEHICLE.CREATE_VEHICLE(gridcar_hash, pos.x, pos.y, pos.z, cam_start_heading, true, false, false)

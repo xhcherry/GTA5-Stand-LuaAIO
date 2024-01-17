@@ -41,7 +41,7 @@ end
 local function refresh_invis_police_sirens(policified_vehicle)
     for _, child_attachment in policified_vehicle.children do
         if child_attachment ~= child_attachment.root then
-            entities.delete(child_attachment.handle)
+            delete_entity(child_attachment.handle)
         end
     end
     attach_attachment_with_children({
@@ -155,11 +155,11 @@ end
             end
         else
             for _, child_attachment in policified_vehicle.children do
-                entities.delete(child_attachment.handle)
+                delete_entity(child_attachment.handle)
             end
         end
     end)
-    menu.list_select(police_vehicle, "警报器类型", {}, "不同的警笛类型有稍微不同的声音", siren_types_name, 1, function(index)
+    menu.list_action(police_vehicle, "警报器类型", {}, "不同的警笛类型有稍微不同的声音", siren_types_name, function(index, value, click_type)
         siren_type = siren_types[index]
         policified_vehicle.options.siren_attachment = {
             name = siren_type[1],
