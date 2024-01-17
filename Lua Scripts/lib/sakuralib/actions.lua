@@ -324,9 +324,9 @@ menu.on_focus(cloudFavoritesBrowseMenu, function()
                     util.yield()
                 end
                 cloud_loading = true
-                async_http.init('jackz.me', '/stand/cloud/actions/list?method=dicts&scname=' .. user, function(body)
+                async_http.init('jackz.me', '/stand/cloud/actions/list?method=dicts&scname=' .. user, function(nbody)
                     cloud_loading = false
-                    if body:sub(1, 1) == "<" then
+                    if nbody:sub(1, 1) == "<" then
                         cloudvehicle_fetch_error("RATELIMITED")
                         return
                     end
@@ -338,7 +338,7 @@ menu.on_focus(cloudFavoritesBrowseMenu, function()
                     end
                     cloudUsers[user].categories = {}
                     local count = 0
-                    for dictionary in string.gmatch(body, "[^\r\n]+") do
+                    for dictionary in string.gmatch(nbody, "[^\r\n]+") do
                         count = count + 1
                         local dictMenu = menu.list(userMenu, dictionary, {}, "All actions in " .. dictionary .. " favorited by " .. user, function() populate_user_dict(user, dictionary) end)
                         cloudUsers[user].categories[dictionary] = {
@@ -431,7 +431,7 @@ for group, scenarios in pairs(SCENARIOS) do
             
             if affectType > 0 then
                 local peds = entities.get_all_peds_as_handles()
-                for _, npc in ipairs(peds) do
+                for i, npc in ipairs(peds) do
                     if not PED.IS_PED_A_PLAYER(npc) and not PED.IS_PED_IN_ANY_VEHICLE(npc, true) then
                         NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(npc)
                         if clearActionImmediately then
@@ -475,7 +475,7 @@ for _, pair in ipairs(SPEECHES) do
         -- Play single duration for peds
         if affectType > 0 then
             if ambientSpeechDuration > 0 then
-                for _, ped in ipairs(entities.get_all_peds_as_handles()) do
+                for i, ped in ipairs(entities.get_all_peds_as_handles()) do
                     if not PED.IS_PED_A_PLAYER(ped) then
                         if ambientSpeechDuration > 1 then
                             util.create_thread(function()
@@ -501,7 +501,7 @@ for _, pair in ipairs(SPEECHES) do
                 create_self_speech_ped()
             end
             util.create_thread(function()
-                for _ = 1,ambientSpeechDuration do
+                for i = 1,ambientSpeechDuration do
                     AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(selfSpeechPed.entity, pair[2], speechParam, 0)
                     util.yield(speechDelay)
                 end
@@ -517,9 +517,9 @@ for _, pair in ipairs(SPEECHES) do
                 if selfSpeechPed.entity == 0 and affectType ~= 1 then
                     create_self_speech_ped()
                 end
-                util.create_tick_handler(function(a)
+                util.create_tick_handler(function()
                     if affectType > 0 then
-                        for _, ped in ipairs(entities.get_all_peds_as_handles()) do
+                        for i, ped in ipairs(entities.get_all_peds_as_handles()) do
                             NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ped)
                             AUDIO.PLAY_PED_AMBIENT_SPEECH_NATIVE(ped, activeSpeech, speechParam, 0)
                         end

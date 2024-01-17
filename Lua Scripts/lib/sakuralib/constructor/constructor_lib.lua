@@ -78,23 +78,23 @@ constructor_lib.string_starts = function(String,Start)
 end
 
 -- From https://stackoverflow.com/questions/12394841/safely-remove-items-from-an-array-table-while-iterating
-constructor_lib.array_remove = function(t, fnKeep)
-    local j, n = 1, #t;
+constructor_lib.array_remove = function(t1, fnKeep)
+    local j, n = 1, #t1;
 
     for i=1,n do
-        if (fnKeep(t, i, j)) then
+        if (fnKeep(t1, i, j)) then
             -- Move i's kept value to j's position, if it's not already there.
             if (i ~= j) then
-                t[j] = t[i];
-                t[i] = nil;
+                t1[j] = t1[i];
+                t1[i] = nil;
             end
             j = j + 1; -- Increment position of where we'll place the next kept value.
         else
-            t[i] = nil;
+            t1[i] = nil;
         end
     end
 
-    return t;
+    return t1;
 end
 
 constructor_lib.table_merge = function(t1, t2)
@@ -747,8 +747,8 @@ end
 constructor_lib.separate_attachment = function(attachment)
     debug_log("Separating attachment "..tostring(attachment.name))
     ENTITY.DETACH_ENTITY(attachment.handle, true, true)
-    constructor_lib.array_remove(attachment.parent.children, function(t, i)
-        local child_attachment = t[i]
+    constructor_lib.array_remove(attachment.parent.children, function(t1, i)
+        local child_attachment = t1[i]
         return child_attachment ~= attachment
     end)
     attachment.root = attachment
@@ -773,8 +773,8 @@ constructor_lib.remove_attachment = function(attachment)
     if not attachment then return end
     debug_log("Removing attachment "..tostring(attachment.name))
     if attachment.children then
-        constructor_lib.array_remove(attachment.children, function(t, i)
-            local child_attachment = t[i]
+        constructor_lib.array_remove(attachment.children, function(t1, i)
+            local child_attachment = t1[i]
             if child_attachment == attachment then error("Invalid child attachment") end
             constructor_lib.remove_attachment(child_attachment)
             return false
@@ -796,8 +796,8 @@ constructor_lib.remove_attachment_from_parent = function(attachment)
     if attachment == attachment.parent then
         constructor_lib.remove_attachment(attachment)
     elseif attachment.parent ~= nil then
-        constructor_lib.array_remove(attachment.parent.children, function(t, i)
-            local child_attachment = t[i]
+        constructor_lib.array_remove(attachment.parent.children, function(t1, i)
+            local child_attachment = t1[i]
             if child_attachment.id == attachment.id then
                 constructor_lib.remove_attachment(attachment)
                 return false

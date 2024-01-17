@@ -123,7 +123,7 @@ local setTractorBeamVehicles = function ()
 
         if ENTITY.DOES_ENTITY_EXIST(vehicle or 0) and vehicle ~= jet and distance < 80.0 and
         ENTITY.HAS_ENTITY_CLEAR_LOS_TO_ENTITY(object, vehicle, 17) then
-            if Config.ufo.targetplayer then
+            if funConfig.ufo.targetplayer then
                 local pVehicle = entities.handle_to_pointer(vehicle)
                 local pDriver = getVehicleDriver(pVehicle)
                 if isPedPlayer(pDriver) and not table.find(targetVehicles, vehicle) then
@@ -217,8 +217,8 @@ local drawDirectionalArrowForEntity = function (entity, hudColour)
     local ptr = memory.alloc(4)
     if not GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(entPos.x, entPos.y, entPos.z, ptr, ptr) then
         local colour = get_hud_colour(hudColour)
-        local cam = CAM.GET_RENDERING_CAM()
-        local camPos = CAM.GET_CAM_COORD(cam)
+        local cam1 = CAM.GET_RENDERING_CAM()
+        local camPos = CAM.GET_CAM_COORD(cam1)
         local camRot = CAM.GET_CAM_ROT(cam, 2)
         camRot:mul(math.pi / 180)
         local deltaXY = v3.new(entPos.x, entPos.y, 0.0)
@@ -255,7 +255,7 @@ end
 
 
 local drawSpriteOnPlayers = function ()
-    if Config.ufo.disableboxes or
+    if funConfig.ufo.disableboxes or
     not GRAPHICS.HAS_STREAMED_TEXTURE_DICT_LOADED("helicopterhud") then
         return
     end
@@ -341,7 +341,7 @@ local function setCannonCamRot()
         sound.panLoop:stop()
     end
 
-    local heading = makeAngPositive(CAM.GET_CAM_ROT(cam, 2).z)
+    heading = makeAngPositive(CAM.GET_CAM_ROT(cam, 2).z)
     HUD.LOCK_MINIMAP_ANGLE(math.ceil(heading))
 end
 

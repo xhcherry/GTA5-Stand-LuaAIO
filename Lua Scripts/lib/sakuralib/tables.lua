@@ -10,6 +10,7 @@ Global_Base = {----https://github.com/CrazyZhang666/GTA5OnlineTools/blob/9260e13
 
     --Vehicle Menus Globals
     oVMYCar = 2738587,-- ==Default (1.68)
+    vehicle_global = 1586504, -- (1.68) 索赔载具 https://github.com/YimMenu/YimMenu/blob/master/src/core/scr_globals.hpp
 }
 --战局名 & id
 session_name = {
@@ -22,6 +23,38 @@ session_name = {
     {name = "单人战局",session_id = 10},
     {name = "仅限邀请战局",session_id = 11},
     {name = "加入帮会伙伴",session_id = 12}
+}
+
+
+----全局UI颜色
+HudColour ={
+	pureWhite = 0,
+	white = 1,
+	black = 2,
+	grey = 3,
+	greyLight = 4,
+	greyDrak = 5,
+	red = 6,
+	redLight = 7,
+	redDark = 8,
+	blue = 9,
+	blueLight = 10,
+	blueDark = 11,
+	yellow = 12,
+	yellowLight = 13,
+	yellowDark = 14,
+	orange = 15,
+	orangeLight = 16,
+	orangeDark = 17,
+	green = 18,
+	greenLight = 19,
+	greenDark = 20,
+	purple = 21,
+	purpleLight = 22,
+	purpleDark = 23,
+	radarHealth = 25,
+	radarArmour = 26,
+	friendly = 118,
 }
 
 
@@ -38,8 +71,11 @@ invite_string = {
 }
 
 ----获取导弹
-obj_pp = {"prop_cs_dildo_01", "prop_ld_bomb_01", "prop_sam_01" ,"h4_prop_h4_airmissile_01a"}
-opt_pp = {{1,"小导弹"}, {2,"中导弹"}, {3,"大导弹"}, {4,"航空导弹"}, {5,"移除导弹"}}
+obj_pp = {
+    name = {{1,"小导弹"}, {2,"中导弹"}, {3,"大导弹"}, {4,"航空导弹"}, {5,"移除导弹"}},
+    value = {"prop_cs_dildo_01", "prop_ld_bomb_01", "prop_sam_01" ,"h4_prop_h4_airmissile_01a"}
+}
+
 
 ----载具附加
 veh_attach_options = {{1,"附加到他载具上"}, {2,"他的载具附加到我的载具"}, {3,"我的载具附加到他的载具"}, {4,"分离载具"}}
@@ -156,41 +192,147 @@ weapon_list = {
     {name = "冲锋霰弹枪", hash = 317205821, model_hash = 1380588314, max_ammo = 250}
 }
 
-----附加实体枪
+
+----行走风格
+movement_style = {
+    name = {
+        {1, "正常"},
+        {2, "Brisk Walk"},
+        {3, "Garbageman"},
+        {4, "跑步"},
+        {5, "Garbageman 2"},
+        {6, "Lean Forward"},
+        {7, "Slow Lean Forward"},
+        {8, "Michael"},
+        {9, "Female flee"},
+        {10, "害怕"},
+        {11, "Sexy"},
+        {12, "莱斯特抢劫"},
+        {13, "Injured"},
+        {14, "莱斯特手杖"},
+        {15, "Fast Wide Arms"},
+        {16, "Tipsy 2"},
+        {17, "Tazered"},
+        {18, "Brave"},
+        {19, "Casual"},
+        {20, "Moderately Drunk"},
+        {21, "Drunk 1"},
+        {22, "Moderately Drunk"},
+        {23, "Slightly Drunk"},
+        {24, "Very Drunk"},
+        {25, "Male fire"},
+        {26, "Upright"},
+        {27, "Head Down"},
+        {28, "Speed Walk"},
+        {29, "Jog (when jogging)"},
+        {30, "Prison guard"},
+        {31, "Regular Alternate"},
+        {32, "MOVE_P_M_ONE_BRIEFCASE"},
+        {33, "Jantior"},
+        {34, "傲慢"},
+        {35, "move_ped_bucket"},
+        {36, "蹲伏"},
+        {37, "move_ped_mop"},
+        {38, "Femme Masculine"},
+        {39, "Femme Feminine"},
+        {40, "Gangster 1 Masculine"},
+        {41, "Gangster 1 Feminine"},
+        {42, "Posh Masculine"},
+        {43, "Posh Feminine"},
+        {44, "Tough Masculine"},
+        {45, "Tough Feminine"},
+        {46, "Wide Stance"}
+    },
+    value = {
+        "normal",--自定义名字(用于重设风格)
+        "ANIM_GROUP_MOVE_LEMAR_ALLEY",
+        "clipset@move@trash_fast_turn",
+        "FEMALE_FAST_RUNNER",
+        "missfbi4prepp1_garbageman",
+        "move_characters@franklin@fire",
+        "move_characters@Jimmy@slow@",
+        "move_characters@michael@fire",
+        "move_f@flee@a",
+        "move_f@scared",
+        "move_f@sexy@a",
+        "move_heist_lester",
+        "move_injured_generic",
+        "move_lester_CaneUp",
+        "move_m@bag",
+        "MOVE_M@BAIL_BOND_NOT_TAZERED",
+        "MOVE_M@BAIL_BOND_TAZERED",
+        "move_m@brave",
+        "move_m@casual@d",
+        "move_m@drunk@moderatedrunk",
+        "MOVE_M@DRUNK@MODERATEDRUNK",
+        "MOVE_M@DRUNK@MODERATEDRUNK_HEAD_UP",
+        "MOVE_M@DRUNK@SLIGHTLYDRUNK",
+        "MOVE_M@DRUNK@VERYDRUNK",
+        "move_m@fire",
+        "move_m@gangster@var_e",
+        "move_m@gangster@var_f",
+        "move_m@gangster@var_i",
+        "move_m@JOG@",
+        "MOVE_M@PRISON_GAURD",
+        "MOVE_P_M_ONE",
+        "MOVE_P_M_ONE_BRIEFCASE",
+        "move_p_m_zero_janitor",
+        "move_p_m_zero_slow",
+        "move_ped_bucket",
+        "move_ped_crouched",
+        "move_ped_mop",
+        "MOVE_M@FEMME@",
+        "MOVE_F@FEMME@",
+        "MOVE_M@GANGSTER@NG",
+        "MOVE_F@GANGSTER@NG",
+        "MOVE_M@POSH@",
+        "MOVE_F@POSH@",
+        "MOVE_M@TOUGH_GUY@",
+        "MOVE_F@TOUGH_GUY@",
+        "ANIM_GROUP_MOVE_BALLISTIC"
+    }
+}
+
+
+
+----实体附加枪
 Objn = {
-    {1,'义警'},
-    {2,'斜面魔宝'},
-    {3,'乔氏 尖锥魅影'},
-    {4,'BR8'},
-    {5,'袒胸女性'},
-    {6,'裸体教徒'},
-    {7,'丁卡 微托经典版'},
-    {8,'太空码头工'},
-    {9,'天煞'},
-    {10,'假阳具'},
-    {11,'圣诞树'},
-    {12,'黄色油桶'},
-    {13,'圣诞怪兽'},
-    {14,'兔子'},
-    {15,'兽人'}
+    name = {
+        {1,'义警'},
+        {2,'斜面魔宝'},
+        {3,'乔氏 尖锥魅影'},
+        {4,'BR8'},
+        {5,'袒胸女性'},
+        {6,'裸体教徒'},
+        {7,'丁卡 微托经典版'},
+        {8,'太空码头工'},
+        {9,'天煞'},
+        {10,'假阳具'},
+        {11,'圣诞树'},
+        {12,'黄色油桶'},
+        {13,'圣诞怪兽'},
+        {14,'兔子'},
+        {15,'兽人'}
+    },
+    value = {
+        'vigilante',
+        'dune4',
+        'phantom2',
+        'openwheel1',
+        'a_f_y_topless_01',
+        'a_m_m_acult_01',
+        'veto',
+        'dune2',
+        'lazer',
+        'prop_cs_dildo_01',
+        'xm_prop_x17_xmas_tree_int',
+        'prop_barrel_03d',
+        'U_M_M_YuleMonster',
+        'A_C_Rabbit_02',
+        'IG_Furry',
+    }
 }
-Objl = {
-    'vigilante',
-    'dune4',
-    'phantom2',
-    'openwheel1',
-    'a_f_y_topless_01',
-    'a_m_m_acult_01',
-    'veto',
-    'dune2',
-    'lazer',
-    'prop_cs_dildo_01',
-    'xm_prop_x17_xmas_tree_int',
-    'prop_barrel_03d',
-    'U_M_M_YuleMonster',
-    'A_C_Rabbit_02',
-    'IG_Furry',
-}
+
 
 ----移除所有摄像头
 CamList = {
@@ -223,29 +365,35 @@ vehweapon_name = {
 
 
 ----冰淇凌盛宴
-ice_entity_name = {"钻石圣诞树","宝石圣诞树","五角星圣诞树","啤酒桶杯"}
-ice_entity = {"ch_prop_ch_diamond_xmastree","ch_prop_tree_01a","ch_prop_tree_02a","ch_prop_tree_03a"}
+ice_entity = {
+    name = {"钻石圣诞树","宝石圣诞树","五角星圣诞树","啤酒桶杯"},
+    value = {"ch_prop_ch_diamond_xmastree","ch_prop_tree_01a","ch_prop_tree_02a","ch_prop_tree_03a"}
+}
 
 
 ----设置天气
-weather_name = {"阳光明媚","晴朗","云","环境污染","雾天","阴天","雨天","雷雨天","雨晴天","温室天气","雪天","暴风雪","雪雾天","圣诞节","万圣节"}
-weather_val = {"EXTRASUNNY","CLEAR","CLOUDS","SMOG","FOGGY","OVERCAST","RAIN","THUNDER","CLEARING","NEUTRAL","SNOW","BLIZZARD","SNOWLIGHT","XMAS","HALLOWEEN"}
+weather = {
+    name = {"阳光明媚","晴朗","云","环境污染","雾天","阴天","雨天","雷雨天","雨晴天","温室天气","雪天","暴风雪","雪雾天","圣诞节","万圣节"},
+    value = {"EXTRASUNNY","CLEAR","CLOUDS","SMOG","FOGGY","OVERCAST","RAIN","THUNDER","CLEARING","NEUTRAL","SNOW","BLIZZARD","SNOWLIGHT","XMAS","HALLOWEEN"}
+}
 
 ----电台
-radio_name = {
-    {1,"布莱恩郡之声"}, {2,"蓝色方舟"},{3,"全球电台"},{4,"飞莲电台"},{5,"真相 91.1"},{6,"实验室电台"},
-    {7,"明镜公园之音"},{8,"103.2 空间"},{9,"好麦坞大道电台"},{10,"金发洛圣都 97.8 电台"},{11,"洛圣都地下电台"},
-    {12,"iFruit 电台"},{13,"自电台"},{14,"洛圣都摇滚台"},{15,"无止境流行乐电台"},{16,"洛圣都广播电台"},{17,"X 频道"},
-    {18,"西海岸谈话电台"},{19,"叛逆电台"}, {20,"灵魂之蜡电台"},{21,"东洛电台"},{22,"西海岸经典"},
-    {23,"媒体播放器"},{24,"音乐柜"},{25,"库尔特 FM"},{26,"放松依旧洛圣都"}
-}
-station_name = {
-    "RADIO_11_TALK_02", "RADIO_12_REGGAE","RADIO_13_JAZZ", "RADIO_14_DANCE_02","RADIO_15_MOTOWN",
-    "RADIO_20_THELAB","RADIO_16_SILVERLAKE","RADIO_17_FUNK","RADIO_18_90S_ROCK","RADIO_21_DLC_XM17",
-    "RADIO_22_DLC_BATTLE_MIX1_RADIO","RADIO_23_DLC_XM19_RADIO","RADIO_19_USER","RADIO_01_CLASS_ROCK",
-    "RADIO_02_POP","RADIO_03_HIPHOP_NEW","RADIO_04_PUNK","RADIO_05_TALK_01","RADIO_06_COUNTRY", 
-    "RADIO_07_DANCE_01","RADIO_08_MEXICAN","RADIO_09_HIPHOP_OLD","RADIO_36_AUDIOPLAYER",
-    "RADIO_35_DLC_HEI4_MLR", "RADIO_34_DLC_HEI4_KULT","RADIO_27_DLC_PRHEI4"
+radio_station = {
+    name = {
+        {1,"布莱恩郡之声"}, {2,"蓝色方舟"},{3,"全球电台"},{4,"飞莲电台"},{5,"真相 91.1"},{6,"实验室电台"},
+        {7,"明镜公园之音"},{8,"103.2 空间"},{9,"好麦坞大道电台"},{10,"金发洛圣都 97.8 电台"},{11,"洛圣都地下电台"},
+        {12,"iFruit 电台"},{13,"自电台"},{14,"洛圣都摇滚台"},{15,"无止境流行乐电台"},{16,"洛圣都广播电台"},{17,"X 频道"},
+        {18,"西海岸谈话电台"},{19,"叛逆电台"}, {20,"灵魂之蜡电台"},{21,"东洛电台"},{22,"西海岸经典"},
+        {23,"媒体播放器"},{24,"音乐柜"},{25,"库尔特 FM"},{26,"放松依旧洛圣都"}
+    },
+    value = {
+        "RADIO_11_TALK_02", "RADIO_12_REGGAE","RADIO_13_JAZZ", "RADIO_14_DANCE_02","RADIO_15_MOTOWN",
+        "RADIO_20_THELAB","RADIO_16_SILVERLAKE","RADIO_17_FUNK","RADIO_18_90S_ROCK","RADIO_21_DLC_XM17",
+        "RADIO_22_DLC_BATTLE_MIX1_RADIO","RADIO_23_DLC_XM19_RADIO","RADIO_19_USER","RADIO_01_CLASS_ROCK",
+        "RADIO_02_POP","RADIO_03_HIPHOP_NEW","RADIO_04_PUNK","RADIO_05_TALK_01","RADIO_06_COUNTRY", 
+        "RADIO_07_DANCE_01","RADIO_08_MEXICAN","RADIO_09_HIPHOP_OLD","RADIO_36_AUDIOPLAYER",
+        "RADIO_35_DLC_HEI4_MLR", "RADIO_34_DLC_HEI4_KULT","RADIO_27_DLC_PRHEI4"
+    }
 }
 
 
@@ -292,31 +440,34 @@ my_model_list = {
 }
 
 ----载具降落伞
-Vparachute_name = {"降落伞1","降落伞2","降落伞3","降落伞4","雨伞1","雨伞2","雨伞3","雨伞4","路牌"}
-Vparachute_list = {
-        "sr_prop_specraces_para_s_01",
-        "p_parachute1_mp_dec",
-        "gr_prop_gr_para_s_01",
-        "imp_prop_impexp_para_s",
-        "prop_beach_parasol_03",
-        "prop_beach_parasol_02",
-        "prop_beach_parasol_07",
-        "prop_beach_parasol_09",
-        "prop_sign_road_01a"
+Vparachute = {
+    name = {"降落伞1","降落伞2","降落伞3","降落伞4","雨伞1","雨伞2","雨伞3","雨伞4","路牌"},
+    value = {
+        [1] = "sr_prop_specraces_para_s_01",
+        [2] = "p_parachute1_mp_dec",
+        [3] = "gr_prop_gr_para_s_01",
+        [4] = "imp_prop_impexp_para_s",
+        [5] = "prop_beach_parasol_03",
+        [6] = "prop_beach_parasol_02",
+        [7] = "prop_beach_parasol_07",
+        [8] = "prop_beach_parasol_09",
+        [9] = "prop_sign_road_01a"
     }
+}
 
 
 
 ----资产传送
 ownedprops = {
+    {name = '办公室', blid = 475},
     {name = '事务所', blid = 826},
+    {name = '回收站', blid = 867},
     {name = '游戏厅', blid = 740},
+    {name = '设施', blid = 590},
+    {name = '机库', blid = 569},
     {name = '改车铺', blid = 779},
     {name = '地堡', blid = 557},
     {name = '货物仓库', blid = 473},
-    {name = 'CEO办公室', blid = 475},
-    {name = '设施', blid = 590},
-    {name = '机库', blid = 569},
     {name = '摩托帮会所', blid = 92},
     {name = '可卡因制造厂', blid = 497 },
     {name = '假钞伪造厂', blid = 500 },
@@ -331,67 +482,73 @@ ownedprops = {
 custom_hooker_options = {{1,"克隆玩家"}, {2,"莱斯特"}, {3,"特蕾西"}, {4,"贝克女士"}, {5,"裸女"}}
 
 ----粒子枪
-particle_gun_name ={
-    {1,"小丑出现"},
-    {2,"小丑死亡"},
-    {3,"鬼火"},
-    {4,"灭火器"}
+particle_gund ={
+    name = {
+        {1,"小丑出现"},
+        {2,"小丑死亡"},
+        {3,"鬼火"},
+        {4,"灭火器"}
+    },
+    value = {
+        {lib = 'scr_rcbarry2', name = 'scr_clown_appears'},
+        {lib = 'scr_rcbarry2', name = 'scr_clown_death'},
+        {lib = 'core', name = 'ent_sht_petrol_fire'},
+        {lib = 'core', name = 'ent_sht_extinguisher'} 
+    }
 }
-particle_gun_fx = {
-    {lib = 'scr_rcbarry2', name = 'scr_clown_appears'},
-    {lib = 'scr_rcbarry2', name = 'scr_clown_death'},
-    {lib = 'core', name = 'ent_sht_petrol_fire'},
-    {lib = 'core', name = 'ent_sht_extinguisher'},
-}
+
 
 
 ----娱乐粒子效果
-funptfxlist = {
-    {1,"小丑出现"},
-    {2,"糖块"},
-    {3,"金属碎片"},
-    {4,"火焰"},
-    {5,"赌场筹码"},
-    {6,"香烟"},
-    {7,"橙子雨"},
-    {8,"火花"},
-    {9,"泡沐雨"},
-    {10,"硬币"},
-    {11,"电线杆故障"},
-    {12,"电器箱故障"},
-    {13,"充气羽毛"},
-    {14,"飘叶"},
-    {15,"枫叶"},
-    {16,"爆竹"},
-    {17,"小丑喷射"},
-    {18,"小丑花"},
-    {19,"星空"},
-    {20,"摇曳烟花"},
-    {21,"光遇"}
-}
 funptfx = {
-    {"scr_rcbarry2","scr_clown_appears","5"},
-    {"core","ent_dst_gen_gobstop","5"},
-    {"core","ent_brk_metal_frag","5"},
-    {"core","ent_sht_flame","5"},
-    {"core","ent_dst_casino_chips","5"},
-    {"core","ent_dst_cig_packets","5"},
-    {"core","ent_col_tree_oranges","5"},
-    {"core","ent_brk_sparking_wires","5"},
-    {"core","water_boat_exit","5"},
-    {"core","ent_brk_coins","5"},
-    {"core","ent_sht_telegraph_pole","5"},
-    {"core","ent_sht_electrical_box","5"},
-    {"core","ent_dst_inflate_ring","2"},
-    {"core","ent_sht_bush_foliage","5"},
-    {"core","ent_col_bush_leaves","5"},
-    {"scr_sm_counter","scr_sm_counter_chaff","1"},
-    {"scr_rcbarry2", "muz_clown","1.5"},
-    {"scr_rcbarry2", "scr_clown_bul","1.5"},
-    {"scr_rcpaparazzo1","scr_mich4_firework_burst_spawn","1"},
-    {"scr_indep_fireworks","scr_indep_firework_trail_spawn","1"},
-    {"scr_ie_tw", "scr_impexp_tw_take_zone","1"}
+    name = {
+        {1,"小丑出现"},
+        {2,"糖块"},
+        {3,"金属碎片"},
+        {4,"火焰"},
+        {5,"赌场筹码"},
+        {6,"香烟"},
+        {7,"橙子雨"},
+        {8,"火花"},
+        {9,"泡沐雨"},
+        {10,"硬币"},
+        {11,"电线杆故障"},
+        {12,"电器箱故障"},
+        {13,"充气羽毛"},
+        {14,"飘叶"},
+        {15,"枫叶"},
+        {16,"爆竹"},
+        {17,"小丑喷射"},
+        {18,"小丑花"},
+        {19,"星空"},
+        {20,"摇曳烟花"},
+        {21,"光遇"}
+    },
+    value = {
+        {"scr_rcbarry2","scr_clown_appears","5"},
+        {"core","ent_dst_gen_gobstop","5"},
+        {"core","ent_brk_metal_frag","5"},
+        {"core","ent_sht_flame","5"},
+        {"core","ent_dst_casino_chips","5"},
+        {"core","ent_dst_cig_packets","5"},
+        {"core","ent_col_tree_oranges","5"},
+        {"core","ent_brk_sparking_wires","5"},
+        {"core","water_boat_exit","5"},
+        {"core","ent_brk_coins","5"},
+        {"core","ent_sht_telegraph_pole","5"},
+        {"core","ent_sht_electrical_box","5"},
+        {"core","ent_dst_inflate_ring","2"},
+        {"core","ent_sht_bush_foliage","5"},
+        {"core","ent_col_bush_leaves","5"},
+        {"scr_sm_counter","scr_sm_counter_chaff","1"},
+        {"scr_rcbarry2", "muz_clown","1.5"},
+        {"scr_rcbarry2", "scr_clown_bul","1.5"},
+        {"scr_rcpaparazzo1","scr_mich4_firework_burst_spawn","1"},
+        {"scr_indep_fireworks","scr_indep_firework_trail_spawn","1"},
+        {"scr_ie_tw", "scr_impexp_tw_take_zone","1"}
+    }
 }
+
 
 
 -----北杨克顿
@@ -406,87 +563,89 @@ North_Yankton = {
 
 
 ----粒子效果轰炸
-Fxcorelist = {
-    {1,"混凝土碎块"},
-    {2,"手榴弹"},
-    {3,"闪光弹"},
-    {4,"糖块"},
-    {5,"血块"},
-    {6,"金属碎片"},
-    {7,"超大喷泉"},
-    {8,"油"},
-    {9,"相机快闪"},
-    {10,"汽油泵爆炸"},
-    {11,"燃烧瓶"},
-    {12,"香烟(吐烟)"},
-    {13,"木屑"},
-    {14,"火花闪电"},
-    {15,"大瀑布"},
-    {16,"聚苯乙烯"},
-    {17,"汽油"},
-    {18,"火焰"},
-    {19,"赌场筹码"},
-    {20,"飞翔的香烟"},
-    {21,"橙子雨"},
-    {22,"载具刹车烟雾"},
-    {23,"火花"},
-    {24,"大爆炸"},
-    {25,"灰尘"},
-    {26,"垃圾报纸"},
-    {27,"灭火器"},
-    {28,"泼洒尿液"},
-    {29,"泡沐雨"},
-    {30,"水雾"},
-    {31,"硬币"},
-    {32,"铸造飞溅的铁水"},
-    {33,"邮件"},
-    {34,"蓝色射线"},
-    {35,"灭火器水"},
-    {36,"烟雾弹"},
-    {37,"电线杆故障"},
-    {38,"电磁脉冲"},
-    {39,"电器箱故障"}
-}
-Fxha = {
-    "ent_dst_concrete_large",
-    "exp_grd_grenade_lod",
-    "exp_arc_grd_flashbang_lod",
-    "ent_dst_gen_gobstop",
-    "blood_stab",
-    "ent_brk_metal_frag",
-    "bul_water_heli",
-    "ent_sht_oil",
-    "ent_anim_paparazzi_flash",
-    "exp_grd_petrol_pump",
-    "exp_air_molotov",
-    "ent_anim_cig_exhale_mth_car",
-    "ent_dst_wood_chunky",
-    "ent_dst_elec_fire_sp",
-    "water_splash_plane_in",
-    "ent_dst_polystyrene",
-    "ent_sht_petrol",
-    "ent_sht_flame",
-    "ent_dst_casino_chips",
-    "ent_dst_cig_packets",
-    "ent_col_tree_oranges",
-    "veh_respray_smoke",
-    "ent_brk_sparking_wires",
-    "exp_grd_sub_large",
-    "ent_anim_dusty_hands",
-    "ent_dst_rubbish",
-    "exp_extinguisher",
-    "liquid_splash_pee",
-    "water_boat_exit",
-    "ent_anim_bm_water_mist",
-    "ent_brk_coins",
-    "ent_amb_foundry_steam_spawn",
-    "ent_dst_mail",
-    "exp_xs_ray",
-    "ent_sht_extinguisher_water",
-    "weap_smoke_grenade",
-    "ent_sht_telegraph_pole",
-    "exp_sec_launched_emp",
-    "ent_sht_electrical_box",
+Fxcore = {
+    name = {
+        {1,"混凝土碎块"},
+        {2,"手榴弹"},
+        {3,"闪光弹"},
+        {4,"糖块"},
+        {5,"血块"},
+        {6,"金属碎片"},
+        {7,"超大喷泉"},
+        {8,"油"},
+        {9,"相机快闪"},
+        {10,"汽油泵爆炸"},
+        {11,"燃烧瓶"},
+        {12,"香烟(吐烟)"},
+        {13,"木屑"},
+        {14,"火花闪电"},
+        {15,"大瀑布"},
+        {16,"聚苯乙烯"},
+        {17,"汽油"},
+        {18,"火焰"},
+        {19,"赌场筹码"},
+        {20,"飞翔的香烟"},
+        {21,"橙子雨"},
+        {22,"载具刹车烟雾"},
+        {23,"火花"},
+        {24,"大爆炸"},
+        {25,"灰尘"},
+        {26,"垃圾报纸"},
+        {27,"灭火器"},
+        {28,"泼洒尿液"},
+        {29,"泡沐雨"},
+        {30,"水雾"},
+        {31,"硬币"},
+        {32,"铸造飞溅的铁水"},
+        {33,"邮件"},
+        {34,"蓝色射线"},
+        {35,"灭火器水"},
+        {36,"烟雾弹"},
+        {37,"电线杆故障"},
+        {38,"电磁脉冲"},
+        {39,"电器箱故障"}
+    },
+    value = {
+        "ent_dst_concrete_large",
+        "exp_grd_grenade_lod",
+        "exp_arc_grd_flashbang_lod",
+        "ent_dst_gen_gobstop",
+        "blood_stab",
+        "ent_brk_metal_frag",
+        "bul_water_heli",
+        "ent_sht_oil",
+        "ent_anim_paparazzi_flash",
+        "exp_grd_petrol_pump",
+        "exp_air_molotov",
+        "ent_anim_cig_exhale_mth_car",
+        "ent_dst_wood_chunky",
+        "ent_dst_elec_fire_sp",
+        "water_splash_plane_in",
+        "ent_dst_polystyrene",
+        "ent_sht_petrol",
+        "ent_sht_flame",
+        "ent_dst_casino_chips",
+        "ent_dst_cig_packets",
+        "ent_col_tree_oranges",
+        "veh_respray_smoke",
+        "ent_brk_sparking_wires",
+        "exp_grd_sub_large",
+        "ent_anim_dusty_hands",
+        "ent_dst_rubbish",
+        "exp_extinguisher",
+        "liquid_splash_pee",
+        "water_boat_exit",
+        "ent_anim_bm_water_mist",
+        "ent_brk_coins",
+        "ent_amb_foundry_steam_spawn",
+        "ent_dst_mail",
+        "exp_xs_ray",
+        "ent_sht_extinguisher_water",
+        "weap_smoke_grenade",
+        "ent_sht_telegraph_pole",
+        "exp_sec_launched_emp",
+        "ent_sht_electrical_box",
+    }
 }
 
 
@@ -512,41 +671,48 @@ soccerball_models = {
 
 
 ----NPC在玩家面前自杀
-traumatize_options = {{1,"克隆玩家"},{2,"莱斯特"},{3,"西部马仔"}}
-traumatize_option_hashes = {"self",1302784073,-927261102}
+traumatize = {
+    name = {{1,"克隆玩家"},{2,"莱斯特"},{3,"西部马仔"}},
+    value = {"self",1302784073,-927261102}
+}
 
 
-----实体枪1
-entity_hashes = {-422877666, -717142483, 1786752042}
-entity_options = {{1,"蔡徐坤"}, {2,"足球"}, {3,"水桶"}}
-
+----重力实体枪
+gravity_entity_gun = {
+    name = {{1,"蔡徐坤"}, {2,"足球"}, {3,"水桶"}},
+    value = {-422877666, -717142483, 1786752042}
+}
 
 ----物体笼子
 obj_table = {}
 objsetcage = {
-    'prop_sign_road_01b','prop_sign_road_03b','prop_airport_sale_sign',
-    'poro_06_sig1_c_source','prop_sign_road_03w','prop_sign_road_04zb',
-    'prop_sign_road_04za','prop_sign_road_06s','prop_sign_road_restriction_10',
-    'prop_mineshaft_door','ch_prop_ch_tunnel_door01a','apa_prop_ss1_mpint_garage2',
-    'ch_prop_ch_vault_slide_door_lrg','ch_prop_ch_vault_slide_door_sm','v_ilev_carmod3door',
-    'v_ilev_fh_slidingdoor','prop_ch2_05d_g_door','prop_com_ls_door_01',
-    'prop_ql_revolving_door','prop_sc1_06_gate_l','prop_sec_gate_01d','gr_prop_gr_doorpart',
-    'gr_prop_gr_fnclink_03e','ch_prop_arcade_fortune_door_01a','sum_prop_hangerdoor_01a',
-    'h4_prop_office_elevator_door_01','p_gate_prison_01_s','prop_lrggate_02'
-}
-objsetcage_name = {
-    {1,'路牌1'},{2,'路牌2'},{3,'路牌3'},{4,'路牌4'},{5,'路牌5'},{6,'路牌6'},
-    {7,'路牌7'},{8,'路牌8'},{9,'路牌9'},{10,'门1'},{11,'门2'},{12,'门3'},{13,'门4'},
-    {14,'门5'},{15,'门6'},{16,'门7'},{17,'门8'},{18,'门9'},{19,'门10'},{20,'门11'},{21,'门12'},
-    {22,'门13'},{23,'门14'},{24,'门15'},{25,'门16'},{26,'门17'},{27,'门18'},{28,'门19'}
+    name = {
+        {1,'路牌1'},{2,'路牌2'},{3,'路牌3'},{4,'路牌4'},{5,'路牌5'},{6,'路牌6'},
+        {7,'路牌7'},{8,'路牌8'},{9,'路牌9'},{10,'门1'},{11,'门2'},{12,'门3'},{13,'门4'},
+        {14,'门5'},{15,'门6'},{16,'门7'},{17,'门8'},{18,'门9'},{19,'门10'},{20,'门11'},{21,'门12'},
+        {22,'门13'},{23,'门14'},{24,'门15'},{25,'门16'},{26,'门17'},{27,'门18'},{28,'门19'}
+    },
+    value = {
+        'prop_sign_road_01b','prop_sign_road_03b','prop_airport_sale_sign',
+        'poro_06_sig1_c_source','prop_sign_road_03w','prop_sign_road_04zb',
+        'prop_sign_road_04za','prop_sign_road_06s','prop_sign_road_restriction_10',
+        'prop_mineshaft_door','ch_prop_ch_tunnel_door01a','apa_prop_ss1_mpint_garage2',
+        'ch_prop_ch_vault_slide_door_lrg','ch_prop_ch_vault_slide_door_sm','v_ilev_carmod3door',
+        'v_ilev_fh_slidingdoor','prop_ch2_05d_g_door','prop_com_ls_door_01',
+        'prop_ql_revolving_door','prop_sc1_06_gate_l','prop_sec_gate_01d','gr_prop_gr_doorpart',
+        'gr_prop_gr_fnclink_03e','ch_prop_arcade_fortune_door_01a','sum_prop_hangerdoor_01a',
+        'h4_prop_office_elevator_door_01','p_gate_prison_01_s','prop_lrggate_02'
+    }
 }
 
 
 
 ----ped笼子
 ped_cage_table = {}
-pedset_tab = {'u_m_m_jesus_01',"ig_lestercrest","player_two"}
-pedset_opt = {{1,"悲伤的耶稣"},{2,"莱斯特"},{3,"崔弗"}}
+pedset_cage = {
+    name = {{1,"悲伤的耶稣"},{2,"莱斯特"},{3,"崔弗"}},
+    value = {'u_m_m_jesus_01',"ig_lestercrest","player_two"}
+}
 
 
 ----在车内生成NPC
@@ -686,25 +852,7 @@ gunnerWeapons = {"weapon_mg", "weapon_rpg"}
 enemVehOptions = {{1,"机枪"}, {2,"火箭炮"}}
 
 
-----列车选项
-models = {
-    util.joaat("metrotrain"), 
-    util.joaat("freight"), 
-    util.joaat("freightcar"), 
-    util.joaat("freightcont1"), 
-    util.joaat("freightcont2"), 
-    util.joaat("freightgrain"), 
-    util.joaat("tankercar")
-}
-variations = {
-    "Variation 1", "Variation 2", "Variation 3", 
-    "Variation 4", "Variation 5", "Variation 6", 
-    "Variation 7", "Variation 8", "Variation 9", 
-    "Variation 10", "Variation 11", "Variation 12", 
-    "Variation 13", "Variation 14", "Variation 15", 
-    "Variation 16", "Variation 17", "Variation 18", 
-    "Variation 19", "Variation 20", "Variation 21", "Variation 22"
-}
+
 
 ----在车内生成NPC
 some_ped_list = {
@@ -743,7 +891,7 @@ sel_heli_model_list = { "buzzard", "valkyrie", "hunter", "savage" }
 
 
 
---vect函数表
+--v3函数表
 vect = {
 	['new'] = function(x, y, z)
 		return {['x'] = x, ['y'] = y, ['z'] = z}
@@ -767,7 +915,7 @@ vect = {
 	['div'] = function(a, b)
 		return vect.new(a.x/b, a.y/b, a.z/b)
 	end, 
-	['dist'] = function(a, b) --returns the distance between two vectors
+	['dist'] = function(a, b) --返回两个矢量之间的距离
 		return vect.mag(vect.subtract(a, b) )
 	end
 }
@@ -1019,6 +1167,29 @@ veffects = {
 ----粒子拖尾
 vehparticle_name = {{1,"烟花拖尾1"},{2,"烟花拖尾2"}}
 vehparticle_tb = {"scr_mich4_firework_trail_spawn","scr_mich4_firework_sparkle_spawn"}
+
+
+----附加恶搞模型
+spoof_attachd = {
+    name = {
+        {1, "橙子"},
+        {2, "篝火"},
+        {3, "UFO"},
+        {4, "马桶"},
+        {5, "垃圾桶"},
+        {6, "仙人掌"},
+        {7, "太阳伞"}
+    },
+    value = {
+        148511758,
+        3229200997,
+        1241740398,
+        1872312775,
+        1143474856,
+        -194496699,
+        -2108662770
+    }
+}
 
 
 
@@ -1563,11 +1734,11 @@ planes = {
 
 ----伪装
 disguise_objects = {
-    [0] = "prop_bush_med_03",
-    [1] = "prop_tree_lficus_06",
-    [2] = "prop_palm_fan_03_b",
-    [3] = "prop_streetlight_01",
-    [4] = "prop_recyclebin_04_b"
+    "prop_bush_med_03",
+    "prop_tree_lficus_06",
+    "prop_palm_fan_03_b",
+    "prop_streetlight_01",
+    "prop_recyclebin_04_b"
 }
 disguise_names = {
     {1,"灌木丛"},

@@ -425,7 +425,7 @@ b_drawing_funcs.new = function ()
             INSTRUCTIONAL.isKeyboard = PAD._IS_USING_KEYBOARD(2)
         
             if not equals(buttons, INSTRUCTIONAL.currentsettup) or INSTRUCTIONAL.isKeyboard ~= PAD._IS_USING_KEYBOARD(2) then
-                local colour = colour or {
+                colour = colour or {
                     ['r'] = 0,
                     ['g'] = 0,
                     ['b'] = 0
