@@ -16,10 +16,9 @@
         \|__|  \|__|\|__|\|__|\|__|\|__| \|__|\_________\|_______|\|__|\|__|    \|__|  \|_______|\|_______|        \|__|    \|__|\|__|\|_______|\|__|     \|__|            \|________|      \|__|  
 --]]
 require "lib.GTSCRIPTS.W"
-require "lib.GTSCRIPTS.O" 
+require "lib.GTSCRIPTS.O"
 require "lib.GTSCRIPTS.T"
 scaleform = require('lib.GTSCRIPTS.Z')
---sf = scaleform('instructional_buttons')
 translations = {}
 Lang = {}
 Lang.Version = ""
@@ -41,16 +40,54 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '1.41'
+--
+GT_version = '1.13'
 translations = {}
 setmetatable(translations, {
-    __index = function (self, key)
+    __index = function(self, key)
         return key
     end
 })
 function updatelogs()
-    notification("修复了上一个版本更新的功能不存在的问题\n修复主机序列的崩溃问题\n重新收集皇榜名单并补齐添加\n其他的一些改进与修复")
+    notification(
+    "纠正版本号混淆\n30天版本过时机制\n新增>自我选项>自我娱乐>新型娱乐>元气弹\n新增>自我选项>自我娱乐>新型娱乐>百米轰炸拳\n新增>自我选项>自我娱乐>新型娱乐>百米雷电拳\n新增>自我选项>自我娱乐>新型娱乐>机械翅膀\n新增>自我选项>自我娱乐>新型娱乐>玄重尺后背\n新增>自我选项>自我娱乐>新型娱乐>玄重尺\n新增>自我选项>自我娱乐>新型娱乐>御剑飞行(2选项)\n新增>武器选项>新枪械玩法>乱射空袭\n新增>武器选项>新枪械玩法>拆车枪\n新增>武器选项>新枪械玩法>弹跳枪\n新增>武器选项>新枪械玩法>吸附枪\n添加了新增的皇榜成员\n其他的一些改进与修复")
 end
+--
+hasShownToast = false
+outdatanow = false
+currentYear = tonumber(os.date("%Y"))
+currentMonth = tonumber(os.date("%m"))
+currentDay = tonumber(os.date("%d"))
+
+notifyYear = 2024
+notifyMonth = 1
+notifyDay = 13
+
+_G.daysSince = _G.daysSince or 0
+
+util.create_tick_handler(function ()
+    wait()
+
+    local daysSince = (currentYear - notifyYear) * 365 + (currentMonth - notifyMonth) * 30 + (currentDay - notifyDay)
+
+    if daysSince >= 30 and not hasShownToast then
+        gtoast("GRANDTOURINGVIP\n当前版本 "..GT_version.." 过于老旧，不受支持\n请更新到最新版本,下载群号已复制")
+        util.copy_to_clipboard("651502721", false)
+        outdatanow = true
+        hasShownToast = true
+        GTD(G, "当前版本已过时")
+        while true do
+            wait()
+            HUD.SET_TEXT_SCALE(0.50, 0.50)
+            HUD.SET_TEXT_FONT(4)
+            HUD.SET_TEXT_CENTRE(1)
+            HUD.SET_TEXT_OUTLINE(0)
+            HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~r~~italic~!Outdated Version!")
+            HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.0655, 0.29)
+        end
+    end
+end)
 --
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
 if filesystem.exists(pathld) then
@@ -59,34 +96,40 @@ else
     gtoast("未检测到文件")
 end
 --
-loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI', 'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
-coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
+loading_frames = {'', 'G', 'GR', 'GRA', 'GRAN', 'GRAND', 'GRANDT', 'GRANDTO', 'GRANDTOU', 'GRANDTOUR', 'GRANDTOURI',
+                  'GRANDTOURIN', 'GRANDTOURING', 'GRANDTOURINGV', 'GRANDTOURINGVI', 'GRANDTOURINGVIP',
+                  'GRANDTOURINGVIP', 'GRANDTOURING', 'GRAND', '', 'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', '',
+                  'GRANDTOURINGVIP', '', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP', 'GRANDTOURINGVIP'}
+coasttext =
+    "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
 bbtxt = "https://jq.qq.com/?_wv=1027&k=U3XOlyOF"
-bbtct = "[点击此处加入官方群聊中进行询问]\n\n*加载脚本显示(请稍等...):#网络问题\n#建议更换您的节点/模式或加速器\n\n*加载脚本提示缺少(not found)文件,\n 或加载脚本提示缺少(no file)文件: #请重新安装脚本及脚本依赖文件\n#建议使用<丢丢原装lua>覆盖lua文件\n其他疑问与发现请联系开发人员,非常感谢您的支持儿,祝您游戏愉快儿~"
-grouplink = "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566"
+bbtct =
+    "[点击此处加入官方群聊中进行询问]\n\n*加载脚本显示(请稍等...):#网络问题\n#建议更换您的节点/模式或加速器\n\n*加载脚本提示缺少(not found)文件,\n 或加载脚本提示缺少(no file)文件: #请重新安装脚本及脚本依赖文件\n#建议使用<丢丢原装lua>覆盖lua文件\n其他疑问与发现请联系开发人员,非常感谢您的支持儿,祝您游戏愉快儿~"
+grouplink =
+    "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566"
 
 function toFloat(num)
-return (num / 10) * 10
+    return (num / 10) * 10
 end
 --
 function SETUP_SINGLE_LINE(scaleform)
-	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SETUP_SINGLE_LINE")
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(70.0)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(125.0)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("left")
-	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SETUP_SINGLE_LINE")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(70.0)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(125.0)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("left")
+    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
 end
 function ADD_TEXT_TO_SINGLE_LINE(scaleform, text, font, colour)
-	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "ADD_TEXT_TO_SINGLE_LINE")
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(text)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(font)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(colour)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_BOOL(true)
-	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "ADD_TEXT_TO_SINGLE_LINE")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(text)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(font)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(colour)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_BOOL(true)
+    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
 end
 cTime = util.current_time_millis
 if SCRIPT_MANUAL_START then
@@ -95,68 +138,69 @@ if SCRIPT_MANUAL_START then
     local sTime = util.current_time_millis()
     AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "clown_die_wrapper", PLAYER.PLAYER_PED_ID(), "BARRY_02_SOUNDSET", true, 20)
     scripts_dir = filesystem.scripts_dir() .. '\\GTLuaScript\\'
-    util.create_tick_handler(function()	
-    local scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE("OPENING_CREDITS")	
-    while not GRAPHICS.HAS_SCALEFORM_MOVIE_LOADED(scaleform) do
-    wait()
-    end
-    --HUD.HIDE_HUD_AND_RADAR_THIS_FRAME()
-    if state == 0 then
-    SETUP_SINGLE_LINE(scaleform)
-    ADD_TEXT_TO_SINGLE_LINE(scaleform, "Welcome", "$font5", "HUD_COLOUR_FREEMODE")
-    ADD_TEXT_TO_SINGLE_LINE(scaleform, PLAYER.GET_PLAYER_NAME(players.user()), "$font5", "HUD_COLOUR_PINK")
-    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_SINGLE_LINE")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
-    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_CREDIT_BLOCK")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
-    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-    AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Pre_Screen_Stinger", PLAYER.PLAYER_PED_ID(), "DLC_HEISTS_FINALE_SCREEN_SOUNDS", true, 20)
-    state = 1
-    sTime = util.current_time_millis()
-    end
-    if util.current_time_millis() - sTime >= 4000 and state == 1 then
-    HIDE(scaleform)
-    state = 2
-    sTime = util.current_time_millis()
-    end
-    if util.current_time_millis() - sTime >= 3000 and state == 2 then
-    SETUP_SINGLE_LINE(scaleform)
-    ADD_TEXT_TO_SINGLE_LINE(scaleform, "GRANDTOURINGVIP", "$font5", "HUD_COLOUR_FREEMODE")
-    ADD_TEXT_TO_SINGLE_LINE(scaleform, "" .. GT_version, "$font5", "HUD_COLOUR_RED")
-    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_SINGLE_LINE")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
-    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_CREDIT_BLOCK")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
-    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-    AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "SPAWN", PLAYER.PLAYER_PED_ID(), "BARRY_01_SOUNDSET", true, 20)
-    state = 3
-    sTime = util.current_time_millis()
-    end
-    if util.current_time_millis() - sTime >= 4000 and state == 3 then
-    HIDE(scaleform)
-    state = 4
-    sTime = util.current_time_millis()
-    end
-    if util.current_time_millis() - sTime >= 3000 and state == 4 then
-    gShowingIntro = false
-    return false
-    end     
-    GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scaleform, 255, 255, 255, 255, 0)
-    return true
+    util.create_tick_handler(function()
+        local scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE("OPENING_CREDITS")
+        while not GRAPHICS.HAS_SCALEFORM_MOVIE_LOADED(scaleform) do
+            wait()
+        end
+        -- HUD.HIDE_HUD_AND_RADAR_THIS_FRAME()
+        if state == 0 then
+            SETUP_SINGLE_LINE(scaleform)
+            ADD_TEXT_TO_SINGLE_LINE(scaleform, "Welcome", "$font5", "HUD_COLOUR_FREEMODE")
+            ADD_TEXT_TO_SINGLE_LINE(scaleform, PLAYER.GET_PLAYER_NAME(players.user()), "$font5", "HUD_COLOUR_PINK")
+            GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_SINGLE_LINE")
+            GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+            GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+            GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_CREDIT_BLOCK")
+            GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+            GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
+            GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+            AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Pre_Screen_Stinger", PLAYER.PLAYER_PED_ID(),
+                "DLC_HEISTS_FINALE_SCREEN_SOUNDS", true, 20)
+            state = 1
+            sTime = util.current_time_millis()
+        end
+        if util.current_time_millis() - sTime >= 4000 and state == 1 then
+            HIDE(scaleform)
+            state = 2
+            sTime = util.current_time_millis()
+        end
+        if util.current_time_millis() - sTime >= 3000 and state == 2 then
+            SETUP_SINGLE_LINE(scaleform)
+            ADD_TEXT_TO_SINGLE_LINE(scaleform, "GRANDTOURINGVIP", "$font5", "HUD_COLOUR_FREEMODE")
+            ADD_TEXT_TO_SINGLE_LINE(scaleform, "" .. GT_version, "$font5", "HUD_COLOUR_RED")
+            GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_SINGLE_LINE")
+            GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+            GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+            GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_CREDIT_BLOCK")
+            GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+            GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
+            GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+            AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "SPAWN", PLAYER.PLAYER_PED_ID(), "BARRY_01_SOUNDSET", true, 20)
+            state = 3
+            sTime = util.current_time_millis()
+        end
+        if util.current_time_millis() - sTime >= 4000 and state == 3 then
+            HIDE(scaleform)
+            state = 4
+            sTime = util.current_time_millis()
+        end
+        if util.current_time_millis() - sTime >= 3000 and state == 4 then
+            gShowingIntro = false
+            return false
+        end
+        GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scaleform, 255, 255, 255, 255, 0)
+        return true
     end)
 end
 
 function do_label_preset(label, text)
-    --log("Setting up label present for label " .. label .. " with text " .. text)
+    -- log("Setting up label present for label " .. label .. " with text " .. text)
     menu.trigger_commands("addlabel " .. label)
     local prep = "edit" .. string.gsub(label, "_", "") .. " " .. text
     menu.trigger_commands(prep)
-    end
-    function GTNB()
+end
+function GTNB()
     do_label_preset("PM_WAIT", "正在引导")
     do_label_preset("HUD_JOINING", "GTVIP YYDS")
     do_label_preset("MP_SPINLOADING", "GTVIP YYDS")
@@ -167,7 +211,7 @@ function do_label_preset(label, text)
     do_label_preset("HUD_LBD_FMS", "GTVIP 在线模式（单人，~1~）")
     do_label_preset("0X56F3BD49", "GTVIP 在线模式")
     do_label_preset("HUD_MAINTIT", "GRANDTOURINGVIP")
-    do_label_preset("LOADING_SPLAYER_L", "请稍后 "..PLAYER.GET_PLAYER_NAME(players.user()))
+    do_label_preset("LOADING_SPLAYER_L", "请稍后 " .. PLAYER.GET_PLAYER_NAME(players.user()))
     do_label_preset("PM_QUIT_MP", "离开 GTVIP 在线模式")
     do_label_preset("PM_INF_LEAT", "离开 GTVIP 在线模式")
     do_label_preset("PM_INF_LEAB", "立刻前往GTVIP故事模式，您的所有游戏进度都将自动保存")
@@ -175,6 +219,7 @@ function do_label_preset(label, text)
     do_label_preset("UI_FLOW_OP_CL_M", "关于 GRANDTOURINGVIP")
     do_label_preset("UI_FLOW_OP_CL", "关于 GRANDTOURINGVIP")
 end
+
 
 srgb = {cus = 100}
 function requestweapon(...)
@@ -8801,7 +8846,7 @@ function renwuegaoqiang2()
         end
         wuqi = false
     end)
-end    
+end
 
 --至臻横幅
 function sxgt(f)
@@ -8886,19 +8931,31 @@ function sxgt(f)
         HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
 
         if playeridx == "hinrcituqzQZ" then
-            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 清歌 正在该战局")
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 清歌 正在该战局")
         elseif playeridx == "chen_you123" then
-            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 辰悠 正在该战局")
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 辰悠 正在该战局")
         elseif playeridx == "rudan891018" then
-            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 湾湾 正在该战局")
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~湾湾 正在该战局")
         elseif playeridx == "An_owQ" then
-            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 船船 正在该战局")
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 船船 正在该战局")
+        elseif playeridx == "Mag7777V" or playeridx == "Magicswordstar" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~闪耀至臻管理员 正在该战局")
+        elseif playeridx == "RhymeBear" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~~italic~菲奥娜K1ng ~r~正在乱杀战局 ~b~000001")
+        elseif playeridx == "Gods_daxiong" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 明月 正在该战局")
+        elseif playeridx == "YuukiAsuna17" then 
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~执掌神判的 YuukiAsuna17 在此降临")
+        elseif playeridx == "xyzkzero" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~执掌神判的 xyzkzero 在此降临")
+        elseif playeridx == "-ZackFair-" or playeridx == "Msinc" or playeridx == "Msincer" or playeridx == "WXH_666" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 人生若只如初见 正在逆袭战局")
         else
-            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~至臻皇榜会员 "..playeridx.." 正在该战局")
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 "..playeridx.." 正在该战局")
         end
 
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.380)
-        if os.time() - starttime >= 7 then
+        if os.time() - starttime >= 12 then
             hfgt = false
             return
         end
@@ -22924,7 +22981,7 @@ pressed_background_colour = newColor(2.55/255, 2.55/255, 2.55/255, 0.54901960784
 spaceBarLength = 3
 spaceBarSlim = 1
 altSpaceBar = 0
-wasd = {
+local wasd = {
     [1]  = { keys = {44, 52, 85, 138, 141, 152, 205, 264},                                               pressed = false, key = 'Q',     show = true },
     [2]  = { keys = {32, 71, 77, 87, 129, 136, 150, 232},                                                pressed = false, key = 'W',     show = true },
     [3]  = { keys = {38, 46, 51, 54, 86, 103, 119, 153, 184, 206, 350, 351, 355, 356},                   pressed = false, key = 'E',     show = true },

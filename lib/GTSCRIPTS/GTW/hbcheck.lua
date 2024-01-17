@@ -1,13 +1,15 @@
 require "lib.GTSCRIPTS.GTA.list"
+starhb = "你已经是至臻皇榜用户\n享受所有皇榜的特权\n还包含此外以下特权:\n皇榜群管理员\n参加新版本Beta测试\n至臻皇榜横幅\n个性化名称缀\n可与开发者交谈定制级功能\n参与为数不多的Today at GT教学"
 imhb = "您已经是皇榜成员\n以下特权已激活:\n战局横幅提示(其他GTVIP用户)\n免疫GTVIP用户脚本攻击\nVIP特有脚本名称显示\n可被选中为随机幸运人\n免密码启动脚本\n皇榜专属独家功能\nStand+2Take1双资格皇榜\n可无限增加多个游戏ID\n如有疑问请联系:820104093"
 hbinfo = "加入皇榜可享受以下特权:\n战局横幅提示(其他GTVIP用户)\n免疫其他GTVIP用户的脚本攻击\n获得VIP功能与立刻加入VIP群聊 若您是卡网经销商,可免费加入GTVIP认证经销商列表\n联系QQ(1114983012/820104093)"
 function checkme()
-    local vipme = "GTLua Pro Edition"
-    local standard = " Version 24: "..GT_version
+    local vip388 = " GTLua Ultra "..GT_version
+    local vipme = "  GTLua Pro "..GT_version
+    local standard = "   Standard "..GT_version
     local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
     
     if name == "RhymeBear" then
-        return " Version 24: "..GT_version
+        return standard
     elseif name == "RcktaR" then
         return "    qianzongGol"
     elseif name == "zqxhnb" then
@@ -37,11 +39,19 @@ function checkme()
     elseif name == "05L5" then
         return "  7SkyK1ng 05L5"
     else
+
+        for _,id in ipairs(sxid) do
+            if name == id.playeridx then
+                return vip388
+            end
+        end
+
         for _, id in ipairs(spid) do
             if name == id.playerid then
                 return vipme
             end
         end
+
         return standard
     end
 end
