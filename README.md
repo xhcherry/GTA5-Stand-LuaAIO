@@ -1,12 +1,13 @@
 # GTA5-Stand-LuaAIO
-
-[![Page Views Count](https://badges.toozhao.com/badges/01H69JD1N3ZWV3EDK36V3F5DJK/green.svg)](https://badges.toozhao.com/stats/01H69JD1N3ZWV3EDK36V3F5DJK "Get your own page views count badge on badges.toozhao.com")
-
-GTA5 Mod Stand Lua All in One；综合任务、crash、模组、娱乐，恶搞等多种standlua于一体的存储库
-
-加入此仓库的[discord](https://discord.gg/wDcY8FFnt5)
-
-QQ群：242429835
+<p align="center">
+  GTA5 Mod Stand Lua All in One：将快捷任务、crash、模组(人物|车辆|地图|模型)、娱乐等多种lua脚本于一体的存储库
+</p>
+<p align="center">
+  <a href="https://badges.toozhao.com/stats/01H69JD1N3ZWV3EDK36V3F5DJK"><img src="https://badges.toozhao.com/badges/01H69JD1N3ZWV3EDK36V3F5DJK/green.svg" /></a>
+  <a href="https://discord.gg/wDcY8FFnt5"><img src="https://img.shields.io/discord/1167118210735276062?color=blue&label=discord&logo=discord&logoColor=white" /></a>
+  <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=wZuM0o7wOFfoiKDW5IxAxyKS_9p3nQ9x&authKey=sR9YMfGnCKK9hDviQMAOxMTfKwqiTSdgN3pw0B1NyWWBq6A3CWkuBHrHkSGbIhdB&noverify=0&group_code=242429835"><img src="https://img.shields.io/badge/QQ%E7%BE%A4-242429835-blue" /></a>
+  <img src="https://img.shields.io/github/license/xhcherry/GTA5-Stand-LuaAIO" />
+</p>
 
 ## 目录
 
@@ -67,6 +68,3 @@ Lua Scripts：脚本目录(已包含daidai，GT，heezy二代目，HC，jinx，�
 profiles：stand个人配置文件(默认任务)
 
 Theme：中文标签与主题文件
-
-
-**本仓库遵守apache-2.0 license**
