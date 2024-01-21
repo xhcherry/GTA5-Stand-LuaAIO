@@ -9,7 +9,7 @@ function checkme()
     local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
     
     if name == "RhymeBear" then
-        return standard
+        return "Happy Every Day"
     elseif name == "RcktaR" then
         return "    qianzongGol"
     elseif name == "zqxhnb" then
@@ -38,6 +38,8 @@ function checkme()
         return "Strawberry Sister"
     elseif name == "05L5" then
         return "  7SkyK1ng 05L5"
+    elseif name == "XiaoYuXin_qwq" then
+        return "Happy Every Day"
     else
 
         for _,id in ipairs(sxid) do

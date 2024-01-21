@@ -2002,46 +2002,180 @@ huorentexiao = GT(funfeatures_self, "火人", {}, "自燃", function(); end)
 local _LR = GT(funfeatures_self, '翅膀选项', {}, '')
 
 -- 新型娱乐
-local are_djb_up = false
-GTTG(newfunc, "元气弹", {""}, "按E丢出元气弹", function(yq)
-    yqd = yq
-    if yqd then
-        while yqd do
-            wait()
-            if not are_djb_up then
-                request_anim_dict("missminuteman_1ig_2")
-                STREAMING.REQUEST_ANIM_SET("handsup_enter")
-                TASK.TASK_PLAY_ANIM(players.user_ped(), "missminuteman_1ig_2", "handsup_enter", 8, 0, -1, 50, 0, false,
-                    false, false)
-                wait(500)
-                are_djb_up = true
-            end
-            if PAD.IS_CONTROL_JUST_RELEASED(38, 38) then
-                TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
-                request_anim_dict("melee@unarmed@streamed_core")
-                STREAMING.REQUEST_ANIM_SET("heavy_punch_a")
-                TASK.TASK_PLAY_ANIM(players.user_ped(), "melee@unarmed@streamed_core", "heavy_punch_a", 8, 0, -1, 0,
-                    0.3, false, false, false)
-                local c = players.get_position(players.user())
-                local rot = ENTITY.GET_ENTITY_ROTATION(player_ped, 0)
-                local rot = ENTITY.GET_ENTITY_ROTATION(player_ped, 0)
-                local dir = rot
-                local dir = v3.toDir(CAM.GET_GAMEPLAY_CAM_ROT(0))
-                dir = dir
-                for i = 3, 41, 3 do
-                    FIRE.ADD_EXPLOSION(c.x + dir.x * i, c.y + dir.y * i, c.z + dir.z * i, 70, 1.0, true, false, 0.0,
-                        false)
-                    wait(100)
+GTTG(newfunc, "坤标", {}, "", function(feats)
+    fts = feats
+    if fts then
+        ipos = players.get_position(players.user())
+        ikun = util.joaat("w_me_flashlight")
+        pedikun = entities.create_object(ikun, ipos)
+        pedikun2 = entities.create_object(ikun, ipos)
+        pedikun3 = entities.create_object(ikun, ipos)
+        pedikun4 = entities.create_object(ikun, ipos)
+        pedikun5 = entities.create_object(ikun, ipos)
+        pedikun6 = entities.create_object(ikun, ipos)
+        pedikun7 = entities.create_object(ikun, ipos)
+        pedikun8 = entities.create_object(ikun, ipos)
+        pedikun9 = entities.create_object(ikun, ipos)
+        pedikun10 = entities.create_object(ikun, ipos)
+        pedikun11 = entities.create_object(ikun, ipos)
+        pedikun12 = entities.create_object(ikun, ipos)
+        pedikun13 = entities.create_object(ikun, ipos)
+        pedikun14 = entities.create_object(ikun, ipos)
+        pedikun15 = entities.create_object(ikun, ipos)
+        pedikun16 = entities.create_object(ikun, ipos)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun, players.user_ped(), 0, -0.15, 0, 1.3, 0, 0, 0, false, false, false,
+            false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun2, pedikun, 0, 0, 0, -0.18, 0, 0, 0, false, false, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun3, pedikun, 0, 0, 0, -0.02, 0, 45, 0, false, false, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun4, pedikun, 0, 0, 0, -0.02, 0, 135, 0, false, false, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun5, players.user_ped(), 0, 0.05, 0, 1.3, 0, 0, 0, false, false, false,
+            false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun6, pedikun5, 0, 0, 0, -0.18, 0, 0, 0, false, false, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun7, pedikun5, 0, 0, 0, -0.18, 0, 90, 0, false, false, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun8, pedikun5, 0, 0.18, 0, 0, 0, 0, 0, false, false, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun9, pedikun8, 0, 0, 0, -0.18, 0, 0, 0, false, false, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun10, players.user_ped(), 0, 0.35, 0, 1.3, 0, 0, 0, false, false, false,
+            false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun11, pedikun10, 0, 0, 0, -0.18, 0, 0, 0, false, false, false, false, 0,
+            true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun12, pedikun10, 0, 0, 0, 0.16, 0, 90, 0, false, false, false, false, 0,
+            true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun13, players.user_ped(), 0, 0.52, 0, 1.3, 0, 0, 0, false, false, false,
+            false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun14, pedikun13, 0, 0, 0, -0.18, 0, 0, 0, false, false, false, false, 0,
+            true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun15, players.user_ped(), 0, -0.3, 0, 1.3, 0, 0, 0, false, false, false,
+            false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun16, pedikun15, 0, 0, 0, -0.18, 0, 0, 0, false, false, false, false, 0,
+            true)
+        load_ptfxs = {}
+        util.create_thread(function()
+            if not fts then
+                for _, p in pairs(load_ptfxs) do
+                    GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+                    GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
                 end
-                TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
-                wait()
-                are_djb_up = false
+            else
+                request_ptfx_asset("scr_bike_adversary")
+                GRAPHICS.USE_PARTICLE_FX_ASSET("scr_bike_adversary")
+                fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("scr_adversary_gunsmith_weap_smoke",
+                    pedikun, 0.2, 0.0, -0.02, 0.0, 0.0, 0, 0, 1, false, false, false, 0, 0, 0, 0)
+                load_ptfxs[#load_ptfxs + 1] = fx
+                GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 0, 1, 1, 1)
             end
-        end
+        end)
     else
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
+        entities.delete_by_handle(pedikun)
+        entities.delete_by_handle(pedikun2)
+        entities.delete_by_handle(pedikun3)
+        entities.delete_by_handle(pedikun4)
+        entities.delete_by_handle(pedikun5)
+        entities.delete_by_handle(pedikun6)
+        entities.delete_by_handle(pedikun7)
+        entities.delete_by_handle(pedikun8)
+        entities.delete_by_handle(pedikun9)
+        entities.delete_by_handle(pedikun10)
+        entities.delete_by_handle(pedikun11)
+        entities.delete_by_handle(pedikun12)
+        entities.delete_by_handle(pedikun13)
+        entities.delete_by_handle(pedikun14)
+        entities.delete_by_handle(pedikun15)
+        entities.delete_by_handle(pedikun16)
     end
 end)
+
+GTTG(newfunc, "坤枪", {}, "", function(feat)
+    ft = feat
+    if ft then
+        WEAPON.GIVE_WEAPON_TO_PED(players.user_ped(), 2024373456, 1, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(players.user_ped(), not ft, false, false, false)
+        ipos = players.get_position(players.user())
+        ikun = util.joaat("a_c_hen")
+        ikun2 = util.joaat("prop_bskball_01")
+        pedikun = Cped(0, ikun, ipos, 0)
+        pedikun2 = entities.create_object(ikun2, ipos)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun, players.user_ped(), PED.GET_PED_BONE_INDEX(players.user_ped(), 18905),
+            0.05, -0.01, 0.15, -50, 0, 320, false, false, false, false, 0, true)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(pedikun2, pedikun, PED.GET_PED_BONE_INDEX(pedikun, 24816), 0.23, 0, -0.07, 0, 0,
+            0, false, false, false, false, 0, true)
+        util.create_thread(function()
+            while ft do
+                wait()
+                local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
+                local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
+                objhash = util.joaat("prop_bskball_01")
+                while not STREAMING.HAS_MODEL_LOADED(objhash) do
+                    STREAMING.REQUEST_MODEL(objhash)
+                    wait()
+                end
+                if PED.IS_PED_SHOOTING(players.user_ped(players.user())) then
+                    bskt = entities.create_object(objhash, pos)
+                    ENTITY.SET_ENTITY_ROTATION(bskt, camrot.x, camrot.y, camrot.z, 1, false)
+                    ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(bskt, 1, 60, 2000, 100, true, true, true, true)
+                    wait(200)
+                    entities.delete_by_handle(bskt)
+                end
+            end
+            ft = false
+        end)
+    else
+        entities.delete_by_handle(pedikun)
+        entities.delete_by_handle(pedikun2)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 2024373456)
+    end
+end)
+
+qigongbo=GTTG(newfunc, "这是看不见的",{""}, "",function(qg)
+    qgb = qg
+    while qgb do
+        wait()
+        local mepos = players.get_position(players.user())
+        FIRE.ADD_EXPLOSION(mepos.x,mepos.y,mepos.z+2, 70, 1.0, false, false, 0.0, false)
+    end
+    qgb = false
+end)
+
+menu.set_visible(qigongbo, false)
+
+local are_djb_up = false
+GTAC(newfunc, "元气弹",{""}, "按E丢出元气弹",function(yq)
+    yqd = yq
+    while yqd do
+        wait()
+            if yqd then
+                if not are_djb_up then 
+                    menu.set_value(qigongbo, true)
+                        request_anim_dict("missminuteman_1ig_2")
+                            STREAMING.REQUEST_ANIM_SET("handsup_enter")
+                        TASK.TASK_PLAY_ANIM(players.user_ped(), "missminuteman_1ig_2", "handsup_enter", 8, 0, -1, 50, 0, false, false, false)
+                wait(500)
+            are_djb_up = true
+        end 
+    if PAD.IS_CONTROL_JUST_RELEASED(38, 38) then
+       menu.set_value(qigongbo, false)
+           TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
+                request_anim_dict("melee@unarmed@streamed_core")
+                STREAMING.REQUEST_ANIM_SET("heavy_punch_a")
+           TASK.TASK_PLAY_ANIM(players.user_ped(), "melee@unarmed@streamed_core", "heavy_punch_a", 8, 0, -1, 0, 0.3, false, false, false)
+           local c = players.get_position(players.user())
+           local rot = ENTITY.GET_ENTITY_ROTATION(player_ped,0)
+           local rot = ENTITY.GET_ENTITY_ROTATION(player_ped,0)
+           local dir = rot
+           local dir = v3.toDir(CAM.GET_GAMEPLAY_CAM_ROT(0))
+           dir = dir
+           for i = 3, 41, 3 do
+               FIRE.ADD_EXPLOSION(c.x+dir.x*i, c.y+dir.y*i, c.z+dir.z*i, 70, 1.0, true, false, 0.0, false)
+               wait(100)
+           end
+                wait(500)
+                ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
+                are_djb_up = false
+                yqd = false
+                end
+            end
+        end
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
+    end)
 
 GTTG(newfunc, "百米轰炸拳", {""}, "按E使用", function(ft)
     b_bones = {0xfa11}
@@ -2483,21 +2617,7 @@ yujian = yj
 end)
 
 -- 
-dancd = GT(renwuxuanxiang, '走路风格', {}, '')
-for _, v in ipairs(dicdd) do 
-dancd:action("选择风格: " .. v, {},"", function(f)
-my_ped = players.user_ped()
-STREAMING.HAS_ANIM_SET_LOADED(v)
-STREAMING.REQUEST_ANIM_SET(v)
-PED.SET_PED_MOVEMENT_CLIPSET(my_ped,v,0x3E800000)
-end)
-end
 
-GTTG(renwuxuanxiang, "没有血迹",{""}, "",function(f) gt=f while gt do wait(100) PED.CLEAR_PED_BLOOD_DAMAGE(PLAYER.PLAYER_PED_ID()) end gt=false end)
-
-GTAC(renwuxuanxiang, "随机服装",{""}, "",function() wait(100) PED.SET_PED_RANDOM_COMPONENT_VARIATION(PLAYER.PLAYER_PED_ID(), true) end)
-
-GTTG(renwuxuanxiang, "循环随机服装",{"会引发XE事件"}, "",function(f) gt=f while gt do wait(100) PED.SET_PED_RANDOM_COMPONENT_VARIATION(PLAYER.PLAYER_PED_ID(), true) end gt=false end)
 
 GTTG(funfeatures,"搭火箭",{},"", function(t)
     local bones <const> = {0x3779,0xCC4D}
@@ -3175,106 +3295,115 @@ GTluaScript.click_slider(funfeatures_self, "缩小NPC", {""}, "本地可见, 1 =
     end
 end)
         
-GTTG(_LR, '火翅膀', {'JSfireWings'}, '将附有火焰的翅膀附加在您的背上.', function (toggle)
-firewing(toggle)
+GTTG(_LR, '火翅膀', {'JSfireWings'}, '将附有火焰的翅膀附加在您的背上.', function(toggle)
+    firewing(toggle)
 end)
 
 GTLuaScript.slider(_LR, '火翅膀比例', {'JSfireWingsScale'}, '', 1, 100, 3, 1, function(value)
-firewingscale(value)
+    firewingscale(value)
 end)
 
-GTLuaScript.rainbow(GTLuaScript.colour(_LR, '火翅膀颜色', {'JSfireWingsColour'}, '', fireWingsSettings.colour, false, function(colour)
-firewingcolour(colour)
-end))
+GTLuaScript.rainbow(GTLuaScript.colour(_LR, '火翅膀颜色', {'JSfireWingsColour'}, '', fireWingsSettings.colour,
+    false, function(colour)
+        firewingcolour(colour)
+    end))
 
-GTTG(_LR, "火翅膀v2",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('weap_xs_vehicle_weapons') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('weap_xs_vehicle_weapons')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('muz_xs_turret_flamethrower_looping', ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.2, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
-end
+GTTG(_LR, "火翅膀v2", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('weap_xs_vehicle_weapons') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('weap_xs_vehicle_weapons')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(
+                'muz_xs_turret_flamethrower_looping', ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2],
+                fireWingsSettingse.scalee, false, false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.2, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('weap_xs_vehicle_weapons')
+    end
 end)
 
-GTTG(_LR, "水翅膀",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_oddjobtraffickingair') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_oddjobtraffickingair')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_oddjobtraffickingair')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_mp_intro_plane_exhaust', ptfxEgg, 0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_oddjobtraffickingair')
-end
+GTTG(_LR, "水翅膀", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_oddjobtraffickingair') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_oddjobtraffickingair')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_oddjobtraffickingair')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_mp_intro_plane_exhaust',
+                ptfxEgg, 0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false,
+                false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_oddjobtraffickingair')
+    end
 end)
 
 local active_rideable_animal = 0
@@ -3405,38 +3534,99 @@ end)
 appearance = GT(funfeatures_self, "隐藏自己")
 disguise_state = state
 GTTG(appearance, "隐藏开启", {"disguise"}, "", function(state)
-disguise_state = state
-if disguise_state then
-invisibility_select = GTLuaScript.ref_by_path("Self>Appearance>Invisibility")
-object_hash = util.joaat(disguise_objects[disguise_object])
-player_pos = players.get_position(players.user())
-request_model(object_hash)
-object = entities.create_object(object_hash, player_pos)
-GTLuaScript.set_value(invisibility_select, 2)
-ENTITY.SET_ENTITY_COLLISION(object, false, false)
-while disguise_state and players.exists(players.user()) do
-player_pos = players.get_position(players.user())
-player_rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 5)
-ENTITY.SET_ENTITY_COORDS(object, player_pos.x, player_pos.y, player_pos.z- 0.3, false, false, false, false)
-ENTITY.SET_ENTITY_ROTATION(object, 0, 0, player_rot.z, false, false, false, false)
-wait()
-end
-entities.delete_by_handle(object)
- GTLuaScript.set_value(invisibility_select, 0)
-end
+    disguise_state = state
+    if disguise_state then
+        invisibility_select = GTLuaScript.ref_by_path("Self>Appearance>Invisibility")
+        object_hash = util.joaat(disguise_objects[disguise_object])
+        player_pos = players.get_position(players.user())
+        request_model(object_hash)
+        object = entities.create_object(object_hash, player_pos)
+        GTLuaScript.set_value(invisibility_select, 2)
+        ENTITY.SET_ENTITY_COLLISION(object, false, false)
+        while disguise_state and players.exists(players.user()) do
+            player_pos = players.get_position(players.user())
+            player_rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 5)
+            ENTITY.SET_ENTITY_COORDS(object, player_pos.x, player_pos.y, player_pos.z - 0.3, false, false, false, false)
+            ENTITY.SET_ENTITY_ROTATION(object, 0, 0, player_rot.z, false, false, false, false)
+            wait()
+        end
+        entities.delete_by_handle(object)
+        GTLuaScript.set_value(invisibility_select, 0)
+    end
 end)
 
 disguise_object_slider = GTLuaScript.slider_text(
     appearance, "隐藏选择", {"disguiseobject"}, "", disguise_names, function()end
 )
+--
+dancd = GT(renwuxuanxiang, '走路风格', {}, '')
+for _, v in ipairs(dicdd) do
+    dancd:action("选择风格: " .. v, {}, "", function(f)
+        my_ped = players.user_ped()
+        STREAMING.HAS_ANIM_SET_LOADED(v)
+        STREAMING.REQUEST_ANIM_SET(v)
+        PED.SET_PED_MOVEMENT_CLIPSET(my_ped, v, 0x3E800000)
+    end)
+end
 
-GTLP(renwuxuanxiang, '随机海滩服装', {}, '', function (f)
+fuzhaung = GT(renwuxuanxiang, "服装选项", {}, "")
+
+GTAC(fuzhaung, "蜘蛛侠", {""}, "", function()
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 2, 0, 0, 0) -- 发型
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 1, 123, 0, 0) -- 面具
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 10, 0, 0, 0) -- 贴花
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 8, 2, 0, 0) -- 内衣
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 11, 254, 0, 0) -- 上衣
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 6, 71, 0, 0) -- 鞋子
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 4, 98, 0, 0) -- 裤子
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 3, 8, 0, 0) -- 手套
+end)
+
+GTAC(fuzhaung, "休闲装", {""}, "", function()
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 1, 209, 0, 0) -- 面具
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 8, 0, 0, 0) -- 内衣
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 11, 466, 0, 0) -- 上衣
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 10, 111, 0, 0) -- 贴花
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 6, 81, 0, 0) -- 鞋子
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 4, 185, 0, 0) -- 裤子
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 3, 133, 0, 0) -- 手套
+end)
+
+GTAC(fuzhaung, "马保国他奶奶", {""}, "", function()
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 2, 1, 0, 0) -- 发型
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 1, 88, 0, 0) -- 面具
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 8, 2, 0, 0) -- 内衣
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 11, 98, 0, 0) -- 上衣
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 6, 146, 0, 0) -- 鞋子
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 4, 65, 0, 0) -- 裤子
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 3, 0, 0, 0) -- 手套
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 10, 0, 0, 0) -- 贴花
+end)
+
+GTAC(fuzhaung, "白色猩猩", {""}, "", function()
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 2, 1, 0, 0) -- 发型
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 1, 84, 0, 0) -- 面具
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 8, 2, 0, 0) -- 内衣
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 11, 545, 0, 0) -- 上衣
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 6, -1, 0, 0) -- 鞋子
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 4, 195, 0, 0) -- 裤子
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 3, 8, 0, 0) -- 手套
+    PED.SET_PED_COMPONENT_VARIATION(players.user_ped(), 10, 0, 0, 0) -- 贴花
+end)
+
+GTTG(renwuxuanxiang, "没有血迹",{""}, "",function(f) gt=f while gt do wait(100) PED.CLEAR_PED_BLOOD_DAMAGE(PLAYER.PLAYER_PED_ID()) end gt=false end)
+
+GTAC(fuzhaung, "随机服装",{""}, "",function() wait(100) PED.SET_PED_RANDOM_COMPONENT_VARIATION(PLAYER.PLAYER_PED_ID(), true) end)
+
+GTTG(fuzhaung, "循环随机服装",{"会引发XE事件"}, "",function(f) gt=f while gt do wait(100) PED.SET_PED_RANDOM_COMPONENT_VARIATION(PLAYER.PLAYER_PED_ID(), true) end gt=false end)
+
+GTLP(fuzhaung, '随机海滩服装', {}, '', function (f)
     wipe_outfit(players.user_ped())
     random_tropical_outfit(players.user_ped())
     wait(100)
 end)
 
-GTLP(renwuxuanxiang, '随机高尔夫服装', {}, '', function (f)
+GTLP(fuzhaung, '随机高尔夫服装', {}, '', function (f)
     local hair = PED.GET_PED_DRAWABLE_VARIATION(freemode_ped, 2)
     local hair_tex = PED.GET_PED_TEXTURE_VARIATION(freemode_ped, 2)
     PED.SET_PED_COMPONENT_VARIATION(freemode_ped, 1, 0, 0, 0)
@@ -3453,19 +3643,19 @@ GTLP(renwuxuanxiang, '随机高尔夫服装', {}, '', function (f)
     wait(100)
 end)
 
-GTAC(renwuxuanxiang, '赤脚', {}, '', function (f)
+GTAC(fuzhaung, '赤脚', {}, '', function (f)
 barefoot(players.user_ped())
 end)
 
-GTAC(renwuxuanxiang, "乳贴", {"sextoplessf"}, "", function(on_click)
+GTAC(fuzhaung, "乳贴", {"sextoplessf"}, "", function(on_click)
     GTLuaScript.trigger_commands("toplessfemale")
 end)
 
-GTAC(renwuxuanxiang, "小老头", {"penisguy"}, "", function(on_click)
+GTAC(fuzhaung, "小老头", {"penisguy"}, "", function(on_click)
     GTLuaScript.trigger_commands("amyacult01")
 end)
 
-GTTG(renwuxuanxiang, "超人", {"imporage"}, "", function(on)
+GTTG(fuzhaung, "超人", {"imporage"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("umyimporage")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3474,7 +3664,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "共和太空游骑兵", {"imporage2"}, "", function(on)
+GTTG(fuzhaung, "共和太空游骑兵", {"imporage2"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("umyrsranger01")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3483,7 +3673,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "死猴子", {"imporage3"}, "", function(on)
+GTTG(fuzhaung, "死猴子", {"imporage3"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("umypogo01")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3492,7 +3682,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "全副武装", {"imporage4"}, "", function(on)
+GTTG(fuzhaung, "全副武装", {"imporage4"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("umyjuggernaut01")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3501,7 +3691,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "丧尸", {"imporage5"}, "", function(on)
+GTTG(fuzhaung, "丧尸", {"imporage5"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("umyzombie01")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3510,7 +3700,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "男同", {"imporage6"}, "", function(on)
+GTTG(fuzhaung, "男同", {"imporage6"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("umyjustin")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3519,7 +3709,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "猛男", {"imporage7"}, "", function(on)
+GTTG(fuzhaung, "猛男", {"imporage7"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("umybabyd")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3528,7 +3718,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "警察", {"imporage8"}, "", function(on)
+GTTG(fuzhaung, "警察", {"imporage8"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("smysheriff01")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3537,7 +3727,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "特警", {"imporage9"}, "", function(on)
+GTTG(fuzhaung, "特警", {"imporage9"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("smyswat01")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3546,7 +3736,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "消防员", {"imporage10"}, "", function(on)
+GTTG(fuzhaung, "消防员", {"imporage10"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("smyfireman01")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3555,7 +3745,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "小丑", {"imporage11"}, "", function(on)
+GTTG(fuzhaung, "小丑", {"imporage11"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("smyclown01")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3564,7 +3754,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "太空人", {"imporage12"}, "", function(on)
+GTTG(fuzhaung, "太空人", {"imporage12"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("smmmovspace01")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3573,7 +3763,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "裸女", {"imporage13"}, "", function(on)
+GTTG(fuzhaung, "裸女", {"imporage13"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("sfystripperlite")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3582,7 +3772,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "妓女", {"imporage14"}, "", function(on)
+GTTG(fuzhaung, "妓女", {"imporage14"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("mpfmisty01")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3591,7 +3781,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "妓女2", {"imporage15"}, "", function(on)
+GTTG(fuzhaung, "妓女2", {"imporage15"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("csbstripper01")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3600,7 +3790,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "光头囚犯", {"imporage16"}, "", function(on)
+GTTG(fuzhaung, "光头囚犯", {"imporage16"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("igrashcosvki")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3609,7 +3799,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "豹纹女", {"imporage17"}, "", function(on)
+GTTG(fuzhaung, "豹纹女", {"imporage17"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("igkaylee")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3618,7 +3808,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "粉红男郎", {"imporage18"}, "", function(on)
+GTTG(fuzhaung, "粉红男郎", {"imporage18"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("iggroom")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3627,7 +3817,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "和平哥", {"imporage19"}, "", function(on)
+GTTG(fuzhaung, "和平哥", {"imporage19"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("igfabien")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3636,7 +3826,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "疯子", {"imporage20"}, "", function(on)
+GTTG(fuzhaung, "疯子", {"imporage20"}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("gmmslasher01")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3645,16 +3835,11 @@ restore_model()
 end
 end)
 
-GTAC(renwuxuanxiang, "警察", {}, "成为警察", function()
+GTAC(fuzhaung, "警察", {}, "成为警察", function()
     becomepoliceman()
 end)
 
-GTAC(funfeatures_self, "随机服装",{""}, "",function()
-wait(100)
-PED.SET_PED_RANDOM_COMPONENT_VARIATION(PLAYER.PLAYER_PED_ID(), true)
-end)
-
-GTTG(renwuxuanxiang, "大猩猩模式", {""}, "", function(on)
+GTTG(fuzhaung, "大猩猩模式", {""}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("igorleans")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3663,7 +3848,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "猴子模式", {""}, "", function(on)
+GTTG(fuzhaung, "猴子模式", {""}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("acchimp02")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3672,7 +3857,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "崔佛模式", {""}, "", function(on)
+GTTG(fuzhaung, "崔佛模式", {""}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("trevor")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3681,7 +3866,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "崔佛模式2", {""}, "", function(on)
+GTTG(fuzhaung, "崔佛模式2", {""}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("trevor")
 GTLuaScript.trigger_commands("walkstyle crouched")
@@ -3691,7 +3876,7 @@ GTLuaScript.trigger_commands("walkstyle poshfemale")
 end 
 end)
 
-GTTG(renwuxuanxiang, "圣诞怪兽模式", {""}, "", function(on)
+GTTG(fuzhaung, "圣诞怪兽模式", {""}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("UMMYuleMonster")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3700,7 +3885,7 @@ restore_model()
 end
 end)
 
-GTTG(renwuxuanxiang, "动物套装", {""}, "", function(on)
+GTTG(fuzhaung, "动物套装", {""}, "", function(on)
 if on then
 GTLuaScript.trigger_commands("IGFurry")
 GTLuaScript.trigger_commands("walkstyle mop")
@@ -3790,7 +3975,6 @@ restore_model()
 end
 end)
 
-
 clpid = {}
 GTAC(renwuxuanxiang, "克隆自己", {}, "生成克隆的你", function()
     clpid [#clpid + 1] = PED.CLONE_PED(players.user_ped(), true, true, true)
@@ -3803,83 +3987,89 @@ util.create_tick_handler(function()
     disguise_object = GTLuaScript.get_value(disguise_object_slider)
 end)
 
-    local bones <const> = {
-        0x49D9,	
-        0xDEAD,	
-        0x3779,	
-        0xCC4D	
-    }
-    local colour = {r = 1.0, g = 0.0, b = 1.0, a = 1.0}
-    local timer <const> = newTimer()
-    local trailsOpt <const> = GT(selflist,"人物轨迹"), {}, ""
-    local effect <const> = Effect.new("scr_rcpaparazzo1", "scr_mich4_firework_sparkle_spawn")
-    local effects = {}
-    
-    GTLP(trailsOpt,"轨迹", {"trails"}, "", function ()
+local bones<const> = {0x49D9, 0xDEAD, 0x3779, 0xCC4D}
+local colour = {
+    r = 1.0,
+    g = 0.0,
+    b = 1.0,
+    a = 1.0
+}
+local timer<const> = newTimer()
+local trailsOpt<const> = GT(selflist, "人物轨迹"), {}, ""
+local effect<const> = Effect.new("scr_rcpaparazzo1", "scr_mich4_firework_sparkle_spawn")
+local effects = {}
+
+GTLP(trailsOpt, "轨迹", {"trails"}, "", function()
     if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(effect.asset) then
-    STREAMING.REQUEST_NAMED_PTFX_ASSET(effect.asset)
-    return
+        STREAMING.REQUEST_NAMED_PTFX_ASSET(effect.asset)
+        return
     end
     if timer.elapsed() >= 1000 then
-    removeFxs(effects); effects = {}
-    timer.reset()
+        removeFxs(effects);
+        effects = {}
+        timer.reset()
     end
     if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
-    local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-    local minimum, maximum = v3.new(), v3.new()
-    MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
-    local offsets <const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
-    for _, offset in ipairs(offsets) do
-    GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
-    local fx =
-    GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(effect.name,vehicle,offset.x,offset.y,0.0,0.0,0.0,0.0,0.7, false, false, false,0, 0, 0, 0)
-    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-    table.insert(effects, fx)
-    end
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local minimum, maximum = v3.new(), v3.new()
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
+        local offsets<const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
+        for _, offset in ipairs(offsets) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(effect.name, vehicle, offset.x, offset.y,
+                0.0, 0.0, 0.0, 0.0, 0.7, false, false, false, 0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(effects, fx)
+        end
     elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
-    for _, boneId in ipairs(bones) do
-    GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
-    local fx =
-    GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(effect.name,players.user_ped(),0.0,0.0,0.0,0.0,0.0,0.0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId),0.7, false, false, false,0, 0, 0, 0)
-    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-    table.insert(effects, fx)
-    end
-    end
-    end, function ()
-    removeFxs(effects); effects = {}
-    end)
-    
-    local trailColour = GTLuaScript.colour(trailsOpt,"颜色", {"trailcolour"}, "", colour, false, function(newColour)
-         colour = newColour 
-    end)
-    GTLuaScript.rainbow(trailColour)
-    
-    local ragdoll = GT(selflist, '摔倒选项', {'JSragdollOptions'}, '选择不同的摔倒选项\n需要取消勾选:(自我选项-不会摔倒)')
-
-    GTLP(ragdoll, '笨拙', {'JSclumsy'}, '让您的人物很容易摔倒', function()
-        clumsy()
-    end)
-
-    GTAC(ragdoll, '绊倒', {'JSstumble'}, '让您的人物绊倒,很可能会摔倒', function()
-        stumble()
-    end)
-
-    local fallTimeout = false
-    GTTG(ragdoll, '倒下', {'JSfallOver'}, '让您绊倒/跌倒并阻止您站起来', function(toggle)
-        if toggle then
-            local vector = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
-            PED.SET_PED_TO_RAGDOLL_WITH_FALL(players.user_ped(), 1500, 2000, 2, vector.x, -vector.y, vector.z, 1, 0, 0, 0, 0, 0, 0)
+        for _, boneId in ipairs(bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(effect.name, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.7, false, false, false,
+                0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(effects, fx)
         end
-        fallTimeout = toggle
-        while fallTimeout do
-            PED.RESET_PED_RAGDOLL_TIMER(players.user_ped())
-            wait()
-        end
-    end)
+    end
+end, function()
+    removeFxs(effects);
+    effects = {}
+end)
 
-    GTLP(ragdoll, '摔倒', {'JSragdoll'}, '让您的人物摔倒', function()
-        ragdoll_self()
-    end)
+local trailColour = GTLuaScript.colour(trailsOpt, "颜色", {"trailcolour"}, "", colour, false, function(newColour)
+    colour = newColour
+end)
+GTLuaScript.rainbow(trailColour)
+
+local ragdoll = GT(selflist, '摔倒选项', {'JSragdollOptions'},
+    '选择不同的摔倒选项\n需要取消勾选:(自我选项-不会摔倒)')
+
+GTLP(ragdoll, '笨拙', {'JSclumsy'}, '让您的人物很容易摔倒', function()
+    clumsy()
+end)
+
+GTAC(ragdoll, '绊倒', {'JSstumble'}, '让您的人物绊倒,很可能会摔倒', function()
+    stumble()
+end)
+
+local fallTimeout = false
+GTTG(ragdoll, '倒下', {'JSfallOver'}, '让您绊倒/跌倒并阻止您站起来', function(toggle)
+    if toggle then
+        local vector = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
+        PED.SET_PED_TO_RAGDOLL_WITH_FALL(players.user_ped(), 1500, 2000, 2, vector.x, -vector.y, vector.z, 1, 0, 0, 0,
+            0, 0, 0)
+    end
+    fallTimeout = toggle
+    while fallTimeout do
+        PED.RESET_PED_RAGDOLL_TIMER(players.user_ped())
+        wait()
+    end
+end)
+
+GTLP(ragdoll, '摔倒', {'JSragdoll'}, '让您的人物摔倒', function()
+    ragdoll_self()
+end)
+
 
 local cus_respawn = GT(selflist, '自定义复活', {}, '')
 
@@ -20588,12 +20778,13 @@ blackweb = GT(other_options, "友情推广经销", {}, "你可以在此找到经
 GTD(blackweb,"经销商列表")
 GTH(blackweb, "沙耶的小店", "https://symenu.me/", "")
 GTH(blackweb, "西瓜 XiGua Store", "https://xgmenu.me/", "")
-GTH(blackweb, "老王二代", "https://xn--4kq1hq65htok.store/", "")
+GTH(blackweb, "老王二代", "http://xn--4kq1hq65htok.store", "")
 GTH(blackweb, "小刘 Xiao Liu Store", "https://xlmenu.love/", "")
 GTH(blackweb, "白山茶", "http://bscmenu.online", "")
 GTH(blackweb, "旧梦", "http://fuzhuzhijia.shop", "")
-GTH(blackweb, "忧刊小店", "http://fuzhuzhijia.shop", "")
+GTH(blackweb, "忧刊小店", "https://youkan.vip/", "")
 GTH(blackweb, "艾洛佩斯伽的超级小店", "http://ailuopeisjia.top", "")
+GTH(blackweb, "DLHPJY", "https://fzgw.7egg.cn/", "")
 
 minimap = GT(other_options, "小地图")
 misclightmenu = GT(other_options, "追光灯")
