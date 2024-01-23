@@ -28,10 +28,12 @@ require "lib.sakuralib.adwords"
 require "lib.sakuralib.location"
 require "lib.sakuralib.tables"
 require "lib.sakuralib.sakuralib"
+--require "lib.sakuralib.sakurakey"
 require "lib.sakuralib.bodyguards.bodyguard"
 
 sfchat = require("lib.sakuralib.ScaleformLib")("multiplayer_chat")
 sfchat:draw_fullscreen()
+--check_access()
 scaleform = require('sakuralib.ScaleformLib')
 sf = scaleform('instructional_buttons')
 JSkey = require 'lib.sakuralib.JSkeyLib'
