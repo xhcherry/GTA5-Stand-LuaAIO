@@ -9,6 +9,7 @@ hb_id = {
     {name = "明月[至臻]"},
     {name = "未来[至臻]"},
     {name = "小雨[至臻]"},
+    {name = "ASKshak/北野[至臻]"},
     {name = "清欢"},
     {name = "12"},
     {name = "sjr"},

@@ -1381,6 +1381,64 @@ function boost_player_vehicle_forward()
     end
 end
 
+penshewt = GT(selflist,"喷射战士", {}, "Stand会自动清理,不可发射过多")
+
+GTLP(penshewt, "喷射水桶", {}, "Stand会自动清理,不可发射过多", function()
+    HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 1, 0.2)
+    local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
+       objhash = util.joaat("prop_barrel_01a")
+       request_model_load(objhash)
+    if PAD.IS_CONTROL_PRESSED(51, 51) then
+       wait(50)
+       bskt = OBJECT.CREATE_OBJECT(objhash,pos.x, pos.y, pos.z, true, true, false)
+       ENTITY.SET_ENTITY_ROTATION(bskt, camrot.x, camrot.y, camrot.z, 1, false)    
+       ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(bskt, 1, 0, 1000, 0, false, true, true, true)
+    end
+end)
+
+GTLP(penshewt, "喷射铁饼", {}, "Stand会自动清理,不可发射过多", function()
+    HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 1, 0.2)
+    local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
+       objhash = util.joaat("prop_weight_20k")
+       request_model_load(objhash)
+    if PAD.IS_CONTROL_PRESSED(51, 51) then
+       wait(50)
+       bskt = OBJECT.CREATE_OBJECT(objhash,pos.x, pos.y, pos.z, true, true, false)
+       ENTITY.SET_ENTITY_ROTATION(bskt, camrot.x, camrot.y, camrot.z, 1, false)    
+       ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(bskt, 1, 0, 1000, 0, false, true, true, true)
+    end
+end)
+
+GTLP(penshewt, "喷射杠铃", {}, "Stand会自动清理,不可发射过多", function()
+    HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 1, 0.2)
+    local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
+       objhash = util.joaat("prop_barbell_100kg")
+       request_model_load(objhash)
+    if PAD.IS_CONTROL_PRESSED(51, 51) then
+       wait(50)
+       bskt = OBJECT.CREATE_OBJECT(objhash,pos.x, pos.y, pos.z, true, true, false)
+       ENTITY.SET_ENTITY_ROTATION(bskt, camrot.x, camrot.y, camrot.z, 1, false)    
+       ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(bskt, 1, 0, 1000, 0, false, true, true, true)
+    end
+end)
+
+GTLP(penshewt, "喷射轮胎", {}, "Stand会自动清理,不可发射过多", function()
+    HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 1, 0.2)
+    local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
+       objhash = util.joaat("prop_wheel_tyre")
+       request_model_load(objhash)
+    if PAD.IS_CONTROL_PRESSED(51, 51) then
+       wait(50)
+       bskt = OBJECT.CREATE_OBJECT(objhash,pos.x, pos.y, pos.z, true, true, false)
+       ENTITY.SET_ENTITY_ROTATION(bskt, camrot.x, camrot.y, camrot.z, 1, false)    
+       ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(bskt, 1, 0, 1000, 0, false, true, true, true)
+    end
+end)
+
 hydraexp = GT(selflist, "核弹飞机")
 
 feijisc=GTTG(hydraexp, "飞机", {""}, "", function(on_toggle)
@@ -2002,6 +2060,57 @@ huorentexiao = GT(funfeatures_self, "火人", {}, "自燃", function(); end)
 local _LR = GT(funfeatures_self, '翅膀选项', {}, '')
 
 -- 新型娱乐
+GTTG(newfunc, "推牌九", {""}, "你喜欢推牌九吗?虽然很无聊-.-!!走起来生效.", function(tp)
+    gp = tp
+    while gp do
+    wait()
+        if is_move() then
+            SwPoser(util.joaat("prop_boogieboard_08"))
+            end
+        end
+    gp = false
+end)
+
+GTTG(newfunc,"空走行走", {""}, "WADS移动,Shift升空,ctrl下降", function(clip)
+    cp = clip
+        while cp do
+        wait()
+    local position = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
+    local direction = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
+        if (PAD.GET_CONTROL_NORMAL(0, 32) == 1.0) -- W
+            or PAD.GET_CONTROL_NORMAL(0, 34) == 1.0 -- A
+            or PAD.GET_CONTROL_NORMAL(0, 9) == 1.0 -- D
+            or PAD.GET_CONTROL_NORMAL(0, 8) == 1.0 then-- S
+            ENTITY.SET_ENTITY_COORDS(players.user_ped(), 
+            position.x + ENTITY.GET_ENTITY_FORWARD_X(players.user_ped())*0.5, 
+            position.y + ENTITY.GET_ENTITY_FORWARD_Y(players.user_ped())*0.5, 
+            (position.z - 1), true, true, true, true)
+        end
+    local position = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
+    local direction = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
+        if ( PAD.GET_CONTROL_NORMAL(0, 21) == 1.0 ) then
+            ENTITY.SET_ENTITY_COORDS(players.user_ped(),
+            position.x, position.y, ((position.z - 1)
+            + 0.5*0.5), true, true, true, true)
+        end
+    local position = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
+    local direction = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
+        if ( PAD.GET_CONTROL_NORMAL(0, 36) == 1.0 ) then
+            ENTITY.SET_ENTITY_COORDS(players.user_ped(),
+            position.x, position.y, ((position.z - 1) - 0.5*0.5),
+            true, true, true, true)
+        end
+    end
+end)
+
+GTTG(newfunc, "丢弃武器", {""}, "按E丢弃", function(dw)
+    d = dw
+    while d do
+        wait()
+        DropWeapon()
+    end
+end)
+
 GTTG(newfunc, "坤标", {}, "", function(feats)
     fts = feats
     if fts then
@@ -2617,7 +2726,17 @@ yujian = yj
 end)
 
 -- 
+GTTG(funfeatures, "尖端炮台", {""}, "获得一个好帮手,帮你扫荡一切不友好的对象\n来自皮尔特沃夫的尖端科技", function(pt)
+    paotai(pt)
+end)
 
+GTTG(funfeatures, "指南针", {""}, "就是一个指南针", function(zn)
+    znz = zn
+        while znz do
+        wait()
+        compasstick()
+	end
+end)
 
 GTTG(funfeatures,"搭火箭",{},"", function(t)
     local bones <const> = {0x3779,0xCC4D}
@@ -3428,7 +3547,7 @@ util.create_tick_handler(function()
                 local w = {}
                 w.x, w.y, w.z, _ = players.get_waypoint(players.user())
                 if w.x == 0.0 and w.y == 0.0 then 
-                    notify(translations.no_waypoint_set)
+                    util.toast("没有标记点")
                 else
                     TASK.TASK_FOLLOW_NAV_MESH_TO_COORD(active_rideable_animal, w.x, w.y, w.z, 1.0, -1, 100, 0, 0)
                 end
@@ -3489,6 +3608,35 @@ GTLuaScript.list_action(funfeatures_self, "插旗", {"attachflagtocar"}, "", fla
 end)
 
 local rideable_animals_root = GT(funfeatures_self, "骑乘动物", {"rideableanimals"}, "请不要按空格,否则无法动弹")
+
+GTTG(rideable_animals_root, "骑兔子", {""}, "", function(f)
+    if f then
+    request_model_load(util.joaat("a_c_rabbit_02"))
+    animal = entities.create_ped(8, util.joaat("a_c_rabbit_02"), players.get_position(players.user()), ENTITY.GET_ENTITY_HEADING(players.user_ped()))
+    ENTITY.SET_ENTITY_INVINCIBLE(animal, true)
+    ENTITY.FREEZE_ENTITY_POSITION(animal, true)
+    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
+    active_rideable_animal = animal
+    local m_z_off = 0
+    local f_z_off = 0
+    if ENTITY.GET_ENTITY_MODEL(players.user_ped()) == util.joaat("mp_f_freemode_01") then 
+         z_off = f_z_off
+    else
+         z_off = m_z_off
+    end
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(), animal, PED.GET_PED_BONE_INDEX(animal, 24816), 0.2, -0.3, z_off, 0, 270, 90, true, true, true, true, 2, true)
+    request_anim_dict("rcmjosh2")
+    TASK.TASK_PLAY_ANIM(players.user_ped(), "rcmjosh2", "josh_sitting_loop", 8.0, 1, -1, 2,
+    1.0, false, false, false)
+    ENTITY.FREEZE_ENTITY_POSITION(animal, false)
+    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
+else
+    entities.delete_by_handle(animal)
+    TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped(players.user()))
+    ENTITY.DETACH_ENTITY(players.user_ped(players.user()), 1, 0)
+    wait()
+    end
+end)
 
 local ranimal_hashes = {util.joaat("a_c_deer"), util.joaat("a_c_boar"), util.joaat("a_c_cow")}
 rideable_animals_root:list_action("生成", {"spawnranimal"}, "", {"鹿", "公猪", "牛"}, function(index)
@@ -20779,12 +20927,14 @@ GTD(blackweb,"经销商列表")
 GTH(blackweb, "沙耶的小店", "https://symenu.me/", "")
 GTH(blackweb, "西瓜 XiGua Store", "https://xgmenu.me/", "")
 GTH(blackweb, "老王二代", "http://xn--4kq1hq65htok.store", "")
+GTH(blackweb, "ASKshak经销商会", "https://daker.cc/", "")
 GTH(blackweb, "小刘 Xiao Liu Store", "https://xlmenu.love/", "")
 GTH(blackweb, "白山茶", "http://bscmenu.online", "")
 GTH(blackweb, "旧梦", "http://fuzhuzhijia.shop", "")
 GTH(blackweb, "忧刊小店", "https://youkan.vip/", "")
 GTH(blackweb, "艾洛佩斯伽的超级小店", "http://ailuopeisjia.top", "")
 GTH(blackweb, "DLHPJY", "https://fzgw.7egg.cn/", "")
+GTH(blackweb, "KexiaoLove", "http://kexiaonolove.asia/", "")
 
 minimap = GT(other_options, "小地图")
 misclightmenu = GT(other_options, "追光灯")

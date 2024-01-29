@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '1.21'
+GT_version = '1.27'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("选中一位玩家，其中的脚本选项现在置顶，并存在单独选项\n新增>自我选项>自我娱乐>新型娱乐>坤标\n新增>自我选项>自我娱乐>新型娱乐>坤枪新增>自我选项>自我娱乐>人物选项>服装选项>蜘蛛侠\n新增>自我选项>自我娱乐>人物选项>服装选项>休闲装\n新增>自我选项>自我娱乐>人物选项>服装选项>接化发\n新增>自我选项>自我娱乐>人物选项>服装选项>白色猩猩\n添加了新的皇榜成员\n错误改进和功能优化")
+    notification("新增>自我选项>喷射战士>喷射水桶\n新增>自我选项>喷射战士>喷射铁饼\n新增>自我选项>喷射战士>喷射杠铃\n新增>自我选项>喷射战士>喷射轮胎\n新增>自我选项>自我娱乐>新型娱乐>推牌九\n新增>自我选项>自我娱乐>新型娱乐>空中行走\n新增>自我选项>自我娱乐>新型娱乐>丢弃武器\n新增>自我选项>自我娱乐>骑乘动物>骑兔子\n新增>娱乐选项>指南针\n新增>娱乐选项>尖端炮台\n添加了新增的皇榜成员\n其他的一些改进与修复\n")
 end
 --
 hasShownToast = false
@@ -60,7 +60,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 1
-notifyDay = 21
+notifyDay = 27
 
 _G.daysSince = _G.daysSince or 0
 
@@ -8672,6 +8672,154 @@ end
 
 --杂项
 --原创功能 缝合死妈
+local last_coords = v3(0, 0, 0)
+function is_move()--检测玩家移动
+    local player_ped = players.user_ped()
+    local current_coords = ENTITY.GET_ENTITY_COORDS(player_ped)
+    local ba = {
+        x = current_coords.x - last_coords.x,
+        y = current_coords.y - last_coords.y,
+        z = current_coords.z - last_coords.z
+    }
+    local distance = math.sqrt(ba.x * ba.x + ba.y * ba.y + ba.z * ba.z)
+    if distance >= 0.5 then
+        last_coords = current_coords
+        return true
+    else
+        return false
+    end
+end
+
+function SwPoser(ObjHash)--推牌九
+    local hash = ObjHash
+    request_model_load(ObjHash)
+    local last_ent = players.user_ped()
+    local c = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(last_ent, 0, -1, 0)
+    local d = entities.create_object(ObjHash, c)
+    ENTITY.SET_ENTITY_HEADING(d, ENTITY.GET_ENTITY_HEADING(last_ent))
+    OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(d)
+end
+
+function DropWeapon()--丢弃武器
+    if WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped()) ~= util.joaat("WEAPON_UNARMED") then
+        if PAD.IS_CONTROL_JUST_RELEASED(38, 38) then
+            if WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped()) == util.joaat("WEAPON_BZGAS") or 
+               WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped()) == util.joaat("WEAPON_FIREEXTINGUISHER") or 
+               WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped()) == util.joaat("WEAPON_SNOWBALL") then
+                WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped()))
+            else
+                WEAPON.SET_PED_DROPS_INVENTORY_WEAPON(players.user_ped(), WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped()), 0, 1.0, 0.0, 0)
+            end
+        end
+    end
+end
+
+function compassdrawText(text, x, y, scale)
+    HUD.SET_TEXT_FONT(0)
+    HUD.SET_TEXT_SCALE(scale, scale)
+    HUD.SET_TEXT_COLOUR(255, 100, 0, 210)
+    HUD.SET_TEXT_WRAP(0.0, 1.0)
+    HUD.SET_TEXT_CENTRE(true)
+    HUD.SET_TEXT_DROPSHADOW(2, 2, 0, 0, 0)
+    HUD.SET_TEXT_EDGE(1, 0, 0, 0, 205)
+    HUD.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING")
+    HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text)
+    HUD.END_TEXT_COMMAND_DISPLAY_TEXT(y, x)
+end
+
+function get_entity_heading(ent)--获取方向
+    native_invoker.begin_call()
+        native_invoker.push_arg_int(ent)
+        native_invoker.end_call_2(0xE83D4F9BA2A38914)
+    return native_invoker.get_return_value_float()
+end
+
+function compasstick()--指南针
+    local pxDegree = 0.06 / 180
+    local playerHeadingDegrees = 360.0 - get_entity_heading(players.user_ped())
+    local tickDegree = playerHeadingDegrees - 180 / 2
+    local tickDegreeRemainder = 9.0 - (tickDegree % 9.0)
+    local tickPosition = 0.18 + 0.005 + tickDegreeRemainder * pxDegree
+    local dgr = tickDegree % 360.0
+        tickDegree = tickDegree + tickDegreeRemainder
+        while tickPosition < 0.48 + 0.3325 do
+            if (tickDegree % 90.0) == 0 then
+                directx.draw_rect(tickPosition, 0.04, 0.0005, 0.012, 0, 0, 0, 1)
+            if dgr >= 7 and dgr <= 89  then 
+                compassdrawText("东南", 0.04+0.015, tickPosition, 0.2 )
+            elseif dgr >= 98 and dgr <= 179 then 
+                compassdrawText("西南", 0.04+0.015, tickPosition, 0.2 )
+            elseif dgr >= 187 and dgr <= 269 then 
+		        compassdrawText("西北", 0.04+0.015, tickPosition, 0.2 )
+            elseif ( dgr >= 278 and dgr <= 359 ) or dgr >= 315 then 
+		        compassdrawText("东北", 0.04+0.015, tickPosition, 0.2 ) 
+		    end
+            elseif (tickDegree % 45.0) == 0 then
+                directx.draw_rect(tickPosition, 0.04, 0.0005, 0.006, 0, 0, 0, 1)
+            if dgr >= 225 and dgr <= 314  then 
+				compassdrawText("北", 0.04+0.015, tickPosition, 0.25 )
+            elseif dgr >= 135 and dgr <= 224 then 
+                compassdrawText("西", 0.04+0.015, tickPosition, 0.25 )
+            elseif dgr >= 45 and dgr <= 134 then 
+                compassdrawText("南", 0.04+0.015, tickPosition, 0.25 )
+            elseif ( dgr >= 0 and dgr <= 44 ) or dgr >= 315 then 
+                compassdrawText("东", 0.04+0.015, tickPosition, 0.25 ) 
+            end
+            elseif (tickDegree % 90.0) == 81.0 or (tickDegree % 90.0) == 72.0
+                or (tickDegree % 90.0) == 9.0 or (tickDegree % 90.0) == 18.0 then
+                directx.draw_rect(tickPosition, 0.04, 0.0006, 0.003, 0, 0, 0, 1)
+                end	
+            tickDegree = tickDegree + 9.0
+        tickPosition = tickPosition + pxDegree * 9.0
+    end
+end
+
+function paotai(pt)--个人炮台
+    isOnPed = pt model_hash = 0x61D4C771
+    local playerCoords = players.get_position(players.user())
+        if isOnPed then
+            STREAMING.REQUEST_MODEL(model_hash)
+                while not STREAMING.HAS_MODEL_LOADED(model_hash) do
+            wait(50)
+        end
+    closestPed = PED.CREATE_PED(26, model_hash, 
+    playerCoords.x, playerCoords.y, playerCoords.z, 0, true, true)
+        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(closestPed, 1119849093, 99000, false)
+        WEAPON._SET_WEAPON_DAMAGE_MODIFIER_THIS_FRAME(1119849093,9999999999)
+        local currentWpMem = memory.alloc()
+        local junk = WEAPON.GET_CURRENT_PED_WEAPON(closestPed, currentWpMem, 1)
+        local currentWP = memory.read_int(currentWpMem)
+        memory.free(currentWpMem)
+            WEAPON.SET_CURRENT_PED_WEAPON(closestPed, 1119849093, true)
+                wait(1)
+            WEAPON.SET_CURRENT_PED_WEAPON(closestPed, currentWP, true)
+        ENTITY.SET_ENTITY_INVINCIBLE(closestPed, true)
+    local group_id = PED.GET_PED_GROUP_INDEX(players.user_ped())
+        PED.SET_PED_AS_GROUP_MEMBER(closestPed, group_id)
+            PED.SET_PED_ACCURACY(closestPed, 90)
+                    ENTITY.ATTACH_ENTITY_TO_ENTITY(closestPed, players.user_ped(), 
+                PED.GET_PED_BONE_INDEX(players.user_ped(), 0x6b52),
+                    0, -0.25, 1.95, 0, 0, 0, true, true, true, true, 2, true)
+                    STREAMING.REQUEST_ANIM_DICT(
+                    "weapons@first_person@aim_idle@p_m_zero@heavy@minigun@aim_trans@idle_to_rng")
+                    TASK.TASK_PLAY_ANIM(closestPed,
+                    "weapons@first_person@aim_idle@p_m_zero@heavy@minigun@aim_trans@idle_to_rng", 
+                    "aim_trans_med", 1000.0, -1.5, -1,1, 0.445, false,false,false)
+                PED.REGISTER_HATED_TARGETS_AROUND_PED(closestPed, 1000)
+            PED.SET_PED_ALLOWED_TO_DUCK(closestPed,false)
+        PED.SET_PED_ALERTNESS(closestPed, 100)
+    PED.SET_PED_COMBAT_RANGE(closestPed, 1000)
+    local firepattern = util.joaat("FIRING_PATTERN_FULL_AUTO")
+        PED.SET_PED_FIRING_PATTERN(closestPed, firepattern)
+            PED.SET_PED_RAGDOLL_ON_COLLISION(closestPed,false)
+               PED.SET_PED_CAN_RAGDOLL(closestPed,false)
+        PED.SET_PED_COMBAT_MOVEMENT(closestPed, 0)
+    ENTITY.SET_ENTITY_COLLISION(closestPed, false,false)
+        else
+        entities.delete_by_handle(closestPed)
+    end
+end
+
 function renderer_triangle(v2_A, v2_B, v2_C, clr)
 	clr.a = 0.15
     function i(j,k,l)
