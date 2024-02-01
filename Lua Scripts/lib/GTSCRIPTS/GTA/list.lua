@@ -70,6 +70,8 @@ sxid = {{
     playeridx = "ghosts_009"
 }, {
     playeridx = "zxzppq"
+}, {
+    playeridx = "John-Wick-AC"
 },
 }
 
@@ -1681,5 +1683,31 @@ spid = {{
     playerid = "YeShenlss"
 }, {
     playerid = "awasde123456789"
+}, {
+    playerid = "CNSeven"
+}, {
+    playerid = "wananxiaoguang"
+}, {
+    playerid = "Komorebi1219"
+}, {
+    playerid = "Namo0816"
+}, {
+    playerid = "wjwjwhh"
+}, {
+    playerid = "TianLin0908"
+}, {
+    playerid = "John-Wick-AC"
+}, {
+    playerid = "nifaidadaadwd"
+}, {
+    playerid = "JPqdstwk"
+}, {
+    playerid = "kucha-520"
+}, {
+    playerid = "lmqwit"
+}, {
+    playerid = "woshishabiSSS"
+}, {
+    playerid = ""
 },
 }

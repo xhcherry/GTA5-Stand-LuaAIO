@@ -1208,6 +1208,24 @@ GTTG(newweapon, "乱射空袭", {""}, "手持武器射击使用\n乱炸打击点
     luanshe = false
 end)
 
+GTTG(newweapon, '翻转枪', {}, '霰弹枪效果最佳,作弊者不起作用', function(fz)
+    fanzhuan = fz
+    while fanzhuan do
+        wait()
+        if PED.IS_PED_SHOOTING(players.user_ped(players.user())) then
+            local aiment = ent_func.get_entity_player_is_aiming_at(players.user())
+            if PED.IS_PED_A_PLAYER(aiment) or ENTITY.IS_ENTITY_A_PED(aiment) or
+                ENTITY.IS_ENTITY_AN_OBJECT(aiment) then
+                requestControlLoop(aiment)
+                for i = 1,10 do
+                ENTITY.SET_ENTITY_VELOCITY(aiment, 1,1, 8)
+                end
+            end
+        end
+    end
+    fanzhuan = false
+end)
+
 GTTG(newweapon,'拆车枪', {}, '射击后的载具将被拆卸', function(cx)
 chaixie = cx
     while chaixie do
@@ -1380,6 +1398,106 @@ function boost_player_vehicle_forward()
         ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(player_vehicle, 1, 0.0, 1000.0, 0.0, true, true, true, true)
     end
 end
+
+local Mount_hashes = {util.joaat("a_c_deer"), util.joaat("a_c_boar"),
+util.joaat("a_c_cow"),util.joaat("A_C_Coyote"),util.joaat("A_C_Hen"),
+util.joaat("A_C_MtLion"),util.joaat("A_C_Retriever"),util.joaat("A_C_Seagull")}
+selflist:list_action("骑乘动物2.0", {},
+"回车键上动物,F下动物,空格跳跃,W移动鼠标控制方向", 
+{"鹿", "公猪", "牛","狼","小鸡","豹子","猎犬","海鸥"}, function(index)
+    local Mou = Mount_hashes[index]
+        request_model_load(Mou)
+    local location = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+        Mount = PED.CREATE_PED( 26, Mou, location.x + 1, 
+        location.y + 1, location.z,-25,true,false)
+        ENTITY.SET_ENTITY_INVINCIBLE(Mount, true)
+    local f_a_off = 0
+        pluto_switch index do 
+            case 1: 
+                f_a_off = 0.25
+            break
+			case 2:
+                f_a_off = 0.3
+            break
+			    case 3:
+                f_a_off = 0.1 
+            break
+			    case 4:
+                f_a_off = 0.2 
+            break
+			    case 5:
+                f_a_off = 0.2 
+            break
+			    case 6:
+                f_a_off = 0.2 
+            break
+			    case 7:
+                f_a_off = 0.2 
+            break
+			    case 8:
+                f_a_off = 0.2 
+            break
+			    end
+        a_off = f_a_off
+    rideable_animal = Mount
+end)
+
+rideable_animal = 0
+util.create_tick_handler(function(index)
+function MountModFix_Animation(Wanted_CoreAnim, Wanted_anim)
+	local pid = PLAYER.PLAYER_PED_ID()
+	STREAMING.REQUEST_ANIM_DICT(Wanted_CoreAnim)
+	while (not STREAMING.HAS_ANIM_DICT_LOADED(Wanted_CoreAnim)) do wait(50) end
+	TASK.TASK_PLAY_ANIM(pid,Wanted_CoreAnim, Wanted_anim, 2.0, -2.0, -1, 33, 0, false, false, false)
+end
+if rideable_animal != 0 then
+if(rideable_animal) then
+if util.is_key_down(0x0D) then -- 回车键
+    local MountModel = ENTITY.GET_ENTITY_MODEL(rideable_animal)
+        TASK.CLEAR_PED_TASKS(rideable_animal)	
+    local mypid = PLAYER.PLAYER_PED_ID()	
+    local heading = ENTITY.GET_ENTITY_HEADING(rideable_animal)
+        TASK.CLEAR_PED_TASKS(mypid)
+        MountModFix_Animation("veh@jeep@bodhi@rds@enter_exit", "get_in")
+        wait(1000)
+    if(MountModel == MtLionHash) then
+        MountModFix_Animation("veh@helicopter@ds@idle_panic", "sit")
+    else
+        MountModFix_Animation("amb@code_human_in_car_idles@generic@ds@idle_a", "idle_a")
+    end		
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(mypid, rideable_animal, 
+        PED.GET_PED_BONE_INDEX(rideable_animal, 24816), -0.3, 0.0, a_off, -20, 0.0, -90, false, false, false, true, 2, true)
+    end
+    if(rideable_animal) then
+	if util.is_key_down(0x46) then -- F键
+		MountModFix_Animation("veh@jeep@bodhi@rds@enter_exit", "get_out")
+		wait(1000)
+			ENTITY.DETACH_ENTITY(players.user_ped())
+				TASK.CLEAR_PED_TASKS(players.user_ped())
+				entities.delete_by_handle(rideable_animal)
+			rideable_animal = 0
+		end
+	end
+	if(rideable_animal) then
+	if(util.is_key_down(0x57))then -- W键
+	local location = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+	local CamRot = CAM.GET_GAMEPLAY_CAM_ROT(2)
+	local Distance = 5
+	local SpawnPosition = location
+		SpawnPosition.x = location.x - ( math.sin(math.rad(CamRot.z)) * Distance )
+		SpawnPosition.y = location.y + ( math.cos(math.rad(CamRot.z)) * Distance )
+		SpawnPosition.z = location.z
+		TASK.TASK_GO_STRAIGHT_TO_COORD(rideable_animal, SpawnPosition.x, SpawnPosition.y, SpawnPosition.z, 120,10, CamRot.z, 0)
+	end
+	end
+	if(rideable_animal) then
+		if util.is_key_down(0x20) then -- 空格键
+			TASK.TASK_JUMP(rideable_animal, true)	
+			end
+			end
+    	end
+    end
+end)
 
 penshewt = GT(selflist,"喷射战士", {}, "Stand会自动清理,不可发射过多")
 
@@ -2059,7 +2177,68 @@ chonglangban = GT(funfeatures_self, "冲浪板", {}, "背在身上", function();
 huorentexiao = GT(funfeatures_self, "火人", {}, "自燃", function(); end)
 local _LR = GT(funfeatures_self, '翅膀选项', {}, '')
 
+function paoku1()
+    PLAYER.GIVE_PLAYER_RAGDOLL_CONTROL(players.user_ped(), true);
+    for i = 1, 10 do
+        ENTITY.APPLY_FORCE_TO_ENTITY(players.user_ped(), 1, 0, 0, 10.3, 0, 0, 0, false, false, false, false, false,
+            false);
+    end
+    ENTITY.SET_ENTITY_INVINCIBLE(players.user_ped(), true);
+    PED.SET_PED_TO_RAGDOLL(players.user_ped(), 6, 20, 20, true, true, true);
+    WIRI_MISC.SET_GRAVITY_LEVEL(2.5);
+end
+
 -- 新型娱乐
+GTTG(newfunc, "跑酷", {""}, "奔跑时(Shift+W)按住空格(0.5秒-1秒)起跳\n跳跃的高度取决于按住空格的时长", function(f)
+    local state = false
+    on = f
+    if on then
+        util.toast("不会摔倒 现在关闭")
+        menu.trigger_commands("grace off")
+        while on do
+            wait()
+            menu.trigger_commands("grace off")
+            if (util.is_key_down(0x20)) and (util.is_key_down(0xA0)) then
+                wait()
+                paoku1()
+            end
+            local height = ENTITY.GET_ENTITY_HEIGHT_ABOVE_GROUND(players.user_ped())
+            local jumping = PED.IS_PED_RUNNING_RAGDOLL_TASK(players.user_ped())
+            if height <= 1.1 
+            and not (util.is_key_down(0x20)) 
+            and not (util.is_key_down(0xA0))
+            and state == false and jumping == true then
+                TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped(), true)
+                util.toast("安全着陆")
+                wait(0)
+                state = true
+                if jumping == true then
+                    state = false
+                end
+            end
+        end
+    end
+    menu.trigger_commands("grace on")
+    util.toast("不会摔倒 现在开启")
+end)
+
+printState = GTAC(newfunc, "Print Ragdoll", {}, "", function ()
+    speed = PED.IS_PED_RUNNING_RAGDOLL_TASK(players.user_ped())
+    gtoast(speed)
+end)
+menu.set_visible(printState, false)
+
+GTTG(newfunc, "原地升天", {}, "按J", function (on)
+    if on then
+        menu.trigger_commands("grace off")
+        util.create_tick_handler(function ()
+            agu_parkour2()
+        end)
+    else
+        menu.trigger_commands("grace on")
+    end
+end)
+
 GTTG(newfunc, "推牌九", {""}, "你喜欢推牌九吗?虽然很无聊-.-!!走起来生效.", function(tp)
     gp = tp
     while gp do
@@ -3605,78 +3784,6 @@ GTLuaScript.list_action(funfeatures_self, "插旗", {"attachflagtocar"}, "", fla
         local ht = get_model_size(ENTITY.GET_ENTITY_MODEL(player_cur_car)).z
         ENTITY.ATTACH_ENTITY_TO_ENTITY(flag, player_cur_car, 0, 0, 0, ht, 0, 0, 0, true, false, false, false, 0, true)
     end
-end)
-
-local rideable_animals_root = GT(funfeatures_self, "骑乘动物", {"rideableanimals"}, "请不要按空格,否则无法动弹")
-
-GTTG(rideable_animals_root, "骑兔子", {""}, "", function(f)
-    if f then
-    request_model_load(util.joaat("a_c_rabbit_02"))
-    animal = entities.create_ped(8, util.joaat("a_c_rabbit_02"), players.get_position(players.user()), ENTITY.GET_ENTITY_HEADING(players.user_ped()))
-    ENTITY.SET_ENTITY_INVINCIBLE(animal, true)
-    ENTITY.FREEZE_ENTITY_POSITION(animal, true)
-    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
-    active_rideable_animal = animal
-    local m_z_off = 0
-    local f_z_off = 0
-    if ENTITY.GET_ENTITY_MODEL(players.user_ped()) == util.joaat("mp_f_freemode_01") then 
-         z_off = f_z_off
-    else
-         z_off = m_z_off
-    end
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(), animal, PED.GET_PED_BONE_INDEX(animal, 24816), 0.2, -0.3, z_off, 0, 270, 90, true, true, true, true, 2, true)
-    request_anim_dict("rcmjosh2")
-    TASK.TASK_PLAY_ANIM(players.user_ped(), "rcmjosh2", "josh_sitting_loop", 8.0, 1, -1, 2,
-    1.0, false, false, false)
-    ENTITY.FREEZE_ENTITY_POSITION(animal, false)
-    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
-else
-    entities.delete_by_handle(animal)
-    TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped(players.user()))
-    ENTITY.DETACH_ENTITY(players.user_ped(players.user()), 1, 0)
-    wait()
-    end
-end)
-
-local ranimal_hashes = {util.joaat("a_c_deer"), util.joaat("a_c_boar"), util.joaat("a_c_cow")}
-rideable_animals_root:list_action("生成", {"spawnranimal"}, "", {"鹿", "公猪", "牛"}, function(index)
-    if active_rideable_animal ~= 0 then 
-        newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;","已经骑动物", "CHAR_CHOP", 140)
-        return 
-    end
-    local hash = ranimal_hashes[index]
-    request_model_load(hash)
-    local animal = entities.create_ped(8, hash, players.get_position(players.user()), ENTITY.GET_ENTITY_HEADING(players.user_ped()))
-    ENTITY.SET_ENTITY_INVINCIBLE(animal, true)
-    ENTITY.FREEZE_ENTITY_POSITION(animal, true)
-    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
-    active_rideable_animal = animal
-    local m_z_off = 0 
-    local f_z_off = 0
-    pluto_switch index do 
-        case 1: 
-            m_z_off = 0.3 
-            f_z_off = 0.15
-            break
-        case 2:
-            m_z_off = 0.4
-            f_z_off = 0.3
-            break
-        case 3:
-            m_z_off = 0.2 
-            f_z_off = 0.1 
-            break
-    end
-    if ENTITY.GET_ENTITY_MODEL(players.user_ped()) == util.joaat("mp_f_freemode_01") then 
-        z_off = f_z_off
-    else
-        z_off = m_z_off
-    end
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(players.user_ped(), animal, PED.GET_PED_BONE_INDEX(animal, 24816), -0.3, 0.0, z_off, 0.0, 0.0, 90.0, false, false, false, true, 2, true)
-    request_anim_dict("rcmjosh2")
-    TASK.TASK_PLAY_ANIM(players.user_ped(), "rcmjosh2", "josh_sitting_loop", 8.0, 1, -1, 2, 1.0, false, false, false)
-    ENTITY.FREEZE_ENTITY_POSITION(animal, false)
-    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
 end)
 
 appearance = GT(funfeatures_self, "隐藏自己")
@@ -13167,17 +13274,7 @@ end)
 		end
 	end)
 
-plscm = menu.list(carfly, T('Los Santos Customs'), {}, '')
-
-pbodym = menu.list(plscm, T('Body Modifications'), {}, T('Only shows what is available to be changed. If they get in a new vehicle back out of Body Modifications to refresh options'))
-
-plighm = menu.list(plscm, T('Lights'), {}, '')
-
-pcolm  = menu.list(plscm, T('Vehicle Colors'), {}, '')
-
-pwmenu = menu.list(plscm, T('Wheels'), {}, '')
-
-pwinmenu = GT(carfly, '控制车窗', {}, '')
+local pwinmenu = GT(carfly, '控制车窗', {}, '')
 
 local speedometer_plate_root = GT(nfs_cs, "仪表盘设置", {}, "")
 
@@ -13188,212 +13285,6 @@ local chauffeur_root = GT(carfly, "司机服务", {}, "呼叫您的私人司机"
 local vehicle_fly = GT(carfly, "载具飞行", {}, "")
 
 local rgbvm = GT(carfly, '彩虹载具', {}, '')
-
-vehmenu = {}
-menu.on_focus(pbodym, function ()
-    for vehmenu as m do
-        menu.delete(m)
-    end
-    vehmenu = {}
-    if not players.exists(players.user()) then
-        util.stop_thread()
-    end
-    local pedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
-    local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
-    if PED.IS_PED_IN_ANY_VEHICLE(pedm, false) then
-        for Vehopts as v do
-            local current = VEHICLE.GET_VEHICLE_MOD(vmod, v[1] -1)
-            local maxmods = Getmodcou(players.user(), v[1] - 1)
-            if maxmods > 0 then
-                local modnames = v[2]
-                local s = menu.slider(pbodym, modnames , {''}, '',  -1, maxmods  , current, 1, function (mod)
-                    Changemod(players.user(), v[1] -1, mod)
-                end)
-              table.insert(vehmenu, s)
-            wait()
-            end
-        end
-
-        for Vehtogs as v do
-            local current = VEHICLE.IS_TOGGLE_MOD_ON(vmod, v[1] -1)
-            local tognames = v[2]
-            local t = GTTG(pbodym, tognames, {''}, '', function (on)
-                VEHICLE.TOGGLE_VEHICLE_MOD(vmod, v[1] - 1, on)
-              end, current)         
-            table.insert(vehmenu, t)
-            wait()
-        end
-    end
-end)
-colmem = {}
-util.create_tick_handler(function ()
-    colmem.red = memory.alloc()
-    colmem.green = memory.alloc()
-    colmem.blue = memory.alloc()
-    local vcolor = entities.get_user_vehicle_as_handle()
-    VEHICLE.GET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vcolor, colmem.red, colmem.green, colmem.blue)
-    colmem.sred = memory.alloc()
-    colmem.sgreen = memory.alloc()
-    colmem.sblue = memory.alloc()
-    VEHICLE.GET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vcolor, colmem.sred, colmem.sgreen, colmem.sblue)
-end)
-
-pcolor = {}
-prgb = {color= {r = memory.read_int(colmem.red) / 255, g =  memory.read_int(colmem.green) / 255, b = memory.read_int(colmem.blue) / 255, a = 1}}
-menus.uservehpai = menu.colour(pcolm, T('Primary Color RGB'), {''}, T('Changes the Primary Color on the Vehicle to RGB'), prgb.color, false, function(prbgc)
-    prgb.color = prbgc
-    local vcolor = entities.get_user_vehicle_as_handle()
-    local red = math.floor(prgb.color.r * 255)
-    local green = math.floor(prgb.color.g * 255)
-    local blue = math.floor(prgb.color.b * 255)
-    VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vcolor, red, green, blue)
-end)
-
-
-psrgb = {color= {r = memory.read_int(colmem.sred)/ 255, g =  memory.read_int(colmem.sgreen)/ 255, b = memory.read_int(colmem.sblue) / 255, a = 1}}
-menus.uservehspai = menu.colour(pcolm, T('Secondary Color RGB'), {''}, T('Changes the Secondary Color on the Vehicle to RGB'), psrgb.color, false, function(prbgsc)
-    psrgb.color = prbgsc
-    local vcolor = entities.get_user_vehicle_as_handle()
-    local sred = math.floor(psrgb.color.r * 255)
-    local sgreen = math.floor(psrgb.color.g * 255)
-    local sblue = math.floor(psrgb.color.b * 255)
-    VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vcolor, sred, sgreen, sblue)
-end)
-
-GTLuaScript.list_select(pcolm, T('Primary Color'), {''}, T('Changes the Primary Color on the Vehicle'), Mainc, 1, function (t)
-    pcolor.prim = t - 1
-    Changecolor(players.user(), pcolor)
-end)
-
-GTLuaScript.list_select(pcolm, T('Secondary Color'), {''}, T('Changes the Secondary Color on the Vehicle'), Mainc, 1, function (t)
-    pcolor.sec = t - 1
-    Changecolor(players.user(), pcolor)
-end)
-
-GTLuaScript.list_select(pcolm, T('Pearlescent Color'), {''}, T('Changes the Pearlescent Color on the Vehicle'), Mainc, 1, function (t)
-    pcolor.per = t - 1
-    Changewhepercolor(players.user(), pcolor)
-end)
-
-GTLuaScript.list_select(pcolm, T('Wheel Color'), {''}, T('Changes the Wheel Color on the Vehicle'), Mainc, 1, function (t)
-    pcolor.whe = t - 1
-    Changewhepercolor(players.user(), pcolor)
-end)
-
-GTLuaScript.list_select(pcolm, T('Interior Color'), {''}, T('Changes the Interior Color on the Vehicle'), Mainc, 1, function (t)
-    pcolor.int = t - 1
-    Changeintcolor(players.user(), pcolor.int)
-end)
-
-GTLuaScript.list_select(pcolm, T('Dashboard Color'), {''}, T('Changes the Dashboard Color on the Vehicle'), Mainc, 1, function (t)
-    pcolor.das = t - 1
-    Changedashcolor(players.user(), pcolor.das)
-end)
-
-GTLuaScript.list_select(plighm, T('Neons'), {''}, T('Changes the Neons to different colors'), Mainc, 1, function(c)
-    local ncolor = c - 1
-    Changeneon(players.user(), ncolor)
-end)
-
-GTLuaScript.list_select(plscm, T('Window Tints'), {''}, T('Changes the Tint on the Vehicle'), Til, 1, function (t)
-    local tint = t - 1
-    Changetint(players.user(), tint)
-end)
-
-GTLuaScript.list_select(plighm, T('Headlights'), {''}, T('Changes the Headlights to different colors'), Lighc, 1, function(c)
-    local hcolor = c - 1
-    Changehead(players.user(), hcolor)
-end)
-
-pnrgb = {color= {r= 0, g = 1, b = 0, a = 1}}
-
-menu.action(plighm, T('Change RGB Neons'), {}, T('Change the Color for the Neons to RGB of your choice'), function ()
-    local pedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user())
-    local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
-    RGBNeonKit(pedm)
-    local red = math.floor(pnrgb.color.r * 255)
-    local green = math.floor(pnrgb.color.g * 255)
-    local blue = math.floor(pnrgb.color.b * 255)
-    VEHICLE.SET_VEHICLE_NEON_COLOUR(vmod, red, green, blue)
-end)
-
-menu.colour(plighm, T('RGB Neon Color'), {'rgbsc'}, T('Choose the Color for the Neons be changed to '), pnrgb.color, false, function(ncolor)
-    pnrgb.color = ncolor
-end)
-
-GTLuaScript.list_select(pwmenu, T('Bennys Bespoke'), {''}, T('Changes the wheels to Bennys Bespoke wheels'), Bbw, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 9, wheel)
-end)
-
-
-GTLuaScript.list_select(pwmenu, T('Bennys Originals'), {''}, T('Changes the wheels to Bennys Originals wheels'), Bow, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 8, wheel)
-end)
-
-
-GTLuaScript.list_select(pwmenu, T('Bike'), {''}, T('Changes the wheels to Bike(motorcycle) wheels'), Bw, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 6, wheel)
-end)
-
-
-GTLuaScript.list_select(pwmenu, T('High End'), {''}, T('Changes the wheels to High End wheels'), Hew, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 7, wheel)
-end)
-
-
-GTLuaScript.list_select(pwmenu, T('Lowrider'), {''}, T('Changes the wheels to Lowrider wheels'), Lw, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 2, wheel)
-end)
-
-GTLuaScript.list_select(pwmenu, T('Muscle'), {''}, T('Changes the wheels to Muscle wheels'), Mw, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 1, wheel)
-end)
-
-GTLuaScript.list_select(pwmenu, T('Offroad'), {''}, T('Changes the wheels to Offroad wheels'), Orw, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 4, wheel)
-end)
-
-
-GTLuaScript.list_select(pwmenu, T('Racing(Formula 1 Wheels)'), {''}, T('Changes the wheels to Racing(Formula 1 Wheels) wheels'), Rw, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 10, wheel)
-end)
-
-
-GTLuaScript.list_select(pwmenu, T('Sport'), {''}, T('Changes the wheels to Sport wheels'), Spw, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 0, wheel)
-end)
-
-
-GTLuaScript.list_select(pwmenu, T('Street'), {''}, T('Changes the wheels to Street wheels'), Stw, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 11, wheel)
-end)
-
-
-GTLuaScript.list_select(pwmenu, T('SUV'), {''}, T('Changes the wheels to SUV wheels'), Suw, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 3, wheel)
-end)
-
-GTLuaScript.list_select(pwmenu, T('Tracks'), {''}, T('Changes the wheels to Track wheels'), Trw, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 12, wheel)
-end)
-
-
-GTLuaScript.list_select(pwmenu, T('Tuner'), {''}, T('Changes the wheels to Tuner wheels'), Tuw, 1, function(w)
-    local wheel = w - 1
-    Changewheel(players.user(), 5, wheel)
-end)
 
 GTAC(pwinmenu, '卷起所有窗口', {'upwin'}, '立即卷起所有窗口', function ()
         Rollaup(players.user())
@@ -13655,10 +13546,10 @@ NextGearOffset = memory.scan("A8 02 0F 84 ? ? ? ? 0F B7 86")+18
  oldGripState    = 0
  debug_notification = 0
  textDrawCol = {
-    r = 255,
-    g = 255,
-    b = 255,
-    a = 255
+    r = 1,
+    g = 1,
+    b = 1,
+    a = 1
 }
  function getCurGear()
     return memory.read_byte(entities.get_user_vehicle_as_pointer() +memory.read_int(CurrentGearOffset))

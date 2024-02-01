@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '1.27'
+GT_version = '3119A'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("新增>自我选项>喷射战士>喷射水桶\n新增>自我选项>喷射战士>喷射铁饼\n新增>自我选项>喷射战士>喷射杠铃\n新增>自我选项>喷射战士>喷射轮胎\n新增>自我选项>自我娱乐>新型娱乐>推牌九\n新增>自我选项>自我娱乐>新型娱乐>空中行走\n新增>自我选项>自我娱乐>新型娱乐>丢弃武器\n新增>自我选项>自我娱乐>骑乘动物>骑兔子\n新增>娱乐选项>指南针\n新增>娱乐选项>尖端炮台\n添加了新增的皇榜成员\n其他的一些改进与修复\n")
+    notification("继续适配在Stand 112的可用性\n添加了新增的皇榜成员\n错误修复与改进")
 end
 --
 hasShownToast = false
@@ -59,8 +59,8 @@ currentMonth = tonumber(os.date("%m"))
 currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
-notifyMonth = 1
-notifyDay = 27
+notifyMonth = 2
+notifyDay = 1
 
 _G.daysSince = _G.daysSince or 0
 
@@ -2077,7 +2077,7 @@ if SCRIPT_MANUAL_START then
             end
         end
         for i = 1, 320 do
-            directx.draw_texture(photo, 0.06, 0.06, 0.5, -1.1, 0.06, 0.50, 0, {r = 1, g = 1, b = 1, a = 255})
+                directx.draw_texture(photo, 0.06, 0.06, 0.5, -1.1, 0.06, 0.50, 0, {r = 1, g = 1, b = 1, a = 1.0})
             wait(0)
         end
         local k = 90
@@ -8672,6 +8672,20 @@ end
 
 --杂项
 --原创功能 缝合死妈
+
+function agu_parkour2()
+	if(util.is_key_down(0x4A))then -- J
+		PLAYER.GIVE_PLAYER_RAGDOLL_CONTROL(players.user_ped(), true);
+		for i = 1, 5 do
+			ENTITY.APPLY_FORCE_TO_ENTITY(players.user_ped(), 1, 0,0,2.3, 0,0,0, false, false, false, false, false, false);
+		end
+		ENTITY.SET_ENTITY_INVINCIBLE(players.user_ped(), true);
+		PED.SET_PED_TO_RAGDOLL(players.user_ped(), 1, 1, 1, true, true, true);
+	else
+		ENTITY.SET_ENTITY_INVINCIBLE(players.user_ped(), false);
+	end
+end
+
 local last_coords = v3(0, 0, 0)
 function is_move()--检测玩家移动
     local player_ped = players.user_ped()
