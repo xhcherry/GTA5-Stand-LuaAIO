@@ -72,6 +72,10 @@ sxid = {{
     playeridx = "zxzppq"
 }, {
     playeridx = "John-Wick-AC"
+}, {
+    playeridx = "sshanheya"
+}, {
+    playeridx = "ASKshak"
 },
 }
 
@@ -1686,7 +1690,7 @@ spid = {{
 }, {
     playerid = "CNSeven"
 }, {
-    playerid = "wananxiaoguang"
+    playerid = "WanAnXiaoGuang"
 }, {
     playerid = "Komorebi1219"
 }, {
@@ -1707,6 +1711,24 @@ spid = {{
     playerid = "lmqwit"
 }, {
     playerid = "woshishabiSSS"
+}, {
+    playerid = "pan1919X"
+}, {
+    playerid = "xiaoyaoxiaoqi"
+}, {
+    playerid = "coke1471"
+}, {
+    playerid = "LIANGFAZHI"
+}, {
+    playerid = "qdstwk"
+}, {
+    playerid = "AfterJesus"
+}, {
+    playerid = "ASKshak"
+}, {
+    playerid = "grplfwsb"
+}, {
+    playerid = "weiyangxiarong"
 }, {
     playerid = ""
 },

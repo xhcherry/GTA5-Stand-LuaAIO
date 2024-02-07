@@ -57,6 +57,7 @@ function checkme()
         return standard
     end
 end
+
 --定义是不是皇榜的玩家
 local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
 isSpidPlayer = false

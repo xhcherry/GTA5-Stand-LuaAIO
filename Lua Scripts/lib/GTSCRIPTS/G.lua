@@ -2843,7 +2843,7 @@ yujian = yj
         end
         ENTITY.FREEZE_ENTITY_POSITION(ped, false)
     else 
-        gtoast("GRANDTOURINGVIP\n请稍等")
+        gtoast("请稍等")
         STREAMING.REQUEST_NAMED_PTFX_ASSET("scr_rcbarry2")
         while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_rcbarry2") do
         wait()
@@ -21096,11 +21096,13 @@ local speedcalce2 = speede2 * 2.236936
 myspeed1e2 = Round(speedcalce2,1)
 end
 inviciamountintt = inviciamountint
---draw_string(string.format("~h~~f~档位 : "..VehicleGears()).."~p~  载具 :"..VehicleInfo(), zhuji_x,zhuji_y-0.025, zhuji_dx,zhuji_dx)
-draw_string(string.format("~h~~r~延迟: ~w~%dms", delay), zhuji_x+0.05,zhuji_y+0.003, zhuji_dx,zhuji_dx)
-draw_string(string.format("~h~~p~帧率: ~w~"..fps), zhuji_x,zhuji_y+0.003, zhuji_dx,zhuji_dx)
-draw_string(string.format("~h~~w~"..myspeed1e.." ~q~公~g~里~f~/小时".."~h~~w~  "..myspeed1e2.." ~y~英~p~里~q~/小时"), zhuji_x,zhuji_y+0.028, zhuji_dx,zhuji_dx)
-draw_string(string.format('~h~~r~时间 ~f~> '.."~h~~p~现实: ~h~~w~"..os.date("%X").."  ~h~~y~游戏:~h~~w~" .. CLOCK.GET_CLOCK_HOURS() .. ":" .. CLOCK.GET_CLOCK_MINUTES()), zhuji_x,zhuji_y+0.057, zhuji_dx,zhuji_dx)
+
+draw_string(string.format("~h~~p~帧率: ~w~"..fps), zhuji_x,zhuji_y-0.110, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~r~延迟: ~w~%dms", delay), zhuji_x,zhuji_y-0.084, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~w~"..myspeed1e.." ~q~公~g~里~f~/小时"), zhuji_x,zhuji_y-0.057, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~w~"..myspeed1e2.." ~y~英~p~里~q~/小时"), zhuji_x,zhuji_y-0.030, zhuji_dx,zhuji_dx)
+draw_string(string.format('~h~~r~'.."~h~~p~现实: ~h~~w~"..os.date("%X")), zhuji_x,zhuji_y-0.003, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~y~游戏内:~h~~w~" .. CLOCK.GET_CLOCK_HOURS() .. ":" .. CLOCK.GET_CLOCK_MINUTES()), zhuji_x,zhuji_y+0.025, zhuji_dx,zhuji_dx)
 gongji = 0
 for pid = 0, 31 do
 if players.exists(pid) and pid ~= players.user() then
@@ -21114,42 +21116,42 @@ end
 end
 
 if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-draw_string(string.format("~h~~p~处于故事模式"), zhuji_x,zhuji_y+0.085, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~p~处于故事模式"), zhuji_x,zhuji_y+0.083, zhuji_dx,zhuji_dx)
 else
-draw_string(string.format("~h~~r~攻击过你的人: ~h~~w~"..gongji), zhuji_x,zhuji_y+0.112, zhuji_dx,zhuji_dx) 
+draw_string(string.format("~h~~r~攻击过你的人: ~h~~w~"..gongji), zhuji_x,zhuji_y+0.083, zhuji_dx,zhuji_dx) 
 end
 
 if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-draw_string(string.format("~h~~y~处于故事模式"), zhuji_x,zhuji_y+0.085, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~y~处于故事模式"), zhuji_x,zhuji_y+0.054, zhuji_dx,zhuji_dx)
 else
-draw_string(string.format("~h~~y~玩家 > ~h~~f~人数: ~h~~w~"..#players.list()), zhuji_x,zhuji_y+0.085, zhuji_dx,zhuji_dx) 
+draw_string(string.format("~h~~y~玩家 > ~h~~f~人数: ~h~~w~"..#players.list()), zhuji_x,zhuji_y+0.054, zhuji_dx,zhuji_dx) 
 end
 
 if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-draw_string(string.format("~h~~p~处于故事模式"), zhuji_x,zhuji_y+0.113, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~g~处于故事模式"), zhuji_x,zhuji_y+0.113, zhuji_dx,zhuji_dx)
 else
-draw_string(string.format(" ~h~~p~挂逼: ~h~~w~"..inviciamountintt), zhuji_x+0.07,zhuji_y+0.085, zhuji_dx,zhuji_dx) 
+draw_string(string.format(" ~h~~p~挂逼: ~h~~w~"..inviciamountintt), zhuji_x+0.07,zhuji_y+0.113, zhuji_dx,zhuji_dx) 
 end
 
 if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-draw_string(string.format("~h~~f~处于故事模式"), zhuji_x,zhuji_y+0.14, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~f~处于故事模式"), zhuji_x,zhuji_y+0.142, zhuji_dx,zhuji_dx)
 else
-draw_string(string.format("~h~~f~战局主机: ~h~~w~"..players.get_name(players.get_host())), zhuji_x,zhuji_y+0.14, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~f~战局主机: ~h~~w~"..players.get_name(players.get_host())), zhuji_x,zhuji_y+0.142, zhuji_dx,zhuji_dx)
 end
 
 if PLAYER.GET_PLAYER_NAME(players.get_script_host()) == "**Invalid**" then
-draw_string(string.format("~h~~q~处于故事模式"), zhuji_x,zhuji_y+0.17, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~q~处于故事模式"), zhuji_x,zhuji_y+0.172, zhuji_dx,zhuji_dx)
 else
-draw_string(string.format("~h~~q~脚本主机: ~h~~w~"..players.get_name(players.get_script_host())), zhuji_x,zhuji_y+0.17, zhuji_dx,zhuji_dx)
+draw_string(string.format("~h~~q~脚本主机: ~h~~w~"..players.get_name(players.get_script_host())), zhuji_x,zhuji_y+0.172, zhuji_dx,zhuji_dx)
 end
 
 local hostxvlie = players.get_host_queue_position(players.user())
 if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-    draw_string(string.format("~h~~p~处于故事模式"), zhuji_x,zhuji_y+0.20, zhuji_dx,zhuji_dx)
+    draw_string(string.format("~h~~p~处于故事模式"), zhuji_x,zhuji_y+0.202, zhuji_dx,zhuji_dx)
 elseif hostxvlie == 0 then
-    draw_string(string.format("~h~~p~你现在是~f~战局主机"), zhuji_x,zhuji_y+0.20, zhuji_dx,zhuji_dx) 
+    draw_string(string.format("~h~~p~你现在是~f~战局主机"), zhuji_x,zhuji_y+0.202, zhuji_dx,zhuji_dx) 
 elseif hostxvlie ~= 0 then 
-    draw_string(string.format("~h~~p~主机~f~优先度:~h~~w~ "..hostxvlie), zhuji_x,zhuji_y+0.20, zhuji_dx,zhuji_dx) 
+    draw_string(string.format("~h~~p~主机~f~优先度:~h~~w~ "..hostxvlie), zhuji_x,zhuji_y+0.202, zhuji_dx,zhuji_dx) 
 end	
 end)
 
@@ -22296,7 +22298,7 @@ function set_menu_open(toggle)
 end
 
 GTTG(zhujixianshi, "显示Stand版本", {"standedition"}, "", function(toggle)
-set_menu_open(toggle)
+    set_menu_open(toggle)
 end)
 
 GTAC(other_options, "幸运人员", {}, "", function ()
@@ -22687,10 +22689,11 @@ ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, fal
 end
 end)
               
-GTH(other_options, "GTVIP一群", "https://jq.qq.com/?_wv=1027&k=wo92Nl0a", "")
-GTH(other_options, "GTVIP二群", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=fecyAfmh_yGqElM5ABguu9YIVIuIiNqh&authKey=Nt%2FvK%2B2K6lEnVl3%2Bz3ZyRtoEEXXX%2FpZjLrrgPpvsXVXHsWCS2kKV%2Bir5P1Xg7f6F&noverify=0&group_code=642072208", "")
-GTH(other_options, "GTVIP三群", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oza9NK13Ql0LJDjvFg6x71QKAu5cDFYj&authKey=mKgjAapXxRtPTKUrwoLi%2FX%2FRovM4ufPDjh9nBhnQ6dFACL%2Fa%2Bqu7QkFTd55ipnEO&noverify=0&group_code=651502721", "")
-GTH(other_options, "GTVIP聊天群", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566", "脚本获取渠道属禁言状态\n仅提供用户获取脚本:)\n聊天交流请加入此群:)")
+GTH(other_options, "GTVIP一群[满]", "https://jq.qq.com/?_wv=1027&k=wo92Nl0a", "")
+GTH(other_options, "GTVIP二群[满]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=fecyAfmh_yGqElM5ABguu9YIVIuIiNqh&authKey=Nt%2FvK%2B2K6lEnVl3%2Bz3ZyRtoEEXXX%2FpZjLrrgPpvsXVXHsWCS2kKV%2Bir5P1Xg7f6F&noverify=0&group_code=642072208", "")
+GTH(other_options, "GTVIP三群[满]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oza9NK13Ql0LJDjvFg6x71QKAu5cDFYj&authKey=mKgjAapXxRtPTKUrwoLi%2FX%2FRovM4ufPDjh9nBhnQ6dFACL%2Fa%2Bqu7QkFTd55ipnEO&noverify=0&group_code=651502721", "")
+GTH(other_options, "GTVIP四群[加入]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=8qYUvJSLb2BVHZrM5Ztu_EyvZxfO5RvE&authKey=tViPuocQN00a41qIKcrWbk7VeYeJfMFPBOFLfrLx1mZdDnt9UjkHjkpC6DALzMHj&noverify=0&group_code=655413793", "")
+GTH(other_options, "GTVIP聊天群[加入]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566", "脚本获取渠道属禁言状态\n仅提供用户获取脚本:)\n聊天交流请加入此群:)")
 
 GTH(other_options, "加入Discord", "https://discord.gg/nJjB8FtxdN", "加入Discord服务器\n言论自由免受QQ限制\n服务器中不定时发布福利~\n欢迎您的加入喔:)")
 
