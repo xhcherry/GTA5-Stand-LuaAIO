@@ -403,10 +403,6 @@ local IsAnyHomingSoundActive = function()
 end
 
 
-local IsWebBrowserOpen = function ()
-	return read_global.int(75693) ~= 0
-end
-
 local IsCameraAppOpen = function ()
 	return SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(util.joaat("appcamera")) > 0
 end
@@ -421,7 +417,7 @@ local LockonEntity = function (entity, count)
 	local amberSound = amberHomingSounds[count]
 
 	if not ENTITY.DOES_ENTITY_EXIST(entity or 0) or ENTITY.IS_ENTITY_DEAD(entity, false) or
-	not IsEntityInSafeScreenPos(entity) or (IsWebBrowserOpen() or IsCameraAppOpen()) then
+	not IsEntityInSafeScreenPos(entity) or IsCameraAppOpen() then
 		amberSound:stop()
 		lockOnBits:ClearBit(bitPlace)
 		redSound:stop()
@@ -489,7 +485,7 @@ end
 
 
 local LockonTargets = function()
-    if numTargets == 0 and not (IsWebBrowserOpen() or IsCameraAppOpen()) then
+    if numTargets == 0 and not IsCameraAppOpen() then
 		local pos = GetCrosshairPosition()
 		local colour = get_hud_colour(HudColour.white)
 		colour.a = 160
@@ -654,8 +650,7 @@ local LockonManager = function ()
 		end
 	end
 
-	if not bits:IsBitSet(Bit_IsTargetShooting) and not bits:IsBitSet(Bit_IsRecharging) and
-	not (IsWebBrowserOpen() or IsCameraAppOpen()) then
+	if not bits:IsBitSet(Bit_IsTargetShooting) and not bits:IsBitSet(Bit_IsRecharging) and not IsCameraAppOpen() then
 		if state == State.GettingNearbyEnts then
 			SetNearbyEntities()
 		elseif state == State.SettingTargets then
@@ -810,13 +805,13 @@ self.mainLoop = function ()
 				else
 					bits:ClearBit(Bit_IsCamPointingInFront)
 				end
-
+				
 				LockonManager()--锁定玩家
-				if not (IsWebBrowserOpen() or IsCameraAppOpen()) then
+				if not IsCameraAppOpen() then
 					ShootMissiles()--发射导弹
 					DrawChargingMeter()--绘制充电图
 				end
-				DisableControlActions()
+				DisableControlActions()--禁用控制按键
 
 			elseif not is_player_in_any_rc_vehicle(players.user()) then
 				if state ~= State.Reseted then

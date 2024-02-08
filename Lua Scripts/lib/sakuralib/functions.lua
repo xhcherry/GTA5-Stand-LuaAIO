@@ -776,23 +776,6 @@ function is_player_active(player, isPlaying, inTransition)
 	return true
 end
 
-
---------------------------
--- CAM
---------------------------
-
----@param dist number
----@return v3
-function get_offset_from_cam(dist)
-	local rot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
-	local pos = CAM.GET_FINAL_RENDERED_CAM_COORD()
-	local dir = rot:toDir()
-	dir:mul(dist)
-	local offset = v3.new(pos)
-	offset:add(dir)
-	return offset
-end
-
 --------------------------
 -- RAYCAST
 --------------------------
@@ -825,7 +808,7 @@ function get_raycast_result(dist, flag)
 	local normal = v3.new()
 	local hitEntity = memory.alloc_int()
 	local camPos = CAM.GET_FINAL_RENDERED_CAM_COORD()
-	local offset = get_offset_from_cam(dist)
+	local offset = get_offset_from_camera(dist)
 
 	local handle = SHAPETEST.START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(
 		camPos.x, camPos.y, camPos.z,

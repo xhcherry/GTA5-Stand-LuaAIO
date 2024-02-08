@@ -2,18 +2,7 @@ local resource_path = filesystem.scripts_dir() .. "\\resources\\SakuraImg\\Watch
 local cursor_texture = directx.create_texture(resource_path .. "cursor.png")
 local point_texture = directx.create_texture(resource_path .. "point.png")
 
-local function request_control(entity, tick)
-    if tick == nil then tick = 20 end
-    local netid = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(entity)
-    NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netid, true)
-    local i = 0
-    while not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity) and i <= tick do
-        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
-        i = i + 1
-        util.yield(100)
-    end
-    return NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(entity)
-end
+
 
 ---判断是否为实体
 function is_an_entity(entity)
@@ -667,6 +656,10 @@ local function draw_vehicle_menu(vehicle)
     draw_menu_window(vehicle)
 
     ------ options ------
+    draw_button("修复载具", 0.6, function()
+        request_control(vehicle)
+        VEHICLE.SET_VEHICLE_FIXED(vehicle)
+    end)
     draw_button("传送到载具", 0.6, function()
         if VEHICLE.ARE_ANY_VEHICLE_SEATS_FREE(vehicle) then
             PED.SET_PED_INTO_VEHICLE(players.user_ped(), vehicle, -2)

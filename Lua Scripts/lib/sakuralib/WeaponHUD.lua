@@ -31,7 +31,7 @@ menu.toggle_loop(weapon_hud,'武器HUD', {}, '', function()
             WEAPON.GET_CURRENT_PED_WEAPON(PLAYER.PLAYER_PED_ID(), wep_hash_ptr, true)
             local wep_hash = memory.read_int(wep_hash_ptr)
             local wep_name = util.reverse_joaat(wep_hash)
-            if WEAPON.GET_WEAPON_DAMAGE_TYPE(wep_hash) ~= 2 then
+            --if WEAPON.GET_WEAPON_DAMAGE_TYPE(wep_hash) ~= 2 then
                 if wep_name == '' then 
                     pluto_switch wep_hash do
                         case 350597077:
@@ -66,7 +66,7 @@ menu.toggle_loop(weapon_hud,'武器HUD', {}, '', function()
                     --HUD_line
                     directx.draw_line(pos_x+0.037, pos_y-0.022, pos_x+0.037, pos_y+0.018, MAIN_COLOR)
                 end
-            end
+            --end
         end
     end
 end)

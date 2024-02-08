@@ -9,7 +9,7 @@ CONSTRUCTOR_CONFIG = {
     show_previews = true,
     preview_camera_distance = 3,
     preview_bounding_box_color = {r=255,g=0,b=255,a=255},
-    deconstruct_all_spawned_constructs_on_unload = true,
+    deconstruct_all_spawned_constructs_on_unload = false,
     drive_spawned_vehicles = true,
     wear_spawned_peds = true,
     focus_menu_on_spawned_constructs = false,
@@ -3404,9 +3404,15 @@ end)
 menu.slider(menus.spawn_settings, t("Constructs Allowed Per Player"), {"constructorspawnsallowedperplayer"}, t("The number of constructs any one player can spawn at a time. When a player tried to spawn additional constructs past this limit, the oldest spawned construct will be deleted."), 1, 5, config.num_allowed_spawned_constructs_per_player, 1, function(value)
     config.num_allowed_spawned_constructs_per_player = value
 end)
-menu.toggle(menus.spawn_settings, t("Delete All on Unload"), {}, t("Deconstruct all spawned constructs when unloading Constructor"), function(on)
-    config.deconstruct_all_spawned_constructs_on_unload = on
-end, config.deconstruct_all_spawned_constructs_on_unload)
+menu.action(menus.spawn_settings, t("Delete All on Unload"), {}, t("Deconstruct all spawned constructs when unloading Constructor"), function()
+    if config.deconstruct_all_spawned_constructs_on_unload == false then --此处不能使用toggle
+        config.deconstruct_all_spawned_constructs_on_unload = true
+        util.toast("当前状态: true")
+    else
+        config.deconstruct_all_spawned_constructs_on_unload = false
+        util.toast("当前状态: false")
+    end
+end)
 
 menus.debug_settings = menu.list(menus.settings_menu, t("Debug"), {}, t("Set configuration options relating to debugging the menu."))
 menu.toggle(menus.debug_settings, t("Debug Mode"), {}, t("Log additional details about Constructors actions."), function(toggle)

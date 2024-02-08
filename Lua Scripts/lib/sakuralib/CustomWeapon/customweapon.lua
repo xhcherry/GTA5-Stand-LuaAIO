@@ -55,7 +55,7 @@ menu.action(weapon_save,"保存配置", {"saveloadout"}, "保存所有当前装�
         menu.show_command_box_click_based(click_type, "saveloadout ")
     end,function(filename)
         local forbidden_chars = {'<', '>', ':', '\"', '/', '\\', '|', '?', '*'} -- at least SOME safety here.. idk, some people are weird
-        for forbidden_chars as char do
+        for v, char in pairs(forbidden_chars) do
             if filename:contains(char) then
                 util.toast("名称包含禁止使用的字符,请另选一个")
                 return
@@ -122,8 +122,8 @@ saved_loadouts = {}
 function update_saved_loadouts()
     saved_loadouts = {}
     for i, path in ipairs(filesystem.list_files(LOADOUTDIR)) do
-        local loadout_name = path:sub(path:rfind("\\")+1, path:rfind(".")-1)
-        saved_loadouts[#saved_loadouts+1] = loadout_name
+        local loadout_info = read_fileinfo(path)
+        saved_loadouts[#saved_loadouts+1] = loadout_info.name
     end
     if #saved_loadouts == 0 then
         saved_loadouts = {"无配置"}

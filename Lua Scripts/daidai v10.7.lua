@@ -27,8 +27,8 @@ require "lib.sakuralib.main.natives"
 require "lib.sakuralib.adwords"
 require "lib.sakuralib.location"
 require "lib.sakuralib.tables"
-require "lib.sakuralib.sakuralib"
 --require "lib.sakuralib.sakurakey"
+require "lib.sakuralib.sakuralib"
 require "lib.sakuralib.bodyguards.bodyguard"
 
 sfchat = require("lib.sakuralib.ScaleformLib")("multiplayer_chat")
@@ -58,9 +58,9 @@ cheater_detection = menu.list(menu.my_root(), "作弊检测", {})
 otherlist = menu.list(menu.my_root(), "其他选项", {})
 
 --自我选项
-health = menu.list(self_option, "恢复", {}, "")
-    SetMaxHealth = menu.list(health, "设置最大生命值", {}, "")
-        local moddedHealth = 274
+health_opt = menu.list(self_option, "恢复选项", {}, "")
+    SetMaxHealth = menu.list(health_opt, "设置最大生命值", {}, "")
+        local moddedHealth = 328
         menu.toggle_loop(SetMaxHealth, "设置最大生命值", {}, "", function ()
             PED.SET_PED_MAX_HEALTH(PLAYER.PLAYER_PED_ID(), moddedHealth)
             ENTITY.SET_ENTITY_HEALTH(PLAYER.PLAYER_PED_ID(), moddedHealth, 0)
@@ -68,39 +68,35 @@ health = menu.list(self_option, "恢复", {}, "")
             local strg = "~b~ HEALTH ~w~ "..health
             draw_string(strg, 0.03, 0.05, 0.6, 4)
         end)
-        menu.slider(SetMaxHealth, "设置数值", {"moddedhealth"}, "", 100, 9000, 274, 50, function(value)
+        menu.slider(SetMaxHealth, "设置数值", {"moddedhealth"}, "", 100, 9000, 328, 50, function(value)
             moddedHealth = value
         end)
-    menu.toggle(health, "无敌", {}, "", function(toggled)
-        PLAYER.SET_PLAYER_INVINCIBLE(PLAYER.PLAYER_PED_ID(), toggled)
+    menu.toggle(health_opt, "无敌", {}, "", function(toggled)
+        invincible_self(toggled)
     end)
-    menu.toggle_loop(health, "半无敌", {}, "不等于无敌,可由高致命性武器击杀", function()
-        ENTITY.SET_ENTITY_HEALTH(PLAYER.PLAYER_PED_ID(), 274)
+    menu.toggle_loop(health_opt, "半无敌", {}, "不等于无敌,可由高致命性武器击杀", function()
+        ENTITY.SET_ENTITY_HEALTH(PLAYER.PLAYER_PED_ID(), 328)
     end)
-    menu.slider(health, "自定义血量", {"setblood"}, "血量低于100会死亡", 1, 1000, 274, 1, function(val)
+    menu.click_slider(health_opt, "自定义血量", {"setblood"}, "血量低于100会死亡", 1, 1000, 328, 1, function(val)
         ENTITY.SET_ENTITY_HEALTH(PLAYER.PLAYER_PED_ID(), val)
     end)
-    menu.toggle_loop(health, "无限氧气", {}, "", function()
+    menu.toggle_loop(health_opt, "无限氧气", {}, "", function()
         PLAYER.SET_PLAYER_UNDERWATER_BREATH_PERCENT_REMAINING(PLAYER.PLAYER_ID(), 100.0)
     end)
-    menu.action(health, "补充血量", {}, "", function()
+    menu.action(health_opt, "补充血量", {}, "", function()
         ENTITY.SET_ENTITY_HEALTH(PLAYER.PLAYER_PED_ID(), PED.GET_PED_MAX_HEALTH(PLAYER.PLAYER_PED_ID()), 0)
     end)
-    menu.action(health, "补充护甲", {}, "", function()
-        if util.is_session_started() then
-            PED.SET_PED_ARMOUR(PLAYER.PLAYER_PED_ID(), 50)
-        else
-            PED.SET_PED_ARMOUR(PLAYER.PLAYER_PED_ID(), 100)
-        end
+    menu.action(health_opt, "补充护甲", {}, "", function()
+        PED.SET_PED_ARMOUR(PLAYER.PLAYER_PED_ID(), 50)
     end)
-    menu.toggle_loop(health, "自动复活", {}, "", function ()
+    menu.toggle_loop(health_opt, "自动复活", {}, "", function ()
         if ENTITY.GET_ENTITY_HEALTH(PLAYER.PLAYER_PED_ID()) < 1.0 then
 			local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
 			PED.RESURRECT_PED(PLAYER.PLAYER_PED_ID())
 			ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos.x, pos.y, pos.z, false, false, false)
 		end
     end)
-    menu.toggle_loop(health, "在死亡点重生", {}, "", function ()
+    menu.toggle_loop(health_opt, "在死亡点重生", {}, "", function ()
         local my_ped = PLAYER.PLAYER_PED_ID()
         if ENTITY.GET_ENTITY_HEALTH(my_ped) == 0 then
             local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
@@ -112,7 +108,7 @@ health = menu.list(self_option, "恢复", {}, "")
         end
     end)
 
-    supplemental_snacks = menu.list(health, "零食编辑", {}, "")
+    supplemental_snacks = menu.list(health_opt, "零食编辑", {}, "")
         menu.action(supplemental_snacks, "补满全部零食", {}, "", function()
             STAT_SET_INT("NO_BOUGHT_YUM_SNACKS", 30)
             STAT_SET_INT("NO_BOUGHT_HEALTH_SNACKS", 15)
@@ -136,10 +132,10 @@ health = menu.list(self_option, "恢复", {}, "")
             STAT_SET_INT("BREATHING_APPAR_BOUGHT", 20)
             util.toast("完成！")
         end)
-    menu.toggle_loop(health, '自动加血', {}, '一直加血直到您的血被加满.', function()
+    menu.toggle_loop(health_opt, '自动加血', {}, '一直加血直到您的血被加满.', function()
         autoBloodReture()
     end)
-    menu.toggle_loop(health, "在掩体后时补充生命值", {}, "", function()
+    menu.toggle_loop(health_opt, "在掩体后时补充生命值", {}, "", function()
             healthincover()
         end, function()
             PLAYER1._SET_PLAYER_HEALTH_RECHARGE_LIMIT(PLAYER.PLAYER_ID(), 0.25)
@@ -147,7 +143,16 @@ health = menu.list(self_option, "恢复", {}, "")
     end)
 
 movement_opt = menu.list(self_option, "移动选项", {}, "")
-    menu.list_action(movement_opt, "行走风格", {}, "", movement_style.name, function(index, value, click_type)
+    menu.toggle(movement_opt, "禁用摔倒", {}, "使你的人物无法摔倒", function(toggled)
+        disable_ragdoll(toggled)
+    end)
+    menu.toggle_loop(movement_opt, "穿墙", {}, "", function()
+        PED.SET_PED_CAPSULE(PLAYER.PLAYER_PED_ID(), 0.001)
+    end)
+    menu.toggle(movement_opt, "无碰撞", {}, "完全失去碰撞", function(toggle)
+        ENTITY.SET_ENTITY_COLLISION(PLAYER.PLAYER_PED_ID(), not toggle, true)
+    end)
+    menu.list_action(movement_opt, "行走风格", {}, "", movement_style.name, function(index)
         if index == 1 then
             PED.RESET_PED_MOVEMENT_CLIPSET(PLAYER.PLAYER_PED_ID(), 0.5)
         else
@@ -155,6 +160,9 @@ movement_opt = menu.list(self_option, "移动选项", {}, "")
             request_anim_set(style)
             PED.SET_PED_MOVEMENT_CLIPSET(PLAYER.PLAYER_PED_ID(), style, 0.5)
         end
+    end)
+    menu.toggle_loop(movement_opt,'软趴趴移动', {}, '关闭禁用摔倒', function()
+        soft_moving()
     end)
     menu.toggle(movement_opt, "蜘蛛侠飞行", {}, "", function(on)
         superman_fly(on)
@@ -172,7 +180,7 @@ movement_opt = menu.list(self_option, "移动选项", {}, "")
     menu.toggle(movement_opt, "丝滑移动", {}, "", function(on)
         Silky_movement(on)
     end)
-    no_clip_lt = menu.list(movement_opt, "无碰撞", {}, "")
+    no_clip_lt = menu.list(movement_opt, "无碰撞移动", {}, "")
         menu.toggle(no_clip_lt,'开启', {}, '', function(on)
             no_clip(on)
         end)
@@ -186,64 +194,64 @@ aspect_opt = menu.list(self_option, "外观选项", {}, "")
     end)
     Face_Editor = menu.list(aspect_opt, "面部编辑器", {}, "仅适用于线上角色")
         menu.slider_float(Face_Editor, "鼻子宽度 (Thin/Wide)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 0, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 0, Value)
         end)
         menu.slider_float(Face_Editor, "鼻峰 (Up/Down)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 1, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 1, Value)
         end)
         menu.slider_float(Face_Editor, "鼻子宽度 (Long/Short)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 2, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 2, Value)
         end)
         menu.slider_float(Face_Editor, "鼻骨 Curveness (Crooked/Curved)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 3, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 3, Value)
         end)
         menu.slider_float(Face_Editor, "鼻尖 (Up/Down)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 4, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 4, Value)
         end)
         menu.slider_float(Face_Editor, "鼻骨扭曲 (Left/Right)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 5, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 5, Value)
         end)
         menu.slider_float(Face_Editor, "眉毛 (Up/Down)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 6, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 6, Value)
         end)
         menu.slider_float(Face_Editor, "眉毛 (In/Out)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 7, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 7, Value)
         end)
         menu.slider_float(Face_Editor, "颧骨 (Up/Down)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 8, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 8, Value)
         end)
         menu.slider_float(Face_Editor, "脸颊侧面骨骼 (In/Out)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 9, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 9, Value)
         end)
         menu.slider_float(Face_Editor, "颧骨宽度 (Puffed/Gaunt)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 10, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 10, Value)
         end)
         menu.slider_float(Face_Editor, "眼廓 (Wide/Squinted)", {}, "", -100, 100, 0, 10, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 11, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 11, Value)
         end)
         menu.slider_float(Face_Editor, "唇厚度 (Fat/Thin)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 12, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 12, Value)
         end)
         menu.slider_float(Face_Editor, "颌骨宽度 (Narrow/Wide)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 13, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 13, Value)
         end)
         menu.slider_float(Face_Editor, "颌骨形状 (Round/Square)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 14, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 14, Value)
         end)
         menu.slider_float(Face_Editor, "颏骨 (Up/Down)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 15, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 15, Value)
         end)
         menu.slider_float(Face_Editor, "颏骨长度 (In/Out or Backward/Forward)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 16, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 16, Value)
         end)
         menu.slider_float(Face_Editor, "颏骨形状 (Pointed/Square)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 17, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 17, Value)
         end)
         menu.slider_float(Face_Editor, "颏骨洞 (Chin Bum)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 18, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 18, Value)
         end)
         menu.slider_float(Face_Editor, "颈部厚度 (Thin/Thick)", {}, "", -100, 100, 0, 1, function(Value)
-            PED.SET_PED_MICRO_MORPH(players.user_ped(), 19, Value)
+            PED.SET_PED_MICRO_MORPH(PLAYER.PLAYER_PED_ID(), 19, Value)
         end)
 
     menu.toggle_loop(aspect_opt, "清洁自己", {}, "保持自身清洁", function()
@@ -284,12 +292,15 @@ aspect_opt = menu.list(self_option, "外观选项", {}, "")
         PED1._SET_PED_HAIR_COLOR(PLAYER.PLAYER_PED_ID(), math.random(33, 53), math.random(33, 53))--发型颜色
         util.yield(100)
     end)
-    menu.slider(aspect_opt, '幽灵', {}, '修改您人物的不透明度.', 0, 255, 255, 51, function(value)
+    menu.click_slider(aspect_opt, '幽灵', {}, '修改您人物的不透明度.', 0, 255, 255, 51, function(value)
         ENTITY.SET_ENTITY_ALPHA(PLAYER.PLAYER_PED_ID(), value, false)
     end)
 
 action_list = menu.list(self_option, "人物行为", {}, "")
-    menu.toggle_loop(action_list, '自转', {}, '', function(on)
+    menu.toggle(action_list, '允许下蹲', {}, '通过ctrl', function(toggle)
+        allow_ducking(toggle)
+    end)
+    menu.toggle_loop(action_list, '自转', {}, '', function()
         ENTITY.APPLY_FORCE_TO_ENTITY(PLAYER.PLAYER_PED_ID(), 5, 200, 8200, 89000, 10, 10, 100, 10000, false, true)
         TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
     end)
@@ -302,6 +313,20 @@ action_list = menu.list(self_option, "人物行为", {}, "")
     end)
     menu.toggle_loop(action_list, '野兽跳跃', {}, '', function()
         MISC.SET_SUPER_JUMP_THIS_FRAME(PLAYER.PLAYER_ID())
+    end)
+    menu.toggle(action_list, '超级跑', {}, '', function(on)
+        if on then
+            PLAYER.SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER(PLAYER.PLAYER_ID(), 1.49)
+        else
+            PLAYER.SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER(PLAYER.PLAYER_ID(), 1.0)
+        end
+    end)
+    menu.toggle(action_list, '快速游泳', {}, '', function(on)
+        if on then
+            PLAYER.SET_SWIM_MULTIPLIER_FOR_PLAYER(PLAYER.PLAYER_ID(), 1.49)
+        else
+            PLAYER.SET_SWIM_MULTIPLIER_FOR_PLAYER(PLAYER.PLAYER_ID(), 1.0)
+        end
     end)
     menu.toggle_loop(action_list, '抽搐野兽跳跃', {}, '', function()
         MISC.SET_BEAST_JUMP_THIS_FRAME(PLAYER.PLAYER_ID())
@@ -363,7 +388,7 @@ action_list = menu.list(self_option, "人物行为", {}, "")
 
 menu.toggle_loop(self_option, "快速重生", {}, "", function()--fastRespawn(freemode_properties) --Update 1.68
     local gwobaw = memory.script_global(2672741 + 1689 + 756)
-    if PED.IS_PED_DEAD_OR_DYING(players.user_ped()) then
+    if PED.IS_PED_DEAD_OR_DYING(PLAYER.PLAYER_PED_ID()) then
         --GRAPHICS.ANIMPOSTFX_STOP_ALL()
         memory.write_int(gwobaw, memory.read_int(gwobaw) | 1 << 1)
     end;end,function()
@@ -374,9 +399,9 @@ end)
 menu.toggle_loop(self_option, '超级飞行', {}, '按下跳跃的时间越长,继续走得更高（也可用于飞行）', function()
     if PAD.IS_CONTROL_PRESSED(0, 22) and PAD.IS_CONTROL_PRESSED(0, 32) then
         PED.SET_PED_CAN_RAGDOLL(PLAYER.PLAYER_PED_ID(), false)
-        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(PLAYER.PLAYER_PED_ID(), 1, 0, 0.6, 0.6, 0, true, true, true, true)
+        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(PLAYER.PLAYER_PED_ID(), 1, 0, 0.6, 0.6, true, true, true, true)
         if ENTITY.IS_ENTITY_IN_AIR(PLAYER.PLAYER_PED_ID()) then
-            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(PLAYER.PLAYER_PED_ID(), 1, 0, 0, 0.6, 0, true, true, true, true)
+            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(PLAYER.PLAYER_PED_ID(), 1, 0, 0, 0.6, true, true, true, true)
         end
     end
 end)
@@ -550,7 +575,7 @@ tripped = menu.list(self_option, '摔倒', {}, '')
         tripped1(toggle)
     end)
     menu.toggle_loop(tripped, '摔倒v2', {}, '', function()
-        tripped2()
+        PED.SET_PED_TO_RAGDOLL(PLAYER.PLAYER_PED_ID(), 2000, 2000, 0, true, true, true)
     end)
 
 trailsOpt = menu.list(self_option,"轨迹", {}, "")
@@ -577,7 +602,7 @@ fire_wings = menu.list(self_option, '翅膀', {})
     menu.toggle(fire_wings, 'XP火翅膀', {}, '', function(toggled)
         xp_fireWing(toggled)
     end)
-    menu.toggle(fire_wings, '彩色翅膀', {}, '', function(toggled)
+    menu.toggle(fire_wings, '彩虹翅膀', {}, '', function(toggled)
         colorful_fireWing(toggled)
     end)
 
@@ -610,7 +635,7 @@ menu.action(self_option, "给予降落伞", {}, "", function()
 end)
 
 wanted_level = menu.list(self_option, '通缉选项', {}, '')
-    menu.slider(wanted_level, '通缉等级', {}, '', 0, 5, 0, 1, function(value)
+    menu.click_slider(wanted_level, '通缉等级', {}, '', 0, 5, 0, 1, function(value)
         PLAYER.SET_PLAYER_WANTED_LEVEL(PLAYER.PLAYER_ID(), value, false)
         PLAYER.SET_PLAYER_WANTED_LEVEL_NOW(PLAYER.PLAYER_ID(),  false)
     end)
@@ -618,7 +643,7 @@ wanted_level = menu.list(self_option, '通缉选项', {}, '')
         PLAYER.SET_PLAYER_WANTED_LEVEL(PLAYER.PLAYER_ID(), 0, false)
         PLAYER.SET_PLAYER_WANTED_LEVEL_NOW(PLAYER.PLAYER_ID(),  false)
     end)
-    menu.slider(wanted_level, '虚假通缉等级', {}, '', 0, 6, 0, 1, function(value)
+    menu.click_slider(wanted_level, '虚假通缉等级', {}, '', 0, 6, 0, 1, function(value)
         MISC.SET_FAKE_WANTED_LEVEL(value)
     end)
 
@@ -717,11 +742,17 @@ online_other = menu.list(online, "战局信息", {}, "")
         local strg = "~b~ Time ~w~"..h.." : "..m
         draw_string(strg, 0.03, 0.2, 0.6, 4)
     end)
+    menu.toggle_loop(online_other,"绘制区域", {}, "", function()
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), true)
+        draw_string(string.format("~b~ Zone ~w~"..ZONE.GET_NAME_OF_ZONE(pos.x,pos.y,pos.z)), 0.03, 0.25, 0.6, 4)
+    end)
+
     menu.toggle_loop(online_other,"绘制坐标", {}, "", function()
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), true)
         local strg = "~b~ pos x:  ~w~"..pos.x.."\n~b~ pos y:  ~w~"..pos.y.."\n~b~ pos z:  ~w~"..pos.z
         draw_string(strg, 0.85, 0.1, 0.5, 4)
     end)
+
     show_time = menu.toggle(online_other, "显示时间", {}, "配置[√]\n请于其他选项使用[保存配置]", function(state)
         daidaishijian(state)
     end)
@@ -840,7 +871,7 @@ online_services = menu.list(online, "线上服务", {}, "")
         menu.trigger_commands("spoofedname " .. name)
         menu.trigger_commands("spoofname on")
     end)
-    menu.slider(online_services, "设置精神状态", {}, "切换战局生效",0, 100, 0, 1, function(val)
+    menu.click_slider(online_services, "设置精神状态", {}, "切换战局生效",0, 100, 0, 1, function(val)
         STATS.STAT_SET_FLOAT(util.joaat("MPPLY_PLAYER_MENTAL_STATE"), val, true)
         STATS.STAT_SET_FLOAT(util.joaat("MP0_PLAYER_MENTAL_STATE"), val, true)
         STATS.STAT_SET_FLOAT(util.joaat("MP1_PLAYER_MENTAL_STATE"), val, true)
@@ -1393,6 +1424,12 @@ veh_performance = menu.list(vehicle, '外观和性能', {}, '')
         local rgb = gradient_colour(timer, 2)
         VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, rgb.r, rgb.g, rgb.b)
     end)
+    menu.toggle_loop(veh_performance, "彩虹大灯", {}, "", function()
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
+        VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 22, true)
+        VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vehicle, math.random(0, 12))  
+        util.yield(500)
+    end)
     menu.toggle_loop(veh_performance, "彩虹霓虹灯", {}, "", function()
         local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
         local timer = MISC.GET_GAME_TIMER()
@@ -1415,12 +1452,12 @@ veh_performance = menu.list(vehicle, '外观和性能', {}, '')
             ENTITY.SET_ENTITY_RENDER_SCORCHED(player_cur_car, toggle)
         end
     end)
-    menu.slider(veh_performance, "设置污垢等级", {}, "", 0, 15, 0, 1, function(num)
+    menu.click_slider(veh_performance, "设置污垢等级", {}, "", 0, 15, 0, 1, function(num)
         local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), true)
         VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, num)
     end)
     
-    menu.slider(veh_performance, "载具透明度", {}, "", 0, 255, 255, 51, function (s)
+    menu.click_slider(veh_performance, "载具透明度", {}, "", 0, 255, 255, 51, function (s)
         ENTITY.SET_ENTITY_ALPHA(entities.get_user_vehicle_as_handle(), s, false)
     end)
     set_self_license = menu.list(veh_performance, "自定义车牌", {}, "")
@@ -1488,10 +1525,57 @@ veh_UI = menu.list(vehicle, '载具UI', {}, '')
         end
     end)
 
+vehicleWeaponRoot = menu.list(vehicle, "载具武器", {}, "")
+    menu.toggle_loop(vehicleWeaponRoot, "载具导弹自瞄", {}, "当玩家在可视范围内发射导弹自动锁定玩家", function()
+        veh_missile_aimbit()
+    end)
+    vehicleWeaponmissile = menu.list(vehicleWeaponRoot, "载具导弹", {}, "")
+        menu.toggle_loop(vehicleWeaponmissile, "载具导弹", {}, "", function()
+            vehweapon_veh()
+        end, function () 
+            Vw_state = 0 
+        end)
+        menu.toggle_loop(vehicleWeaponmissile, "载具激光", {}, "", function ()
+            vehlaser()
+        end)
+        menu.list_select(vehicleWeaponmissile, "设置载具武器", {}, "", vehweapon_name, 1, function (value, menu_name, prev_value, click_type)
+            setvehweapon(value, menu_name, prev_value, click_type)
+        end)
+        vehicleWeaponsControl = menu.list(vehicleWeaponmissile, "更改按键", {}, "")
+            for name, control in pairs(Imputs_vehweapon) do
+                local keyboard, controller = control[1]:match('^(.+)%s?;%s?(.+)$')
+                local strg = ("%s: %s, %s: %s"):format(trans_plane.Keyboard, keyboard, trans_plane.Controller, controller)
+                menu.action(vehicleWeaponsControl, strg, {}, "", function()
+                    funConfig.controls.vehicleweapons = control[2]
+                    util.show_corner_help(trans_plane.VehicleWeapons:format(name))
+                end)
+            end
+    list_homingMissiles = menu.list(vehicleWeaponRoot, "先进追踪导弹", {}, "允许您在任何载具上使用追踪导弹,并一次射出最多六个目标 ..")
+        mistoggle = menu.toggle_loop(list_homingMissiles, "先进追踪导弹", {}, "", function ()
+            if not UFO.exists() and not GuidedMissile.exists() then
+                HomingMissiles.mainLoop()
+            else
+                menu.set_value(mistoggle, false)
+            end
+        end)
+        whiteList = menu.list(list_homingMissiles, "白名单", {}, "")
+            menu.toggle(whiteList, "朋友", {}, "", HomingMissiles.SetIgnoreFriends)
+            menu.toggle(whiteList, "组织成员", {}, "", HomingMissiles.SetIgnoreOrgMembers)
+            menu.toggle(whiteList, "帮会成员", {}, "", HomingMissiles.SetIgnoreCrewMembers)
+        menu.slider(list_homingMissiles, "最大目标数" , {}, "", 1, 6, 6, 1, HomingMissiles.SetMaxTargets)
+    menu.toggle_loop(vehicleWeaponRoot, "空袭飞机", {}, "使用任何飞机或直升机进行空袭", function ()
+            air_strike_plane()
+        end, function()
+            air_strike_state = 0 
+    end)
+
 workshop = menu.list(vehicle, '洛圣都改车王', {}, '')
     require "lib.sakuralib.Repairshop"
 
 ----载具选项
+menu.action(vehicle, "修复载具", {}, "", function()
+    repair_vehicle(PLAYER.PLAYER_ID())
+end)
 menu.toggle(vehicle, "自动锁门",{},"当你进入载具后自动上锁,下车不受影响", function(toggled)
     auto_locked(toggled)
 end)
@@ -1592,50 +1676,6 @@ end)
 menu.toggle_loop(vehicle, "自动翻转", {}, "如果你的车辆颠倒或侧面将自动翻转回正", function()
     vehicle_automatically()
 end)
-
-vehicleWeaponRoot = menu.list(vehicle, "载具武器", {}, "")
-    vehicleWeaponmissile = menu.list(vehicleWeaponRoot, "载具导弹", {}, "")
-        menu.toggle_loop(vehicleWeaponmissile, "载具导弹", {}, "", function()
-            vehweapon_veh()
-        end, function () 
-            Vw_state = 0 
-        end)
-        menu.toggle_loop(vehicleWeaponmissile, "载具激光", {}, "", function ()
-            vehlaser()
-        end)
-        menu.list_select(vehicleWeaponmissile, "设置载具武器", {}, "", vehweapon_name, 1, function (value, menu_name, prev_value, click_type)
-            setvehweapon(value, menu_name, prev_value, click_type)
-        end)
-        vehicleWeaponsControl = menu.list(vehicleWeaponmissile, "更改按键", {}, "")
-            for name, control in pairs(Imputs_vehweapon) do
-                local keyboard, controller = control[1]:match('^(.+)%s?;%s?(.+)$')
-                local strg = ("%s: %s, %s: %s"):format(trans_plane.Keyboard, keyboard, trans_plane.Controller, controller)
-                menu.action(vehicleWeaponsControl, strg, {}, "", function()
-                    funConfig.controls.vehicleweapons = control[2]
-                    util.show_corner_help(trans_plane.VehicleWeapons:format(name))
-                end)
-            end
-
-    list_homingMissiles = menu.list(vehicleWeaponRoot, "先进追踪导弹", {}, "允许您在任何载具上使用追踪导弹,并一次射出最多六个目标 ..")
-        mistoggle = menu.toggle_loop(list_homingMissiles, "先进追踪导弹", {}, "", function ()
-            if not UFO.exists() and not GuidedMissile.exists() then
-                HomingMissiles.mainLoop()
-            else
-                menu.set_value(mistoggle, false)
-            end
-        end)
-        whiteList = menu.list(list_homingMissiles, "白名单", {}, "")
-            menu.toggle(whiteList, "朋友", {}, "", HomingMissiles.SetIgnoreFriends)
-            menu.toggle(whiteList, "组织成员", {}, "", HomingMissiles.SetIgnoreOrgMembers)
-            menu.toggle(whiteList, "帮会成员", {}, "", HomingMissiles.SetIgnoreCrewMembers)
-        menu.slider(list_homingMissiles, "最大目标数" , {}, "", 1, 6, 6, 1, HomingMissiles.SetMaxTargets)
-
-    menu.toggle_loop(vehicleWeaponRoot, "空袭飞机", {}, "使用任何飞机或直升机进行空袭", function ()
-            air_strike_plane()
-        end, function()
-            air_strike_state = 0 
-    end)
-
 menu.toggle_loop(vehicle, "随机升级", {}, "", function()
     randomupdatcar_self()
     util.yield(500)
@@ -1657,16 +1697,6 @@ menu.toggle_loop(vehicle, "锁定全部载具", {}, "", function()
         for i, vehicle in entities.get_all_vehicles_as_handles() do
             VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_PLAYER(vehicle, pid, true)
             util.yield()
-        end
-    end
-end)
-menu.toggle_loop(vehicle, "Mk2自瞄玩家", {}, "当玩家在可视范围内发射导弹自动锁定玩家", function()
-    for _, pid in players.list(false, true, true) do
-        local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-        local ped_dist = v3.distance(players.get_position(PLAYER.PLAYER_ID()), players.get_position(pid))
-        if not PED.IS_PED_DEAD_OR_DYING(ped) and PAD.IS_CONTROL_PRESSED(0, 70) and ped_dist < 200.0 then
-            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid), false)
-            VEHICLE1.SET_VEHICLE_SHOOT_AT_TARGET(PLAYER.PLAYER_PED_ID(), ped, pos.x, pos.y, pos.z)
         end
     end
 end)
@@ -1760,15 +1790,16 @@ sdroot = menu.list(vehicle, '魔幻激光战马', {}, '')
         Magic_Warhorse_W(value, menu_name, prev_value, click_type)
     end)
 
-menu.slider(vehicle, "换座位", {}, "", 1, 6, 1, 1, function(value)
-    local ourped = PLAYER.PLAYER_PED_ID()
-    if PED.IS_PED_IN_ANY_VEHICLE(ourped, false) then
-        local veh = PED.GET_VEHICLE_PED_IS_IN(ourped, false)
-        PED.SET_PED_INTO_VEHICLE(ourped, veh, value - 2)
-    else
-        util.toast("你还没上车呢")
+menu.click_slider(vehicle, "换座位", {}, "", 1, 6, 1, 1, function(value)
+    if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.PLAYER_PED_ID(), false) then
+        local veh = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false)
+        PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), veh, value - 2)
     end
 end)
+menu.toggle(vehicle, "阻止挪座", {}, "防止在驾驶座空闲时自动移到驾驶座上", function(toggled)
+	PED.SET_PED_CONFIG_FLAG(PLAYER.PLAYER_PED_ID(), 184, toggled)
+end)
+
 menu.toggle_loop(vehicle, "粘在地上", {}, "", function()
     local vehicle = PED.GET_VEHICLE_PED_IS_USING(PLAYER.PLAYER_PED_ID())
     local velocity = ENTITY.GET_ENTITY_VELOCITY(vehicle)
@@ -1999,16 +2030,16 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
 
     island_cut = menu.list(perrico_island, "分红调整", {}, "分红界面出现时再修改")--佩里科岛
         cayo_cut = menu.list(island_cut, "玩家[1-4]", {}, "")--https://github.com/CrazyZhang666/GTA5OnlineTools/tree/c2bf00804661a81917bd7656f6d306dc591ab795/GTA5MenuExtra/Views/HeistsEditor
-            menu.slider(cayo_cut, "玩家1", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+            menu.click_slider(cayo_cut, "玩家1", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                 SET_INT_GLOBAL(1970744 + 831 + 56 + 1, value)
             end)
-            menu.slider(cayo_cut, "玩家2", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+            menu.click_slider(cayo_cut, "玩家2", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                 SET_INT_GLOBAL(1970744 + 831 + 56 + 2, value)
             end)
-            menu.slider(cayo_cut, "玩家3", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+            menu.click_slider(cayo_cut, "玩家3", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                 SET_INT_GLOBAL(1970744 + 831 + 56 + 3, value)
             end)
-            menu.slider(cayo_cut, "玩家4", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+            menu.click_slider(cayo_cut, "玩家4", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                 SET_INT_GLOBAL(1970744 + 831 + 56 + 4, value)
             end)
         menu.action(island_cut, "自保分红", {}, "全员135%,自己60%", function()--Update tag(1.68)
@@ -2017,7 +2048,7 @@ perrico_island = menu.list(Task_robbery, "佩里科岛", {}, "")
             SET_INT_GLOBAL(1970744 + 831 + 56 + 3, 135)
             SET_INT_GLOBAL(1970744 + 831 + 56 + 4, 135)
         end)
-        menu.slider(island_cut, "全员分红", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+        menu.click_slider(island_cut, "全员分红", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
             SET_INT_GLOBAL(1970744 + 831 + 56 + 1, value)
             SET_INT_GLOBAL(1970744 + 831 + 56 + 2, value)
             SET_INT_GLOBAL(1970744 + 831 + 56 + 3, value)
@@ -2163,16 +2194,16 @@ casino = menu.list(Task_robbery, "名钻赌场", {}, "")
 
     casino_fenhong = menu.list(casino, "分红调整", {}, "")--赌场
         casino_cut = menu.list(casino_fenhong, "玩家[1-4]", {}, "")
-            menu.slider(casino_cut, "玩家1", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+            menu.click_slider(casino_cut, "玩家1", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                 SET_INT_GLOBAL(1963945 + 1497 + 736 + 92 + 1, value)
             end)
-            menu.slider(casino_cut, "玩家2", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+            menu.click_slider(casino_cut, "玩家2", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                 SET_INT_GLOBAL(1963945 + 1497 + 736 + 92 + 2, value)
             end)
-            menu.slider(casino_cut, "玩家3", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+            menu.click_slider(casino_cut, "玩家3", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                 SET_INT_GLOBAL(1963945 + 1497 + 736 + 92 + 3, value)
             end)
-            menu.slider(casino_cut, "玩家4", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+            menu.click_slider(casino_cut, "玩家4", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                 SET_INT_GLOBAL(1963945 + 1497 + 736 + 92 + 4, value)
             end)
         menu.action(casino_fenhong, "自保分红", {}, "全员146%, 自己60%", function()--Update tag(1.68)
@@ -2181,7 +2212,7 @@ casino = menu.list(Task_robbery, "名钻赌场", {}, "")
             SET_INT_GLOBAL(1963945 + 1497 + 736 + 92 + 3, 146)
             SET_INT_GLOBAL(1963945 + 1497 + 736 + 92 + 4, 146)
         end)
-        menu.slider(casino_fenhong, "自定义分红", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+        menu.click_slider(casino_fenhong, "自定义分红", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
             SET_INT_GLOBAL(1963945 + 1497 + 736 + 92 + 1, value)
             SET_INT_GLOBAL(1963945 + 1497 + 736 + 92 + 2, value)
             SET_INT_GLOBAL(1963945 + 1497 + 736 + 92 + 3, value)
@@ -2198,7 +2229,7 @@ casino = menu.list(Task_robbery, "名钻赌场", {}, "")
     end)
     advanced_options_casino = menu.list(casino, "高级选项", {}, "")--赌场
         menu.toggle_loop(advanced_options_casino, "自动鼠标左键点击", {}, "用于拿取目标财物时",function()
-            if TASK.GET_IS_TASK_ACTIVE(players.user_ped(), 135) then
+            if TASK.GET_IS_TASK_ACTIVE(PLAYER.PLAYER_PED_ID(), 135) then
                 PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 237, 1)
                 util.yield(50)
             end
@@ -2251,19 +2282,19 @@ doomsday = menu.list(Task_robbery, "末日豪杰", {}, "")
     doomsday_cut = menu.list(doomsday, "分红设置", {}, "")--末日
         doomsday_cut1 = menu.list(doomsday_cut, "末日分红", {}, "")
             doomsday_cut_p = menu.list(doomsday_cut1, "玩家[1-4]", {}, "")
-                menu.slider(doomsday_cut_p, "玩家1", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+                menu.click_slider(doomsday_cut_p, "玩家1", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                     SET_INT_GLOBAL(1959865 + 812 + 50 + 1, value)
                 end)
-                menu.slider(doomsday_cut_p, "玩家2", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+                menu.click_slider(doomsday_cut_p, "玩家2", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                     SET_INT_GLOBAL(1959865 + 812 + 50 + 2, value)
                 end)
-                menu.slider(doomsday_cut_p, "玩家3", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+                menu.click_slider(doomsday_cut_p, "玩家3", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                     SET_INT_GLOBAL(1959865 + 812 + 50 + 3, value)
                 end)
-                menu.slider(doomsday_cut_p, "玩家4", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+                menu.click_slider(doomsday_cut_p, "玩家4", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                     SET_INT_GLOBAL(1959865 + 812 + 50 + 4, value)
                 end)
-            menu.slider(doomsday_cut1, "全员分红", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
+            menu.click_slider(doomsday_cut1, "全员分红", {}, "(%)", 0, 1000, 25, 5, function(value)--Update tag(1.68)
                 SET_INT_GLOBAL(1959865 + 812 + 50 + 1, value)
                 SET_INT_GLOBAL(1959865 + 812 + 50 + 2, value)
                 SET_INT_GLOBAL(1959865 + 812 + 50 + 3, value)
@@ -2407,6 +2438,9 @@ end)
 
 ----武器选项
 weaponsetting = menu.list(weapons, '武器设置', {}, '')
+    menu.action(weaponsetting, "强制丢弃武器", {}, "强制丢弃当前武器", function()
+        force_discard_weapon()
+    end)
     menu.action(weaponsetting, "给予所有武器", {}, "", function()
         give_all_weapon(PLAYER.PLAYER_ID())
     end)
@@ -2505,6 +2539,9 @@ entity_control = menu.list(weapons, "实体控制枪", {}, "控制你所瞄准�
     require "lib.sakuralib.Entity_control"
 
 weapon_fun = menu.list(weapons, "武器娱乐", {}, "")
+    menu.toggle(weapon_fun, "小狗枪", {}, "", function(toggle)
+        poodle_gun(toggle)
+    end)
     magnetic_gun = menu.list(weapon_fun, "磁力枪", {}, "")
         menu.toggle_loop(magnetic_gun, "磁力枪", {}, "具有磁力的枪,可控制车辆去向", function ()
             ciliqiang()
@@ -2672,9 +2709,7 @@ weapon_fun = menu.list(weapons, "武器娱乐", {}, "")
     end)
     vehicleGun = menu.list(weapon_fun,"载具枪", {}, "")
         menu.toggle_loop(vehicleGun,"开启", {}, "", function ()
-                Vehicle_gun()
-            end, function()
-                Vehicle_gun_stop()
+            Vehicle_gun()
         end)
         menu.list_select(vehicleGun,"选择载具", {}, "", Objoptions_all, 1, function (value, menu_name, prev_value, click_type)
             Vehicle_gun_opt(value, menu_name, prev_value, click_type)
@@ -2716,7 +2751,7 @@ end)
 menu.toggle_loop(weapons, "显示准星", {}, '', function()
     front_sight("·")
 end)
-menu.slider_float(weapons, "近战伤害修改", {"meleedamage"}, "", 100, 1000, 100, 10, function(value)
+menu.click_slider_float(weapons, "近战伤害修改", {"meleedamage"}, "", 100, 1000, 100, 10, function(value)
     PLAYER.SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER(PLAYER.PLAYER_ID(), value / 100)
 end)
 menu.toggle_loop(weapons, "无爆炸物", {}, "移除玩家所有爆炸性弹药,甚至是火箭弹", function()
@@ -2832,6 +2867,9 @@ menu.toggle_loop(weapons, '翻滚换弹', {}, '', function()
 end)
 
 ----------娱乐选项
+menu.action(funfeatures, '野兽模式', {}, '当然,这是虚假的野兽', function()
+    beast_mode()
+end)
 menu.toggle(funfeatures, "丧尸模式", {}, '', function(toggle)
     Zombie_Mode(toggle)
 end)
@@ -3048,16 +3086,9 @@ green_soda = menu.list(funfeatures, "绿汽水")
 menu.toggle(funfeatures, "灵魂出窍", {}, "", function(toggle)
     Out_body(toggle)
 end)
-
 menu.toggle_loop(funfeatures, "homer粒子", {}, "", function()
-    local player_pos = players.get_position(PLAYER.PLAYER_ID())
-    request_ptfx_asset("scr_sum2_hal")
-    GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-    suijijianqi(jianqi), player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-    util.yield(200)
+    homer_particle()
 end)
-
 menu.toggle(funfeatures, "火拳",{}, "",function(on)
     Fire_Fist(on)
 end)
@@ -3333,8 +3364,8 @@ menu.toggle_loop(funfeatures, '钢铁侠', {}, '', function()
         Iron_Man_stop()
 end)
 
-menu.toggle_loop(funfeatures, "UFO勇闯洛城", {}, "在你的周围随机生成UFO", function(toggle)
-    UFO_Los_Angeles(toggle)
+menu.toggle_loop(funfeatures, "UFO勇闯洛城", {}, "在你的周围随机生成UFO", function()
+    UFO_Los_Angeles()
 end)
 
 menu.toggle(funfeatures, "洛城暴乱", {}, "开启后,周围的npc会进入无差别攻击模式!", function(toggle)
@@ -3418,262 +3449,51 @@ force_field = menu.list(funfeatures, "力场Pro", {}, "")
         Plot_force_field_range()
     end)
 
-
-
-
 -------崩溃全局
 menu.action(sk, "无效降落伞", {}, "", function ()
     Invalid_parachute()
 end)
 menu.action(sk, "载具伞崩全局", {}, "崩溃全局", function ()
-    local Pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), true)
-    for pid = 0, 31 do
-        local mypos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), true)
-        local TargetPlayerPed = PLAYER.GET_PLAYER_PED(pid)
-        local Ruiner2 = create_vehicle(util.joaat("Ruiner2"), mypos.x, mypos.y, mypos.z, ENTITY.GET_ENTITY_HEADING(TargetPlayerPed))
-        PED.SET_PED_INTO_VEHICLE(PLAYER.PLAYER_PED_ID(), Ruiner2, -1)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, mypos.x, mypos.y, 1000, false, true, true)
-        util.yield(200)
-        VEHICLE1._SET_VEHICLE_PARACHUTE_MODEL(Ruiner2, util.joaat("prop_beach_parasol_05"))
-        VEHICLE1._SET_VEHICLE_PARACHUTE_ACTIVE(Ruiner2, true)
-        util.yield(200)
-        delete_entity(Ruiner2)
-    end
-    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), Pos.x, Pos.y, Pos.z, false, true, true)
+    veh_ubl_carsh()
 end)
-
 menu.toggle_loop(sk, "飞机模型崩溃", {}, "", function()
     airplane_collapsed1()
 end)
 menu.action(sk, "崩溃主机", {}, "使用前请确认自己是否为主机", function(pid)
     hostcrash(pid)
 end)
-
 menu.action(sk, "人物伞崩V1", {}, "", function()
-    local SelfPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
-    local PreviousPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
-    for n = 0 , 3 do
-        local object_hash = util.joaat("prop_logpile_06b")
-        request_model(object_hash)
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0,0,500, false, true, true)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 1000, false)
-        util.yield(1000)
-        for i = 0 , 20 do
-            PED.FORCE_PED_TO_OPEN_PARACHUTE(SelfPlayerPed)
-        end
-        util.yield(1000)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
-
-        local object_hash2 = util.joaat("prop_beach_parasol_03")
-        request_model(object_hash2)
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash2)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0,0,500, 0, 0, 1)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 1000, false)
-        util.yield(1000)
-        for i = 0 , 20 do
-            PED.FORCE_PED_TO_OPEN_PARACHUTE(SelfPlayerPed)
-        end
-        util.yield(1000)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
-    end
-    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
+    ped_ubl_crashv1()
 end)
-
 menu.action(sk,"人物伞崩V2", {}, "", function()
-    for n = 0 , 5 do
-        PEDP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
-        object_hash = 1381105889
-                                    STREAMING.REQUEST_MODEL(object_hash)
-      while not STREAMING.HAS_MODEL_LOADED(object_hash) do
-           util.yield()
-         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
-        util.yield(1000)
-        for i = 0 , 20 do
-        PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
-        end
-        util.yield(1000)
-        menu.trigger_commands("tplsia")
-        bush_hash = 720581693
-                                    STREAMING.REQUEST_MODEL(bush_hash)
-      while not STREAMING.HAS_MODEL_LOADED(bush_hash) do
-           util.yield()
-         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),bush_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
-           util.yield(1000)
-        for i = 0 , 20 do
-        PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
-        end
-        util.yield(1000)
-        menu.trigger_commands("tplsia")
-        end
+    ped_ubl_crashv2()
 end)
-
 menu.action(sk,"人物伞崩V3",{},"",function()
-    for n = 0 , 5 do
-        PEDP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
-        object_hash =192829538
-                                    STREAMING.REQUEST_MODEL(object_hash)
-      while not STREAMING.HAS_MODEL_LOADED(object_hash) do
-           util.yield()
-         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
-        util.yield(1000)
-        for i = 0 , 20 do
-        PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
-        end
-        util.yield(1000)
-        menu.trigger_commands("tplsia")
-        bush_hash = 	192829538
-                                    STREAMING.REQUEST_MODEL(bush_hash)
-      while not STREAMING.HAS_MODEL_LOADED(bush_hash) do
-           util.yield()
-         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),bush_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
-           util.yield(1000)
-        for i = 0 , 20 do
-        PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
-        end
-        util.yield(1000)
-        menu.trigger_commands("tplsia")
-    end
+    ped_ubl_crashv3()
 end)
-
 menu.action(sk,"人物伞崩V4",{},"",function()
-    for n = 0 , 5 do
-        PEDP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
-        object_hash = 1117917059
-                                    STREAMING.REQUEST_MODEL(object_hash)
-      while not STREAMING.HAS_MODEL_LOADED(object_hash) do
-           util.yield()
-         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
-        util.yield(1000)
-        for i = 0 , 20 do
-        PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
-        end
-        util.yield(1000)
-        menu.trigger_commands("tplsia")
-        bush_hash = 1117917059
-                                    STREAMING.REQUEST_MODEL(bush_hash)
-      while not STREAMING.HAS_MODEL_LOADED(bush_hash) do
-           util.yield()
-         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),bush_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
-           util.yield(1000)
-        for i = 0 , 20 do
-        PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
-        end
-        util.yield(1000)
-        menu.trigger_commands("tplsia")
-    end
+    ped_ubl_crashv4()
 end)
-
 menu.action(sk,"CARGO崩溃",{},"崩溃所有玩家",function()
     CARGO()
 end)
-
 menu.action(sk, "大自然全局崩溃", {}, "", function()
     nature()
 end)
-
 menu.action(sk, "懂哥崩溃", {}, "", function()
-    for pid = 0, 31 do
-        PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),0xE5022D03)
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()))
-        util.yield(20)
-        local p_pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),p_pos.x,p_pos.y,p_pos.z,false,true,true)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()), 0xFBAB5776, 1000, false)
-        TASK.TASK_PARACHUTE_TO_TARGET(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()),-1087,-3012,13.94)
-        util.yield(500)
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()))
-        util.yield(1000)
-        PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID())
-        TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID()))
-    end
+    dongge_crash()
 end)
-
 menu.action(sk, "全局顶崩", {}, "", function()
     unknown()
 end)
-
 menu.action(sk, "5G崩溃", {}, "", function()
-    for pid = 0, 31 do
-        local TPP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-        local pos = ENTITY.GET_ENTITY_COORDS(TPP, true)
-        pos.z = pos.z + 10
-        veh = entities.get_all_vehicles_as_handles()
-        for i = 1, #veh do
-            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh[i])
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh[i], pos.x,pos.y,pos.z, ENTITY.GET_ENTITY_HEADING(TPP), 10)
-            TASK.TASK_VEHICLE_TEMP_ACTION(TPP, veh[i], 18, 999)
-            TASK.TASK_VEHICLE_TEMP_ACTION(TPP, veh[i], 16, 999)
-        end
-    end
+    G5_crash()
 end)
 menu.action(sk,"冷战崩溃",{},"崩崩崩",function()
-    for n = 0 , 5 do
-        PEDP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
-        object_hash = 1117917059
-        STREAMING.REQUEST_MODEL(object_hash)
-        while not STREAMING.HAS_MODEL_LOADED(object_hash) do
-           util.yield()
-        end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
-        util.yield(1000)
-        for i = 0 , 20 do
-        PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
-        end
-        util.yield(1000)
-        menu.trigger_commands("tplsia")
-        bush_hash = -908104950
-        STREAMING.REQUEST_MODEL(bush_hash)
-        while not STREAMING.HAS_MODEL_LOADED(bush_hash) do
-           util.yield()
-        end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),bush_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
-        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
-           util.yield(1000)
-        for i = 0 , 20 do
-            PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
-        end
-        util.yield(1000)
-        menu.trigger_commands("tplsia")
-    end
+    shiver_crash()
 end)
-menu.action(sk,"声音崩溃战局", {}, "", function()
-    for pid = 0, 31 do
-        local TPP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-        local time = util.current_time_millis() + 2000
-        while time > util.current_time_millis() do
-        local TPPS = ENTITY.GET_ENTITY_COORDS(TPP, true)
-            for i = 1, 20 do
-                AUDIO.PLAY_SOUND_FROM_COORD(-1, "Event_Message_Purple", TPPS.x,TPPS.y,TPPS.z, "GTAO_FM_Events_Soundset", true, 100000, false)
-            end
-            util.yield()
-            for i = 1, 20 do
-            AUDIO.PLAY_SOUND_FROM_COORD(-1, "5s", TPPS.x,TPPS.y,TPPS.z, "GTAO_FM_Events_Soundset", true, 100000, false)
-            end
-            util.yield()
-        end
-    end
+menu.action(sk,"声音崩溃", {}, "", function()
+    sound_crash()
 end)
 
 
@@ -3686,10 +3506,13 @@ end)
 
 ---------------玩家选项
 players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断玩家是否存在
-    menu.divider(menu.player_root(pid), "Sakura")
-    local Player_list = menu.list(menu.player_root(pid), "daidai脚本", {}, "")
+    Player_list = menu.player_root(pid):getChildren()[1]:attachBefore(menu.shadow_root():list('Sakura选项'))
+    --local Player_list = menu.list(menu.player_root(pid), "daidai脚本", {}, "")
+
+    menu.divider(Player_list, "Sakura")
+
         menu.toggle(Player_list, "观看玩家", {}, "", function(toggle)
-            menu.trigger_commands("spectate".. players.get_name(pid), toggle)
+            NETWORK.NETWORK_SET_IN_SPECTATOR_MODE(toggle,PLAYER.GET_PLAYER_PED(pid))
         end)
         menu.toggle(Player_list, '上帝视角', {}, '', function(toggled)
             god_cam(toggled, pid)
@@ -3717,10 +3540,10 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
             end
         end)
 
-        friendly = menu.list(Player_list, "友好选项", {}, "")
-        trolling = menu.list(Player_list, "恶搞选项", {}, "")
-        kickplayer = menu.list(Player_list, "踢出玩家", {}, "")
-        crashplayer = menu.list(Player_list, "崩溃玩家", {}, "")
+    friendly = menu.list(Player_list, "友好选项", {}, "")
+    trolling = menu.list(Player_list, "恶搞选项", {}, "")
+    kickplayer = menu.list(Player_list, "踢出玩家", {}, "")
+    crashplayer = menu.list(Player_list, "崩溃玩家", {}, "")
 
 
     ------友好选项
@@ -3951,7 +3774,6 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
         menu.action(False_notification, "移除现金", {}, "", function()
             util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {-642704387, 0, -242911964, 10000000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
         end)
-
         menu.action(False_notification, "激活导弹锁定干扰器", {}, "", function()
             util.trigger_script_event(SYSTEM.SHIFT_LEFT(pid, 1), {-642704387, 0, -1957780196, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
         end)
@@ -4523,7 +4345,7 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
     menu.action(trolling, "喷射", {}, "", function()
         local player_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
         local bone_index = PED.GET_PED_BONE_INDEX(player_ped, 0x2e28)
-        request_ptfx_asset_peeloop("core_snow")
+        request_ptfx_asset("core_snow")
         GRAPHICS.USE_PARTICLE_FX_ASSET("core_snow")
         GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("cs_mich1_spade_dirt_throw", player_ped, 0, 0, 0, -90, 0, 0, bone_index, 2, false, false, false, 0, 0, 0, 0) 
     end)
@@ -4576,6 +4398,9 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
         towcarpro(pid, index, value)
     end)
 
+    menu.action(vehicle_car, "移除车门", {}, "", function ()
+        remove_doors(pid)
+    end)
     menu.action(vehicle_car, "分离载具零件", {}, "", function()
         detach_vehicle_parts(pid)
     end)
@@ -4732,9 +4557,6 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
     menu.action(vehicle_car, "爆胎", {}, "", function ()
         menu.trigger_commands("poptires".. players.get_name(pid))
     end)
-    menu.action(vehicle_car, "移除车门", {}, "", function ()
-        menu.trigger_commands("removedoors".. players.get_name(pid))
-    end)
     menu.action(vehicle_car, "摧毁螺旋桨", {}, "使螺旋桨失效", function ()
         menu.trigger_commands("destroyprop".. players.get_name(pid))
     end)
@@ -4807,26 +4629,6 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
         menu.list_action(mrplaym, '类型', {''}, '更改在玩家身上下雨的类型', Weaplist, function(weapsel, text)
             Rain_on_players_type(weapsel, text)
         end)
-
-
-    menu.action(vehicle_car, "传送到地下", {}, "", function()
-        local p = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-        local c = ENTITY.GET_ENTITY_COORDS(p)
-        local veh = PED.GET_VEHICLE_PED_IS_IN(p, false)
-        c.z = c.z - 100
-        if PED.IS_PED_IN_ANY_VEHICLE(p, false) then
-            local bool, vector3 = {}, {}
-            repeat
-                bool.success, vector3.floorcoords = util.get_ground_z(c.x, c.y)
-                util.yield()
-            until bool.success
-            request_control(veh)
-            vector3.floorcoords = vector3.floorcoords - 50
-            ENTITY.SET_ENTITY_COORDS(veh, c.x, c.y, vector3.floorcoords, false, false, false, false) --tp undermap
-        else
-            util.toast("玩家不在载具")
-        end
-    end)
 
     menu.action(vehicle_car, "加速带", {}, "在他们面前产生车辆加速带", function() 
         jiasudian(pid)
@@ -4917,28 +4719,31 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
 
     player_veh_teleport = menu.list(vehicle_car, "传送载具", {}, "")
         menu.action(player_veh_teleport, "传送载具到我", {}, "传送玩家最后一个载具\n或当前乘坐的载具", function()
-            tpcartome(pid)
+            tp_player_car_to_coords(pid, ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), true))
         end)
         menu.action(player_veh_teleport, "传送载具到导航点", {}, "传送玩家最后一个载具\n或当前乘坐的载具", function()
-            tocartopoint(pid)
+            tp_player_car_to_point(pid)
+        end)
+        menu.action(player_veh_teleport, "传送到地下", {}, "", function()
+            tp_player_car_to_underground(pid)
         end)
         menu.action(player_veh_teleport, "传送载具到花园银行停机坪", {}, "传送玩家最后一个载具\n或当前乘坐的载具", function()
-            tptomaze(pid)
+            tp_player_car_to_coords(pid, tp_playerveh_coord.maze)
         end)
         menu.action(player_veh_teleport, "传送载具到深海底", {}, "传送玩家最后一个载具\n或当前乘坐的载具", function()
-            tptounderwater(pid)
+            tp_player_car_to_coords(pid, tp_playerveh_coord.underwater)
         end)
         menu.action(player_veh_teleport, "传送载具到高空", {}, "传送玩家最后一个载具\n或当前乘坐的载具", function()
-            tptohighair(pid)
+            tp_player_car_to_coords(pid, tp_playerveh_coord.highair)
         end)
         menu.action(player_veh_teleport, "传送载具到洛圣都改车王", {}, "传送玩家最后一个载具\n或当前乘坐的载具", function()
-            tolsc(pid)
+            tp_player_car_to_coords(pid, tp_playerveh_coord.lsc)
         end)
         menu.action(player_veh_teleport, "传送载具到监狱SCP-173单元", {}, "传送玩家最后一个载具\n或当前乘坐的载具", function()
-            tpscp(pid)
+            tp_player_car_to_coords(pid, tp_playerveh_coord.scp)
         end)
         menu.action(player_veh_teleport, "传送载具到大牢房中", {}, "传送玩家最后一个载具\n或当前乘坐的载具", function()
-            tocell(pid)
+            tp_player_car_to_coords(pid, tp_playerveh_coord.cell)
         end)
 
     menu.toggle_loop(vehicle_car, "随机升级", {}, "玩家必须有乘坐过的载具", function(state)
@@ -5196,6 +5001,15 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
     end)
 
     -----崩溃玩家
+    menu.action(crashplayer, "动画崩溃", {}, "", function()
+        anim_dict_crash(pid)
+    end)
+    menu.action(crashplayer, "动画崩溃2", {}, "", function()
+        anim_dict_crash2(pid)
+    end)
+    menu.action(crashplayer, "无效爆炸", {}, "", function()
+        Invalid_explosion(pid)
+    end)
     menu.action(crashplayer, "任务载具崩溃", {}, "", function()
         task_veh_crash(pid)
     end)
@@ -5258,9 +5072,9 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
     end)
 
 
-    menu.action(Player_list, "玩家自检", {}, "检测玩家是否触发作弊者检测", function() 
-        is_player_modder(pid) 
-    end)
+menu.action(Player_list, "玩家自检", {}, "检测玩家是否触发作弊者检测", function() 
+    is_player_modder(pid) 
+end)
 
 end)--玩家选项end
 ----------------
@@ -5431,9 +5245,15 @@ protex = menu.list(protection, "事件保护", {}, "")
     menu.toggle_loop(protex, "阻止玩家观看", {}, "阻止所有观看你的人的同步.", function()
         block_spectate()
     end)
-    menu.toggle_loop(protex, "野兽防护", {}, "防止你被变成野兽,但也会阻止其他人的战局事件.", function()
+    menu.toggle_loop(protex, "野兽防护", {}, "防止你被变成野兽,但也会阻止其他人的战局事件", function()
         if util.spoof_script("am_hunt_the_beast", SCRIPT1.TERMINATE_THIS_THREAD) then
             util.toast("检测到《 猎杀野兽 》事件生成。已终止事件...")
+        end
+    end)
+    menu.toggle_loop(protex, "阻止古奇", {}, "阻止古奇事件", function()
+        if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(util.joaat("fm_content_xmas_mugger")) > 0 then
+            local amLauncherHost = NETWORK.NETWORK_GET_HOST_OF_SCRIPT("am_launcher", -1, 0)
+            MISC.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME("fm_content_xmas_mugger")
         end
     end)
     
@@ -5795,7 +5615,7 @@ free_cam = menu.list(worldlist, "自由相机", {}, "")
 menu.toggle(worldlist, '上帝视角', {}, '', function(toggled)
     god_cam(toggled, PLAYER.PLAYER_ID())
 end)
-menu.slider(worldlist, '神奇的水坑', {}, '', 0, 10, 0, 1, function(val)
+menu.click_slider(worldlist, '神奇的水坑', {}, '', 0, 10, 0, 1, function(val)
     MISC.SET_RAIN(val)
 end)
 menu.action(worldlist,"移除所有摄像头", {}, "", function()
@@ -5825,10 +5645,10 @@ end)
 menu.toggle_loop(worldlist, "锁定游戏视角", {}, "", function()
     CAM.SET_GAMEPLAY_CAM_RELATIVE_HEADING(0)
 end)
-menu.slider(worldlist, "设置时间刻度", {}, "", 0, 10, 10, 1, function(val)
+menu.click_slider(worldlist, "设置时间刻度", {}, "", 0, 10, 10, 1, function(val)
     MISC.SET_TIME_SCALE(val/10)
 end)
-menu.slider(worldlist, "距离比例尺", {}, "", 0, 200, 1, 1, function(val)
+menu.click_slider(worldlist, "距离比例尺", {}, "", 0, 200, 1, 1, function(val)
     override_lodscale(val)
 end)
 
@@ -6211,7 +6031,7 @@ train_list = menu.list(worldlist, "列车选项", {}, "")
 
 hudminimapmenu = menu.list(worldlist, "小地图")
     local mapzoom = 1
-    menu.slider(hudminimapmenu, "小地图缩放", {"minimapzoom"}, "", 0, 100, 0, 1, function(s)
+    menu.click_slider(hudminimapmenu, "小地图缩放", {"minimapzoom"}, "", 0, 100, 0, 1, function(s)
         HUD.SET_RADAR_ZOOM_PRECISE(s)
     end)
 
@@ -6219,8 +6039,6 @@ hudminimapmenu = menu.list(worldlist, "小地图")
     menu.slider(hudminimapmenu,"小地图角度", {"minimapanglme"}, "", 0, 360, 0, 1, function(s)
         mapangle = s
     end)
-
-    mapanglet = off
     menu.toggle(hudminimapmenu,"锁定地图角度", {"lockminimapangle"}, "", function(on)
         mapanglet = on
         while mapanglet do
@@ -6559,14 +6377,12 @@ kongzhitai = menu.list(otherlist, "控制台", {}, "")
         console_bg_color = on_change
     end)
 
-menu.toggle_loop(otherlist, "显示logo", {}, "", function()
-    local logo = directx.create_texture(filesystem.resources_dir() .. '/SakuraImg/Img/' .. 'banner.png')
-    directx.draw_texture(logo, 0.06, 0.1, 0.0, 0.0, 0.86, 0.57, 0, 1, 1, 1, 1)
-end)
-
 pendants = menu.list(otherlist, '小挂件', {}, '')
-    menu.toggle_loop(pendants, '猫和老鼠', {}, '', function()
-        dd_showpng()  
+    menu.toggle(pendants, "显示logo", {}, "", function(toggled)
+        show_logo(toggled)
+    end)
+    menu.toggle(pendants, "Tom&Jerry", {}, "", function(toggled)
+        show_Tom(toggled)
     end)
     illustration = menu.list(pendants, '插图', {}, '')
         local illustration_num = 1
@@ -6587,7 +6403,7 @@ pendants = menu.list(otherlist, '小挂件', {}, '')
         menu.slider_float(illustration, "尺寸", { "illsize" }, "", 0, 200, 80, 1, function(s)
             ill_size = s/800
         end)
-        menu.slider(illustration, "序号", {}, "", 1, 14, 1, 1, function(s)
+        menu.click_slider(illustration, "序号", {}, "", 1, 14, 1, 1, function(s)
             illus_header = directx.create_texture(filesystem.resources_dir() .. "/SakuraImg/illustrations/"..s..".png")
         end)
 
@@ -6667,16 +6483,15 @@ end)
 
 while true do
     --保镖方框绘制
-    bodyguardMenu:onTick()
-
-    Black_list()
-    Black_self()
-    --GuidedMissile
-    GuidedMissile.mainLoop()
-    UFO.mainLoop()
-    OrbitalCannon.mainLoop()
+        bodyguardMenu:onTick()
+    --Guided,ufo,
+        GuidedMissile.mainLoop()
+        UFO.mainLoop()
+        OrbitalCannon.mainLoop()
     --water,air,walk
-    all_drive_style()
+        all_drive_style()
+    --blacklist
+        Black_list() 
 ----
     util.yield()
 end

@@ -379,8 +379,8 @@ function L7_1(A0_2)
 end
 unicode_escape = L7_1
 function L7_1()
-  local L0_2, L1_2
-  function L0_2(A0_3, A1_3, A2_3)
+  local Y0_2, L1_2
+  function Y0_2(A0_3, A1_3, A2_3)
     local L3_3, L4_3, L5_3, L6_3, L7_3, L8_3
     L3_3 = {}
     L3_3.client = "dict-chrome-ex"
@@ -451,21 +451,21 @@ function L7_1()
       end
     end
     function L8_3()
-      local L0_4, L1_4
-      L0_4 = util
-      L0_4 = L0_4.toast
+      local Y0_4, L1_4
+      Y0_4 = util
+      Y0_4 = Y0_4.toast
       L1_4 = "翻译超时啦"
-      L0_4(L1_4)
-      L0_4 = LOG
+      Y0_4(L1_4)
+      Y0_4 = LOG
       L1_4 = "翻译超时啦"
-      L0_4(L1_4)
+      Y0_4(L1_4)
     end
     L4_3(L5_3, L6_3, L7_3, L8_3)
     L4_3 = async_http
     L4_3 = L4_3.dispatch
     L4_3()
   end
-  return L0_2
+  return Y0_2
 end
 createGoogleTranslateCall = L7_1
 function L7_1(A0_2, A1_2, A2_2, A3_2, A4_2)
@@ -674,28 +674,28 @@ L13_1 = "发送翻译文本"
 L14_1 = {}
 L15_1 = "仅使用T or Y即可键入文本\n当使用此选项时你应该首选关闭翻译自我"
 function L16_1()
-  local L0_2, L1_2, L2_2, L3_2, L4_2, L5_2, L6_2
-  L0_2 = PAD
-  L0_2 = L0_2.IS_CONTROL_PRESSED
+  local Y0_2, L1_2, L2_2, L3_2, L4_2, L5_2, L6_2
+  Y0_2 = PAD
+  Y0_2 = Y0_2.IS_CONTROL_PRESSED
   L1_2 = 0
   L2_2 = 245
-  L0_2 = L0_2(L1_2, L2_2)
-  if not L0_2 then
-    L0_2 = PAD
-    L0_2 = L0_2.IS_CONTROL_PRESSED
+  Y0_2 = Y0_2(L1_2, L2_2)
+  if not Y0_2 then
+    Y0_2 = PAD
+    Y0_2 = Y0_2.IS_CONTROL_PRESSED
     L1_2 = 0
     L2_2 = 246
-    L0_2 = L0_2(L1_2, L2_2)
-    if not L0_2 then
+    Y0_2 = Y0_2(L1_2, L2_2)
+    if not Y0_2 then
       goto lbl_48
     end
   end
-  L0_2 = util
-  L0_2 = L0_2.register_label
+  Y0_2 = util
+  Y0_2 = Y0_2.register_label
   L1_2 = "输入文本"
-  L0_2 = L0_2(L1_2)
+  Y0_2 = Y0_2(L1_2)
   L1_2 = get_input_from_screen_keyboard
-  L2_2 = L0_2
+  L2_2 = Y0_2
   L3_2 = 254
   L4_2 = ""
   L1_2 = L1_2(L2_2, L3_2, L4_2)
@@ -752,14 +752,14 @@ function L16_1()
     end
   end
   function L6_2()
-    local L0_3, L1_3
-    L0_3 = util
-    L0_3 = L0_3.toast
+    local Y0_3, L1_3
+    Y0_3 = util
+    Y0_3 = Y0_3.toast
     L1_3 = "翻译超时啦"
-    L0_3(L1_3)
-    L0_3 = LOG
+    Y0_3(L1_3)
+    Y0_3 = LOG
     L1_3 = "翻译超时啦"
-    L0_3(L1_3)
+    Y0_3(L1_3)
   end
   L2_2(L3_2, L4_2, L5_2, L6_2)
   L2_2 = async_http
@@ -933,14 +933,14 @@ function L12_1(A0_2, A1_2, A2_2, A3_2, A4_2, A5_2)
           end
         end
         function L10_2()
-          local L0_3, L1_3
-          L0_3 = util
-          L0_3 = L0_3.toast
+          local Y0_3, L1_3
+          Y0_3 = util
+          Y0_3 = Y0_3.toast
           L1_3 = "翻译超时啦"
-          L0_3(L1_3)
-          L0_3 = LOG
+          Y0_3(L1_3)
+          Y0_3 = LOG
           L1_3 = "翻译超时啦"
-          L0_3(L1_3)
+          Y0_3(L1_3)
         end
         L6_2(L7_2, L8_2, L9_2, L10_2)
         L6_2 = async_http
@@ -1024,28 +1024,28 @@ L14_1 = "发送翻译文本"
 L15_1 = {}
 L16_1 = "仅使用T or Y即可键入文本\n当使用此选项时你应该首选关闭翻译自我"
 function L17_1()
-  local L0_2, L1_2, L2_2, L3_2, L4_2, L5_2, L6_2, L7_2
-  L0_2 = PAD
-  L0_2 = L0_2.IS_CONTROL_PRESSED
+  local Y0_2, L1_2, L2_2, L3_2, L4_2, L5_2, L6_2, L7_2
+  Y0_2 = PAD
+  Y0_2 = Y0_2.IS_CONTROL_PRESSED
   L1_2 = 0
   L2_2 = 245
-  L0_2 = L0_2(L1_2, L2_2)
-  if not L0_2 then
-    L0_2 = PAD
-    L0_2 = L0_2.IS_CONTROL_PRESSED
+  Y0_2 = Y0_2(L1_2, L2_2)
+  if not Y0_2 then
+    Y0_2 = PAD
+    Y0_2 = Y0_2.IS_CONTROL_PRESSED
     L1_2 = 0
     L2_2 = 246
-    L0_2 = L0_2(L1_2, L2_2)
-    if not L0_2 then
+    Y0_2 = Y0_2(L1_2, L2_2)
+    if not Y0_2 then
       goto lbl_60
     end
   end
-  L0_2 = util
-  L0_2 = L0_2.register_label
+  Y0_2 = util
+  Y0_2 = Y0_2.register_label
   L1_2 = "输入文本"
-  L0_2 = L0_2(L1_2)
+  Y0_2 = Y0_2(L1_2)
   L1_2 = get_input_from_screen_keyboard
-  L2_2 = L0_2
+  L2_2 = Y0_2
   L3_2 = 254
   L4_2 = ""
   L1_2 = L1_2(L2_2, L3_2, L4_2)
@@ -1127,14 +1127,14 @@ function L17_1()
     end
   end
   function L7_2()
-    local L0_3, L1_3
-    L0_3 = util
-    L0_3 = L0_3.toast
+    local Y0_3, L1_3
+    Y0_3 = util
+    Y0_3 = Y0_3.toast
     L1_3 = "翻译超时啦"
-    L0_3(L1_3)
-    L0_3 = LOG
+    Y0_3(L1_3)
+    Y0_3 = LOG
     L1_3 = "翻译超时啦"
-    L0_3(L1_3)
+    Y0_3(L1_3)
   end
   L3_2(L4_2, L5_2, L6_2, L7_2)
   L3_2 = async_http

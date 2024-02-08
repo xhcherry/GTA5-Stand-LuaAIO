@@ -13,21 +13,21 @@ local contact = directx.create_texture(store_dir.. 'contact.png')
 
 local hud_green = {
     r = 0, 
-    g = 100,
+    g = 1,
     b = 0,
-    a = 100
+    a = 1
 }
 local hud_red = {
-    r = 255, 
+    r = 1, 
     g = 0,
     b = 0,
-    a = 100
+    a = 1
 }
 local hud_yellow = {
-    r = 255, 
-    g = 187,
+    r = 1, 
+    g = 187 / 255,
     b = 0,
-    a = 100
+    a = 1
 }
 
 --世界坐标转屏幕坐标
