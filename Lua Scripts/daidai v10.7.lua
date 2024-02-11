@@ -54,7 +54,7 @@ module_list = menu.list(menu.my_root(), "模组选项", {}, "")
 Task_robbery = menu.list(menu.my_root(), "任务选项", {},"")
 tp_world = menu.list(menu.my_root(), "传送选项", {})
 worldlist = menu.list(menu.my_root(), "世界选项", {})
-cheater_detection = menu.list(menu.my_root(), "作弊检测", {})
+cheater_detection = menu.list(menu.my_root(), "作弊者检测", {})
 otherlist = menu.list(menu.my_root(), "其他选项", {})
 
 --自我选项
@@ -6491,7 +6491,7 @@ while true do
     --water,air,walk
         all_drive_style()
     --blacklist
-        Black_list() 
+        -- Black_list() 
 ----
     util.yield()
 end

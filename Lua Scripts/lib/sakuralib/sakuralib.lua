@@ -14073,7 +14073,7 @@ async_http.init("http://cnsakura.top", "/other/blacklist.json",function(info,hea
 end, function()
     notification("~y~~bold~云数据库同步错误", HudColour.blue)
 end)
-async_http.dispatch() 
+--async_http.dispatch() 
 
 
 --执行Blacklist

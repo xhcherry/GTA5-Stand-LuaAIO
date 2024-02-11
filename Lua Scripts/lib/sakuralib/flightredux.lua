@@ -72,12 +72,14 @@ function get_lockon_tgt(vehicle)
     return memory.read_int(alloc)
 end
 function getentityinfo()
-    somefile="C:\\Sakura\\function.dll"
-    local F,err=io.open(somefile,"r+");
+    local username = os.getenv("USERNAME")
+    local somefile = string.format("C:\\Users\\%s\\AppData\\Roaming\\Stand\\Lua Scripts\\daidaiScript\\function.dll", username)
+    local F, err = io.open(somefile, "r+")
     if err then
-        util . stop_script ()
+        util.stop_script()
     end
 end
+
 function get_model_size(hash)
     local minptr = memory.alloc(24)
     local maxptr = memory.alloc(24)

@@ -41,22 +41,45 @@ local textnotify={
     "在尘埃落定前奋力一搏",
 }
 
+local name = PLAYER.GET_PLAYER_NAME(players.user())
 function welcomehb()
+    welcome388 = "至臻皇榜 "
     welcomevip = "近来可好，"
     welcomestand = "欢迎 "
-    local name = PLAYER.GET_PLAYER_NAME(players.user())
+
+    for _,id in ipairs(sxid) do
+        if name == id.playeridx then
+            return welcome388
+        end
+    end
+
     for _, id in ipairs(spid) do
         if name == id.playerid then
             return welcomevip
         end
     end
+
     return welcomestand
 end
 
 random_notify = math.random(1,#textnotify)
 
 welcomet1 = menu.toggle_loop(players_root, "你看不到", {"ucantseeit"}, "", function ()
-    notification(textnotify[random_notify] .. "\n"..welcomehb()..PLAYER.GET_PLAYER_NAME(players.user()))
+    if name == "Mag7777V" or name == "Magicswordstar" then
+        notification(textnotify[random_notify] .. "\n"..welcomehb().."佳佳 驾到")
+    elseif name == "Gods_daxiong" then
+        notification(textnotify[random_notify] .. "\n"..welcomehb().."明月 驾到")
+    elseif name == "An_owQ" then
+        notification(textnotify[random_notify] .. "\n"..welcomehb().."安安 驾到")
+    elseif name == "hinrcituqzQZ" then
+        notification(textnotify[random_notify] .. "\n"..welcomehb().."清歌 驾到")
+    elseif name == "XiaoYuXin_qwq" then
+        notification(textnotify[random_notify] .. "\n"..welcomehb().."小雨 驾到")
+    elseif name == "chen_you123" then
+        notification(textnotify[random_notify] .. "\n"..welcomehb().."辰悠 驾到")
+    else
+        notification(textnotify[random_notify] .. "\n"..welcomehb()..PLAYER.GET_PLAYER_NAME(players.user()))
+    end
 end)
 
 welcomet2 = menu.toggle_loop(players_root, "你看不到", {"youcantseeit"}, "", function ()

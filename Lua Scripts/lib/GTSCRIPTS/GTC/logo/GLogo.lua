@@ -41,7 +41,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '2.03'
+GT_version = '2.08'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,7 +49,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("当每个版本的时效到达30天后 会提示你进行更新 此外,你有三天的时间进行更新 否则在三天后将无法使用 更新主机序列 添加了新的皇榜成员 错误修复和功能改进")
+    notification("更新、修复主机序列显示样式和功能\n玩家选项>将创建新的战局选项克隆至此\n检测选项现在被归类为保护选项\n视觉选项现在被归类为娱乐选项\n优化性能，以及运行效率\n添加了新的皇榜成员\n错误修改与功能改进")
 end
 
 function gtoast(string)
@@ -65,7 +65,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 2
-notifyDay = 2
+notifyDay = 8
 
 _G.daysSince = _G.daysSince or 0
 
@@ -9083,10 +9083,6 @@ function sxgt(f)
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~忽有故人心上过，回首山河已是冬")
         elseif playeridx == "zxzppq" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~r~中华人民共和国万岁")
-        elseif playeridx == "sshanheya" then
-            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~妹子最爱的sshanheya")
-        elseif playeridx == "ASKshak" then
-            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~北野在此")
         else
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 "..playeridx.." 正在该战局")
         end
@@ -23533,7 +23529,7 @@ end
 function egaoxuanxianggongneng()
 
 function playerActionsSetup(pid)
-GTROOT = menu.shadow_root():list('GRANDTOURINGVIP')
+GTROOT = menu.shadow_root():list('GRANDTOURINGVIP', {"gtluaplayer"}, "GTVIP YYDS\n点击进入GTVIP玩家选项")
 GTROOT = menu.player_root(pid):getChildren()[1]:attachBefore(GTROOT)
 GTD(GTROOT, "GRANDTOURINGVIP")
 
@@ -23542,8 +23538,52 @@ GT = GTluaScript.list
 local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
 for _,id in ipairs(spid) do
     if name == id.playerid then
-        HbMainMenu = GT(GTROOT, "皇榜专属", {}, "请注意,此选项允许两个相同的皇榜用户互相攻击 我们正在考虑是否也将这一选项列为皇榜免疫")
-        tobe = GTD(HbMainMenu, "将在来年一月开放更多功能!")
+        HbMainMenu = GT(GTROOT, "GTVIP Pro Features ~(>.<)~", {}, "此选项允许两个相同的皇榜用户互相攻击")
+        tobe = GTD(HbMainMenu, "请尽情享用")
+
+        tcb = GTAC(HbMainMenu, "完美谢幕", {}, "", function ()
+            gtoast("请保持不动")
+            util.create_thread(function ()
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                local user = PLAYER.GET_PLAYER_PED(players.user())
+                local pos = ENTITY.GET_ENTITY_COORDS(ped)
+                local my_pos = ENTITY.GET_ENTITY_COORDS(user)
+                local anim_dict = ("anim@mp_player_intupperstinker")
+                request_animation(anim_dict)
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(user, pos.x, pos.y, pos.z, false, false, false)
+                    util.yield(100)
+                    TASK.TASK_SWEEP_AIM_POSITION(user, anim_dict, "get", "fucked", "retard", -1, 0.0, 0.0, 0.0, 0.0, 0.0)
+                    util.yield(750)
+                TASK.CLEAR_PED_TASKS_IMMEDIATELY(user)
+            end)
+            util.create_thread(function ()
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                local pos = players.get_position(pid)
+                local mdl = util.joaat("mp_m_freemode_01")
+                local veh_mdl = util.joaat("powersurge")
+                util.request_model(veh_mdl)
+                util.request_model(mdl)
+
+                for i = 1, 10 do
+                    if not players.exists(pid) then
+                        return
+                    end
+                    local veh = entities.create_vehicle(veh_mdl, pos, 0)
+                    local jesus = entities.create_ped(2, mdl, pos, 0)
+                    ENTITY.SET_ENTITY_VISIBLE(veh, false)
+                    ENTITY.SET_ENTITY_VISIBLE(jesus, false)
+                    PED.SET_PED_INTO_VEHICLE(jesus, veh, -1)
+                    util.yield(100)
+                    TASK.TASK_SUBMARINE_GOTO_AND_STOP(1, veh, pos.x, pos.y, pos.z, 1)
+                    util.yield(1000)
+                    entities.delete_by_handle(jesus)
+                    entities.delete_by_handle(veh)
+                end
+                STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(mdl)
+                STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl)
+                gtoast("已完成")
+            end)
+        end)
 
         tcr = GTAC(HbMainMenu, "戏命师", {}, "我于杀戮之中绽放\n亦如黎明中的花朵", function()
             STREAMING.REQUEST_MODEL(0x78BC1A3C)
@@ -31128,6 +31168,7 @@ function baocun()
     local success, errorMsg = pcall(function()
         gtoast("保存完成")
         todaysdate = os.date("%Y/%m/%d")
+        local hboff = menu.get_value(hb_off)
         local zjxlxs = menu.get_value(zjxlbc)--主机序列
         local wjlxs1 = menu.get_value(wjlxs)--玩家栏
         local stcxs1 = menu.get_value(stcxs)--实体池
@@ -31143,6 +31184,7 @@ function baocun()
         local liulanwj1 = menu.get_value(liulanwj)--玩家浏览
         local jiankang1 = menu.get_value(jiankang)--健康显示
         local configStr = "--保存日期:" .. tostring(todaysdate)
+        local configStr0 = "\nhboff = " .. tostring(hboff)
         local configStr1 = "\nzjxlxs = " .. tostring(zjxlxs)
         local configStr2 = "\nwjlxs1 = " .. tostring(wjlxs1)
         local configStr3 = "\nstcxs1 = " .. tostring(stcxs1)
@@ -31159,6 +31201,7 @@ function baocun()
         local configStr14 = "\njiankang1 = " .. tostring(jiankang1)
         local file = io.open(pathld, 'w')
         file:write(configStr)
+        file:write(configStr0)
         file:write(configStr1)
         file:write(configStr2)
         file:write(configStr3)

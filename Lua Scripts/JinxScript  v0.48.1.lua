@@ -4,11 +4,7 @@ native_invoker.accept_bools_as_ints(true)
 
 local joaat, toast, yield, draw_debug_text, reverse_joaat = util.joaat, util.toast, util.yield, util.draw_debug_text, util.reverse_joaat
 
-local supported_game_version <constexpr> = "1.68-3095"
-if (game_version := menu.get_version().game) != supported_game_version then
-	util.toast($"脚本支持 {supported_game_version}. 游戏版本 {game_version}. 功能可能不可用")
-end
-
+local supported_game_version = "1.68-3095"
 local CWeaponDamageEventTrigger = memory.rip(memory.scan("E8 ? ? ? ? 44 8B 65 80 41 FF C7") + 1)
 local ppCNetworkObjectMgr__sm_Instance = memory.rip(memory.scan("48 8B 0D ? ? ? ? 45 33 C0 E8 ? ? ? ? 48 8B F8") + 3) -- credit to sapphire
 local allowDuckingAddr = memory.read_long(memory.read_long(memory.rip(memory.scan("01 48 8B 05 ? ? ? ? 48 8B 48 18") + 4)) + 0x18) -- this too lol
@@ -422,15 +418,11 @@ local function nullCheck(text_string)
 end
 
 local function getTeamID(playerID)
-	if not isNetPlayerOk(playerID) or util.is_session_transition_active() then
-		return
-	end
+	if not isNetPlayerOk(playerID) then return end
 	local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
 	local pPed = entities.handle_to_pointer(ped)
-	if pPed == 0 then 
-		return 
-	end 
 	local net_obj = memory.read_long(pPed + 0xD0)
+	if net_obj == 0 then return end
 	local teamID = memory.read_byte(net_obj + 0x469)
 	if net_obj != 0 and teamID != 6 then
 		return teamID
@@ -442,6 +434,7 @@ local function getInstanceID(playerID)
 	local pPed = entities.handle_to_pointer(ped)
 	if not isNetPlayerOk(playerID) or ped == 0 then return end 
 	local net_obj = memory.read_long(pPed + 0xD0)
+	if net_obj == 0 then return end
 	local instanceID = memory.read_byte(net_obj + 0x46A)
 	if net_obj != 0 and instanceID != 64 then
 		return instanceID
@@ -780,9 +773,9 @@ local colors = {
 }
 
 local natTypes = {
-	"Open",
-	"Moderate",
-	"Strict",
+	"开放",
+	"中等",
+	"严格",
 }
 
 
@@ -860,22 +853,20 @@ local bones = {31086, 24816, 40269, 45509, 0, 51826, 58271}
 local plates = {" PR1NCE ", " PR2NCE "}
 
 local my_root = menu.my_root()
-local self = my_root:list("自我")
-local audio = my_root:list("音效")
-local online = my_root:list("在线")
-local players_list = my_root:list("玩家")
-local lobby = my_root:list("战局")
-local missions = my_root:list("任务")
-local vehicles = my_root:list("载具")
-local weapons = my_root:list("武器")
-local world = my_root:list("世界")
-local detections = my_root:list("检测", {}, "注意 启用所有检测可能会掉帧")
+local self = my_root:list("自我选项")
+local audio = my_root:list("音效选项")
+local online = my_root:list("在线选项")
+local players_list = my_root:list("玩家选项")
+local lobby = my_root:list("战局选项")
+local missions = my_root:list("任务选项")
+local vehicles = my_root:list("载具选项")
+local weapons = my_root:list("武器选项")
+local world = my_root:list("世界选项")
+local detections = my_root:list("检测选项", {}, "注意 启用所有检测可能会掉帧")
 local modder_detections = detections:list("作弊检测")
 local normal_detections = detections:list("正常检测")
-local protections = my_root:list("保护")
-local funfeatures = my_root:list("趣味")
-local misc = my_root:list("其他")
-local credits = misc:list("鸣谢", {}, "")
+local protections = my_root:list("保护选项")
+local funfeatures = my_root:list("趣味选项")
 
 local menus = {}
 local function player_list(playerID)
@@ -899,9 +890,7 @@ end
 players.on_join(player_list)
 players.on_leave(handle_player_list)
 
-if not SCRIPT_SILENT_START then
-	toast($"你好, {players.get_name(players.user())}!\n欢迎使用 JinxScript!\n官方 Discord: https://discord.gg/hjs5S93kQv")
-end
+
 
 local thrust = self:list("推降落伞")
 local thrustSpeed = 0.0
@@ -2992,7 +2981,7 @@ end)
 normal_detections:toggle_loop("检测语音", {}, "检测谁在游戏聊天中说话", function()
 	for players.list_except() as playerID do
 		if NETWORK_IS_PLAYER_TALKING(playerID) then
-			draw_debug_text($"{players.get_name(playerID)} is talking")
+			draw_debug_text($"{players.get_name(playerID)} 在说话")
 		end
 	end 
 end)
@@ -3491,42 +3480,30 @@ end
 
 local petJinx = funfeatures:list("宠物")
 petJinx:toggle_loop("宠物", {}, "Jinx", function()
-	if not petJinx or not DOES_ENTITY_EXIST(petJinx) then
+	if not petJinx_ped or not DOES_ENTITY_EXIST(petJinx_ped) then
 		local jinx = joaat("a_c_cat_01")
 		util.request_model(jinx)
 		local pos = players.get_position(players.user())
-		petJinx = entities.create_ped(28, jinx, pos, 0)
-		entities.set_can_migrate(petJinx, false)
-		SET_PED_COMPONENT_VARIATION(petJinx, 0, 0, 1, 0)
-		SET_ENTITY_INVINCIBLE(petJinx, true)
+		petJinx_ped = entities.create_ped(28, jinx, pos, 0)
+		entities.set_can_migrate(petJinx_ped, false)
+		SET_PED_COMPONENT_VARIATION(petJinx_ped, 0, 0, 1, 0)
+		SET_ENTITY_INVINCIBLE(petJinx_ped, true)
 	end
-	NETWORK_REQUEST_CONTROL_OF_ENTITY(petJinx)
-	TASK_FOLLOW_TO_OFFSET_OF_ENTITY(petJinx, players.user_ped(), 0, -0.3, 0, 7.0, -1, 1.5, true)
+	NETWORK_REQUEST_CONTROL_OF_ENTITY(petJinx_ped)
+	TASK_FOLLOW_TO_OFFSET_OF_ENTITY(petJinx_ped, players.user_ped(), 0, -0.3, 0, 7.0, -1, 1.5, true)
 end, function()
-	entities.delete(petJinx)
+	entities.delete(petJinx_ped)
 end)
 
 petJinx:action("寻找", {}, "Jinx", function()
 	local pos = players.get_position(players.user())
-	if petJinx != nil then 
-		SET_ENTITY_COORDS_NO_OFFSET(petJinx, pos, false, false, false)
+	if petJinx_ped != nil then 
+		SET_ENTITY_COORDS_NO_OFFSET(petJinx_ped, pos, false, false, false)
 	else
 		toast("Jinx没有找到 :(")
 	end
 end)
 
-misc:hyperlink("加入", "https://discord.gg/hjs5S93kQv", "加入Discord获取有关所有最新和即将推出的消息")
-local jinxCredits = credits:list("Jinx", {}, "它被命名为 JinxScript 的原因")
-jinxCredits:hyperlink("Tiktok", "https://www.tiktok.com/@bigfootjinx")
-jinxCredits:hyperlink("Twitter", "https://twitter.com/bigfootjinx")
-jinxCredits:hyperlink("Instagram", "https://www.instagram.com/bigfootjinx")
-jinxCredits:hyperlink("Youtube", "https://www.youtube.com/channel/UC-nkxad5MRDuyz7xstc-wHQ?sub_confirmation=1")
-credits:action("Sapphire", {}, "处理我所有的自闭症 并在脚本的发展过程中通过一大堆的信息辅助我 就像用勺子喂食一样", function() end)
-credits:action("aaronlink127", {}, "帮助我理解一堆我尚未完全理解的事情 并处理我遇到的问题", function() end)
-credits:action("well in that case", {}, "为让我的生活变得更轻松 制造了pluto", function() end)
-credits:action("Scriptcat", {}, "自从我开始的时候一直在那里 并不断督促我开始学习StandsAPI和本地", function() end)
-credits:action("Pedro9558", {}, "贡献了一些他制作的东西 用于加入脚本", function() end)
-credits:action("ICYPhoenix", {}, "如果他没有将我在 Stand Discord 中的角色更改为OP Jinx Lua 我可能永远不会制作这个脚本 也不会考虑制作这个脚本", function() end)
 menu.apply_command_states()
 
 

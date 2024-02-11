@@ -164,7 +164,7 @@ function Profile.get_profile_from_player(player)
 	self.name = PLAYER.GET_PLAYER_NAME(player)
 	self.rid = players.get_rockstar_id(player)
 	self.crew = Crew.get_player_crew(player)
-	self.ip = get_external_ip(player)
+	--self.ip = get_external_ip(player)
 	return self
 end
 
@@ -582,9 +582,9 @@ function get_external_ip(player)
 	if CPlayerInfo == NULL then
 		return nil
 	end
-	local netPlayerData = CPlayerInfo + 0x20
-	local netAddress = read_net_address(netPlayerData + 0x4C)
-	return netAddress
+	--local netPlayerData = CPlayerInfo + 0x20
+	--local netAddress = read_net_address(netPlayerData + 0x4C)
+	--return netAddress
 end
 local profilesList <const> = ProfileManager.new(menu.my_root())
 

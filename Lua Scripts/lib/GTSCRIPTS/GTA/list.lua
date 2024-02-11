@@ -74,8 +74,6 @@ sxid = {{
     playeridx = "John-Wick-AC"
 }, {
     playeridx = "sshanheya"
-}, {
-    playeridx = "ASKshak"
 },
 }
 
@@ -1724,11 +1722,41 @@ spid = {{
 }, {
     playerid = "AfterJesus"
 }, {
-    playerid = "ASKshak"
+    playerid = "lmqwit"
 }, {
-    playerid = "grplfwsb"
+    playerid = "SL198198"
 }, {
-    playerid = "weiyangxiarong"
+    playerid = "shanghengyu"
+}, {
+    playerid = "Ez2uuG"
+}, {
+    playerid = "LSP-KunK"
+}, {
+    playerid = "zxnb05"
+}, {
+    playerid = "YanGtaoNB"
+}, {
+    playerid = "TianLin0908"
+}, {
+    playerid = "vansmano"
+}, {
+    playerid = "Chiefowo"
+}, {
+    playerid = "c2332618"
+}, {
+    playerid = "kingpo030715"
+}, {
+    playerid = "wyy798002"
+}, {
+    playerid = "Guruodi1"
+}, {
+    playerid = "First_encounters"
+}, {
+    playerid = "___JVKE___"
+}, {
+    playerid = "XiaoHe_1_1"
+}, {
+    playerid = "Xiaomao_m"
 }, {
     playerid = ""
 },

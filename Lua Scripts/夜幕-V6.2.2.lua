@@ -7310,7 +7310,7 @@ end)
 menu.action(flyxuanxiang, "打开降落伞", {}, "滑翔的乐趣", function()
 	PED.FORCE_PED_TO_OPEN_PARACHUTE(PLAYER.GET_PLAYER_PED(players.user()))
 end)
-
+Heist_Control = menu.list(zidongrenwu, "第一任务选项HC(V3.3.10)")
  require "lib.YeMulib.YMhc"
 baoguo = menu.list(zidongrenwu,"武器厢型车传送", {},"一键传送到对应位置！~")
 zhaobaoguo = menu.action(baoguo, "加载厢型车地点传送选项", {""}, "寻找厢型车！", function()
