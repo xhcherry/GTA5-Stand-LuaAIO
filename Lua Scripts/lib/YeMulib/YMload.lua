@@ -1,27 +1,23 @@
 ------------------------------------夜幕LUA------------------------------
 require "lib.YeMulib.YeMulib"
-Version5 = 6.2
+Version5 = 6.3
 local net = "夜幕LUA暂时无法连接到服务器！"
---[[ local aalib = require("aalib")
-local PlaySound = aalib.play_sound
-local SND_ASYNC<const> = 0x0001
-local SND_FILENAME<const> = 0x00020000
-store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound3.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
+----播放音频
+--来自https://github.com/calamity-inc/Soup-Lua-Bindings/blob/main/LUA_API.md
+--似乎无法停止
+function PlaySound(dir)--dir-指向绝对文件(local dir = filesystem.scripts_dir() .. '\\store\\YMss\\huanying.wav')
+    local fr = soup.FileReader(dir)
+    local wav = soup.audWav(fr)
+    local dev = soup.audDevice.getDefault()--选择默认音频驱动
+    local devname = dev:getName()--获取播放驱动名
+    local pb = dev:open(wav.channels)
+    local mix = soup.audMixer()
+
+    mix.stop_playback_when_done = false
+    mix:setOutput(pb)
+    mix:playSound(wav)
+    while pb:isPlaying() do util.yield() end
 end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close() ]]
---[[ local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end ]]
-util.keep_running()
 util.show_corner_help("~bold~~y~欢迎使用夜幕LUA 此版本号为：~o~" .. Version5 ..  "~g~‹\n ~b~祝你玩的开心！")
 if SCRIPT_MANUAL_START then
     AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
@@ -352,5 +348,5 @@ end
 end
 
 YMplanid = {{playerrid = "Hilovewould"}}
-YMth = {{playerid = "muyusd"},{playerid = "Dust-wine"},{playerid = "Maple_1999"},{playerid = "Xzzz_polar"},{playerid = "Hf19172798591"},{playerid = "dabaixiong0415"},{playerid = "sshiwga"},{playerid = "jasmine7294"},{playerid = "XiProNB"},{playerid = "hujkilsr"},{playerid = "Lyccchi"},{playerid = "dandanshinimenba"},{playerid = "Bronya_15644"},{playerid = "Royston7294"},{playerid = "liangzihui0522"},{playerid = "xx-bai"},{playerid = "--KZboy-SSR--"},{playerid = "RESERVEDBOSS"},{playerid = "Moldoveanuu07"},{playerid = "tiantian_qwq"},{playerid = "PowerByAndroid"},{playerid = "HeezyLua"},{playerid = "smithnsksmsmzk"},{playerid = "JiYanaa"},{playerid = "daxingxingrule"},{playerid = "sfasafafasfa"}}
+YMth = {{playerid = "muyusd"},{playerid = "Dust-wine"},{playerid = "Maple_1999"},{playerid = "Xzzz_polar"},{playerid = "Hf19172798591"},{playerid = "dabaixiong0415"},{playerid = "sshiwga"},{playerid = "jasmine7294"},{playerid = "Admin-Stand"},{playerid = "hujkilsr"},{playerid = "Lyccchi"},{playerid = "dandanshinimenba"},{playerid = "Bronya_15644"},{playerid = "Royston7294"},{playerid = "liangzihui0522"},{playerid = "xx-bai"},{playerid = "--KZboy-SSR--"},{playerid = "RESERVEDBOSS"},{playerid = "Moldoveanuu07"},{playerid = "tiantian_qwq"},{playerid = "PowerByAndroid"},{playerid = "HeezyLua"},{playerid = "smithnsksmsmzk"},{playerid = "JiYanaa"},{playerid = "daxingxingrule"},{playerid = "sfasafafasfa"}}
 YMblacklist = {{playerrrid = "Angel00512"}}

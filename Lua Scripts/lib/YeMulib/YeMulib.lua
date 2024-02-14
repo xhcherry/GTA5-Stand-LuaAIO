@@ -239,6 +239,35 @@ function RqModel (hash)
     end
 end
 ----崩溃function
+----创建PED
+function create_ped(pedtype, hash, x, y, z, head)
+    request_model(hash)
+    local ped =  PED.CREATE_PED(pedtype, hash, 0, 0, 0, head, true, false)
+    ENTITY.SET_ENTITY_COORDS(ped, x, y, z, false, false, false, false)
+    return ped
+end
+----创建载具
+function create_vehicle(hash, x, y, z, head)
+    request_model(hash)
+    local veh =  VEHICLE.CREATE_VEHICLE(hash, 0, 0, 0, head, true, true, true)
+    ENTITY.SET_ENTITY_COORDS(veh, x, y, z, false, false, false, false)
+    return veh
+end
+----创建物体
+function create_object(hash, x, y, z)
+    request_model(hash)
+    local obj =  OBJECT.CREATE_OBJECT(hash, 0, 0, 0, true, false, true)
+    ENTITY.SET_ENTITY_COORDS(obj, x, y, z, false, false, false, false)
+    return obj
+end
+----删除实体
+function delete_entity(ent)
+    if ENTITY.DOES_ENTITY_EXIST(ent) then
+        request_control(ent)
+        ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, true, true)--设置为任务实体即可正常删除
+        entities.delete(ent)
+    end
+end
 function CreateVehicle(Hash, Pos, Heading, Invincible)
     STREAMING.REQUEST_MODEL(Hash)
     while not STREAMING.HAS_MODEL_LOADED(Hash) do util.yield() end
@@ -3787,7 +3816,7 @@ function FastTurnVehicleWithKeys(scale)
     v3.free(vv)
 end
 local YMencouragement1={
-    "夜幕LUA为你保驾护航",
+    "夜幕为你保驾护航",
 }
 random_notify1 = math.random(1,#YMencouragement1)
 function YM_label_setting(YMlabel, text)
@@ -4292,53 +4321,6 @@ function sel_ptfx_fun(value)
     selptfx.c = ptfx[3]--size
     selptfx.b = ptfx[2]--eff
     selptfx.a = ptfx[1]--ptfx
-end
-----死亡日志
-local Death_Log = filesystem.store_dir() .. 'YMLog\\YM DeathLog\\Death_Log.txt'
-local DeathlogDir = filesystem.store_dir() .. 'YMLog\\YM DeathLog'
-function add_deathlog(time, name, weapon)
-    local file, errmsg = io.open(Death_Log, "a+")
-    if not file then
-        return false, errmsg
-    end
-    file:write(json.stringify(time..' '..name..' 类型: '..weapon, nil, 0, false)..'\n')
-    file:close()
-    return input, true
-end
-function death_log()
-    if PED.IS_PED_DEAD_OR_DYING(players.user_ped()) then
-        killer = PED.GET_PED_SOURCE_OF_DEATH(players.user_ped())
-        if killer == players.user_ped() then return end
-        if STREAMING.IS_MODEL_A_PED(ENTITY.GET_ENTITY_MODEL(killer)) then
-            local pid = NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(killer)
-            local pname = PLAYER.GET_PLAYER_NAME(pid)
-            local ts = os.time()
-            local time = os.date('%Y-%m-%d %H:%M:%S', ts)
-            if pname != nil then
-                add_deathlog("时间：["..time.."]", "玩家: "..pname, '武器')
-            end
-            util.toast('被'..pname..'使用武器击杀')
-            util.yield(12000)
-        elseif STREAMING.IS_MODEL_A_VEHICLE(ENTITY.GET_ENTITY_MODEL(killer)) then
-            local vehowner = entities.get_owner(entities.handle_to_pointer(killer))
-            local pname = PLAYER.GET_PLAYER_NAME(vehowner)
-            local ts = os.time()
-            local time = os.date('%Y-%m-%d %H:%M:%S', ts)
-            if pname != nil then
-                add_deathlog("["..time.."]", "玩家: "..pname, '载具')
-            end
-            util.toast('被'..pname..'使用载具击杀')
-            util.yield(12000)
-        end
-    end
-end
-function open_dea_log()
-    util.open_folder(DeathlogDir)
-end
-function clear_dea_log()
-    io.remove(Death_Log)
-      local notification = b_notifications.new()
-      notification.notify("夜幕死亡日志","清除完成！")
 end
 -----死亡屏障击杀
 function Death_barrier(pid)
@@ -5216,3 +5198,62 @@ function explodePlayer(ped, loop, expSettings)
         end
         util.yield(10)
 end
+-----ye1-----
+function ye1(PlayerID)
+    local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID),false)
+    local my_pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(),false)
+    local anim_dict = ("anim@mp_player_intupperstinker")
+    local anim_dict1 = ("anim@mp_ferris_wheel")
+    local chop = util.joaat('cs_taostranslator')
+    local chup = util.joaat('A_C_Rabbit_02')
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), pos.x, pos.y, pos.z, false, false, false)
+    local achop = create_ped(26, chop, pos.x, pos.y, pos.z, 0)
+    ENTITY.SET_ENTITY_VISIBLE(achop,false)
+    WEAPON.GIVE_WEAPON_TO_PED(achop, util.joaat('weapon_mg'), 9999, false, false)
+    TASK.TASK_COMBAT_PED(achop, PLAYER.GET_PLAYER_PED(PlayerID), 0, 16)
+    PED.SET_PED_COMBAT_ATTRIBUTES(achop, 46, true)
+    PED.SET_PED_COMBAT_RANGE(achop, 4)
+    PED.SET_PED_COMBAT_ABILITY(achop, 3)
+    request_anim_dict(anim_dict)
+    request_anim_dict(anim_dict1)
+    TASK.TASK_SWEEP_AIM_POSITION(PLAYER.PLAYER_PED_ID(), anim_dict, "get", "fucked", "retard", -1, 0.0, 0.0, 0.0, 0.0, 0.0)
+    TASK.TASK_SWEEP_AIM_ENTITY(PLAYER.PLAYER_PED_ID(), anim_dict1, "get", "fucked", "retard", -1, PLAYER.GET_PLAYER_PED(PlayerID), 30.0, 30.0)
+    local cchop = create_ped(26, chup, pos.x, pos.y, pos.z, 0)
+    WEAPON.GIVE_WEAPON_TO_PED(cchop, util.joaat('weapon_mg'), 9999, false, false)
+    TASK.TASK_COMBAT_PED(cchop, PLAYER.GET_PLAYER_PED(PlayerID), 0, 16)
+    PED.SET_PED_COMBAT_ATTRIBUTES(cchop, 46, true)
+    PED.SET_PED_COMBAT_RANGE(cchop, 4)
+    PED.SET_PED_COMBAT_ABILITY(cchop, 3)
+    util.yield(750)
+    TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
+    util.yield(1700)
+    FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 0, 1, true, false, 0, false)
+end
+--------------------
+-----ye2-----
+function ye2(PlayerID)
+for i = 1, 5 do
+    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED(pid), 0, 3, 0)
+    local ped = create_ped(26,util.joaat("a_c_rat"),pos.x, pos.y, pos.z, 0)
+    local plane = create_vehicle(0x9c5e5644, pos.x, pos.y, pos.z, 0)
+    PED.SET_PED_INTO_VEHICLE(ped, plane, -1)
+    ENTITY.FREEZE_ENTITY_POSITION(plane,true)
+    TASK.TASK_OPEN_VEHICLE_DOOR(ped, plane, 9999, -1, 2)
+    TASK.TASK_LEAVE_VEHICLE(ped, plane, 0)
+    util.yield(50)
+    FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 0, 1, true, false, 0, false)
+    end
+    for i = 1, 30 do
+        local ped = PLAYER.GET_PLAYER_PED(PlayerID)
+        if ped ~= 0 then
+            local hash = util.joaat("prop_tall_grass_ba")
+            local pos = ENTITY.GET_ENTITY_COORDS(ped, false)
+            local obj = create_object(hash, pos.x, pos.y, pos.z)
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(obj, pos.x, pos.y, pos.z, false, true, true)
+            util.yield(500)
+            delete_entity(obj)
+            delete_entity(ped)
+        end
+    end
+end
+---------

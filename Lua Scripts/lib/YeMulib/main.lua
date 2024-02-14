@@ -1,3 +1,17 @@
+--脚本全局值
+Global_Base = {----https://github.com/CrazyZhang666/GTA5OnlineTools/blob/9260e13791e067c9ef98566e43e16f8e171175be/GTA5Core/Features/Online.cs#L495
+    Default = 2738587, --(1.68) --util.joaat("CHARACTER_APPEARANCE_CHARGE")(freemode_global)
+    gooch = 1882037, -- (1.68) gooch test(from yimmenu)古奇击杀
+    SessionSwitchType = 1575032, --(1.68) NETWORK::NETWORK_SESSION_SET_UNIQUE_CREW_LIMIT(1)
+    SessionSwitchState = 1574589,
+    gpbd_fm_1 = 1845263, --派遣劫匪(1.68)
+    gpbd_fm_3 = 1886967,--(1.68)
+
+    --Vehicle Menus Globals
+    oVMYCar = 2738587,-- ==Default (1.68)
+    vehicle_global = 1586504, -- (1.68) 索赔载具 https://github.com/YimMenu/YimMenu/blob/master/src/core/scr_globals.hpp
+}
+
 function clone(vehicle)
     local vehicleHeading<const> = ENTITY.GET_ENTITY_HEADING(vehicle)
     local vehicleHash<const> = ENTITY.GET_ENTITY_MODEL(vehicle)
@@ -790,8 +804,7 @@ function acknowledgement()
     menu.readonly(script_meta_menu, "夜幕官方网站", "暂无官网")
 
     menu.divider(script_meta_menu, "夜幕主要负责")
-    menu.readonly(script_meta_menu, "技术支持", "夜幕工作室")
-    menu.readonly(script_meta_menu, "夜幕主制作策划：", "Ping")
+    menu.readonly(script_meta_menu, "技术支持", "夜幕团队")
     menu.divider(script_meta_menu, "夜幕制作支持")
     menu.readonly(script_meta_menu, "夜幕策划管理：", "思庸")
     menu.readonly(script_meta_menu, "夜幕副制作策划：", "呆呆")
