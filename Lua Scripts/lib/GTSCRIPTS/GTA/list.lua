@@ -61,7 +61,7 @@ sxid = {{
 }, {
     playeridx = "WXH_666"
 }, {
-    playeridx = "shanheya"
+    playeridx = "xusdsd11"
 }, {
     playeridx = "XiaoYuXin_qwq"
 }, {
@@ -74,6 +74,8 @@ sxid = {{
     playeridx = "John-Wick-AC"
 }, {
     playeridx = "sshanheya"
+}, {
+    playeridx = "yjsdj8bag"
 },
 }
 
@@ -590,7 +592,7 @@ spid = {{
 }, {
     playerid = "1ts_Karma"
 }, {
-    playerid = "Tmiiqq"
+    playerid = "DNMDBABY"
 }, {
     playerid = "HanserAngel"
 }, {
@@ -914,7 +916,7 @@ spid = {{
 }, {
     playerid = "aswqam"
 }, {
-    playerid = "hunpoyooo"
+    playerid = "mozheng114514"
 }, {
     playerid = "myrdok87"
 }, {
@@ -1500,7 +1502,7 @@ spid = {{
 }, {
     playerid = "yangtuoao"
 }, {
-    playerid = "Yistaeliy"
+    playerid = "shateit"
 }, {
     playerid = "Liuyunxi01"
 }, {
@@ -1606,7 +1608,7 @@ spid = {{
 }, {
     playerid = "soo-cat"
 }, {
-    playerid = "Aa151633"
+    playerid = "Strikese"
 }, {
     playerid = "GSD-Queen6"
 }, {
@@ -1754,9 +1756,89 @@ spid = {{
 }, {
     playerid = "___JVKE___"
 }, {
-    playerid = "XiaoHe_1_1"
+    playerid = "XIaohe_1_1"
 }, {
     playerid = "Xiaomao_m"
+}, {
+    playerid = "zzh20040212"
+}, {
+    playerid = "Excyses_J"
+}, {
+    playerid = "YAK820"
+}, {
+    playerid = "qqqsna"
+}, {
+    playerid = "1234gta5_"
+}, {
+    playerid = "Admin-Stand"
+}, {
+    playerid = "XiProNB"
+}, {
+    playerid = "Q_w_1ko"
+}, {
+    playerid = "On1_Tapp"
+}, {
+    playerid = "Tovh-0520"
+}, {
+    playerid = "Lrop994"
+}, {
+    playerid = "liang_6957"
+}, {
+    playerid = "X-Lxalingyu"
+}, {
+    playerid = "FallSakura0"
+}, {
+    playerid = "ZXH0292"
+}, {
+    playerid = "Excyses_J"
+}, {
+    playerid = "novelty0018"
+}, {
+    playerid = "iooooe"
+}, {
+    playerid = "15kunkun"
+}, {
+    playerid = "qqqsna"
+}, {
+    playerid = "xiaochengzi3311"
+}, {
+    playerid = "XiaoxinVIP"
+}, {
+    playerid = "Ares-ROG"
+}, {
+    playerid = "new541788vest"
+}, {
+    playerid = "tqd9cha6"
+}, {
+    playerid = "damaodm"
+}, {
+    playerid = "kucha-520"
+}, {
+    playerid = "SiZhi_99"
+}, {
+    playerid = "wyt666666"
+}, {
+    playerid = "100by3"
+}, {
+    playerid = "LJH6626"
+}, {
+    playerid = "su123mou"
+}, {
+    playerid = "WangQuanFuGui_01"
+}, {
+    playerid = "ex3690"
+}, {
+    playerid = "luochenhongyan"
+}, {
+    playerid = "xusdsd11"
+}, {
+    playerid = "LeiYu66666"
+}, {
+    playerid = "caomei-666"
+}, {
+    playerid = "xiao-lin666"
+}, {
+    playerid = "GOD______NESS"
 }, {
     playerid = ""
 },

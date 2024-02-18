@@ -14059,46 +14059,46 @@ function Soul_Gun()
     end
 end
 
------Blacklist
---云更新Blacklist
-async_http.init("http://cnsakura.top", "/other/blacklist.json",function(info,header,response)
-    if response == 200 then
-        local list = StrToTable(info)
-        local content = json1.stringify(list, nil, 4)
-        local dir = filesystem.scripts_dir() .. 'daidaiScript/blacklist.json'
-        filewrite(dir, "w+", content)
-    else
-        notification("~y~~bold~云数据库同步错误", HudColour.blue)
-    end
-end, function()
-    notification("~y~~bold~云数据库同步错误", HudColour.blue)
-end)
---async_http.dispatch() 
+-- -----Blacklist
+-- --云更新Blacklist
+-- async_http.init("http://cnsakura.top", "/other/blacklist.json",function(info,header,response)
+--     if response == 200 then
+--         local list = StrToTable(info)
+--         local content = json1.stringify(list, nil, 4)
+--         local dir = filesystem.scripts_dir() .. 'daidaiScript/blacklist.json'
+--         filewrite(dir, "w+", content)
+--     else
+--         notification("~y~~bold~云数据库同步错误", HudColour.blue)
+--     end
+-- end, function()
+--     notification("~y~~bold~云数据库同步错误", HudColour.blue)
+-- end)
+-- --async_http.dispatch() 
 
 
---执行Blacklist
-local blacklistplayers = {}
-function Black_list()
-    ----读取黑名单
-    if #blacklistplayers < 1 then
-        local path = filesystem.scripts_dir() .. 'daidaiScript/blacklist.json'
-        local data = fileread(path, 'r', '*all')
-        blacklistplayers = StrToTable(data)
-    end
-    ----判断黑名单
-    for pid = 0, 31 do
-        local name = PLAYER.GET_PLAYER_NAME(pid)
-        local myname = PLAYER.GET_PLAYER_NAME(PLAYER.PLAYER_ID())
-        for i = 1, #blacklistplayers do
-            if blacklistplayers[i] == name and players.get_host() == PLAYER.PLAYER_ID() and myname ~= name  then
-                util.toast("检测到云黑玩家: "..name.."\n已执行踢出")
-                menu.trigger_commands("kick " .. name)
-            elseif blacklistplayers[i] == myname then
-                exit_game ()
-            end
-        end
-    end
-end
+-- --执行Blacklist
+-- local blacklistplayers = {}
+-- function Black_list()
+--     ----读取黑名单
+--     if #blacklistplayers < 1 then
+--         local path = filesystem.scripts_dir() .. 'daidaiScript/blacklist.json'
+--         local data = fileread(path, 'r', '*all')
+--         blacklistplayers = StrToTable(data)
+--     end
+--     ----判断黑名单
+--     for pid = 0, 31 do
+--         local name = PLAYER.GET_PLAYER_NAME(pid)
+--         local myname = PLAYER.GET_PLAYER_NAME(PLAYER.PLAYER_ID())
+--         for i = 1, #blacklistplayers do
+--             if blacklistplayers[i] == name and players.get_host() == PLAYER.PLAYER_ID() and myname ~= name  then
+--                 util.toast("检测到云黑玩家: "..name.."\n已执行踢出")
+--                 menu.trigger_commands("kick " .. name)
+--             elseif blacklistplayers[i] == myname then
+--                 exit_game ()
+--             end
+--         end
+--     end
+-- end
 
 
 

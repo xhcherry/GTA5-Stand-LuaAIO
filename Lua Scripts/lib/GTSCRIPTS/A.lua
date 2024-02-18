@@ -278,14 +278,8 @@ local cloud_list = {}
 function upload_animation(group, animation, alias)
     show_busyspinner("上传动画")
     async_http.init('jackz.me',
-        string.format(
-            '/stand/cloud/actions/manage?scname=%s&hash=%d&alias=%s&dict=%s&anim=%s',
-            SOCIALCLUB._SC_GET_NICKNAME(),
-            menu.get_activation_key_hash(),
-            alias or '',
-            group,
-            animation
-        ),
+        string.format('/stand/cloud/actions/manage?scname=%s&hash=%d&alias=%s&dict=%s&anim=%s',
+            SOCIALCLUB._SC_GET_NICKNAME(), menu.get_activation_key_hash(), alias or '', group, animation),
         function(body)
             if body == "OK" then
                 util.toast("上传成功 " .. group .. "/" .. animation)
@@ -295,11 +289,11 @@ function upload_animation(group, animation, alias)
                 util.toast("上传失败 " .. group .. "/" .. animation .. ": " .. body)
             end
             HUD.BUSYSPINNER_OFF()
-        end
-    )
+        end)
     async_http.set_post('text/plain', '')
     async_http.dispatch()
 end
+
 function populate_cloud_list(useFavorites)
     local listMenu = useFavorites and cloudUploadFromFavorites or cloudUploadFromRecent
     local tuple = useFavorites and favorites or recents

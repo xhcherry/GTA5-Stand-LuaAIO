@@ -5,12 +5,8 @@
 ██║   ██║██╔══██╗██╔══██║██║╚██╗██║██║  ██║   ██║   ██║   ██║██║   ██║██╔══██╗██║██║╚██╗██║██║   ██║╚██╗ ██╔╝██║██╔═══╝ 
 ╚██████╔╝██║  ██║██║  ██║██║ ╚████║██████╔╝   ██║   ╚██████╔╝╚██████╔╝██║  ██║██║██║ ╚████║╚██████╔╝ ╚████╔╝ ██║██║     
  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝    ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝      
-GRANDTOURINGVIP™ Copyright© 2023
-Author: GT
-Developer: Respect
-Manager: Strawbetter / SmallGodGirl
-All rights reserved.]] 
---require "lib.GTSCRIPTS.V" 
+GRANDTOURINGVIP™ Copyright© 2024 All rights reserved.]] 
+--require "lib.GTSCRIPTS.V"
 
 function loadgt() 
 memory.alloc_int()
@@ -34,6 +30,31 @@ memory.alloc_int()
     end
 
 require "lib.GTSCRIPTS.GTW.hbcheck"
+
+--[[connect_frames = {"连接到服务器","连接到服务器.","连接到服务器..","连接到服务器..." }
+connection = GTD(G, "C")
+util.create_tick_handler(function() 
+    for _, frame in pairs(connect_frames) do 
+        GTluaScript.set_menu_name(connection, frame .. '') 
+        wait(250) 
+    end
+end)
+
+util.create_thread(function ()
+    async_http.init("baidu.com", "", function(status_code)
+
+        if status_code == 200 then
+            gtoast("成功连接服务器")
+            menu.delete(connection)
+        else
+            gtoast("连接失败")
+            util.stop_script()
+        end
+
+    end)
+    async_http.dispatch()
+end)]]
+
 festive_div = GTD(G, "GRANDTOURINGVIP") 
 util.create_tick_handler(function() 
     for _, frame in pairs(loading_frames) do 
@@ -43,19 +64,21 @@ util.create_tick_handler(function()
 end)
 
 function restartscript() 
+    package.loaded["lib.GTSCRIPTS.Q2"] = nil
     package.loaded["lib.GTSCRIPTS.GTC.logo.GLogo"] = nil 
     package.loaded["lib.GTSCRIPTS.V"] = nil
+
     wait()
     util.restart_script() 
 end
 
 --主菜单与UI
-GTAC(menu.my_root(), ">>进入GRANDTOURINGVIP", {}, "",function ()
+GTAC(menu.my_root(), ">>点击进入GTLua", {}, "",function ()
     menu.trigger_command(G) 
 end) 
-GTAC(menu.my_root(), ">>重新启动脚本", {}, "", function () restartscript() end) 
+GTAC(menu.my_root(), ">>重新启动GTLua", {}, "", function () restartscript() end) 
 
-enable_options = GTTG(G, ">>启用快捷入口", {}, "", function (on) Quick_Enable(on) end)
+enable_options = GTTG(G, ">>快捷入口", {}, "", function (on) Quick_Enable(on) end)
 changelogs = GTLP(G, ">>更新日志", {}, "", function () updatelogs() end)
 players_root = GT(G, ">>玩家选项", {}, "")
 frendlist = GT(G, ">>好友选项", {""}, "", function(); end)
@@ -74,7 +97,7 @@ Heist_Control = GT(G, ">>任务选项", {}, "")
 Musiness_Banager = GT(G, ">>自动资产")
 Constructor_Lua = GT(G, ">>模组选项")
 other_options = GT(G, ">>其他选项")
-bbttt = GTH(G, ">>GTVIP三群[下载脚本]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oza9NK13Ql0LJDjvFg6x71QKAu5cDFYj&authKey=mKgjAapXxRtPTKUrwoLi%2FX%2FRovM4ufPDjh9nBhnQ6dFACL%2Fa%2Bqu7QkFTd55ipnEO&noverify=0&group_code=651502721", "")
+bbttt = GTH(G, ">>GTVIP四群[下载脚本]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=8qYUvJSLb2BVHZrM5Ztu_EyvZxfO5RvE&authKey=tViPuocQN00a41qIKcrWbk7VeYeJfMFPBOFLfrLx1mZdDnt9UjkHjkpC6DALzMHj&noverify=0&group_code=655413793", "")
 --显示UI
 GTD(players_root, "[玩家选项]")
 GTD(selflist, "[自我选项]")
@@ -87,7 +110,7 @@ GTD(protex, "[保护选项]")
 GTD(funfeatures, "[娱乐选项]")
 GTD(FY, "[聊天选项]")
 GTD(lobbyFeats, "[世界选项]")
-GTD(Musiness_Banager, "[自动资产] 版本:e94d676")
+GTD(Musiness_Banager, "[自动资产] 版本:808cedc")
 GTD(Constructor_Lua, "[模组选项]")
 GTD(other_options, "[其他选项]")
 
@@ -103,7 +126,7 @@ end
 if SCRIPT_MANUAL_START then
     menu.trigger_commands("gtluascript")
 end
-util.toast("\n心在跳,超美妙,新欢喜,狂比心")
+gtoast("心在跳,超美妙,新欢喜,狂比心")
 
 if players.get_name(players.user()) == "SmallGodGirlo3o" then
     gtoast("欢迎回来，美丽的丢丢~")
@@ -200,6 +223,7 @@ friends_in_session_list = GTLuaScript.list_action(players_root, "战局好友", 
     friends_in_this_session, function(pid, name)
         menu.trigger_commands("p" .. players.get_name(pid))
     end)
+    
 modders_in_session_list = GTLuaScript.list_action(players_root, "作弊玩家", {"moddersinsession"}, "",
     modders_in_this_session, function(pid, name)
         menu.trigger_commands("p" .. players.get_name(pid))
@@ -323,7 +347,7 @@ spo = GTTG(players_root, "SPO", {"spcheck"}, "", function(f)
                         if pid then
                             if off_hb ~= true and pid == players.user() then
                                 util.show_corner_help("~h~~q~GRANDTOURINGVIP 温馨提示 ~p~皇榜人员 ".. playerid .."\n~p~当前正在该战局")
-                                util.toast("\nGTVIP皇榜人员 ".. playerid .." 当前正在该战局")
+                                gtoast("GTVIP皇榜人员 ".. playerid .." 当前正在该战局")
                                 hengfugt(f)
                                 wait(1000)
                                 notified_sp[id.playerid] = true
@@ -354,7 +378,7 @@ sxo = GTTG(players_root, "SXO", {"sxcheck"}, "", function(f)
                     if pid then
                         if off_hb ~= true and pid == players.user() then
                             util.show_corner_help("~h~~q~GRANDTOURINGVIP 温馨提示 ~y~至臻皇榜 ".. playeridx .."\n~y~当前正在该战局")
-                            util.toast("\nGTVIP至臻皇榜 ".. playeridx .." 当前正在该战局")
+                            gtoast("GTVIP至臻皇榜 ".. playeridx .." 当前正在该战局")
                             sxgt(f)
                             wait(1000)
                             notified_sx[id.playeridx] = true
@@ -3480,7 +3504,6 @@ jiaotong = f
         wait(30)
     end
 end)
-
 GTLP(funfeatures_self, "忍者", {""}, "忍者式奔跑(允许携带武器)", function()
     local dict = "swimming@scuba"
     local name = "dive_glide"
@@ -6074,6 +6097,7 @@ GTTG(sessionfun, "表演魔术", {}, "", function(on)
     end
 end)
 
+
 GTTG(sessionfun, "篮球", {}, "", function(on)
     while not STREAMING.HAS_ANIM_DICT_LOADED("mp_prison_break") do 
         STREAMING.REQUEST_ANIM_DICT("mp_prison_break")
@@ -6093,6 +6117,362 @@ GTTG(sessionfun, "篮球", {}, "", function(on)
     end
 end)
 
+animAttachments = {}
+--[[function playing_anim(ped, group, animation, flags, props)
+    if props ~= nil then
+        local pos = ENTITY.GET_ENTITY_COORDS(ped)
+        for _, propData in ipairs(props) do
+            local boneIndex = PED.GET_PED_BONE_INDEX(ped, propData.Bone)
+            local hash = util.joaat(propData.Prop)
+            STREAMING.REQUEST_MODEL(hash)
+            while not STREAMING.HAS_MODEL_LOADED(hash) do
+                wait()
+            end
+            STREAMING.REQUEST_ANIM_DICT(animGroup) --动画加载
+            while not STREAMING.HAS_ANIM_DICT_LOADED(animGroup) do
+                wait(100)
+            end
+            local object = entities.create_object(hash, pos)
+            animAttachments[object] = propData.DeleteOnEnd ~= nil
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(
+                object, ped, boneIndex,
+                propData.Placement[1] or 0.0,
+                propData.Placement[2] or 0.0,
+                propData.Placement[3] or 0.0,
+                propData.Placement[4] or 0.0,
+                propData.Placement[5] or 0.0,
+                propData.Placement[6] or 0.0,
+                false,
+                true,
+                false,
+                true,
+                1,
+                true
+            )
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
+            if menu.get_value(hbd) == false then
+                ENTITY.DETACH_ENTITY(object)
+                entities.delete_by_handle(object)
+            end
+        end
+    end
+    TASK.TASK_PLAY_ANIM(ped, group, animation, 8.0, 8.0, -1, flags, 0.0, false, false, false)
+end
+
+hbd = GTTG(players_root, "凳子1", {}, "", function(on)
+    local animGroup = "timetable@reunited@ig_10" -- 修改为正确的动画组
+    local animName = "base_amanda"
+    
+    local props = {
+        {
+            Bone =  64729, -- 骨骼索引
+            Prop = "h4_prop_battle_club_chair_02", -- 道具模型名称
+            Placement = {0.1, -0.1, 0.5, 180, 20, 30}, -- 道具位置
+        }
+    }
+
+    if on then
+        playing_anim(players.user_ped(), animGroup, animName, 1, props)
+    else
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
+    end
+end)
+--]]
+
+jj2_object = nil -- 用于存储附加的凳子对象
+jj2 = GTTG(players_root, "佳佳的凳子", {"jiajia1"}, "", function(on)
+    local animGroup = "timetable@reunited@ig_10" 
+    local animName = "base_amanda"
+
+    local ped = players.user_ped() -- 获取玩家的角色实体
+    
+    local props = {
+        {
+            Bone =  64729, -- 骨骼索引
+            Prop = "h4_prop_battle_club_chair_02", -- 道具模型名称
+            Placement = {0.175, 0, 0.5, 180, 20, 30}, -- 道具位置
+        }
+    }
+
+    if on then
+        if props ~= nil then
+            local pos = ENTITY.GET_ENTITY_COORDS(ped)
+            for _, propData in ipairs(props) do
+                local boneIndex = PED.GET_PED_BONE_INDEX(ped, propData.Bone)
+                local hash = util.joaat(propData.Prop)
+
+                STREAMING.REQUEST_MODEL(hash) --模型加载
+                while not STREAMING.HAS_MODEL_LOADED(hash) do
+                    wait()
+                end
+                
+                STREAMING.REQUEST_ANIM_DICT(animGroup) --动画加载
+                while not STREAMING.HAS_ANIM_DICT_LOADED(animGroup) do
+                    wait(100)
+                end
+
+                local object = entities.create_object(hash, pos)
+                animAttachments[object] = propData.DeleteOnEnd ~= nil
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(
+                    object, ped, boneIndex,
+                    propData.Placement[1] or 0.0,
+                    propData.Placement[2] or 0.0,
+                    propData.Placement[3] or 0.0,
+                    propData.Placement[4] or 0.0,
+                    propData.Placement[5] or 0.0,
+                    propData.Placement[6] or 0.0,
+                    false,
+                    true,
+                    false,
+                    true,
+                    1,
+                    true
+                )
+                STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
+
+                jj2_object = object
+            end
+        end
+        TASK.TASK_PLAY_ANIM(ped, animGroup, animName, 5.0, 5.0, -1, 1, 0.0, false, false, false)
+    else
+        TASK.STOP_ANIM_TASK(players.user_ped(), animGroup, animName, 5)
+        --TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped)
+        if jj2_object ~= nil then
+            ENTITY.DETACH_ENTITY(jj2_object)
+            entities.delete_by_handle(jj2_object)
+            jj2_object = nil 
+        end
+    end
+end)
+
+ptfx1 = GTTG(players_root, "星火燎原", {"jiajia2"}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_xs_pits') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_xs_pits')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_xs_pits')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_xs_fire_pit_long', ptfxEgg,
+                0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], 0.45, false, false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 0)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, 0.45)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_xs_pits')
+    end
+end)
+
+ptfx2 = GTTG(players_root, "终极过载", {"lens"}, "", function(on)
+    if not on then
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+    else
+        request_ptfx_asset(man_ptfx_asset)
+        for _, bone in pairs(l_bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
+            local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0, bone_id, 1, false, false, false, 0, 0, 0, 0)
+            load_ptfxs[#load_ptfxs + 1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 255, 255, 0, 255)
+        end
+    end
+    if not on then
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+    else
+        request_ptfx_asset(man_ptfx_asset)
+        for _, bone in pairs(l_bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
+            local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0, bone_id, 1, false, false, false, 0, 0, 0, 0)
+            load_ptfxs[#load_ptfxs + 1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 255, 0, 0, 255)
+        end
+    end
+    if not on then
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+    else
+        request_ptfx_asset(man_ptfx_asset)
+        for _, bone in pairs(l_bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
+            local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0, bone_id, 1, false, false, false, 0, 0, 0, 0)
+            load_ptfxs[#load_ptfxs + 1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 255, 0, 255, 255)
+        end
+    end
+    if not on then
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+    else
+        request_ptfx_asset(man_ptfx_asset)
+        for _, bone in pairs(l_bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
+            local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0, bone_id, 1, false, false, false, 0, 0, 0, 0)
+            load_ptfxs[#load_ptfxs + 1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 0, 255, 255, 255)
+        end
+    end
+    if not on then
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+    else
+        request_ptfx_asset(man_ptfx_asset)
+        for _, bone in pairs(l_bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
+            local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0, bone_id, 1, false, false, false, 0, 0, 0, 0)
+            load_ptfxs[#load_ptfxs + 1] = fx
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 0, 0, 255, 255)
+        end
+    end
+end)
+
+ptfx3 = GTTG(players_root, '雷电法王', {'lightk'}, '', function(k)
+    leidian = k
+    while leidian do
+        pedmyfirst = players.user_ped(players.user())
+        local titlle = "scr_xs_pits"
+        local hashid = "scr_xs_sf_pit_long"
+        GRAPHICS.USE_PARTICLE_FX_ASSET(titlle)
+        while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(titlle) do
+            STREAMING.REQUEST_NAMED_PTFX_ASSET(titlle)
+            wait(0)
+        end
+        GRAPHICS.START_PARTICLE_FX_LOOPED_ON_ENTITY(hashid, pedmyfirst, 0, 0, -0.90, 0, 0, -7, 0.45, false, false,
+            false)
+        wait(0)
+    end
+    leidian = false
+    GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(pedmyfirst)
+end)
+
+ptfx4 = GTLP(players_root, "神奇糖果", {"sans"}, "", function()
+    local colour = {
+        r = 0.0,
+        g = 1.0,
+        b = 1.0,
+        a = 0.0
+    }
+    local affect<const> = Effect.new("core", "ent_dst_inflate_ball_clr")
+    if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
+        STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
+        return
+    end
+    if timer.elapsed() >= 1500 then
+        removeFxs(affects);
+        affects = {}
+        timer.reset()
+    end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local minimum, maximum = v3.new(), v3.new()
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
+        local offsets<const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
+        for _, offset in ipairs(offsets) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name, vehicle, offset.x, offset.y,
+                0.0, 0.0, 0.0, 0.0, 0.7, false, false, false, 0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
+        for _, boneId in ipairs(bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 1, false, false, false,
+                0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    end
+end, function()
+    removeFxs(affects);
+    affects = {}
+end)
+
+--namers = players.get_rockstar_id("Mag7777v")
+--gtoast(namers)
+
+magfunc = GTTG(players_root, "Mag的王座", {"magic"}, "", function(on)
+    if players.get_name(players.user()) == "Mag7777v" 
+    or players.get_name(players.user()) == "Magicswordstar" then
+
+        if on then
+            menu.trigger_commands("jiajia1 on")
+            menu.trigger_commands("jiajia2 on")
+            menu.trigger_commands("lens on")
+            menu.trigger_commands("lightk on")
+            menu.trigger_commands("sans on")
+        else
+            menu.trigger_commands("jiajia1 off")
+            menu.trigger_commands("jiajia2 off")
+            menu.trigger_commands("lens off")
+            menu.trigger_commands("lightk off")
+            menu.trigger_commands("sans off")
+        end
+        
+    else
+        gtoast("暂无权使用\n至高之物 尔等何以染指")
+        return
+        menu.set_value(magfunc, false)
+    end
+end)
+
+ptfx1.visible = false
+ptfx2.visible = false
+ptfx3.visible = false
+ptfx4.visible = false
+jj2.visible = false
+
 GTTG(sessionfun, "逼王", {}, "", function(on)
     while not STREAMING.HAS_ANIM_DICT_LOADED("rcmbarry") do 
         STREAMING.REQUEST_ANIM_DICT("rcmbarry")
@@ -6111,7 +6491,7 @@ GTTG(sessionfun, "逼王", {}, "", function(on)
         entities.delete_by_handle(jibage)
     end
 end)
-
+        
 
 GTTG(sessionfun, "逼王V2", {}, "", function(on)
     while not STREAMING.HAS_ANIM_DICT_LOADED("rcmbarry") do 
@@ -6999,74 +7379,84 @@ suijijianqi = function(x)
     return x[r]
 end
 
-GTTG(wushidao, "武士刀",{""}, "",function(on)
+GTTG(wushidao, "武士刀", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_cs_katana_01"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.03, 0, 0, -80, 0.0, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.03, 0, 0, -80, 0.0, 0, true, true, true, true, 0,
+            true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "荣誉",{""}, "",function(on)
+GTTG(wushidao, "荣誉", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
-    local taidao = OBJECT.CREATE_OBJECT(util.joaat("xs_prop_trophy_firepit_01a"), pos.x, pos.y, pos.z, true, true, false)
+    local taidao =
+        OBJECT.CREATE_OBJECT(util.joaat("xs_prop_trophy_firepit_01a"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0, -0.1, -0.07, -72, 0.0, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0, -0.1, -0.07, -72, 0.0, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "荣誉2",{""}, "",function(on)
+GTTG(wushidao, "荣誉2", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
-    local taidao = OBJECT.CREATE_OBJECT(util.joaat("xs_prop_trophy_carfire_01a"), pos.x, pos.y, pos.z, true, true, false)
+    local taidao =
+        OBJECT.CREATE_OBJECT(util.joaat("xs_prop_trophy_carfire_01a"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0, -0.1, -0.07, -72, 0.0, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0, -0.1, -0.07, -72, 0.0, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "荣誉3",{""}, "",function(on)
+GTTG(wushidao, "荣誉3", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("xs_prop_trophy_flags_01a"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.02, -0.1, -0.05, -72, 0.0, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.02, -0.1, -0.05, -72, 0.0, 0, true, true, true,
+            true, 0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-        for k,ent in pairs(entities.get_all_objects_as_handles()) do
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
             ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
             entities.delete_by_handle(ent)
             count = count + 1
@@ -7075,17 +7465,19 @@ GTTG(wushidao, "荣誉3",{""}, "",function(on)
     end
 end)
 
-GTTG(wushidao, "荣誉4",{""}, "",function(on)
+GTTG(wushidao, "荣誉4", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("xs_prop_trophy_cup_01a"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.02, -0.15, -0.05, -72, 0.0, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.02, -0.15, -0.05, -72, 0.0, 0, true, true, true,
+            true, 0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-        for k,ent in pairs(entities.get_all_objects_as_handles()) do
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
             ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
             entities.delete_by_handle(ent)
             count = count + 1
@@ -7094,380 +7486,417 @@ GTTG(wushidao, "荣誉4",{""}, "",function(on)
     end
 end)
 
-GTTG(wushidao, "手提袋",{""}, "",function(on)
+GTTG(wushidao, "手提袋", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_med_bag_01b"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.3, 0, 0, -90, -10, 90, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.3, 0, 0, -90, -10, 90, true, true, true, true, 0,
+            true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(sessionfun, "灯架",{""}, "手持灯架",function(on)
+GTTG(sessionfun, "灯架", {""}, "手持灯架", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_kino_light_02"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.07, 0, 0, -100, 0.0, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.07, 0, 0, -100, 0.0, 0, true, true, true, true, 0,
+            true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "键盘",{""}, "",function(on)
+GTTG(wushidao, "键盘", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_cs_keyboard_01"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.3, 0, 0, -360, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.3, 0, 0, -360, 0.5, 0, true, true, true, true, 0,
+            true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "高尔夫球杆",{""}, "",function(on)
+GTTG(wushidao, "高尔夫球杆", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_golf_driver"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0, 0, 120, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0, 0, 120, 0.5, 0, true, true, true, true, 0,
+            true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "凳子",{""}, "",function(on)
+GTTG(wushidao, "凳子", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_cs_office_chair"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.32, 0.05, 0.28, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.32, 0.05, 0.28, -90, 0.5, 0, true, true, true,
+            true, 0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "娃哈哈",{""}, "",function(on)
+GTTG(wushidao, "娃哈哈", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_energy_drink"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "队长盾牌",{""}, "",function(on)
+GTTG(wushidao, "队长盾牌", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_ex_b_shark"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "队长盾牌2",{""}, "",function(on)
+GTTG(wushidao, "队长盾牌2", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_ex_b_shark_g"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "队长盾牌3",{""}, "",function(on)
+GTTG(wushidao, "队长盾牌3", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_ex_b_shark_p"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "队长盾牌4",{""}, "",function(on)
+GTTG(wushidao, "队长盾牌4", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_ex_b_shark_pk"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "队长盾牌5",{""}, "",function(on)
+GTTG(wushidao, "队长盾牌5", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_ex_b_shark_wh"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "队长盾牌6",{""}, "",function(on)
+GTTG(wushidao, "队长盾牌6", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_ex_b_time"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "队长盾牌7",{""}, "",function(on)
+GTTG(wushidao, "队长盾牌7", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_ex_b_time_g"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "队长盾牌8",{""}, "",function(on)
+GTTG(wushidao, "队长盾牌8", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_ex_b_time_p"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "队长盾牌9",{""}, "",function(on)
+GTTG(wushidao, "队长盾牌9", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_ex_b_time_pk"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "队长盾牌10",{""}, "",function(on)
+GTTG(wushidao, "队长盾牌10", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_ex_b_time_wh"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "队长盾牌11",{""}, "",function(on)
+GTTG(wushidao, "队长盾牌11", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_ex_bmd"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "队长盾牌12",{""}, "",function(on)
+GTTG(wushidao, "队长盾牌12", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("prop_gr_bmd_b"), pos.x, pos.y, pos.z, true, true, false)
     if on then
-    WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),1317494643,15,true,true)
-    WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
-    ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(), PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true, 0, true)
+        WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()), 1317494643, 15, true, true)
+        WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(PLAYER.PLAYER_PED_ID(), not on, false, false, false)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(taidao, PLAYER.PLAYER_PED_ID(),
+            PED.GET_PED_BONE_INDEX(PLAYER.PLAYER_PED_ID(), 28422), 0.05, 0.05, 0, -90, 0.5, 0, true, true, true, true,
+            0, true)
     else
-        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(),1317494643)
+        WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), 1317494643)
         local count = 0
-			for k,ent in pairs(entities.get_all_objects_as_handles()) do
-				ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
-				entities.delete_by_handle(ent)
-				count = count + 1
-				wait()
-			end
+        for k, ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            entities.delete_by_handle(ent)
+            count = count + 1
+            wait()
+        end
     end
 end)
 
-GTTG(wushidao, "御盘术V1",{""}, "",function(on)
+GTTG(wushidao, "御盘术V1", {""}, "", function(on)
     local katana = "prop_cs_keyboard_01"
-    if on then     
-        attach_to_player(katana, 1, -0.3, 0, 0.8, 0, 90,90)
-        attach_to_player(katana, 1, 0.3, 0, 0.8, 0, 90,90)
-        attach_to_player(katana, 1, -0.5, 0, 0.5, 0, 90,90)
-        attach_to_player(katana, 1, 0.5, 0, 0.5, 0, 90,90)
-        attach_to_player(katana, 1, -0.8, 0, 0.8, 0, 90,90)
-        attach_to_player(katana, 1, 0.8, 0, 0.8, 0, 90,90)
-        attach_to_player(katana, 1, 0.0, 0, 1, 0, 90,90)
-        attach_to_player(katana, 1, 1.0, 0, 0, -90, 0,0)
-        attach_to_player(katana, 1, -1.0, 0, 0, 80, 90,95)
-        attach_to_player(katana, 1, 2.0, 0, 0.2, -90, 0,0)
-        attach_to_player(katana, 1, -2.0, 0, 0.2, 80, 90,95)
-        attach_to_player(katana, 1, 1.0, 0, 0.4, -90, 0,0)
-        attach_to_player(katana, 1, -1.0, 0, 0.4, 80, 90,95)
-        attach_to_player(katana, 1, 1.5, 0, 0.6, -90, 0,0)
-        attach_to_player(katana, 1, -1.5, 0, 0.6, 80, 90,95)
-        attach_to_player(katana, 0, 0, -0.2, 0.5, 0, -150,0)
-        attach_to_player(katana, 0, 0, -0.2, 0.5, 0, 150,0)
-        attach_to_player(katana, 0, 0, -0.2, 0.5, 0, 180,0)
-        attach_to_player(katana, 0, 0.23, 0, 0, 0, -180,100)
-        attach_to_player(katana, 0, -0.23, 0, 0, 0, -180,100)
+    if on then
+        attach_to_player(katana, 1, -0.3, 0, 0.8, 0, 90, 90)
+        attach_to_player(katana, 1, 0.3, 0, 0.8, 0, 90, 90)
+        attach_to_player(katana, 1, -0.5, 0, 0.5, 0, 90, 90)
+        attach_to_player(katana, 1, 0.5, 0, 0.5, 0, 90, 90)
+        attach_to_player(katana, 1, -0.8, 0, 0.8, 0, 90, 90)
+        attach_to_player(katana, 1, 0.8, 0, 0.8, 0, 90, 90)
+        attach_to_player(katana, 1, 0.0, 0, 1, 0, 90, 90)
+        attach_to_player(katana, 1, 1.0, 0, 0, -90, 0, 0)
+        attach_to_player(katana, 1, -1.0, 0, 0, 80, 90, 95)
+        attach_to_player(katana, 1, 2.0, 0, 0.2, -90, 0, 0)
+        attach_to_player(katana, 1, -2.0, 0, 0.2, 80, 90, 95)
+        attach_to_player(katana, 1, 1.0, 0, 0.4, -90, 0, 0)
+        attach_to_player(katana, 1, -1.0, 0, 0.4, 80, 90, 95)
+        attach_to_player(katana, 1, 1.5, 0, 0.6, -90, 0, 0)
+        attach_to_player(katana, 1, -1.5, 0, 0.6, 80, 90, 95)
+        attach_to_player(katana, 0, 0, -0.2, 0.5, 0, -150, 0)
+        attach_to_player(katana, 0, 0, -0.2, 0.5, 0, 150, 0)
+        attach_to_player(katana, 0, 0, -0.2, 0.5, 0, 180, 0)
+        attach_to_player(katana, 0, 0.23, 0, 0, 0, -180, 100)
+        attach_to_player(katana, 0, -0.23, 0, 0, 0, -180, 100)
         local player_pos = players.get_position(players.user())
         request_ptfx_asset("scr_sum2_hal")
         GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-            "scr_sum2_hal_rider_weak_orange", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
+        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("scr_sum2_hal_rider_weak_orange", player_pos.x,
+            player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
     else
         delete_object(katana)
     end
 end)
+
 
 GTTG(wushidao, "御盘术V2",{""}, "",function(on)
     wanjianguizong_2 = state
@@ -8337,17 +8766,20 @@ GTLP(newptfx, '尾拖白', {}, '', function (g)
      end
 end)
 
-GTTG(newptfx, "电疗",{""}, "",function(state)
-local boneIdx = { 0x796e,0x6f06,0xeb95,0xe39f,0xca72,0x192A,  0xffa, 0xfa11, 0x83c,   0x512d, 0x58b7, 0xbb,0xb3fe,0x3fcf,0x5c01,0x60f0,0x60f1,0x60f2,0x6e5c,0x29d2,0xeeeb,0xfcd9,0xe0fd,0x5c57,0x192a,0x2e28,0x62ac,0x8b93,0xb4a0,0x6b52,0x8b93,0xf9bb,0x9000,0xb1c5,0x9d4d,0xdd1c}
-if state then
-for _, boneIds in ipairs(boneIdx) do
-request_ptfx_asset("scr_reconstructionaccident")
-    GRAPHICS.USE_PARTICLE_FX_ASSET("scr_reconstructionaccident")
-    GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("scr_sparking_generator", players.user_ped(), 0, 0, 0, 0, 0 , 0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneIds), 2, false, false, false, 0, 0, 0, 0)
-end
-else
-    GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(players.user_ped())
-end
+GTTG(newptfx, "电疗", {""}, "", function(state)
+    local boneIdx = {0x796e, 0x6f06, 0xeb95, 0xe39f, 0xca72, 0x192A, 0xffa, 0xfa11, 0x83c, 0x512d, 0x58b7, 0xbb, 0xb3fe,
+                     0x3fcf, 0x5c01, 0x60f0, 0x60f1, 0x60f2, 0x6e5c, 0x29d2, 0xeeeb, 0xfcd9, 0xe0fd, 0x5c57, 0x192a,
+                     0x2e28, 0x62ac, 0x8b93, 0xb4a0, 0x6b52, 0x8b93, 0xf9bb, 0x9000, 0xb1c5, 0x9d4d, 0xdd1c}
+    if state then
+        for _, boneIds in ipairs(boneIdx) do
+            request_ptfx_asset("scr_reconstructionaccident")
+            GRAPHICS.USE_PARTICLE_FX_ASSET("scr_reconstructionaccident")
+            GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE("scr_sparking_generator", players.user_ped(), 0,
+                0, 0, 0, 0, 0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneIds), 2, false, false, false, 0, 0, 0, 0)
+        end
+    else
+        GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(players.user_ped())
+    end
 end)
 
 man_ptfx_asset = "scr_bike_adversary"
@@ -8367,7 +8799,7 @@ l_bones = {0xffa, 0xfa11, 0x83c, 0x512d, 0x796e, 0xb3fe, 0x3fcf, 0x58b7, 0xbb0}
 load_ptfxs = {}
 was_burning_man_on = false
 newptfx:toggle('过载能量', {}, "", function(on)
-    if not on then 
+    if not on then
         for _, p in pairs(load_ptfxs) do
             GRAPHICS.REMOVE_PARTICLE_FX(p, false)
             GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
@@ -8377,8 +8809,9 @@ newptfx:toggle('过载能量', {}, "", function(on)
         for _, bone in pairs(l_bones) do
             GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
             local bone_id = PED.GET_PED_BONE_INDEX(players.user_ped(), bone)
-            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0, 0.0, 0.0, 0.0, 0.0, 90.0, bone_id, 0.7, false, false, false, 0, 0, 0, 0)
-            load_ptfxs[#load_ptfxs+1] = fx
+            fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(man_ptfx_effect, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 90.0, bone_id, 0.7, false, false, false, 0, 0, 0, 0)
+            load_ptfxs[#load_ptfxs + 1] = fx
             GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 0, 255, 255, 255)
         end
     end
@@ -8386,1026 +8819,1283 @@ end)
 
 GTLP(newptfx, "奥义秘术", {""}, "此特效由于粒子上限可能无法展示完全效果", function()
     for i = 1, 16 do
-    local p_pos = players.get_position(players.user())
-    local rad = 2 * math.pi
+        local p_pos = players.get_position(players.user())
+        local rad = 2 * math.pi
         rad = rad / 16
         rad = rad * i
-             p_pos.x = p_pos.x + (18 * math.cos(rad))
-             p_pos.y = p_pos.y + (18 * math.sin(rad))
-             p_pos.z = p_pos.z +0.5
-    request_ptfx_asset("scr_sum2_hal")
-         GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-        "scr_sum2_hal_rider_weak_blue", p_pos.x, p_pos.y, p_pos.z, 0, 0, 0, 4, false, false, false)
-    local c_pos = players.get_position(players.user())
+        p_pos.x = p_pos.x + (18 * math.cos(rad))
+        p_pos.y = p_pos.y + (18 * math.sin(rad))
+        p_pos.z = p_pos.z + 0.5
         request_ptfx_asset("scr_sum2_hal")
-    GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
-    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-    suijijianqi(jianqi), c_pos.x, c_pos.y, c_pos.z, 0, 0, 0, 2.5, false, false, false)
+        GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
+        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("scr_sum2_hal_rider_weak_blue", p_pos.x, p_pos.y,
+            p_pos.z, 0, 0, 0, 4, false, false, false)
+        local c_pos = players.get_position(players.user())
+        request_ptfx_asset("scr_sum2_hal")
+        GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
+        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(suijijianqi(jianqi), c_pos.x, c_pos.y, c_pos.z, 0, 0,
+            0, 2.5, false, false, false)
     end
 end)
 
-GTLP(texiao,"斗气护甲", {""}, "", function ()
-local colour = {r = 0.0, g = 1.0, b = 1.0, a = 0.0}
-local affect <const> = Effect.new("scr_bike_adversary", "scr_adversary_gunsmith_weap_smoke")
-if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
-STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
-return
-end
-if timer.elapsed() >= 1000 then
-removeFxs(affects); affects = {}
-timer.reset()
-end
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
-local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-local minimum, maximum = v3.new(), v3.new()
-MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
-local offsets <const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
-for _, offset in ipairs(offsets) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name,vehicle,offset.x,offset.y,0.0,0.0,0.0,0.0,0.0, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
-for _, boneId in ipairs(bones) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name,players.user_ped(),0.0,0.0,0.0,0.0,0.0,0.0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId),0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-end
-end, function ()
-removeFxs(affects); affects = {}
+GTLP(texiao, "斗气护甲", {""}, "", function()
+    local colour = {
+        r = 0.0,
+        g = 1.0,
+        b = 1.0,
+        a = 0.0
+    }
+    local affect<const> = Effect.new("scr_bike_adversary", "scr_adversary_gunsmith_weap_smoke")
+    if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
+        STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
+        return
+    end
+    if timer.elapsed() >= 1000 then
+        removeFxs(affects);
+        affects = {}
+        timer.reset()
+    end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local minimum, maximum = v3.new(), v3.new()
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
+        local offsets<const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
+        for _, offset in ipairs(offsets) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name, vehicle, offset.x, offset.y,
+                0.0, 0.0, 0.0, 0.0, 0.0, false, false, false, 0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
+        for _, boneId in ipairs(bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.7, false, false, false,
+                0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    end
+end, function()
+    removeFxs(affects);
+    affects = {}
 end)
 
-starlight = GT(texiao,"星光闪耀", {})
-GTLP(starlight,"星光闪耀v1", {""}, "", function ()
-local colour = {r = 0.0, g = 1.0, b = 1.0, a = 0.0}
-local affect <const> = Effect.new("scr_rcpaparazzo1", "scr_mich4_firework_trailburst_spawn")
-if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
-STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
-return
-end
-if timer.elapsed() >= 1000 then
-removeFxs(affects); affects = {}
-timer.reset()
-end
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
-local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-local minimum, maximum = v3.new(), v3.new()
-MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
-local offsets <const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
-for _, offset in ipairs(offsets) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name,vehicle,offset.x,offset.y,0.0,0.0,0.0,0.0,0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
-for _, boneId in ipairs(bones) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name,players.user_ped(),0.0,0.0,0.0,0.0,0.0,0.0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId),0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-end
-end, function ()
-removeFxs(affects); affects = {}
+starlight = GT(texiao, "星光闪耀", {})
+GTLP(starlight, "星光闪耀v1", {""}, "", function()
+    local colour = {
+        r = 0.0,
+        g = 1.0,
+        b = 1.0,
+        a = 0.0
+    }
+    local affect<const> = Effect.new("scr_rcpaparazzo1", "scr_mich4_firework_trailburst_spawn")
+    if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
+        STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
+        return
+    end
+    if timer.elapsed() >= 1000 then
+        removeFxs(affects);
+        affects = {}
+        timer.reset()
+    end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local minimum, maximum = v3.new(), v3.new()
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
+        local offsets<const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
+        for _, offset in ipairs(offsets) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name, vehicle, offset.x, offset.y,
+                0.0, 0.0, 0.0, 0.0, 0.7, false, false, false, 0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
+        for _, boneId in ipairs(bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.7, false, false, false,
+                0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    end
+end, function()
+    removeFxs(affects);
+    affects = {}
 end)
 
-GTLP(starlight,"星光闪耀v2", {""}, "", function ()
-local colour = {r = 1.0, g = 1.0, b = 1.0, a = 1.0}
-local affect <const> = Effect.new("scr_rcpaparazzo1", "scr_mich4_firework_trailburst_spawn")
-if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
-STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
-return
-end
-if timer.elapsed() >= 1000 then
-removeFxs(affects); affects = {}
-timer.reset()
-end
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
-local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-local minimum, maximum = v3.new(), v3.new()
-MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
-local offsets <const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
-for _, offset in ipairs(offsets) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name,vehicle,offset.x,offset.y,0.0,0.0,0.0,0.0,0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
-for _, boneId in ipairs(bones) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name,players.user_ped(),0.0,0.0,0.0,0.0,0.0,0.0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId),0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-end
-end, function ()
-removeFxs(affects); affects = {}
+GTLP(starlight, "星光闪耀v2", {""}, "", function()
+    local colour = {
+        r = 1.0,
+        g = 1.0,
+        b = 1.0,
+        a = 1.0
+    }
+    local affect<const> = Effect.new("scr_rcpaparazzo1", "scr_mich4_firework_trailburst_spawn")
+    if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
+        STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
+        return
+    end
+    if timer.elapsed() >= 1000 then
+        removeFxs(affects);
+        affects = {}
+        timer.reset()
+    end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local minimum, maximum = v3.new(), v3.new()
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
+        local offsets<const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
+        for _, offset in ipairs(offsets) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name, vehicle, offset.x, offset.y,
+                0.0, 0.0, 0.0, 0.0, 0.7, false, false, false, 0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
+        for _, boneId in ipairs(bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.7, false, false, false,
+                0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    end
+end, function()
+    removeFxs(affects);
+    affects = {}
 end)
 
-GTLP(starlight,"星光闪耀v3", {""}, "", function ()
-local colour = {r = 1.0, g = 0.0, b = 1.0, a = 1.0}
-local affect <const> = Effect.new("scr_rcpaparazzo1", "scr_mich4_firework_trailburst_spawn")
-if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
-STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
-return
-end
-if timer.elapsed() >= 1000 then
-removeFxs(affects); affects = {}
-timer.reset()
-end
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
-local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-local minimum, maximum = v3.new(), v3.new()
-MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
-local offsets <const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
-for _, offset in ipairs(offsets) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name,vehicle,offset.x,offset.y,0.0,0.0,0.0,0.0,0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
-for _, boneId in ipairs(bones) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name,players.user_ped(),0.0,0.0,0.0,0.0,0.0,0.0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId),0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-end
-end, function ()
-removeFxs(affects); affects = {}
+GTLP(starlight, "星光闪耀v3", {""}, "", function()
+    local colour = {
+        r = 1.0,
+        g = 0.0,
+        b = 1.0,
+        a = 1.0
+    }
+    local affect<const> = Effect.new("scr_rcpaparazzo1", "scr_mich4_firework_trailburst_spawn")
+    if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
+        STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
+        return
+    end
+    if timer.elapsed() >= 1000 then
+        removeFxs(affects);
+        affects = {}
+        timer.reset()
+    end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local minimum, maximum = v3.new(), v3.new()
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
+        local offsets<const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
+        for _, offset in ipairs(offsets) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name, vehicle, offset.x, offset.y,
+                0.0, 0.0, 0.0, 0.0, 0.7, false, false, false, 0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
+        for _, boneId in ipairs(bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.7, false, false, false,
+                0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    end
+end, function()
+    removeFxs(affects);
+    affects = {}
 end)
 
-GTLP(texiao,"列光波", {""}, "", function ()
-local colour = {r = 0.0, g = 1.0, b = 1.0, a = 0.0}
-local affect <const> = Effect.new("proj_indep_firework", "proj_indep_flare_trail")
-if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
-STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
-return
-end
-if timer.elapsed() >= 1000 then
-removeFxs(affects); affects = {}
-timer.reset()
-end
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
-local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-local minimum, maximum = v3.new(), v3.new()
-MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
-local offsets <const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
-for _, offset in ipairs(offsets) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name,vehicle,offset.x,offset.y,0.0,0.0,0.0,0.0,0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
-for _, boneId in ipairs(bones) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name,players.user_ped(),0.0,0.0,0.0,0.0,0.0,0.0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId),0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-end
-end, function ()
-removeFxs(affects); affects = {}
+GTLP(texiao, "列光波", {""}, "", function()
+    local colour = {
+        r = 0.0,
+        g = 1.0,
+        b = 1.0,
+        a = 0.0
+    }
+    local affect<const> = Effect.new("proj_indep_firework", "proj_indep_flare_trail")
+    if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
+        STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
+        return
+    end
+    if timer.elapsed() >= 1000 then
+        removeFxs(affects);
+        affects = {}
+        timer.reset()
+    end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local minimum, maximum = v3.new(), v3.new()
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
+        local offsets<const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
+        for _, offset in ipairs(offsets) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name, vehicle, offset.x, offset.y,
+                0.0, 0.0, 0.0, 0.0, 0.7, false, false, false, 0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
+        for _, boneId in ipairs(bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.7, false, false, false,
+                0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    end
+end, function()
+    removeFxs(affects);
+    affects = {}
 end)
 
-GTLP(texiao,"蒸汽朋克", {""}, "", function ()
-local colour = {r = 0.0, g = 1.0, b = 1.0, a = 0.0}
-local affect <const> = Effect.new("wpn_indep_firework", "muz_indep_firework")
-if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
-STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
-return
-end
-if timer.elapsed() >= 1000 then
-removeFxs(affects); affects = {}
-timer.reset()
-end
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
-local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-local minimum, maximum = v3.new(), v3.new()
-MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
-local offsets <const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
-for _, offset in ipairs(offsets) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name,vehicle,offset.x,offset.y,0.0,0.0,0.0,0.0,0.0, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
-for _, boneId in ipairs(bones) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name,players.user_ped(),0.0,0.0,0.0,0.0,0.0,0.0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId),0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-end
-end, function ()
-removeFxs(affects); affects = {}
+GTLP(texiao, "蒸汽朋克", {""}, "", function()
+    local colour = {
+        r = 0.0,
+        g = 1.0,
+        b = 1.0,
+        a = 0.0
+    }
+    local affect<const> = Effect.new("wpn_indep_firework", "muz_indep_firework")
+    if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
+        STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
+        return
+    end
+    if timer.elapsed() >= 1000 then
+        removeFxs(affects);
+        affects = {}
+        timer.reset()
+    end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local minimum, maximum = v3.new(), v3.new()
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
+        local offsets<const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
+        for _, offset in ipairs(offsets) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name, vehicle, offset.x, offset.y,
+                0.0, 0.0, 0.0, 0.0, 0.0, false, false, false, 0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
+        for _, boneId in ipairs(bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.7, false, false, false,
+                0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    end
+end, function()
+    removeFxs(affects);
+    affects = {}
 end)
 
-GTLP(texiao,"火冒三丈", {""}, "", function ()
-local colour = {r = 1.0, g = 0.0, b = 1.0, a = 1.0}
-local affect <const> = Effect.new("scr_ie_export", "scr_ie_export_fire_ring")
-if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
-STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
-return
-end
-if timer.elapsed() >= 1000 then
-removeFxs(affects); affects = {}
-timer.reset()
-end
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
-local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-local minimum, maximum = v3.new(), v3.new()
-MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
-local offsets <const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
-for _, offset in ipairs(offsets) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name,vehicle,offset.x,offset.y,0.0,0.0,0.0,0.0,0.0, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
-for _, boneId in ipairs(bones) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name,players.user_ped(),0.0,0.0,0.0,0.0,0.0,0.0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId),0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-end
-end, function ()
-removeFxs(affects); affects = {}
+GTLP(texiao, "火冒三丈", {""}, "", function()
+    local colour = {
+        r = 1.0,
+        g = 0.0,
+        b = 1.0,
+        a = 1.0
+    }
+    local affect<const> = Effect.new("scr_ie_export", "scr_ie_export_fire_ring")
+    if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
+        STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
+        return
+    end
+    if timer.elapsed() >= 1000 then
+        removeFxs(affects);
+        affects = {}
+        timer.reset()
+    end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local minimum, maximum = v3.new(), v3.new()
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
+        local offsets<const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
+        for _, offset in ipairs(offsets) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name, vehicle, offset.x, offset.y,
+                0.0, 0.0, 0.0, 0.0, 0.0, false, false, false, 0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
+        for _, boneId in ipairs(bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.7, false, false, false,
+                0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    end
+end, function()
+    removeFxs(affects);
+    affects = {}
 end)
 
-feisheng = GT(texiao,"飞升", {})
-GTLP(feisheng,"飞升v1", {""}, "", function ()
-local colour = {r = 0.0, g = 1.0, b = 1.0, a = 0.0}
-local affect <const> = Effect.new("scr_as_trap", "scr_as_trap_zone_rectangle")
-if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
-STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
-return
-end
-if timer.elapsed() >= 1000 then
-removeFxs(affects); affects = {}
-timer.reset()
-end
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
-local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-local minimum, maximum = v3.new(), v3.new()
-MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
-local offsets <const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
-for _, offset in ipairs(offsets) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name,vehicle,offset.x,offset.y,0.0,0.0,0.0,0.0,0.0, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
-for _, boneId in ipairs(bones) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name,players.user_ped(),0.0,0.0,0.0,0.0,0.0,0.0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId),0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-end
-end, function ()
-removeFxs(affects); affects = {}
+feisheng = GT(texiao, "飞升", {})
+GTLP(feisheng, "飞升v1", {""}, "", function()
+    local colour = {
+        r = 0.0,
+        g = 1.0,
+        b = 1.0,
+        a = 0.0
+    }
+    local affect<const> = Effect.new("scr_as_trap", "scr_as_trap_zone_rectangle")
+    if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
+        STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
+        return
+    end
+    if timer.elapsed() >= 1000 then
+        removeFxs(affects);
+        affects = {}
+        timer.reset()
+    end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local minimum, maximum = v3.new(), v3.new()
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
+        local offsets<const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
+        for _, offset in ipairs(offsets) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name, vehicle, offset.x, offset.y,
+                0.0, 0.0, 0.0, 0.0, 0.0, false, false, false, 0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
+        for _, boneId in ipairs(bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.7, false, false, false,
+                0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    end
+end, function()
+    removeFxs(affects);
+    affects = {}
 end)
 
-GTLP(feisheng,"飞升v2", {""}, "", function ()
-local colour = {r = 1.0, g = 1.0, b = 1.0, a = 1.0}
-local affect <const> = Effect.new("scr_as_trap", "scr_as_trap_zone_rectangle")
-if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
-STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
-return
-end
-if timer.elapsed() >= 1000 then
-removeFxs(affects); affects = {}
-timer.reset()
-end
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
-local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-local minimum, maximum = v3.new(), v3.new()
-MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
-local offsets <const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
-for _, offset in ipairs(offsets) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name,vehicle,offset.x,offset.y,0.0,0.0,0.0,0.0,0.0, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
-for _, boneId in ipairs(bones) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name,players.user_ped(),0.0,0.0,0.0,0.0,0.0,0.0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId),0.7, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-end
-end, function ()
-removeFxs(affects); affects = {}
+GTLP(feisheng, "飞升v2", {""}, "", function()
+    local colour = {
+        r = 1.0,
+        g = 1.0,
+        b = 1.0,
+        a = 1.0
+    }
+    local affect<const> = Effect.new("scr_as_trap", "scr_as_trap_zone_rectangle")
+    if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
+        STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
+        return
+    end
+    if timer.elapsed() >= 1000 then
+        removeFxs(affects);
+        affects = {}
+        timer.reset()
+    end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local minimum, maximum = v3.new(), v3.new()
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
+        local offsets<const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
+        for _, offset in ipairs(offsets) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name, vehicle, offset.x, offset.y,
+                0.0, 0.0, 0.0, 0.0, 0.0, false, false, false, 0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
+        for _, boneId in ipairs(bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.7, false, false, false,
+                0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    end
+end, function()
+    removeFxs(affects);
+    affects = {}
 end)
 
-GTLP(texiao,"荧光飞轮", {""}, "", function ()
-local colour = {r = 1.0, g = 1.0, b = 1.0, a = 1.0}
-local affect <const> = Effect.new("veh_sm_pyro", "veh_exhaust_afterburner_pyro")
-if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
-STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
-return
-end
-if timer.elapsed() >= 1000 then
-removeFxs(affects); affects = {}
-timer.reset()
-end
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
-local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
-local minimum, maximum = v3.new(), v3.new()
-MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
-local offsets <const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
-for _, offset in ipairs(offsets) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name,vehicle,offset.x,offset.y,0.0,0.0,0.0,0.0,0.0, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
-for _, boneId in ipairs(bones) do
-GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
-local fx =
-GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name,players.user_ped(),0.0,0.0,0.0,0.0,0.0,0.0,PED.GET_PED_BONE_INDEX(players.user_ped(), boneId),0.5, false, false, false,0, 0, 0, 0)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
-table.insert(affects, fx)
-end
-end
-end, function ()
-removeFxs(affects); affects = {}
+GTLP(texiao, "荧光飞轮", {""}, "", function()
+    local colour = {
+        r = 1.0,
+        g = 1.0,
+        b = 1.0,
+        a = 1.0
+    }
+    local affect<const> = Effect.new("veh_sm_pyro", "veh_exhaust_afterburner_pyro")
+    if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(affect.asset) then
+        STREAMING.REQUEST_NAMED_PTFX_ASSET(affect.asset)
+        return
+    end
+    if timer.elapsed() >= 1000 then
+        removeFxs(affects);
+        affects = {}
+        timer.reset()
+    end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false)
+        local minimum, maximum = v3.new(), v3.new()
+        MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(vehicle), minimum, maximum)
+        local offsets<const> = {v3(minimum.x, minimum.y, 0.0), v3(maximum.x, minimum.y, 0.0)}
+        for _, offset in ipairs(offsets) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(affect.name, vehicle, offset.x, offset.y,
+                0.0, 0.0, 0.0, 0.0, 0.0, false, false, false, 0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    elseif ENTITY.DOES_ENTITY_EXIST(players.user_ped()) then
+        for _, boneId in ipairs(bones) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(affect.asset)
+            local fx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(affect.name, players.user_ped(), 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, PED.GET_PED_BONE_INDEX(players.user_ped(), boneId), 0.5, false, false, false,
+                0, 0, 0, 0)
+            GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, colour.r, colour.g, colour.b, 0)
+            table.insert(affects, fx)
+        end
+    end
+end, function()
+    removeFxs(affects);
+    affects = {}
 end)
 
 function firewingcolours(colours)
-fireWingsSettingse.colour = colour
+    fireWingsSettingse.colour = colour
 end
- fireWingse = {
-[1] = {pos = {[1] = 100, [2] =  50}},
-[2] = {pos = {[1] = 100, [2] = -50}},
-[3] = {pos = {[1] = 115, [2] =  50}},
-[4] = {pos = {[1] = 115, [2] = -50}},
-[5] = {pos = {[1] = 160, [2] =  50}},
-[6] = {pos = {[1] = 160, [2] = -50}},
-[7] = {pos = {[1] = 170, [2] =  50}},
-[8] = {pos = {[1] = 170, [2] = -50}},
-[9] = {pos = {[1] = 110, [2] =  50}},
-[10] = {pos = {[1] = 110, [2] = -50}},
-[11] = {pos = {[1] = 120, [2] =  50}},
-[12] = {pos = {[1] = 120, [2] = -50}},
-[13] = {pos = {[1] = 130, [2] =  50}},
-[14] = {pos = {[1] = 130, [2] = -50}},
-[15] = {pos = {[1] = 190, [2] =  50}},
-[16] = {pos = {[1] = 190, [2] = -50}},
-[17] = {pos = {[1] = 175, [2] =  50}},
-[18] = {pos = {[1] = 175, [2] = -50}},
-[19] = {pos = {[1] = 140, [2] =  50}},
-[20] = {pos = {[1] = 140, [2] = -50}},
-[21] = {pos = {[1] = 150, [2] =  50}},
-[22] = {pos = {[1] = 150, [2] = -50}},
-[23] = {pos = {[1] = 180, [2] =  50}},
-[24] = {pos = {[1] = 180, [2] = -50}},
+fireWingse = {
+    [1] = {
+        pos = {
+            [1] = 100,
+            [2] = 50
+        }
+    },
+    [2] = {
+        pos = {
+            [1] = 100,
+            [2] = -50
+        }
+    },
+    [3] = {
+        pos = {
+            [1] = 115,
+            [2] = 50
+        }
+    },
+    [4] = {
+        pos = {
+            [1] = 115,
+            [2] = -50
+        }
+    },
+    [5] = {
+        pos = {
+            [1] = 160,
+            [2] = 50
+        }
+    },
+    [6] = {
+        pos = {
+            [1] = 160,
+            [2] = -50
+        }
+    },
+    [7] = {
+        pos = {
+            [1] = 170,
+            [2] = 50
+        }
+    },
+    [8] = {
+        pos = {
+            [1] = 170,
+            [2] = -50
+        }
+    },
+    [9] = {
+        pos = {
+            [1] = 110,
+            [2] = 50
+        }
+    },
+    [10] = {
+        pos = {
+            [1] = 110,
+            [2] = -50
+        }
+    },
+    [11] = {
+        pos = {
+            [1] = 120,
+            [2] = 50
+        }
+    },
+    [12] = {
+        pos = {
+            [1] = 120,
+            [2] = -50
+        }
+    },
+    [13] = {
+        pos = {
+            [1] = 130,
+            [2] = 50
+        }
+    },
+    [14] = {
+        pos = {
+            [1] = 130,
+            [2] = -50
+        }
+    },
+    [15] = {
+        pos = {
+            [1] = 190,
+            [2] = 50
+        }
+    },
+    [16] = {
+        pos = {
+            [1] = 190,
+            [2] = -50
+        }
+    },
+    [17] = {
+        pos = {
+            [1] = 175,
+            [2] = 50
+        }
+    },
+    [18] = {
+        pos = {
+            [1] = 175,
+            [2] = -50
+        }
+    },
+    [19] = {
+        pos = {
+            [1] = 140,
+            [2] = 50
+        }
+    },
+    [20] = {
+        pos = {
+            [1] = 140,
+            [2] = -50
+        }
+    },
+    [21] = {
+        pos = {
+            [1] = 150,
+            [2] = 50
+        }
+    },
+    [22] = {
+        pos = {
+            [1] = 150,
+            [2] = -50
+        }
+    },
+    [23] = {
+        pos = {
+            [1] = 180,
+            [2] = 50
+        }
+    },
+    [24] = {
+        pos = {
+            [1] = 180,
+            [2] = -50
+        }
+    }
 }
 
-local mildOrangeFires = new.colour( 60, 255, 255 )
+local mildOrangeFires = new.colour(60, 255, 255)
 fireWingsSettingse = {
-scalee = 1,
-colour = mildOrangeFires,
-on = false,
-y = { value = 0.12, still = 0.12, walk =  0.22, sprint = 0.32, sneak = 0.35 },
-z = { value = 0.58, still = 0.58, walk =  0.45, sprint = 0.38, sneak = 0.35 },
+    scalee = 1,
+    colour = mildOrangeFires,
+    on = false,
+    y = {
+        value = 0.12,
+        still = 0.12,
+        walk = 0.22,
+        sprint = 0.32,
+        sneak = 0.35
+    },
+    z = {
+        value = 0.58,
+        still = 0.58,
+        walk = 0.45,
+        sprint = 0.38,
+        sneak = 0.35
+    }
 }
 fireWingsSettingse.colour = colour
-huoshen = GT(texiao,"火神", {})
-GTTG(huoshen, "火神",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_xs_props') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_xs_props')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_xs_props')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_xs_oil_jack_fire', ptfxEgg, 0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_xs_props')
-end
-end)
-
-GTTG(huoshen, "火神II",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_paletoscore') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_paletoscore')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_paletoscore')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_paleto_fire_trail', ptfxEgg, 0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_paletoscore')
-end
+huoshen = GT(texiao, "火神", {})
+GTTG(huoshen, "火神", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_xs_props') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_xs_props')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_xs_props')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_xs_oil_jack_fire', ptfxEgg,
+                0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_xs_props')
+    end
 end)
 
-GTTG(huoshen, "火神III",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_martin1') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_martin1')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_martin1')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_sol1_plane_smoke_loop', ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.5, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_martin1')
-end
-end)
-
-GTTG(huoshen, "火神IIII",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_martin1') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_martin1')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_martin1')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_sol1_plane_engine_fire', ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.5, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_martin1')
-end
+GTTG(huoshen, "火神II", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_paletoscore') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_paletoscore')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_paletoscore')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_paleto_fire_trail', ptfxEgg,
+                0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_paletoscore')
+    end
 end)
 
-GTTG(texiao, "星火燎原",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_xs_pits') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_xs_pits')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_xs_pits')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_xs_fire_pit_long', ptfxEgg, 0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_xs_pits')
-end
-end)
-
-GTTG(texiao, "雷惊电绕",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_xs_pits') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_xs_pits')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_xs_pits')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_xs_sf_pit_long', ptfxEgg, 0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_xs_pits')
-end
+GTTG(huoshen, "火神III", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_martin1') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_martin1')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_martin1')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_sol1_plane_smoke_loop',
+                ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false,
+                false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.5, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_martin1')
+    end
 end)
 
-GTTG(texiao, "斗气化翼",{""}, "行走触发",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_pm_plane_promotion') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_pm_plane_promotion')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_pm_plane_promotion')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_stuntplane_trail', ptfxEgg, 0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.3, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_pm_plane_promotion')
-end
-end)
-
-GTTG(texiao, "尿频",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_bigscore') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_bigscore')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_bigscore')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_bigscore_peeing', ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.2, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_bigscore')
-end
+GTTG(huoshen, "火神IIII", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_martin1') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_martin1')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_martin1')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_sol1_plane_engine_fire',
+                ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false,
+                false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.5, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_martin1')
+    end
 end)
 
-huohai = GT(texiao,"火海",{},"")
-GTTG(huohai, "火海",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_martin1') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_martin1')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_martin1')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_sol1_plane_tail_fire', ptfxEgg, 0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.5, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_martin1')
-end
-end)
-
-GTTG(huohai, "火海II",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_finale1') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_finale1')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_finale1')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_fin_fire_petrol_trev', ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, -0.2, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_finale1')
-end
+GTTG(texiao, "星火燎原", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_xs_pits') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_xs_pits')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_xs_pits')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_xs_fire_pit_long', ptfxEgg,
+                0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_xs_pits')
+    end
 end)
 
-GTTG(texiao, "Xfire",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_martin1') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_martin1')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_martin1')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_sol1_fire_trail', ptfxEgg, 0, 0, -1.3, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.5, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_martin1')
-end
-end)
-
-GTTG(texiao, "硝烟",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_finale1') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_finale1')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_finale1')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_fin_env_trev_sky', ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, -0.2, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_finale1')
-end
+GTTG(texiao, "雷惊电绕", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_xs_pits') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_xs_pits')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_xs_pits')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_xs_sf_pit_long', ptfxEgg, 0,
+                0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_xs_pits')
+    end
 end)
 
-GTTG(texiao, "满面金光",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_exile2') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_exile2')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_exile2')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_ex2_rpg_trail', ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 1, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
+GTTG(texiao, "斗气化翼", {""}, "行走触发", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_pm_plane_promotion') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_pm_plane_promotion')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_pm_plane_promotion')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_stuntplane_trail', ptfxEgg,
+                0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.3, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_pm_plane_promotion')
+    end
 end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_exile2')
-end
+
+GTTG(texiao, "尿频", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_bigscore') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_bigscore')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_bigscore')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_bigscore_peeing', ptfxEgg,
+                0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.2, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_bigscore')
+    end
+end)
+
+huohai = GT(texiao, "火海", {}, "")
+GTTG(huohai, "火海", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_martin1') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_martin1')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_martin1')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_sol1_plane_tail_fire',
+                ptfxEgg, 0, 0, 0.1, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false,
+                false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.5, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_martin1')
+    end
+end)
+
+GTTG(huohai, "火海II", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_finale1') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_finale1')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_finale1')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_fin_fire_petrol_trev',
+                ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false,
+                false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, -0.2, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_finale1')
+    end
+end)
+
+GTTG(texiao, "Xfire", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_martin1') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_martin1')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_martin1')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_sol1_fire_trail', ptfxEgg,
+                0, 0, -1.3, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false,
+                false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.5, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_martin1')
+    end
+end)
+
+GTTG(texiao, "硝烟", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_finale1') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_finale1')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_finale1')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_fin_env_trev_sky', ptfxEgg,
+                0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, -0.2, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_finale1')
+    end
+end)
+
+GTTG(texiao, "满面金光", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_exile2') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_exile2')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_exile2')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_ex2_rpg_trail', ptfxEgg, 0,
+                0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 1, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_exile2')
+    end
 end)
 
 GTTG(newptfx, '雷电法王', {''}, '', function(k)
     leidian = k
     while leidian do
-      pedmyfirst = players.user_ped(players.user())
-      local titlle = "scr_xs_pits"
-      local hashid = "scr_xs_sf_pit_long"
-      GRAPHICS.USE_PARTICLE_FX_ASSET(titlle)
-      while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(titlle) do
-        STREAMING.REQUEST_NAMED_PTFX_ASSET(titlle)
+        pedmyfirst = players.user_ped(players.user())
+        local titlle = "scr_xs_pits"
+        local hashid = "scr_xs_sf_pit_long"
+        GRAPHICS.USE_PARTICLE_FX_ASSET(titlle)
+        while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(titlle) do
+            STREAMING.REQUEST_NAMED_PTFX_ASSET(titlle)
+            wait(0)
+        end
+        GRAPHICS.START_PARTICLE_FX_LOOPED_ON_ENTITY(hashid, pedmyfirst, -0.3, 0, -0.3, 0, 0, 100, 2.5, false, false,
+            false)
         wait(0)
-      end
-      GRAPHICS.START_PARTICLE_FX_LOOPED_ON_ENTITY(hashid, pedmyfirst, -0.3, 0, -0.3, 0, 0, 100, 2.5, false, false, false)
-      wait(0)
     end
     leidian = false
     GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(pedmyfirst)
@@ -9414,128 +10104,136 @@ end)
 GTTG(newptfx, '尘土飞扬', {''}, '', function(k)
     leidian = k
     while leidian do
-      pedmyfirst = players.user_ped(players.user())
-      local titlle = "scr_pm_plane_promotion"
-      local hashid = "scr_stuntplane_trail"
-      GRAPHICS.USE_PARTICLE_FX_ASSET(titlle)
-      while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(titlle) do
-        STREAMING.REQUEST_NAMED_PTFX_ASSET(titlle)
+        pedmyfirst = players.user_ped(players.user())
+        local titlle = "scr_pm_plane_promotion"
+        local hashid = "scr_stuntplane_trail"
+        GRAPHICS.USE_PARTICLE_FX_ASSET(titlle)
+        while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(titlle) do
+            STREAMING.REQUEST_NAMED_PTFX_ASSET(titlle)
+            wait(0)
+        end
+        GRAPHICS.START_PARTICLE_FX_LOOPED_ON_ENTITY(hashid, pedmyfirst, 0.1, 0, -0.3, 0, 0, 0, 2, false, false, false)
         wait(0)
-      end
-      GRAPHICS.START_PARTICLE_FX_LOOPED_ON_ENTITY(hashid, pedmyfirst, 0.1, 0, -0.3, 0, 0,0, 2, false, false, false)
-      wait(0)
     end
     leidian = false
     GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(pedmyfirst)
-  end)
-  
-  GTTG(newptfx, 'JB喷火', {''}, '', function(k)
-    leidian = k
-    while leidian do
-      pedmyfirst = players.user_ped(players.user())
-      local titlle = "weap_xs_vehicle_weapons"
-      local hashid = "muz_xs_turret_flamethrower_looping"
-      GRAPHICS.USE_PARTICLE_FX_ASSET(titlle)
-      while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(titlle) do
-        STREAMING.REQUEST_NAMED_PTFX_ASSET(titlle)
-        wait(0)
-      end
-      GRAPHICS.START_PARTICLE_FX_LOOPED_ON_ENTITY(hashid, pedmyfirst, 0, 0, -0.2, 0, 0,0, 1.5, false, false, false)
-      wait(0)
-    end
-    leidian = false
-    GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(pedmyfirst)
-  end)
-  
-GTTG(newptfx, "风起云涌",{""}, "非常壮观喔~",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_exile1') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_exile1')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_exile1')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_ex1_moving_cloud', ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
-end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_exile1')
-end
 end)
 
-GTTG(texiao, "闪亮登场",{""}, "",function(toggle)
-fireWingsSettingse.on = toggle
-if fireWingsSettingse.on then
- ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
-if ptfxEgg == nil then
-local eggHash = 1803116220
-loadModel(eggHash)
-ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
-ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
-STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
-end
-for i = 1, #fireWingse do
-while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_bigscore') do
-STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_bigscore')
-wait()
-end
-GRAPHICS.USE_PARTICLE_FX_ASSET('scr_bigscore')
-fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_bigscore_rpg_trail', ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
-util.create_tick_handler(function()
-local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
-ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.2, rot.x, rot.y, rot.z, false, false, false, false, 0, false)
-ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
-for i = 1, #fireWingse do
-GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
-GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r, fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
-end
-ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
-return fireWingsSettingse.on
+GTTG(newptfx, 'JB喷火', {''}, '', function(k)
+    leidian = k
+    while leidian do
+        pedmyfirst = players.user_ped(players.user())
+        local titlle = "weap_xs_vehicle_weapons"
+        local hashid = "muz_xs_turret_flamethrower_looping"
+        GRAPHICS.USE_PARTICLE_FX_ASSET(titlle)
+        while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(titlle) do
+            STREAMING.REQUEST_NAMED_PTFX_ASSET(titlle)
+            wait(0)
+        end
+        GRAPHICS.START_PARTICLE_FX_LOOPED_ON_ENTITY(hashid, pedmyfirst, 0, 0, -0.2, 0, 0, 0, 1.5, false, false, false)
+        wait(0)
+    end
+    leidian = false
+    GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(pedmyfirst)
 end)
-end
-else
-for i = 1, #fireWingse do
-if fireWingse[i].ptfx then
-GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
-fireWingse[i].ptfx = nil
-end
-if ptfxEgg then
-entities.delete_by_handle(ptfxEgg)
-ptfxEgg = nil
-end
-end
-STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_bigscore')
-end
+
+GTTG(newptfx, "风起云涌", {""}, "非常壮观喔~", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_exile1') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_exile1')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_exile1')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_ex1_moving_cloud', ptfxEgg,
+                0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false, false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_exile1')
+    end
 end)
+
+GTTG(texiao, "闪亮登场", {""}, "", function(toggle)
+    fireWingsSettingse.on = toggle
+    if fireWingsSettingse.on then
+        ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
+        if ptfxEgg == nil then
+            local eggHash = 1803116220
+            loadModel(eggHash)
+            ptfxEgg = entities.create_object(eggHash, ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+            ENTITY.SET_ENTITY_COLLISION(ptfxEgg, false, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(eggHash)
+        end
+        for i = 1, #fireWingse do
+            while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED('scr_bigscore') do
+                STREAMING.REQUEST_NAMED_PTFX_ASSET('scr_bigscore')
+                wait()
+            end
+            GRAPHICS.USE_PARTICLE_FX_ASSET('scr_bigscore')
+            fireWingse[i].ptfx = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY('scr_bigscore_rpg_trail',
+                ptfxEgg, 0, 0, 0, fireWingse[i].pos[1], 0, fireWingse[i].pos[2], fireWingsSettingse.scalee, false,
+                false, false)
+            util.create_tick_handler(function()
+                local rot = ENTITY.GET_ENTITY_ROTATION(players.user_ped(), 2)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(ptfxEgg, players.user_ped(), -1, 0, 0, 0.2, rot.x, rot.y, rot.z, false,
+                    false, false, false, 0, false)
+                ENTITY.SET_ENTITY_ROTATION(ptfxEgg, rot.x, rot.y, rot.z, 2, true)
+                for i = 1, #fireWingse do
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_SCALE(fireWingse[i].ptfx, fireWingsSettingse.scalee)
+                    GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fireWingse[i].ptfx, fireWingsSettingse.colour.r,
+                        fireWingsSettingse.colour.g, fireWingsSettingse.colour.b)
+                end
+                ENTITY.SET_ENTITY_VISIBLE(ptfxEgg, false)
+                return fireWingsSettingse.on
+            end)
+        end
+    else
+        for i = 1, #fireWingse do
+            if fireWingse[i].ptfx then
+                GRAPHICS.REMOVE_PARTICLE_FX(fireWingse[i].ptfx, true)
+                fireWingse[i].ptfx = nil
+            end
+            if ptfxEgg then
+                entities.delete_by_handle(ptfxEgg)
+                ptfxEgg = nil
+            end
+        end
+        STREAMING.REMOVE_NAMED_PTFX_ASSET('scr_bigscore')
+    end
+end)
+
 
 guangxian = GT(texiao,"光线",{},"")
 GTLP(guangxian, "光线", {""}, "", function()
@@ -19495,15 +20193,17 @@ function decode(text)
 end
 
 chat_translation = GT(FY, "聊天翻译")
-enableTR=GTAC(chat_translation, "启用翻译功能", {}, "", function ()
-if not async_http.have_access() then
-    gtoast("您启用了禁止访问互联网 请关闭脚本，在Lua脚本>GRANDTOURINGVIP中取消勾选禁止访问互联网并重新启动")
-else
-    wait()
-    dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\GTA\\tr.lua")
-    enableTR.visible = false
-end
+enableTR = GTAC(chat_translation, "启用翻译功能", {}, "", function()
+    if not async_http.have_access() then
+        gtoast(
+            "您启用了禁止访问互联网 请关闭脚本，在Lua脚本>GRANDTOURINGVIP中取消勾选禁止访问互联网并重新启动")
+    else
+        wait()
+        dofile(filesystem.scripts_dir() .. "\\lib\\GTSCRIPTS\\GTA\\tr.lua")
+        enableTR.visible = false
+    end
 end)
+
 
 chatspamtrash = GT(FY, "公屏内容")
 
@@ -20387,10 +21087,10 @@ GTLP(lobbyFeats, '禁用所有地图通知', {'JSnoMapNotifications'}, '自动�
 end)
 
 Heist_Control_Load = GTAC(Heist_Control, "加载任务选项", {""}, "", function()
-newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;","~h~~b~请稍等...", "CHAR_CHOP", 140)
-wait(2000)
-dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\GTW\\C7.lua")
-GTLuaScript.delete(Heist_Control_Load)
+    newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;", "~h~~b~请稍等...", "CHAR_CHOP", 140)
+    wait(2000)
+    dofile(filesystem.scripts_dir() .. "\\lib\\GTSCRIPTS\\GTW\\C8.lua")
+    GTLuaScript.delete(Heist_Control_Load)
 end)
 
 Constructor_Lua_Load = GT(Constructor_Lua, "模组选项1", {""}, "", function(); end)
@@ -20847,7 +21547,7 @@ end)
 hblink = GTAC(G, ">>"..authvalue, {}, authinfo, function ()
 end)
 
-restartgt = GTAC(G, ">>重新启动脚本", {}, "", function ()
+restartgt = GTAC(G, ">>重新启动", {}, "", function ()
     restartscript()
 end)
 
@@ -20871,6 +21571,7 @@ GTH(blackweb, "西瓜 XiGua Store", "https://xgmenu.me/", "留言:暂无")
 GTH(blackweb, "老王二代", "http://xn--4kq1hq65htok.store", "留言:暂无")
 GTH(blackweb, "ASKshak经销商会", "https://daker.cc/", "留言:2TSTAND经销")
 GTH(blackweb, "小刘 Xiao Liu Store", "https://xlmenu.love/", "留言:暂无")
+GTH(blackweb, "菌儿的小店", "https://junmenu.top/", "留言:暂无")
 GTH(blackweb, "白山茶", "http://bscmenu.online", "留言:暂无")
 GTH(blackweb, "旧梦", "http://fuzhuzhijia.shop", "留言:暂无")
 GTH(blackweb, "忧刊小店", "https://youkan.vip/", "留言:暂无")
@@ -21148,6 +21849,18 @@ zjxlbc = GTLP(zjxlid, "主机序列", {}, "", function(zhuji)
         myspeed1e2 = Round(speedcalce2, 1)
     end
     inviciamountintt = inviciamountint
+
+    local name = players.get_name(players.user())
+    local hbtext = "~h~~y~"..checkme()
+    
+    hbtext = hbtext:gsub("%s", "") -- 移除所有空格
+
+    for _, id in ipairs(spid) do
+        if name == id.playerid then
+            draw_string(string.format(hbtext), zhuji_x, zhuji_y - 0.022, zhuji_dx, zhuji_dx)
+        end
+    end
+    
     draw_string(string.format("~h~~r~延迟: ~w~%dms", delay), zhuji_x + 0.047, zhuji_y + 0.003, zhuji_dx, zhuji_dx)
     draw_string(string.format("~h~~p~帧率: ~w~" .. fps), zhuji_x, zhuji_y + 0.003, zhuji_dx, zhuji_dx)
     draw_string(string.format("~h~~w~" .. myspeed1e .. " ~q~公~g~里~f~/时" .. "~H~~w~  " .. myspeed1e2 ..
@@ -23138,6 +23851,7 @@ util.on_stop(function()
         GuidedMissile.destroy()
 	end
 end) 
+
 end
 --
 

@@ -1,20 +1,13 @@
 --[[
- _________     _________    ________     ________     ________     _________     _________    ________     ________     ________      _________     _________    ________     ________     ________ 
-|\   ____ \   |\___  ___\  |\   __  \   |\   __  \   |\   __  \   |\   ____ \   |\___  ___\  |\   __  \   |\   __  \   |\   __  \    |\   ____ \   |\___  ___\  |\   __  \   |\   __  \   |\   __  \
-\ \  \___| \  \|___\  \_/  \ \  \|\ /_  \ \  \|\ /_  \ \  \|\ /_  \ \  \___| \  \|___\  \_/  \ \  \|\ /_  \ \  \|\ /_  \ \  \|\ /_   \ \  \___| \  \|___\  \_/  \ \  \|\ /_  \ \  \|\ /_  \ \  \|\ /_
- \ \  \ __  \     \ \  \    \ \   __  \  \ \   __  \  \ \   __  \  \ \  \ __  \     \ \  \    \ \   __  \  \ \   __  \  \ \   __  \   \ \  \ __  \     \ \  \    \ \   __  \  \ \   __  \  \ \   __  \ 
-  \ \  \|\ \ \     \ \  \    \ \  \|\  \  \ \  \|\  \  \ \  \|\  \  \ \  \|\ \ \     \ \  \    \ \  \|\  \  \ \  \|\  \  \ \  \|\  \   \ \  \|\ \ \     \ \  \    \ \  \|\  \  \ \  \|\  \  \ \  \|\  \
-   \ \________\     \ \__\    \ \_______\  \ \_______\  \ \_______\  \ \________\     \ \__\    \ \_______\  \ \_______\  \ \_______\   \ \________\     \ \__\    \ \_______\  \ \_______\  \ \_______\
-    \|________|      \|__|     \|_______|   \|_______|   \|_______|   \|________|      \|__|     \|_______|   \|_______|   \|_______|    \|________|      \|__|     \|_______|   \|_______|   \|_______|
-                                                                                                                                                                                                                                    
- _________  ________  ________  ________   ________  ___       ________  _________  _______   ________          ________ ________  ________  _____ ______              _________      _________ 
-|\___   ___\\   __  \|\   __  \|\   ___  \|\   ____\|\  \     |\   __  \|\___   ___\\  ___ \ |\   ___ \        |\  _____\\   __  \|\   __  \|\   _ \  _   \           |\    _____\   |\___  ___\  
-\|___ \  \_\ \  \|\  \ \  \|\  \ \  \\ \  \ \  \___|\ \  \    \ \  \|\  \|___ \  \_\ \   __/|\ \  \_|\ \       \ \  \__/\ \  \|\  \ \  \|\  \ \  \\\__\ \  \           \ \  \___| \  \|___\  \_/  
-     \ \  \ \ \   _  _\ \   __  \ \  \\ \  \ \_____  \ \  \    \ \   __  \   \ \  \ \ \  \_|/_\ \  \ \\ \       \ \   __\\ \   _  _\ \  \\\  \ \  \\|__| \  \           \ \  \ __  \     \ \  \    
-      \ \  \ \ \  \\  \\ \  \ \  \ \  \\ \  \|____|\  \ \  \____\ \  \ \  \   \ \  \ \ \  \_|\ \ \  \_\\ \       \ \  \_| \ \  \\  \\ \  \\\  \ \  \    \ \  \           \ \  \|\ \ \     \ \  \    
-       \ \__\ \ \__\\ _\\ \__\ \__\ \__\\ \__\____\_\  \ \_______\ \__\ \__\   \ \__\ \ \_______\ \_______\       \ \__\   \ \__\\ _\\ \_______\ \__\    \ \__\           \ \________\     \ \__\    
-        \|__|  \|__|\|__|\|__|\|__|\|__| \|__|\_________\|_______|\|__|\|__|    \|__|  \|_______|\|_______|        \|__|    \|__|\|__|\|_______|\|__|     \|__|            \|________|      \|__|  
---]]
+ ██████╗ ██████╗  █████╗ ███╗   ██╗██████╗ ████████╗ ██████╗ ██╗   ██╗██████╗ ██╗███╗   ██╗ ██████╗ ██╗   ██╗██╗██████╗ 
+██╔════╝ ██╔══██╗██╔══██╗████╗  ██║██╔══██╗╚══██╔══╝██╔═══██╗██║   ██║██╔══██╗██║████╗  ██║██╔════╝ ██║   ██║██║██╔══██╗
+██║  ███╗██████╔╝███████║██╔██╗ ██║██║  ██║   ██║   ██║   ██║██║   ██║██████╔╝██║██╔██╗ ██║██║  ███╗██║   ██║██║██████╔╝
+██║   ██║██╔══██╗██╔══██║██║╚██╗██║██║  ██║   ██║   ██║   ██║██║   ██║██╔══██╗██║██║╚██╗██║██║   ██║╚██╗ ██╔╝██║██╔═══╝ 
+╚██████╔╝██║  ██║██║  ██║██║ ╚████║██████╔╝   ██║   ╚██████╔╝╚██████╔╝██║  ██║██║██║ ╚████║╚██████╔╝ ╚████╔╝ ██║██║     
+ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝    ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝      
+GRANDTOURINGVIP™ Copyright© 2024 All rights reserved.]] 
+--require "lib.GTSCRIPTS.V"
+
 require "lib.GTSCRIPTS.W"
 require "lib.GTSCRIPTS.O" 
 require "lib.GTSCRIPTS.T"
@@ -41,7 +34,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '2.08'
+GT_version = '2.18'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -49,11 +42,11 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("更新、修复主机序列显示样式和功能\n玩家选项>将创建新的战局选项克隆至此\n检测选项现在被归类为保护选项\n视觉选项现在被归类为娱乐选项\n优化性能，以及运行效率\n添加了新的皇榜成员\n错误修改与功能改进")
+    notification("更新了任务功能（3.3.10）\n更新了自动资产（808cedc）\n更新、修复主机序列显示样式和功能\n玩家选项>将创建新的战局选项克隆至此\n检测选项现在被归类为保护选项\n视觉选项现在被归类为娱乐选项\n优化性能，以及运行效率\n添加了新的皇榜成员\n错误修改与功能改进")
 end
 
-function gtoast(string)
-    util.toast("\n"..string)
+function gtoast(str)
+    return util.toast("\n"..str)
 end
 --
 hasShownToast = false
@@ -65,7 +58,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 2
-notifyDay = 8
+notifyDay = 18
 
 _G.daysSince = _G.daysSince or 0
 
@@ -75,9 +68,10 @@ util.create_tick_handler(function ()
     local daysSince = (currentYear - notifyYear) * 365 + (currentMonth - notifyMonth) * 30 + (currentDay - notifyDay)
 
     if daysSince >= 33 and not hasShownToast then
-        gtoast("无法使用此版本，因为过于老旧\n下载群号已复制")
+        gtoast("无法使用此版本，因为过于老旧\n请更新脚本，下载群号已复制")
         hasShownToast = true
         util.copy_to_clipboard("651502721", false)
+        return
         util.stop_script()
     end
 
@@ -119,23 +113,23 @@ return (num / 10) * 10
 end
 --
 function SETUP_SINGLE_LINE(scaleform)
-	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SETUP_SINGLE_LINE")
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(70.0)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(125.0)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("left")
-	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SETUP_SINGLE_LINE")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(70.0)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(125.0)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("left")
+    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
 end
 function ADD_TEXT_TO_SINGLE_LINE(scaleform, text, font, colour)
-	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "ADD_TEXT_TO_SINGLE_LINE")
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(text)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(font)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(colour)
-	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_BOOL(true)
-	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "ADD_TEXT_TO_SINGLE_LINE")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(text)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(font)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(colour)
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_BOOL(true)
+    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
 end
 cTime = util.current_time_millis
 if SCRIPT_MANUAL_START then
@@ -144,68 +138,69 @@ if SCRIPT_MANUAL_START then
     local sTime = util.current_time_millis()
     AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "clown_die_wrapper", PLAYER.PLAYER_PED_ID(), "BARRY_02_SOUNDSET", true, 20)
     scripts_dir = filesystem.scripts_dir() .. '\\GTLuaScript\\'
-    util.create_tick_handler(function()	
-    local scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE("OPENING_CREDITS")	
-    while not GRAPHICS.HAS_SCALEFORM_MOVIE_LOADED(scaleform) do
-    wait()
-    end
-    --HUD.HIDE_HUD_AND_RADAR_THIS_FRAME()
-    if state == 0 then
-    SETUP_SINGLE_LINE(scaleform)
-    ADD_TEXT_TO_SINGLE_LINE(scaleform, "Welcome", "$font5", "HUD_COLOUR_FREEMODE")
-    ADD_TEXT_TO_SINGLE_LINE(scaleform, PLAYER.GET_PLAYER_NAME(players.user()), "$font5", "HUD_COLOUR_PINK")
-    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_SINGLE_LINE")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
-    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_CREDIT_BLOCK")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
-    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-    AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Pre_Screen_Stinger", PLAYER.PLAYER_PED_ID(), "DLC_HEISTS_FINALE_SCREEN_SOUNDS", true, 20)
-    state = 1
-    sTime = util.current_time_millis()
-    end
-    if util.current_time_millis() - sTime >= 4000 and state == 1 then
-    HIDE(scaleform)
-    state = 2
-    sTime = util.current_time_millis()
-    end
-    if util.current_time_millis() - sTime >= 3000 and state == 2 then
-    SETUP_SINGLE_LINE(scaleform)
-    ADD_TEXT_TO_SINGLE_LINE(scaleform, "GRANDTOURINGVIP", "$font5", "HUD_COLOUR_FREEMODE")
-    ADD_TEXT_TO_SINGLE_LINE(scaleform, "" .. GT_version, "$font5", "HUD_COLOUR_RED")
-    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_SINGLE_LINE")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
-    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_CREDIT_BLOCK")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
-    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-    AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "SPAWN", PLAYER.PLAYER_PED_ID(), "BARRY_01_SOUNDSET", true, 20)
-    state = 3
-    sTime = util.current_time_millis()
-    end
-    if util.current_time_millis() - sTime >= 4000 and state == 3 then
-    HIDE(scaleform)
-    state = 4
-    sTime = util.current_time_millis()
-    end
-    if util.current_time_millis() - sTime >= 3000 and state == 4 then
-    gShowingIntro = false
-    return false
-    end     
-    GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scaleform, 255, 255, 255, 255, 0)
-    return true
+    util.create_tick_handler(function()
+        local scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE("OPENING_CREDITS")
+        while not GRAPHICS.HAS_SCALEFORM_MOVIE_LOADED(scaleform) do
+            wait()
+        end
+        -- HUD.HIDE_HUD_AND_RADAR_THIS_FRAME()
+        if state == 0 then
+            SETUP_SINGLE_LINE(scaleform)
+            ADD_TEXT_TO_SINGLE_LINE(scaleform, "Welcome", "$font5", "HUD_COLOUR_FREEMODE")
+            ADD_TEXT_TO_SINGLE_LINE(scaleform, PLAYER.GET_PLAYER_NAME(players.user()), "$font5", "HUD_COLOUR_PINK")
+            GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_SINGLE_LINE")
+            GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+            GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+            GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_CREDIT_BLOCK")
+            GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+            GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
+            GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+            AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Pre_Screen_Stinger", PLAYER.PLAYER_PED_ID(),
+                "DLC_HEISTS_FINALE_SCREEN_SOUNDS", true, 20)
+            state = 1
+            sTime = util.current_time_millis()
+        end
+        if util.current_time_millis() - sTime >= 4000 and state == 1 then
+            HIDE(scaleform)
+            state = 2
+            sTime = util.current_time_millis()
+        end
+        if util.current_time_millis() - sTime >= 3000 and state == 2 then
+            SETUP_SINGLE_LINE(scaleform)
+            ADD_TEXT_TO_SINGLE_LINE(scaleform, "GRANDTOURINGVIP", "$font5", "HUD_COLOUR_FREEMODE")
+            ADD_TEXT_TO_SINGLE_LINE(scaleform, "" .. GT_version, "$font5", "HUD_COLOUR_RED")
+            GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_SINGLE_LINE")
+            GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+            GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+            GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleform, "SHOW_CREDIT_BLOCK")
+            GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("presents")
+            GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(0.5)
+            GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+            AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "SPAWN", PLAYER.PLAYER_PED_ID(), "BARRY_01_SOUNDSET", true, 20)
+            state = 3
+            sTime = util.current_time_millis()
+        end
+        if util.current_time_millis() - sTime >= 4000 and state == 3 then
+            HIDE(scaleform)
+            state = 4
+            sTime = util.current_time_millis()
+        end
+        if util.current_time_millis() - sTime >= 3000 and state == 4 then
+            gShowingIntro = false
+            return false
+        end
+        GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scaleform, 255, 255, 255, 255, 0)
+        return true
     end)
 end
 
 function do_label_preset(label, text)
-    --log("Setting up label present for label " .. label .. " with text " .. text)
+    -- log("Setting up label present for label " .. label .. " with text " .. text)
     menu.trigger_commands("addlabel " .. label)
     local prep = "edit" .. string.gsub(label, "_", "") .. " " .. text
     menu.trigger_commands(prep)
-    end
-    function GTNB()
+end
+function GTNB()
     do_label_preset("PM_WAIT", "正在引导")
     do_label_preset("HUD_JOINING", "GTVIP YYDS")
     do_label_preset("MP_SPINLOADING", "GTVIP YYDS")
@@ -216,7 +211,7 @@ function do_label_preset(label, text)
     do_label_preset("HUD_LBD_FMS", "GTVIP 在线模式（单人，~1~）")
     do_label_preset("0X56F3BD49", "GTVIP 在线模式")
     do_label_preset("HUD_MAINTIT", "GRANDTOURINGVIP")
-    do_label_preset("LOADING_SPLAYER_L", "请稍后 "..PLAYER.GET_PLAYER_NAME(players.user()))
+    do_label_preset("LOADING_SPLAYER_L", "请稍后 " .. PLAYER.GET_PLAYER_NAME(players.user()))
     do_label_preset("PM_QUIT_MP", "离开 GTVIP 在线模式")
     do_label_preset("PM_INF_LEAT", "离开 GTVIP 在线模式")
     do_label_preset("PM_INF_LEAB", "立刻前往GTVIP故事模式，您的所有游戏进度都将自动保存")
@@ -225,88 +220,80 @@ function do_label_preset(label, text)
     do_label_preset("UI_FLOW_OP_CL", "关于 GRANDTOURINGVIP")
 end
 
-srgb = {cus = 100}
+srgb = {
+    cus = 100
+}
 function requestweapon(...)
-local arg = {...}
-for _, model in ipairs(arg) do
-WEAPON.REQUEST_WEAPON_ASSET(model, 31, 26)
-while not WEAPON.HAS_WEAPON_ASSET_LOADED(model) do
-wait()
-end
-end
+    local arg = {...}
+    for _, model in ipairs(arg) do
+        WEAPON.REQUEST_WEAPON_ASSET(model, 31, 26)
+        while not WEAPON.HAS_WEAPON_ASSET_LOADED(model) do
+            wait()
+        end
+    end
 end
 function RGBNeonKit(pedm)
-local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
-for i = 0, 3 do
-C_C_VEHICLE.SET_VEHICLE_NEON_ENABLED(vmod, i, true)
+    local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
+    for i = 0, 3 do
+        C_C_VEHICLE.SET_VEHICLE_NEON_ENABLED(vmod, i, true)
+    end
 end
-end
-local rgb = {cus = 100}
+local rgb = {
+    cus = 100
+}
 function zjbs()
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) ~= 0 then
-local vmod = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), true)
-RGBNeonKit(players.user_ped())
-local red = (math.random(0, 255))
-local green = (math.random(0, 255))
-local blue = (math.random(0, 255))
-C_C_VEHICLE.SET_VEHICLE_NEON_COLOUR(vmod, red, green, blue)
-C_C_VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vmod, red, green, blue)
-C_C_VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vmod, red, green, blue)
-wait(rgb.cus)
-end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) ~= 0 then
+        local vmod = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), true)
+        RGBNeonKit(players.user_ped())
+        local red = (math.random(0, 255))
+        local green = (math.random(0, 255))
+        local blue = (math.random(0, 255))
+        C_C_VEHICLE.SET_VEHICLE_NEON_COLOUR(vmod, red, green, blue)
+        C_C_VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vmod, red, green, blue)
+        C_C_VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vmod, red, green, blue)
+        wait(rgb.cus)
+    end
 end
 function qzd()
-local color = {
-{64, 1},
-{73, 2},
-{51, 3}, 
-{92, 4}, 
-{89, 5}, 
-{88, 6}, 
-{38, 7}, 
-{39 , 8}, 
-{137, 9}, 
-{135, 10}, 
-{145, 11},
-{142, 12} 
-}
+    local color = {{64, 1}, {73, 2}, {51, 3}, {92, 4}, {89, 5}, {88, 6}, {38, 7}, {39, 8}, {137, 9}, {135, 10},
+                   {145, 11}, {142, 12}}
 
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) ~= 0 then
-local vmod = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), true)
-RGBNeonKit(players.user_ped())
-local rcolor = math.random(1, 12)
-C_C_VEHICLE.TOGGLE_VEHICLE_MOD(vmod, 22, true)
-C_C_VEHICLE.SET_VEHICLE_NEON_INDEX_COLOUR(vmod, color[rcolor][1])
-C_C_VEHICLE.SET_VEHICLE_COLOURS(vmod, color[rcolor][1], color[rcolor][1])
-C_C_VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vmod, 0, color[rcolor][1])
-C_C_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vmod, color[rcolor][1])
-C_C_VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vmod, color[rcolor][2])
-wait(srgb.cus)
-end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) ~= 0 then
+        local vmod = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), true)
+        RGBNeonKit(players.user_ped())
+        local rcolor = math.random(1, 12)
+        C_C_VEHICLE.TOGGLE_VEHICLE_MOD(vmod, 22, true)
+        C_C_VEHICLE.SET_VEHICLE_NEON_INDEX_COLOUR(vmod, color[rcolor][1])
+        C_C_VEHICLE.SET_VEHICLE_COLOURS(vmod, color[rcolor][1], color[rcolor][1])
+        C_C_VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vmod, 0, color[rcolor][1])
+        C_C_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vmod, color[rcolor][1])
+        C_C_VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vmod, color[rcolor][2])
+        wait(srgb.cus)
+    end
 end
 
 colors = {
-green = 184,
-red = 6,
-yellow = 190,
-black = 2,
-white = 1,
-gray = 3,
-pink = 201,
-purple = 49, 
-blue = 11
+    green = 184,
+    red = 6,
+    yellow = 190,
+    black = 2,
+    white = 1,
+    gray = 3,
+    pink = 201,
+    purple = 49,
+    blue = 11
 }
 
 ladder_objects = {}
-pause=0
-do1=16
-re=17
-mi=18
-fa=19
-sol=20
-la=21
-ti=22
-do2=23
+pause = 0
+do1 = 16
+re = 17
+mi = 18
+fa = 19
+sol = 20
+la = 21
+ti = 22
+do2 = 23
 
 C1 = 16
 D1 = 17
@@ -327,92 +314,105 @@ MOD_HORN = 14
 
 horn_on = false
 
-dicdd={
-"ANIM_GROUP_MOVE_BALLISTIC",
-"ANIM_GROUP_MOVE_LEMAR_ALLEY",
-"clipset@move@trash_fast_turn",
-"FEMALE_FAST_RUNNER",
-"missfbi4prepp1_garbageman",
-"move_characters@franklin@fire",
-"move_characters@Jimmy@slow@",
-"move_characters@michael@fire",
-"move_f@flee@a",
-"move_f@scared",
-"move_f@sexy@a",
-"move_heist_lester",
-"move_injured_generic",
-"move_lester_CaneUp",
-"move_m@bag",
-"MOVE_M@BAIL_BOND_NOT_TAZERED",
-"MOVE_M@BAIL_BOND_TAZERED",
-"move_m@brave",
-"move_m@casual@d",
-"move_m@drunk@moderatedrunk",
-"MOVE_M@DRUNK@MODERATEDRUNK",
-"MOVE_M@DRUNK@MODERATEDRUNK_HEAD_UP",
-"MOVE_M@DRUNK@SLIGHTLYDRUNK",
-"MOVE_M@DRUNK@VERYDRUNK",
-"move_m@fire",
-"move_m@gangster@var_e",
-"move_m@gangster@var_f",
-"move_m@gangster@var_i",
-"move_m@JOG@",
-"MOVE_M@PRISON_GAURD",
-"MOVE_P_M_ONE",
-"MOVE_P_M_ONE_BRIEFCASE",
-"move_p_m_zero_janitor",
-"move_p_m_zero_slow",
-"move_ped_bucket",
-"move_ped_crouched",
-"move_ped_mop",
-"MOVE_M@FEMME@",
-"MOVE_F@FEMME@",
-"MOVE_M@GANGSTER@NG",
-"MOVE_F@GANGSTER@NG",
-"MOVE_M@POSH@",
-"MOVE_F@POSH@",
-"MOVE_M@TOUGH_GUY@",
-"MOVE_F@TOUGH_GUY@",
-}
+dicdd = {"ANIM_GROUP_MOVE_BALLISTIC", "ANIM_GROUP_MOVE_LEMAR_ALLEY", "clipset@move@trash_fast_turn",
+         "FEMALE_FAST_RUNNER", "missfbi4prepp1_garbageman", "move_characters@franklin@fire",
+         "move_characters@Jimmy@slow@", "move_characters@michael@fire", "move_f@flee@a", "move_f@scared",
+         "move_f@sexy@a", "move_heist_lester", "move_injured_generic", "move_lester_CaneUp", "move_m@bag",
+         "MOVE_M@BAIL_BOND_NOT_TAZERED", "MOVE_M@BAIL_BOND_TAZERED", "move_m@brave", "move_m@casual@d",
+         "move_m@drunk@moderatedrunk", "MOVE_M@DRUNK@MODERATEDRUNK", "MOVE_M@DRUNK@MODERATEDRUNK_HEAD_UP",
+         "MOVE_M@DRUNK@SLIGHTLYDRUNK", "MOVE_M@DRUNK@VERYDRUNK", "move_m@fire", "move_m@gangster@var_e",
+         "move_m@gangster@var_f", "move_m@gangster@var_i", "move_m@JOG@", "MOVE_M@PRISON_GAURD", "MOVE_P_M_ONE",
+         "MOVE_P_M_ONE_BRIEFCASE", "move_p_m_zero_janitor", "move_p_m_zero_slow", "move_ped_bucket",
+         "move_ped_crouched", "move_ped_mop", "MOVE_M@FEMME@", "MOVE_F@FEMME@", "MOVE_M@GANGSTER@NG",
+         "MOVE_F@GANGSTER@NG", "MOVE_M@POSH@", "MOVE_F@POSH@", "MOVE_M@TOUGH_GUY@", "MOVE_F@TOUGH_GUY@"}
 
-songs = {
-    {
-        name = "一闪一闪亮晶晶",
-        bpm = 90,
-        notes = {
-            pause,
-            do1, do1, sol, sol, la, la, { pitch = sol, length = half }, pause,
-            fa, fa, mi, mi, re, re, { pitch = do1, length = half }, pause,
-            sol, sol, fa, fa, mi, mi, { pitch = re, length = half }, pause,
-            sol, sol, fa, fa, mi, mi, { pitch = re, length = half }, pause,
-            do1, do1, sol, sol, la, la, { pitch = sol, length = half }, pause,
-            fa, fa, mi, mi, re, re, { pitch = do1, length = half }, pause,
-        },
-    },
-    {
-        name = "在月光下",
-        bpm = 60,
-        notes = {
-            fa, fa, fa, sol, { pitch = la, length = half }, { pitch = sol, length = half },
-            fa, la, sol, sol, { pitch = fa, length = whole },
-            fa, fa, fa, sol,  { pitch = la, length = half }, { pitch = sol, length = half },
-            fa, la, sol, sol, { pitch = fa, length = whole },
-        },
-    },
-    {
-        name = "热热的十字面包",
-        bpm = 60,
-        notes = {
-            { pitch = mi, length = half }, { pitch = re, length = half },
-            { pitch = do1, length = half }, { pitch = pause, length = half },
-            { pitch = mi, length = half }, { pitch = re, length = half },
-            { pitch = do1, length = half }, { pitch = pause, length = half },
-            do1, do1, do1, do1, re, re, re, re,
-            { pitch = mi, length = half }, { pitch = re, length = half },
-            { pitch = do1, length = half }, { pitch = pause, length = half },
-        },
-    },
-}
+
+songs = {{
+    name = "一闪一闪亮晶晶",
+    bpm = 90,
+    notes = {pause, do1, do1, sol, sol, la, la, {
+        pitch = sol,
+        length = half
+    }, pause, fa, fa, mi, mi, re, re, {
+        pitch = do1,
+        length = half
+    }, pause, sol, sol, fa, fa, mi, mi, {
+        pitch = re,
+        length = half
+    }, pause, sol, sol, fa, fa, mi, mi, {
+        pitch = re,
+        length = half
+    }, pause, do1, do1, sol, sol, la, la, {
+        pitch = sol,
+        length = half
+    }, pause, fa, fa, mi, mi, re, re, {
+        pitch = do1,
+        length = half
+    }, pause}
+}, {
+    name = "在月光下",
+    bpm = 60,
+    notes = {fa, fa, fa, sol, {
+        pitch = la,
+        length = half
+    }, {
+        pitch = sol,
+        length = half
+    }, fa, la, sol, sol, {
+        pitch = fa,
+        length = whole
+    }, fa, fa, fa, sol, {
+        pitch = la,
+        length = half
+    }, {
+        pitch = sol,
+        length = half
+    }, fa, la, sol, sol, {
+        pitch = fa,
+        length = whole
+    }}
+}, {
+    name = "热热的十字面包",
+    bpm = 60,
+    notes = {{
+        pitch = mi,
+        length = half
+    }, {
+        pitch = re,
+        length = half
+    }, {
+        pitch = do1,
+        length = half
+    }, {
+        pitch = pause,
+        length = half
+    }, {
+        pitch = mi,
+        length = half
+    }, {
+        pitch = re,
+        length = half
+    }, {
+        pitch = do1,
+        length = half
+    }, {
+        pitch = pause,
+        length = half
+    }, do1, do1, do1, do1, re, re, re, re, {
+        pitch = mi,
+        length = half
+    }, {
+        pitch = re,
+        length = half
+    }, {
+        pitch = do1,
+        length = half
+    }, {
+        pitch = pause,
+        length = half
+    }}
+}}
+
 snowmens = {
     { -955.5352, -782.4186, 15.925326 },
     { -819.9067, 165.35524, 71.26295 },
@@ -449,170 +449,151 @@ config = {
     delay_after_entering_casino = 4000,
     default_spin_delay_time = 1000,
     max_daily_winnings = 45000000,
-    millis_in_day = 86400000,
+    millis_in_day = 86400000
 }
 state = {}
 menus = {}
 commands = {
-    rigslotmachines=menu.ref_by_path("Online>Quick Progress>Casino>Slot Machines Outcome")
+    rigslotmachines = menu.ref_by_path("Online>Quick Progress>Casino>Slot Machines Outcome")
 }
 
-slot_machine_positions = {
-    {
-        seated={x=1102.2573, y=232.43211, z=-50.0909},
-        standing={x=1102.6787, y=232.73073, z=-49.84076, h=90},
+slot_machine_positions = {{
+    seated = {
+        x = 1102.2573,
+        y = 232.43211,
+        z = -50.0909
     },
-    {
-        seated={x=1112.4808, y=234.83745, z=-50.0909},
-        standing={x=1112.0146, y=235.13573, z=-49.84075, h=-90},
+    standing = {
+        x = 1102.6787,
+        y = 232.73073,
+        z = -49.84076,
+        h = 90
+    }
+}, {
+    seated = {
+        x = 1112.4808,
+        y = 234.83745,
+        z = -50.0909
     },
-    {
-        seated={x=1110.1028, y=235.05864, z=-50.0909},
-        standing={x=1110.5834, y=235.30466, z=-49.840767, h=90},
+    standing = {
+        x = 1112.0146,
+        y = 235.13573,
+        z = -49.84075,
+        h = -90
+    }
+}, {
+    seated = {
+        x = 1110.1028,
+        y = 235.05864,
+        z = -50.0909
     },
-    {
-        seated={x=1111.9581, y=237.83565, z=-50.0909},
-        standing={x=1112.1866, y=237.27339, z=-49.840763, h=0},
+    standing = {
+        x = 1110.5834,
+        y = 235.30466,
+        z = -49.840767,
+        h = 90
+    }
+}, {
+    seated = {
+        x = 1111.9581,
+        y = 237.83565,
+        z = -50.0909
     },
-    {
-        seated={x=1113.66, y=238.81334, z=-50.0909},
-        standing={x=1113.8134, y=238.09317, z=-49.840786, h=0}
+    standing = {
+        x = 1112.1866,
+        y = 237.27339,
+        z = -49.840763,
+        h = 0
+    }
+}, {
+    seated = {
+        x = 1113.66,
+        y = 238.81334,
+        z = -50.0909
     },
-    {
-        seated={x=1139.4238, y=250.89787, z=-51.2909},
-        standing={x=1139.8647, y=250.2418, z=-51.035732, h=70}
+    standing = {
+        x = 1113.8134,
+        y = 238.09317,
+        z = -49.840786,
+        h = 0
+    }
+}, {
+    seated = {
+        x = 1139.4238,
+        y = 250.89787,
+        z = -51.2909
     },
-    {
-        seated={x=1130.6184, y=251.2604, z=-51.2909},
-        standing={x=1130.7328, y=251.68321, z=-51.035774, h=180}
+    standing = {
+        x = 1139.8647,
+        y = 250.2418,
+        z = -51.035732,
+        h = 70
+    }
+}, {
+    seated = {
+        x = 1130.6184,
+        y = 251.2604,
+        z = -51.2909
     },
-    {
-        seated={x=1137.2375, y=253.092, z=-51.2909},
-        standing={x=1137.3026, y=253.69514, z=-51.03577, h=180}
+    standing = {
+        x = 1130.7328,
+        y = 251.68321,
+        z = -51.035774,
+        h = 180
+    }
+}, {
+    seated = {
+        x = 1137.2375,
+        y = 253.092,
+        z = -51.2909
     },
-    {
-        seated={x=1103.4133, y=230.6071, z=-50.0909},
-        standing={x=1102.95, y=230.27, z=-49.84, h=-90},
+    standing = {
+        x = 1137.3026,
+        y = 253.69514,
+        z = -51.03577,
+        h = 180
+    }
+}, {
+    seated = {
+        x = 1103.4133,
+        y = 230.6071,
+        z = -50.0909
     },
-    {
-        seated={x=1118.7598, y=230.03072, z=-50.0909},
-        standing={x=1119.2648, y=230.20291, z=-49.840748, h=100}
+    standing = {
+        x = 1102.95,
+        y = 230.27,
+        z = -49.84,
+        h = -90
+    }
+}, {
+    seated = {
+        x = 1118.7598,
+        y = 230.03072,
+        z = -50.0909
     },
-}
+    standing = {
+        x = 1119.2648,
+        y = 230.20291,
+        z = -49.840748,
+        h = 100
+    }
+}}
 
- selectedobject = 1268884662
- all_objects = {
--1268884662,
--1268884662,
-4121513285,
-1085274000,
-1729911864,
-2166988379,
-3702106121,
-1398809829,
-1043035044,
-3639322914,
-464329140,
-4046278932,
-3785611910,
-388197031,
-2977746558,
-659187150,
-420170064,
-2436749075,
-1193854962,
-476379176,
-630616933,
-3945660640,
-1565925668,
-175309727,
-3196461136,
-3251728163,
-176008245,
-2112015640,
-993120320,
-865627822,
-266130508,
-3762892718,
-3854180205,
-2804199464,
-523317885,
-1327834842,
-1321190118,
-29828513,
--1026778664,
-310817095,
-4130089803,
-148511758,
-3087007557,
-2969831089,
-3533371316,
-2024855755,
-2450168807,
-297107423,
-2017086435,
-3553022755,
-4046278932,
-3639322914,
-3231494328,
-3271283456,
-386059801,
-202070568,
-1971657777,
-2005313754,
-3859048180,
-866394777,
-740404217,
-2409855828,
-286298615,
-795984016,
-2374537677,
-3161612443,
-1165195353,
-2450522579,
-4260070095,
-974883178,
-3965551402,
-3854180205,
-3696781377,
-4124467285,
-2684801972,
-3449848423,
-118627012,
-1565925668,
-1924419321,
-2201918560,
-3762892718,
-266130508,
-1193854962, 
-630616933,
-476379176,
-2436749075,
-2154892897,
-1369811908,
-2420804668,
-1948561556,
-356462018,
-462203053,
-3552768664,
-2057223314,
-3290378943,
-168901740,
-303280717,
-725259233,
-2064599526,
-4204303756,
-3185604174,
-1046958884,
-81317377,
-2539784170,
-795367207,
-2684668286,
-827574655,
-617299305,
-3999634798
+selectedobject = 1268884662
+all_objects = {-1268884662, -1268884662, 4121513285, 1085274000, 1729911864, 2166988379, 3702106121, 1398809829,
+               1043035044, 3639322914, 464329140, 4046278932, 3785611910, 388197031, 2977746558, 659187150, 420170064,
+               2436749075, 1193854962, 476379176, 630616933, 3945660640, 1565925668, 175309727, 3196461136, 3251728163,
+               176008245, 2112015640, 993120320, 865627822, 266130508, 3762892718, 3854180205, 2804199464, 523317885,
+               1327834842, 1321190118, 29828513, -1026778664, 310817095, 4130089803, 148511758, 3087007557, 2969831089,
+               3533371316, 2024855755, 2450168807, 297107423, 2017086435, 3553022755, 4046278932, 3639322914,
+               3231494328, 3271283456, 386059801, 202070568, 1971657777, 2005313754, 3859048180, 866394777, 740404217,
+               2409855828, 286298615, 795984016, 2374537677, 3161612443, 1165195353, 2450522579, 4260070095, 974883178,
+               3965551402, 3854180205, 3696781377, 4124467285, 2684801972, 3449848423, 118627012, 1565925668,
+               1924419321, 2201918560, 3762892718, 266130508, 1193854962, 630616933, 476379176, 2436749075, 2154892897,
+               1369811908, 2420804668, 1948561556, 356462018, 462203053, 3552768664, 2057223314, 3290378943, 168901740,
+               303280717, 725259233, 2064599526, 4204303756, 3185604174, 1046958884, 81317377, 2539784170, 795367207,
+               2684668286, 827574655, 617299305, 3999634798}
 
-} 
 
 attachments_table = {
     ---------------------PISTOLS--------------------------------------
@@ -6315,40 +6296,32 @@ function personllightc()
     request_fx_asset(effect.asset)
     GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
     GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour.r, colour.g, colour.b)
-    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
-        effect.name,
-        localPed,
-        0.0, 0.0, -1,
-        0.0, 0.0, 0.0,
-        0.09,
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(effect.name, localPed, 0.0, 0.0, -1, 0.0, 0.0, 0.0, 0.09,
         false, false, false)
     GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
     GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour2.r, colour2.g, colour2.b)
-    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
-        effect.name,
-        localPed,
-        0.0, 0.0, -2.9,
-        0.0, 0.0, 0.0,
-        1.0,
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(effect.name, localPed, 0.0, 0.0, -2.9, 0.0, 0.0, 0.0, 1.0,
         false, false, false)
 end
 
+
 function supermanpersonl()
-	local pWeapon = memory.alloc_int()
-	WEAPON.GET_CURRENT_PED_WEAPON(players.user_ped(), pWeapon, 1)
-	local weaponHash = memory.read_int(pWeapon)
-	if WEAPON.IS_PED_ARMED(players.user_ped(), 1) or weaponHash == util.joaat("weapon_unarmed") then
-		local pImpactCoords = v3.new()
-		local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), false)
-		if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pImpactCoords) then
-			set_explosion_proof(players.user_ped(), true)
-			wait()
-			FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z - 1.0, 29, 5.0, false, true, 0.3, true)
-		elseif not FIRE.IS_EXPLOSION_IN_SPHERE(29, pos.x, pos.y, pos.z, 2.0) then
-			set_explosion_proof(players.user_ped(), false)
-		end
-	end
+    local pWeapon = memory.alloc_int()
+    WEAPON.GET_CURRENT_PED_WEAPON(players.user_ped(), pWeapon, 1)
+    local weaponHash = memory.read_int(pWeapon)
+    if WEAPON.IS_PED_ARMED(players.user_ped(), 1) or weaponHash == util.joaat("weapon_unarmed") then
+        local pImpactCoords = v3.new()
+        local pos = ENTITY.GET_ENTITY_COORDS(players.user_ped(), false)
+        if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), pImpactCoords) then
+            set_explosion_proof(players.user_ped(), true)
+            wait()
+            FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z - 1.0, 29, 5.0, false, true, 0.3, true)
+        elseif not FIRE.IS_EXPLOSION_IN_SPHERE(29, pos.x, pos.y, pos.z, 2.0) then
+            set_explosion_proof(players.user_ped(), false)
+        end
+    end
 end
+
 
 function becomepoliceman()
     local p = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user_ped())
@@ -6520,62 +6493,62 @@ function jedmode()
 end
 
 object = 0
-local format0 = "按 ~%s~ ~%s~ ~%s~ ~%s~ 来使用地毯式骑行"
-local format1 = "按 ~%s~ 以移动得更快"
+local format0 = "按 W A S D 来使用地毯式骑行"
+local format1 = "按 Shift 以移动得更快"
 function carpetridexx()
     if state == 0 then
-		local objHash = util.joaat("p_cs_beachtowel_01_s")
-		request_model(objHash)
-		STREAMING.REQUEST_ANIM_DICT("rcmcollect_paperleadinout@")
-		while not STREAMING.HAS_ANIM_DICT_LOADED("rcmcollect_paperleadinout@") do
-			wait()
-		end
-		local localPed = players.user_ped()
-		local pos = ENTITY.GET_ENTITY_COORDS(localPed, false)
-		TASK.CLEAR_PED_TASKS_IMMEDIATELY(localPed)
-		object = entities.create_object(objHash, pos)
-		ENTITY.ATTACH_ENTITY_TO_ENTITY(
-			localPed, object, 0, 0, -0.2, 1.0, 1.0, 1.0,1, false, true, false, false, 0, true, false
-		)
-		ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(object, false, false)
+        local objHash = util.joaat("p_cs_beachtowel_01_s")
+        request_model(objHash)
+        STREAMING.REQUEST_ANIM_DICT("rcmcollect_paperleadinout@")
+        while not STREAMING.HAS_ANIM_DICT_LOADED("rcmcollect_paperleadinout@") do
+            wait()
+        end
+        local localPed = players.user_ped()
+        local pos = ENTITY.GET_ENTITY_COORDS(localPed, false)
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(localPed)
+        object = entities.create_object(objHash, pos)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(localPed, object, 0, 0, -0.2, 1.0, 1.0, 1.0, 1, false, true, false, false, 0,
+            true, false)
+        ENTITY.SET_ENTITY_COMPLETELY_DISABLE_COLLISION(object, false, false)
 
-		TASK.TASK_PLAY_ANIM(localPed, "rcmcollect_paperleadinout@", "meditiate_idle", 8.0, -8.0, -1, 1, 0.0, false, false, false)
-        notification(format0 .. ".\n" .. format1 .. '.', HudColour.black,
-        "INPUT_MOVE_UP_ONLY", "INPUT_MOVE_DOWN_ONLY", "INPUT_VEH_JUMP", "INPUT_DUCK", "INPUT_VEH_MOVE_UP_ONLY")
-		state = 1
+        TASK.TASK_PLAY_ANIM(localPed, "rcmcollect_paperleadinout@", "meditiate_idle", 8.0, -8.0, -1, 1, 0.0, false,
+            false, false)
+        notification(format0 .. ".\n" .. format1 .. '.', HudColour.black, "INPUT_MOVE_UP_ONLY", "INPUT_MOVE_DOWN_ONLY",
+            "INPUT_VEH_JUMP", "INPUT_DUCK", "INPUT_VEH_MOVE_UP_ONLY")
+        state = 1
 
-	elseif state == 1 then
-		HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
-		local objPos = ENTITY.GET_ENTITY_COORDS(object, false)
-		local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
-		ENTITY.SET_ENTITY_ROTATION(object, 0, 0, camrot.z, 0, true)
-		local forwardV = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
-		forwardV.z = 0.0
-		local delta = v3.new(0, 0, 0)
-		local speed = 0.2
-		if PAD.IS_CONTROL_PRESSED(0, 61) then
-			speed = 1.5
-		end
-		if PAD.IS_CONTROL_PRESSED(0, 32) then
-			delta = v3.new(forwardV)
-			delta:mul(speed)
-		end
-		if PAD.IS_CONTROL_PRESSED(0, 130)  then
-			delta = v3.new(forwardV)
-			delta:mul(-speed)
-		end
-		if PAD.IS_DISABLED_CONTROL_PRESSED(0, 22) then
-			delta.z = speed
-		end
-		if PAD.IS_CONTROL_PRESSED(0, 36) then
-			delta.z = -speed
-		end
-		local newPos = v3.new(objPos)
-		newPos:add(delta)
-		ENTITY.SET_ENTITY_COORDS(object, newPos.x,newPos.y,newPos.z, false, false, false, false)
-	end
+    elseif state == 1 then
+        HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
+        local objPos = ENTITY.GET_ENTITY_COORDS(object, false)
+        local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
+        ENTITY.SET_ENTITY_ROTATION(object, 0, 0, camrot.z, 0, true)
+        local forwardV = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped())
+        forwardV.z = 0.0
+        local delta = v3.new(0, 0, 0)
+        local speed = 0.2
+        if PAD.IS_CONTROL_PRESSED(0, 61) then
+            speed = 1.5
+        end
+        if PAD.IS_CONTROL_PRESSED(0, 32) then
+            delta = v3.new(forwardV)
+            delta:mul(speed)
+        end
+        if PAD.IS_CONTROL_PRESSED(0, 130) then
+            delta = v3.new(forwardV)
+            delta:mul(-speed)
+        end
+        if PAD.IS_DISABLED_CONTROL_PRESSED(0, 22) then
+            delta.z = speed
+        end
+        if PAD.IS_CONTROL_PRESSED(0, 36) then
+            delta.z = -speed
+        end
+        local newPos = v3.new(objPos)
+        newPos:add(delta)
+        ENTITY.SET_ENTITY_COORDS(object, newPos.x, newPos.y, newPos.z, false, false, false, false)
+    end
 end
---待修复
+-- 待修复
 function fingergun()
     for id, data in pairs(weapon_stuff) do
         local name = data[1]
@@ -6591,7 +6564,7 @@ function fingergun()
                 if memory.read_int(memory.script_global(4521801 + 930)) == 3 then
                     memory.write_int(memory.script_global(4521801 + 935), NETWORK.GET_NETWORK_TIME())
                     local inst = v3.new()
-                    v3.set(inst,CAM.GET_FINAL_RENDERED_CAM_ROT(2))
+                    v3.set(inst, CAM.GET_FINAL_RENDERED_CAM_ROT(2))
                     local tmp = v3.toDir(inst)
                     v3.set(inst, v3.get(tmp))
                     v3.mul(inst, 1000)
@@ -6599,7 +6572,8 @@ function fingergun()
                     v3.add(inst, tmp)
                     local x, y, z = v3.get(inst)
                     local fingerPos = PED.GET_PED_BONE_COORDS(players.user_ped(), 0xff9, 1.0, 0, 0)
-                    MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(fingerPos.x, fingerPos.y, fingerPos.z, x, y, z, 1, true, projectile, 0, true, false, 500.0, players.user_ped(), 0)
+                    MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(fingerPos.x, fingerPos.y, fingerPos.z, x, y,
+                        z, 1, true, projectile, 0, true, false, 500.0, players.user_ped(), 0)
                 end
                 wait(100)
             end
@@ -9064,7 +9038,7 @@ function sxgt(f)
         elseif playeridx == "rudan891018" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~湾湾 正在该战局")
         elseif playeridx == "An_owQ" then
-            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 船船 正在该战局")
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~Lin带着好大儿瑞思拜进入了战局")
         elseif playeridx == "Mag7777V" or playeridx == "Magicswordstar" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~闪耀至臻管理员 正在该战局")
         elseif playeridx == "RhymeBear" then
@@ -13959,13 +13933,13 @@ function get_best_mug_target()
         end
     end
     if cur_wallet == nil then
-        util.toast("你孤单一人。找不到最佳抢劫目标。")
+        util.toast("你孤单一人。找不到最佳抢劫目标")
         return
     end
     if most ~= 0 then
-        return PLAYER.GET_PLAYER_NAME(mostp) .. " 钱包里的钱最多($" .. most .. ")。 也许去抢劫他们。"
+        return PLAYER.GET_PLAYER_NAME(mostp) .. " 钱包里的钱最多($" .. most .. ")。 也许去抢劫他们"
     else
-        util.toast("找不到最佳抢劫目标。")
+        util.toast("找不到最佳抢劫目标")
         return nil
     end
 end
@@ -23531,17 +23505,125 @@ function egaoxuanxianggongneng()
 function playerActionsSetup(pid)
 GTROOT = menu.shadow_root():list('GRANDTOURINGVIP', {"gtluaplayer"}, "GTVIP YYDS\n点击进入GTVIP玩家选项")
 GTROOT = menu.player_root(pid):getChildren()[1]:attachBefore(GTROOT)
-GTD(GTROOT, "GRANDTOURINGVIP")
+PLAYER_ROOT = GTD(GTROOT, "GRANDTOURINGVIP")
+util.create_tick_handler(function() 
+    for _, frame in pairs(loading_frames) do 
+        GTluaScript.set_menu_name(PLAYER_ROOT, frame .. '') 
+        wait(100) 
+    end 
+end)
 
 GT = GTluaScript.list
 
 local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
+
 for _,id in ipairs(spid) do
     if name == id.playerid then
         HbMainMenu = GT(GTROOT, "GTVIP Pro Features ~(>.<)~", {}, "此选项允许两个相同的皇榜用户互相攻击")
         tobe = GTD(HbMainMenu, "请尽情享用")
 
-        tcb = GTAC(HbMainMenu, "完美谢幕", {}, "", function ()
+        tcp = GTAC(HbMainMenu, "飞驰人生", {}, "", function ()
+        end)
+
+        tcd = GTAC(HbMainMenu, "祖安花火", {"zaunfirework"}, "", function ()
+            util.create_thread(function ()
+                local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                local allvehicles = entities.get_all_vehicles_as_handles()
+                for i = 1, 3 do
+                    for i = 1, #allvehicles do
+                        TASK.TASK_VEHICLE_TEMP_ACTION(player, allvehicles[i], 15, 1000)
+                        wait()
+                        TASK.TASK_VEHICLE_TEMP_ACTION(player, allvehicles[i], 16, 1000)
+                        wait()
+                        TASK.TASK_VEHICLE_TEMP_ACTION(player, allvehicles[i], 17, 1000)
+                        wait()
+                        TASK.TASK_VEHICLE_TEMP_ACTION(player, allvehicles[i], 18, 1000)
+                        wait()
+                    end
+                end
+                TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()))
+            end)
+
+            gtoast("保持不动,等待结束")
+            util.create_thread(function ()
+                local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                local pos = ENTITY.GET_ENTITY_COORDS(player)
+                local mdl = util.joaat("u_m_y_rsranger_01")
+                local veh_mdl = util.joaat("technical2")
+                util.request_model(veh_mdl)
+                util.request_model(mdl)
+                local veh = entities.create_vehicle(veh_mdl, pos, 0)
+                local ped = entities.create_ped(26, mdl, pos, 0)
+                ENTITY.FREEZE_ENTITY_POSITION(veh, true)
+                ENTITY.SET_ENTITY_COLLISION(veh, false)
+                ENTITY.SET_ENTITY_INVINCIBLE(veh, true)
+                ENTITY.SET_ENTITY_VISIBLE(veh, false)
+                ENTITY.SET_ENTITY_VISIBLE(ped, false)
+                PED.SET_PED_INTO_VEHICLE(ped, veh, 1)
+                wait(100)
+                TASK.CONTROL_MOUNTED_WEAPON(ped)
+                TASK.SET_MOUNTED_WEAPON_TARGET(ped, ped, 0, pos.x,pos.y,pos.z, 5, true)
+                entities.give_control_by_handle(veh, pid)
+                wait(5000)
+                WIRI_NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+                entities.delete_by_handle(ped)
+                entities.delete_by_handle(veh)
+            end)
+
+            util.create_thread(function()
+                local p = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                local c = ENTITY.GET_ENTITY_COORDS(p)
+                local chop = util.joaat('cs_taostranslator')
+                local chup = util.joaat('A_C_Rabbit_02')
+                STREAMING.REQUEST_MODEL(chop)
+                STREAMING.REQUEST_MODEL(chup)
+                while not STREAMING.HAS_MODEL_LOADED(chop) do
+                    STREAMING.REQUEST_MODEL(chop)
+                    util.yield()
+                end
+                while not STREAMING.HAS_MODEL_LOADED(chup) do
+                    STREAMING.REQUEST_MODEL(chup)
+                    util.yield()
+                end
+
+                local achop = entities.create_ped(26, chop, c, 0)
+                ENTITY.SET_ENTITY_VISIBLE(achop, false)
+
+                WEAPON.GIVE_WEAPON_TO_PED(achop, util.joaat('weapon_mg'), 9999, false, false)
+
+                TASK.TASK_COMBAT_PED(achop, p, 0, 16)
+                setAttribute(achop)
+                local bchop = entities.create_ped(26, chop, c, 0)
+                ENTITY.SET_ENTITY_VISIBLE(bchop, false)
+                WEAPON.GIVE_WEAPON_TO_PED(bchop, util.joaat('weapon_mg'), 9999, false, false)
+
+                TASK.TASK_COMBAT_PED(bchop, p, 0, 16)
+                setAttribute(bchop)
+                local cchop = entities.create_ped(26, chup, c, 0)
+                WEAPON.GIVE_WEAPON_TO_PED(cchop, util.joaat('weapon_mg'), 9999, false, false)
+
+                ENTITY.SET_ENTITY_VISIBLE(chup, false)
+                ENTITY.SET_ENTITY_VISIBLE(cchop, false)
+
+                TASK.TASK_COMBAT_PED(cchop, p, 0, 16)
+                setAttribute(cchop)
+                util.yield(1700)
+                
+                menu.trigger_commands("as " .. PLAYER.GET_PLAYER_NAME(pid) .. " explode " .. PLAYER.GET_PLAYER_NAME(pid) .. " ")
+                
+                util.yield(10000)
+                entities.delete_by_handle(bchop)
+                entities.delete_by_handle(achop)
+                entities.delete_by_handle(cchop)
+                if not STREAMING.HAS_MODEL_LOADED(chop) then
+                    util.toast("无法加载一个崩溃模型，请重试")
+                end
+                gtoast("已完成")
+            end)
+
+        end)
+
+        tcb = GTAC(HbMainMenu, "完美谢幕", {"perfectend"}, "", function ()
             gtoast("请保持不动")
             util.create_thread(function ()
                 local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
