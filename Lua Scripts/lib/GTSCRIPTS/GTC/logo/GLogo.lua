@@ -7,7 +7,6 @@
  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝    ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝      
 GRANDTOURINGVIP™ Copyright© 2024 All rights reserved.]] 
 --require "lib.GTSCRIPTS.V"
-
 require "lib.GTSCRIPTS.W"
 require "lib.GTSCRIPTS.O" 
 require "lib.GTSCRIPTS.T"
@@ -34,7 +33,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '2.18'
+GT_version = '2.20'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -42,12 +41,9 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("更新了任务功能（3.3.10）\n更新了自动资产（808cedc）\n更新、修复主机序列显示样式和功能\n玩家选项>将创建新的战局选项克隆至此\n检测选项现在被归类为保护选项\n视觉选项现在被归类为娱乐选项\n优化性能，以及运行效率\n添加了新的皇榜成员\n错误修改与功能改进")
+    notification("改进在线战局时在玩家进入或离开出现报错信息的问题\nGTLua现在拥有网络框架，后续会提供实际功能\n同时修复了某些情况下脚本内容加载不完全，建议所有用户更新")
 end
 
-function gtoast(str)
-    return util.toast("\n"..str)
-end
 --
 hasShownToast = false
 outdatanow = false
@@ -58,7 +54,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 2
-notifyDay = 18
+notifyDay = 20
 
 _G.daysSince = _G.daysSince or 0
 
@@ -9057,6 +9053,10 @@ function sxgt(f)
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~忽有故人心上过，回首山河已是冬")
         elseif playeridx == "zxzppq" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~r~中华人民共和国万岁")
+        elseif playeridx == "Doll0v0" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~妹妹最爱的Doll0v0正在此战局")
+        elseif playeridx == "Herykcz" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~妹妹最爱的Herykcz正在此战局")
         else
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 "..playeridx.." 正在该战局")
         end
@@ -23505,13 +23505,7 @@ function egaoxuanxianggongneng()
 function playerActionsSetup(pid)
 GTROOT = menu.shadow_root():list('GRANDTOURINGVIP', {"gtluaplayer"}, "GTVIP YYDS\n点击进入GTVIP玩家选项")
 GTROOT = menu.player_root(pid):getChildren()[1]:attachBefore(GTROOT)
-PLAYER_ROOT = GTD(GTROOT, "GRANDTOURINGVIP")
-util.create_tick_handler(function() 
-    for _, frame in pairs(loading_frames) do 
-        GTluaScript.set_menu_name(PLAYER_ROOT, frame .. '') 
-        wait(100) 
-    end 
-end)
+GTD(GTROOT, "GRANDTOURINGVIP")
 
 GT = GTluaScript.list
 

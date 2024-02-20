@@ -21,7 +21,7 @@ devid = {{
 }
 
 sxid = {{
-    playeridx = "RhymeBear"
+    playeridx = "RhymeBear" --测试
 }, {
     playeridx = "hinrcituqzQZ"
 }, {
@@ -29,19 +29,19 @@ sxid = {{
 }, {
     playeridx = "chen_you123"
 }, {
-    playeridx = "Last100million"
+    playeridx = "Last100million" --]
+}, {                             --]
+    playeridx = "FallenMountain" --]
 }, {
-    playeridx = "FallenMountain"
-}, {
-    playeridx = "Lil_Windows_XP"
-}, {
-    playeridx = "Dreams_dog"
+    playeridx = "Lil_Windows_XP" --]
+}, {                             --]
+    playeridx = "Dreams_dog"     --]
 }, {
     playeridx = "bilal22520"
 }, {
-    playeridx = "Mag7777V"
-}, {
-    playeridx = "Magicswordstar"
+    playeridx = "Mag7777V"       --]
+}, {                             --]
+    playeridx = "Magicswordstar" --]
 }, {
     playeridx = "xyzkzero"
 }, {
@@ -49,15 +49,15 @@ sxid = {{
 }, {
     playeridx = "jinxCore"
 }, {
-    playeridx = "yangtuoao"
-}, {
-    playeridx = "Gods_daxiong"
+    playeridx = "yangtuoao"    --]
+}, {                           --]
+    playeridx = "Gods_daxiong" --]
 }, {
     playeridx = "-ZackFair-"
 }, {
-    playeridx = "Msinc"
-}, {
-    playeridx = "Msincer"
+    playeridx = "Msinc"   --]
+}, {                      --]
+    playeridx = "Msincer" --]
 }, {
     playeridx = "WXH_666"
 }, {
@@ -73,10 +73,14 @@ sxid = {{
 }, {
     playeridx = "John-Wick-AC"
 }, {
-    playeridx = "sshanheya"
-}, {
     playeridx = "yjsdj8bag"
-},
+}, {
+    playeridx = "Doll0v0"   --]
+}, {                        --]
+    playeridx = "Herykcz"   --]
+}, {                        --]
+    playeridx = "sshanheya" --]
+}, 
 }
 
 spid = {{
@@ -1644,8 +1648,6 @@ spid = {{
 }, {
     playerid = "tool236"
 }, {
-    playerid = "Herykcz"
-}, {
     playerid = "fhwnbkls666"
 }, {
     playerid = "Neri_summer"
@@ -1826,7 +1828,7 @@ spid = {{
 }, {
     playerid = "WangQuanFuGui_01"
 }, {
-    playerid = "ex3690"
+    playerid = "EX3690"
 }, {
     playerid = "luochenhongyan"
 }, {
@@ -1839,6 +1841,22 @@ spid = {{
     playerid = "xiao-lin666"
 }, {
     playerid = "GOD______NESS"
+}, {
+    playerid = "awasde1314"
+}, {
+    playerid = "NeverDieA"
+}, {
+    playerid = "Dialog04_-"
+}, {
+    playerid = "TizzTcKEe3"
+}, {
+    playerid = "XIAOLIN1022"
+}, {
+    playerid = "xiaobai_0714"
+}, {
+    playerid = "weiyangxiarong"
+}, {
+    playerid = "long10011"
 }, {
     playerid = ""
 },

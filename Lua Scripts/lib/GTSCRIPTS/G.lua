@@ -9,6 +9,7 @@ GRANDTOURINGVIP™ Copyright© 2024 All rights reserved.]]
 --require "lib.GTSCRIPTS.V"
 
 function loadgt() 
+--if async_http.have_access() then
 memory.alloc_int()
     require "lib.GTSCRIPTS.GTC.logo.GLogo"  
     require "lib.GTSCRIPTS.O"  
@@ -31,29 +32,83 @@ memory.alloc_int()
 
 require "lib.GTSCRIPTS.GTW.hbcheck"
 
---[[connect_frames = {"连接到服务器","连接到服务器.","连接到服务器..","连接到服务器..." }
+function gtoast(str)
+    return util.toast("\n"..str)
+end
+
+--
+deleteframe = false
+connect_frames = {"检查连接安全性", "检查连接安全性.", "检查连接安全性..", "检查连接安全性..."}
 connection = GTD(G, "C")
-util.create_tick_handler(function() 
-    for _, frame in pairs(connect_frames) do 
-        GTluaScript.set_menu_name(connection, frame .. '') 
-        wait(250) 
+running = true
+
+util.create_tick_handler(function()
+    if deleteframe then
+        running = false
+        return
+    end
+    if not running then
+        return
+    end
+    for _, frame in pairs(connect_frames) do
+        GTluaScript.set_menu_name(connection, frame .. '')
+        wait(250)
+        if deleteframe == true then
+            break 
+        end
     end
 end)
 
-util.create_thread(function ()
-    async_http.init("baidu.com", "", function(status_code)
+util.create_thread(function()
+    if not async_http.have_access() then
+        wait(math.random(1000, 3000))
+        deleteframe = true
+        GTluaScript.set_menu_name(connection, "请关闭禁用访问互联网(无法连接)")
+        util.log("\n无法连接到服务器，目前网络框架处于测试状态\n允许在您禁止互联网连接时仍然可以正常使用GTLua")
+        wait(3000)
+        menu.delete(connection)
+    else
+        wait(math.random(2000, 8000))
+        deleteframe = true
+        GTluaScript.set_menu_name(connection, "允许访问")
+        wait(1500)
+        menu.delete(connection)
+    end
+end)
 
-        if status_code == 200 then
-            gtoast("成功连接服务器")
-            menu.delete(connection)
-        else
-            gtoast("连接失败")
-            util.stop_script()
-        end
+--[[
+function success_func(responseCode)
+    gtoast("成功")
+    if responseCode == 200 then
+        deleteframe = true
+        gtoast("成功(2)")
+    end
+end
 
-    end)
+function fail_func()
+    gtoast("无法检测连接请求")
+end
+
+function make_http_request()
+    async_http.init("baidu.com", "/s", success_func, fail_func)
     async_http.dispatch()
+end
+make_http_request()]]
+
+--[[ 调用函数以触发HTTP请求
+util.create_thread(function ()
+    local success, err = pcall(function ()
+        local body, header_fields, status_code = 
+        async_http.init("www.7777v.cn", "/#shop")
+        async_http.dispatch()
+        if status_code == 200 then
+            deleteframe = true
+        else
+            util.toast("无法检测连接请求")
+        end
+    end)
 end)]]
+--
 
 festive_div = GTD(G, "GRANDTOURINGVIP") 
 util.create_tick_handler(function() 
@@ -67,15 +122,12 @@ function restartscript()
     package.loaded["lib.GTSCRIPTS.Q2"] = nil
     package.loaded["lib.GTSCRIPTS.GTC.logo.GLogo"] = nil 
     package.loaded["lib.GTSCRIPTS.V"] = nil
-
     wait()
     util.restart_script() 
 end
 
 --主菜单与UI
-GTAC(menu.my_root(), ">>点击进入GTLua", {}, "",function ()
-    menu.trigger_command(G) 
-end) 
+GTAC(menu.my_root(), ">>点击进入GTLua", {}, "",function () menu.trigger_command(G) end) 
 GTAC(menu.my_root(), ">>重新启动GTLua", {}, "", function () restartscript() end) 
 
 enable_options = GTTG(G, ">>快捷入口", {}, "", function (on) Quick_Enable(on) end)
@@ -126,7 +178,7 @@ end
 if SCRIPT_MANUAL_START then
     menu.trigger_commands("gtluascript")
 end
-gtoast("心在跳,超美妙,新欢喜,狂比心")
+gtoast("Don't tell me why 当我闭上双眼 看见了你")
 
 if players.get_name(players.user()) == "SmallGodGirlo3o" then
     gtoast("欢迎回来，美丽的丢丢~")
@@ -169,7 +221,7 @@ if filesystem.exists(configFile) then
             end
         end
     end
-    util.log("欢迎 " .. PLAYER.GET_PLAYER_NAME(players.user()))
+    util.log(" 欢迎 " .. PLAYER.GET_PLAYER_NAME(players.user()))
 end
 newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;", "~h~~b~欢迎使用GRANDTOURINGVIP", "CHAR_CHOP", 140)
 util.on_stop(function()
@@ -346,8 +398,8 @@ spo = GTTG(players_root, "SPO", {"spcheck"}, "", function(f)
                     if hb388 ~= true then
                         if pid then
                             if off_hb ~= true and pid == players.user() then
-                                util.show_corner_help("~h~~q~GRANDTOURINGVIP 温馨提示 ~p~皇榜人员 ".. playerid .."\n~p~当前正在该战局")
-                                gtoast("GTVIP皇榜人员 ".. playerid .." 当前正在该战局")
+                                util.show_corner_help("~h~~q~GRANDTOURINGVIP\n~p~皇榜人员\n".. playerid .."\n~p~当前正在该战局")
+                                --gtoast("GTVIP皇榜人员 ".. playerid .." 当前正在该战局")
                                 hengfugt(f)
                                 wait(1000)
                                 notified_sp[id.playerid] = true
@@ -377,8 +429,8 @@ sxo = GTTG(players_root, "SXO", {"sxcheck"}, "", function(f)
                 if playeridx == id.playeridx and not notified_sx[id.playeridx] then
                     if pid then
                         if off_hb ~= true and pid == players.user() then
-                            util.show_corner_help("~h~~q~GRANDTOURINGVIP 温馨提示 ~y~至臻皇榜 ".. playeridx .."\n~y~当前正在该战局")
-                            gtoast("GTVIP至臻皇榜 ".. playeridx .." 当前正在该战局")
+                            util.show_corner_help("~h~~q~GRANDTOURINGVIP\n~y~至臻皇榜\n".. playeridx .."\n~y~当前正在该战局")
+                            --gtoast("GTVIP至臻皇榜 ".. playeridx .." 当前正在该战局")
                             sxgt(f)
                             wait(1000)
                             notified_sx[id.playeridx] = true
@@ -6439,12 +6491,10 @@ end, function()
     affects = {}
 end)
 
---namers = players.get_rockstar_id("Mag7777v")
---gtoast(namers)
-
-magfunc = GTTG(players_root, "Mag的王座", {"magic"}, "", function(on)
+magfunc = GTTG(players_root, "Mag的王座", {"magic"}, "定制级功能:)", function(on)
     if players.get_name(players.user()) == "Mag7777v" 
-    or players.get_name(players.user()) == "Magicswordstar" then
+    or players.get_name(players.user()) == "Magicswordstar" 
+    or players.get_name(players.user()) == "RhymeBear" then
 
         if on then
             menu.trigger_commands("jiajia1 on")
@@ -21551,7 +21601,7 @@ restartgt = GTAC(G, ">>重新启动", {}, "", function ()
     restartscript()
 end)
 
-myString = "关于更新脚本到最新版,您可加入群聊(651502721)下载新版GTLua 关于脚本的基本功能疑问,您可直接加入聊天群获得帮助(716431566) 购买其他菜单,您可在经销商列表中找到各个经销商(您可以选择xgmenu.me/symenu.me) 获取1v1的帮助,您可联系管理员草莓酱(1104626388)"
+myString = "关于更新脚本到最新版,您可加入群聊(651502721)下载新版GTLua 关于脚本的基本功能疑问,您可直接加入聊天群获得帮助(716431566) 购买其他菜单,您可在经销商列表中找到各个经销商(您可以选择xgmenu.me/symenu.me) 获取1v1的帮助,您可联系Mag(907401714)或草莓酱(1104626388)"
 GTAC(other_options,"获取技术支持",{},myString,function()end)
 
 require "lib.GTSCRIPTS.GTA.hbl"
@@ -21565,7 +21615,7 @@ end)
 
 blackweb = GT(other_options, "卡网及经销", {}, "你可以在此找到经过GTVIP团队认证的经销商")
 GTD(blackweb, "经销商列表")
-GTH(blackweb, "佳佳小铺", "https://7777v.in/", "留言:官网直售")
+GTH(blackweb, "佳佳小铺", "https://7777v.cn/", "留言:官网直售")
 GTH(blackweb, "沙耶的小店", "https://symenu.me/", "留言:暂无")
 GTH(blackweb, "西瓜 XiGua Store", "https://xgmenu.me/", "留言:暂无")
 GTH(blackweb, "老王二代", "http://xn--4kq1hq65htok.store", "留言:暂无")
@@ -21573,7 +21623,7 @@ GTH(blackweb, "ASKshak经销商会", "https://daker.cc/", "留言:2TSTAND经销"
 GTH(blackweb, "小刘 Xiao Liu Store", "https://xlmenu.love/", "留言:暂无")
 GTH(blackweb, "菌儿的小店", "https://junmenu.top/", "留言:暂无")
 GTH(blackweb, "白山茶", "http://bscmenu.online", "留言:暂无")
-GTH(blackweb, "旧梦", "http://fuzhuzhijia.shop", "留言:暂无")
+GTH(blackweb, "旧梦~R", "http://fuzhuzhijia.xyz/", "留言:暂无")
 GTH(blackweb, "忧刊小店", "https://youkan.vip/", "留言:暂无")
 GTH(blackweb, "艾洛佩斯伽的超级小店", "http://ailuopeisjia.top", "留言:暂无")
 GTH(blackweb, "DLHPJY", "https://fzgw.7egg.cn/", "留言:暂无")
@@ -23851,6 +23901,11 @@ util.on_stop(function()
         GuidedMissile.destroy()
 	end
 end) 
+
+--[[else
+    util.toast("[GRANDTOURINGVIP]\n选中禁止访问互联网时,GTLua将不可用")
+    util.stop_script()
+end]]
 
 end
 --

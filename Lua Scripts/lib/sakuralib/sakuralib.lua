@@ -14059,8 +14059,8 @@ function Soul_Gun()
     end
 end
 
--- -----Blacklist
--- --云更新Blacklist
+-----Blacklist
+--云更新Blacklist
 -- async_http.init("http://cnsakura.top", "/other/blacklist.json",function(info,header,response)
 --     if response == 200 then
 --         local list = StrToTable(info)
