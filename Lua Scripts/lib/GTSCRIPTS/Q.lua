@@ -832,7 +832,7 @@ do
 end
 --#endregion Translation Functions
 
-local menu_findsaferways = menu.hyperlink(Musiness_Banager, MenuLabels.FINDSAFERWAYS, "https://stand.gg/help/money", MenuLabels.FINDSAFERWAYS_DESC)
+--local menu_findsaferways = menu.hyperlink(Musiness_Banager, MenuLabels.FINDSAFERWAYS, "https://stand.gg/help/money", MenuLabels.FINDSAFERWAYS_DESC)
 
 -----------------------------------
 -- HTTP Functions
@@ -1624,7 +1624,7 @@ SCRefs[#SCRefs+1] = menu.toggle_loop(SCMan, MenuLabels.MAXSELLPRICE, {"maxsellca
     end
 
     if IsInSession() then
-        CheckIfAlone()
+        --CheckIfAlone()
         SetSpecialCargoValues(true)
     end
 end, function()
@@ -2010,7 +2010,7 @@ local NCMan = menu.list(Musiness_Banager, MenuLabels.NIGHTCLUB, {}, MenuLabels.N
     
             if IsInSession() then
                 if MyBusinesses.Hub[name] ~= 0 then
-                    CheckIfAlone()
+                    --CheckIfAlone()
                     SetGlobalInt(globals.Hub[name].Sell, globals.Hub.MaxSellPrice // MyBusinesses.Hub[name])
                 end
             end
@@ -2308,7 +2308,7 @@ local MCMan = menu.list(Musiness_Banager, GetLabelText(MenuLabels.MCBUSINESS), {
 
             if IsInSession() then
                 if MyBusinesses[name].property ~= 0 then
-                    CheckIfAlone()
+                    --CheckIfAlone()
                     if MyBusinesses[name].product > 0 then
                         SetGlobalInt(globals.MC[name].Sell1, globals.MC.MaxSellPrice // MyBusinesses[name].product)
                         SetGlobalFloat(globals.MC[name].Sell2, 1)
@@ -2391,7 +2391,7 @@ local BunkMan = menu.list(Musiness_Banager, MenuLabels.BUNKER, {}, MenuLabels.BU
 
         if IsInSession() then
             if MyBusinesses.Bunker.product ~= 0 then
-                CheckIfAlone()
+                --CheckIfAlone()
                 SetGlobalInt(globals.MC.Bunker.Sell1, 2500000 // MyBusinesses.Bunker.product)
                 SetGlobalFloat(globals.MC.Bunker.Sell2, 1)
             end

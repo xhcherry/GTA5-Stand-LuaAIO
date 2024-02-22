@@ -33,7 +33,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '2.20'
+GT_version = '2.22'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -41,7 +41,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("改进在线战局时在玩家进入或离开出现报错信息的问题\nGTLua现在拥有网络框架，后续会提供实际功能\n同时修复了某些情况下脚本内容加载不完全，建议所有用户更新")
+    notification("安全性更新\n一些功能的浮点数值现在不会出现浮点过多的错误\n某些字符与功能衔接的字串功能现在不会再次混淆导致报错\n主local级别的选项和功能现在分割到其他位置以免导致注册过多报错\n某些util.create_tick_handler现在被修改的更加节省资源\n大量使用package.loaded语句以达到节省内存资源\n大量while语句现在加入等待线程以避免max loop 100000\n自动资产功能现在打开最大销售价格不会再卡单\n其他的一些改进与修复")
 end
 
 --
@@ -54,7 +54,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 2
-notifyDay = 20
+notifyDay = 22
 
 _G.daysSince = _G.daysSince or 0
 
@@ -6085,38 +6085,43 @@ function sqgk(pid)
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), oldcoords.x, oldcoords.y, oldcoords.z, false, false, false)
 end
 
---hedan
+-- hedan
 GTYYDS = {
-int = function(global, value)
-local radress = memory.script_global(global)
-memory.write_int(radress, value)
-end,
-GTYYDS1 = function(sound, sound_group, wait_for)
-for i=0, 31, 1 do
-AUDIO.PLAY_SOUND_FROM_ENTITY(-1, sound, PLAYER.GET_PLAYER_PED(i), sound_group, true, 20)
-end
-wait(wait_for)
-end,
-get_coords = function(entity)
-entity = entity or PLAYER.PLAYER_PED_ID()
-return ENTITY.GET_ENTITY_COORDS(entity, true)
-end,
-GTYYDS2 = function(earrape_type, wait_for)
-for i=0, 31, 1 do
-coords = GTYYDS.get_coords(PLAYER.GET_PLAYER_PED(i))
-FIRE.ADD_EXPLOSION(coords.x, coords.y, coords.z, 0, 100, true, false, 150, false)
-if earrape_type == EARRAPE_BED then
-AUDIO.PLAY_SOUND_FROM_COORD(-1, "Bed", coords.x, coords.y, coords.z, "WastedSounds", true, 999999999, true)
-end
-if earrape_type == EARRAPE_FLASH then
-AUDIO.PLAY_SOUND_FROM_COORD(-1, "MP_Flash", coords.x, coords.y, coords.z, "WastedSounds", true, 999999999, true)
-AUDIO.PLAY_SOUND_FROM_COORD(-1, "MP_Flash", coords.x, coords.y, coords.z, "WastedSounds", true, 999999999, true)
-AUDIO.PLAY_SOUND_FROM_COORD(-1, "MP_Flash", coords.x, coords.y, coords.z, "WastedSounds", true, 999999999, true)
-end
-end
-wait(wait_for)
-end
+    int = function(global, value)
+        local radress = memory.script_global(global)
+        memory.write_int(radress, value)
+    end,
+    GTYYDS1 = function(sound, sound_group, wait_for)
+        for i = 0, 31, 1 do
+            AUDIO.PLAY_SOUND_FROM_ENTITY(-1, sound, PLAYER.GET_PLAYER_PED(i), sound_group, true, 20)
+        end
+        wait(wait_for)
+    end,
+    get_coords = function(entity)
+        entity = entity or PLAYER.PLAYER_PED_ID()
+        return ENTITY.GET_ENTITY_COORDS(entity, true)
+    end,
+    GTYYDS2 = function(earrape_type, wait_for)
+        for i = 0, 31, 1 do
+            coords = GTYYDS.get_coords(PLAYER.GET_PLAYER_PED(i))
+            FIRE.ADD_EXPLOSION(coords.x, coords.y, coords.z, 0, 100, true, false, 150, false)
+            if earrape_type == EARRAPE_BED then
+                AUDIO.PLAY_SOUND_FROM_COORD(-1, "Bed", coords.x, coords.y, coords.z, "WastedSounds", true, 999999999,
+                    true)
+            end
+            if earrape_type == EARRAPE_FLASH then
+                AUDIO.PLAY_SOUND_FROM_COORD(-1, "MP_Flash", coords.x, coords.y, coords.z, "WastedSounds", true,
+                    999999999, true)
+                AUDIO.PLAY_SOUND_FROM_COORD(-1, "MP_Flash", coords.x, coords.y, coords.z, "WastedSounds", true,
+                    999999999, true)
+                AUDIO.PLAY_SOUND_FROM_COORD(-1, "MP_Flash", coords.x, coords.y, coords.z, "WastedSounds", true,
+                    999999999, true)
+            end
+        end
+        wait(wait_for)
+    end
 }
+
 
 function snowpeople(on)
     local zhangzi = "prop_gumball_03"
@@ -7023,258 +7028,122 @@ function translate(section, name)
 	return Translation[section][name]
 end
 
---伤害数字
+-- 伤害数字
 b_drawing_funcs = {}
-b_drawing_funcs.new = function ()
+b_drawing_funcs.new = function()
     local self = {}
     self.draw_arrow = function(pos, angle, size, colour_a, colour_b)
         local angle_cos = math.cos(angle)
         local angle_sin = math.sin(angle)
-    
+
         local width = 0.5 * size
         local length = 1 * size
         local height = 0.25 * size
-    
-        GRAPHICS.DRAW_POLY(
-            pos.x + (angle_cos * -width - angle_sin * -length),
-            pos.y + (angle_sin * -width + angle_cos * -length),
-            pos.z + 0,
-            pos.x + (angle_cos * 0 - angle_sin * -width),
-            pos.y + (angle_sin * 0 + angle_cos * -width),
-            pos.z + -height,
-            pos.x + (angle_cos * 0 - angle_sin * -width),
-            pos.y + (angle_sin * 0 + angle_cos * -width),
-            pos.z + height,
-            colour_b.r,
-            colour_b.g,
-            colour_b.b,
-            colour_b.a
-        )
-        GRAPHICS.DRAW_POLY(
-            pos.x + (angle_cos * 0 - angle_sin * -width),
-            pos.y + (angle_sin * 0 + angle_cos * -width),
-            pos.z + -height,
-            pos.x + (angle_cos * width - angle_sin * -length),
-            pos.y + (angle_sin * width + angle_cos * -length),
-            pos.z + 0,
-            pos.x + (angle_cos * 0 - angle_sin * -width),
-            pos.y + (angle_sin * 0 + angle_cos * -width),
-            pos.z + height,
-            colour_a.r,
-            colour_a.g,
-            colour_a.b,
-            colour_a.a
-        )
-        GRAPHICS.DRAW_POLY(
-            pos.x + (angle_cos * width - angle_sin * -length),
-            pos.y + (angle_sin * width + angle_cos * -length),
-            pos.z + 0,
-            pos.x + (angle_cos * 0 - angle_sin * width),
-            pos.y + (angle_sin * 0 + angle_cos * width),
-            pos.z + 0,
-            pos.x + (angle_cos * 0 - angle_sin * -width),
-            pos.y + (angle_sin * 0 + angle_cos * -width),
-            pos.z + height,
-            colour_a.r,
-            colour_a.g,
-            colour_a.b,
-            colour_a.a
-        )
-        GRAPHICS.DRAW_POLY(
-            pos.x + (angle_cos * 0 - angle_sin * width),
-            pos.y + (angle_sin * 0 + angle_cos * width),
-            pos.z + 0,
-            pos.x + (angle_cos * width - angle_sin * -length),
-            pos.y + (angle_sin * width + angle_cos * -length),
-            pos.z + 0,
-            pos.x + (angle_cos * 0 - angle_sin * -width),
-            pos.y + (angle_sin * 0 + angle_cos * -width),
-            pos.z + -height,
-            colour_a.r,
-            colour_a.g,
-            colour_a.b,
-            colour_a.a
-        )
-        GRAPHICS.DRAW_POLY(
-            pos.x + (angle_cos * -width - angle_sin * -length),
-            pos.y + (angle_sin * -width + angle_cos * -length),
-            pos.z + 0,
-            pos.x + (angle_cos * 0 - angle_sin * width),
-            pos.y + (angle_sin * 0 + angle_cos * width),
-            pos.z + 0,
-            pos.x + (angle_cos * 0 - angle_sin * -width),
-            pos.y + (angle_sin * 0 + angle_cos * -width),
-            pos.z + -height,
-            colour_b.r,
-            colour_b.g,
-            colour_b.b,
-            colour_b.a
-        )
-        GRAPHICS.DRAW_POLY(
-            pos.x + (angle_cos * 0 - angle_sin * width),
-            pos.y + (angle_sin * 0 + angle_cos * width),
-            pos.z + 0,
-            pos.x + (angle_cos * -width - angle_sin * -length),
-            pos.y + (angle_sin * -width + angle_cos * -length),
-            pos.z + 0,
-            pos.x + (angle_cos * 0 - angle_sin * -width),
-            pos.y + (angle_sin * 0 + angle_cos * -width),
-            pos.z + height,
-            colour_b.r,
-            colour_b.g,
-            colour_b.b,
-            colour_b.a
-        )
+
+        GRAPHICS.DRAW_POLY(pos.x + (angle_cos * -width - angle_sin * -length),
+            pos.y + (angle_sin * -width + angle_cos * -length), pos.z + 0, pos.x + (angle_cos * 0 - angle_sin * -width),
+            pos.y + (angle_sin * 0 + angle_cos * -width), pos.z + -height, pos.x + (angle_cos * 0 - angle_sin * -width),
+            pos.y + (angle_sin * 0 + angle_cos * -width), pos.z + height, colour_b.r, colour_b.g, colour_b.b, colour_b.a)
+        GRAPHICS.DRAW_POLY(pos.x + (angle_cos * 0 - angle_sin * -width), pos.y + (angle_sin * 0 + angle_cos * -width),
+            pos.z + -height, pos.x + (angle_cos * width - angle_sin * -length),
+            pos.y + (angle_sin * width + angle_cos * -length), pos.z + 0, pos.x + (angle_cos * 0 - angle_sin * -width),
+            pos.y + (angle_sin * 0 + angle_cos * -width), pos.z + height, colour_a.r, colour_a.g, colour_a.b, colour_a.a)
+        GRAPHICS.DRAW_POLY(pos.x + (angle_cos * width - angle_sin * -length),
+            pos.y + (angle_sin * width + angle_cos * -length), pos.z + 0, pos.x + (angle_cos * 0 - angle_sin * width),
+            pos.y + (angle_sin * 0 + angle_cos * width), pos.z + 0, pos.x + (angle_cos * 0 - angle_sin * -width),
+            pos.y + (angle_sin * 0 + angle_cos * -width), pos.z + height, colour_a.r, colour_a.g, colour_a.b, colour_a.a)
+        GRAPHICS.DRAW_POLY(pos.x + (angle_cos * 0 - angle_sin * width), pos.y + (angle_sin * 0 + angle_cos * width),
+            pos.z + 0, pos.x + (angle_cos * width - angle_sin * -length),
+            pos.y + (angle_sin * width + angle_cos * -length), pos.z + 0, pos.x + (angle_cos * 0 - angle_sin * -width),
+            pos.y + (angle_sin * 0 + angle_cos * -width), pos.z + -height, colour_a.r, colour_a.g, colour_a.b,
+            colour_a.a)
+        GRAPHICS.DRAW_POLY(pos.x + (angle_cos * -width - angle_sin * -length),
+            pos.y + (angle_sin * -width + angle_cos * -length), pos.z + 0, pos.x + (angle_cos * 0 - angle_sin * width),
+            pos.y + (angle_sin * 0 + angle_cos * width), pos.z + 0, pos.x + (angle_cos * 0 - angle_sin * -width),
+            pos.y + (angle_sin * 0 + angle_cos * -width), pos.z + -height, colour_b.r, colour_b.g, colour_b.b,
+            colour_b.a)
+        GRAPHICS.DRAW_POLY(pos.x + (angle_cos * 0 - angle_sin * width), pos.y + (angle_sin * 0 + angle_cos * width),
+            pos.z + 0, pos.x + (angle_cos * -width - angle_sin * -length),
+            pos.y + (angle_sin * -width + angle_cos * -length), pos.z + 0, pos.x + (angle_cos * 0 - angle_sin * -width),
+            pos.y + (angle_sin * 0 + angle_cos * -width), pos.z + height, colour_b.r, colour_b.g, colour_b.b, colour_b.a)
     end
     self.draw_arrow_down = function(pos, angle, size, colour_a, colour_b)
         local angle_cos = math.cos(angle)
         local angle_sin = math.sin(angle)
-    
+
         local width = 0.5 * size
         local length = 1 * size
         local height = 0.25 * size
-        
-        GRAPHICS.DRAW_POLY(
-            pos.x + (angle_cos * 0 - angle_sin * 0),
-            pos.y + (angle_sin * 0 + angle_cos * 0),
-            pos.z + 0,
-            pos.x + (angle_cos * 0 - angle_sin * height),
-            pos.y + (angle_sin * 0 + angle_cos * height),
-            pos.z + length + height,
-            pos.x + (angle_cos * width - angle_sin * 0),
-            pos.y + (angle_sin * width + angle_cos * 0),
-            pos.z + length,
-            colour_b.r,
-            colour_b.g,
-            colour_b.b,
-            colour_b.a
-        )
-        GRAPHICS.DRAW_POLY(
-            pos.x + (angle_cos * 0 - angle_sin * -height),
-            pos.y + (angle_sin * 0 + angle_cos * -height),
-            pos.z + length + height,
-            pos.x + (angle_cos * 0 - angle_sin * 0),
-            pos.y + (angle_sin * 0 + angle_cos * 0),
-            pos.z + 0,
-            pos.x + (angle_cos * width - angle_sin * 0),
-            pos.y + (angle_sin * width + angle_cos * 0),
-            pos.z + length,
-            colour_b.r,
-            colour_b.g,
-            colour_b.b,
-            colour_b.a
-        )
-        GRAPHICS.DRAW_POLY(
-            pos.x + (angle_cos * 0 - angle_sin * 0),
-            pos.y + (angle_sin * 0 + angle_cos * 0),
-            pos.z + 0,
-            pos.x + (angle_cos * 0 - angle_sin * -height),
-            pos.y + (angle_sin * 0 + angle_cos * -height),
-            pos.z + length + height,
-            pos.x + (angle_cos * -width - angle_sin * 0),
-            pos.y + (angle_sin * -width + angle_cos * 0),
-            pos.z + length,
-            colour_a.r,
-            colour_a.g,
-            colour_a.b,
-            colour_a.a
-        )
-        GRAPHICS.DRAW_POLY(
-            pos.x + (angle_cos * 0 - angle_sin * height),
-            pos.y + (angle_sin * 0 + angle_cos * height),
-            pos.z + length + height,
-            pos.x + (angle_cos * 0 - angle_sin * 0),
-            pos.y + (angle_sin * 0 + angle_cos * 0),
-            pos.z + 0,
-            pos.x + (angle_cos * -width - angle_sin * 0),
-            pos.y + (angle_sin * -width + angle_cos * 0),
-            pos.z + length,
-            colour_a.r,
-            colour_a.g,
-            colour_a.b,
-            colour_a.a
-        )
-        GRAPHICS.DRAW_POLY(
-            pos.x + (angle_cos * 0 - angle_sin * height),
-            pos.y + (angle_sin * 0 + angle_cos * height),
-            pos.z + length + height,
-            pos.x + (angle_cos * 0 - angle_sin * -height),
-            pos.y + (angle_sin * 0 + angle_cos * -height),
-            pos.z + length + height,
-            pos.x + (angle_cos * width - angle_sin * 0),
-            pos.y + (angle_sin * width + angle_cos * 0),
-            pos.z + length,
-            colour_b.r,
-            colour_b.g,
-            colour_b.b,
-            colour_b.a
-        )
-        GRAPHICS.DRAW_POLY(
-            pos.x + (angle_cos * 0 - angle_sin * -height),
-            pos.y + (angle_sin * 0 + angle_cos * -height),
-            pos.z + length + height,
-            pos.x + (angle_cos * 0 - angle_sin * height),
-            pos.y + (angle_sin * 0 + angle_cos * height),
-            pos.z + length + height,
-            pos.x + (angle_cos * -width - angle_sin * 0),
-            pos.y + (angle_sin * -width + angle_cos * 0),
-            pos.z + length,
-            colour_a.r,
-            colour_a.g,
-            colour_a.b,
-            colour_a.a
-        )
+
+        GRAPHICS.DRAW_POLY(pos.x + (angle_cos * 0 - angle_sin * 0), pos.y + (angle_sin * 0 + angle_cos * 0), pos.z + 0,
+            pos.x + (angle_cos * 0 - angle_sin * height), pos.y + (angle_sin * 0 + angle_cos * height),
+            pos.z + length + height, pos.x + (angle_cos * width - angle_sin * 0),
+            pos.y + (angle_sin * width + angle_cos * 0), pos.z + length, colour_b.r, colour_b.g, colour_b.b, colour_b.a)
+        GRAPHICS.DRAW_POLY(pos.x + (angle_cos * 0 - angle_sin * -height), pos.y + (angle_sin * 0 + angle_cos * -height),
+            pos.z + length + height, pos.x + (angle_cos * 0 - angle_sin * 0), pos.y + (angle_sin * 0 + angle_cos * 0),
+            pos.z + 0, pos.x + (angle_cos * width - angle_sin * 0), pos.y + (angle_sin * width + angle_cos * 0),
+            pos.z + length, colour_b.r, colour_b.g, colour_b.b, colour_b.a)
+        GRAPHICS.DRAW_POLY(pos.x + (angle_cos * 0 - angle_sin * 0), pos.y + (angle_sin * 0 + angle_cos * 0), pos.z + 0,
+            pos.x + (angle_cos * 0 - angle_sin * -height), pos.y + (angle_sin * 0 + angle_cos * -height),
+            pos.z + length + height, pos.x + (angle_cos * -width - angle_sin * 0),
+            pos.y + (angle_sin * -width + angle_cos * 0), pos.z + length, colour_a.r, colour_a.g, colour_a.b, colour_a.a)
+        GRAPHICS.DRAW_POLY(pos.x + (angle_cos * 0 - angle_sin * height), pos.y + (angle_sin * 0 + angle_cos * height),
+            pos.z + length + height, pos.x + (angle_cos * 0 - angle_sin * 0), pos.y + (angle_sin * 0 + angle_cos * 0),
+            pos.z + 0, pos.x + (angle_cos * -width - angle_sin * 0), pos.y + (angle_sin * -width + angle_cos * 0),
+            pos.z + length, colour_a.r, colour_a.g, colour_a.b, colour_a.a)
+        GRAPHICS.DRAW_POLY(pos.x + (angle_cos * 0 - angle_sin * height), pos.y + (angle_sin * 0 + angle_cos * height),
+            pos.z + length + height, pos.x + (angle_cos * 0 - angle_sin * -height),
+            pos.y + (angle_sin * 0 + angle_cos * -height), pos.z + length + height,
+            pos.x + (angle_cos * width - angle_sin * 0), pos.y + (angle_sin * width + angle_cos * 0), pos.z + length,
+            colour_b.r, colour_b.g, colour_b.b, colour_b.a)
+        GRAPHICS.DRAW_POLY(pos.x + (angle_cos * 0 - angle_sin * -height), pos.y + (angle_sin * 0 + angle_cos * -height),
+            pos.z + length + height, pos.x + (angle_cos * 0 - angle_sin * height),
+            pos.y + (angle_sin * 0 + angle_cos * height), pos.z + length + height,
+            pos.x + (angle_cos * -width - angle_sin * 0), pos.y + (angle_sin * -width + angle_cos * 0), pos.z + length,
+            colour_a.r, colour_a.g, colour_a.b, colour_a.a)
     end
-    self.draw_quad = function (pos1_org, pos2_org, size, colour_a, colour_b, dict, texture)
+    self.draw_quad = function(pos1_org, pos2_org, size, colour_a, colour_b, dict, texture)
         GRAPHICS.REQUEST_STREAMED_TEXTURE_DICT(dict, false)
         if GRAPHICS.HAS_STREAMED_TEXTURE_DICT_LOADED(dict) then
-            pos1 =  {x = pos1_org.x, y = pos1_org.y, z = pos1_org.z}
-            pos2 =  {x = pos2_org.x, y = pos2_org.y, z = pos2_org.z}
+            pos1 = {
+                x = pos1_org.x,
+                y = pos1_org.y,
+                z = pos1_org.z
+            }
+            pos2 = {
+                x = pos2_org.x,
+                y = pos2_org.y,
+                z = pos2_org.z
+            }
             pos2.z = pos2.z - size * 0.5
             pos1.z = pos1.z - size * 0.5
             GRAPHICS.SET_BACKFACECULLING(false)
-            GRAPHICS._DRAW_SPRITE_POLY_2(
-                pos1.x,     pos1.y,             pos1.z,
-                pos2.x,     pos2.y,             pos2.z,
-                pos2.x,     pos2.y,             pos2.z + size,
-                colour_b.r, colour_b.g, colour_b.b, colour_b.a,
-                colour_b.r, colour_b.g, colour_b.b, colour_b.a,
-                colour_b.r, colour_b.g, colour_b.b, colour_b.a,
-                dict,
-                texture,
-                0, 1, 0, 
-                1, 1, 0,
-                0, 0, 0
-            )
-              GRAPHICS._DRAW_SPRITE_POLY_2(
-                pos1.x,     pos1.y,             pos1.z + size,
-                pos1.x,     pos1.y,             pos1.z,
-                pos2.x,     pos2.y,             pos2.z + size,
-                colour_a.r, colour_a.g, colour_a.b, colour_a.a,
-                colour_a.r, colour_a.g, colour_a.b, colour_a.a,
-                colour_a.r, colour_a.g, colour_a.b, colour_a.a,
-                dict,
-                texture,
-                0, 0, 0,
-                1, 1, 0,
-                1, 0, 0
-            )
+            GRAPHICS._DRAW_SPRITE_POLY_2(pos1.x, pos1.y, pos1.z, pos2.x, pos2.y, pos2.z, pos2.x, pos2.y, pos2.z + size,
+                colour_b.r, colour_b.g, colour_b.b, colour_b.a, colour_b.r, colour_b.g, colour_b.b, colour_b.a,
+                colour_b.r, colour_b.g, colour_b.b, colour_b.a, dict, texture, 0, 1, 0, 1, 1, 0, 0, 0, 0)
+            GRAPHICS._DRAW_SPRITE_POLY_2(pos1.x, pos1.y, pos1.z + size, pos1.x, pos1.y, pos1.z, pos2.x, pos2.y,
+                pos2.z + size, colour_a.r, colour_a.g, colour_a.b, colour_a.a, colour_a.r, colour_a.g, colour_a.b,
+                colour_a.a, colour_a.r, colour_a.g, colour_a.b, colour_a.a, dict, texture, 0, 0, 0, 1, 1, 0, 1, 0, 0)
         else
             notification("not loaded")
-        end 
+        end
     end
     self.arc_line = {}
-    self.arc_line.new = function ()
+    self.arc_line.new = function()
         arc = {}
         arc.instability = 0.75
-        arc.draw = function (pos1, pos2)
-            local dif = {x = pos2.x - pos1.x, y = pos2.y - pos1.y, z = pos2.z - pos1.z}
-            local distance_to_cover = math.sqrt(
-                (dif.x * dif.x) +
-                (dif.y * dif.y) +
-                (dif.z * dif.z)
-            )
-            local nor_dir = {x = dif.x / distance_to_cover, y = dif.y / distance_to_cover,z = dif.z / distance_to_cover}
+        arc.draw = function(pos1, pos2)
+            local dif = {
+                x = pos2.x - pos1.x,
+                y = pos2.y - pos1.y,
+                z = pos2.z - pos1.z
+            }
+            local distance_to_cover = math.sqrt((dif.x * dif.x) + (dif.y * dif.y) + (dif.z * dif.z))
+            local nor_dir = {
+                x = dif.x / distance_to_cover,
+                y = dif.y / distance_to_cover,
+                z = dif.z / distance_to_cover
+            }
 
             for _ = 0, 3, 1 do
                 local distance_covered = math.random() * 1.5
@@ -7285,22 +7154,16 @@ b_drawing_funcs.new = function ()
                         y = pos1.y + nor_dir.y * distance_covered + (math.random() - 0.5) * arc.instability,
                         z = pos1.z + nor_dir.z * distance_covered + (math.random() - 0.5) * arc.instability
                     }
-                    GRAPHICS.DRAW_LINE(
-                        previous_pos.x, previous_pos.y, previous_pos.z,
-                        current_pos.x , current_pos.y , current_pos.z,
-                        0, 255, 255, 255
-                    )
+                    GRAPHICS.DRAW_LINE(previous_pos.x, previous_pos.y, previous_pos.z, current_pos.x, current_pos.y,
+                        current_pos.z, 0, 255, 255, 255)
                     previous_pos = current_pos
                     distance_covered = distance_covered + math.random() * 1.5
                 until distance_covered > distance_to_cover
-                GRAPHICS.DRAW_LINE(
-                    previous_pos.x, previous_pos.y, previous_pos.z,
-                    pos2.x , pos2.y , pos2.z,
-                    0, 255, 255, 255
-                )
+                GRAPHICS.DRAW_LINE(previous_pos.x, previous_pos.y, previous_pos.z, pos2.x, pos2.y, pos2.z, 0, 255, 255,
+                    255)
             end
 
-            arc.instability = arc.instability + (0.15 - arc.instability) *  MISC.GET_FRAME_TIME() * 7
+            arc.instability = arc.instability + (0.15 - arc.instability) * MISC.GET_FRAME_TIME() * 7
         end
         return arc
     end
@@ -7310,7 +7173,7 @@ b_drawing_funcs.new = function ()
     local rightVector_pointer = memory.alloc()
     local forwardVector_pointer = memory.alloc()
     local position_pointer = memory.alloc()
-    self.draw_bounding_box = function (entity, colour)
+    self.draw_bounding_box = function(entity, colour)
         ENTITY.GET_ENTITY_MATRIX(entity, rightVector_pointer, forwardVector_pointer, upVector_pointer, position_pointer);
         local forward_vector = memory.read_vector3(forwardVector_pointer)
         local right_vector = memory.read_vector3(rightVector_pointer)
@@ -7319,90 +7182,93 @@ b_drawing_funcs.new = function ()
         MISC.GET_MODEL_DIMENSIONS(ENTITY.GET_ENTITY_MODEL(entity), minimum, maximum)
         local minimum_vec = memory.read_vector3(minimum)
         local maximum_vec = memory.read_vector3(maximum)
-        local dimensions = {x = maximum_vec.y - minimum_vec.y, y = maximum_vec.x - minimum_vec.x, z = maximum_vec.z - minimum_vec.z}
+        local dimensions = {
+            x = maximum_vec.y - minimum_vec.y,
+            y = maximum_vec.x - minimum_vec.x,
+            z = maximum_vec.z - minimum_vec.z
+        }
 
-        local top_right =           ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity,       maximum_vec.x, maximum_vec.y, maximum_vec.z)
-        local top_right_back =      {x = forward_vector.x * -dimensions.y + top_right.x,        y = forward_vector.y * -dimensions.y + top_right.y,         z = forward_vector.z * -dimensions.y + top_right.z}
-        local bottom_right_back =   {x = up_vector.x * -dimensions.z + top_right_back.x,        y = up_vector.y * -dimensions.z + top_right_back.y,         z = up_vector.z * -dimensions.z + top_right_back.z}
-        local bottom_left_back =    {x = -right_vector.x * dimensions.x + bottom_right_back.x,  y = -right_vector.y * dimensions.x + bottom_right_back.y,   z = -right_vector.z * dimensions.x + bottom_right_back.z}
-        local top_left =            {x = -right_vector.x * dimensions.x + top_right.x,          y = -right_vector.y * dimensions.x + top_right.y,           z = -right_vector.z * dimensions.x + top_right.z}
-        local bottom_right =        {x = -up_vector.x * dimensions.z + top_right.x,             y = -up_vector.y * dimensions.z + top_right.y,              z = -up_vector.z * dimensions.z + top_right.z}
-        local bottom_left =         {x = forward_vector.x * dimensions.y + bottom_left_back.x,  y = forward_vector.y * dimensions.y + bottom_left_back.y,   z = forward_vector.z * dimensions.y + bottom_left_back.z}
-        local top_left_back =       {x = up_vector.x * dimensions.z + bottom_left_back.x,       y = up_vector.y * dimensions.z + bottom_left_back.y,        z = up_vector.z * dimensions.z + bottom_left_back.z}
+        local top_right = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, maximum_vec.x, maximum_vec.y,
+            maximum_vec.z)
+        local top_right_back = {
+            x = forward_vector.x * -dimensions.y + top_right.x,
+            y = forward_vector.y * -dimensions.y + top_right.y,
+            z = forward_vector.z * -dimensions.y + top_right.z
+        }
+        local bottom_right_back = {
+            x = up_vector.x * -dimensions.z + top_right_back.x,
+            y = up_vector.y * -dimensions.z + top_right_back.y,
+            z = up_vector.z * -dimensions.z + top_right_back.z
+        }
+        local bottom_left_back = {
+            x = -right_vector.x * dimensions.x + bottom_right_back.x,
+            y = -right_vector.y * dimensions.x + bottom_right_back.y,
+            z = -right_vector.z * dimensions.x + bottom_right_back.z
+        }
+        local top_left = {
+            x = -right_vector.x * dimensions.x + top_right.x,
+            y = -right_vector.y * dimensions.x + top_right.y,
+            z = -right_vector.z * dimensions.x + top_right.z
+        }
+        local bottom_right = {
+            x = -up_vector.x * dimensions.z + top_right.x,
+            y = -up_vector.y * dimensions.z + top_right.y,
+            z = -up_vector.z * dimensions.z + top_right.z
+        }
+        local bottom_left = {
+            x = forward_vector.x * dimensions.y + bottom_left_back.x,
+            y = forward_vector.y * dimensions.y + bottom_left_back.y,
+            z = forward_vector.z * dimensions.y + bottom_left_back.z
+        }
+        local top_left_back = {
+            x = up_vector.x * dimensions.z + bottom_left_back.x,
+            y = up_vector.y * dimensions.z + bottom_left_back.y,
+            z = up_vector.z * dimensions.z + bottom_left_back.z
+        }
 
-        GRAPHICS.DRAW_LINE(
-            top_right.x, top_right.y, top_right.z,
-            top_right_back.x, top_right_back.y, top_right_back.z,
-           colour.r, colour.g, colour.b, colour.a
-        )
-        GRAPHICS.DRAW_LINE(
-            top_right.x, top_right.y, top_right.z,
-            top_left.x, top_left.y, top_left.z,
-           colour.r, colour.g, colour.b, colour.a
-        )
-        GRAPHICS.DRAW_LINE(
-            top_right.x, top_right.y, top_right.z,
-            bottom_right.x, bottom_right.y, bottom_right.z,
-           colour.r, colour.g, colour.b, colour.a
-        )
-        GRAPHICS.DRAW_LINE(
-            bottom_left_back.x, bottom_left_back.y, bottom_left_back.z,
-            bottom_right_back.x, bottom_right_back.y, bottom_right_back.z,
-           colour.r, colour.g, colour.b, colour.a
-        )
-        GRAPHICS.DRAW_LINE(
-            bottom_left_back.x, bottom_left_back.y, bottom_left_back.z,
-            bottom_left.x, bottom_left.y, bottom_left.z,
-           colour.r, colour.g, colour.b, colour.a
-        )
-        GRAPHICS.DRAW_LINE(
-            bottom_left_back.x, bottom_left_back.y, bottom_left_back.z,
-            top_left_back.x, top_left_back.y, top_left_back.z,
-           colour.r, colour.g, colour.b, colour.a
-        )
-        GRAPHICS.DRAW_LINE(
-            top_left_back.x, top_left_back.y, top_left_back.z,
-            top_right_back.x, top_right_back.y, top_right_back.z,
-           colour.r, colour.g, colour.b, colour.a
-        )
-        GRAPHICS.DRAW_LINE(
-            top_left_back.x, top_left_back.y, top_left_back.z,
-            top_left.x, top_left.y, top_left.z,
-           colour.r, colour.g, colour.b, colour.a
-        )
-        GRAPHICS.DRAW_LINE(
-            bottom_right_back.x, bottom_right_back.y, bottom_right_back.z,
-            top_right_back.x, top_right_back.y, top_right_back.z,
-           colour.r, colour.g, colour.b, colour.a
-        )
-        GRAPHICS.DRAW_LINE(
-            bottom_left.x, bottom_left.y, bottom_left.z,
-            top_left.x, top_left.y, top_left.z,
-           colour.r, colour.g, colour.b, colour.a
-        )
-        GRAPHICS.DRAW_LINE(
-            bottom_left.x, bottom_left.y, bottom_left.z,
-            bottom_right.x, bottom_right.y, bottom_right.z,
-           colour.r, colour.g, colour.b, colour.a
-        )
-        GRAPHICS.DRAW_LINE(
-            bottom_right_back.x, bottom_right_back.y, bottom_right_back.z,
-            bottom_right.x, bottom_right.y, bottom_right.z,
-           colour.r, colour.g, colour.b, colour.a
-        )
+        GRAPHICS.DRAW_LINE(top_right.x, top_right.y, top_right.z, top_right_back.x, top_right_back.y, top_right_back.z,
+            colour.r, colour.g, colour.b, colour.a)
+        GRAPHICS.DRAW_LINE(top_right.x, top_right.y, top_right.z, top_left.x, top_left.y, top_left.z, colour.r,
+            colour.g, colour.b, colour.a)
+        GRAPHICS.DRAW_LINE(top_right.x, top_right.y, top_right.z, bottom_right.x, bottom_right.y, bottom_right.z,
+            colour.r, colour.g, colour.b, colour.a)
+        GRAPHICS.DRAW_LINE(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z, bottom_right_back.x,
+            bottom_right_back.y, bottom_right_back.z, colour.r, colour.g, colour.b, colour.a)
+        GRAPHICS.DRAW_LINE(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z, bottom_left.x, bottom_left.y,
+            bottom_left.z, colour.r, colour.g, colour.b, colour.a)
+        GRAPHICS.DRAW_LINE(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z, top_left_back.x, top_left_back.y,
+            top_left_back.z, colour.r, colour.g, colour.b, colour.a)
+        GRAPHICS.DRAW_LINE(top_left_back.x, top_left_back.y, top_left_back.z, top_right_back.x, top_right_back.y,
+            top_right_back.z, colour.r, colour.g, colour.b, colour.a)
+        GRAPHICS.DRAW_LINE(top_left_back.x, top_left_back.y, top_left_back.z, top_left.x, top_left.y, top_left.z,
+            colour.r, colour.g, colour.b, colour.a)
+        GRAPHICS.DRAW_LINE(bottom_right_back.x, bottom_right_back.y, bottom_right_back.z, top_right_back.x,
+            top_right_back.y, top_right_back.z, colour.r, colour.g, colour.b, colour.a)
+        GRAPHICS.DRAW_LINE(bottom_left.x, bottom_left.y, bottom_left.z, top_left.x, top_left.y, top_left.z, colour.r,
+            colour.g, colour.b, colour.a)
+        GRAPHICS.DRAW_LINE(bottom_left.x, bottom_left.y, bottom_left.z, bottom_right.x, bottom_right.y, bottom_right.z,
+            colour.r, colour.g, colour.b, colour.a)
+        GRAPHICS.DRAW_LINE(bottom_right_back.x, bottom_right_back.y, bottom_right_back.z, bottom_right.x,
+            bottom_right.y, bottom_right.z, colour.r, colour.g, colour.b, colour.a)
     end
     local numbers = {}
     local x_coord_ptr = memory.alloc(4)
     local y_coord_ptr = memory.alloc(4)
-    local draw_numbers = function ()
-        util.create_tick_handler(function() 
+    local draw_numbers = function()
+        util.create_tick_handler(function()
             local delta_time = MISC.GET_FRAME_TIME()
             for i, number in ipairs(numbers) do
-                if GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(number.pos.x, number.pos.y, number.pos.z, x_coord_ptr, y_coord_ptr) then
+                if GRAPHICS.GET_SCREEN_COORD_FROM_WORLD_COORD(number.pos.x, number.pos.y, number.pos.z, x_coord_ptr,
+                    y_coord_ptr) then
                     local x = memory.read_float(x_coord_ptr)
                     local y = memory.read_float(y_coord_ptr)
                     local alpha = math.min(1, number.time)
-                    directx.draw_text(x, y, number.num, ALIGN_CENTRE, number.size, {r = number.colour.r * alpha,g = number.colour.g * alpha,b = number.colour.b * alpha,a = number.colour.a * alpha}, false)
+                    directx.draw_text(x, y, number.num, ALIGN_CENTRE, number.size, {
+                        r = number.colour.r * alpha,
+                        g = number.colour.g * alpha,
+                        b = number.colour.b * alpha,
+                        a = number.colour.a * alpha
+                    }, false)
                     number.pos.z = number.pos.z + 0.2 * delta_time
                 end
                 number.time = number.time - delta_time
@@ -7416,8 +7282,12 @@ b_drawing_funcs.new = function ()
     local random_offset = 1
     self.draw_damage_number = function(entity, num, colour, size)
         pos = ENTITY.GET_ENTITY_COORDS(entity)
-        random_offset_pos = {x = pos.x + (math.random() * random_offset - random_offset * 0.5),y = pos.y + (math.random() * random_offset - random_offset * 0.5),z = pos.z}
-        numbers[#numbers+1] = {
+        random_offset_pos = {
+            x = pos.x + (math.random() * random_offset - random_offset * 0.5),
+            y = pos.y + (math.random() * random_offset - random_offset * 0.5),
+            z = pos.z
+        }
+        numbers[#numbers + 1] = {
             pos = random_offset_pos,
             colour = colour,
             num = num,
@@ -7428,65 +7298,72 @@ b_drawing_funcs.new = function ()
             draw_numbers()
         end
     end
-        --all credit to Nowiry#2663 for this one
-        self.draw_button_tip = function (buttons, duration, colour)
-            function equals(l1, l2)
-                if l1 == l2 then return true end
-                local type1 = type(l1)
-                local type2 = type(l2)
-                if type1 ~= type2 then return false end
-                if type1 ~= 'table' then return false end
-                for k, v in pairs(l1) do
-                    if not l2[ k ] or not equals(v, l2[ k ]) then
-                        return false
-                    end
-                end
+    -- all credit to Nowiry#2663 for this one
+    self.draw_button_tip = function(buttons, duration, colour)
+        function equals(l1, l2)
+            if l1 == l2 then
                 return true
             end
-            local timer = 0
-            util.create_tick_handler(function ()
-                local INSTRUCTIONAL = {}
+            local type1 = type(l1)
+            local type2 = type(l2)
+            if type1 ~= type2 then
+                return false
+            end
+            if type1 ~= 'table' then
+                return false
+            end
+            for k, v in pairs(l1) do
+                if not l2[k] or not equals(v, l2[k]) then
+                    return false
+                end
+            end
+            return true
+        end
+        local timer = 0
+        util.create_tick_handler(function()
+            local INSTRUCTIONAL = {}
             INSTRUCTIONAL.scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE('instructional_buttons')
             INSTRUCTIONAL.isKeyboard = PAD._IS_USING_KEYBOARD(2)
-        
+
             if not equals(buttons, INSTRUCTIONAL.currentsettup) or INSTRUCTIONAL.isKeyboard ~= PAD._IS_USING_KEYBOARD(2) then
                 local colour = colour or {
                     ['r'] = 0,
                     ['g'] = 0,
                     ['b'] = 0
                 }
-        
+
                 while not GRAPHICS.HAS_SCALEFORM_MOVIE_LOADED(INSTRUCTIONAL.scaleform) do
                     wait()
                 end
-                
+
                 GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(INSTRUCTIONAL.scaleform, 'CLEAR_ALL')
                 GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-        
+
                 GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(INSTRUCTIONAL.scaleform, 'TOGGLE_MOUSE_BUTTONS')
                 GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_BOOL(true)
                 GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-        
+
                 for i = 1, #buttons do
                     GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(INSTRUCTIONAL.scaleform, 'SET_DATA_SLOT')
-                    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT(i) --position
-                    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_PLAYER_NAME_STRING(PAD.GET_CONTROL_INSTRUCTIONAL_BUTTON(2, buttons[i][2], true)) --control
-                    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(buttons[i][1]) --name
-                    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_BOOL(buttons[i][3] or false) --clickable
-                    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT(buttons[i][2]) --what control will be pressed when you click the button
+                    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT(i) -- position
+                    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_PLAYER_NAME_STRING(
+                        PAD.GET_CONTROL_INSTRUCTIONAL_BUTTON(2, buttons[i][2], true)) -- control
+                    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING(buttons[i][1]) -- name
+                    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_BOOL(buttons[i][3] or false) -- clickable
+                    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT(buttons[i][2]) -- what control will be pressed when you click the button
                     GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
                 end
-        
+
                 GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(INSTRUCTIONAL.scaleform, 'SET_BACKGROUND_COLOUR')
                 GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT(colour.r)
                 GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT(colour.g)
                 GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT(colour.b)
                 GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT(80)
                 GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-        
+
                 GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(INSTRUCTIONAL.scaleform, 'DRAW_INSTRUCTIONAL_BUTTONS')
                 GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-        
+
                 INSTRUCTIONAL.currentsettup = buttons
                 INSTRUCTIONAL.isKeyboard = PAD._IS_USING_KEYBOARD(2)
             end
@@ -7496,15 +7373,15 @@ b_drawing_funcs.new = function ()
             end
             timer = timer + MISC.GET_FRAME_TIME()
             return true
-            end)
-        end
-        return self
+        end)
     end
+    return self
+end
 
 b_colour = {}
-b_colour.new = function ()
+b_colour.new = function()
     local self = {}
-    self.new = function (r, g, b, a)
+    self.new = function(r, g, b, a)
         return {
             r = r,
             g = g,
@@ -7512,19 +7389,49 @@ b_colour.new = function ()
             a = a
         }
     end
-    self.white =    {r = 255,g = 255,b = 255,a = 255}
+    self.white = {
+        r = 255,
+        g = 255,
+        b = 255,
+        a = 255
+    }
 
-    self.black =    {r = 0,g = 0,b = 0,a = 255}
+    self.black = {
+        r = 0,
+        g = 0,
+        b = 0,
+        a = 255
+    }
 
-    self.magenta =  {r = 255,g = 0,b = 255,a = 255}
+    self.magenta = {
+        r = 255,
+        g = 0,
+        b = 255,
+        a = 255
+    }
 
-    self.red =      {r = 255,g = 0,b = 0,a = 255}
+    self.red = {
+        r = 255,
+        g = 0,
+        b = 0,
+        a = 255
+    }
 
-    self.green =    {r = 0,g = 255,b = 0,a = 255}
+    self.green = {
+        r = 0,
+        g = 255,
+        b = 0,
+        a = 255
+    }
 
-    self.blue =     {r = 0,g = 0,b = 255,a = 255}
+    self.blue = {
+        r = 0,
+        g = 0,
+        b = 255,
+        a = 255
+    }
 
-    self.to_rage = function (colour)
+    self.to_rage = function(colour)
         return {
             r = math.floor(colour.r * 255),
             g = math.floor(colour.g * 255),
@@ -7532,7 +7439,7 @@ b_colour.new = function ()
             a = math.floor(colour.a * 255)
         }
     end
-    self.to_stand = function (colour)
+    self.to_stand = function(colour)
         return {
             r = colour.r / 255,
             g = colour.g / 255,
@@ -7555,7 +7462,7 @@ damage_numbers_bone_ptr = memory.alloc(4)
 damage_numbers_text_size = 0.700000
 damage_numbers_target_vehicles = damage_numbers_text_size
 function damage_numbers()
-   if PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(players.user(), damage_numbers_target_ptr) then
+    if PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(players.user(), damage_numbers_target_ptr) then
         local target = memory.read_int(damage_numbers_target_ptr)
         if ENTITY.IS_ENTITY_A_PED(target) then
             local vehicle = PED.GET_VEHICLE_PED_IS_IN(target, false)
@@ -7569,15 +7476,15 @@ function damage_numbers()
                     damage_numbers_tracked_entities[vehicle].timer = 1
                 end
             end
-                if damage_numbers_tracked_entities[target] == nil then
-                    damage_numbers_tracked_entities[target] = {
-                        health = math.max(0, ENTITY.GET_ENTITY_HEALTH(target) - 100),
-                        armour = PED.GET_PED_ARMOUR(target),
-                        timer = 1
-                    }
-                else
-                    damage_numbers_tracked_entities[target].timer = 1
-                end
+            if damage_numbers_tracked_entities[target] == nil then
+                damage_numbers_tracked_entities[target] = {
+                    health = math.max(0, ENTITY.GET_ENTITY_HEALTH(target) - 100),
+                    armour = PED.GET_PED_ARMOUR(target),
+                    timer = 1
+                }
+            else
+                damage_numbers_tracked_entities[target].timer = 1
+            end
         elseif ENTITY.IS_ENTITY_A_VEHICLE(target) and damage_numbers_target_vehicles then
             if damage_numbers_tracked_entities[target] == nil then
                 damage_numbers_tracked_entities[target] = {
@@ -7588,9 +7495,9 @@ function damage_numbers()
                 damage_numbers_tracked_entities[target].timer = 1
             end
         end
-   end
-   for entity, data in pairs(damage_numbers_tracked_entities) do
-        if  ENTITY.IS_ENTITY_A_PED(entity) then
+    end
+    for entity, data in pairs(damage_numbers_tracked_entities) do
+        if ENTITY.IS_ENTITY_A_PED(entity) then
             local current_health = math.max(0, ENTITY.GET_ENTITY_HEALTH(entity) - 100)
             local current_armour = PED.GET_PED_ARMOUR(entity)
             if ENTITY.HAS_ENTITY_BEEN_DAMAGED_BY_ENTITY(entity, PLAYER.PLAYER_PED_ID(), 1) then
@@ -7598,14 +7505,17 @@ function damage_numbers()
                     data.timer = 1
                     PED.GET_PED_LAST_DAMAGE_BONE(entity, damage_numbers_bone_ptr)
                     if memory.read_int(damage_numbers_bone_ptr) == 31086 then
-                        drawing_funcs.draw_damage_number(entity, data.health - current_health, damage_numbers_crit_colour, damage_numbers_text_size)
+                        drawing_funcs.draw_damage_number(entity, data.health - current_health,
+                            damage_numbers_crit_colour, damage_numbers_text_size)
                     else
-                        drawing_funcs.draw_damage_number(entity, data.health - current_health, damage_numbers_health_colour, damage_numbers_text_size)
+                        drawing_funcs.draw_damage_number(entity, data.health - current_health,
+                            damage_numbers_health_colour, damage_numbers_text_size)
                     end
                 end
                 if current_armour < data.armour then
                     data.timer = 1
-                    drawing_funcs.draw_damage_number(entity, data.armour - current_armour, damage_numbers_armour_colour, damage_numbers_text_size)
+                    drawing_funcs.draw_damage_number(entity, data.armour - current_armour, damage_numbers_armour_colour,
+                        damage_numbers_text_size)
                 end
             end
             data.timer = data.timer - MISC.GET_FRAME_TIME()
@@ -7619,7 +7529,8 @@ function damage_numbers()
             if ENTITY.HAS_ENTITY_BEEN_DAMAGED_BY_ENTITY(entity, PLAYER.PLAYER_PED_ID(), 1) then
                 if current_health < data.health then
                     data.timer = 1
-                    drawing_funcs.draw_damage_number(entity, data.health - current_health, damage_numbers_vehicle_colour, damage_numbers_text_size)
+                    drawing_funcs.draw_damage_number(entity, data.health - current_health,
+                        damage_numbers_vehicle_colour, damage_numbers_text_size)
                 end
             end
             data.timer = data.timer - MISC.GET_FRAME_TIME()
@@ -7763,854 +7674,854 @@ function set_carvis(index)
     selectedOpt = index
 end
 
---封号斗罗
+-- 封号斗罗
 function kongzhihk(toggle)
     local radius = 0.3
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.97, c.x + x2, c.y + y2, c.z-0.95, 255, 255, 255, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.97, c.x + x2, c.y + y2, c.z - 0.95, 255, 255, 255, 255)
     end
-    end
-    
-    function kongzhiha(toggle)
+end
+
+function kongzhiha(toggle)
     local radius = 0.31
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.97, c.x + x2, c.y + y2, c.z-0.97, 255, 255, 255, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.97, c.x + x2, c.y + y2, c.z - 0.97, 255, 255, 255, 255)
     end
-    end
-    
-    function kongzhihb(toggle)
+end
+
+function kongzhihb(toggle)
     local radius = 0.32
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.97, c.x + x2, c.y + y2, c.z-0.97, 255, 255, 255, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.97, c.x + x2, c.y + y2, c.z - 0.97, 255, 255, 255, 255)
     end
-    end
-    
-    function kongzhihc(toggle)
+end
+
+function kongzhihc(toggle)
     local radius = 0.33
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.97, c.x + x2, c.y + y2, c.z-0.97, 255, 255, 255, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.97, c.x + x2, c.y + y2, c.z - 0.97, 255, 255, 255, 255)
     end
-    end
-    
-    function kongzhihd(toggle)
+end
+
+function kongzhihd(toggle)
     local radius = 0.34
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.97, c.x + x2, c.y + y2, c.z-0.97, 255, 255, 255, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.97, c.x + x2, c.y + y2, c.z - 0.97, 255, 255, 255, 255)
     end
-    end
-    
-    function hunhuan(toggle)
+end
+
+function hunhuan(toggle)
     kongzhihk()
     kongzhiha()
     kongzhihb()
     kongzhihc()
     kongzhihd()
-    end
-    
-    function kongzhikk(toggle)
+end
+
+function kongzhikk(toggle)
     local radius = 0.5
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.95, c.x + x2, c.y + y2, c.z-0.95, 255, 255, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.95, c.x + x2, c.y + y2, c.z - 0.95, 255, 255, 0, 255)
     end
-    end
-    
-    function kongzhika(toggle)
+end
+
+function kongzhika(toggle)
     local radius = 0.51
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.95, c.x + x2, c.y + y2, c.z-0.95, 255, 255, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.95, c.x + x2, c.y + y2, c.z - 0.95, 255, 255, 0, 255)
     end
-    end
-    
-    function kongzhikb(toggle)
+end
+
+function kongzhikb(toggle)
     local radius = 0.52
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.95, c.x + x2, c.y + y2, c.z-0.95, 255, 255, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.95, c.x + x2, c.y + y2, c.z - 0.95, 255, 255, 0, 255)
     end
-    end
-    
-    function kongzhikc(toggle)
+end
+
+function kongzhikc(toggle)
     local radius = 0.53
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.95, c.x + x2, c.y + y2, c.z-0.95, 255, 255, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.95, c.x + x2, c.y + y2, c.z - 0.95, 255, 255, 0, 255)
     end
-    end
-    
-    function kongzhikd(toggle)
+end
+
+function kongzhikd(toggle)
     local radius = 0.54
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.95, c.x + x2, c.y + y2, c.z-0.95, 255, 255, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.95, c.x + x2, c.y + y2, c.z - 0.95, 255, 255, 0, 255)
     end
-    end
-    
-    function hunhuan1(toggle)
+end
+
+function hunhuan1(toggle)
     kongzhikk()
     kongzhika()
     kongzhikb()
     kongzhikc()
     kongzhikd()
-    end
-    
-    function kongzhiak(toggle)
+end
+
+function kongzhiak(toggle)
     local radius = 0.7
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.90, c.x + x2, c.y + y2, c.z-0.90, 150, 50, 200, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.90, c.x + x2, c.y + y2, c.z - 0.90, 150, 50, 200, 255)
     end
-    end
-    
-    function kongzhiba(toggle)
+end
+
+function kongzhiba(toggle)
     local radius = 0.71
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.90, c.x + x2, c.y + y2, c.z-0.90, 150, 50, 200, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.90, c.x + x2, c.y + y2, c.z - 0.90, 150, 50, 200, 255)
     end
-    end
-    
-    function kongzhicb(toggle)
+end
+
+function kongzhicb(toggle)
     local radius = 0.72
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.90, c.x + x2, c.y + y2, c.z-0.90, 150, 50, 200, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.90, c.x + x2, c.y + y2, c.z - 0.90, 150, 50, 200, 255)
     end
-    end
-    
-    function kongzhidc(toggle)
+end
+
+function kongzhidc(toggle)
     local radius = 0.73
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.90, c.x + x2, c.y + y2, c.z-0.90, 150, 50, 200, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.90, c.x + x2, c.y + y2, c.z - 0.90, 150, 50, 200, 255)
     end
-    end
-    
-    function kongzhied(toggle)
+end
+
+function kongzhied(toggle)
     local radius = 0.74
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.90, c.x + x2, c.y + y2, c.z-0.90, 150, 50, 200, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.90, c.x + x2, c.y + y2, c.z - 0.90, 150, 50, 200, 255)
     end
-    end
-    
-    function hunhuan2(toggle)
+end
+
+function hunhuan2(toggle)
     kongzhiak()
     kongzhiba()
     kongzhicb()
     kongzhidc()
     kongzhied()
-    end
-    
-    function kongzhiaa(toggle)
+end
+
+function kongzhiaa(toggle)
     local radius = 0.9
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.8, c.x + x2, c.y + y2, c.z-0.8, 0, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.8, c.x + x2, c.y + y2, c.z - 0.8, 0, 0, 0, 255)
     end
-    end
-    
-    function kongzhibb(toggle)
+end
+
+function kongzhibb(toggle)
     local radius = 0.91
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.8, c.x + x2, c.y + y2, c.z-0.8, 0, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.8, c.x + x2, c.y + y2, c.z - 0.8, 0, 0, 0, 255)
     end
-    end
-    
-    function kongzhicc(toggle)
+end
+
+function kongzhicc(toggle)
     local radius = 0.92
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.8, c.x + x2, c.y + y2, c.z-0.8, 0, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.8, c.x + x2, c.y + y2, c.z - 0.8, 0, 0, 0, 255)
     end
-    end
-    
-    function kongzhidd(toggle)
+end
+
+function kongzhidd(toggle)
     local radius = 0.93
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.8, c.x + x2, c.y + y2, c.z-0.8, 0, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.8, c.x + x2, c.y + y2, c.z - 0.8, 0, 0, 0, 255)
     end
-    end
-    
-    function kongzhiee(toggle)
+end
+
+function kongzhiee(toggle)
     local radius = 0.94
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.8, c.x + x2, c.y + y2, c.z-0.8, 0, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.8, c.x + x2, c.y + y2, c.z - 0.8, 0, 0, 0, 255)
     end
-    end
-    
-    function hunhuan3(toggle)
+end
+
+function hunhuan3(toggle)
     kongzhiaa()
     kongzhibb()
     kongzhicc()
     kongzhidd()
     kongzhiee()
-    end
-    
-    function honga(toggle)
+end
+
+function honga(toggle)
     local radius = 1.2
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.7, c.x + x2, c.y + y2, c.z-0.7, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.7, c.x + x2, c.y + y2, c.z - 0.7, 255, 0, 0, 255)
     end
-    end
-    
-    function hongb(toggle)
+end
+
+function hongb(toggle)
     local radius = 1.21
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.7, c.x + x2, c.y + y2, c.z-0.7, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.7, c.x + x2, c.y + y2, c.z - 0.7, 255, 0, 0, 255)
     end
-    end
-    
-    function hongc(toggle)
+end
+
+function hongc(toggle)
     local radius = 1.22
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.7, c.x + x2, c.y + y2, c.z-0.7, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.7, c.x + x2, c.y + y2, c.z - 0.7, 255, 0, 0, 255)
     end
-    end
-    
-    function hongd(toggle)
+end
+
+function hongd(toggle)
     local radius = 1.23
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.7, c.x + x2, c.y + y2, c.z-0.7, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.7, c.x + x2, c.y + y2, c.z - 0.7, 255, 0, 0, 255)
     end
-    end
-    
-    function honge(toggle)
+end
+
+function honge(toggle)
     local radius = 1.24
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.7, c.x + x2, c.y + y2, c.z-0.7, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.7, c.x + x2, c.y + y2, c.z - 0.7, 255, 0, 0, 255)
     end
-    end
-    
-    function hunhuan4(toggle)
+end
+
+function hunhuan4(toggle)
     honga()
     hongb()
     hongc()
     hongd()
     honge()
-    end
-    
-    function hongaa(toggle)
+end
+
+function hongaa(toggle)
     local radius = 1.5
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.5, c.x + x2, c.y + y2, c.z-0.5, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.5, c.x + x2, c.y + y2, c.z - 0.5, 255, 0, 0, 255)
     end
-    end
-    
-    function hongbb(toggle)
+end
+
+function hongbb(toggle)
     local radius = 1.51
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.5, c.x + x2, c.y + y2, c.z-0.5, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.5, c.x + x2, c.y + y2, c.z - 0.5, 255, 0, 0, 255)
     end
-    end
-    
-    function hongcc(toggle)
+end
+
+function hongcc(toggle)
     local radius = 1.52
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.5, c.x + x2, c.y + y2, c.z-0.5, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.5, c.x + x2, c.y + y2, c.z - 0.5, 255, 0, 0, 255)
     end
-    end
-    
-    function hongdd(toggle)
+end
+
+function hongdd(toggle)
     local radius = 1.53
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.5, c.x + x2, c.y + y2, c.z-0.5, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.5, c.x + x2, c.y + y2, c.z - 0.5, 255, 0, 0, 255)
     end
-    end
-    
-    function hongee(toggle)
+end
+
+function hongee(toggle)
     local radius = 1.54
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.5, c.x + x2, c.y + y2, c.z-0.5, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.5, c.x + x2, c.y + y2, c.z - 0.5, 255, 0, 0, 255)
     end
-    end
-    
-    function hunhuan5(toggle)
+end
+
+function hunhuan5(toggle)
     hongaa()
     hongbb()
     hongcc()
     hongdd()
     hongee()
-    end
-    
-    function hongaaa(toggle)
+end
+
+function hongaaa(toggle)
     local radius = 1.7
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.3, c.x + x2, c.y + y2, c.z-0.3, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.3, c.x + x2, c.y + y2, c.z - 0.3, 255, 0, 0, 255)
     end
-    end
-    
-    function hongbbb(toggle)
+end
+
+function hongbbb(toggle)
     local radius = 1.71
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.3, c.x + x2, c.y + y2, c.z-0.3, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.3, c.x + x2, c.y + y2, c.z - 0.3, 255, 0, 0, 255)
     end
-    end
-    
-    function hongccc(toggle)
+end
+
+function hongccc(toggle)
     local radius = 1.72
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.3, c.x + x2, c.y + y2, c.z-0.3, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.3, c.x + x2, c.y + y2, c.z - 0.3, 255, 0, 0, 255)
     end
-    end
-    
-    function hongddd(toggle)
+end
+
+function hongddd(toggle)
     local radius = 1.73
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.3, c.x + x2, c.y + y2, c.z-0.3, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.3, c.x + x2, c.y + y2, c.z - 0.3, 255, 0, 0, 255)
     end
-    end
-    
-    function hongeee(toggle)
+end
+
+function hongeee(toggle)
     local radius = 1.74
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.3, c.x + x2, c.y + y2, c.z-0.3, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.3, c.x + x2, c.y + y2, c.z - 0.3, 255, 0, 0, 255)
     end
-    end
-    
-    function hunhuan6(toggle)
+end
+
+function hunhuan6(toggle)
     hongaaa()
     hongbbb()
     hongccc()
     hongddd()
     hongeee()
-    end
-    
-    function hongaaaa(toggle)
+end
+
+function hongaaaa(toggle)
     local radius = 1.9
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.1, c.x + x2, c.y + y2, c.z-0.1, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.1, c.x + x2, c.y + y2, c.z - 0.1, 255, 0, 0, 255)
     end
-    end
-    
-    function hongbbbb(toggle)
+end
+
+function hongbbbb(toggle)
     local radius = 1.91
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.1, c.x + x2, c.y + y2, c.z-0.1, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.1, c.x + x2, c.y + y2, c.z - 0.1, 255, 0, 0, 255)
     end
-    end
-    
-    function hongcccc(toggle)
+end
+
+function hongcccc(toggle)
     local radius = 1.92
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.1, c.x + x2, c.y + y2, c.z-0.1, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.1, c.x + x2, c.y + y2, c.z - 0.1, 255, 0, 0, 255)
     end
-    end
-    
-    function hongdddd(toggle)
+end
+
+function hongdddd(toggle)
     local radius = 1.93
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.1, c.x + x2, c.y + y2, c.z-0.1, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.1, c.x + x2, c.y + y2, c.z - 0.1, 255, 0, 0, 255)
     end
-    end
-    
-    function hongeeee(toggle)
+end
+
+function hongeeee(toggle)
     local radius = 1.94
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
+        local angle1 = math.rad((i - 1) * segmentAngle)
         local angle2 = math.rad(i * segmentAngle)
         local x1 = radius * math.cos(angle1)
         local y1 = radius * math.sin(angle1)
         local x2 = radius * math.cos(angle2)
         local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z-0.1, c.x + x2, c.y + y2, c.z-0.1, 255, 0, 0, 255)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z - 0.1, c.x + x2, c.y + y2, c.z - 0.1, 255, 0, 0, 255)
     end
-    end
-    
-    function hunhuan7(toggle)
+end
+
+function hunhuan7(toggle)
     hongaaaa()
     hongbbbb()
     hongcccc()
     hongdddd()
     hongeeee()
-    end
-    
-    function hongaaaaa(toggle)
-    local radius = 2.2
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
-    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
-    for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
-        local angle2 = math.rad(i * segmentAngle)
-        local x1 = radius * math.cos(angle1)
-        local y1 = radius * math.sin(angle1)
-        local x2 = radius * math.cos(angle2)
-        local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z+0.1, c.x + x2, c.y + y2, c.z+0.1, 255, 0, 0, 255)
-    end
-    end
-    
-    function hongbbbbb(toggle)
-    local radius = 2.21
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
-    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
-    for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
-        local angle2 = math.rad(i * segmentAngle)
-        local x1 = radius * math.cos(angle1)
-        local y1 = radius * math.sin(angle1)
-        local x2 = radius * math.cos(angle2)
-        local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z+0.1, c.x + x2, c.y + y2, c.z+0.1, 255, 0, 0, 255)
-    end
-    end
-    
-    function hongccccc(toggle)
-    local radius = 2.22
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
-    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
-    for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
-        local angle2 = math.rad(i * segmentAngle)
-        local x1 = radius * math.cos(angle1)
-        local y1 = radius * math.sin(angle1)
-        local x2 = radius * math.cos(angle2)
-        local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z+0.1, c.x + x2, c.y + y2, c.z+0.1, 255, 0, 0, 255)
-    end
-    end
-    
-    function hongddddd(toggle)
-    local radius = 2.23
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
-    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
-    for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
-        local angle2 = math.rad(i * segmentAngle)
-        local x1 = radius * math.cos(angle1)
-        local y1 = radius * math.sin(angle1)
-        local x2 = radius * math.cos(angle2)
-        local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z+0.1, c.x + x2, c.y + y2, c.z+0.1, 255, 0, 0, 255)
-    end
-    end
-    
-    function hongeeeee(toggle)
-    local radius = 2.24
-    local numSegments = 100 
-    local segmentAngle = 360 / numSegments 
-    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
-    for i = 1, numSegments do
-        local angle1 = math.rad((i-1) * segmentAngle)
-        local angle2 = math.rad(i * segmentAngle)
-        local x1 = radius * math.cos(angle1)
-        local y1 = radius * math.sin(angle1)
-        local x2 = radius * math.cos(angle2)
-        local y2 = radius * math.sin(angle2)
-        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z+0.1, c.x + x2, c.y + y2, c.z+0.1, 255, 0, 0, 255)
-    end
-    end
-    
-function hunhuan8(toggle)
-hongaaaaa()
-hongbbbbb()
-hongccccc()
-hongddddd()
-hongeeeee()
 end
---FUCK YOU
+
+function hongaaaaa(toggle)
+    local radius = 2.2
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i - 1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z + 0.1, c.x + x2, c.y + y2, c.z + 0.1, 255, 0, 0, 255)
+    end
+end
+
+function hongbbbbb(toggle)
+    local radius = 2.21
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i - 1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z + 0.1, c.x + x2, c.y + y2, c.z + 0.1, 255, 0, 0, 255)
+    end
+end
+
+function hongccccc(toggle)
+    local radius = 2.22
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i - 1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z + 0.1, c.x + x2, c.y + y2, c.z + 0.1, 255, 0, 0, 255)
+    end
+end
+
+function hongddddd(toggle)
+    local radius = 2.23
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i - 1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z + 0.1, c.x + x2, c.y + y2, c.z + 0.1, 255, 0, 0, 255)
+    end
+end
+
+function hongeeeee(toggle)
+    local radius = 2.24
+    local numSegments = 100
+    local segmentAngle = 360 / numSegments
+    local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    for i = 1, numSegments do
+        local angle1 = math.rad((i - 1) * segmentAngle)
+        local angle2 = math.rad(i * segmentAngle)
+        local x1 = radius * math.cos(angle1)
+        local y1 = radius * math.sin(angle1)
+        local x2 = radius * math.cos(angle2)
+        local y2 = radius * math.sin(angle2)
+        GRAPHICS.DRAW_LINE(c.x + x1, c.y + y1, c.z + 0.1, c.x + x2, c.y + y2, c.z + 0.1, 255, 0, 0, 255)
+    end
+end
+
+function hunhuan8(toggle)
+    hongaaaaa()
+    hongbbbbb()
+    hongccccc()
+    hongddddd()
+    hongeeeee()
+end
+-- FUCK YOU
 speed = 6
-function do_vehicle_fly() 
+function do_vehicle_fly()
     veh = PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false);
     cam_pos = CAM.GET_GAMEPLAY_CAM_ROT(0);
     ENTITY.SET_ENTITY_ROTATION(veh, cam_pos.x, cam_pos.y, cam_pos.z, 1, TRUE);
     ENTITY.SET_ENTITY_COLLISION(veh, not no_collision, TRUE);
-    
-    local locspeed = speed*10
+
+    local locspeed = speed * 10
     local locspeed2 = speed
-    if PAD.IS_CONTROL_PRESSED(0, 61) then 
-        locspeed = locspeed*2
-        locspeed2 = locspeed2*2
+    if PAD.IS_CONTROL_PRESSED(0, 61) then
+        locspeed = locspeed * 2
+        locspeed2 = locspeed2 * 2
     end
-    
+
     if PAD.IS_CONTROL_PRESSED(2, 71) then
         if dont_stop then
             ENTITY.APPLY_FORCE_TO_ENTITY(veh, 1, 0.0, speed, 0.0, 0.0, 0.0, 0.0, 0, 1, 1, 1, 0, 1)
-        else 
+        else
             VEHICLE.SET_VEHICLE_FORWARD_SPEED(veh, locspeed)
         end
-	end
+    end
     if PAD.IS_CONTROL_PRESSED(2, 72) then
-		local lsp = speed
-        if not PAD.IS_CONTROL_PRESSED(0, 61) then 
+        local lsp = speed
+        if not PAD.IS_CONTROL_PRESSED(0, 61) then
             lsp = speed * 2
         end
         if dont_stop then
             ENTITY.APPLY_FORCE_TO_ENTITY(veh, 1, 0.0, 0 - (lsp), 0.0, 0.0, 0.0, 0.0, 0, 1, 1, 1, 0, 1)
-        else 
+        else
             VEHICLE.SET_VEHICLE_FORWARD_SPEED(veh, 0 - (locspeed));
         end
-   end
+    end
     if PAD.IS_CONTROL_PRESSED(2, 63) then
-        local lsp = (0 - speed)*2
-        if not PAD.IS_CONTROL_PRESSED(0, 61) then 
+        local lsp = (0 - speed) * 2
+        if not PAD.IS_CONTROL_PRESSED(0, 61) then
             lsp = 0 - speed
         end
         if dont_stop then
             ENTITY.APPLY_FORCE_TO_ENTITY(veh, 1, (lsp), 0.0, 0.0, 0.0, 0.0, 0.0, 0, 1, 1, 1, 0, 1)
-        else 
+        else
             ENTITY.APPLY_FORCE_TO_ENTITY(veh, 1, 0 - (locspeed), 0.0, 0.0, 0.0, 0.0, 0.0, 0, 1, 1, 1, 0, 1);
         end
-	end
+    end
     if PAD.IS_CONTROL_PRESSED(2, 64) then
         local lsp = speed
-        if not PAD.IS_CONTROL_PRESSED(0, 61) then 
-            lsp = speed*2
+        if not PAD.IS_CONTROL_PRESSED(0, 61) then
+            lsp = speed * 2
         end
         if dont_stop then
             ENTITY.APPLY_FORCE_TO_ENTITY(veh, 1, lsp, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 1, 1, 1, 0, 1)
-        else 
+        else
             ENTITY.APPLY_FORCE_TO_ENTITY(veh, 1, locspeed, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 1, 1, 1, 0, 1)
         end
     end
-	if not dont_stop and not PAD.IS_CONTROL_PRESSED(2, 71) and not PAD.IS_CONTROL_PRESSED(2, 72) then
+    if not dont_stop and not PAD.IS_CONTROL_PRESSED(2, 71) and not PAD.IS_CONTROL_PRESSED(2, 72) then
         VEHICLE.SET_VEHICLE_FORWARD_SPEED(veh, 0.0);
     end
 end
@@ -8733,51 +8644,49 @@ function compasstick()--指南针
     end
 end
 
-function paotai(pt)--个人炮台
-    isOnPed = pt model_hash = 0x61D4C771
+function paotai(pt) -- 个人炮台
+    isOnPed = pt
+    model_hash = 0x61D4C771
     local playerCoords = players.get_position(players.user())
-        if isOnPed then
-            STREAMING.REQUEST_MODEL(model_hash)
-                while not STREAMING.HAS_MODEL_LOADED(model_hash) do
+    if isOnPed then
+        STREAMING.REQUEST_MODEL(model_hash)
+        while not STREAMING.HAS_MODEL_LOADED(model_hash) do
             wait(50)
         end
-    closestPed = PED.CREATE_PED(26, model_hash, 
-    playerCoords.x, playerCoords.y, playerCoords.z, 0, true, true)
+        closestPed = PED.CREATE_PED(26, model_hash, playerCoords.x, playerCoords.y, playerCoords.z, 0, true, true)
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(closestPed, 1119849093, 99000, false)
-        WEAPON._SET_WEAPON_DAMAGE_MODIFIER_THIS_FRAME(1119849093,9999999999)
+        WEAPON._SET_WEAPON_DAMAGE_MODIFIER_THIS_FRAME(1119849093, 9999999999)
         local currentWpMem = memory.alloc()
         local junk = WEAPON.GET_CURRENT_PED_WEAPON(closestPed, currentWpMem, 1)
         local currentWP = memory.read_int(currentWpMem)
         memory.free(currentWpMem)
-            WEAPON.SET_CURRENT_PED_WEAPON(closestPed, 1119849093, true)
-                wait(1)
-            WEAPON.SET_CURRENT_PED_WEAPON(closestPed, currentWP, true)
+        WEAPON.SET_CURRENT_PED_WEAPON(closestPed, 1119849093, true)
+        wait(1)
+        WEAPON.SET_CURRENT_PED_WEAPON(closestPed, currentWP, true)
         ENTITY.SET_ENTITY_INVINCIBLE(closestPed, true)
-    local group_id = PED.GET_PED_GROUP_INDEX(players.user_ped())
+        local group_id = PED.GET_PED_GROUP_INDEX(players.user_ped())
         PED.SET_PED_AS_GROUP_MEMBER(closestPed, group_id)
-            PED.SET_PED_ACCURACY(closestPed, 90)
-                    ENTITY.ATTACH_ENTITY_TO_ENTITY(closestPed, players.user_ped(), 
-                PED.GET_PED_BONE_INDEX(players.user_ped(), 0x6b52),
-                    0, -0.25, 1.95, 0, 0, 0, true, true, true, true, 2, true)
-                    STREAMING.REQUEST_ANIM_DICT(
-                    "weapons@first_person@aim_idle@p_m_zero@heavy@minigun@aim_trans@idle_to_rng")
-                    TASK.TASK_PLAY_ANIM(closestPed,
-                    "weapons@first_person@aim_idle@p_m_zero@heavy@minigun@aim_trans@idle_to_rng", 
-                    "aim_trans_med", 1000.0, -1.5, -1,1, 0.445, false,false,false)
-                PED.REGISTER_HATED_TARGETS_AROUND_PED(closestPed, 1000)
-            PED.SET_PED_ALLOWED_TO_DUCK(closestPed,false)
+        PED.SET_PED_ACCURACY(closestPed, 90)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(closestPed, players.user_ped(),
+            PED.GET_PED_BONE_INDEX(players.user_ped(), 0x6b52), 0, -0.25, 1.95, 0, 0, 0, true, true, true, true, 2, true)
+        STREAMING.REQUEST_ANIM_DICT("weapons@first_person@aim_idle@p_m_zero@heavy@minigun@aim_trans@idle_to_rng")
+        TASK.TASK_PLAY_ANIM(closestPed, "weapons@first_person@aim_idle@p_m_zero@heavy@minigun@aim_trans@idle_to_rng",
+            "aim_trans_med", 1000.0, -1.5, -1, 1, 0.445, false, false, false)
+        PED.REGISTER_HATED_TARGETS_AROUND_PED(closestPed, 1000)
+        PED.SET_PED_ALLOWED_TO_DUCK(closestPed, false)
         PED.SET_PED_ALERTNESS(closestPed, 100)
-    PED.SET_PED_COMBAT_RANGE(closestPed, 1000)
-    local firepattern = util.joaat("FIRING_PATTERN_FULL_AUTO")
+        PED.SET_PED_COMBAT_RANGE(closestPed, 1000)
+        local firepattern = util.joaat("FIRING_PATTERN_FULL_AUTO")
         PED.SET_PED_FIRING_PATTERN(closestPed, firepattern)
-            PED.SET_PED_RAGDOLL_ON_COLLISION(closestPed,false)
-               PED.SET_PED_CAN_RAGDOLL(closestPed,false)
+        PED.SET_PED_RAGDOLL_ON_COLLISION(closestPed, false)
+        PED.SET_PED_CAN_RAGDOLL(closestPed, false)
         PED.SET_PED_COMBAT_MOVEMENT(closestPed, 0)
-    ENTITY.SET_ENTITY_COLLISION(closestPed, false,false)
-        else
+        ENTITY.SET_ENTITY_COLLISION(closestPed, false, false)
+    else
         entities.delete_by_handle(closestPed)
     end
 end
+
 
 function renderer_triangle(v2_A, v2_B, v2_C, clr)
 	clr.a = 0.15
@@ -13036,37 +12945,44 @@ JS_tbls = {}
     }
 
 local expSettings = {
-    camShake = 0, invisible = false, audible = true, noDamage = false, owned = false, blamed = false, blamedPlayer = false, expType = 0,
-    --stuff for fx explosions
+    camShake = 0,
+    invisible = false,
+    audible = true,
+    noDamage = false,
+    owned = false,
+    blamed = false,
+    blamedPlayer = false,
+    expType = 0,
+    -- stuff for fx explosions
     currentFx = JS_tbls.effects['Clown_Explosion'],
-    colour = new.colour( 255, 0, 255 )
+    colour = new.colour(255, 0, 255)
 }
 
 function explodePlayer(ped, loop, expSettings)
     pos = ENTITY.GET_ENTITY_COORDS(ped)
-   --if any blame is enabled this decides who should be blamed
+    -- if any blame is enabled this decides who should be blamed
     blamedPlayer = PLAYER.PLAYER_PED_ID()
-   if expSettings.blamedPlayer and expSettings.blamed then
-       blamedPlayer = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(expSettings.blamedPlayer)
-   elseif expSettings.blamed then
+    if expSettings.blamedPlayer and expSettings.blamed then
+        blamedPlayer = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(expSettings.blamedPlayer)
+    elseif expSettings.blamed then
         playerList = players.list(true, true, true)
-       blamedPlayer = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(playerList[math.random(1, #playerList)])
-   end
-   if not loop and PED.IS_PED_IN_ANY_VEHICLE(ped, true) then
-       for i = 0, 50, 1 do --50 explosions to account for most armored vehicles
-           if expSettings.owned or expSettings.blamed then
-               ownedExplosion(blamedPlayer, pos, expSettings)
-           else
-               explosion(pos, expSettings)
-           end
-           wait(10)
-       end
-   elseif expSettings.owned or expSettings.blamed then
-       ownedExplosion(blamedPlayer, pos, expSettings)
-   else
-       explosion(pos, expSettings)
-   end
-   wait(10)
+        blamedPlayer = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(playerList[math.random(1, #playerList)])
+    end
+    if not loop and PED.IS_PED_IN_ANY_VEHICLE(ped, true) then
+        for i = 0, 50, 1 do -- 50 explosions to account for most armored vehicles
+            if expSettings.owned or expSettings.blamed then
+                ownedExplosion(blamedPlayer, pos, expSettings)
+            else
+                explosion(pos, expSettings)
+            end
+            wait(10)
+        end
+    elseif expSettings.owned or expSettings.blamed then
+        ownedExplosion(blamedPlayer, pos, expSettings)
+    else
+        explosion(pos, expSettings)
+    end
+    wait(10)
 end
 
 function getTotalDelay(delayTable)
@@ -13077,7 +12993,8 @@ function bulletaimkarma()
     local userPed = players.user_ped()
     if isAnyPlayerTargetingEntity(userPed) and karma[userPed] then
         local pos = ENTITY.GET_ENTITY_COORDS(karma[userPed].ped)
-        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z, pos.x, pos.y, pos.z + 0.1, 100, true, 100416529, userPed, true, false, 100.0)
+        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z, pos.x, pos.y, pos.z + 0.1, 100, true, 100416529,
+            userPed, true, false, 100.0)
         wait(getTotalDelay(expLoopDelay))
     end
 end
@@ -13097,56 +13014,64 @@ function godaimkarma()
     end
 end
 
-
-
-
-
-
 function fangkongjingbao()
     local pos, exp_pos = v3(), v3()
-    local Audio_POS = {v3(-73.31681060791,-820.26013183594,326.17517089844),v3(2784.536,5994.213,354.275),v3(-983.292,-2636.995,89.524),v3(1747.518,4814.711,41.666),v3(1625.209,-76.936,166.651),v3(751.179,1245.13,353.832),v3(-1644.193,-1114.271,13.029),v3(462.795,5602.036,781.400),v3(-125.284,6204.561,40.164),v3(2099.765,1766.219,102.698)}
-    
+    local Audio_POS = {v3(-73.31681060791, -820.26013183594, 326.17517089844), v3(2784.536, 5994.213, 354.275),
+                       v3(-983.292, -2636.995, 89.524), v3(1747.518, 4814.711, 41.666), v3(1625.209, -76.936, 166.651),
+                       v3(751.179, 1245.13, 353.832), v3(-1644.193, -1114.271, 13.029), v3(462.795, 5602.036, 781.400),
+                       v3(-125.284, 6204.561, 40.164), v3(2099.765, 1766.219, 102.698)}
+
     for i = 1, #Audio_POS do
- 
-    AUDIO.PLAY_SOUND_FROM_COORD(-1, "Air_Defences_Activated", Audio_POS[i].x, Audio_POS[i].y, Audio_POS[i].z, "DLC_sum20_Business_Battle_AC_Sounds", true, 999999999, true)
-    pos.z = 2000.00
-    
-    AUDIO.PLAY_SOUND_FROM_COORD(-1, "Air_Defences_Activated", Audio_POS[i].x, Audio_POS[i].y, Audio_POS[i].z, "DLC_sum20_Business_Battle_AC_Sounds", true, 999999999, true)
+
+        AUDIO.PLAY_SOUND_FROM_COORD(-1, "Air_Defences_Activated", Audio_POS[i].x, Audio_POS[i].y, Audio_POS[i].z,
+            "DLC_sum20_Business_Battle_AC_Sounds", true, 999999999, true)
+        pos.z = 2000.00
+
+        AUDIO.PLAY_SOUND_FROM_COORD(-1, "Air_Defences_Activated", Audio_POS[i].x, Audio_POS[i].y, Audio_POS[i].z,
+            "DLC_sum20_Business_Battle_AC_Sounds", true, 999999999, true)
         pos.z = -2000.00
-    
-    AUDIO.PLAY_SOUND_FROM_COORD(-1, "Air_Defences_Activated", Audio_POS[i].x, Audio_POS[i].y, Audio_POS[i].z, "DLC_sum20_Business_Battle_AC_Sounds", true, 999999999, true)
-    
-    for pid = 0, 31 do
-        local pos =	NETWORK._NETWORK_GET_PLAYER_COORDS(pid)
-        AUDIO.PLAY_SOUND_FROM_COORD(-1, "Air_Defences_Activated", pos.x, pos.y, pos.z, "DLC_sum20_Business_Battle_AC_Sounds", true, 999999999, true)
+
+        AUDIO.PLAY_SOUND_FROM_COORD(-1, "Air_Defences_Activated", Audio_POS[i].x, Audio_POS[i].y, Audio_POS[i].z,
+            "DLC_sum20_Business_Battle_AC_Sounds", true, 999999999, true)
+
+        for pid = 0, 31 do
+            local pos = NETWORK._NETWORK_GET_PLAYER_COORDS(pid)
+            AUDIO.PLAY_SOUND_FROM_COORD(-1, "Air_Defences_Activated", pos.x, pos.y, pos.z,
+                "DLC_sum20_Business_Battle_AC_Sounds", true, 999999999, true)
         end
     end
 end
 
---噪音
-function zaoyin()		
-    --{"Bed", "WastedSounds"}
-        local pos = v3()
-        local Audio_POS = {v3(-73.31681060791,-820.26013183594,326.17517089844),v3(2784.536,5994.213,354.275),v3(-983.292,-2636.995,89.524),v3(1747.518,4814.711,41.666),v3(1625.209,-76.936,166.651),v3(751.179,1245.13,353.832),v3(-1644.193,-1114.271,13.029),v3(462.795,5602.036,781.400),v3(-125.284,6204.561,40.164),v3(2099.765,1766.219,102.698)}
-    
-        for i = 1, #Audio_POS do
-    
-            AUDIO.PLAY_SOUND_FROM_COORD(-1, "Bed", Audio_POS[i].x, Audio_POS[i].y, Audio_POS[i].z, "WastedSounds", true, 999999999, true)
-            pos.z = 2000.00
-        
-            AUDIO.PLAY_SOUND_FROM_COORD(-1, "Bed", Audio_POS[i].x, Audio_POS[i].y, Audio_POS[i].z, "WastedSounds", true, 999999999, true)
-            pos.z = -2000.00
-        
-            AUDIO.PLAY_SOUND_FROM_COORD(-1, "Bed", Audio_POS[i].x, Audio_POS[i].y, Audio_POS[i].z, "WastedSounds", true, 999999999, true)
-    
-            for pid = 0, 31 do
-                local pos =	NETWORK._NETWORK_GET_PLAYER_COORDS(pid)
-                AUDIO.PLAY_SOUND_FROM_COORD(-1, "Bed", pos.x, pos.y, pos.z, "WastedSounds", true, 999999999, true)
+-- 噪音
+function zaoyin()
+    -- {"Bed", "WastedSounds"}
+    local pos = v3()
+    local Audio_POS = {v3(-73.31681060791, -820.26013183594, 326.17517089844), v3(2784.536, 5994.213, 354.275),
+                       v3(-983.292, -2636.995, 89.524), v3(1747.518, 4814.711, 41.666), v3(1625.209, -76.936, 166.651),
+                       v3(751.179, 1245.13, 353.832), v3(-1644.193, -1114.271, 13.029), v3(462.795, 5602.036, 781.400),
+                       v3(-125.284, 6204.561, 40.164), v3(2099.765, 1766.219, 102.698)}
+
+    for i = 1, #Audio_POS do
+
+        AUDIO.PLAY_SOUND_FROM_COORD(-1, "Bed", Audio_POS[i].x, Audio_POS[i].y, Audio_POS[i].z, "WastedSounds", true,
+            999999999, true)
+        pos.z = 2000.00
+
+        AUDIO.PLAY_SOUND_FROM_COORD(-1, "Bed", Audio_POS[i].x, Audio_POS[i].y, Audio_POS[i].z, "WastedSounds", true,
+            999999999, true)
+        pos.z = -2000.00
+
+        AUDIO.PLAY_SOUND_FROM_COORD(-1, "Bed", Audio_POS[i].x, Audio_POS[i].y, Audio_POS[i].z, "WastedSounds", true,
+            999999999, true)
+
+        for pid = 0, 31 do
+            local pos = NETWORK._NETWORK_GET_PLAYER_COORDS(pid)
+            AUDIO.PLAY_SOUND_FROM_COORD(-1, "Bed", pos.x, pos.y, pos.z, "WastedSounds", true, 999999999, true)
         end
-    end		
+    end
 end
 
---爆炸圈
+-- 爆炸圈
 function explosion_circle(ped, angle, radius)
     local ped_coords = ENTITY.GET_ENTITY_COORDS(ped)
 
@@ -13158,7 +13083,7 @@ function explosion_circle(ped, angle, radius)
 
     FIRE.ADD_EXPLOSION(x, y, ped_coords.z, 4, 1, true, false, 0)
 end
- --载具伞崩全局
+-- 载具伞崩全局
 function carcrashv1()
     local spped = PLAYER.PLAYER_PED_ID()
     local ppos = ENTITY.GET_ENTITY_COORDS(spped, true)
@@ -13175,21 +13100,21 @@ function carcrashv1()
     end
     ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spped, ppos.x, ppos.y, ppos.z, false, true, true)
 end
---人物伞崩
+-- 人物伞崩
 function personlcrashv1()
     local spped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
     local ppos = ENTITY.GET_ENTITY_COORDS(spped, true)
-    for n = 0 , 5 do
+    for n = 0, 5 do
         local object_hash = util.joaat("prop_logpile_06b")
         STREAMING.REQUEST_MODEL(object_hash)
-          while not STREAMING.HAS_MODEL_LOADED(object_hash) do
-           wait()
+        while not STREAMING.HAS_MODEL_LOADED(object_hash) do
+            wait()
         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spped, 0,0,500, false, true, true)
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), object_hash)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spped, 0, 0, 500, false, true, true)
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(spped, 0xFBAB5776, 1000, false)
         wait(1000)
-        for i = 0 , 20 do
+        for i = 0, 20 do
             PED.FORCE_PED_TO_OPEN_PARACHUTE(spped)
         end
         wait(1000)
@@ -13197,14 +13122,14 @@ function personlcrashv1()
 
         local object_hash2 = util.joaat("prop_beach_parasol_03")
         STREAMING.REQUEST_MODEL(object_hash2)
-          while not STREAMING.HAS_MODEL_LOADED(object_hash2) do
-           wait()
+        while not STREAMING.HAS_MODEL_LOADED(object_hash2) do
+            wait()
         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash2)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spped, 0,0,500, 0, 0, 1)
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), object_hash2)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spped, 0, 0, 500, 0, 0, 1)
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(spped, 0xFBAB5776, 1000, false)
         wait(1000)
-        for i = 0 , 20 do
+        for i = 0, 20 do
             PED.FORCE_PED_TO_OPEN_PARACHUTE(spped)
         end
         wait(1000)
@@ -13214,200 +13139,212 @@ function personlcrashv1()
 end
 
 function personalcrashv2()
-    for n = 0 , 5 do
+    for n = 0, 5 do
         PEDP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
         object_hash = 1381105889
-                                    STREAMING.REQUEST_MODEL(object_hash)
-      while not STREAMING.HAS_MODEL_LOADED(object_hash) do
-           wait()
-         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
+        STREAMING.REQUEST_MODEL(object_hash)
+        while not STREAMING.HAS_MODEL_LOADED(object_hash) do
+            wait()
+        end
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), object_hash)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0, 0, 500, 0, 0, 1)
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
         wait(1000)
-        for i = 0 , 20 do
-        PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
+        for i = 0, 20 do
+            PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
         end
         wait(1000)
         menu.trigger_commands("tplsia")
         bush_hash = 720581693
-                                    STREAMING.REQUEST_MODEL(bush_hash)
-      while not STREAMING.HAS_MODEL_LOADED(bush_hash) do
-           wait()
-         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),bush_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
+        STREAMING.REQUEST_MODEL(bush_hash)
+        while not STREAMING.HAS_MODEL_LOADED(bush_hash) do
+            wait()
+        end
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), bush_hash)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0, 0, 500, 0, 0, 1)
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
-           wait(1000)
-        for i = 0 , 20 do
-        PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
+        wait(1000)
+        for i = 0, 20 do
+            PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
         end
         wait(1000)
-        menu.trigger_commands("tplsia")			
-        end
+        menu.trigger_commands("tplsia")
+    end
 end
 
 function personalcrashv3()
     local SelfPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
     local PreviousPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
-    for n = 0 , 3 do
+    for n = 0, 3 do
         local object_hash = util.joaat("v_ilev_light_wardrobe_face")
         STREAMING.REQUEST_MODEL(object_hash)
-          while not STREAMING.HAS_MODEL_LOADED(object_hash) do
-           wait()
+        while not STREAMING.HAS_MODEL_LOADED(object_hash) do
+            wait()
         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0,0,500, false, true, true)
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), object_hash)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0, 0, 500, false, true, true)
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 1000, false)
         wait(1000)
-        for i = 0 , 20 do
+        for i = 0, 20 do
             PED.FORCE_PED_TO_OPEN_PARACHUTE(SelfPlayerPed)
         end
         wait(1000)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z,
+            false, true, true)
 
         local object_hash2 = util.joaat("v_ilev_light_wardrobe_face")
         STREAMING.REQUEST_MODEL(object_hash2)
-          while not STREAMING.HAS_MODEL_LOADED(object_hash2) do
-           wait()
+        while not STREAMING.HAS_MODEL_LOADED(object_hash2) do
+            wait()
         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash2)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0,0,500, 0, 0, 1)
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), object_hash2)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0, 0, 500, 0, 0, 1)
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 1000, false)
         wait(1000)
-        for i = 0 , 20 do
+        for i = 0, 20 do
             PED.FORCE_PED_TO_OPEN_PARACHUTE(SelfPlayerPed)
         end
         wait(1000)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z,
+            false, true, true)
     end
-    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z,
+        false, true, true)
     wait(500)
 end
 
 function personalcrashv4()
     local SelfPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
-        local PreviousPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
-        for n = 0 , 3 do
-            local object_hash = util.joaat("prop_mk_num_6")
-            STREAMING.REQUEST_MODEL(object_hash)
-              while not STREAMING.HAS_MODEL_LOADED(object_hash) do
-               wait()
-            end
-            PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0,0,500, false, true, true)
-            WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 1000, false)
-            wait(1000)
-            for i = 0 , 20 do
-                PED.FORCE_PED_TO_OPEN_PARACHUTE(SelfPlayerPed)
-            end
-            wait(1000)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
-    
-            local object_hash2 = util.joaat("prop_beach_parasol_03")
-            STREAMING.REQUEST_MODEL(object_hash2)
-              while not STREAMING.HAS_MODEL_LOADED(object_hash2) do
-               wait()
-            end
-            PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash2)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0,0,500, 0, 0, 1)
-            WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 1000, false)
-            wait(1000)
-            for i = 0 , 20 do
-                PED.FORCE_PED_TO_OPEN_PARACHUTE(SelfPlayerPed)
-            end
-            wait(1000)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
+    local PreviousPlayerPos = ENTITY.GET_ENTITY_COORDS(SelfPlayerPed, true)
+    for n = 0, 3 do
+        local object_hash = util.joaat("prop_mk_num_6")
+        STREAMING.REQUEST_MODEL(object_hash)
+        while not STREAMING.HAS_MODEL_LOADED(object_hash) do
+            wait()
         end
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z, false, true, true)
-    end
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), object_hash)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0, 0, 500, false, true, true)
+        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 1000, false)
+        wait(1000)
+        for i = 0, 20 do
+            PED.FORCE_PED_TO_OPEN_PARACHUTE(SelfPlayerPed)
+        end
+        wait(1000)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z,
+            false, true, true)
 
+        local object_hash2 = util.joaat("prop_beach_parasol_03")
+        STREAMING.REQUEST_MODEL(object_hash2)
+        while not STREAMING.HAS_MODEL_LOADED(object_hash2) do
+            wait()
+        end
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), object_hash2)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, 0, 0, 500, 0, 0, 1)
+        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(SelfPlayerPed, 0xFBAB5776, 1000, false)
+        wait(1000)
+        for i = 0, 20 do
+            PED.FORCE_PED_TO_OPEN_PARACHUTE(SelfPlayerPed)
+        end
+        wait(1000)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z,
+            false, true, true)
+    end
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(SelfPlayerPed, PreviousPlayerPos.x, PreviousPlayerPos.y, PreviousPlayerPos.z,
+        false, true, true)
+end
 
 function personalcrashv5()
-    		for n = 0 , 5 do
-    			PEDP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
-    			object_hash = 1117917059
-    			            		    	STREAMING.REQUEST_MODEL(object_hash)
-    	      while not STREAMING.HAS_MODEL_LOADED(object_hash) do
-    		       wait()
-    	         end
-    			PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
-    			ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
-                WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
-    			wait(1000)
-    			for i = 0 , 20 do
-    			PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
-    			end
-    			wait(1000)
-    			menu.trigger_commands("tplsia")
-    			bush_hash = -908104950
-    			            		    	STREAMING.REQUEST_MODEL(bush_hash)
-    	      while not STREAMING.HAS_MODEL_LOADED(bush_hash) do
-    		       wait()
-    	         end
-    		    PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),bush_hash)
-    			ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
-                WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
-               	wait(1000)
-    			for i = 0 , 20 do
-    			PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
-    		    end
-    			wait(1000)
-    			menu.trigger_commands("tplsia")
-    	end
+    for n = 0, 5 do
+        PEDP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
+        object_hash = 1117917059
+        STREAMING.REQUEST_MODEL(object_hash)
+        while not STREAMING.HAS_MODEL_LOADED(object_hash) do
+            wait()
+        end
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), object_hash)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0, 0, 500, 0, 0, 1)
+        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
+        wait(1000)
+        for i = 0, 20 do
+            PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
+        end
+        wait(1000)
+        menu.trigger_commands("tplsia")
+        bush_hash = -908104950
+        STREAMING.REQUEST_MODEL(bush_hash)
+        while not STREAMING.HAS_MODEL_LOADED(bush_hash) do
+            wait()
+        end
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), bush_hash)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0, 0, 500, 0, 0, 1)
+        WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
+        wait(1000)
+        for i = 0, 20 do
+            PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
+        end
+        wait(1000)
+        menu.trigger_commands("tplsia")
+    end
 end
 
-    function soundcrash_all()
-	    local TPP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0,pid)
-        local time = util.current_time_millis() + 2000
-        while time > util.current_time_millis() do
-		local TPPS = ENTITY.GET_ENTITY_COORDS(TPP, true)
-			for i = 1, 20 do
-				AUDIO.PLAY_SOUND_FROM_COORD(-1, "Event_Message_Purple", TPPS.x,TPPS.y,TPPS.z, "GTAO_FM_Events_Soundset", true, 100000, false)
-			end
-			wait()
-			for i = 1, 20 do
-			AUDIO.PLAY_SOUND_FROM_COORD(-1, "5s", TPPS.x,TPPS.y,TPPS.z, "GTAO_FM_Events_Soundset", true, 100000, false)
-			end
-			wait()
-		end
-         util.toast("声音垃圾邮件崩溃成功执行")
+function soundcrash_all()
+    local TPP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0, pid)
+    local time = util.current_time_millis() + 2000
+    while time > util.current_time_millis() do
+        local TPPS = ENTITY.GET_ENTITY_COORDS(TPP, true)
+        for i = 1, 20 do
+            AUDIO.PLAY_SOUND_FROM_COORD(-1, "Event_Message_Purple", TPPS.x, TPPS.y, TPPS.z, "GTAO_FM_Events_Soundset",
+                true, 100000, false)
+        end
+        wait()
+        for i = 1, 20 do
+            AUDIO.PLAY_SOUND_FROM_COORD(-1, "5s", TPPS.x, TPPS.y, TPPS.z, "GTAO_FM_Events_Soundset", true, 100000, false)
+        end
+        wait()
+    end
+    util.toast("声音垃圾邮件崩溃成功执行")
 end
 
-    function soundcrash_allV1()
-	    local TPP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-        local time = util.current_time_millis() + 100
-        while time > util.current_time_millis() do
-		local TPPS = ENTITY.GET_ENTITY_COORDS(TPP, true)
-			for i = 1, 8, 1 do
-				AUDIO.PLAY_SOUND_FROM_COORD(-1, "Event_Message_Purple", TPPS.x,TPPS.y,TPPS.z + 3, "GTAO_FM_Events_Soundset","MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
-			end
-			wait()
-			for i = 1, 8, 1 do
-				AUDIO.PLAY_SOUND_FROM_COORD(-1, "Checkpoint_Cash_Hit", TPPS.x,TPPS.y,TPPS.z + 3, "GTAO_FM_Events_Soundset","MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
-			end
-			wait()
-			for i = 1, 8, 1 do
-				AUDIO.PLAY_SOUND_FROM_COORD(-1, "Object_Dropped_Remote", TPPS.x,TPPS.y,TPPS.z + 3, "GTAO_FM_Events_Soundset","MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
-			end
-			wait()
-			for i = 1, 8, 1 do
-				AUDIO.PLAY_SOUND_FROM_COORD(-1, "Event_Start_Text", TPPS.x,TPPS.y,TPPS.z + 3, "GTAO_FM_Events_Soundset","MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
-			end
-			wait()
-			for i = 1, 8, 1 do
-			AUDIO.PLAY_SOUND_FROM_COORD(-1, "5s", TPPS.x,TPPS.y,TPPS.z + 3, "GTAO_FM_Events_Soundset","MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
-			end
-			wait()
-		end
+function soundcrash_allV1()
+    local TPP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local time = util.current_time_millis() + 100
+    while time > util.current_time_millis() do
+        local TPPS = ENTITY.GET_ENTITY_COORDS(TPP, true)
+        for i = 1, 8, 1 do
+            AUDIO.PLAY_SOUND_FROM_COORD(-1, "Event_Message_Purple", TPPS.x, TPPS.y, TPPS.z + 3,
+                "GTAO_FM_Events_Soundset", "MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
+        end
+        wait()
+        for i = 1, 8, 1 do
+            AUDIO.PLAY_SOUND_FROM_COORD(-1, "Checkpoint_Cash_Hit", TPPS.x, TPPS.y, TPPS.z + 3,
+                "GTAO_FM_Events_Soundset", "MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
+        end
+        wait()
+        for i = 1, 8, 1 do
+            AUDIO.PLAY_SOUND_FROM_COORD(-1, "Object_Dropped_Remote", TPPS.x, TPPS.y, TPPS.z + 3,
+                "GTAO_FM_Events_Soundset", "MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
+        end
+        wait()
+        for i = 1, 8, 1 do
+            AUDIO.PLAY_SOUND_FROM_COORD(-1, "Event_Start_Text", TPPS.x, TPPS.y, TPPS.z + 3, "GTAO_FM_Events_Soundset",
+                "MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
+        end
+        wait()
+        for i = 1, 8, 1 do
+            AUDIO.PLAY_SOUND_FROM_COORD(-1, "5s", TPPS.x, TPPS.y, TPPS.z + 3, "GTAO_FM_Events_Soundset",
+                "MP_MISSION_COUNTDOWN_SOUNDSET", true, 100, false)
+        end
+        wait()
+    end
 end
 
 function jesus_help_me()
     local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), true)
     local SelfPlayerPed = entities.create_ped(2, util.joaat("u_m_m_jesus_01"), SelfPlayerPos, 0)
-    for i = 1, 20 do                   
+    for i = 1, 20 do
         ENTITY.SET_ENTITY_INVINCIBLE(SelfPlayerPed, true)
-        local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos, ENTITY.GET_ENTITY_HEADING(0,TargetPlayerPed), true)
+        local Ruiner2 = CreateVehicle(util.joaat("Ruiner2"), SelfPlayerPos,
+            ENTITY.GET_ENTITY_HEADING(0, TargetPlayerPed), true)
         PED.SET_PED_INTO_VEHICLE(SelfPlayerPed, Ruiner2, -1)
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 1000, false, true, true)
         wait(200)
@@ -13420,33 +13357,33 @@ function jesus_help_me()
 end
 
 function rlengzhan()
-    for n = 0 , 5 do
+    for n = 0, 5 do
         PEDP = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
         object_hash = 1117917059
         STREAMING.REQUEST_MODEL(object_hash)
-      while not STREAMING.HAS_MODEL_LOADED(object_hash) do
-           wait()
-         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),object_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
+        while not STREAMING.HAS_MODEL_LOADED(object_hash) do
+            wait()
+        end
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), object_hash)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0, 0, 500, 0, 0, 1)
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
         wait(1000)
-        for i = 0 , 20 do
-        PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
+        for i = 0, 20 do
+            PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
         end
         wait(1000)
         menu.trigger_commands("tplsia")
         bush_hash = -908104950
-                                    STREAMING.REQUEST_MODEL(bush_hash)
-      while not STREAMING.HAS_MODEL_LOADED(bush_hash) do
-           wait()
-         end
-        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(),bush_hash)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0,0,500, 0, 0, 1)
+        STREAMING.REQUEST_MODEL(bush_hash)
+        while not STREAMING.HAS_MODEL_LOADED(bush_hash) do
+            wait()
+        end
+        PLAYER.SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), bush_hash)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PEDP, 0, 0, 500, 0, 0, 1)
         WEAPON.GIVE_DELAYED_WEAPON_TO_PED(PEDP, 0xFBAB5776, 1000, false)
-           wait(1000)
-        for i = 0 , 20 do
-        PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
+        wait(1000)
+        for i = 0, 20 do
+            PED.FORCE_PED_TO_OPEN_PARACHUTE(PEDP)
         end
         wait(1000)
         menu.trigger_commands("tplsia")
@@ -13454,82 +13391,86 @@ function rlengzhan()
 end
 
 function numbercrash()
-    local cspped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0,pid)
-     local playpos = ENTITY.GET_ENTITY_COORDS(cspped, true)
+    local cspped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0, pid)
+    local playpos = ENTITY.GET_ENTITY_COORDS(cspped, true)
 
-     playpos.x = playpos.x + 10
+    playpos.x = playpos.x + 10
 
-     local carc = CreateVehicle(2598821281, playpos, ENTITY.GET_ENTITY_HEADING(cspped), true)
-     local carcPos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
-     local pedc = CreatePed(26, 2597531625, playpos, 0)
-     local pedcPos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
+    local carc = CreateVehicle(2598821281, playpos, ENTITY.GET_ENTITY_HEADING(cspped), true)
+    local carcPos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
+    local pedc = CreatePed(26, 2597531625, playpos, 0)
+    local pedcPos = ENTITY.GET_ENTITY_COORDS(vehicle, true)
 
-     local ropec = PHYSICS.ADD_ROPE(playpos.x, playpos.y, playpos.z, 0, 0, 0, 1, 1, 0.00300000000000000000000000000000000000000000000001, 1, 1, true, true, true, 1.0, true, 0)
-     PHYSICS.ATTACH_ENTITIES_TO_ROPE(ropec,carc,pedc,carcPos.x, carcPos.y, carcPos.z ,pedcPos.x, pedcPos.y, pedcPos.z,2, false, false, 0, 0, "Center","Center")
-     wait(2500)
-     PHYSICS.DELETE_CHILD_ROPE(ropec)
-     entities.delete_by_handle(carc)
-     entities.delete_by_handle(pedc)
+    local ropec = PHYSICS.ADD_ROPE(playpos.x, playpos.y, playpos.z, 0, 0, 0, 1, 1,
+        0.00300000000000000000000000000000000000000000000001, 1, 1, true, true, true, 1.0, true, 0)
+    PHYSICS.ATTACH_ENTITIES_TO_ROPE(ropec, carc, pedc, carcPos.x, carcPos.y, carcPos.z, pedcPos.x, pedcPos.y, pedcPos.z,
+        2, false, false, 0, 0, "Center", "Center")
+    wait(2500)
+    PHYSICS.DELETE_CHILD_ROPE(ropec)
+    entities.delete_by_handle(carc)
+    entities.delete_by_handle(pedc)
 end
 
 function natural_crash_all()
     local user = players.user()
     local user_ped = players.user_ped()
     local model = util.joaat("h4_prop_bush_mang_ad") -- special op object so you dont have to be near them :D
-        wait(100)
-        ENTITY.SET_ENTITY_VISIBLE(user_ped, false)
-        for i = 0, 110 do
-            PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user, model)
-            PED.SET_PED_COMPONENT_VARIATION(user_ped, 5, i, 0, 0)
-            wait(25)
-            PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
-        end
-        for i = 1, 5 do
-            util.spoof_script("freemode", SYSTEM.WAIT) -- preventing wasted screen
-        end
-        ENTITY.SET_ENTITY_HEALTH(user_ped, 0) -- killing ped because it will still crash others until you die (clearing tasks doesnt seem to do much)
-        local pos = players.get_position(user)
-        NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x, pos.y, pos.z, 0, false, false, 0)
-        ENTITY.SET_ENTITY_VISIBLE(user_ped, true)
-        end
---董哥崩溃
+    wait(100)
+    ENTITY.SET_ENTITY_VISIBLE(user_ped, false)
+    for i = 0, 110 do
+        PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user, model)
+        PED.SET_PED_COMPONENT_VARIATION(user_ped, 5, i, 0, 0)
+        wait(25)
+        PLAYER.CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user)
+    end
+    for i = 1, 5 do
+        util.spoof_script("freemode", SYSTEM.WAIT) -- preventing wasted screen
+    end
+    ENTITY.SET_ENTITY_HEALTH(user_ped, 0) -- killing ped because it will still crash others until you die (clearing tasks doesnt seem to do much)
+    local pos = players.get_position(user)
+    NETWORK.NETWORK_RESURRECT_LOCAL_PLAYER(pos.x, pos.y, pos.z, 0, false, false, 0)
+    ENTITY.SET_ENTITY_VISIBLE(user_ped, true)
+end
+-- 董哥崩溃
 function dgcrash()
     local user = players.user()
     local user_ped = players.user_ped()
     local setpackmodel = {}
-    local obj_hash = {util.joaat("h4_prop_bush_mang_ad"),util.joaat("urbanweeds02_l1")}
+    local obj_hash = {util.joaat("h4_prop_bush_mang_ad"), util.joaat("urbanweeds02_l1")}
     while true do
-    crash_pos = players.get_position(user)
-    PED.SET_PED_COMPONENT_VARIATION(user_ped,5,8,0,0)
-    for mmtcrash = 1 , 1 do
-        wait(500)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(user_ped,crash_pos.x,crash_pos.y,crash_pos.z,false, false, false) 
-        for Cra_ove , mmtcrash in pairs (obj_hash) do
-            setpackmodel[Cra_ove] = PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user,mmtcrash)
+        crash_pos = players.get_position(user)
+        PED.SET_PED_COMPONENT_VARIATION(user_ped, 5, 8, 0, 0)
+        for mmtcrash = 1, 1 do
+            wait(500)
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(user_ped, crash_pos.x, crash_pos.y, crash_pos.z, false, false, false)
+            for Cra_ove, mmtcrash in pairs(obj_hash) do
+                setpackmodel[Cra_ove] = PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(user, mmtcrash)
+                wait(0)
+            end
+            PED.SET_PED_COMPONENT_VARIATION(user_ped, -1087, -3012, 13.94)
             wait(0)
         end
-        PED.SET_PED_COMPONENT_VARIATION(user_ped,-1087,-3012,13.94)
-        wait(0)
-    end
         TASK.CLEAR_PED_TASKS_IMMEDIATELY(user_ped)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(user_ped,crash_pos.x,crash_pos.y,crash_pos.z,true, true, true)  
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(user_ped, crash_pos.x, crash_pos.y, crash_pos.z, true, true, true)
     end
 end
 
 function nothingcrash()
-    local spped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0,pid)
-    local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0,pid)) 
+    local spped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0, pid)
+    local SelfPlayerPos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0, pid))
     SelfPlayerPos.x = SelfPlayerPos.x + 10
     TTPos.x = TTPos.x + 10
     local carc = CreateObject(util.joaat("apa_prop_flag_china"), TTPos, ENTITY.GET_ENTITY_HEADING(spped), true)
-    local carcPos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0,pid)) 
+    local carcPos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0, pid))
     local pedc = CreatePed(26, util.joaat("A_C_HEN"), TTPos, 0)
-    local pedcPos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0,pid)) 
-    local ropec = PHYSICS.ADD_ROPE(TTPos.x, TTPos.y, TTPos.z, 0, 0, 0, 1, 1, 0.00300000000000000000000000000000000000000000000001, 1, 1, true, true, true, 1.0, true, 0)
-    PHYSICS.ATTACH_ENTITIES_TO_ROPE(ropec,carc,pedc,carcPos.x, carcPos.y, carcPos.z ,pedcPos.x, pedcPos.y, pedcPos.z,2, false, false, 0, 0, "Center","Center")
+    local pedcPos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0, pid))
+    local ropec = PHYSICS.ADD_ROPE(TTPos.x, TTPos.y, TTPos.z, 0, 0, 0, 1, 1,
+        0.00300000000000000000000000000000000000000000000001, 1, 1, true, true, true, 1.0, true, 0)
+    PHYSICS.ATTACH_ENTITIES_TO_ROPE(ropec, carc, pedc, carcPos.x, carcPos.y, carcPos.z, pedcPos.x, pedcPos.y, pedcPos.z,
+        2, false, false, 0, 0, "Center", "Center")
     wait(3500)
     PHYSICS.DELETE_CHILD_ROPE(ropec)
-	entities.delete_by_handle(pedc)
+    entities.delete_by_handle(pedc)
 end
 
 ------------------------------------
@@ -13540,92 +13481,93 @@ function bitTest(addr, offset)
 end
 
 local function CanSpawnNanoDrone()
-	return BitTest(read_global.int(1962996), 23)
+    return BitTest(read_global.int(1962996), 23)
 end
 
 local function CanUseDrone()
-	if not is_player_active(players.user(), true, true) then
-		return false
-	end
-	if util.is_session_transition_active() then
-		return false
-	end
-	if players.is_in_interior(players.user()) then
-		return false
-	end
-	if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
-		return false
-	end
-	if PED.IS_PED_IN_ANY_TRAIN(players.user_ped()) or
-	PLAYER.IS_PLAYER_RIDING_TRAIN(players.user()) then
-		return false
-	end
-	if PED.IS_PED_FALLING(players.user_ped()) then
-		return false
-	end
-	if ENTITY.GET_ENTITY_SUBMERGED_LEVEL(players.user_ped()) > 0.3 then
-		return false
-	end
-	if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) then
-		return false
-	end
-	if PED.IS_PED_ON_VEHICLE(players.user_ped()) then
-		return false
-	end
-	return true
+    if not is_player_active(players.user(), true, true) then
+        return false
+    end
+    if util.is_session_transition_active() then
+        return false
+    end
+    if players.is_in_interior(players.user()) then
+        return false
+    end
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
+        return false
+    end
+    if PED.IS_PED_IN_ANY_TRAIN(players.user_ped()) or PLAYER.IS_PLAYER_RIDING_TRAIN(players.user()) then
+        return false
+    end
+    if PED.IS_PED_FALLING(players.user_ped()) then
+        return false
+    end
+    if ENTITY.GET_ENTITY_SUBMERGED_LEVEL(players.user_ped()) > 0.3 then
+        return false
+    end
+    if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) then
+        return false
+    end
+    if PED.IS_PED_ON_VEHICLE(players.user_ped()) then
+        return false
+    end
+    return true
 end
---即时纳米无人机
+-- 即时纳米无人机
 function nanodrone()
     local p_bits = memory.script_global(1962996)
-	local bits = memory.read_int(p_bits)
-	if CanUseDrone() and not BitTest(bits, 24) then
-		TASK.CLEAR_PED_TASKS(players.user_ped())
-		memory.write_int(p_bits, SetBit(bits, 24))
-		if not CanSpawnNanoDrone() then memory.write_int(p_bits, SetBit(bits, 23)) end
-	end
+    local bits = memory.read_int(p_bits)
+    if CanUseDrone() and not BitTest(bits, 24) then
+        TASK.CLEAR_PED_TASKS(players.user_ped())
+        memory.write_int(p_bits, SetBit(bits, 24))
+        if not CanSpawnNanoDrone() then
+            memory.write_int(p_bits, SetBit(bits, 23))
+        end
+    end
 end
---请求豪华直升机
+-- 请求豪华直升机
 function luxuryhelicopter()
-	if NETWORK.NETWORK_IS_SESSION_ACTIVE() and
-	not NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_heli_taxi", -1, true, 0) then
-		write_global.int(2793044 + 888, 1)
-		write_global.int(2793044 + 895, 1)
-	end
+    if NETWORK.NETWORK_IS_SESSION_ACTIVE() and not NETWORK.NETWORK_IS_SCRIPT_ACTIVE("am_heli_taxi", -1, true, 0) then
+        write_global.int(2793044 + 888, 1)
+        write_global.int(2793044 + 895, 1)
+    end
 end
 
 function DoesPlayerOwnBandito(player)
-	if player ~= -1 then
-		local address = memory.script_global(1853910 + (player * 862 + 1) + 267 + 299)
-		return BitTest(memory.read_int(address), 4)
-	end
-	return false
+    if player ~= -1 then
+        local address = memory.script_global(1853910 + (player * 862 + 1) + 267 + 299)
+        return BitTest(memory.read_int(address), 4)
+    end
+    return false
 end
 
---即时RC匪徒
+-- 即时RC匪徒
 function bandito()
-	write_global.int(2793044 + 6874, 1)
-	if not DoesPlayerOwnBandito(players.user()) then
-		local address = memory.script_global(1853910 + (players.user() * 862 + 1) + 267 + 299)
-		memory.write_int(address, SetBit(memory.read_int(address), 4))
-	end
+    write_global.int(2793044 + 6874, 1)
+    if not DoesPlayerOwnBandito(players.user()) then
+        local address = memory.script_global(1853910 + (players.user() * 862 + 1) + 267 + 299)
+        memory.write_int(address, SetBit(memory.read_int(address), 4))
+    end
 end
 
 function DoesPlayerOwnMinitank(player)
-	if player ~= -1 then
-		local address = memory.script_global(1853910 + (player * 862 + 1) + 267 + 428 + 2)
-		return BitTest(memory.read_int(address), 15)
-	end
-	return false
+    if player ~= -1 then
+        local address = memory.script_global(1853910 + (player * 862 + 1) + 267 + 428 + 2)
+        return BitTest(memory.read_int(address), 15)
+    end
+    return false
 end
 
---即时遥控RC坦克
+-- 即时遥控RC坦克
 function rctank()
-	write_global.int(2793044 + 6875, 1)
-	if not DoesPlayerOwnMinitank(players.user()) then
-		local address = memory.script_global(1853910 + (players.user() * 862 + 1) + 267 + 428 + 2)
-		memory.write_int(address, SetBit(memory.read_int(address), 15))
-	end
+    write_global.int(2793044 + 6875, 1)
+    if not DoesPlayerOwnMinitank(players.user()) then
+        local address = memory.script_global(1853910 + (players.user() * 862 + 1) + 267 + 428 + 2)
+        memory.write_int(address, SetBit(memory.read_int(address), 15))
+    end
 end
+
 ------------------------------------
 -----------线上模式传送-------------
 ------------------------------------

@@ -80,7 +80,13 @@ sxid = {{
     playeridx = "Herykcz"   --]
 }, {                        --]
     playeridx = "sshanheya" --]
-}, 
+}, {                       
+    playeridx = "xiaochengzi3311"
+}, {                       
+    playeridx = "pengsiejw"
+}, {                       
+    playeridx = "FallSakura0"
+},
 }
 
 spid = {{
@@ -1723,6 +1729,8 @@ spid = {{
     playerid = "LIANGFAZHI"
 }, {
     playerid = "qdstwk"
+},  {
+    playerid = "QDSTWKPRO"
 }, {
     playerid = "AfterJesus"
 }, {
@@ -1857,6 +1865,28 @@ spid = {{
     playerid = "weiyangxiarong"
 }, {
     playerid = "long10011"
+}, {
+    playerid = "lYimen"
+}, {
+    playerid = "edFzzZ"
+}, {
+    playerid = "Japan-surrender"
+}, {
+    playerid = "XXX-YuLin"
+}, {
+    playerid = "NASA---RS9"
+}, {
+    playerid = "China66666066666"
+}, {
+    playerid = "0hh-Stars"
+}, {
+    playerid = "whyjhm"
+}, {
+    playerid = ""
+}, {
+    playerid = ""
+}, {
+    playerid = ""
 }, {
     playerid = ""
 },

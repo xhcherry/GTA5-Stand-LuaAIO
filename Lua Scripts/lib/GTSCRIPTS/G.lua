@@ -179,6 +179,7 @@ if SCRIPT_MANUAL_START then
     menu.trigger_commands("gtluascript")
 end
 gtoast("Don't tell me why 当我闭上双眼 看见了你")
+gtoast("GTLua 为开源代码 请勿相信任何所谓的破解版")
 
 if players.get_name(players.user()) == "SmallGodGirlo3o" then
     gtoast("欢迎回来，美丽的丢丢~")
@@ -454,11 +455,12 @@ GTLP(lightbones, "玩家光柱", {}, "", function()
     for pid = 0, 31 do
         if pid ~= players.user() and players.exists(pid) then
             local ped_pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
-            GRAPHICS.DRAW_BOX(ped_pos.x-0.1,ped_pos.y-0.1,ped_pos.z-1,ped_pos.x+0.1,ped_pos.y+0.1,ped_pos.z+20,200,0,0,255)
+            GRAPHICS.DRAW_BOX(ped_pos.x - 0.1, ped_pos.y - 0.1, ped_pos.z - 1, ped_pos.x + 0.1, ped_pos.y + 0.1,
+                ped_pos.z + 20, 200, 0, 0, 255)
         end
     end
 end)
-    
+
 GTLP(lightbones, "NPC光柱", {}, "", function()
     local pedtable = entities.get_all_peds_as_handles()
     for _, peds in pairs(pedtable) do
@@ -476,6 +478,7 @@ GTLP(lightbones, "载具光柱", {}, "", function()
             ped_pos.z + 20, 0, 200, 0, 255)
     end
 end)
+
 
 toushi=GT(players_root, "玩家透视选项", {}, "")
 
@@ -8459,12 +8462,13 @@ GTLP(sessionfun, "上帝之指", {"godfinger"}, "按B瞄准对象后使用滑鼠
     godfinger()
 end)
 
-GTLuaScript.slider(selflist, '透明人物', {'JSghost'}, '修改您人物的不透明度', 0, 100, 100, 25, function(value)
+other_self = GT(selflist, '其他自我选项')
+
+GTLuaScript.slider(other_self, '透明人物', {'JSghost'}, '修改您人物的不透明度', 0, 100, 100, 25, function(value)
     ENTITY.SET_ENTITY_ALPHA(players.user_ped(), JS_tbls.alphaPoints[value / 25 + 1], false)
 end)
 
-
-GTLP(selflist, "幽灵攻击", {}, "在幽灵模式下允许攻击玩家", function()
+GTLP(other_self, "幽灵攻击", {}, "在幽灵模式下允许攻击玩家", function()
     for _, pid in ipairs(players.list(false, true, true)) do
         if PLAYER.IS_PLAYER_FREE_AIMING(pid) then
             NETWORK.SET_REMOTE_PLAYER_AS_GHOST(pid, true)
@@ -8474,7 +8478,7 @@ GTLP(selflist, "幽灵攻击", {}, "在幽灵模式下允许攻击玩家", funct
     end
 end)
 
-GTTG(selflist, "消除热成像", {}, "让玩家无法用正常的热成像看到您", function(toggle)
+GTTG(other_self, "消除热成像", {}, "让玩家无法用正常的热成像看到您", function(toggle)
     if toggle then
         PED.SET_PED_HEATSCALE_OVERRIDE(players.user_ped(), 0)
     else
@@ -8510,7 +8514,7 @@ GTAC(aimkarma, 'Stand玩家瞄准惩罚', {}, '连接到Stand的玩家瞄准惩�
     menu.focus(menu.ref_by_path('World>Inhabitants>Player Aim Punishments>Anonymous Explosion', 37))
 end)
 
-GTTG(selflist, '无声脚步', {'JSquietSteps'}, '禁用您的脚步声', function(toggle)
+GTTG(other_self, '无声脚步', {'JSquietSteps'}, '禁用您的脚步声', function(toggle)
     AUDIO._SET_PED_AUDIO_FOOTSTEP_LOUD(players.user_ped(), not toggle)
 end)
 
@@ -10464,7 +10468,7 @@ GTLP(bianshen, "变身V5", {""}, "七彩", function()
     suijijianqi(jianqi), player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)         
 end)
 
-GTLP(selflist, "奥义秘术", {}, "", function(f)
+GTLP(other_self, "奥义秘术", {}, "", function(f)
     feat = f
     if feat then
         for i = 1, 16 do
@@ -11307,7 +11311,7 @@ GTLP(sessionfun, "一拳超人", {""}, "", function()
 supermanpersonl()
 end)
 
-GTTG(selflist, "假装平民", {}, "让您无法拾取武器", function(toggle)
+GTTG(other_self, "假装平民", {}, "让您无法拾取武器", function(toggle)
 PED.SET_ENABLE_HANDCUFFS(players.user_ped(), toggle)
 end)
 
@@ -11321,7 +11325,7 @@ entities.delete_by_handle(object)
 state = 0
 end)
     
-GTTG(selflist, "空中游泳", {}, "", function(on)
+GTTG(other_self, "空中游泳", {}, "", function(on)
     if on then
         menu.trigger_commands("swiminair on")
     else
@@ -11330,15 +11334,15 @@ GTTG(selflist, "空中游泳", {}, "", function(on)
 end)
 
 
-GTLP(selflist, "警察无视", {}, "警察不会对您产生敌意", function(toggle)
+GTLP(other_self, "警察无视", {}, "警察不会对您产生敌意", function(toggle)
     PLAYER.SET_POLICE_IGNORE_PLAYER(PLAYER.PLAYER_ID(), toggle)
 end)
 
-GTLP(selflist, "所有人无视", {}, "所有NPC不会对您产生敌意", function(toggle)
+GTLP(other_self, "所有人无视", {}, "所有NPC不会对您产生敌意", function(toggle)
     PLAYER.SET_EVERYONE_IGNORE_PLAYER(PLAYER.PLAYER_ID(), toggle)
 end)
 
-GTLP(selflist, "行动无声", {}, "", function()
+GTLP(other_self, "行动无声", {}, "", function()
     PLAYER.SET_PLAYER_NOISE_MULTIPLIER(PLAYER.PLAYER_ID(), 0.0)
 end)
 
@@ -23471,15 +23475,17 @@ GTLP(zanzhuzx, "致谢名单", {""}, "GRANDTOURING董事会", function()
     draw_string(string.format("~italic~~bold~~q~ ~q~[丢丢] ~w~[02] ~y~[xion] ~r~[rudan]"), 0.250,0.520,1.5,5)
 end)]]
 
-GTD(zanzhuzx, "GT[Creator]")
-GTD(zanzhuzx, "瑞思拜[Developer]")
+GTAC(zanzhuzx, "GTLua Operation Team", {}, "", function () end)
+GTD(zanzhuzx, "GT[Main Creator]")
+GTD(zanzhuzx, "瑞思拜[Main Developer]")
 GTD(zanzhuzx, "12[Arting]")
-GTD(zanzhuzx, "丢丢[Work]")
+GTD(zanzhuzx, "丢丢[Planning]")
 GTD(zanzhuzx, "安安安安安[Admin]")
 GTD(zanzhuzx, "Hardon[Function]")
 GTD(zanzhuzx, "西木[Function]")
 GTD(zanzhuzx, "草莓酱[Admin]")
-GTD(zanzhuzx, "7SkyK1ng[Shit]")
+GTD(zanzhuzx, "Mag[Marketing]")
+GTD(zanzhuzx, "7SkyK1ng[Shit Base]")
 GTD(zanzhuzx, "Rebound[Menu]")
 GTAC(zanzhuzx, "...更多", {}, "", function ()
     gtoast("联系我们加入GTLua团队\n了解GTLua如何与GTA相得益彰\n了解我们的名字,和我们的故事\n了解如何与我们一同创造奇迹")
