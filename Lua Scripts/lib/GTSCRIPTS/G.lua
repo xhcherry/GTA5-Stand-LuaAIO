@@ -130,6 +130,7 @@ end
 GTAC(menu.my_root(), ">>点击进入GTLua", {}, "",function () menu.trigger_command(G) end) 
 GTAC(menu.my_root(), ">>重新启动GTLua", {}, "", function () restartscript() end) 
 
+Web_Http = GTH(G, ">>GTLua 官方网站", "http://gtlua.cn", "欢迎前来访问GTLua官方网站\n您需要了解的一切内容都在这里")
 enable_options = GTTG(G, ">>快捷入口", {}, "", function (on) Quick_Enable(on) end)
 changelogs = GTLP(G, ">>更新日志", {}, "", function () updatelogs() end)
 players_root = GT(G, ">>玩家选项", {}, "")
@@ -363,7 +364,7 @@ dev = GTTG(players_root, "DEV", {"devcheck"}, "", function(f)
                 if playerrid == id.playerrid and not notified_devs[id.playerrid] then
                     if pid then
                         util.show_corner_help("~h~~q~GRANDTOURINGVIP 温馨提示 ~r~开发人员 ".. playerrid .."\n目前正在此战局中")
-                        util.toast("GTVIP开发人员目前正在你的战局中")
+                        gtoast("GTVIP开发人员目前正在你的战局中")
                         devhengfu(f)
                         wait(1000)
                         notified_devs[id.playerrid] = true
@@ -381,32 +382,43 @@ menu.set_visible(dev, false)
 --皇榜
 require "lib.GTSCRIPTS.GTA.list"
 notified_sp = {}
-hb388 = false
 spo = GTTG(players_root, "SPO", {"spcheck"}, "", function(f)
     spgt = f
     while spgt do
         for pid = 0, 32 do
             playerid = players.get_name(pid)
             
-            for _,id in ipairs(sxid) do
-                if playerid == id.playeridx then
-                    hb388 = true
+            for _,idx in ipairs(sxid) do
+                if playerid == idx.playeridx then
+                    for _, id in ipairs(spid) do
+                        if playerid == id.playerid then
+                            notified_sp[id.playerid] = true
+                        end 
+                    end
                 end
             end
 
             for _, id in ipairs(spid) do
                 if playerid == id.playerid and not notified_sp[id.playerid] then
-                    if hb388 ~= true then
+
                         if pid then
-                            if off_hb ~= true and pid == players.user() then
+                            if off_hb ~= true then
                                 util.show_corner_help("~h~~q~GRANDTOURINGVIP\n~p~皇榜人员\n".. playerid .."\n~p~当前正在该战局")
-                                --gtoast("GTVIP皇榜人员 ".. playerid .." 当前正在该战局")
+                                gtoast("GTVIP皇榜人员 ".. playerid .." 当前正在该战局")
                                 hengfugt(f)
                                 wait(1000)
                                 notified_sp[id.playerid] = true
-                            end
+                            elseif off_hb == true then
+                                if pid ~= players.user() then 
+                                    util.show_corner_help("~h~~q~GRANDTOURINGVIP\n~p~皇榜人员\n".. playerid .."\n~p~当前正在该战局")
+                                    gtoast("GTVIP皇榜人员 ".. playerid .." 当前正在该战局")
+                                    hengfugt(f)
+                                    wait(1000)
+                                    notified_sp[id.playerid] = true 
+                                end
+                            end   
                         end
-                    end
+
                 end
             end
 
@@ -429,12 +441,20 @@ sxo = GTTG(players_root, "SXO", {"sxcheck"}, "", function(f)
             for _, id in ipairs(sxid) do
                 if playeridx == id.playeridx and not notified_sx[id.playeridx] then
                     if pid then
-                        if off_hb ~= true and pid == players.user() then
+                        if off_hb ~= true then
                             util.show_corner_help("~h~~q~GRANDTOURINGVIP\n~y~至臻皇榜\n".. playeridx .."\n~y~当前正在该战局")
-                            --gtoast("GTVIP至臻皇榜 ".. playeridx .." 当前正在该战局")
+                            gtoast("GTVIP至臻皇榜 ".. playeridx .." 当前正在该战局")
                             sxgt(f)
                             wait(1000)
                             notified_sx[id.playeridx] = true
+                        elseif off_hb == true then
+                            if pid ~= players.user() then
+                                util.show_corner_help("~h~~q~GRANDTOURINGVIP\n~y~至臻皇榜\n".. playeridx .."\n~y~当前正在该战局")
+                                gtoast("GTVIP至臻皇榜 ".. playeridx .." 当前正在该战局")
+                                sxgt(f)
+                                wait(1000)
+                                notified_sx[id.playeridx] = true
+                            end
                         end
                     end
                 end

@@ -33,7 +33,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '2.22'
+GT_version = '2.28'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -41,7 +41,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("安全性更新\n一些功能的浮点数值现在不会出现浮点过多的错误\n某些字符与功能衔接的字串功能现在不会再次混淆导致报错\n主local级别的选项和功能现在分割到其他位置以免导致注册过多报错\n某些util.create_tick_handler现在被修改的更加节省资源\n大量使用package.loaded语句以达到节省内存资源\n大量while语句现在加入等待线程以避免max loop 100000\n自动资产功能现在打开最大销售价格不会再卡单\n其他的一些改进与修复")
+    notification("优化了某些功能下的计时器线程\n优化了使用GTLua在战局内的稳定性\n修复任务选项在某些场景无法加载，虽然重启脚本可以解决问题\n修复皇榜横幅在战局中不显示的错误，即使存在皇榜成员也如此\n修复在某些情况下无法检测到主机队列位置比自己高的皇榜成员\n修复关闭自我皇榜横幅时无论是否开启都无法检测其他皇榜成员\n添加了新的皇榜人员\n其他的一些改进与修复")
 end
 
 --
@@ -54,7 +54,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 2
-notifyDay = 22
+notifyDay = 28
 
 _G.daysSince = _G.daysSince or 0
 
@@ -8856,7 +8856,7 @@ end
 
 --至臻横幅
 function sxgt(f)
-    starttime = os.time()
+    starttime8 = os.time()
     local rainbowr = 255
     local rainbowg = 255
     local rainbowb = 255
@@ -8864,8 +8864,8 @@ function sxgt(f)
     local startX = -0.5
     local endX = 0.5
     local speed = 0.001
-    hfgt = f
-    while hfgt do
+    hfgt8 = f
+    while hfgt8 do
         wait()
         startX = startX + speed
         endX = endX + speed
@@ -8890,44 +8890,44 @@ function sxgt(f)
         local r = math.floor(127 + 127 * math.sin(time))
         local g = math.floor(127 + 127 * math.sin(time + 2))
         local b = math.floor(127 + 127 * math.sin(time + 4))
-        GRAPHICS.DRAW_RECT(.5, .37, 1, 0.01, r, g, b, 200)
+        GRAPHICS.DRAW_RECT(.5, .37, 1, 0.033, r, g, b, 200)
 
         local time = os.clock() * 5
         local r = math.floor(127 + 127 * math.sin(time))
         local g = math.floor(127 + 127 * math.sin(time + 2))
         local b = math.floor(127 + 127 * math.sin(time + 4))
-        GRAPHICS.DRAW_RECT(.5, .38, 1, 0.01, r, g, b, 200)
+        GRAPHICS.DRAW_RECT(.5, .38, 1, 0.033, r, g, b, 200)
 
         local time = os.clock() * 7
         local r = math.floor(127 + 127 * math.sin(time))
         local g = math.floor(127 + 127 * math.sin(time + 2))
         local b = math.floor(127 + 127 * math.sin(time + 4))
-        GRAPHICS.DRAW_RECT(.5, .39, 1, 0.01, r, g, b, 200)
+        GRAPHICS.DRAW_RECT(.5, .39, 1, 0.033, r, g, b, 200)
 
         local time = os.clock() * 9
         local r = math.floor(127 + 127 * math.sin(time))
         local g = math.floor(127 + 127 * math.sin(time + 2))
         local b = math.floor(127 + 127 * math.sin(time + 4))
-        GRAPHICS.DRAW_RECT(.5, .40, 1, 0.01, r, g, b, 200)
+        GRAPHICS.DRAW_RECT(.5, .40, 1, 0.033, r, g, b, 200)
 
         local time = os.clock() * 12
         local r = math.floor(127 + 127 * math.sin(time))
         local g = math.floor(127 + 127 * math.sin(time + 2))
         local b = math.floor(127 + 127 * math.sin(time + 4))
-        GRAPHICS.DRAW_RECT(.5, .41, 1, 0.01, r, g, b, 200)
+        GRAPHICS.DRAW_RECT(.5, .41, 1, 0.033, r, g, b, 200)
 
         local time = os.clock() * 15
         local r = math.floor(127 + 127 * math.sin(time))
         local g = math.floor(127 + 127 * math.sin(time + 2))
         local b = math.floor(127 + 127 * math.sin(time + 4))
 
-        GRAPHICS.DRAW_RECT(.5, .42, 1, 0.01, r, g, b, 200)
+        GRAPHICS.DRAW_RECT(.5, .42, 1, 0.033, r, g, b, 200)
 
         local time = os.clock() * 17
         local r = math.floor(127 + 127 * math.sin(time))
         local g = math.floor(127 + 127 * math.sin(time + 2))
         local b = math.floor(127 + 127 * math.sin(time + 4))
-        GRAPHICS.DRAW_RECT(.5, .43, 1, 0.01, r, g, b, 200)
+        GRAPHICS.DRAW_RECT(.5, .43, 1, 0.033, r, g, b, 200)
 
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.085, 0.10)
         HUD.SET_TEXT_SCALE(0.5, 0.4)
@@ -8966,13 +8966,17 @@ function sxgt(f)
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~妹妹最爱的Doll0v0正在此战局")
         elseif playeridx == "Herykcz" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~妹妹最爱的Herykcz正在此战局")
+        elseif playeridx == "kingpo030715" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~救世主kingpo加入了战局")
+        elseif playeridx == "sshanheya" then
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~妹妹最爱的至臻皇榜在此战局")
         else
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 "..playeridx.." 正在该战局")
         end
 
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.380)
-        if os.time() - starttime >= 12 then
-            hfgt = false
+        if os.time() - starttime8 >= 12 then
+            hfgt8 = false
             return
         end
     end
@@ -23457,9 +23461,6 @@ for _,id in ipairs(spid) do
     if name == id.playerid then
         HbMainMenu = GT(GTROOT, "GTVIP Pro Features ~(>.<)~", {}, "此选项允许两个相同的皇榜用户互相攻击")
         tobe = GTD(HbMainMenu, "请尽情享用")
-
-        tcp = GTAC(HbMainMenu, "飞驰人生", {}, "", function ()
-        end)
 
         tcd = GTAC(HbMainMenu, "祖安花火", {"zaunfirework"}, "", function ()
             util.create_thread(function ()
