@@ -98,6 +98,16 @@ sxid = {{
     playeridx = "TianZihao7987"
 }, {                       
     playeridx = "China66666066666"
+}, {
+    playeridx = "ya-QWQ"
+}, {
+    playeridx = "xiaozhangaaa9"
+}, {
+    playeridx = "ZEROISGODS"
+}, {
+    playeridx = "APver-kill"
+}, {
+    playeridx = ""
 },
 }
 
@@ -1566,8 +1576,6 @@ spid = {{
 }, {
     playerid = "WangZaiBOY"
 }, {
-    playerid = "MichaelD186"
-}, {
     playerid = "shanheya"
 }, {
     playerid = "Jiuyangboss"
@@ -1925,6 +1933,52 @@ spid = {{
     playerid = "HHHHHZ9000"
 }, {
     playerid = "ASKshak"
+}, {
+    playerid = "Madlyo"
+}, {
+    playerid = "Arrizo_"
+}, {
+    playerid = "ya-QWQ"
+}, {
+    playerid = "LSP-Agui"
+}, {
+    playerid = "xiaobei117"
+}, {
+    playerid = "mjacr7"
+}, {
+    playerid = "QAQxxxggg"
+}, {
+    playerid = "RESERVEDBOSS"
+}, {
+    playerid = "xington530"
+}, {
+    playerid = "ZEROISGODS"
+}, {
+    playerid = "-Hickey-"
+}, {
+    playerid = "____S__A__D____"
+}, {
+    playerid = "JuanLian0_0"
+}, {
+    playerid = "GodAnan999"
+}, {
+    playerid = "ljhriogr"
+}, {
+    playerid = "caolaobiao"
+}, {
+    playerid = "QAQxxxggg"
+}, {
+    playerid = "chixinshuomeng"
+}, {
+    playerid = "Tse-tao"
+}, {
+    playerid = "s_ckmyD_ck_m3"
+}, {
+    playerid = "2TAKE1MENU-186"
+}, {
+    playerid = "XIAN-N"
+}, {
+    playerid = "APver-kill"
 }, {
     playerid = ""
 },

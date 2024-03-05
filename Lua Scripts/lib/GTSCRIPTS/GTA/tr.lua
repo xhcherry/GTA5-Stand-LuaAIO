@@ -199,198 +199,24 @@ local moduleExports = {}
 
 local Languages = {
     {
-        Name = "Afrikaans",
-        Key = "af"
-    }, {
-        Name = "Albanian",
-        Key = "sq"
-    }, {
-        Name = "Arabic",
-        Key = "ar"
-    }, {
-        Name = "Azerbaijani",
-        Key = "az"
-    }, {
-        Name = "Basque",
-        Key = "eu"
-    }, {
-        Name = "Belarusian",
-        Key = "be"
-    }, {
-        Name = "Bengali",
-        Key = "bn"
-    }, {
-        Name = "Bulgarian",
-        Key = "bg"
-    }, {
-        Name = "Catalan",
-        Key = "ca"
-    }, {
-        Name = "Chinese Simplified",
+        Name = "简体中文",
         Key = "zh-cn"
     }, {
-        Name = "Chinese Traditional",
+        Name = "繁体中文",
         Key = "zh-tw"
     }, {
-        Name = "Croatian",
-        Key = "hr"
-    }, {
-        Name = "Czech",
-        Key = "cs"
-    }, {
-        Name = "Danish",
-        Key = "da"
-    }, {
-        Name = "Dutch",
-        Key = "nl"
-    }, {
-        Name = "English",
+        Name = "英语",
         Key = "en"
-    }, {
-        Name = "Esperanto",
-        Key = "eo"
-    }, {
-        Name = "Estonian",
-        Key = "et"
-    }, {
-        Name = "Filipino",
-        Key = "tl"
-    }, {
-        Name = "Finnish",
-        Key = "fi"
-    }, {
-        Name = "French",
-        Key = "fr"
-    }, {
-        Name = "Galician",
-        Key = "gl"
-    }, {
-        Name = "Georgian",
-        Key = "ka"
-    }, {
-        Name = "German",
-        Key = "de"
-    }, {
-        Name = "Greek",
-        Key = "el"
-    }, {
-        Name = "Gujarati",
-        Key = "gu"
-    }, {
-        Name = "Haitian Creole",
-        Key = "ht"
-    }, {
-        Name = "Hebrew",
-        Key = "iw"
-    }, {
-        Name = "Hindi",
-        Key = "hi"
-    }, {
-        Name = "Hungarian",
-        Key = "hu"
-    }, {
-        Name = "Icelandic",
-        Key = "is"
-    }, {
-        Name = "Indonesian",
-        Key = "id"
-    }, {
-        Name = "Irish",
-        Key = "ga"
-    }, {
-        Name = "Italian",
-        Key = "it"
-    }, {
-        Name = "Japanese",
+    }, --[[{
+        Name = "日语",
         Key = "ja"
     }, {
-        Name = "Kannada",
-        Key = "kn"
-    }, {
-        Name = "Korean",
-        Key = "ko"
-    }, {
-        Name = "Latin",
-        Key = "la"
-    }, {
-        Name = "Latvian",
-        Key = "lv"
-    }, {
-        Name = "Lithuanian",
-        Key = "lt"
-    }, {
-        Name = "Macedonian",
-        Key = "mk"
-    }, {
-        Name = "Malay",
-        Key = "ms"
-    }, {
-        Name = "Maltese",
-        Key = "mt"
-    }, {
-        Name = "Norwegian",
-        Key = "no"
-    }, {
-        Name = "Persian",
-        Key = "fa"
-    }, {
-        Name = "Polish",
-        Key = "pl"
-    }, {
-        Name = "Portuguese",
-        Key = "pt"
-    }, {
-        Name = "Romanian",
-        Key = "ro"
-    }, {
-        Name = "Russian",
+        Name = "俄语",
         Key = "ru"
-    }, {
-        Name = "Serbian",
-        Key = "sr"
-    }, {
-        Name = "Slovak",
-        Key = "sk"
-    }, {
-        Name = "Slovenian",
-        Key = "sl"
-    }, {
-        Name = "Spanish",
-        Key = "es"
-    }, {
-        Name = "Swahili",
-        Key = "sw"
-    }, {
-        Name = "Swedish",
-        Key = "sv"
-    }, {
-        Name = "Tamil",
-        Key = "ta"
-    }, {
-        Name = "Telugu",
-        Key = "te"
-    }, {
-        Name = "Thai",
-        Key = "th"
-    }, {
-        Name = "Turkish",
-        Key = "tr"
-    }, {
-        Name = "Ukrainian",
-        Key = "uk"
-    }, {
-        Name = "Urdu",
-        Key = "ur"
-    }, {
-        Name = "Vietnamese",
-        Key = "vi"
-    }, {
-        Name = "Welsh",
-        Key = "cy"
-    }, {
-        Name = "Yiddish",
-        Key = "yi"
-    }}
+    },  {
+        Name = "韩语",
+        Key = "ko"
+    },]] }
 
 LangPairs = {} -- Aux for sorting
 LangKeyList = {}
@@ -524,7 +350,7 @@ local translationMethods = {
 }
 
 TranslationMethodOptions = {
-    "Google Translate",
+    "谷歌引擎",
     -- "Bing",
 }
 
@@ -1089,11 +915,11 @@ local zhTranslations = {
     frequencyPenalty = "频率惩罚",
     frequencyPenaltyD = "介于 -2.0 和 2.0 之间的数字。正值会根据它们在迄今为止的文本中的频率对新标记进行惩罚，从而降低模型重复相同行的可能性。（默认值：0）",
 
-    translatorListenerOn = "监听消息并翻译",
+    translatorListenerOn = "开启翻译玩家信息",
     translatorListenerOnD = "翻译器将监听传入的消息并进行翻译",
     translateYourself = "翻译自己的消息",
     translateYourselfD = "翻译您自己发送的消息",
-    translatedMessageDisplay = "已翻译消息显示",
+    translatedMessageDisplay = "翻译消息显示模式",
     translatedMessageDisplayD = "翻译后的消息位置。您需要点击以应用更改",
     scriptSettings = "多语种翻译器的其他设置",
     scriptSettingsD = "包括颜色设置和更新",
@@ -1102,16 +928,16 @@ local zhTranslations = {
     customLabelForAllTranslationD = "将其留空将还原为原始标签",
     translatorListenerBlacklist = "翻译语言黑名单",
     translatorListenerBlacklistD = "在此列表中切换为开启的语言的消息将被忽略",
-    translationMethod = "翻译方法",
-    translationMethodD = "选择翻译方法",
+    translationMethod = "翻译引擎选择",
+    translationMethodD = "选择翻译引擎",
     incomingMessages = "传入的消息",
-    incomingMessagesD = "选择传入消息的翻译方法",
+    incomingMessagesD = "选择传入消息的翻译引擎",
     outgoingMessages = "发出的消息",
-    outgoingMessagesD = "选择发出消息的翻译方法",
-    targetLanguageIncoming = "传入消息的目标语言",
+    outgoingMessagesD = "选择发出消息的翻译引擎",
+    targetLanguageIncoming = "翻译后的语言",
     targetLanguageIncomingD = "默认为中文\n您需要点击以应用更改",
     sendTranslatedMessage = "发送翻译后的消息",
-    targetLanguageOutgoing = "发出消息的目标语言",
+    targetLanguageOutgoing = "玩家们应该看到何种语言？",
     targetLanguageOutgoingD = "您发送的消息的最终语言\n默认为英文\n您需要点击以应用更改",
     sendMessage = "发送消息",
     sendMessageD = "输入您要发送的消息文本",
@@ -1546,7 +1372,7 @@ chat_translation:list_select(LOC.translatedMessageDisplay, {}, LOC.translatedMes
     function(index, option, prevIndex, clickType) Config.translatedMsgLocation = index end)
 
 -- CommandRef|CommandUniqPtr menu.list(CommandRef parent, Label menu_name, table<any, string> command_names = {}, Label help_text = "", ?function on_click = nil, ?function on_back = nil, ?function on_active_list_update = nil)
-local settingTranslationMenu = menu.list(chat_translation, LOC.scriptSettings, {}, LOC.scriptSettingsD)
+--[[local settingTranslationMenu = menu.list(chat_translation, LOC.scriptSettings, {}, LOC.scriptSettingsD)
 local colorTranslation = menu.list(settingTranslationMenu, LOC.playerNameColor)
 menu.on_focus(colorTranslation, function()
     util.yield(50)
@@ -1610,7 +1436,7 @@ menu.text_input(settingTranslationMenu, polyglotUtils.templateReplace(LOC.templa
     end)
 if not (Config.teamChatLabel == util.get_label_text("MP_CHAT_TEAM")) then
     menu.trigger_commands("labelall " .. Config.allChatLabel)
-end
+end]]
 -- CommandRef|CommandUniqPtr menu.action(CommandRef parent, Label menu_name, table<any, string> command_names, Label help_text, function on_click, ?function on_command = nil, ?string syntax = nil, int perm = COMMANDPERM_USERONLY)
 
 
@@ -1642,7 +1468,7 @@ menu.list_select(chat_translation, LOC.targetLanguageIncoming, {"inlang"}, LOC.t
 ---@type CommandRef
 local translateMyMsg = menu.list(chat_translation, LOC.sendTranslatedMessage)
 
-translateMyMsg:list_select(LOC.targetLanguageOutgoing, {"outlang"}, LOC.targetLanguageOutgoingD, LangNameList, 1,
+translateMyMsg:list_select(LOC.targetLanguageOutgoing, {"outlang"}, LOC.targetLanguageOutgoingD, LangNameList, 3,
     function(index, option, prevIndex, clickType) Config.targetLanguageOutgoing = LangLookupByName[option] end)
 
 translateMyMsg:action(LOC.sendMessage, {"Sendmessage"}, LOC.sendMessageD, function(on_click)
