@@ -5,10 +5,7 @@ native_invoker.accept_bools_as_ints(true)
 local joaat, toast, yield, draw_debug_text, reverse_joaat = util.joaat, util.toast, util.yield, util.draw_debug_text, util.reverse_joaat
 local IS_DEBUG_BUILD = false
 
-local supported_game_version <constexpr> = "1.68-3095"
-if (game_version := menu.get_version().game) != supported_game_version then
-	util.toast($"脚本支持 {supported_game_version}. 游戏版本 {game_version}. 功能可能不可用")
-end
+local supported_game_version = "1.68-3095"
 
 local CWeaponDamageEventTrigger = memory.rip(memory.scan("E8 ? ? ? ? 44 8B 65 80 41 FF C7") + 1)
 local ppCNetworkObjectMgr__sm_Instance = memory.rip(memory.scan("48 8B 0D ? ? ? ? 45 33 C0 E8 ? ? ? ? 48 8B F8") + 3) -- credit to sapphire
@@ -786,66 +783,64 @@ local stats = {
 local bones = {31086, 24816, 40269, 45509, 0, 51826, 58271}
 
 local my_root = menu.my_root()
-local self = my_root:list("自我")
-local audio = my_root:list("音效")
-local online = my_root:list("在线")
-local players_list = my_root:list("玩家")
-local lobby = my_root:list("战局")
-local missions = my_root:list("任务")
-local vehicles = my_root:list("载具")
-local weapons = my_root:list("武器")
-local world = my_root:list("世界")
-local detections = my_root:list("检测", {}, "⚠启用所有检测可能会掉帧")
+local self = my_root:list("自我选项")
+local audio = my_root:list("音效选项")
+local online = my_root:list("在线选项")
+local players_list = my_root:list("玩家选项")
+local lobby = my_root:list("战局选项")
+local missions = my_root:list("任务选项")
+local vehicles = my_root:list("载具选项")
+local weapons = my_root:list("武器选项")
+local world = my_root:list("世界选项")
+local detections = my_root:list("检测选项", {}, "⚠启用所有检测可能会掉帧")
 local modder_detections = detections:list("作弊检测")
 local normal_detections = detections:list("正常检测")
-local protections = my_root:list("保护")
-local funfeatures = my_root:list("趣味")
-local misc = my_root:list("其他")
-local credits = misc:list("鸣谢", {}, "")
+local protections = my_root:list("保护选项")
+local funfeatures = my_root:list("趣味选项")
+local misc = my_root:list("其他选项")
 
 local menus = {}
 local hasLink = {}
-util.create_tick_handler(function()
-	for players.list() as playerID do
-    	if NETWORK_IS_SESSION_ACTIVE() and not menus[playerID] then 
-    	    menus[playerID] = menu.list(players_list, players.get_name(playerID), {}, "", function()
-				if not hasLink[playerID] then
-					menus[playerID]:link(friendly)
-					menus[playerID]:link(griefing)
-					menus[playerID]:link(antigodmode)
-					menus[playerID]:link(tpPlayer)
-					menus[playerID]:link(miscPlayer)
-					hasLink[playerID] = true
-				end
-    	    end)
-    	end
-	end
-end)
+local function player_list(playerID)
+    if NETWORK_IS_SESSION_ACTIVE() and not menus[playerID] then
+		local playerRoot = menu.player_root(playerID)
+        menus[playerID] = players_list:list(players.get_name(playerID), {}, "", function()
+			if not hasLink[playerID] then
+		 		menus[playerID]:link(menu.ref_by_rel_path(playerRoot, "JinxScript>友好"))
+				menus[playerID]:link(menu.ref_by_rel_path(playerRoot, "JinxScript>恶搞"))
+				menus[playerID]:link(menu.ref_by_rel_path(playerRoot, "JinxScript>无敌"))
+				menus[playerID]:link(menu.ref_by_rel_path(playerRoot, "JinxScript>传送"))
+				menus[playerID]:link(menu.ref_by_rel_path(playerRoot, "JinxScript>其他"))
+				hasLink[playerID] = true
+			end
+        end)
+    end
+end
 
-players.on_leave(function(playerID)
-    local playerRoot = menus[playerID]
+local function handle_player_list(playerID)
+    local ref = menus[playerID]
     if not players.exists(playerID) then
-        if playerRoot then
-            menu.delete(playerRoot)
+        if ref then
+            menu.delete(ref)
             menus[playerID] = nil
         end
     end
-end)
-
-if not SCRIPT_SILENT_START then
-	toast($"你好, {players.get_name(players.user())}!\n欢迎来到 JinxScript!\n官方 Discord: https://discord.gg/hjs5S93kQv")
 end
 
-playerHealth = self:slider("设置血量", {"playerhealth"}, "", 160, 2147483647, 328, 1, function(health)
+players.on_join(player_list)
+players.on_leave(handle_player_list)
+players.dispatch_on_join()
+
+playerHealth = self:slider("血量", {"playerhealth"}, "", 160, 2147483647, 328, 1, function(health)
 	SET_PED_MAX_HEALTH(players.user_ped(), health)
 	SET_ENTITY_HEALTH(players.user_ped(), health, players.user_ped(), 0)
 end)  
 menu.add_value_replacement(playerHealth, 328, "默认")
 
-local proofsList = self:list("无敌模式", {}, "")
+local proofsList = self:list("无敌", {}, "")
 local immortalityCmd = menu.ref_by_path("Self>Immortality")
 for proofs as data do
-    proofsList:toggle(data.name, {data.name:lower().."证明"}, "让你刀枪不入 "..data.name:lower()..".", function(toggled)
+    proofsList:toggle(data.name, {data.name:lower().."proof"}, "让你刀枪不入 "..data.name:lower()..".", function(toggled)
         data.on = toggled
     end)
 end
@@ -856,7 +851,7 @@ util.create_tick_handler(function()
     end
 end)
 
-self:toggle_loop("隐形悬浮", {"stealthlevitation"}, "实现隐形 同时悬浮隐藏你的地图光点和角色 不让其他玩家看到", function()
+self:toggle_loop("隐形", {"stealthlevitation"}, "使用悬浮隐藏你的地图坐标和角色 其他玩家看不见", function()
 	local levitation = menu.ref_by_path("Self>Movement>Levitation>Levitation")
 	local vehInvisibility = menu.ref_by_path("Vehicle>Invisibility")
 	if levitation.value then
@@ -876,7 +871,7 @@ end, function()
 	menu.ref_by_path("Vehicle>Invisibility"):setState("Disabled")
 end)
 
-local thrust = self:list("推降落伞")
+local thrust = self:list("推伞")
 local thrustSpeed = 0.0
 thrustSlider = thrust:slider_float("推力值", {"thrust"}, "", 0, 500, 0, 10, function(value)
 	thrustSpeed = value/100
@@ -887,29 +882,29 @@ thrust:toggle_loop("启用", {"parachutethrust"}, "改变跳伞时的推力速�
 	SET_PARACHUTE_TASK_THRUST(players.user_ped(), thrustSpeed)
 end)
 
-self:toggle("阻止挪座", {}, "防止在驾驶座空闲时自动移到驾驶座上 配合Stand换座", function(toggled)
+self:toggle("挪座", {}, "防止在驾驶座空闲时自动移到驾驶座上 配合Stand换座", function(toggled)
 	SET_PED_CONFIG_FLAG(players.user_ped(), 184, toggled)
 end)
 
-self:toggle_loop("立即起身", {}, "", function()
+self:toggle_loop("起身", {}, "立即起身", function()
 	SET_PED_CONFIG_FLAG(players.user_ped(), 227, IS_PLAYER_PLAYING(players.user()))
 end)
 
-self:toggle("禁用雷达", {"noradar"}, "", function(toggled)
+self:toggle("雷达", {"noradar"}, "开关雷达", function(toggled)
 	DISPLAY_RADAR(not toggled)
 end)
 
-self:toggle("牛鲨睾酮", {"bstmode"}, "没有画效和音效的牛鲨睾酮", function(toggled)
+self:toggle("睾酮", {"bstmode"}, "没有画效和音效的牛鲨睾酮", function(toggled)
 	SET_PLAYER_WEAPON_DAMAGE_MODIFIER(players.user(), toggled ? 1.44 : 0.72)
 	SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER(players.user(), toggled ? 2.0 : 1.0)
 	SET_PLAYER_MELEE_WEAPON_DEFENSE_MODIFIER(players.user(), toggled ? 0.5 : 1.0)
 end)
 
-self:toggle("快速翻滚", {"fastroll"}, "", function(toggled)
+self:toggle("翻滚", {"fastroll"}, "", function(toggled)
 	menu.ref_by_path("Self>No Combat Roll Cooldown").value = toggled
 end)
 
-self:toggle_loop("立即蹲下", {}, "按Ctrl键", function()
+self:toggle_loop("蹲下", {}, "按Ctrl键", function()
 	memory.write_int(allowDuckingAddr + 0x4DC, 1)
 	if GET_PED_STEALTH_MOVEMENT(players.user_ped()) then
 		TASK_TOGGLE_DUCK(players.user_ped(), IS_PED_DUCKING(players.user_ped()) ? TOGGLE_DUCK_OFF : TOGGLE_DUCK_ON)
@@ -920,7 +915,7 @@ end, function()
 	memory.write_int(allowDuckingAddr + 0x4DC, 0)
 end)
 
-self:action("清除动作", {"已清除的动作", "清除动作"}, "清除玩家当前动作", function()
+self:action("清除", {"clearpedtasks", "cleartasks"}, "清除玩家当前动作", function()
 	CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
 end)
 
@@ -1364,7 +1359,7 @@ end, function()
 	memory.write_int(isPlayerUsingBallisticEquipment(players.user()), 0)
 end)
 
-local spoofBlip = online:list("虚假位置")
+local spoofBlip = spoofing:list("虚假位置")
 local blipX = 0.00
 spoofBlip:slider_float("X", {"spoofedx"}, "", 0, 1000000, 0, 1, function(x_pos)
 	blipX = x_pos/100
@@ -1722,7 +1717,7 @@ annoy_tgl = annoy:toggle_loop("启用", {}, "", function()
 end)
 
 local ghostOrb = orbital:list("幽灵模式")
-ghostOrb:toggle_loop("总是", {"ghostorb"}, "自动幽灵化使用天基炮的玩家", function()
+ghostOrb:toggle_loop("一直是", {"ghostorb"}, "自动幽灵化使用天基炮的玩家", function()
 	for players.list_except() as playerID do
 		local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
 		local cam_dist = v3.distance(players.get_position(players.user()), players.get_cam_pos(playerID))
@@ -1740,7 +1735,7 @@ end, function()
 	end
 end)
 
-ghostOrb:toggle_loop("被瞄准时", {}, "被瞄准时自动幽灵使用天基炮瞄准你的玩家", function()
+ghostOrb:toggle_loop("瞄准时", {}, "被瞄准时自动幽灵使用天基炮瞄准你的玩家", function()
 	for players.list_except(true) as playerID do
 		local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
 		local pos = players.get_position(players.user())
@@ -2251,7 +2246,7 @@ accelrating = flamethrowerTune:toggle_loop("加速时", {}, "", function()
 end)
 
 local alwaysOn
-alwaysOn = flamethrowerTune:toggle_loop("总是", {}, "", function()
+alwaysOn = flamethrowerTune:toggle_loop("一直是", {}, "", function()
 	if not nitrousTgl.value then 
 		toast("请先启用氮气 :/")
 		alwaysOn.value = false
@@ -3584,7 +3579,7 @@ end)
 funfeatures:toggle("断电", {"enableblackout"}, "", function(toggled)
 	menu.trigger_commands(toggled ? "time 0" : "syncclock")
 	SET_ARTIFICIAL_LIGHTS_STATE(toggled)
-	SET_TIMECYCLE_MODIFIER(toggled ? "dlc_island_vault" : "DEFAULT")
+	SET_TIMECYCLE_MODIFIER(toggled ? "dlc_island_vault" : "默认")
 end)
 
 local fingerGun = funfeatures:list("指枪", {}, "按B射击 无伤害")
@@ -3632,18 +3627,6 @@ petJinx:action("寻找", {}, "Jinx", function()
 	end
 end)
 
-misc:hyperlink("加入", "https://discord.gg/hjs5S93kQv", "加入Discord获取有关所有最新和即将推出的消息")
-local jinxCredits = credits:list("Jinx", {}, "它被命名为 JinxScript 的原因")
-jinxCredits:hyperlink("Tiktok", "https://www.tiktok.com/@bigfootjinx")
-jinxCredits:hyperlink("Twitter", "https://twitter.com/bigfootjinx")
-jinxCredits:hyperlink("Instagram", "https://www.instagram.com/bigfootjinx")
-jinxCredits:hyperlink("Youtube", "https://www.youtube.com/channel/UC-nkxad5MRDuyz7xstc-wHQ?sub_confirmation=1")
-credits:action("Sapphire", {}, "处理我所有的自闭症 并在脚本的发展过程中通过一大堆的信息辅助我 就像用勺子喂食一样", function() end)
-credits:action("aaronlink127", {}, "帮助我理解一堆我尚未完全理解的事情 并处理我遇到的问题", function() end)
-credits:action("well in that case", {}, "为让我的生活变得更轻松 制造了pluto", function() end)
-credits:action("Scriptcat", {}, "自从我开始的时候一直在那里 并不断督促我开始学习StandsAPI和本地", function() end)
-credits:action("Pedro9558", {}, "贡献了一些他制作的东西 用于加入脚本", function() end)
-credits:action("ICYPhoenix", {}, "如果他没有将我在 Stand Discord 中的角色更改为OP Jinx Lua 我可能永远不会制作这个脚本 也不会考虑制作这个脚本", function() end)
 misc:toggle("调试模式", {"debugmode"}, "启用额外信息以查明某功能未按预期工作的原因或调试通知", function(toggled)
 	IS_DEBUG_BUILD = toggled
 end)

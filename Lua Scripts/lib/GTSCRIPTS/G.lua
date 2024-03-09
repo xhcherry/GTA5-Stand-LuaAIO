@@ -130,7 +130,11 @@ GTAC(menu.my_root(), ">>点击进入GTLua", {}, "",function () menu.trigger_comm
 GTAC(menu.my_root(), ">>重新启动GTLua", {}, "", function () restartscript() end) 
 
 Web_Http = GTH(G, ">>GTLua 官方网站", "http://gtlua.cn", "欢迎前来访问GTLua官方网站\n您需要了解的一切内容都在这里")
-enable_options = GTTG(G, ">>快捷入口", {}, "", function (on) Quick_Enable(on) end)
+enable_options = GTTG(G, ">>快捷入口", {}, "", function (on) 
+    Quick_Enable(on) 
+end)
+menu.set_value(enable_options, eo_value)
+
 changelogs = GTLP(G, ">>更新日志", {}, "", function () updatelogs() end)
 players_root = GT(G, ">>玩家选项", {}, "")
 frendlist = GT(G, ">>好友选项", {""}, "", function(); end)
@@ -6373,6 +6377,28 @@ ptfx2 = GTTG(players_root, "终极过载", {"lens"}, "", function(on)
             GRAPHICS.REMOVE_PARTICLE_FX(p, false)
             GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
         end
+
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+
+        for _, p in pairs(load_ptfxs) do
+            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
+            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
+        end
+
+
     else
         request_ptfx_asset(man_ptfx_asset)
         for _, bone in pairs(l_bones) do
@@ -6383,13 +6409,7 @@ ptfx2 = GTTG(players_root, "终极过载", {"lens"}, "", function(on)
             load_ptfxs[#load_ptfxs + 1] = fx
             GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 255, 255, 0, 255)
         end
-    end
-    if not on then
-        for _, p in pairs(load_ptfxs) do
-            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
-            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
-        end
-    else
+
         request_ptfx_asset(man_ptfx_asset)
         for _, bone in pairs(l_bones) do
             GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
@@ -6399,13 +6419,7 @@ ptfx2 = GTTG(players_root, "终极过载", {"lens"}, "", function(on)
             load_ptfxs[#load_ptfxs + 1] = fx
             GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 255, 0, 0, 255)
         end
-    end
-    if not on then
-        for _, p in pairs(load_ptfxs) do
-            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
-            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
-        end
-    else
+
         request_ptfx_asset(man_ptfx_asset)
         for _, bone in pairs(l_bones) do
             GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
@@ -6415,13 +6429,7 @@ ptfx2 = GTTG(players_root, "终极过载", {"lens"}, "", function(on)
             load_ptfxs[#load_ptfxs + 1] = fx
             GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 255, 0, 255, 255)
         end
-    end
-    if not on then
-        for _, p in pairs(load_ptfxs) do
-            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
-            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
-        end
-    else
+
         request_ptfx_asset(man_ptfx_asset)
         for _, bone in pairs(l_bones) do
             GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
@@ -6431,13 +6439,7 @@ ptfx2 = GTTG(players_root, "终极过载", {"lens"}, "", function(on)
             load_ptfxs[#load_ptfxs + 1] = fx
             GRAPHICS.SET_PARTICLE_FX_LOOPED_COLOUR(fx, 0, 255, 255, 255)
         end
-    end
-    if not on then
-        for _, p in pairs(load_ptfxs) do
-            GRAPHICS.REMOVE_PARTICLE_FX(p, false)
-            GRAPHICS.STOP_PARTICLE_FX_LOOPED(p, false)
-        end
-    else
+
         request_ptfx_asset(man_ptfx_asset)
         for _, bone in pairs(l_bones) do
             GRAPHICS.USE_PARTICLE_FX_ASSET(man_ptfx_asset)
@@ -6514,30 +6516,30 @@ end, function()
 end)
 
 magfunc = GTTG(players_root, "Mag的王座", {"magic"}, "定制级功能:)", function(on)
-    if players.get_name(players.user()) == "Mag7777v" 
-    or players.get_name(players.user()) == "Magicswordstar" 
-    or players.get_name(players.user()) == "RhymeBear" then
+
+    if WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(PLAYER.PLAYER_ID()) == "Mag7777V"
+    or WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(PLAYER.PLAYER_ID()) == "Magicwordstar" 
+    or WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(PLAYER.PLAYER_ID()) == "RhymeBear" then
 
         if on then
             menu.trigger_commands("jiajia1 on")
             menu.trigger_commands("jiajia2 on")
             menu.trigger_commands("lens on")
-            menu.trigger_commands("lightk on")
+            --menu.trigger_commands("lightk on")
             menu.trigger_commands("sans on")
         else
             menu.trigger_commands("jiajia1 off")
             menu.trigger_commands("jiajia2 off")
             menu.trigger_commands("lens off")
-            menu.trigger_commands("lightk off")
+            --menu.trigger_commands("lightk off")
             menu.trigger_commands("sans off")
         end
-        
     else
-        gtoast("暂无权使用\n至高之物 尔等何以染指")
-        return
+        gtoast("不可使用")
         menu.set_value(magfunc, false)
     end
 end)
+
 
 ptfx1.visible = false
 ptfx2.visible = false

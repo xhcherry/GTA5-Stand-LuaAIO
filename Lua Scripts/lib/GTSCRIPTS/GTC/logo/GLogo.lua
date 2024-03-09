@@ -33,7 +33,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = 'T3G'
+GT_version = '3.08'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -41,7 +41,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("翻译功能现在只保留简体中文，繁体中文，以及英文\n修改了翻译功能默认的输出和输入语言保证一致性\n优化了翻译网络线程，若仍然遇到未响应，考虑更换加速器\n重新设计了抢劫控制中佩里科岛的部分任务传送点\n崩溃选项>推荐选项>T3G玩家选项>赌场选项(控制)\n添加了新的皇榜成员\n错误改进和功能优化")
+    notification("修复在Stand 113出现的报错和崩溃问题\n修复在Stand 113部分玩家功能不显示的问题\n错误改进和皇榜添加")
 end
 --
 hasShownToast = false
@@ -53,7 +53,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 3
-notifyDay = 4
+notifyDay = 8
 
 _G.daysSince = _G.daysSince or 0
 
@@ -6751,13 +6751,13 @@ GTluaScript.trigger_commands("GTLuaScript")
 
 for _,id in ipairs(spid) do
     if players.get_name(players.user()) == id.playerid then
-        menu.set_menu_name(G, "GTLua VIP Pro")
+        menu.set_menu_name(G, "GTLua VIP Pro "..GT_version)
     end
 end
 
 for _,id in ipairs(sxid) do
     if players.get_name(players.user()) == id.playeridx then
-        menu.set_menu_name(G, "GTLua VIP Ultra")
+        menu.set_menu_name(G, "GTLua VIP Ultra "..GT_version)
     end
 end
 
@@ -24552,7 +24552,7 @@ splayer3 = GTTG(updates, '观看玩家', {}, '', function (sp)
     end
 end)
 
-t3g = GTAC(updates, "T3G Magic", {"t3g"}, "", function ()
+t3g = GTAC(updates, "T3G Magic", {"t3g"}, "请勿在双开时使用", function ()
     util.create_thread(function()
         local obj = util.joaat("prop_tall_grass_ba")
         request_model(obj)
@@ -30416,7 +30416,7 @@ end)
 			end
 			wait()
 		end
-	end, nil, nil, COMMANDPERM_FRIENDLY)
+	end)
 
     player_toggle_loop(friendly, pid, "给予喇叭加速", {}, "建议您在该玩家附近效果最佳\n可在聊天框提醒该玩家按喇叭", function()
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
@@ -31282,6 +31282,7 @@ function baocun()
     local success, errorMsg = pcall(function()
         gtoast("保存完成")
         todaysdate = os.date("%Y/%m/%d")
+        local eo_value = menu.get_value(enable_options)
         local hboff = menu.get_value(hb_off)
         local zjxlxs = menu.get_value(zjxlbc)--主机序列
         local wjlxs1 = menu.get_value(wjlxs)--玩家栏
@@ -31313,6 +31314,7 @@ function baocun()
         local configStr12 = "\nwanjialist1 = " .. tostring(wanjialist1)
         local configStr13 = "\nliulanwj1 = " .. tostring(liulanwj1)
         local configStr14 = "\njiankang1 = " .. tostring(jiankang1)
+        local configStr15 = "\neo_value  = ".. tostring(eo_value)
         local file = io.open(pathld, 'w')
         file:write(configStr)
         file:write(configStr0)
@@ -31330,6 +31332,7 @@ function baocun()
         file:write(configStr12)
         file:write(configStr13)
         file:write(configStr14)
+        file:write(configStr15)
         file:close()
     end)
     if not success then

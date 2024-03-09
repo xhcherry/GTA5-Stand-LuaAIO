@@ -20,6 +20,7 @@ hb_id = {
     {name = "FallSakura0[至臻]"},
     {name = "香橙不是橙子[至臻]"},
     {name = "肥肥企鹅[至臻]"},
+    {name = "泽熙[至臻]"},
     {name = "清欢"},
     {name = "12"},
     {name = "sjr"},
