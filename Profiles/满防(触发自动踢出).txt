@@ -1,0 +1,138 @@
+Tree Compatibility Version: 51
+Self
+	Immortality: On
+Vehicle
+	Spawner
+		Make Spawned Vehicles Indestructible: On
+		Tune Spawned Vehicles: Fully
+	Indestructible: On
+Online
+	Protections
+		Events
+			Crash Event
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Kick Event
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Modded Event
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Unusual Event
+				Block: Enabled
+			Apartment Invite
+				Block: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Force Camera Forward
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Trigger Business Raid
+				Block: Enabled
+			Start Freemode Mission
+				Block: Enabled
+			Start Freemode Mission (Not My Boss)
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Teleport To Interior
+				Block: Enabled
+			Teleport To Interior (Not My Boss)
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Give Collectible
+				Block: Enabled
+			Give Collectible (Not My Boss)
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			CEO/MC Kick
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Infinite Loading Screen
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Infinite Phone Ringing
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Cayo Perico Invite
+				Block: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Send To Job
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Vehicle Takeover
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Disable Driving Vehicles
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Kick From Vehicle
+				Block: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Kick From Interior
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Freeze
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Camera Shaking Event
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Explosion Spam
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Ragdoll Event
+				Block: Enabled
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Modded Damage Event
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Remove Weapon Event
+				Kick: Enabled
+				Love Letter Kick: Enabled
+			Raw Network Events: Warning Acknowledged
+		Detections
+			Stand User Identification: Off
+		Host-Controlled Kicks
+			Notification When Love Letter Kicked: On
+			Desync Kick Karma: On
+		Pickups
+			Cash Pickup Collected
+				Notification: On
+				Block: On
+			RP Pickup Collected
+				Notification: On
+				Block: On
+	Reactions
+		Host Change Reactions
+			Notification: Enabled
+Players
+	Settings
+		Tags
+			Self: 
+			Friend: 
+			Crew Member: 
+			In Timeout: 
+			Modder: 
+			Admin: 
+			Likely Modder: 
+			Attacked You: 
+			Host: 
+			Next Host: 
+			Script Host: 
+			Invulnerable: 
+			Indestructible Vehicle: 
+			RC Vehicle: 
+			Off The Radar: 
+			In An Interior: 
+			Spectating: 
+			Typing: 
+			Dead: 
+			Invisible: 
+			VPN: 
+World
+	Places
+		Teleport To...
+			Auto Teleport To Waypoints: On

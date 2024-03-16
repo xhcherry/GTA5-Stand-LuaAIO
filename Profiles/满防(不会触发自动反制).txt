@@ -1,0 +1,73 @@
+Tree Compatibility Version: 51
+Self
+	Immortality: On
+Vehicle
+	Spawner
+		Make Spawned Vehicles Indestructible: On
+		Tune Spawned Vehicles: Fully
+	Indestructible: On
+Online
+	Protections
+		Events
+			Unusual Event
+				Block: Enabled
+			Apartment Invite
+				Block: Enabled
+			Trigger Business Raid
+				Block: Enabled
+			Start Freemode Mission
+				Block: Enabled
+			Teleport To Interior
+				Block: Enabled
+			Give Collectible
+				Block: Enabled
+			Cayo Perico Invite
+				Block: Enabled
+			Kick From Vehicle
+				Block: Enabled
+			Ragdoll Event
+				Block: Enabled
+			Raw Network Events: Warning Acknowledged
+		Detections
+			Stand User Identification: Off
+		Host-Controlled Kicks
+			Notification When Love Letter Kicked: On
+			Desync Kick Karma: On
+		Pickups
+			Cash Pickup Collected
+				Notification: On
+				Block: On
+			RP Pickup Collected
+				Notification: On
+				Block: On
+	Reactions
+		Host Change Reactions
+			Notification: Enabled
+Players
+	Settings
+		Tags
+			Self: 
+			Friend: 
+			Crew Member: 
+			In Timeout: 
+			Modder: 
+			Admin: 
+			Likely Modder: 
+			Attacked You: 
+			Host: 
+			Next Host: 
+			Script Host: 
+			Invulnerable: 
+			Indestructible Vehicle: 
+			RC Vehicle: 
+			Off The Radar: 
+			In An Interior: 
+			Spectating: 
+			Typing: 
+			Dead: 
+			Invisible: 
+			VPN: 
+World
+	Places
+		Teleport To...
+			Auto Teleport To Waypoints: On

@@ -33,7 +33,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '3.08'
+GT_version = '3.15'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -41,7 +41,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("修复在Stand 113出现的报错和崩溃问题\n修复在Stand 113部分玩家功能不显示的问题\n错误改进和皇榜添加")
+    notification("重制>恶搞选项>近期更新>控制无敌\n重制>战局选项>全局控制无敌\n自我选项>自我娱乐>新型娱乐>我的跟班\n自我选项>自我娱乐>新型娱乐>手搓冲击波\n自我选项>自我娱乐>新型娱乐>汽车瞬杀门\n大师级星探皇榜横幅(Beta Preview)\n错误修复和皇榜添加")
 end
 --
 hasShownToast = false
@@ -53,7 +53,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 3
-notifyDay = 8
+notifyDay = 15
 
 _G.daysSince = _G.daysSince or 0
 
@@ -2058,6 +2058,8 @@ function notification(input)
         mayonotification.notify("GRANDTOURINGVIP",input)  -- 只有在标志为 false 时调用
     end
 end
+
+drawnotify = notification
 
 scripts_dir = filesystem.scripts_dir()
 if not filesystem.exists(scripts_dir) then
@@ -6761,6 +6763,12 @@ for _,id in ipairs(sxid) do
     end
 end
 
+for _,id in ipairs(masterid) do
+    if players.get_name(players.user()) == id.mid then
+        menu.set_menu_name(G, "GTLua VIP "..GT_version.." 大师星探版 (Beta Preview)")
+    end
+end
+
 local vehicleWeaponList <const> = {
 	VehicleWeapon.new("weapon_vehicle_rocket", 220),
 	VehicleWeapon.new("weapon_raypistol", 50),
@@ -8538,8 +8546,486 @@ function do_vehicle_fly()
 end
 
 --杂项
---原创功能 缝合死妈
+-- 原创功能 缝合死妈
+master_index = false
 
+function master1(f)
+    starttime = os.time()
+    local ctran = 0
+
+    tx1 = f
+    while tx1 do
+
+        util.create_thread(function()
+            wait()
+
+            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, ctran)
+
+            ctran = ctran + 8
+
+        end)
+
+        wait()
+        textX = lerp(textX, textEndPosition, speed)
+        local text = "~h~~italic~大师级星探 " .. mid
+
+        rainbowr = rainbowr + math.random(0, 3)
+        rainbowg = rainbowg + math.random(0, 3)
+        rainbowb = rainbowb + math.random(0, 3)
+        if rainbowr > 255 then
+            rainbowr = rainbowr - 255
+        end
+        if rainbowg > 255 then
+            rainbowg = rainbowg - 255
+        end
+        if rainbowb > 255 then
+            rainbowb = rainbowb - 255
+        end
+        HUD.SET_TEXT_SCALE(0.5, 0.4)
+        HUD.SET_TEXT_COLOUR(rainbowr, rainbowg, rainbowb, 255)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(text)
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(textX, 0.02)
+
+        if os.time() - starttime >= 2 then
+            tx1 = false
+        end
+
+    end
+end
+
+function master2(f)
+    starttime = os.time()
+    tx2 = f
+
+    while tx2 do
+
+        util.create_thread(function()
+            wait()
+
+            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, 255)
+        end)
+
+        wait()
+        textX = lerp(textX, textEndPosition, speed)
+        local text = "~h~~italic~大师级星探 " .. mid .. " GTLua VIP"
+
+        rainbowr = rainbowr + math.random(0, 3)
+        rainbowg = rainbowg + math.random(0, 3)
+        rainbowb = rainbowb + math.random(0, 3)
+        if rainbowr > 255 then
+            rainbowr = rainbowr - 255
+        end
+        if rainbowg > 255 then
+            rainbowg = rainbowg - 255
+        end
+        if rainbowb > 255 then
+            rainbowb = rainbowb - 255
+        end
+        HUD.SET_TEXT_SCALE(0.5, 0.4)
+        HUD.SET_TEXT_COLOUR(rainbowr, rainbowg, rainbowb, 255)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(text)
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(textX, 0.02)
+
+        if os.time() - starttime >= 2 then
+            tx2 = false
+        end
+    end
+end
+
+function master3(f)
+    starttime = os.time()
+
+    tx3 = f
+    while tx3 do
+
+        util.create_thread(function()
+            wait()
+
+            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, 255)
+        end)
+
+        wait()
+        textX = lerp(textX, textEndPosition, speed)
+        local text = "~h~~italic~大师级星探 " .. mid .. " 正在该战局"
+        HUD.SET_TEXT_SCALE(0.5, 0.4)
+        rainbowr = rainbowr + math.random(0, 3)
+        rainbowg = rainbowg + math.random(0, 3)
+        rainbowb = rainbowb + math.random(0, 3)
+        if rainbowr > 255 then
+            rainbowr = rainbowr - 255
+        end
+        if rainbowg > 255 then
+            rainbowg = rainbowg - 255
+        end
+        if rainbowb > 255 then
+            rainbowb = rainbowb - 255
+        end
+        HUD.SET_TEXT_COLOUR(rainbowr, rainbowg, rainbowb, 255)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(text)
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(textX, 0.02)
+
+        if os.time() - starttime >= 3 then
+            tx3 = false
+        end
+
+    end
+end
+
+function master4(f)
+    starttime = os.time()
+
+    tx4 = f
+    while tx4 do
+
+        util.create_thread(function()
+            wait()
+
+            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, 255)
+        end)
+
+        wait()
+        textX = lerp(textX - 0.0023, textEndPosition, speed)
+        local text = "~h~~italic~GRANDTOURINGVIP 大师级星探 " .. mid
+
+        rainbowr = rainbowr + math.random(0, 3)
+        rainbowg = rainbowg + math.random(0, 3)
+        rainbowb = rainbowb + math.random(0, 3)
+        if rainbowr > 255 then
+            rainbowr = rainbowr - 255
+        end
+        if rainbowg > 255 then
+            rainbowg = rainbowg - 255
+        end
+        if rainbowb > 255 then
+            rainbowb = rainbowb - 255
+        end
+        HUD.SET_TEXT_SCALE(0.5, 0.4)
+        HUD.SET_TEXT_COLOUR(rainbowr, rainbowg, rainbowb, 255)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(text)
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(textX, 0.02)
+
+        if os.time() - starttime >= 4 then
+            tx4 = false
+        end
+    end
+end
+
+function master5(f)
+    starttime = os.time()
+    tx5 = f
+    while tx5 do
+
+        util.create_thread(function()
+            wait()
+
+            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, 255)
+            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, 255)
+
+        end)
+
+        wait()
+        textX = lerp(textX - 0.0050, textEndPosition, speed) -- 控制左滑出速度
+        local text = "~h~~italic~GRANDTOURINGVIP 星探大师 " .. mid
+
+        rainbowr = rainbowr + math.random(0, 3)
+        rainbowg = rainbowg + math.random(0, 3)
+        rainbowb = rainbowb + math.random(0, 3)
+        if rainbowr > 255 then
+            rainbowr = rainbowr - 255
+        end
+        if rainbowg > 255 then
+            rainbowg = rainbowg - 255
+        end
+        if rainbowb > 255 then
+            rainbowb = rainbowb - 255
+        end
+        HUD.SET_TEXT_SCALE(0.5, 0.4)
+        HUD.SET_TEXT_COLOUR(rainbowr, rainbowg, rainbowb, 255)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(text)
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(textX, 0.02)
+
+        if os.time() - starttime >= 3 then
+            tx5 = false
+        end
+    end
+end
+
+function master6(f)
+    starttime = os.time()
+    local ctran = 255
+    tx6 = f
+    while tx6 do
+
+        util.create_thread(function()
+            wait()
+
+            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, ctran)
+
+            ctran = ctran - 8
+
+        end)
+
+        wait()
+        textX = lerp(textX + 0.0300, textEndPosition, speed) -- 控制左滑出速度
+        local text = "~h~~italic~GRANDTOURINGVIP 星探大师 " .. mid
+
+        rainbowr = rainbowr + math.random(0, 3)
+        rainbowg = rainbowg + math.random(0, 3)
+        rainbowb = rainbowb + math.random(0, 3)
+        if rainbowr > 255 then
+            rainbowr = rainbowr - 255
+        end
+        if rainbowg > 255 then
+            rainbowg = rainbowg - 255
+        end
+        if rainbowb > 255 then
+            rainbowb = rainbowb - 255
+        end
+        HUD.SET_TEXT_SCALE(0.5, 0.4)
+        HUD.SET_TEXT_COLOUR(rainbowr, rainbowg, rainbowb, 255)
+        HUD.SET_TEXT_FONT(0)
+        HUD.SET_TEXT_CENTRE(1)
+        HUD.SET_TEXT_OUTLINE(0)
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(text)
+        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(textX, 0.02)
+
+        if os.time() - starttime >= 3 then
+            tx6 = false
+            master_index = true
+            textX = 0
+        end
+    end
+end
+
+function mastergt(f)
+    master = f
+    while master do
+        
+        master1(f)
+        master2(f)
+        master3(f)
+        master4(f)
+        master5(f)
+        master6(f)
+        if master_index then
+            master = false
+        end
+
+    end
+end
+--
+timerT = 0
+function InstantKillDoordrawText(text, x, y)
+    HUD.SET_TEXT_SCALE(0.5, 0.35)
+    HUD.SET_TEXT_FONT(6)
+    HUD.SET_TEXT_COLOUR(0, 255, 255, 255)
+    HUD.SET_TEXT_CENTRE(true)
+    HUD.SET_TEXT_OUTLINE(true)
+    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(textToShow)
+    HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.5, 0.05, 0)
+end
+
+function request_anim_dict(dict)
+    request_time = os.time()
+    if not STREAMING.DOES_ANIM_DICT_EXIST(dict) then
+        return
+    end
+    STREAMING.REQUEST_ANIM_DICT(dict)
+    while not STREAMING.HAS_ANIM_DICT_LOADED(dict) do
+        if os.time() - request_time >= 10 then
+            break
+        end
+        util.yield()
+    end
+end
+
+function get_ped_nearby_vehicles(ped, maxVehicles)
+    maxVehicles = maxVehicles or 16
+    local pVehicleList = memory.alloc((maxVehicles + 1) * 8)
+    memory.write_int(pVehicleList, maxVehicles)
+    local vehiclesList = {}
+    for i = 1, PED.GET_PED_NEARBY_VEHICLES(ped, pVehicleList) do
+        vehiclesList[i] = memory.read_int(pVehicleList + i * 8)
+    end
+    return vehiclesList
+end
+
+function get_ped_nearby_peds(ped, maxpeds)
+    maxpeds = maxpeds or 16
+    local ppedsList = memory.alloc((maxpeds + 1) * 8)
+    memory.write_int(ppedsList, maxpeds)
+    local pedsList = {}
+    for i = 1, PED.GET_PED_NEARBY_PEDS(ped, ppedsList, 1) do
+        pedsList[i] = memory.read_int(ppedsList + i * 8)
+    end
+    return pedsList
+end
+
+
+function InstantKillDoortick()
+	local playerPed = PLAYER.PLAYER_PED_ID()
+	local playerState = PED.IS_PED_IN_ANY_VEHICLE(playerPed, false)
+	if (playerState) and (modState) then
+		local currentVehicle = PED.GET_VEHICLE_PED_IS_IN(playerPed, false)
+		if util.is_key_down(0x25) then
+			VEHICLE.SET_VEHICLE_DOOR_OPEN(currentVehicle, 0, false, false)
+			VEHICLE.SET_VEHICLE_DOOR_OPEN(currentVehicle, 0, true, false)
+
+			if (unbreakableDoor) then
+				VEHICLE._SET_VEHICLE_DOOR_BREAKABLE(currentVehicle, 0, false)
+			end
+		end
+		if util.is_key_down(0x27) then
+			VEHICLE.SET_VEHICLE_DOOR_OPEN(currentVehicle, 1, false, false)
+			VEHICLE.SET_VEHICLE_DOOR_OPEN(currentVehicle, 1, true, false)
+			if (unbreakableDoor) then
+				VEHICLE._SET_VEHICLE_DOOR_BREAKABLE(currentVehicle, 1, false)
+			end
+		end
+	end
+	if util.is_key_down(0x47) then
+		modState = not modState
+		if (modState) then
+			textToShow = "瞬杀门启动"
+			timerT = 50
+		else
+			textToShow = "瞬杀门关闭"
+			timerT = 50
+			if (unbreakableDoor) then
+				VEHICLE._SET_VEHICLE_DOOR_BREAKABLE(currentVehicle, 0, true)
+				VEHICLE._SET_VEHICLE_DOOR_BREAKABLE(currentVehicle, 1, true)
+			end
+		end
+	end
+	sameKeyModState = util.is_key_down(0x47)
+	if (timerT > 0) then
+		InstantKillDoordrawText()
+		timerT = timerT - 1
+	end
+end
+
+force = 100
+function applyForce(playerCoord, entity)
+	local coord=ENTITY.GET_ENTITY_COORDS(entity,true)
+	local dx=coord.x - playerCoord.x
+	local dy=coord.y - playerCoord.y
+	local dz=coord.z - playerCoord.z
+	local distance=math.sqrt(dx*dx+dy*dy+dz*dz)
+	local distanceRate = (force / distance) * (1.04^(1 - distance))
+	ENTITY.APPLY_FORCE_TO_ENTITY(entity, 1, 
+	distanceRate*dx,distanceRate*dy,distanceRate*dz, 
+	math.random()*math.random(-1,1),math.random()*math.random(-1,1),
+	math.random()*math.random(-1,1), true, false, true, true, true, true)
+end
+
+function shockwavetick()
+    local mypid = players.user_ped()
+	STREAMING.REQUEST_ANIM_DICT("anim@mp_player_intcelebrationmale@thumbs_up")
+	while (not STREAMING.HAS_ANIM_DICT_LOADED(
+		"anim@mp_player_intcelebrationmale@thumbs_up")) 
+		do util.yield(50) end
+    TASK.TASK_PLAY_ANIM(mypid, "anim@mp_player_intcelebrationmale@thumbs_up",
+	"thumbs_up",10.0, -2.0, -1, 52, 0, true, true, false)
+    util.yield(1600)
+    TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped(), true)
+end
+
+keyPressed = false
+function shockwavetick2()
+	if util.is_key_down(0x45) then
+		keyPressed = true
+	elseif keyPressed then
+		keyPressed = false
+		shockwavetick()
+		local player = players.user_ped()
+		local playerCoord = ENTITY.GET_ENTITY_COORDS(player,true)		
+		local Table,Count = get_ped_nearby_vehicles(player)
+		local playerVehicle = PLAYER.GET_PLAYERS_LAST_VEHICLE()
+		local inVehicle = PED.IS_PED_IN_VEHICLE(player,playerVehicle,true)
+		for k,v in ipairs(Table) do
+			if(not inVehicle or playerVehicle ~= v) then
+				applyForce(playerCoord, v)
+			end
+		end
+		Tables,Count = get_ped_nearby_peds(player)
+		for k,v in ipairs(Tables) do
+			PED.SET_PED_RAGDOLL_ON_COLLISION(v,true)
+			PED.SET_PED_RAGDOLL_FORCE_FALL(v)
+			applyForce(playerCoord, v)
+		end
+	end
+end
+
+function get_closest_ped_index(coords)
+    local closest = 0
+    local closest_dist = 1000000
+    local this_dist = 0
+    for _, ped in pairs(entities.get_all_peds_as_handles()) do 
+        this_dist = v3.distance(coords, ENTITY.GET_ENTITY_COORDS(ped))
+        if this_dist < closest_dist and not PED.IS_PED_A_PLAYER(ped) 
+		and not PED.IS_PED_FATALLY_INJURED(ped)  and
+		not PED.IS_PED_IN_ANY_VEHICLE(ped, true) then
+            closest = ped
+            closest_dist = this_dist
+        end
+    end
+    if closest ~= nil then 
+        return {closest, closest_dist}
+    else
+        return nil 
+    end
+end
+--
 function agu_parkour2()
 	if(util.is_key_down(0x4A))then -- J
 		PLAYER.GIVE_PLAYER_RAGDOLL_CONTROL(players.user_ped(), true);
@@ -9030,7 +9516,6 @@ function hengfugt(f)
         end
     end
 end
-
 
 --开发横幅
 function devhengfu(f)
@@ -10295,33 +10780,32 @@ function weedfire(pid)
 end
 
 function reolcrash(pid)
-menu.trigger_commands("kill".. PLAYER.GET_PLAYER_NAME(pid))
-menu.trigger_commands("sendtojob".. PLAYER.GET_PLAYER_NAME(pid))
-menu.trigger_commands("choke".. PLAYER.GET_PLAYER_NAME(pid))
-menu.trigger_commands("ngcrash".. PLAYER.GET_PLAYER_NAME(pid))
-menu.trigger_commands("footlettuce".. PLAYER.GET_PLAYER_NAME(pid))
-menu.trigger_commands("steamroll".. PLAYER.GET_PLAYER_NAME(pid))
-local stupid_pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid)) 
-local stupid_pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid)) stupid_pos.x = stupid_pos.x - 2
-util.create_thread(function ()
-local mod_vel = {-692292317,-1323100960,4244420235,444583674,184361638,642617954,586013744,920453016,3186376089,1030400667,240201337,
-1492612435, 3517794615, 3889340782, 3253274834,970385471, 2336777441, 184361638, 1030400667, 920453016, 240201337, 642617954, 
-586013744, 868868440, 1550581940, 3334677549, 3186376089,0xc5dd6967,0x58f77553,0x1446590a}
-for _spawn, value in pairs(mod_vel) do
-local s = {}
-for i = 1, 10, 1 do  
-s[_spawn] = CreateVehicle(value,stupid_pos,0)
-ENTITY.SET_ENTITY_AS_MISSION_ENTITY(PLAYER.GET_PLAYER_PED(pid),Entity, true, false)
-wait(0)
+    menu.trigger_commands("footlettuce" .. PLAYER.GET_PLAYER_NAME(pid))
+    menu.trigger_commands("steamroll" .. PLAYER.GET_PLAYER_NAME(pid))
+    local stupid_pos<const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+    local stupid_pos<const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
+    stupid_pos.x = stupid_pos.x - 2
+    util.create_thread(function()
+        local mod_vel = {-692292317, -1323100960, 4244420235, 444583674, 184361638, 642617954, 586013744, 920453016,
+                         3186376089, 1030400667, 240201337, 1492612435, 3517794615, 3889340782, 3253274834, 970385471,
+                         2336777441, 184361638, 1030400667, 920453016, 240201337, 642617954, 586013744, 868868440,
+                         1550581940, 3334677549, 3186376089, 0xc5dd6967, 0x58f77553, 0x1446590a}
+        for _spawn, value in pairs(mod_vel) do
+            local s = {}
+            for i = 1, 10, 1 do
+                s[_spawn] = CreateVehicle(value, stupid_pos, 0)
+                ENTITY.SET_ENTITY_AS_MISSION_ENTITY(PLAYER.GET_PLAYER_PED(pid), Entity, true, false)
+                wait(0)
+            end
+        end
+        wait(0)
+        local ar_vs = entities.get_all_vehicles_as_handles()
+        for key, value in pairs(ar_vs) do
+            entities.delete_by_handle(value)
+        end
+    end, nil)
 end
-end
-wait(0)
-local ar_vs = entities.get_all_vehicles_as_handles()
-for key, value in pairs(ar_vs) do
-entities.delete_by_handle(value)
-end
-end,nil)
-end
+
 
 function commandsc(pid)
     menu.trigger_commands("12crash".. PLAYER.GET_PLAYER_NAME(pid))
@@ -23472,52 +23956,32 @@ for _,id in ipairs(spid) do
     if name == id.playerid then
         HbMainMenu = GT(GTROOT, "GTVIP Pro Features ~(>.<)~", {}, "此选项允许两个相同的皇榜用户互相攻击")
         tobe = GTD(HbMainMenu, "请尽情享用")
-        
-        --[[HbMainMenu:action("说唱旋律 V3", {}, "", function ()
-            local c_veh = {}
-            local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-            local c_pos<const> = ENTITY.GET_ENTITY_COORDS(player)
-            c_pos.z = c_pos.z+2
-            print(c_pos.x)
-            print(c_pos.y)
-            print(c_pos.z)
-            local model_veh = {
-                1177543287,-394074634,-1137532101,-808457413,-1651067813,884422927,1269098716,
-                1337041428,2006918058,2136773105,-1775728740,-808831384,-1543762099,142944341,
-                -789894171,914654722,1221512915,850565707
-            }
-            for i, value in pairs(model_veh) do
-                util.create_thread(function ()
-                    c_veh[i] = spawn_vehicle(value, c_pos,0)
-                    print(c_veh[i])
-                    ENTITY.FREEZE_ENTITY_POSITION(c_veh[i], true)
-                    ENTITY.SET_ENTITY_COLLISION(c_veh[i], false, true)
-                    gtoast("running 1")
-                    upgrade_car(c_veh[i])
-                    VEHICLE.EXPLODE_VEHICLE(c_veh[i], true, true, false)
-                    for d = 0, 20 do
-                        VEHICLE.SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(c_veh[i], d, true)
-                        gtoast("running 2")
-                    end 
-                    local time = util.current_time_millis() + 20000
-                    while time > util.current_time_millis() do
-                        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(c_veh[i], c_pos.x, c_pos.y, c_pos.z)
-                        gtoast("running 3")
-                        for d = 0, 20 do
-                            VEHICLE.SET_VEHICLE_CAN_BREAK(c_veh[i], d, true)
-                            gtoast("running 4")
-                        end
-                        wait(100)
-                        VEHICLE.SET_VEHICLE_FIXED(c_veh[i])
-                        wait(10)
-                    end
-                end)
+
+        control_team_god2 = GTTG(HbMainMenu, "控制队友无敌", {}, "开启为给予\n关闭为移除\n此功能最好只在任务中使用 因为只控制任务内玩家\n如果队友是外挂 那么可能不起作用", function (on)
+            f = on
+            while f do
+                for pid = 0, 4 do
+                    wait()
+                    pidp = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                    PED.SET_PED_MAX_HEALTH(pidp, 10999999)
+                    ENTITY.SET_ENTITY_HEALTH(pidp, 10999999)
+                    PLAYER.SET_PLAYER_MAX_ARMOUR(pidp, 10999999)
+                    PED.SET_PED_ARMOUR(pidp, 10999999)
+                    ENTITY.SET_ENTITY_INVINCIBLE(pidp, true)
+                    PED.CLEAR_PED_BLOOD_DAMAGE(pidp)
+                    ENTITY.SET_ENTITY_PROOFS(pidp, false, false, false, false, false, false, 1, false)
+                end
             end
-            wait(20000)
-            for i, k in ipairs(c_veh) do 
-                entities.delete_by_handle(c_veh[i])
+            for pid = 0, 4 do
+                pidp = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                PED.SET_PED_MAX_HEALTH(pidp, 328)
+                ENTITY.SET_ENTITY_HEALTH(pidp, 328)
+                PLAYER.SET_PLAYER_MAX_ARMOUR(pidp, 328)
+                PED.SET_PED_ARMOUR(pidp, 328)
+                ENTITY.SET_ENTITY_INVINCIBLE(pidp, false)
+                ENTITY.SET_ENTITY_PROOFS(pidp, true, true, true, true, true, true, 1, true)
             end
-        end)]]
+        end)
 
         tcd = GTAC(HbMainMenu, "祖安花火", {"zaunfirework"}, "", function ()
             util.create_thread(function ()
@@ -24552,6 +25016,11 @@ splayer3 = GTTG(updates, '观看玩家', {}, '', function (sp)
     end
 end)
 
+beyond = GTAC(updates, "年月把拥有变做失去", {}, "", function ()
+    fireworkcrash(pid)
+    reolcrash(pid)
+end)
+
 t3g = GTAC(updates, "T3G Magic", {"t3g"}, "请勿在双开时使用", function ()
     util.create_thread(function()
         local obj = util.joaat("prop_tall_grass_ba")
@@ -25574,6 +26043,28 @@ local playerMain = GT(GTROOT, "恶搞选项", {"GTTrolling"}, "无恶不作,无�
 end)
 
 local updatetroll = GT(playerMain, "近期更新", {}, "")
+
+GTTG(updatetroll, '控制无敌', {}, '', function(w)
+    on = w
+    while on do
+        wait()
+        pidp = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        PED.SET_PED_MAX_HEALTH(pidp, 10999999)
+        ENTITY.SET_ENTITY_HEALTH(pidp, 10999999)
+        PLAYER.SET_PLAYER_MAX_ARMOUR(pidp, 10999999)
+        PED.SET_PED_ARMOUR(pidp, 10999999)
+        ENTITY.SET_ENTITY_INVINCIBLE(pidp, true)
+        PED.CLEAR_PED_BLOOD_DAMAGE(pidp)
+        ENTITY.SET_ENTITY_PROOFS(pidp, false, false, false, false, false, false, 1, false)
+    end
+    pidp = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    PED.SET_PED_MAX_HEALTH(pidp, 328)
+    ENTITY.SET_ENTITY_HEALTH(pidp, 328)
+    PLAYER.SET_PLAYER_MAX_ARMOUR(pidp, 328)
+    PED.SET_PED_ARMOUR(pidp, 328)
+    ENTITY.SET_ENTITY_INVINCIBLE(pidp, false)
+    ENTITY.SET_ENTITY_PROOFS(pidp, true, true, true, true, true, true, 1, true)
+end)
 
 GTTG(updatetroll,"载具跳舞", {}, "使对方车辆一直弹跳", function(tw)
     tiaowu=tw

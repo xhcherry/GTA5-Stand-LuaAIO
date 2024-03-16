@@ -118,7 +118,7 @@ util.create_tick_handler(function()
 end)
 
 function restartscript() 
-    package.loaded["lib.GTSCRIPTS.Q2"] = nil
+    package.loaded["lib.GTSCRIPTS.Q"] = nil
     package.loaded["lib.GTSCRIPTS.GTC.logo.GLogo"] = nil 
     package.loaded["lib.GTSCRIPTS.V"] = nil
     wait()
@@ -153,7 +153,7 @@ Heist_Control = GT(G, ">>任务选项", {}, "")
 Musiness_Banager = GT(G, ">>自动资产")
 Constructor_Lua = GT(G, ">>模组选项")
 other_options = GT(G, ">>设置选项")
-bbttt = GTH(G, ">>GTVIP四群[下载脚本]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=8qYUvJSLb2BVHZrM5Ztu_EyvZxfO5RvE&authKey=tViPuocQN00a41qIKcrWbk7VeYeJfMFPBOFLfrLx1mZdDnt9UjkHjkpC6DALzMHj&noverify=0&group_code=655413793", "")
+bbttt = GTH(G, ">>GTVIP五群[下载脚本]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oaXbT9ji8V5GbTYGAMLyvcWu0wmsL9rY&authKey=nmvivn0c1f1NX7r3HMD7Hzz45LUmab6seEnbpSMTK5ud%2BfJcdYaRX9e43orCIOZV&noverify=0&group_code=933822463", "")
 --显示UI
 GTD(players_root, "[玩家选项]")
 GTD(selflist, "[自我选项]")
@@ -168,11 +168,10 @@ GTD(FY, "[聊天选项]")
 GTD(lobbyFeats, "[世界选项]")
 GTD(Musiness_Banager, "[自动资产] 版本:808cedc")
 GTD(Constructor_Lua, "[模组选项]")
-GTD(other_options, "[其他选项]")
+GTD(other_options, "[设置选项]")
 
 local configFile <const> = filesystem.scripts_dir() .. '\\GTLuaScript\\'.. "config.ini"
 dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\Q.lua")
-
 function log(content)
     if verbose then
         util.log("[GTluaScript] " .. content)
@@ -182,8 +181,9 @@ end
 if SCRIPT_MANUAL_START then
     menu.trigger_commands("gtluascript")
 end
-gtoast("Don't tell me why 当我闭上双眼 看见了你")
-gtoast("GTLua 为开源代码 请勿相信任何所谓的破解版")
+
+gtoast("GTLua 为开源代码 不要相信任何“破解版”\n以及包括所有Stand脚本,全部为开源代码\n不要相信一些大雅之堂的小丑,比如尊*")
+gtoast("Everywhere We Go, 我有一路 清楚找我有幅图")
 
 if players.get_name(players.user()) == "SmallGodGirlo3o" then
     gtoast("欢迎回来，美丽的丢丢~")
@@ -253,8 +253,28 @@ font_size = 0.40
 GTLuaScript = menu
 util.keep_running()
 
-off_hb = false
+--[[Accessibility = GT(other_options, "辅助功能", {}, "本选项皆在帮助一些存在困难的用户\n以帮助他们自适应游戏功能和条件")
 
+Filter = GT(Accessibility, "色彩滤镜模式", {}, "帮助一些存在颜色盲辩的用户能自适应游戏颜色色彩")
+
+GTLP(Filter, "红/绿滤镜(红色盲)", {}, "", function ()
+
+end)
+
+
+GTLP(Filter, "绿/红滤镜(绿色盲)", {}, "", function ()
+
+end)
+
+GTLP(Filter, "蓝/黄滤镜(蓝色盲)", {}, "", function ()
+
+end)
+
+GTLP(Filter, "自定义色调", {}, "", function ()
+
+end)]]
+
+off_hb = false
 hb_off = GTTG(other_options, "关闭自我皇榜横幅", {}, "可点击F8保存,开启后下一次启动脚本时候将不会展示自身横幅\n不会影响其他人显示出你的皇榜横幅", function (on)
     if on then
         off_hb = true
@@ -469,6 +489,39 @@ end)
 
 menu.trigger_commands("sxcheck on")
 menu.set_visible(sxo, false)
+
+function lerp(start, destination, speed)
+    return start + ((destination - start) * speed)
+end
+
+textX = 0
+textEndPosition = 0.80 -- 文本最终停靠的X轴位置
+speed = 0.0075
+
+--星探
+notified_mid = {}
+mio = GTTG(players_root, "MIO", {"miocheck"}, "", function(f)
+    spgt = f
+    while spgt do
+        for pid = 0, 32 do
+            mid = players.get_name(pid)
+            for _,id in ipairs(masterid) do
+                if mid == id.mid and not notified_mid[id.mid] then
+                    if pid then
+                        --menu.set_value(xty, true)
+                        gtoast("GTLua VIP 星探级会员 "..mid.." 正在该战局")
+                        mastergt(f)
+                        notified_mid[id.mid] = true
+                    end
+                end
+            end
+        end
+        wait(2000)
+    end
+end)
+
+menu.trigger_commands("miocheck on")
+menu.set_visible(mio, false)
 --
 menu.link(players_root, menu.ref_by_path("Online>Rockstar ID Tools"), true)
 cs2 = menu.link(players_root, menu.ref_by_path("Online>Quick Progress>Casino"), true)
@@ -2321,6 +2374,40 @@ function paoku1()
 end
 
 -- 新型娱乐
+GTLP(newfunc, '我的跟班', {}, '靠近你指定的NPC,按E成为你选择的跟班,按X删除跟班.', function()
+    local closest = get_closest_ped_index(ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+    local ped = closest[1]
+    local dist = closest[2]
+    if dist <= 5 then
+        local pedpos = ENTITY.GET_ENTITY_COORDS(ped)
+        GRAPHICS.DRAW_LINE(ENTITY.GET_ENTITY_COORDS(players.user_ped()).x,
+            ENTITY.GET_ENTITY_COORDS(players.user_ped()).y, ENTITY.GET_ENTITY_COORDS(players.user_ped()).z, pedpos.x,
+            pedpos.y, pedpos.z, 255, 201, 212, 255)
+        GRAPHICS.DRAW_MARKER(0, pedpos.x, pedpos.y, pedpos.z + 1.5, 0, 180, 0, 0, 0, 0, .5, .5, .4, 255, 201, 212, 255,
+            true, true, 0, 0, 0, 0, false)
+        GRAPHICS.DRAW_MARKER(25, pedpos.x, pedpos.y, pedpos.z - 0.85, 0, 180, 0, 0, 180, 0, 1, 1, 1, 255, 201, 212, 255,
+            true, true, 0, 0, 0, 0, false)
+        if util.is_key_down(0x45) then
+            PED.SET_PED_AS_GROUP_MEMBER(ped, PLAYER.GET_PLAYER_GROUP(players.user()))
+            PED.SET_PED_AS_GROUP_MEMBER(ped, PLAYER.GET_PLAYER_GROUP(players.user()))
+            PED.SET_PED_NEVER_LEAVES_GROUP(ped, true)
+            PED.SET_GROUP_SEPARATION_RANGE(PLAYER.GET_PLAYER_GROUP(players.user()), 99999)
+        end
+        if util.is_key_down(0x58) then
+            util.yield(50)
+            entities.delete_by_handle(ped)
+        end
+    end
+end)
+
+GTLP(newfunc, '手搓冲击波',{""},'按E使用',function()
+    shockwavetick2()
+end)
+
+GTLP(newfunc, '汽车瞬杀门',{""},'按G激活功能\n数字键盘左键开启左门\n数字键盘右键开启右门',function()
+    InstantKillDoortick()
+end)
+
 GTTG(newfunc, "跑酷", {""}, "奔跑时(Shift+W)按住空格(0.5秒-1秒)起跳\n跳跃的高度取决于按住空格的时长", function(f)
     local state = false
     on = f
@@ -6518,7 +6605,7 @@ end)
 magfunc = GTTG(players_root, "Mag的王座", {"magic"}, "定制级功能:)", function(on)
 
     if WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(PLAYER.PLAYER_ID()) == "Mag7777V"
-    or WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(PLAYER.PLAYER_ID()) == "Magicwordstar" 
+    or WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(PLAYER.PLAYER_ID()) == "Magicswordstar" 
     or WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(PLAYER.PLAYER_ID()) == "RhymeBear" then
 
         if on then
@@ -15460,13 +15547,39 @@ end)
 
 visual_setting()
 
-GTAC(custselc, "所有人标记为傻逼", {}, "", function()
+GTTG(custselc, "全局控制无敌", {}, "若有防护性的外挂则可能不起作用", function (w)
+    on = w
+    while on do
+        for pid = 0, 31 do
+            util.yield()
+            pidp = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+            PED.SET_PED_MAX_HEALTH(pidp, 10999999)
+            ENTITY.SET_ENTITY_HEALTH(pidp, 10999999)
+            PLAYER.SET_PLAYER_MAX_ARMOUR(pidp, 10999999)
+            PED.SET_PED_ARMOUR(pidp, 10999999)
+            ENTITY.SET_ENTITY_INVINCIBLE(pidp, true)
+            PED.CLEAR_PED_BLOOD_DAMAGE(pidp)
+            ENTITY.SET_ENTITY_PROOFS(pidp, false, false, false, false, false, false, 1, false)
+        end
+    end
+    for pid = 0, 31 do
+        pidp = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        PED.SET_PED_MAX_HEALTH(pidp, 328)
+        ENTITY.SET_ENTITY_HEALTH(pidp, 328)
+        PLAYER.SET_PLAYER_MAX_ARMOUR(pidp, 328)
+        PED.SET_PED_ARMOUR(pidp, 328)
+        ENTITY.SET_ENTITY_INVINCIBLE(pidp, false)
+        ENTITY.SET_ENTITY_PROOFS(pidp, true, true, true, true, true, true, 1, true)
+    end
+end)
+
+GTAC(custselc, "全局标记傻逼", {}, "", function()
     for pid = 0,31 do
         local pedp  = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
         gametag = WIRI_HUD.CREATE_FAKE_MP_GAMER_TAG(pedp,"我是傻逼",false,false,"flakin",0)
     end
 end)
-    
+
 local allcrash = GT(custselc, "全局崩溃", {}, "魔怔选项,请您慎重!", function(); end)
 
 local allguyssound = GT(custselc, "全局声音", {}, "", function(); end)
@@ -21619,7 +21732,8 @@ util.create_thread(function ()
     end
 end)
 
-hblink = GTAC(G, ">>"..authvalue, {}, authinfo, function ()
+hblink = GTLP(G, ">>"..authvalue, {}, authinfo, function ()
+    drawnotify(authinfo)
 end)
 
 restartgt = GTAC(G, ">>重新启动", {}, "", function ()
@@ -23562,9 +23676,10 @@ end)
 GTH(other_options, "GTVIP一群[满]", "https://jq.qq.com/?_wv=1027&k=wo92Nl0a", "")
 GTH(other_options, "GTVIP二群[满]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=fecyAfmh_yGqElM5ABguu9YIVIuIiNqh&authKey=Nt%2FvK%2B2K6lEnVl3%2Bz3ZyRtoEEXXX%2FpZjLrrgPpvsXVXHsWCS2kKV%2Bir5P1Xg7f6F&noverify=0&group_code=642072208", "")
 GTH(other_options, "GTVIP三群[满]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oza9NK13Ql0LJDjvFg6x71QKAu5cDFYj&authKey=mKgjAapXxRtPTKUrwoLi%2FX%2FRovM4ufPDjh9nBhnQ6dFACL%2Fa%2Bqu7QkFTd55ipnEO&noverify=0&group_code=651502721", "")
-GTH(other_options, "GTVIP四群[加入]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=8qYUvJSLb2BVHZrM5Ztu_EyvZxfO5RvE&authKey=tViPuocQN00a41qIKcrWbk7VeYeJfMFPBOFLfrLx1mZdDnt9UjkHjkpC6DALzMHj&noverify=0&group_code=655413793", "")
-GTH(other_options, "GTVIP聊天群[加入]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566", "脚本获取渠道属禁言状态\n仅提供用户获取脚本:)\n聊天交流请加入此群:)")
-
+GTH(other_options, "GTVIP四群[满]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=8qYUvJSLb2BVHZrM5Ztu_EyvZxfO5RvE&authKey=tViPuocQN00a41qIKcrWbk7VeYeJfMFPBOFLfrLx1mZdDnt9UjkHjkpC6DALzMHj&noverify=0&group_code=655413793", "")
+GTH(other_options, "GTVIP五群[加入]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oaXbT9ji8V5GbTYGAMLyvcWu0wmsL9rY&authKey=nmvivn0c1f1NX7r3HMD7Hzz45LUmab6seEnbpSMTK5ud%2BfJcdYaRX9e43orCIOZV&noverify=0&group_code=933822463")
+GTH(other_options, "GTVIP聊天一群[无法加入]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566")
+GTH(other_options, "GTVIP聊天二群[立刻加入]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=bVV36LnHp5WtE_b4z0NES6AtML6vWJu3&authKey=Q9azpxnisaisyX%2FAEmEesFC3HK3c6dhpP9JAGEyGSPRkpcYf3%2B03T4BcZ9wz1rdw&noverify=0&group_code=311525640")
 GTH(other_options, "加入Discord", "https://discord.gg/nJjB8FtxdN", "加入Discord服务器\n言论自由免受QQ限制\n服务器中不定时发布福利~\n欢迎您的加入喔:)")
 
 require "lib.GTSCRIPTS.GTW.real"

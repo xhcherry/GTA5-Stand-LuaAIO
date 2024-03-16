@@ -20,9 +20,42 @@ devid = {{
 }, {
     playerrid = "Mag7777V"
 }, {
-    playerrid = "Magicwordstar"
+    playerrid = "Magicswordstar"
 }, {
     playerrid = ""
+},
+}
+
+masterid = {{
+    mid = "RhymeBear"   
+}, {
+    mid = "Devin9161"
+}, {
+    mid = "pengsiejw"
+}, {
+    mid = "Japan-surrender"
+}, {
+    mid = "An_owQ"
+}, {
+    mid = "Magicswordstar"
+}, {
+    mid = "Mag7777V"
+}, {
+    mid = "Gmmmmmmm7"
+}, {
+    mid = "Hf19172798591"
+}, {
+    mid = "XIAN-N"
+}, {
+    mid = "Crowowowow"
+}, {
+    mid = "Koo-JCJKTL"
+}, {
+    mid = "zitong-922"
+}, {
+    mid = "ailuopeisijia"
+}, {
+    mid = "writerOvo"
 },
 }
 
@@ -124,6 +157,20 @@ sxid = {{
     playeridx = "king-the-lfie" --]
 }, {
     playeridx = "wodejierbbying"
+}, {
+    playeridx = "Carrystory"
+}, {
+    playeridx = "lgrwu_2020"
+}, {
+    playeridx = "gyhhh15"
+},{
+    playeridx = "Oaklandau"
+}, {
+    playeridx = "Tt940312"
+}, {
+    playeridx = "An_owQ"
+}, {
+    playeridx = "hxnhwan"
 }, {
     playeridx = ""
 },
@@ -1050,7 +1097,7 @@ spid = {{
 }, {
     playerid = "ghost_1689"
 }, {
-    playerid = "jamescxk"
+    playerid = "Jamescxk"
 }, {
     playerid = "Ymy0943"
 }, {
@@ -2055,6 +2102,62 @@ spid = {{
     playerid = "147258fram"
 }, {
     playerid = "Tt940312"
+}, {
+    playerid = "GanRan_"
+}, {
+    playerid = "fengshuonibuhuil"
+}, {
+    playerid = "ljhriogr"
+}, {
+    playerid = "semigod1"
+}, {
+    playerid = "FiteXkM"
+}, {
+    playerid = "EnperorPeterZJY"
+}, {
+    playerid = "dadsawdada"
+}, {
+    playerid = "Qingyi_ovo"
+}, {
+    playerid = "xiaoyuhuichushou"
+}, {
+    playerid = "stan-daidai"
+}, {
+    playerid = "2TAKE_STANDUser"
+}, {
+    playerid = "SuanAior"
+}, {
+    playerid = "Coolboiledrice"
+}, {
+    playerid = "GQ2022"
+}, {
+    playerid = "Carrystory"
+}, {
+    playerid = "lgrwu_2020"
+}, {
+    playerid = "gyhhh15"
+}, {
+    playerid = "HongKong_AimEsp"
+}, {
+    playerid = "Lmz31676"
+}, {
+    playerid = "SAMHO1127"
+}, {
+    playerid = "GTA-zs7000"
+}, {
+    playerid = "ma___zong666"
+}, {
+    playerid = "Anoxia1025"
+}, {
+    playerid = "lgnoran"
+}, {
+    playerid = "DemonBladeHusky4"
+}, {
+    playerid = "ftrsydszfvgnotif"
+}, {
+    playerid = "hxnhwan"
+}, {
+    playerid = "writerOvo"
 }, {
     playerid = ""
 },

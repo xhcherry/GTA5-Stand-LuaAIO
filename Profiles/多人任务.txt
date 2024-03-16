@@ -1,0 +1,267 @@
+Tree Compatibility Version: 51
+Self
+	Weapons
+		Infinite Ammo: On
+	Immortality: On
+Vehicle
+	Spawner
+		Make Spawned Vehicles Indestructible: On
+		Tune Spawned Vehicles: Fully
+	Indestructible: On
+Online
+	Enhancements
+		Disable Idle/AFK Kick: On
+	Protections
+		Events
+			Crash Event
+				Write To Console: Disabled
+			Kick Event
+				Write To Console: Disabled
+			Modded Event
+				Notification: Disabled
+				Block: Disabled
+				Write To Console: Disabled
+			Unusual Event
+				Notification: Disabled
+				Block: Disabled
+				Write To Console: Disabled
+			Apartment Invite
+				Notification: Disabled
+				Write To Console: Disabled
+			Force Camera Forward
+				Notification: Disabled
+				Write To Console: Disabled
+			Trigger Business Raid
+				Notification: Disabled
+				Write To Console: Disabled
+			Start Freemode Mission
+				Notification: Disabled
+				Write To Console: Disabled
+			Start Freemode Mission (Not My Boss)
+				Notification: Disabled
+				Write To Console: Disabled
+			Teleport To Interior
+				Notification: Disabled
+				Write To Console: Disabled
+			Teleport To Interior (Not My Boss)
+				Notification: Disabled
+				Write To Console: Disabled
+			Give Collectible
+				Notification: Disabled
+				Write To Console: Disabled
+			Give Collectible (Not My Boss)
+				Notification: Disabled
+				Write To Console: Disabled
+			CEO/MC Kick
+				Notification: Disabled
+				Write To Console: Disabled
+			Infinite Loading Screen
+				Notification: Disabled
+				Write To Console: Disabled
+			Infinite Phone Ringing
+				Notification: Disabled
+				Write To Console: Disabled
+			Cayo Perico Invite
+				Notification: Disabled
+				Write To Console: Disabled
+			Send To Job
+				Notification: Disabled
+				Write To Console: Disabled
+			Vehicle Takeover
+				Notification: Disabled
+				Write To Console: Disabled
+			Disable Driving Vehicles
+				Notification: Disabled
+				Write To Console: Disabled
+			Kick From Vehicle
+				Notification: Disabled
+				Block: Enabled
+				Write To Console: Disabled
+			Kick From Interior
+				Notification: Disabled
+				Write To Console: Disabled
+			Freeze
+				Notification: Disabled
+				Write To Console: Disabled
+			Camera Shaking Event
+				Notification: Disabled
+				Block: Disabled
+				Write To Console: Disabled
+			Explosion Spam
+				Notification: Disabled
+				Block: Disabled
+				Write To Console: Disabled
+			Ragdoll Event
+				Notification: Disabled
+				Block: Enabled
+				Write To Console: Disabled
+			Modded Damage Event
+				Notification: Disabled
+				Block: Disabled
+				Write To Console: Disabled
+			Remove Weapon Event
+				Notification: Disabled
+				Write To Console: Disabled
+			Raw Network Events: Warning Acknowledged
+		Detections
+			Classifications
+				Modder
+					Notification: Disabled
+					Write To Console: Disabled
+				Admin
+					Notification: Disabled
+					Write To Log File: Disabled
+					Write To Console: Disabled
+			Stand User Identification: Off
+			Modded Health
+				Notification: Disabled
+				Write To Console: Disabled
+			Dead For Too Long
+				Notification: Disabled
+				Write To Console: Disabled
+			Off The Radar For Too Long
+				Notification: Disabled
+				Write To Console: Disabled
+			Too Much Armour
+				Notification: Disabled
+				Write To Console: Disabled
+			Presence Spoofing
+				Notification: Disabled
+				Write To Console: Disabled
+			Rockstar Employee RID
+				Notification: Disabled
+				Write To Console: Disabled
+			Take-Two IP Address
+				Notification: Disabled
+				Write To Console: Disabled
+			Spoofed Host Token (Aggressive)
+				Notification: Disabled
+				Write To Console: Disabled
+			Spoofed Host Token (Sweet Spot)
+				Notification: Disabled
+				Write To Console: Disabled
+			Spoofed Host Token (Handicap)
+				Notification: Disabled
+				Write To Console: Disabled
+			Spoofed Host Token (Other)
+				Notification: Disabled
+				Write To Console: Disabled
+			Modded Character Model
+				Notification: Disabled
+				Write To Console: Disabled
+			Attacking While Invulnerable
+				Notification: Disabled
+				Write To Console: Disabled
+			Damage Multiplier
+				Notification: Disabled
+				Write To Console: Disabled
+			Super Jump
+				Notification: Disabled
+				Write To Console: Disabled
+			Rockstar Developer Flag
+				Notification: Disabled
+				Write To Console: Disabled
+			Rockstar QA Flag
+				Notification: Disabled
+				Write To Console: Disabled
+			Cheater Flag
+				Notification: Disabled
+				Write To Console: Disabled
+			Invalid Rank/RP
+				Notification: Disabled
+				Write To Console: Disabled
+			RP-Rank Mismatch
+				Notification: Disabled
+				Write To Console: Disabled
+			Spoofed Rank
+				Notification: Disabled
+				Write To Console: Disabled
+			Blocked Network Event
+				Notification: Disabled
+				Write To Console: Disabled
+			Modded Driveby Weapon
+				Notification: Disabled
+				Write To Console: Disabled
+			Chatting Without Typing
+				Notification: Disabled
+				Write To Console: Disabled
+			Bounty Spam
+				Notification: Disabled
+				Write To Console: Disabled
+			Modded Bounty
+				Notification: Disabled
+				Write To Console: Disabled
+			Modded Explosion
+				Notification: Disabled
+				Write To Console: Disabled
+			Modded Organisation Name
+				Notification: Disabled
+				Write To Console: Disabled
+			Hidden From Player List
+				Notification: Disabled
+				Write To Console: Disabled
+			Love Letter Lube
+				Notification: Disabled
+				Write To Console: Disabled
+			Modded Data
+				Notification: Disabled
+				Write To Console: Disabled
+		Session Script Start
+			Arcade Game
+				Notification: Disabled
+				Block: Disabled
+				Write To Console: Disabled
+			Removed Freemode Activity
+				Notification: Disabled
+				Write To Console: Disabled
+			Session Breaking
+				Notification: Disabled
+				Write To Console: Disabled
+			Service
+				Notification: Disabled
+				Write To Console: Disabled
+			Disable Passive Mode
+				Notification: Disabled
+				Write To Console: Disabled
+		Pickups
+			Invalid Pickup Collected
+				Notification: Off
+				Block: Off
+				Write To Console: Off
+		Block Join Karma
+			Notification: Off
+	Reactions
+		Vote Kick Reactions
+			Voting To Kick Me
+				Notification: Disabled
+				Write To Console: Disabled
+		Report Reactions
+			Write To Console: Disabled
+		Bounty Reactions
+			Write To Console: Disabled
+		Particle Spam Reactions
+			Write To Console: Disabled
+Players
+	Settings
+		Tags
+			Self: 
+			Friend: 
+			Crew Member: 
+			In Timeout: 
+			Modder: 
+			Admin: 
+			Likely Modder: 
+			Attacked You: 
+			Host: 
+			Next Host: 
+			Script Host: 
+			Invulnerable: 
+			Indestructible Vehicle: 
+			RC Vehicle: 
+			Off The Radar: 
+			In An Interior: 
+			Spectating: 
+			Typing: 
+			Dead: 
+			Invisible: 
+			VPN: 
