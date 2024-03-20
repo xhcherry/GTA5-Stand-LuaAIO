@@ -57,26 +57,22 @@ worldlist = menu.list(menu.my_root(), "世界选项", {})
 cheater_detection = menu.list(menu.my_root(), "作弊者检测", {})
 otherlist = menu.list(menu.my_root(), "其他选项", {})
 
+
 --自我选项
 health_opt = menu.list(self_option, "恢复选项", {}, "")
-    SetMaxHealth = menu.list(health_opt, "设置最大生命值", {}, "")
-        local moddedHealth = 328
-        menu.toggle_loop(SetMaxHealth, "设置最大生命值", {}, "", function ()
-            PED.SET_PED_MAX_HEALTH(PLAYER.PLAYER_PED_ID(), moddedHealth)
-            ENTITY.SET_ENTITY_HEALTH(PLAYER.PLAYER_PED_ID(), moddedHealth, 0)
-            local health = ENTITY.GET_ENTITY_HEALTH(PLAYER.PLAYER_PED_ID())
-            local strg = "~b~ HEALTH ~w~ "..health
-            draw_string(strg, 0.03, 0.05, 0.6, 4)
-        end)
-        menu.slider(SetMaxHealth, "设置数值", {"moddedhealth"}, "", 100, 9000, 328, 50, function(value)
-            moddedHealth = value
-        end)
     menu.toggle(health_opt, "无敌", {}, "", function(toggled)
         invincible_self(toggled)
     end)
     menu.toggle_loop(health_opt, "半无敌", {}, "不等于无敌,可由高致命性武器击杀", function()
         ENTITY.SET_ENTITY_HEALTH(PLAYER.PLAYER_PED_ID(), 328)
     end)
+    SetMaxHealth = menu.list(health_opt, "设置最大生命值", {}, "")
+        menu.toggle_loop(SetMaxHealth, "最大生命值", {}, "", function ()
+            max_health_loop()
+        end)
+        menu.slider(SetMaxHealth, "设置数值", {"moddedhealth"}, "", 100, 9000, 328, 50, function(value)
+            set_max_health(value)
+        end)
     menu.click_slider(health_opt, "自定义血量", {"setblood"}, "血量低于100会死亡", 1, 1000, 328, 1, function(val)
         ENTITY.SET_ENTITY_HEALTH(PLAYER.PLAYER_PED_ID(), val)
     end)
@@ -135,11 +131,8 @@ health_opt = menu.list(self_option, "恢复选项", {}, "")
     menu.toggle_loop(health_opt, '自动加血', {}, '一直加血直到您的血被加满.', function()
         autoBloodReture()
     end)
-    menu.toggle_loop(health_opt, "在掩体后时补充生命值", {}, "", function()
-            healthincover()
-        end, function()
-            PLAYER1._SET_PLAYER_HEALTH_RECHARGE_LIMIT(PLAYER.PLAYER_ID(), 0.25)
-            PLAYER.SET_PLAYER_HEALTH_RECHARGE_MULTIPLIER(PLAYER.PLAYER_ID(), 1.0)
+    menu.toggle(health_opt, "在掩体后时补充生命值", {}, "", function(toggled)
+        healthincover(toggled)
     end)
 
 movement_opt = menu.list(self_option, "移动选项", {}, "")
@@ -344,8 +337,8 @@ action_list = menu.list(self_option, "人物行为", {}, "")
     menu.toggle_loop(action_list, "空中游泳", {}, "", function()
         PED.SET_PED_CONFIG_FLAG(PLAYER.PLAYER_PED_ID(), 65, 81)
     end)
-    menu.toggle_loop(action_list, "太空步", {}, "", function(on)
-        Space_walk(on)
+    menu.toggle_loop(action_list, "太空步", {}, "", function()
+        Space_walk()
     end)
     menu.toggle(action_list, "忍者跑",{}, "忍者跑步动作",function(on)
         renzhepao(on)
@@ -579,10 +572,8 @@ tripped = menu.list(self_option, '摔倒', {}, '')
     end)
 
 trailsOpt = menu.list(self_option,"轨迹", {}, "")
-    menu.toggle_loop(trailsOpt,"轨迹", {"trails"}, "", function()
-            Character_locus()
-        end, function()
-            stop_Character_locus()
+    menu.toggle(trailsOpt,"轨迹", {"trails"}, "", function(toggle)
+        Character_locus(toggle)
     end)
     menu.rainbow(menu.colour(trailsOpt,"颜色", {"trailcolour"}, "",locus_colour, false, function(newColour)
         locus_color(newColour)
@@ -953,12 +944,8 @@ musiclist = menu.list(online, "音乐", {}, "")
         music(on)
     end)
     menu.toggle_loop(musiclist, "蹦迪", {}, "", function()
-        HUD.FLASH_MINIMAP_DISPLAY_WITH_COLOR(hud_rgb_colors[hud_rgb_index])
-        hud_rgb_index = hud_rgb_index + 1
-        if hud_rgb_index == 4 then
-            hud_rgb_index = 1
-        end
-        util.yield(200)
+        HUD.FLASH_MINIMAP_DISPLAY_WITH_COLOR(math.random(26))
+        util.yield(100)
     end)
 
 personal_vehicle = menu.list(online, '个人载具', {}, '')
@@ -1261,6 +1248,15 @@ veh_movement = menu.list(vehicle, '移动选项', {}, '')
         else
             VEHICLE.SET_VEHICLE_REDUCE_GRIP(last_vehicle, false)
             VEHICLE1._SET_VEHICLE_REDUCE_TRACTION(last_vehicle, 100)
+        end
+    end)
+    menu.toggle_loop(veh_movement, "漂移模式", {}, "按住shift键进行漂移", function()
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(PLAYER.PLAYER_ID()), false)
+        if PAD.IS_CONTROL_PRESSED(0, 21) then
+            VEHICLE.SET_VEHICLE_REDUCE_GRIP(vehicle, true)
+            VEHICLE.SET_VEHICLE_REDUCE_GRIP_LEVEL(vehicle, 0.0)
+        else
+            VEHICLE.SET_VEHICLE_REDUCE_GRIP(vehicle, false)
         end
     end)
     cruise_control = menu.list(veh_movement, "定速巡航", {}, "")
@@ -1620,15 +1616,6 @@ menu.toggle(vehicle, "防止载具被锁定", {}, "", function(toggled)
     local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(PLAYER.PLAYER_ID()), false)
     VEHICLE1._SET_VEHICLE_CAN_BE_LOCKED_ON(vehicle, not toggled, false)
 end)
-menu.toggle_loop(vehicle, "漂移模式", {}, "按住shift键进行漂移", function()
-    local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(PLAYER.PLAYER_ID()), false)
-    if PAD.IS_CONTROL_PRESSED(0, 21) then
-        VEHICLE.SET_VEHICLE_REDUCE_GRIP(vehicle, true)
-        VEHICLE.SET_VEHICLE_REDUCE_GRIP_LEVEL(vehicle, 0.0)
-    else
-        VEHICLE.SET_VEHICLE_REDUCE_GRIP(vehicle, false)
-    end
-end)
 menu.toggle_loop(vehicle, "载具快速射击", {}, "", function()
     local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(PLAYER.PLAYER_ID()), false)
     if vehicle ~= nil then
@@ -1677,7 +1664,7 @@ menu.toggle_loop(vehicle, "自动翻转", {}, "如果你的车辆颠倒或侧面
     vehicle_automatically()
 end)
 menu.toggle_loop(vehicle, "随机升级", {}, "", function()
-    randomupdatcar_self()
+    randomupdatcar(PLAYER.PLAYER_ID())
     util.yield(500)
 end)
 
@@ -2416,7 +2403,7 @@ menu.toggle_loop(Task_robbery, '自动出租车', {}, '自动传送到出租车�
         end)
 
 menu.toggle_loop(Task_robbery, "自动CEO/首领", {},"", function()
-    if not util.is_session_started() then return end 
+    if not NETWORK.NETWORK_IS_SESSION_STARTED() then return end 
     for _, label in pairs(CEOLabels) do
         if IS_HELP_MSG_DISPLAYED(label) then
             if players.get_boss(PLAYER.PLAYER_ID()) == -1 then menu.trigger_commands("ceostart") end
@@ -2724,6 +2711,9 @@ weapon_fun = menu.list(weapons, "武器娱乐", {}, "")
 silent_aimbotroot = menu.list(weapons, "武器自瞄", {}, "")
     require "lib.sakuralib.Aimbot"
 
+menu.toggle(weapons, "锁定玩家", {}, "允许使用制导发射器锁定玩家", function(toggled)
+    lock_player(toggled)
+end)
 menu.toggle_loop(weapons, "双发", {}, "在同一时间内射出两枪", function()
     if PED.IS_PED_SHOOTING(PLAYER.PLAYER_PED_ID()) then
         PED.FORCE_PED_AI_AND_ANIMATION_UPDATE(PLAYER.PLAYER_PED_ID())
@@ -2810,7 +2800,7 @@ menu.list_action(weapons, "更改弹药效果", {}, "", explosion_names, functio
     change_ammo_effect(index, PLAYER.PLAYER_ID())
 end)
 
-menu.toggle_loop(weapons, "快速更换武器", {}, "武器更换速度更快.", function()
+menu.toggle_loop(weapons, "快速切枪", {}, "武器更换速度更快.", function()
     if TASK.GET_IS_TASK_ACTIVE(PLAYER.PLAYER_PED_ID(), 56) then
         PED.FORCE_PED_AI_AND_ANIMATION_UPDATE(PLAYER.PLAYER_PED_ID())
     end
@@ -2867,6 +2857,22 @@ menu.toggle_loop(weapons, '翻滚换弹', {}, '', function()
 end)
 
 ----------娱乐选项
+Superhuman = menu.list(funfeatures, "超能者", {}, "")
+    menu.toggle_loop(Superhuman, "闪电侠", {}, '', function()
+        flash_man()
+    end)
+    menu.toggle_loop(Superhuman, "外星人", {}, '', function()
+        alien_man()
+    end)
+    menu.toggle_loop(Superhuman, "白月光", {}, '', function()
+        moonlight_man()
+    end)
+    menu.toggle_loop(Superhuman, "太阳花", {}, '', function()
+        sunflower_man()
+    end)
+menu.toggle_loop(funfeatures, "万象天征", {}, '按E触发\n一股神秘的冲击波,不知道会发生什么...', function()
+    vientiane_explosion()
+end)
 menu.action(funfeatures, '野兽模式', {}, '当然,这是虚假的野兽', function()
     beast_mode()
 end)
@@ -2881,6 +2887,9 @@ menu.toggle_loop(funfeatures, "鱼雨", {}, '', function()
 end)
 menu.action(funfeatures, "通往天堂", {}, "", function()
     To_Heaven()
+end)
+menu.action(funfeatures, "军演阅兵", {}, "", function()
+    parade()
 end)
 menu.toggle_loop(funfeatures, "军演轰炸", {}, "射击你要轰炸的地点", function()
     Military_exercises()
@@ -3615,18 +3624,15 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
         menu.action(green_soda_player, "绿~汽水！", {}, "生成随机一辆绿载具和少数的汽水罐", function()
             local sprunk_vehicle = random_spawn_vehicles[math.random(1, #random_spawn_vehicles)]
             local vehicle = spawn_vehicle_for_player(pid, sprunk_vehicle.model)
-            if vehicle then
-                sprunkify_vehicle(vehicle)
-                for i = 1,10,1 do
-                    sprunk_raindrop_vehicle(vehicle)
-                end
+            sprunkify_vehicle(vehicle)
+            for i = 1,10,1 do
+                sprunk_raindrop_vehicle(vehicle)
             end
         end)
         menu.action(green_soda_player, "喷上绿漆", {}, "把他的载具染成绿色!", function()
-            local vehicle = get_player_vehicle_in_control(pid)
-            if vehicle then
-                sprunkify_vehicle(vehicle)
-            end
+            local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED(pid), false)
+            request_control(vehicle)
+            sprunkify_vehicle(vehicle)
         end)
         menu.action(green_soda_player, "汽水罐", {}, "在玩家附近掉落一罐汽水", function()
             sprunk_raindrop_player(pid)
@@ -3652,10 +3658,7 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
             local coords = players.get_position(pid)
             coords.z = coords.z + 1.5
             local figure = MISC.GET_HASH_KEY("vw_prop_vw_colle_prbubble")
-            STREAMING.REQUEST_MODEL(figure)
-            if STREAMING.HAS_MODEL_LOADED(figure) == false then  
-                STREAMING.REQUEST_MODEL(figure)
-            end
+            request_model(figure)
             OBJECT.CREATE_AMBIENT_PICKUP(-1009939663, coords.x, coords.y, coords.z, 0, 1, figure, false, true)
             util.yield(rpDropDelay)
         end)
@@ -3668,10 +3671,7 @@ players.on_join(function(pid)--玩家离开后列表存在,循环执行时判断
             local coords = players.get_position(pid)
             coords.z = coords.z + 1.5
             local card = MISC.GET_HASH_KEY("vw_prop_vw_lux_card_01a")
-            STREAMING.REQUEST_MODEL(card)
-            if STREAMING.HAS_MODEL_LOADED(card) == false then  
-                STREAMING.REQUEST_MODEL(card)
-            end
+            request_model(card)
             OBJECT.CREATE_AMBIENT_PICKUP(-1009939663, coords.x, coords.y, coords.z, 0, 1, card, false, true)
             util.yield(cardDropDelay)
         end)
@@ -5116,6 +5116,9 @@ deathlog_lt = menu.list(protection,'死亡日志', {}, '记录谁杀了你')
 menu.toggle(protection, "防崩视角", {}, "", function(toggled)
     anti_crash_cam(toggled)
 end)
+menu.toggle_loop(protection, "禁止镜头抖动", {}, "", function()
+    block_cam_shake()
+end)
 
 -------事件保护
 protex = menu.list(protection, "事件保护", {}, "")
@@ -5136,21 +5139,7 @@ protex = menu.list(protection, "事件保护", {}, "")
 
     auto_kick_adBot = menu.toggle(protection, "自动踢出广告机", {}, "配置[√]\n自动踢出广告机/事件检测玩家", function(on)
         kick_adBot = on
-        end)
-        chat.on_message(function(sender, reserved, text, team_chat, networked, is_auto)
-            local newtext = string.lower(text)--转小写
-            local name = players.get_name(sender)
-            if kick_adBot then
-                for _, word in pairs(Bot_adwords) do 
-                    if string.contains(newtext, word) then
-                        util.toast("检测到广告机"..name)
-                        util.log("检测到广告机"..name)
-                        menu.trigger_commands("kick " .. name)
-                    end
-                end
-            end
-    end)
-    menu.set_value(auto_kick_adBot, config_active7)
+    end);menu.set_value(auto_kick_adBot, config_active7)
 
     ridicule_list = menu.list(protex, "攻击嘲讽", {}, "")
         menu.action(ridicule_list, "修改内容", {}, "", function()
@@ -5175,38 +5164,33 @@ protex = menu.list(protection, "事件保护", {}, "")
         menu.toggle_loop(pool_limiter, "启用节流器", {}, "", function()
             entity_limit()
         end)
-        menu.slider(pool_limiter, "Ped池", {"pedslimit"}, "默认为175", 0, 256, 50, 1, function(amount)
+        menu.slider(pool_limiter, "Ped池", {"pedslimit"}, "默认为175", 0, 256, 100, 1, function(amount)
             ped_limit = amount
         end)
-        menu.slider(pool_limiter, "载具池", {"vehlimit"}, "默认为127", 0, 300, 127, 1, function(amount)
+        menu.slider(pool_limiter, "载具池", {"vehlimit"}, "默认为127", 0, 300, 180, 1, function(amount)
             veh_limit = amount
         end)
-        menu.slider(pool_limiter, "物体池", {"objlimit"}, "默认为500", 0, 2300, 200, 1, function(amount)
+        menu.slider(pool_limiter, "物体池", {"objlimit"}, "默认为500", 0, 2300, 500, 1, function(amount)
             obj_limit = amount
         end)
 
     mk2 = menu.list(protex, "MK-2拦截", {}, "")
-        menu.toggle(mk2, "开启报应", {},"自动处理附近mk2用户载具",function(on)
-            if on then
-                oppressorKarma = true
-                oppKarma()
-            else
-                oppressorKarma = false
-            end
+        menu.toggle_loop(mk2, "开启报应", {},"自动处理附近mk2用户载具",function()
+            oppKarma()
         end)
         menu.toggle(mk2, "目标朋友", {},"这也将针对你的朋友.",function(on)
-            oppressorFriendKarma = on
+            set_mk2_friend(on)
         end)
         menu.toggle(mk2, "目标你自己", {},"这也将针对你自己.",function(on)
-            oppressorYourselfKarma = on
+            set_mk2_self(on)
         end)
-        menu.list_select(mk2, "报应方式", {}, "选择一种方式",optionsMK2Karma, 1, function(value, menu_name, prev_value, click_type)
-            selectedKarmaMK2 = gm[value]
+        menu.list_select(mk2, "报应方式", {}, "选择一种方式",optionsMK2Karma, 1, function(value)
+            set_mk2_select(value)
         end)
 
     r_admin = menu.list(protex, "R*管理人员加入反应", {}, "")
         menu.toggle_loop(r_admin, "R*管理人员加入提示", {}, "", function()
-            if util.is_session_started() then
+            if NETWORK.NETWORK_IS_SESSION_STARTED() then
                 for _, pid in players.list(false, true, true) do 
                     if players.is_marked_as_admin(pid) then 
                         util.toast("检测到管理员加入哦！")
@@ -5215,7 +5199,7 @@ protex = menu.list(protection, "事件保护", {}, "")
             end
         end)
         menu.toggle_loop(r_admin, "R*管理人员加入反应", {}, "当管理员加入时自动加入新战局", function()
-            if util.is_session_started() then
+            if NETWORK.NETWORK_IS_SESSION_STARTED() then
                 for _, pid in players.list(false, true, true) do 
                     if players.is_marked_as_admin(pid) then 
                         util.toast("检测到管理员!5秒后加入新战局!")
@@ -5256,8 +5240,23 @@ protex = menu.list(protection, "事件保护", {}, "")
             MISC.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME("fm_content_xmas_mugger")
         end
     end)
+    menu.toggle_loop(protex, "阻止克隆", {}, "阻止生成的克隆", function()
+        for _, ped in ipairs(entities.get_all_peds_as_handles()) do
+            if (ENTITY.GET_ENTITY_MODEL(ped) == util.joaat("mp_f_freemode_01") or ENTITY.GET_ENTITY_MODEL(ped) == util.joaat("mp_m_freemode_01")) and not PED.IS_PED_A_PLAYER(ped) then
+                delete_entity(ped)
+                util.toast("已删除克隆")
+            end
+        end
+    end)
     
     menu.divider(protex, "网络事件")
+    menu.toggle(protex, "全局超时", {}, "超时所有人", function(toggled)
+		if toggled then
+            NETWORK.NETWORK_START_SOLO_TUTORIAL_SESSION()--创建新手教程战局以取消与其他玩家同步
+        else                  
+            NETWORK.NETWORK_END_TUTORIAL_SESSION()
+        end
+	end)
 	menu.toggle(protex, "阻止网络事件", {}, "阻止网络事件传输", function(on_toggle)
 		local BlockNetEvents = menu.ref_by_path("Online>Protections>Events>Raw Network Events>Any Event>Block>Enabled")
 		local UnblockNetEvents = menu.ref_by_path("Online>Protections>Events>Raw Network Events>Any Event>Block>Disabled")
@@ -6112,6 +6111,12 @@ all_npc = menu.list(worldlist, "NPC选项", {})
     menu.toggle_loop(all_npc, '反向驾驶', {}, '强制所有NPC反向行驶', function()
         force_npc_reverse_travel()
     end)
+    menu.toggle_loop(all_npc, "强制冻结NPC", {}, "", function()
+        force_freeze_npc()
+    end)
+    menu.toggle_loop(all_npc, "冻结NPC", {}, "禁止npc移动", function()
+        freeze_npc()
+    end)
 
     pedToggleLoops = {
         {name = '摔倒NPC', command = 'ragdollPeds', description = '让附近的所有NPC都摔倒.', action = function(ped)
@@ -6234,42 +6239,25 @@ visuallist = menu.list(worldlist, "视觉效果", {})
 
 ----作弊者检测
 menu.divider(cheater_detection,"检测列表")
-pin1 = menu.toggle_loop(cheater_detection, "玩家无敌检测", {}, "检测是否在使用无敌.", function()
+menu.toggle_loop(cheater_detection, "玩家语音检测", {}, "检测谁在游戏聊天中说话", function()
+    talking_detection()
+end)
+menu.toggle_loop(cheater_detection, "玩家无敌检测", {}, "检测是否在使用无敌.", function()
     god_detection()
 end)
-pin2 = menu.toggle_loop(cheater_detection, "载具无敌检测", {}, "检测载具是否在使用无敌.", function()
+menu.toggle_loop(cheater_detection, "载具无敌检测", {}, "检测载具是否在使用无敌.", function()
     car_god_detection()
 end)
-pin3 = menu.toggle_loop(cheater_detection, "未发布载具检测", {}, "检测是否有人在驾使尚未发布的车辆.", function()
-    unreleased_car_detection()
-end)
-pin4 = menu.toggle_loop(cheater_detection, "无法获得武器检测", {}, "检测是否有人使用无法在线获得的武器.", function()
-    cantgetweapon_detection()
-end)
-pin5 = menu.toggle_loop(cheater_detection, "无法获得载具检测", {}, "检测是否有人正在使用无法在线获得的车辆.", function()
-    cantgetvar_detection()
-end)
-pin6 = menu.toggle_loop(cheater_detection, "室内使用武器检测", {}, "检测玩家是否在室内使用武器.", function()
+menu.toggle_loop(cheater_detection, "室内使用武器检测", {}, "检测玩家是否在室内使用武器.", function()
     usingweapon_detection()
 end)
-pin7 = menu.toggle_loop(cheater_detection, "超级驾驶检测", {}, "检测是否有在修改载具车速.", function()
-    supercar_detection()
-end)
-pin8 = menu.toggle_loop(cheater_detection, "超级跑检测", {}, "检测玩家是否在使用超级跑（奔跑速度不合常理）", function()
-    superrun_detection()
-end)
-pin9 = menu.toggle_loop(cheater_detection, "观看检测", {}, "检测是否有人在观看你.", function()
+menu.toggle_loop(cheater_detection, "观看检测", {}, "检测是否有人在观看你.", function()
     lookingyou_detection()
 end)
-pin10 = menu.toggle_loop(cheater_detection, "传送检测", {}, "检测玩家是否使用了传送", function()
+menu.toggle_loop(cheater_detection, "传送检测", {}, "检测玩家是否使用了传送", function()
     tp_detection()
 end)
-pin11 = menu.toggle_loop(cheater_detection, "改装武器检测", {}, "检测玩家是否使用了改装武器", function()
-    modified_weapon_detection()
-end)
-pin12 = menu.toggle_loop(cheater_detection, "改装载具检测", {}, "检测玩家是否使用了改装载具", function()
-    modified_vehicles_detection()
-end)
+
 
 ------其他选项
 menu.toggle_loop(otherlist, "死亡警告", {}, "当你死亡时触发警告", function()
@@ -6491,7 +6479,7 @@ while true do
     --water,air,walk
         all_drive_style()
     --blacklist
-        -- Black_list() 
+        Black_list() 
 ----
     util.yield()
 end

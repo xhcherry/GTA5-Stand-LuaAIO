@@ -82,6 +82,7 @@ veh_attach_options = {{1,"附加到他载具上"}, {2,"他的载具附加到我�
 
 ----武器表
 weapon_list = {
+    {name = "骇入设备", hash = 485882440, model_hash = nil, max_ammo = 0},
     {name = "危害性汽油桶", hash = -1168940174, model_hash = nil, max_ammo = 0},
     {name = "肥料桶", hash = 406929569, model_hash = nil, max_ammo = 0},
     {name = "致幻剂包裹", hash = -135142818, model_hash = nil, max_ammo = 0},
@@ -921,6 +922,54 @@ vect = {
 }
 
 
+----v3函数
+vector3 = {
+    --创建一个新的v3
+	['new'] = function(x, y, z)
+		return {x = x, y = y, z = z}
+	end,
+    --计算两个 v3 向量的差
+	['sub'] = function(a, b)
+		return vector3.new(a.x-b.x, a.y-b.y, a.z-b.z)
+	end,
+    -- 计算两个 v3 向量的和
+	['add'] = function(a, b)
+		return vector3.new(a.x+b.x, a.y+b.y, a.z+b.z)
+	end,
+    -- 计算 v3 向量的长度（模长）
+	['mag'] = function(a)
+		return math.sqrt(a.x^2 + a.y^2 + a.z^2)
+	end,
+	['norm'] = function(a)
+		local mag = vector3.mag(a)
+		return vector3.div(a, mag)
+	end,
+    -- 计算两个 v3 向量的乘积（点乘）
+	['mul'] = function(a, b)
+		return vector3.new(a.x*b.x, a.y*b.y, a.z*b.z)
+	end, 
+    -- 将 v3 乘以一个标量
+    ['mulScalar'] = function(vec, scalar)
+		return vector3.new(vec.x*scalar, vec.y*scalar, vec.z*scalar)
+	end, 
+
+    -- 计算两个 v3 向量的除法
+	['div'] = function(a, b)
+		return vector3.new(a.x/b.x, a.y/b.y, a.z/b.z)
+	end, 
+    --返回两个 v3 向量的距离
+	['distance'] = function(a, b) 
+		return vector3.mag(vector3.subtract(a, b) )
+	end,
+    -- 将 v3 向量转换为欧拉角
+    ['toRot'] = function(vec) 
+        local yaw = math.atan2(vec.z, vec.x)
+        local pitch = math.asin(vec.y)
+        local roll = 0 -- 在这个示例中将 roll 设为 0，你可以根据需要自行计算
+        return {x = yaw, y = pitch, z = roll}
+	end
+}
+
 
 
 ----给予爆炸子弹
@@ -1239,12 +1288,6 @@ fireWings = {
 }
 
 
-
-----蹦迪
-hud_rgb_index = 1
-hud_rgb_colors = {6, 18, 9}
-
-
 -----水印
 watermark_pos = {
     x = 0.992,
@@ -1422,47 +1465,7 @@ weapon_stuff = {
 }
 
 
---------作弊者检测
-interior_stuff = {
-    0, 
-    233985, 
-    169473, 
-    169729, 
-    169985, 
-    170241, 
-    177665, 
-    177409, 
-    185089, 
-    184833, 
-    184577, 
-    163585, 
-    167425, 
-    167169
-}
-unreleased_vehicles = {
-    "Sentinel4",
-}
-modded_vehicles = {
-    "dune2",
-    "tractor",
-    "dilettante2",
-    "asea2",
-    "cutter",
-    "mesa2",
-    "jet",
-    "skylift",
-    "policeold1",
-    "policeold2",
-    "armytrailer2",
-    "towtruck",
-    "towtruck2",
-    "cargoplane",
-}
-modded_weapons = {
-    "weapon_railgun",
-    "weapon_stungun",
-    "weapon_digiscanner",
-}
+
 
 -------视觉增强
 visual_stuff = {

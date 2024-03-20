@@ -3244,15 +3244,6 @@ end
 local load_constructs_root_menu_file
 menus.load_construct = menu.list(module_list, t("Load Construct"), {"constructorloadconstruct"}, t("Load a previously saved or shared construct into the world"), function()
     menus.rebuild_load_construct_menu()
-    if #load_constructs_root_menu_file.menus == 0 or (#load_constructs_root_menu_file.menus == 1 and load_constructs_root_menu_file.menus[1] == menus.load_jackz_builds) then
-        menus.update_curated_constructs = menu.action(menus.load_construct, t("Install Curated Constructs"), {}, t("Download and install a curated collection of constructs. This may take up to 5 minutes."), function()
-            install_curated_constructs()
-            if menu.is_ref_valid(menus.update_curated_constructs) then
-                menu.delete(menus.update_curated_constructs)
-            end
-            menus.rebuild_load_construct_menu()
-        end)
-    end
 end)
 load_constructs_root_menu_file = {menu=menus.load_construct, name=t("Loaded Constructs Menu"), menus={}}
 

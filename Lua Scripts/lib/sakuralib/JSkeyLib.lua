@@ -65,7 +65,7 @@ local keyLookupTable = {
     ['VK_9']                    =  0x39,	--9 key
     -- -	0x3A-40	Undefined
     ['VK_A']                    =  0x41,	--A key
-    ['VK_B']                    =  0x42,	--B key
+    ['VK_B']                    =  0x42,	--B key val = 29
     ['VK_C']                    =  0x43,	--C key
     ['VK_D']                    =  0x44,	--D key
     ['VK_E']                    =  0x45,	--E key

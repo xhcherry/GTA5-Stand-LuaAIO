@@ -368,7 +368,8 @@ function draw_bounding_box(entity, showPoly, colour)
 	end
 end
 
-function set_entity_face_entity(entity, target, usePitch)
+----设置实体面对实体
+--[[ function set_entity_face_entity(entity, target, usePitch)
 	local pos1 = ENTITY.GET_ENTITY_COORDS(entity, false)
 	local pos2 = ENTITY.GET_ENTITY_COORDS(target, false)
 	local rel = v3.new(pos2)
@@ -379,8 +380,9 @@ function set_entity_face_entity(entity, target, usePitch)
 	else
 		ENTITY.SET_ENTITY_ROTATION(entity, rot.x, rot.y, rot.z, 2, false)
 	end
-end
+end ]]
 
+----给实体添加光标
 function add_blip_for_entity(entity, blipSprite, colour)
 	local blip = HUD.ADD_BLIP_FOR_ENTITY(entity)
 	HUD.SET_BLIP_SPRITE(blip, blipSprite)
@@ -401,7 +403,7 @@ function add_blip_for_entity(entity, blipSprite, colour)
 
 	return blip
 end
-
+----设置光标名字
 function set_blip_name(blip, name, isLabel)
 	HUD.BEGIN_TEXT_COMMAND_SET_BLIP_NAME("STRING")
 	if not isLabel then
@@ -412,15 +414,7 @@ function set_blip_name(blip, name, isLabel)
 	HUD.END_TEXT_COMMAND_SET_BLIP_NAME(blip)
 end
 
-function request_control_once(entity)
-	if not NETWORK.NETWORK_IS_IN_SESSION() then
-		return true
-	end
-	local netId = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(entity)
-	NETWORK.SET_NETWORK_ID_CAN_MIGRATE(netId, true)
-	return NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entity)
-end
-
+----获取附近peds句柄
 function get_ped_nearby_peds(ped, maxPeds, ignore)
 	maxPeds = maxPeds or 16
 	local pEntityList = memory.alloc((maxPeds + 1) * 8)
@@ -431,7 +425,7 @@ function get_ped_nearby_peds(ped, maxPeds, ignore)
 	end
 	return pedsList
 end
-
+----获取附近载具句柄
 function get_ped_nearby_vehicles(ped, maxVehicles)
 	maxVehicles = maxVehicles or 16
 	local pVehicleList = memory.alloc((maxVehicles + 1) * 8)
@@ -442,7 +436,7 @@ function get_ped_nearby_vehicles(ped, maxVehicles)
 	end
 	return vehiclesList
 end
-
+----获取附近实体句柄
 function get_ped_nearby_entities(ped)
 	local peds = get_ped_nearby_peds(ped)
 	local vehicles = get_ped_nearby_vehicles(ped)

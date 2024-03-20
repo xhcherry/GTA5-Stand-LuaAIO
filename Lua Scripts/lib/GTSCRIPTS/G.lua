@@ -740,6 +740,29 @@ local function gameplay_camera(distance)
     return destination
 end
 
+GTTG(players_root, '虚假无敌', {}, '', function(wudi)
+    wd = wudi
+    while wd do
+        util.yield()
+        pidp = players.user_ped()
+        PED.SET_PED_MAX_HEALTH(pidp, 55487)
+        ENTITY.SET_ENTITY_HEALTH(pidp, 55487)
+        PLAYER.SET_PLAYER_MAX_ARMOUR(pidp, 55487)
+        PED.SET_PED_ARMOUR(pidp, 55487)
+        ENTITY.SET_ENTITY_INVINCIBLE(pidp, true)
+        PED.CLEAR_PED_BLOOD_DAMAGE(pidp)
+        ENTITY.SET_ENTITY_PROOFS(pidp, false, false, false, false, false, false, 1, false)
+    end
+    pidp = players.user_ped()
+    PED.SET_PED_MAX_HEALTH(pidp, 328)
+    ENTITY.SET_ENTITY_HEALTH(pidp, 328)
+    PLAYER.SET_PLAYER_MAX_ARMOUR(pidp, 328)
+    PED.SET_PED_ARMOUR(pidp, 328)
+    ENTITY.SET_ENTITY_INVINCIBLE(pidp, false)
+    ENTITY.SET_ENTITY_PROOFS(pidp, true, true, true, true, true, true, 1, true)
+end)
+
+
 local cur_rot = 0
 local cur_clone = 0
 liulanwj=GTLP(players_root, "玩家预览", {}, "预览对方玩家人物模型", function()
@@ -2374,6 +2397,21 @@ function paoku1()
 end
 
 -- 新型娱乐
+local entity_held_ped = 0
+GTLP(newfunc, '虐杀原形', {}, '按E抓取和扔出', function()
+    if PAD.IS_CONTROL_JUST_RELEASED(38, 38) then
+        if entity_held_ped == 0 then
+            local ped = pick_up_ped()
+            if ped then
+                entity_held_ped = ped
+            end
+        else
+            throw_ped(entity_held_ped)
+            entity_held_ped = 0
+        end
+    end
+end)
+
 GTLP(newfunc, '我的跟班', {}, '靠近你指定的NPC,按E成为你选择的跟班,按X删除跟班.', function()
     local closest = get_closest_ped_index(ENTITY.GET_ENTITY_COORDS(players.user_ped()))
     local ped = closest[1]
@@ -6613,13 +6651,13 @@ magfunc = GTTG(players_root, "Mag的王座", {"magic"}, "定制级功能:)", fun
             menu.trigger_commands("jiajia2 on")
             menu.trigger_commands("lens on")
             --menu.trigger_commands("lightk on")
-            menu.trigger_commands("sans on")
+            --menu.trigger_commands("sans on")
         else
             menu.trigger_commands("jiajia1 off")
             menu.trigger_commands("jiajia2 off")
             menu.trigger_commands("lens off")
             --menu.trigger_commands("lightk off")
-            menu.trigger_commands("sans off")
+            --menu.trigger_commands("sans off")
         end
     else
         gtoast("不可使用")
@@ -13854,6 +13892,21 @@ function deluxomode(veh, ratio)
     native_invoker.end_call_2(0xD138FA15C9776837)
 end
 
+GTAC(funfeatures_veh, '陆地火车', {}, '', function()
+    spawnAndCustomizeEntity(1030400667)
+    setmenoinvisible()
+end)
+
+GTAC(funfeatures_veh, '陆地飞机', {}, '', function()
+    spawnAndCustomizeEntity(-1214505995)
+    setmenoinvisible()
+end)
+
+GTAC(funfeatures_veh, '陆地船只', {}, '', function()
+    spawnAndCustomizeEntity(-1043459709)
+    setmenoinvisible()
+end)
+
 GTTG(funfeatures_veh, '漏油', {}, '', function (f)
 feat = f
     local vehicles
@@ -20556,110 +20609,58 @@ GTluaScript.rainbow(GTluaScript.colour(colouroverlyasd   , '设置覆盖颜色',
     colourOverlay = colour
 end))
 
-local trainsasd = GT(lobbyFeats, '火车选项', {''}, '')
+ps_train = GT(lobbyFeats, "火车选项", {}, "控制火车行为")
 
-local get_control_of_entity = function(h, t)
-    if not h then
-        return
-    end
-    if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(h) then
-        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(h)
-        local time = util.current_time_millis() + t
-        while ENTITY.IS_AN_ENTITY(h) and not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(h) and time > util.current_time_millis() do
-            wait(5)
+spawned_train = nil
+GTAC(ps_train, '生成火车', {}, '会在你附近范围生成', function()
+    local train_models = {
+        0x3D6AAA9B,
+        0x0AFD22A6,
+        0x264D9262,
+        0x36DCFF98,
+        0x0E512E79,
+        0xD1ABB666
+    }
+    for _, model in ipairs(train_models) do
+        STREAMING.REQUEST_MODEL(model)
+        while not STREAMING.HAS_MODEL_LOADED(model) do
+            util.yield(0)
         end
     end
-    return NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(h)
-end
+    local coords = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+    local veh = VEHICLE.CREATE_MISSION_TRAIN(15, coords.x, coords.y, coords.z, true, 0, 0)
+    spawned_train = veh
+end)
 
-    function is_player_driving_train(pid)
-        if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED(pid), true) and
-            int_to_uint(ENTITY.GET_ENTITY_MODEL(veh)) == 1030400667 or
-            int_to_uint(ENTITY.GET_ENTITY_MODEL(veh)) then
-            return true
-        else
-            return false
-        end
+menu.click_slider(ps_train, "火车:", {""}, "1 = 进入, 2 = 离开 3 = 删除", 1, 3, 1, 1, function(selectedOption)
+    if selectedOption == 1 then
+        PED.SET_PED_INTO_VEHICLE(players.user_ped(), spawned_train, -1)
+    elseif selectedOption == 2 then
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
+    elseif selectedOption == 3 then
+        entities.delete_by_handle(spawned_train)
     end
+end)
 
-    traincontrol = GT(trainsasd,"火车控制", {}, '')
+GTAC(ps_train,'毁坏火车',  {''}, '', function()
+    local coords = ENTITY.GET_ENTITY_COORDS(spawned_train)
+    VEHICLE.SET_VEHICLE_UNDRIVEABLE(spawned_train, true)
+    VEHICLE.SET_VEHICLE_ENGINE_HEALTH(spawned_train, 0)
+    VEHICLE.SET_VEHICLE_PETROL_TANK_HEALTH(spawned_train, 0)
+    FIRE.ADD_EXPLOSION(coords.x, coords.y, coords.z, 1, 100.0, true, false, 3.0, false)
+    VEHICLE.SET_RENDER_TRAIN_AS_DERAILED(spawned_train, true)
+    ENTITY.SET_ENTITY_RENDER_SCORCHED(spawned_train, true)
+    VEHICLE.SET_TRAIN_CRUISE_SPEED(spawned_train, 0)
+    VEHICLE.SET_TRAIN_SPEED(spawned_train, 0)
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spawned_train, coords.x, coords.y, coords.z + 1)
+end)
 
-    getintotrain = GTAC(traincontrol,"进入火车/电车", {}, '', function(k)
-        pedmy = players.user_ped(players.user())
-        veh = entities.get_all_vehicles_as_handles()
-        for i = 1, #veh do
-            get_control_of_entity(veh[i], 300)
-            entityhash = return int_to_uint(ENTITY.GET_ENTITY_MODEL(veh[i]))
-            if entityhash == 868868440 then
-                PED.SET_PED_INTO_VEHICLE(pedmy, veh[i], -1)
-            else
-                util.toast("附加没有电车")
-            end
-            wait(1)
-            if entityhash == 1030400667 then
-                PED.SET_PED_INTO_VEHICLE(pedmy, veh[i], -1)
-            else
-                util.toast("附加没有火车")
-            end
-        end
-    end)
-
-    GTTG(traincontrol,"火车控制器", {}, '', function(f)
-        if f then
-            local TrainSpeed = 10.0
-            while f do
-                wait(10)
-                if is_player_driving_train(players.user()) then
-                    local New_Request = false
-                    if PAD.IS_DISABLED_CONTROL_PRESSED(2, 32) then
-                        TrainSpeed = TrainSpeed + 1.0
-                        New_Request = true
-                    end
-                    if PAD.IS_DISABLED_CONTROL_PRESSED(2, 33) then
-                        TrainSpeed = TrainSpeed - 1.0
-                        New_Request = true
-                    end
-                    if New_Request then
-                        VEHICLE.SET_TRAIN_SPEED(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED()),TrainSpeed)
-                        VEHICLE.SET_TRAIN_CRUISE_SPEED(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED()),TrainSpeed)
-                    end
-                end
-            end
-        end
-    end)
-
-    GTTG(traincontrol,"停止火车", {}, '', function(f)
-        while f do
-            wait(0)
-            if is_player_driving_train(players.user()) then
-                VEHICLE.SET_TRAIN_SPEED(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED()), 0.0)
-                VEHICLE.SET_TRAIN_CRUISE_SPEED(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED()), 0.0)
-            end
-        end
-    end)
-
-    GTAC(traincontrol,"强制离开火车", {}, '', function(f)
-        if is_player_driving_train(players.user()) then
-            TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped(players.user()))
-        end
-    end)
-
-    GTAC(traincontrol,"删除所有火车", {},'', function(f)
-        VEHICLE.DELETE_ALL_TRAINS()
-    end)
-
-    GTAC(traincontrol,"火车脱轨",{},'', function(f)
-        if is_player_driving_train(players.user()) then
-            if f then
-                VEHICLE.SET_RENDER_TRAIN_AS_DERAILED(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED()), true)
-            end
-            if not f then
-                VEHICLE.SET_RENDER_TRAIN_AS_DERAILED(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED()), false)
-            end
-        end
-    end)
-
-
+GTAC(ps_train, '超音速火车', {}, '', function()
+    local train_speed_native = ENTITY.GET_ENTITY_SPEED(spawned_train)
+    local train_speed = train_speed_native TrainSpeed_new = train_speed + 200.0
+    VEHICLE.SET_TRAIN_CRUISE_SPEED(spawned_train, TrainSpeed_new)
+    VEHICLE.SET_TRAIN_SPEED(spawned_train, TrainSpeed_new)
+end)
 
 fireworks_root = GT(lobbyFeats, "烟花选项", {}, "")
 tianqi = GT(lobbyFeats, "天气更改", {}, "")
@@ -20835,6 +20836,28 @@ MISC.FORCE_LIGHTNING_FLASH()
 end)
 
 world_lol = GT(lobbyFeats, '世界玩乐', {}, '')
+
+GTTG(world_lol, '劈海', {}, '靠近海水生效', function(Split)
+    sp = Split
+    while sp do
+    local coords = players.get_position(players.user())
+    WATER.MODIFY_WATER(coords.x, coords.y, -10, 10)
+    WATER.MODIFY_WATER(coords.x + 2, coords.y, -10, 10)
+    WATER.MODIFY_WATER(coords.x, coords.y + 2, -10, 10)
+    WATER.MODIFY_WATER(coords.x + 2, coords.y + 2, -10, 10)
+    WATER.MODIFY_WATER(coords.x + 4, coords.y, -10, 10)
+    WATER.MODIFY_WATER(coords.x, coords.y + 4, -10, 10)
+    WATER.MODIFY_WATER(coords.x + 4, coords.y + 4, -10, 10)
+    WATER.MODIFY_WATER(coords.x + 6, coords.y, -10, 10)
+    WATER.MODIFY_WATER(coords.x, coords.y + 6, -10, 10)
+    WATER.MODIFY_WATER(coords.x + 6, coords.y + 6, -10, 10)
+    WATER.MODIFY_WATER(coords.x + 8, coords.y, -10, 10)
+    WATER.MODIFY_WATER(coords.x, coords.y + 8, -10, 10)
+    WATER.MODIFY_WATER(coords.x + 8, coords.y + 8, -10, 10)
+    util.yield(1)
+    end
+    sp = false
+end)
 
 GTAC(world_lol, '冻结所有载具和实体', {}, '', function (f)
 allobj = entities.get_all_objects_as_handles()
@@ -22041,7 +22064,7 @@ zjxlbc = GTLP(zjxlid, "主机序列", {}, "", function(zhuji)
         myspeed1e = math.ceil(speedcalce)
         local speede2 = ENTITY.GET_ENTITY_SPEED(ente)
         local speedcalce2 = speede2 * 2.236936
-        myspeed1e2 = Round(speedcalce2, 1)
+        --myspeed1e2 = Round(speedcalce2, 1)
     end
     inviciamountintt = inviciamountint
 
@@ -22058,8 +22081,7 @@ zjxlbc = GTLP(zjxlid, "主机序列", {}, "", function(zhuji)
     
     draw_string(string.format("~h~~r~延迟: ~w~%dms", delay), zhuji_x + 0.047, zhuji_y + 0.003, zhuji_dx, zhuji_dx)
     draw_string(string.format("~h~~p~帧率: ~w~" .. fps), zhuji_x, zhuji_y + 0.003, zhuji_dx, zhuji_dx)
-    draw_string(string.format("~h~~w~" .. myspeed1e .. " ~q~公~g~里~f~/时" .. "~H~~w~  " .. myspeed1e2 ..
-                                  " ~y~英~p~里~q~/时"), zhuji_x, zhuji_y + 0.028, zhuji_dx, zhuji_dx)
+    draw_string(string.format("~h~~w~" .. myspeed1e .. " ~q~公~g~里~f~/每小时 每秒速度"), zhuji_x, zhuji_y + 0.028, zhuji_dx, zhuji_dx)
     draw_string(string.format('~h~~f~' .. "~h~~p~现实:~h~~w~" .. os.date("%X") .. "  ~h~~y~游戏:~h~~w~" ..
                                   CLOCK.GET_CLOCK_HOURS() .. ":" .. CLOCK.GET_CLOCK_MINUTES()), zhuji_x,
         zhuji_y + 0.057, zhuji_dx, zhuji_dx)

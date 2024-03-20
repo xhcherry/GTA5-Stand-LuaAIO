@@ -33,7 +33,7 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '3.15'
+GT_version = '3.20'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -41,7 +41,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("重制>恶搞选项>近期更新>控制无敌\n重制>战局选项>全局控制无敌\n自我选项>自我娱乐>新型娱乐>我的跟班\n自我选项>自我娱乐>新型娱乐>手搓冲击波\n自我选项>自我娱乐>新型娱乐>汽车瞬杀门\n大师级星探皇榜横幅(Beta Preview)\n错误修复和皇榜添加")
+    notification("更新了世界选项>火车选项\n世界选项>世界玩乐>劈海\n载具选项>载具玩乐>陆地火车\n载具选项>载具玩乐>陆地飞机\n载具选项>载具玩乐>陆地船只\n自我选项>新型娱乐>XX原形\n玩家选项>虚假无敌\n崩溃选项>推荐选项>ID1\n崩溃选项>推荐选项>ID2\n崩溃选项>推荐选项>ID3\n恶搞选项>近期更新>传送位置故障\n恶搞选项>近期更新>打破玩家物理平衡\n恶搞选项>近期更新>视觉XX\n恶搞选项>近期更新>隐形爬楼梯\n错误改进和皇榜添加")
 end
 --
 hasShownToast = false
@@ -53,7 +53,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 3
-notifyDay = 15
+notifyDay = 20
 
 _G.daysSince = _G.daysSince or 0
 
@@ -8547,28 +8547,238 @@ end
 
 --杂项
 -- 原创功能 缝合死妈
+-- 
+function loadModels(models)
+    for _, model in ipairs(models) do
+        STREAMING.REQUEST_MODEL(model)
+        while not STREAMING.HAS_MODEL_LOADED(model) do
+            util.yield(0)
+        end
+    end
+end
+
+spawned_crash_vehs = {}
+spawned_crash_peds = {}
+function spawn_vehicle_and_ped(veh_hash, ped_hash, coords)
+    local vehicle = entities.create_vehicle(veh_hash, coords, 0)
+    VEHICLE.SET_VEHICLE_ON_GROUND_PROPERLY(vehicle,0)
+    local ped = entities.create_ped(26, ped_hash, coords, 0)
+    util.yield(25)
+    PED.SET_PED_INTO_VEHICLE(ped, vehicle, -1)
+        util.yield(10)
+    table.insert(spawned_crash_vehs, vehicle)
+    table.insert(spawned_crash_peds, ped)
+end
+
+function spawn_vehicles_and_peds(pid, num_vehicles, veh_hash, ped_hash, coords)
+    for i = 1, num_vehicles do
+        coords.x = coords.x + math.random(-5, 5)
+        coords.y = coords.y + math.random(-5, 5)
+        spawn_vehicle_and_ped(veh_hash, ped_hash, coords)
+    end
+end
+
+function give_crash_ent_control(pid)
+    local ped_net_id2 = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(spawned_crash_peds[2])
+    local veh_net_id2 = NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(spawned_crash_vehs[2])
+    for i = 1, 100 do
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(pid, spawned_crash_peds[2])
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(pid, spawned_crash_vehs[2])
+        if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(spawned_crash_peds[2]) then
+            NETWORK.SET_NETWORK_ID_CAN_MIGRATE(ped_net_id2, true)
+        end
+        if not NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(spawned_crash_vehs[2]) then
+            NETWORK.SET_NETWORK_ID_CAN_MIGRATE(veh_net_id2, true)
+        end
+    end
+end
+
+function spawn_bad_vehicle_and_ped(veh_hash, ped_hash, coords)
+    local vehicle = entities.create_vehicle(veh_hash, coords, 0)
+    VEHICLE.SET_VEHICLE_ON_GROUND_PROPERLY(vehicle,0)
+    VEHICLE.SET_VEHICLE_MOD_KIT(targetVehicle2, 0)
+    VEHICLE.SET_VEHICLE_MOD(targetVehicle2, 34, 3, false)
+    VEHICLE.TOGGLE_VEHICLE_MOD(targetVehicle2, 34, true)
+    local ped = entities.create_ped(26, ped_hash, coords, 0)
+    util.yield(25)
+    PED.SET_PED_INTO_VEHICLE(ped, vehicle, -1)
+        util.yield(10)
+    table.insert(spawned_crash_vehs, vehicle)
+    table.insert(spawned_crash_peds, ped)
+end
+
+function spawn_bad_vehicles_and_peds(pid, num_vehicles, veh_hash, ped_hash, coords)
+    for i = 1, num_vehicles do
+        coords.x = coords.x + math.random(-5, 5)
+        coords.y = coords.y + math.random(-5, 5)
+        spawn_bad_vehicle_and_ped(veh_hash, ped_hash, coords)
+    end
+end
+
+function is_valid_ped(ped)
+    return PED.IS_PED_A_PLAYER(ped) or 
+	PED.IS_PED_FATALLY_INJURED(ped) or 
+	PED.IS_PED_IN_ANY_VEHICLE(ped, true)
+end
+
+function pick_up_ped()
+    local closest = get_closest_ped(
+		ENTITY.GET_ENTITY_COORDS(players.user_ped()))
+    if closest and closest[2] <= 5 then 
+        local ped = closest[1]
+        request_anim_dict("random@atmrobberygen")
+        TASK.TASK_PLAY_ANIM(players.user_ped(), 
+		"random@atmrobberygen", "b_atm_mugging", 8.0, 0.0, 
+		-1, 50, 0, false, false, false)
+        util.yield(500)
+        ENTITY.SET_ENTITY_HEADING(ped, 
+		ENTITY.GET_ENTITY_HEADING(players.user_ped()))
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(ped, players.user_ped(), 
+		PED.GET_PED_BONE_INDEX(players.user_ped(), 28422),
+		0.08, -0.1, -0.27, -45, 0, 0, false, false, false, true, 0, true)
+        PED.SET_PED_CONFIG_FLAG(ped, 223, true)
+		HUD.CREATE_FAKE_MP_GAMER_TAG(ped,"→捕获←",false,false,"flakin",0)
+        return ped
+    end 
+    
+    return nil
+end
+
+function throw_ped(ped)
+    ENTITY.DETACH_ENTITY(ped)
+    PED.SET_PED_TO_RAGDOLL(ped, 10, 10, 0, 
+	false, false, false)
+    ENTITY.SET_ENTITY_MAX_SPEED(ped, 100.0)
+    ENTITY.APPLY_FORCE_TO_ENTITY(ped, 1, 0, 
+	100, 0, 0, 0, 0, 0, true, false, true, false, false)
+    AUDIO.PLAY_PAIN(ped, 7, 0, 0)
+    TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
+    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
+    ENTITY.SET_ENTITY_NO_COLLISION_ENTITY(ped, players.user_ped(), false)
+    request_anim_dict("melee@unarmed@streamed_core")
+    TASK.TASK_PLAY_ANIM(players.user_ped(), 
+	"melee@unarmed@streamed_core", "heavy_punch_a", 
+	8.0, 8.0, -1, 0, 0.3, false, false, false)
+    PED.SET_PED_CONFIG_FLAG(ped, 223, false)
+    util.create_thread(function()
+	local i = 1
+    while i <= 1000 do
+    util.yield()
+    FIRE.ADD_EXPLOSION(ENTITY.GET_ENTITY_COORDS(ped).x,
+    ENTITY.GET_ENTITY_COORDS(ped).y,
+    ENTITY.GET_ENTITY_COORDS(ped).z-0.5, 12,1, true, false,0, true)
+    i = i+1
+    end
+    end)
+    util.yield(500)
+    ENTITY.FREEZE_ENTITY_POSITION(
+	players.user_ped(), false)
+end
+
+function get_forward_vector_from_heading(heading)
+    local heading_rad = math.rad(heading)
+    local forward_x = -math.sin(heading_rad)
+    local forward_y = math.cos(heading_rad)
+    return forward_x, forward_y
+end
+
+function setmenoinvisible()
+    local myPed = players.user_ped()
+    ENTITY.SET_ENTITY_VISIBLE(myPed, true)
+end
+
+function spawnAndCustomizeEntity(attachmentHash)
+    local playerPed = players.user_ped()
+    local playerPos = ENTITY.GET_ENTITY_COORDS(playerPed)
+    local playerHeading = ENTITY.GET_ENTITY_HEADING(playerPed)
+    local spawnPos = v3.new(playerPos.x + math.sin(math.rad(playerHeading)) * 5, playerPos.y + math.cos(math.rad(playerHeading)) * 5, playerPos.z)
+    local motorcycleHash = -1216765807 
+    STREAMING.REQUEST_MODEL(motorcycleHash)
+    while not STREAMING.HAS_MODEL_LOADED(motorcycleHash) do
+        util.yield(0) 
+    end
+    local motorcycle = entities.create_vehicle(motorcycleHash, spawnPos, playerHeading)
+    PED.SET_PED_INTO_VEHICLE(playerPed, motorcycle, -1)
+    ENTITY.SET_ENTITY_VISIBLE(motorcycle, false)
+    STREAMING.REQUEST_MODEL(attachmentHash)
+    while not STREAMING.HAS_MODEL_LOADED(attachmentHash) do
+        util.yield(0)
+    end
+    local attachedEntity = entities.create_vehicle(attachmentHash, spawnPos, playerHeading)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(attachedEntity, motorcycle, 0, 0, 0, 0, 0, 0, 0, true, false, false,false, 0, true)
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(motorcycleHash)
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(attachmentHash)
+end
+
+spawnedObjects = {}
+spawnedVehicles = {}
+function deleteEntities(entitiesList)
+    for _, entityID in ipairs(entitiesList) do
+            entities.delete_by_handle(entityID)
+    end
+    return {}
+end
+
+function createAndAttachObject(objectHash, position, attachToPed)
+    local obj = entities.create_object(objectHash, position)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(obj, attachToPed, 0, 0, 0, 0, 0, 0, 0, false, true, false,false, 0, true)
+    return obj
+end
+
+function spawnAndDeleteVehicles(vehHash, position, count)
+    STREAMING.REQUEST_MODEL(vehHash)
+    while not STREAMING.HAS_MODEL_LOADED(vehHash) do
+        util.yield(10) 
+    end
+    for i = 1, count do
+        local veh = entities.create_vehicle(vehHash, position, position.z)
+        table.insert(spawnedVehicles, veh)
+    end
+    util.yield(50) 
+    spawnedVehicles = deleteEntities(spawnedVehicles)
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(vehHash)
+end
+
+function weirdcombatstats(ped1, thereped)
+    PED.SET_PED_COMBAT_ABILITY(ped1, 100)
+    TASK.TASK_COMBAT_PED(ped1, thereped, 0, 16)
+    PED.SET_PED_KEEP_TASK(ped1, true)
+end
+--
 master_index = false
+
+fadein = false
+function dectfadein(f)
+    local ctran = 0
+    sx = f
+    while sx do
+
+        wait()
+
+        GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, ctran)
+        GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, ctran)
+        GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, ctran)
+        GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, ctran)
+        GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, ctran)
+        GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, ctran)
+        GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, ctran)
+
+        ctran = ctran + 1
+
+    end
+end
 
 function master1(f)
     starttime = os.time()
-    local ctran = 0
-
+    --local ctran = 0
+    local rainbowr = 255
+    local rainbowg = 255
+    local rainbowb = 255
     tx1 = f
     while tx1 do
 
-        util.create_thread(function()
-            wait()
-
-            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, ctran)
-            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, ctran)
-            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, ctran)
-            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, ctran)
-            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, ctran)
-            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, ctran)
-            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, ctran)
-
-            ctran = ctran + 8
-
+        util.create_thread(function ()
+            dectfadein(f)
         end)
 
         wait()
@@ -8604,21 +8814,12 @@ end
 
 function master2(f)
     starttime = os.time()
+    local rainbowr = 255
+    local rainbowg = 255
+    local rainbowb = 255
     tx2 = f
 
     while tx2 do
-
-        util.create_thread(function()
-            wait()
-
-            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, 255)
-        end)
 
         wait()
         textX = lerp(textX, textEndPosition, speed)
@@ -8652,21 +8853,11 @@ end
 
 function master3(f)
     starttime = os.time()
-
+    local rainbowr = 255
+    local rainbowg = 255
+    local rainbowb = 255
     tx3 = f
     while tx3 do
-
-        util.create_thread(function()
-            wait()
-
-            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, 255)
-        end)
 
         wait()
         textX = lerp(textX, textEndPosition, speed)
@@ -8700,21 +8891,11 @@ end
 
 function master4(f)
     starttime = os.time()
-
+    local rainbowr = 255
+    local rainbowg = 255
+    local rainbowb = 255
     tx4 = f
     while tx4 do
-
-        util.create_thread(function()
-            wait()
-
-            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, 255)
-        end)
 
         wait()
         textX = lerp(textX - 0.0023, textEndPosition, speed)
@@ -8748,21 +8929,11 @@ end
 
 function master5(f)
     starttime = os.time()
+    local rainbowr = 255
+    local rainbowg = 255
+    local rainbowb = 255
     tx5 = f
     while tx5 do
-
-        util.create_thread(function()
-            wait()
-
-            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, 255)
-            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, 255)
-
-        end)
 
         wait()
         textX = lerp(textX - 0.0050, textEndPosition, speed) -- 控制左滑出速度
@@ -8794,26 +8965,42 @@ function master5(f)
     end
 end
 
+function dectfadeon(f)
+
+    local ctran = 255
+    sx1 = f
+    while sx1 do
+
+        wait()
+        GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, ctran)
+        GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, ctran)
+        GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, ctran)
+        GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, ctran)
+        GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, ctran)
+        GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, ctran)
+        GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, ctran)
+
+        if fadein then
+            ctran = ctran - 4
+        end
+
+    end
+end
+
 function master6(f)
     starttime = os.time()
+    local rainbowr = 255
+    local rainbowg = 255
+    local rainbowb = 255
     local ctran = 255
+    sx = false
+
+    util.create_thread(function ()
+        dectfadeon(f)
+    end)
+
     tx6 = f
     while tx6 do
-
-        util.create_thread(function()
-            wait()
-
-            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, ctran)
-            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, ctran)
-            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, ctran)
-            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, ctran)
-            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, ctran)
-            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, ctran)
-            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, ctran)
-
-            ctran = ctran - 8
-
-        end)
 
         wait()
         textX = lerp(textX + 0.0300, textEndPosition, speed) -- 控制左滑出速度
@@ -8839,8 +9026,12 @@ function master6(f)
         util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT(text)
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(textX, 0.02)
 
+        fadein = true
         if os.time() - starttime >= 3 then
+            
+            sx1 = false
             tx6 = false
+            
             master_index = true
             textX = 0
         end
@@ -8857,6 +9048,7 @@ function mastergt(f)
         master4(f)
         master5(f)
         master6(f)
+        
         if master_index then
             master = false
         end
@@ -24295,8 +24487,8 @@ PlayerMainMenu = GT(GTROOT, "崩溃选项", {"GTCrash"}, "", function()
         for _, id in ipairs(spid) do
             if name == id.playerid then
                 if name ~= "RhymeBear" then
-                gtoast("你无法对皇榜用户使用任何攻击功能")
-                menu.trigger_commands("GTProt" .. name)
+                    gtoast("你无法对皇榜用户使用任何攻击功能")
+                    menu.trigger_commands("GTProt" .. name)
                 end
             end
         end
@@ -25016,9 +25208,101 @@ splayer3 = GTTG(updates, '观看玩家', {}, '', function (sp)
     end
 end)
 
-beyond = GTAC(updates, "年月把拥有变做失去", {}, "", function ()
-    fireworkcrash(pid)
-    reolcrash(pid)
+local plypos = nil
+GTAC(updates,'ID1',{''},'完成后将传送回原地',function()
+
+    plypos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+
+    local start_coords = players.get_position(players.user_ped())
+
+    for i = 1, 10 do
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), players.get_position(pid).x,players.get_position(pid).y,players.get_position(pid).z)
+        wait(0)
+    end
+    wait(1000)
+    local all_vehicles = entities.get_all_vehicles_as_handles()
+    for i = 1, #all_vehicles do
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(all_vehicles[i])
+        PED.SET_PED_INTO_VEHICLE(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), all_vehicles[i], 1)
+        TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), all_vehicles[i], 33, 1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(all_vehicles[i], ENTITY.GET_ENTITY_COORDS(pid).x,ENTITY.GET_ENTITY_COORDS(pid).y,ENTITY.GET_ENTITY_COORDS(pid).z, ENTITY.GET_ENTITY_HEADING(pid))
+        wait(5)
+    end
+    for i = 1, #all_vehicles do
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(all_vehicles[i])
+        PED.SET_PED_INTO_VEHICLE(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), all_vehicles[i], 1)
+        TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), all_vehicles[i], 17, 1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(all_vehicles[i], ENTITY.GET_ENTITY_COORDS(pid).x,ENTITY.GET_ENTITY_COORDS(pid).y,ENTITY.GET_ENTITY_COORDS(pid).z+0.5, ENTITY.GET_ENTITY_HEADING(pid))
+        wait(5)
+    end
+
+    if plypos ~= nil then
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), 
+        plypos.x, plypos.y, plypos.z, false, false ,false)
+        gtoast("传送回原地")
+
+        plypos = nil
+    end
+end)
+
+local plypos2 = nil
+GTAC(updates, 'ID2',{},'完成后将传送回原地',function(on) 
+
+    plypos2 = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+
+    local start_coords = players.get_position(players.user_ped())
+    local pos = players.get_position(pid)
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), pos.x, pos.y, pos.z + 350)
+    TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
+
+    local hash = util.joaat("player_zero")
+    local attempts = 0
+    local maxAttempts = 20
+
+    while not STREAMING.HAS_MODEL_LOADED(hash) and attempts < maxAttempts do
+        STREAMING.REQUEST_MODEL(hash)
+        util.yield(0)
+        attempts = attempts + 1
+    end
+
+    local invalidped = entities.create_ped(26, hash, pos, 0)
+    ENTITY.FREEZE_ENTITY_POSITION(invalidped, true)
+    p = 1
+    while p <= 10 do
+        for i = 0, 600 do
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), pos.x, pos.y, pos.z + 350)
+            TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
+            pos = players.get_position(pid)
+            pos.x = pos.x + math.random(-1, 1)
+            pos.y = pos.y + math.random(-1, 1)
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(invalidped, pos.x, pos.y, pos.z)
+            PED.SET_PED_COMPONENT_VARIATION(invalidped, 0, math.random(0, 10), math.random(0, 10), 11)
+            util.yield(5)
+            p = p+1
+        end
+    end
+
+    entities.delete(invalidped)
+
+    if plypos2 ~= nil then
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), 
+        plypos2.x, plypos2.y, plypos2.z ,false, false, false)
+        gtoast("传送回原地")
+
+        plypos2 = nil
+    end
+end)
+
+GTAC(updates,"ID3", {""}, "", function(selectedOption)
+    local models = {-252946718, -599568815, 1349725314}
+    loadModels(models)
+    local there_coords = players.get_position(pid)
+    local start_coords = players.get_position(players.user_ped())
+    spawn_vehicles_and_peds(pid, 2, -599568815, -252946718, there_coords)
+    spawn_bad_vehicles_and_peds(pid, 2, 1349725314, -252946718, there_coords)
+    give_crash_ent_control(pid)
+    spawned_crash_vehs = {}
+    spawned_crash_peds = {}
 end)
 
 t3g = GTAC(updates, "T3G Magic", {"t3g"}, "请勿在双开时使用", function ()
@@ -26022,25 +26306,28 @@ GTAC(updates, 'NSA崩溃', {"nsacrash"}, '', function ()
         end
     end)	   
 
-local playerMain = GT(GTROOT, "恶搞选项", {"GTTrolling"}, "无恶不作,无所不为", function ()
-        local focused = players.get_focused()
-        if #focused > 0 and menu.is_open() and (players.get_spectate_target(players.user()) ~= focused[1]) then
-            local pid = focused[1]
-            if pid ~= cur_focused_player then
-                if not cur ~= 0 then
-                    entities.delete(cur)
-                end
-                cur_focused_player = pid
+local playerMain = GT(GTROOT, "恶搞选项", {"GTTrolling"}, "无恶不作,无所不为", function()
+    local focused = players.get_focused()
+    if #focused > 0 and menu.is_open() and (players.get_spectate_target(players.user()) ~= focused[1]) then
+        local pid = focused[1]
+        if pid ~= cur_focused_player then
+            if not cur ~= 0 then
+                entities.delete(cur)
             end
-            local name = PLAYER.GET_PLAYER_NAME(pid)
-            for _, id in ipairs(spid) do
-                if name == id.playerid then
-                gtoast("你无法对皇榜用户使用任何攻击功能")
-                menu.trigger_commands("GTProt"..name)
+            cur_focused_player = pid
+        end
+        local name = PLAYER.GET_PLAYER_NAME(pid)
+        for _, id in ipairs(spid) do
+            if name == id.playerid then
+                if name ~= "RhymeBear" then
+                    gtoast("你无法对皇榜用户使用任何攻击功能")
+                    menu.trigger_commands("GTProt" .. name)
+                end
             end
         end
     end
 end)
+
 
 local updatetroll = GT(playerMain, "近期更新", {}, "")
 
@@ -26064,6 +26351,112 @@ GTTG(updatetroll, '控制无敌', {}, '', function(w)
     PED.SET_PED_ARMOUR(pidp, 328)
     ENTITY.SET_ENTITY_INVINCIBLE(pidp, false)
     ENTITY.SET_ENTITY_PROOFS(pidp, true, true, true, true, true, true, 1, true)
+end)
+
+
+GTAC(updatetroll, '传送位置故障', {},'',function()
+    local teleportLocations = {
+        {403.78, -961.35, -99.00},
+        {135.9541, -749.8984, 258.1520},
+        {459.414, -980.884, 30.690},
+        {126.1211, -1278.5130, 29.2696},
+        {-91.6870, 33.0948, 71.4655},
+        {-1244.379, -1454.591, 4.348},
+        {-254.9432, -147.3534, 42.7314},
+        {928.937, 41.536, 85.995},
+        {-1907.3500, -577.2352, 20.1223},
+        {721.6599, -1000.6510, 23.5455}
+    }
+    local function teleportPlayerToLocation(location)
+    local meped = players.user_ped()
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(meped, location[1], location[2], location[3], 
+        false, true, true)
+        util.yield(100) 
+        menu.trigger_commands("summon" .. PLAYER.GET_PLAYER_NAME(pid)) 
+        util.yield(500) 
+    end
+    local startcoords = players.get_position(players.user_ped())
+        for _, location in ipairs(teleportLocations) do
+        teleportPlayerToLocation(location)
+    end
+end)
+
+GTAC(updatetroll, '打破玩家物理平衡', {}, '', function()
+    local playerVehicle = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local models = {1074457665, 916292624}
+    for _, model in ipairs(models) do
+        STREAMING.REQUEST_MODEL(model)
+        while not STREAMING.HAS_MODEL_LOADED(model) do
+            util.yield(0)
+        end
+    end
+    local playerPos = players.get_position(pid)
+    local pedId = entities.create_ped(4, models[1], playerPos, 0)
+    local obj = entities.create_object(models[2], playerPos)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(obj, pedId, 0, 0, 0, 0, 0, 0, 0, false, true, false, false, 0, true)
+    ENTITY.ATTACH_ENTITY_TO_ENTITY(pedId, playerVehicle, 0, 0, 0, 0, 0, 0, 0, false, true, false, false, 0, true)
+    ENTITY.SET_ENTITY_VISIBLE(pedId, false)
+    ENTITY.SET_ENTITY_VISIBLE(obj, false)
+    ENTITY.SET_ENTITY_COLLISION(pedId, true)
+    ENTITY.SET_ENTITY_COLLISION(obj, true)
+end)
+
+GTTG(updatetroll, '视觉痉挛', {}, '', function(ft)
+    local x = ft
+    if x then
+        spawnedObjects = deleteEntities(spawnedObjects)
+        spawnedVehicles = deleteEntities(spawnedVehicles)
+
+        local playerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        local playerCoords = players.get_position(playerPed)
+        request_ptfx("scr_indep_fireworks")
+        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("scr_indep_firework_trail_spawn", playerCoords.x,
+            playerCoords.y, playerCoords.z, 0, 0, 0, 1.0, true, true, true)
+        local objectHashes = {util.joaat("prop_xmas_ext"), util.joaat("prop_food_van_01")}
+        for _, hash in ipairs(objectHashes) do
+            local obj = createAndAttachObject(hash, playerCoords, playerPed)
+            table.insert(spawnedObjects, obj)
+        end
+
+        spawnAndDeleteVehicles(0x810369E2, playerCoords, 25)
+    else
+        spawnedObjects = deleteEntities(spawnedObjects)
+        spawnedVehicles = deleteEntities(spawnedVehicles)
+    end
+    return HANDLER_CONTINUE
+end)
+
+GTLP(updatetroll,'隐形爬楼梯',{},'',function()
+    local coords = ENTITY.GET_ENTITY_COORDS(
+        PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+    local cageCoords = 
+    v3.new(coords.x, coords.y, coords.z - 0.5)
+    STREAMING.REQUEST_MODEL(util.joaat(
+        "prop_towercrane_02e"))
+    while not STREAMING.HAS_MODEL_LOADED(
+        util.joaat("prop_towercrane_02e")) do
+        util.yield(25)
+    end
+    local player_heading = ENTITY.GET_ENTITY_HEADING(
+        PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)) 
+    local offset_forward = 0
+    local offset_right = 0.0 
+    local offset_up = -0.5 
+    local forward_x, forward_y = 
+    get_forward_vector_from_heading(player_heading)
+    local right_x, right_y = forward_y, -forward_x 
+    local new_x = cageCoords.x + forward_x * 
+    offset_forward + right_x * offset_right
+    local new_y = cageCoords.y + forward_y * 
+    offset_forward + right_y * offset_right
+    local new_z = cageCoords.z + offset_up
+    cageobjecttest = OBJECT.CREATE_OBJECT(
+        util.joaat("prop_towercrane_02e"), 
+    new_x, new_y, new_z, true,true, false)
+    ENTITY.SET_ENTITY_HEADING(cageobjecttest, player_heading)
+    ENTITY.SET_ENTITY_COLLISION(cageobjecttest, true)
+    ENTITY.SET_ENTITY_VISIBLE(cageobjecttest, false)
+    util.yield(1500)
 end)
 
 GTTG(updatetroll,"载具跳舞", {}, "使对方车辆一直弹跳", function(tw)
