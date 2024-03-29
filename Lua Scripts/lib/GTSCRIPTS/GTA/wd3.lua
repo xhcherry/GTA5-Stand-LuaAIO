@@ -3338,7 +3338,7 @@ package.preload["src.lib.utils"] = function(...)
 	    end
 	    v3.mul(rotDir, -multiplier)
 	    v3.add(newCoords, rotDir)
-	    WIRI_CAM.FORCE_CAMERA_RELATIVE_HEADING_AND_PITCH(0, 0, 0)
+	    CAM.FORCE_CAMERA_RELATIVE_HEADING_AND_PITCH(0, 0, 0)
 	    ENTITY.SET_ENTITY_ROTATION(myVeh or myPed, rot.x, rot.y, rot.z, 2, true)
 	    return newCoords
 	end	function Utils.getTableIdx(tbl, value)

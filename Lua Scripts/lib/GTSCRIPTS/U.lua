@@ -189,7 +189,7 @@ end
 local drawLockonSprite = function (pos, hudColour, alpha)
     local colour = get_hud_colour(hudColour)
     local txdSizeX = 0.013
-    local txdSizeY = 0.013 * WIRI.GET_ASPECT_RATIO(false)
+    local txdSizeY = 0.013 * GRAPHICS.GET_ASPECT_RATIO(false)
     GRAPHICS.SET_DRAW_ORIGIN(pos.x, pos.y, pos.z, 0)
     size = 0.015
     GRAPHICS.DRAW_SPRITE("helicopterhud", "hud_corner", -size * 0.5, -size, txdSizeX, txdSizeY, 0.0, colour.r, colour.g, colour.b, alpha, true, 0)
@@ -343,7 +343,7 @@ local function setCannonCamRot()
         end
 
         sound.panLoop:play()
-        WIRI.HARD_ATTACH_CAM_TO_ENTITY(cam, jet, cameraRot.x, cameraRot.y, cameraRot.z, 0.0, 0.0, -4.0, true)
+        CAM.HARD_ATTACH_CAM_TO_ENTITY(cam, jet, cameraRot.x, cameraRot.y, cameraRot.z, 0.0, 0.0, -4.0, true)
     else
         sound.panLoop:stop()
     end
@@ -540,7 +540,7 @@ self.mainLoop = function ()
                 CAM.DESTROY_ALL_CAMS(true)
                 cam = CAM.CREATE_CAM("DEFAULT_SCRIPTED_CAMERA", false)
                 cameraRot:set(-89.0, 0, 0)
-                WIRI.HARD_ATTACH_CAM_TO_ENTITY(cam, jet, -89.0, 0.0, 0.0, 0.0, 0.0, -4.0, true)
+                CAM.HARD_ATTACH_CAM_TO_ENTITY(cam, jet, -89.0, 0.0, 0.0, 0.0, 0.0, -4.0, true)
                 CAM.SET_CAM_FOV(cam, camFov)
                 CAM.SET_CAM_ACTIVE(cam, true)
 
@@ -563,7 +563,7 @@ self.mainLoop = function ()
 
         VEHICLE.DISABLE_VEHICLE_WEAPON(true, util.joaat("vehicle_weapon_player_lazer"), jet, players.user_ped())
 		VEHICLE.DISABLE_VEHICLE_WEAPON(true, util.joaat("vehicle_weapon_space_rocket"), jet, players.user_ped())
-        WIRI.DISABLE_CINEMATIC_BONNET_CAMERA_THIS_UPDATE()
+        CAM.DISABLE_CINEMATIC_BONNET_CAMERA_THIS_UPDATE()
 
 		if PAD.IS_DISABLED_CONTROL_JUST_PRESSED(0, 75) or get_vehicle_player_is_in(PLAYER.PLAYER_ID()) ~= jet then
             CAM.DO_SCREEN_FADE_OUT(500)
@@ -576,7 +576,7 @@ self.mainLoop = function ()
 		if PAD.IS_CONTROL_JUST_PRESSED(0, 80) or PAD.IS_CONTROL_JUST_PRESSED(0, 45) then
             if isCannonActive then
                 cameraRot:set(-89.0, 0.0, 0.0)
-                WIRI.HARD_ATTACH_CAM_TO_ENTITY(cam, jet, -89.0, 0.0, 0.0, 0.0, 0.0, -4.0, true)
+                CAM.HARD_ATTACH_CAM_TO_ENTITY(cam, jet, -89.0, 0.0, 0.0, 0.0, 0.0, -4.0, true)
             end
             AUDIO.PLAY_SOUND_FRONTEND(-1, "cannon_active", "dlc_xm_orbital_cannon_sounds", true);
             zoom = 0.0

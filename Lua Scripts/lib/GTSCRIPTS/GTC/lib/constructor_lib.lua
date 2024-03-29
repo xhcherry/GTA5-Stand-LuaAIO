@@ -282,17 +282,17 @@ constructor_lib.deserialize_entity_attributes = function(attachment)
                 attachment.options.gravity, 0.0, 0.0, 0.0, 0.0, attachment.options.buoyancy)
     end
     if attachment.options.is_light_on == true then
-        WIRI_VEHICLE.SET_VEHICLE_SIREN(attachment.handle, true)
-        WIRI_VEHICLE.SET_VEHICLE_HAS_MUTED_SIRENS(attachment.handle, true)
-        WIRI_ENTITY.SET_ENTITY_LIGHTS(attachment.handle, false)
-        WIRI_AUDIO.TRIGGER_SIREN_AUDIO(attachment.handle, true)
-        WIRI_AUDIO.SET_SIREN_BYPASS_MP_DRIVER_CHECK(attachment.handle, true)
+        VEHICLE.SET_VEHICLE_SIREN(attachment.handle, true)
+        VEHICLE.SET_VEHICLE_HAS_MUTED_SIRENS(attachment.handle, true)
+        ENTITY.SET_ENTITY_LIGHTS(attachment.handle, false)
+        AUDIO.TRIGGER_SIREN_AUDIO(attachment.handle, true)
+        AUDIO.SET_SIREN_BYPASS_MP_DRIVER_CHECK(attachment.handle, true)
     end
     if (attachment.options.is_bullet_proof ~= nil or attachment.options.is_fire_proof ~= nil
         or attachment.options.is_explosion_proof ~= nil or attachment.options.is_melee_proof ~= nil)
         and attachment.options.is_on_fire == nil
     then
-        WIRI_ENTITY.SET_ENTITY_PROOFS(
+        ENTITY.SET_ENTITY_PROOFS(
                 attachment.handle,
                 attachment.options.is_bullet_proof, attachment.options.is_fire_proof,
                 attachment.options.is_explosion_proof, attachment.options.is_melee_proof,
@@ -1807,7 +1807,7 @@ constructor_lib.deserialize_vehicle_options = function(vehicle)
     if vehicle.vehicle_attributes.options.engine_running == true then
         VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle.handle, true, true, false)
         VEHICLE.SET_VEHICLE_KEEP_ENGINE_ON_WHEN_ABANDONED(vehicle.handle, true)
-        -- Thanks Prisuhm and Jinxscript
+
         if (VEHICLE.GET_VEHICLE_CLASS(vehicle.handle) == 15 or VEHICLE.GET_VEHICLE_CLASS(vehicle.handle) == 16) then
             VEHICLE.SET_HELI_BLADES_FULL_SPEED(vehicle.handle)
         end
@@ -2269,7 +2269,7 @@ local probe_start_pos_out = memory.alloc()
 local probe_end_pos_out = memory.alloc()
 
 constructor_lib.get_mouse_cursor_dir = function()
-    WIRI_SHAPETEST.START_SHAPE_TEST_MOUSE_CURSOR_LOS_PROBE(probe_start_pos_out, probe_end_pos_out, 0, nil, 0)
+    SHAPETEST.START_SHAPE_TEST_MOUSE_CURSOR_LOS_PROBE(probe_start_pos_out, probe_end_pos_out, 0, nil, 0)
     local probe_dir = v3.new(probe_end_pos_out)
     probe_dir:sub(v3.new(probe_start_pos_out))
     return probe_dir

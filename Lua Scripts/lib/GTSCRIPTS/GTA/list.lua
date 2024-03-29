@@ -4,7 +4,7 @@
 devid = {{
     playerrid = "Samantha.V"
 }, {
-    playerrid = "Rhy2meBear"
+    playerrid = "RhymeBear"
 }, {
     playerrid = "BabyDone"
 }, {
@@ -28,34 +28,6 @@ devid = {{
 
 masterid = {{
     mid = "RhymeBear"   
-}, {
-    mid = "Devin9161"
-}, {
-    mid = "pengsiejw"
-}, {
-    mid = "Japan-surrender"
-}, {
-    mid = "An_owQ"
-}, {
-    mid = "Magicswordstar"
-}, {
-    mid = "Mag7777V"
-}, {
-    mid = "Gmmmmmmm7"
-}, {
-    mid = "Hf19172798591"
-}, {
-    mid = "XIAN-N"
-}, {
-    mid = "Crowowowow"
-}, {
-    mid = "Koo-JCJKTL"
-}, {
-    mid = "zitong-922"
-}, {
-    mid = "ailuopeisijia"
-}, {
-    mid = "writerOvo"
 },
 }
 
@@ -186,12 +158,24 @@ sxid = {{
 }, {
     playeridx = "LongtianR"
 }, {
+    playeridx = "liuhengliuheng"
+}, {
+    playeridx = "HHHHHZ9000"
+}, {
+    playeridx = "fengshuonibuhuil"
+}, {
+    playeridx = "Y222jin"
+}, {
+    playeridx = "Lrop994"
+}, {
+    playeridx = "NASA---RS9"
+}, {
     playeridx = ""
 },
 }
 
 spid = {{
-    playerid = "xybl0206"
+    playerid = "cashboylife"
 }, {
     playerid = "RhymeBear"
 }, {
@@ -2005,8 +1989,6 @@ spid = {{
 }, {
     playerid = "HHHHHZ8000"
 }, {
-    playerid = "HHHHHZ9000"
-}, {
     playerid = "ASKshak"
 }, {
     playerid = "Madlyo"
@@ -2210,6 +2192,54 @@ spid = {{
     playerid = "eminentzaixianfa"
 }, {
     playerid = "LoneIy_v"
+}, {
+    playerid = "yuxuan051123"
+}, {
+    playerid = "YanZiQwQ"
+}, {
+    playerid = "scaredIGniubizip"
+}, {
+    playerid = "wantplay1234"
+}, {
+    playerid = "cgnpnpnnp"
+}, {
+    playerid = "moyiaaaaa"
+}, {
+    playerid = "MyLucky_0517"
+}, {
+    playerid = "Jacky_Hwang"
+}, {
+    playerid = "moran1241"
+}, {
+    playerid = "xiaokaiV"
+}, {
+    playerid = "Duanruthless"
+}, {
+    playerid = "Sakura"
+}, {
+    playerid = "AUNK_x"
+}, {
+    playerid = "dadwas"
+}, {
+    playerid = "guangdozai"
+}, {
+    playerid = "yaoyouyao"
+}, {
+    playerid = "Agastopia-"
+}, {
+    playerid = "NaiNai19902"
+}, {
+    playerid = "fangtang26"
+}, {
+    playerid = "liuhengliuheng"
+}, {
+    playerid = "BabyEliauk"
+}, {
+    playerid = "geinizuiba"
+}, {
+    playerid = "colddog66"
+}, {
+    playerid = "Eliauk51"
 }, {
     playerid = ""
 },

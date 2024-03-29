@@ -39,7 +39,7 @@ while kmgzj do
                 local boxColor = {r = 0, g = 200, b = 255, a = 150}
                 
                 local pedCoords = ENTITY.GET_ENTITY_COORDS(ent)
-                 WIRI_GRAPHICS.DRAW_MARKER(2, pedCoords.x, pedCoords.y, pedCoords.z+1.5, 0, 0, 0, 0, 180, 0, 1, 1, 1, 0, 255, 255, 255, false, true, 2, true, 0, 0, false)
+                 GRAPHICS.DRAW_MARKER(2, pedCoords.x, pedCoords.y, pedCoords.z+1.5, 0, 0, 0, 0, 180, 0, 1, 1, 1, 0, 255, 255, 255, false, true, 2, true, 0, 0, false)
                  end
              end
         end

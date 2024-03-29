@@ -655,8 +655,8 @@ local grabbed_gizmo_index = -1
 
 local function gizmo_edit_mode_tick()
     if not state.gizmo_edit_mode then return end
-    WIRI_GRAPHICS.SET_DEPTHWRITING(true)
-    WIRI_HUD.SET_MOUSE_CURSOR_THIS_FRAME()
+    GRAPHICS.SET_DEPTHWRITING(true)
+    HUD.SET_MOUSE_CURSOR_THIS_FRAME()
 
     PAD.DISABLE_CONTROL_ACTION(2, 25, true) --aim
     PAD.DISABLE_CONTROL_ACTION(2, 24, true) --attack
@@ -703,7 +703,7 @@ local function gizmo_edit_mode_tick()
         current_gizmo_entity = constructor_lib.get_ent_clicked_on(mouse_dir)
         ENTITY.FREEZE_ENTITY_POSITION(current_gizmo_entity, true)
     end
-    WIRI_GRAPHICS.SET_DEPTHWRITING(false)
+    GRAPHICS.SET_DEPTHWRITING(false)
     return true
 end
 

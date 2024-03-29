@@ -820,7 +820,7 @@ function add_ai_blip_for_ped(ped, forcedOn, hasCone, noticeRange, colour, sprite
 	if colour == -1 then
 		HUD.SET_PED_HAS_AI_BLIP(ped, true)
 	else
-		WIRI_HUD.SET_PED_HAS_AI_BLIP_WITH_COLOUR(ped, true, colour)
+		HUD.SET_PED_HAS_AI_BLIP_WITH_COLOUR(ped, true, colour)
 	end
 	HUD.SET_PED_AI_BLIP_NOTICE_RANGE(ped, noticeRange)
 	if sprite ~= -1 then HUD.SET_PED_AI_BLIP_SPRITE(ped, sprite) end

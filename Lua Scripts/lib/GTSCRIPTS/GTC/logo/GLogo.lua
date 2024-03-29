@@ -6,7 +6,6 @@
 ╚██████╔╝██║  ██║██║  ██║██║ ╚████║██████╔╝   ██║   ╚██████╔╝╚██████╔╝██║  ██║██║██║ ╚████║╚██████╔╝ ╚████╔╝ ██║██║     
  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝    ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝      
 GRANDTOURINGVIP™ Copyright© 2024 All rights reserved.]] 
---require "lib.GTSCRIPTS.V"
 require "lib.GTSCRIPTS.W"
 require "lib.GTSCRIPTS.O" 
 require "lib.GTSCRIPTS.T"
@@ -33,7 +32,8 @@ GTH = GTluaScript.hyperlink
 gtlog = util.log
 new = {}
 Ini = {}
-GT_version = '3.20'
+--
+GT_version = '3.28'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -41,7 +41,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("更新了世界选项>火车选项\n世界选项>世界玩乐>劈海\n载具选项>载具玩乐>陆地火车\n载具选项>载具玩乐>陆地飞机\n载具选项>载具玩乐>陆地船只\n自我选项>新型娱乐>XX原形\n玩家选项>虚假无敌\n崩溃选项>推荐选项>ID1\n崩溃选项>推荐选项>ID2\n崩溃选项>推荐选项>ID3\n恶搞选项>近期更新>传送位置故障\n恶搞选项>近期更新>打破玩家物理平衡\n恶搞选项>近期更新>视觉XX\n恶搞选项>近期更新>隐形爬楼梯\n错误改进和皇榜添加")
+    notification("自我选项>自我娱乐>新型娱乐>帅痞\n自我选项>自我娱乐>新型娱乐>水遁之术\n自我选项>增强选项>显示鼠标|鼠标样式\n恶搞选项>近期更新>压杀1\n恶搞选项>近期更新>压杀2\n武器选项>新枪械玩法>恕瑞玛飞升枪\n错误修复和皇榜添加")
 end
 --
 hasShownToast = false
@@ -53,7 +53,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 3
-notifyDay = 20
+notifyDay = 28
 
 _G.daysSince = _G.daysSince or 0
 
@@ -230,7 +230,7 @@ end
 function RGBNeonKit(pedm)
     local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
     for i = 0, 3 do
-        C_C_VEHICLE.SET_VEHICLE_NEON_ENABLED(vmod, i, true)
+        VEHICLE.SET_VEHICLE_NEON_ENABLED(vmod, i, true)
     end
 end
 local rgb = {
@@ -243,9 +243,9 @@ function zjbs()
         local red = (math.random(0, 255))
         local green = (math.random(0, 255))
         local blue = (math.random(0, 255))
-        C_C_VEHICLE.SET_VEHICLE_NEON_COLOUR(vmod, red, green, blue)
-        C_C_VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vmod, red, green, blue)
-        C_C_VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vmod, red, green, blue)
+        VEHICLE.SET_VEHICLE_NEON_COLOUR(vmod, red, green, blue)
+        VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vmod, red, green, blue)
+        VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vmod, red, green, blue)
         wait(rgb.cus)
     end
 end
@@ -257,12 +257,12 @@ function qzd()
         local vmod = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), true)
         RGBNeonKit(players.user_ped())
         local rcolor = math.random(1, 12)
-        C_C_VEHICLE.TOGGLE_VEHICLE_MOD(vmod, 22, true)
-        C_C_VEHICLE.SET_VEHICLE_NEON_INDEX_COLOUR(vmod, color[rcolor][1])
-        C_C_VEHICLE.SET_VEHICLE_COLOURS(vmod, color[rcolor][1], color[rcolor][1])
-        C_C_VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vmod, 0, color[rcolor][1])
-        C_C_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vmod, color[rcolor][1])
-        C_C_VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vmod, color[rcolor][2])
+        VEHICLE.TOGGLE_VEHICLE_MOD(vmod, 22, true)
+        VEHICLE.SET_VEHICLE_NEON_INDEX_COLOUR(vmod, color[rcolor][1])
+        VEHICLE.SET_VEHICLE_COLOURS(vmod, color[rcolor][1], color[rcolor][1])
+        VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vmod, 0, color[rcolor][1])
+        VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vmod, color[rcolor][1])
+        VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vmod, color[rcolor][2])
         wait(srgb.cus)
     end
 end
@@ -4369,7 +4369,7 @@ thrust_cam_dir_add = 1.25
 before_vel = {x = 1, y = 1, z = 1}
 function cam_direction()
 local camRot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
--- credits to jinxscript
+
 local inst = v3.new()
 v3.set(inst,CAM.GET_FINAL_RENDERED_CAM_ROT(2))
 local tmp = v3.toDir(inst)
@@ -5983,7 +5983,7 @@ function undead()
 end
 
 function autoaccept()
-    local message_hash = Jinx.GET_WARNING_SCREEN_MESSAGE_HASH()
+    local message_hash = HUD.GET_WARNING_SCREEN_MESSAGE_HASH()
     if message_hash == 15890625 or message_hash == -398982408 or message_hash == -587688989 then
         PAD.SET_CONTROL_VALUE_NEXT_FRAME(2, 201, 1.0)
         wait(50)
@@ -7675,7 +7675,7 @@ function cargoodeffect()
 		for _, boneName in pairs({"wheel_lf", "wheel_lr", "wheel_rf", "wheel_rr"}) do
 			local bone = ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(vehicle, boneName)
 			GRAPHICS.USE_PARTICLE_FX_ASSET(effects[1])
-			WIRI_GRAPHICS.START_PARTICLE_FX_NON_LOOPED_ON_ENTITY_BONE(
+			GRAPHICS.START_PARTICLE_FX_NON_LOOPED_ON_ENTITY_BONE(
 				effects[2],
 				vehicle,
 				-0.05, 0.0, 0.0,
@@ -8547,7 +8547,98 @@ end
 
 --杂项
 -- 原创功能 缝合死妈
--- 
+function startExplosionEffect(aiment, aimpos)
+    if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_powerplay") then
+        STREAMING.REQUEST_NAMED_PTFX_ASSET("scr_powerplay")
+        while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_powerplay") do
+            wait(0)
+        end
+    end
+    GRAPHICS.USE_PARTICLE_FX_ASSET("scr_powerplay")
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+    'sp_powerplay_beast_appear_trails', aiment, 0, 0, 1, 0, 0, 0, 5)
+end
+
+function rotateAndMoveEntity(aiment)
+    local rot = 0
+    for time = 1, 100 do
+        ENTITY.SET_ENTITY_ROTATION(aiment, 0, 0, rot + time, 1, true)
+        ENTITY.SET_ENTITY_VELOCITY(aiment, 0, 0, time)
+        rot = rot + 20
+        wait()
+    end
+end
+
+G_GeneratedList = false
+function AddEntityToList(listName, handle, generatedCheck)
+    if ((not G_GeneratedList) and generatedCheck) or (not generatedCheck) then
+        G_GeneratedList = true
+        local lis = menu.list(menu.my_root(), listName .. " handle " .. handle, {}, "")
+        menu.action(lis, "Delete", {}, "", function()
+            entities.delete_by_handle(handle)
+            menu.delete(lis)
+            G_GeneratedList = false
+        end)
+        menu.action(lis, "Teleport to entity", {}, "", function()
+            local pos = ENTITY.GET_ENTITY_COORDS(handle)
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(GetLocalPed(), pos.x, pos.y, pos.z + 1, false, false, false)
+        end)
+        menu.action(lis, "Drive Entity", {}, "", function()
+            PED.SET_PED_INTO_VEHICLE(GetLocalPed(), handle, -1)
+        end)
+        menu.action(lis, "Teleport to you", {}, "", function()
+            local pos = ENTITY.GET_ENTITY_COORDS(GetLocalPed())
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(handle, pos.x, pos.y, pos.z + 1, false, false, false)
+        end)
+    end
+end
+--
+function yasha1(pid, model, position, heading)
+    STREAMING.REQUEST_MODEL(model)
+    while not STREAMING.HAS_MODEL_LOADED(model) do 
+        wait(25) 
+    end
+    local offset = {x = math.sin(math.rad(heading)) * 2, y = math.cos(math.rad(heading)) * 2, z = 3}
+    local spawnPos = {x = position.x - offset.x, y = position.y - offset.y, z = position.z - offset.z}
+    local khanjali = entities.create_vehicle(model, spawnPos, heading)
+    if not khanjali then 
+        return 
+    end
+    for i = 2, 4 do
+        local attachPos = (i == 2) and {x = 0, y = 0, z = 3} or {x = 0, y = 0, z = 0}
+        NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(khanjali)
+        ENTITY.ATTACH_ENTITY_TO_ENTITY(khanjali, khanjali, 0, attachPos.x, attachPos.y, attachPos.z, 0, 0, 0, 
+        -180, false, true, false, false, 0, true)
+    end
+    ENTITY.SET_ENTITY_VISIBLE(khanjali, false)
+    wait(2300)
+    entities.delete_by_handle(khanjali)
+end
+
+function yasha2(pid, objectModel)
+    STREAMING.REQUEST_MODEL(objectModel)
+    while not STREAMING.HAS_MODEL_LOADED(objectModel) do
+        wait(0)
+    end
+    local pos = players.get_position(pid)
+    local vent_objs = {}
+    for i = -1.2, 1.2, 0.2 do
+        for j = -1.2, 1.2, 0.2 do
+            if i ~= 0 or j ~= 0 then
+                local vent = entities.create_object(objectModel, v3.new(pos.x + i, pos.y + j, pos.z - 2.4))
+                if vent then
+                    table.insert(vent_objs, vent)
+                    ENTITY.SET_ENTITY_VISIBLE(vent, false)
+                end
+            end
+        end
+    end
+    wait(275)
+    for _, obj in ipairs(vent_objs) do
+        entities.delete_by_handle(obj)
+    end
+end
+
 function loadModels(models)
     for _, model in ipairs(models) do
         STREAMING.REQUEST_MODEL(model)
@@ -8754,21 +8845,22 @@ function dectfadein(f)
     while sx do
 
         wait()
-
-        GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, ctran)
-        GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, ctran)
-        GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, ctran)
-        GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, ctran)
-        GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, ctran)
-        GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, ctran)
-        GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, ctran)
+        util.create_thread(function ()
+        
+            GRAPHICS.DRAW_RECT(.5, .01, 1, 0.01, 255, 80, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .02, 1, 0.01, 255, 100, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .03, 1, 0.01, 255, 120, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .04, 1, 0.01, 255, 140, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .05, 1, 0.01, 255, 160, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .06, 1, 0.01, 255, 180, 160, ctran)
+            GRAPHICS.DRAW_RECT(.5, .07, 1, 0.01, 255, 200, 160, ctran)
 
         ctran = ctran + 1
-
+        end)
     end
 end
 
-function master1(f)
+function master1(f, masterpid)
     starttime = os.time()
     --local ctran = 0
     local rainbowr = 255
@@ -8780,10 +8872,9 @@ function master1(f)
         util.create_thread(function ()
             dectfadein(f)
         end)
-
         wait()
         textX = lerp(textX, textEndPosition, speed)
-        local text = "~h~~italic~大师级星探 " .. mid
+        local text = "~h~~italic~GTLua Ultra VIP " .. masterpid
 
         rainbowr = rainbowr + math.random(0, 3)
         rainbowg = rainbowg + math.random(0, 3)
@@ -8812,7 +8903,7 @@ function master1(f)
     end
 end
 
-function master2(f)
+function master2(f, masterpid)
     starttime = os.time()
     local rainbowr = 255
     local rainbowg = 255
@@ -8823,7 +8914,7 @@ function master2(f)
 
         wait()
         textX = lerp(textX, textEndPosition, speed)
-        local text = "~h~~italic~大师级星探 " .. mid .. " GTLua VIP"
+        local text = "~h~~italic~GTLua Ultra VIP " .. masterpid .. " 至臻皇榜"
 
         rainbowr = rainbowr + math.random(0, 3)
         rainbowg = rainbowg + math.random(0, 3)
@@ -8851,7 +8942,7 @@ function master2(f)
     end
 end
 
-function master3(f)
+function master3(f, masterpid)
     starttime = os.time()
     local rainbowr = 255
     local rainbowg = 255
@@ -8861,7 +8952,7 @@ function master3(f)
 
         wait()
         textX = lerp(textX, textEndPosition, speed)
-        local text = "~h~~italic~大师级星探 " .. mid .. " 正在该战局"
+        local text = "~h~~italic~GTVIP 至臻皇榜 " .. masterpid .. " 正在该战局"
         HUD.SET_TEXT_SCALE(0.5, 0.4)
         rainbowr = rainbowr + math.random(0, 3)
         rainbowg = rainbowg + math.random(0, 3)
@@ -8889,7 +8980,7 @@ function master3(f)
     end
 end
 
-function master4(f)
+function master4(f, masterpid)
     starttime = os.time()
     local rainbowr = 255
     local rainbowg = 255
@@ -8899,7 +8990,7 @@ function master4(f)
 
         wait()
         textX = lerp(textX - 0.0023, textEndPosition, speed)
-        local text = "~h~~italic~GRANDTOURINGVIP 大师级星探 " .. mid
+        local text = "~h~~italic~GRANDTOURINGVIP 至臻皇榜 " .. masterpid
 
         rainbowr = rainbowr + math.random(0, 3)
         rainbowg = rainbowg + math.random(0, 3)
@@ -8927,7 +9018,7 @@ function master4(f)
     end
 end
 
-function master5(f)
+function master5(f, masterpid)
     starttime = os.time()
     local rainbowr = 255
     local rainbowg = 255
@@ -8937,7 +9028,7 @@ function master5(f)
 
         wait()
         textX = lerp(textX - 0.0050, textEndPosition, speed) -- 控制左滑出速度
-        local text = "~h~~italic~GRANDTOURINGVIP 星探大师 " .. mid
+        local text = "~h~~italic~GRANDTOURINGVIP 至臻皇榜会员 " .. masterpid
 
         rainbowr = rainbowr + math.random(0, 3)
         rainbowg = rainbowg + math.random(0, 3)
@@ -8987,7 +9078,7 @@ function dectfadeon(f)
     end
 end
 
-function master6(f)
+function master6(f, masterpid)
     starttime = os.time()
     local rainbowr = 255
     local rainbowg = 255
@@ -9004,7 +9095,7 @@ function master6(f)
 
         wait()
         textX = lerp(textX + 0.0300, textEndPosition, speed) -- 控制左滑出速度
-        local text = "~h~~italic~GRANDTOURINGVIP 星探大师 " .. mid
+        local text = "~h~~italic~GRANDTOURINGVIP 至臻皇榜会员 " .. masterpid
 
         rainbowr = rainbowr + math.random(0, 3)
         rainbowg = rainbowg + math.random(0, 3)
@@ -9038,23 +9129,29 @@ function master6(f)
     end
 end
 
-function mastergt(f)
+function mastergt(f, masterpid)
     master = f
     while master do
-        
-        master1(f)
-        master2(f)
-        master3(f)
-        master4(f)
-        master5(f)
-        master6(f)
-        
+        wait()
+        master1(f, masterpid)
+
+        master2(f, masterpid)
+
+        master3(f, masterpid)
+
+        master4(f, masterpid)
+
+        master5(f, masterpid)
+
+        master6(f, masterpid)
+
         if master_index then
             master = false
         end
 
     end
 end
+
 --
 timerT = 0
 function InstantKillDoordrawText(text, x, y)
@@ -9544,7 +9641,7 @@ function renwuegaoqiang2()
 end    
 
 --至臻横幅
-function sxgt(f)
+function sxgt(f, sxpid)
     starttime8 = os.time()
     local rainbowr = 255
     local rainbowg = 255
@@ -9625,42 +9722,42 @@ function sxgt(f)
         HUD.SET_TEXT_OUTLINE(0)
         HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
 
-        if playeridx == "hinrcituqzQZ" then
+        if sxpid == "hinrcituqzQZ" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 清歌 正在该战局")
-        elseif playeridx == "chen_you123" then
+        elseif sxpid == "chen_you123" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 辰悠 正在该战局")
-        elseif playeridx == "rudan891018" then
+        elseif sxpid == "rudan891018" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~湾湾 正在该战局")
-        elseif playeridx == "An_owQ" then
+        elseif sxpid == "An_owQ" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~Lin带着好大儿瑞思拜进入了战局")
-        elseif playeridx == "Mag7777V" or playeridx == "Magicswordstar" then
+        elseif sxpid == "Mag7777V" or sxpid == "Magicswordstar" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~闪耀至臻管理员 正在该战局")
-        elseif playeridx == "RhymeBear" then
+        elseif sxpid == "RhymeBear" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~italic~~h~~y~菲奥娜K1ng ~r~正在逆袭战局")
-        elseif playeridx == "Gods_daxiong" then
+        elseif sxpid == "Gods_daxiong" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 明月 正在该战局")
-        elseif playeridx == "YuukiAsuna17" then 
+        elseif sxpid == "YuukiAsuna17" then 
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~执掌神判的 YuukiAsuna17 在此降临")
-        elseif playeridx == "xyzkzero" then
+        elseif sxpid == "xyzkzero" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~执掌神判的 xyzkzero 在此降临")
-        elseif playeridx == "-ZackFair-" or playeridx == "Msinc" or playeridx == "Msincer" or playeridx == "WXH_666" then
+        elseif sxpid == "-ZackFair-" or sxpid == "Msinc" or sxpid == "Msincer" or sxpid == "WXH_666" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 人生若只如初见 正在逆袭战局")
-        elseif playeridx == "XiaoYuXin_qwq" then
+        elseif sxpid == "XiaoYuXin_qwq" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~italic~~h~~y~小~q~雨~b~祝~p~战~r~局~y~里~q~的~b~GT~p~玩~r~家~y~玩~q~的~r~开~b~心")
-        elseif playeridx == "ghosts_009" then
+        elseif sxpid == "ghosts_009" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~忽有故人心上过，回首山河已是冬")
-        elseif playeridx == "zxzppq" then
+        elseif sxpid == "zxzppq" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~r~中华人民共和国万岁")
-        elseif playeridx == "Doll0v0" then
+        elseif sxpid == "Doll0v0" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~妹妹最爱的Doll0v0正在此战局")
-        elseif playeridx == "Herykcz" then
+        elseif sxpid == "Herykcz" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~妹妹最爱的Herykcz正在此战局")
-        elseif playeridx == "kingpo030715" then
+        elseif sxpid == "kingpo030715" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~救世主kingpo加入了战局")
-        elseif playeridx == "sshanheya" then
+        elseif sxpid == "sshanheya" then
             util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~q~妹妹最爱的至臻皇榜在此战局")
         else
-            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 "..playeridx.." 正在该战局")
+            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~至臻皇榜 "..sxpid.." 正在该战局")
         end
 
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.380)
@@ -9671,13 +9768,14 @@ function sxgt(f)
     end
 end
 
-function hengfugt(f)
+function hengfugt(f, targetplayer)
     starttime = os.time()
     local startX = -0.5
     local endX = 0.5
     local speed = 0.001
     hfgt = f
     while hfgt do
+
         wait()
         startX = startX + speed
         endX = endX + speed
@@ -9699,18 +9797,19 @@ function hengfugt(f)
         HUD.SET_TEXT_CENTRE(1)
         HUD.SET_TEXT_OUTLINE(0)
         HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
-        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~GTVIP皇榜会员 " .. playerid .. " 正在该战局")
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~GTVIP皇榜会员 " .. targetplayer .. " 正在该战局")
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.480)
 
         if os.time() - starttime >= 7 then
             hfgt = false
             return
         end
+
     end
 end
 
 --开发横幅
-function devhengfu(f)
+function devhengfu(f, devt)
     starttime = os.time()
     local startX = -0.5
     local endX = 0.5
@@ -9724,7 +9823,7 @@ function devhengfu(f)
             startX = -0.5
             endX = 0.5
         end
-        
+
         GRAPHICS.DRAW_RECT(.5, .30, 1, 0.05, 255, 90, 160, 255)
         GRAPHICS.DRAW_RECT(.5, .31, 1, 0.05, 255, 160, 190, 255)
         GRAPHICS.DRAW_RECT(.5, .33, 1, 0.011, 255, 90, 160, 255)
@@ -9735,15 +9834,16 @@ function devhengfu(f)
         HUD.SET_TEXT_CENTRE(1)
         HUD.SET_TEXT_OUTLINE(0)
         HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
-        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~GTVIP开发人员 " .. playerrid .. " 正在该战局")
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~GTVIP开发人员 " .. devt .. " 正在该战局")
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.5, 0.285)
-        
-        if os.time() - starttime >= 7 then
-        devhf = false
+
+        if os.time() - starttime >= 6 then
+            devhf = false
+            return
         end
-        end
-        --devhf = false
     end
+end
+
 --入侵载具
 function control_vehicle(pid, output_toast, callback, opts)
     local vehicle = ent_func.get_player_vehicle_in_control(pid, opts)
@@ -10171,15 +10271,15 @@ function fku()
 if PED.IS_PED_A_PLAYER(players.user_ped()) then
     pos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     local c = players.get_position(players.user())
-    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 1, 1, 1, 255, 0, 0, 255, false, true, 2, 0, 0, 0, false)
-    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 2, 2, 2,  255, 128, 0, 255, false, true, 2, 0, 0, 0, false)
-    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 3, 3, 3, 255, 255, 0, 255, false, true, 2, 0, 0, 0, false)
-    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 5, 5, 5, 0, 255, 0, 255, false, true, 2, 0, 0, 0, false)
-    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 8, 8, 8, 0, 255, 255, 255, false, true, 2, 0, 0, 0, false)
-    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 13, 13, 13, 0, 75, 255, 255, false, true, 2, 0, 0, 0, false)
-    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 21, 21, 21, 128, 0, 255, 255, false, true, 2, 0, 0, 0, false)
-    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 34, 34, 34, 255, 0, 0, 255, false, true, 2, 0, 0, 0, false)
-    WIRI_GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 55, 55, 1, 255, 255, 0, 255, false, true, 2, 0, 0, 0, false)
+    GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 1, 1, 1, 255, 0, 0, 255, false, true, 2, 0, 0, 0, false)
+    GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 2, 2, 2,  255, 128, 0, 255, false, true, 2, 0, 0, 0, false)
+    GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 3, 3, 3, 255, 255, 0, 255, false, true, 2, 0, 0, 0, false)
+    GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 5, 5, 5, 0, 255, 0, 255, false, true, 2, 0, 0, 0, false)
+    GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 8, 8, 8, 0, 255, 255, 255, false, true, 2, 0, 0, 0, false)
+    GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 13, 13, 13, 0, 75, 255, 255, false, true, 2, 0, 0, 0, false)
+    GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 21, 21, 21, 128, 0, 255, 255, false, true, 2, 0, 0, 0, false)
+    GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 34, 34, 34, 255, 0, 0, 255, false, true, 2, 0, 0, 0, false)
+    GRAPHICS.DRAW_MARKER(25, c.x, c.y, c.z-0.85, 0, 180, 0, 0, 180, 0, 55, 55, 1, 255, 255, 0, 255, false, true, 2, 0, 0, 0, false)
     end
 end
 --sb
@@ -10190,7 +10290,7 @@ function woshishabi(f)
     end
     wait()
     local pedp  = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-    gametag = WIRI_HUD.CREATE_FAKE_MP_GAMER_TAG(pedp,"我是傻逼",false,false,"flakin",0)
+    gametag = HUD.CREATE_FAKE_MP_GAMER_TAG(pedp,"我是傻逼",false,false,"flakin",0)
 end
 --上岛
 function sendscriptevent_three()--上岛
@@ -10652,7 +10752,7 @@ function topless(pid)
 --
 function biaoji(f)
     local pedp  = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-    gametag = WIRI_HUD.CREATE_FAKE_MP_GAMER_TAG(pedp,"我是傻逼",false,false,"flakin",0)
+    gametag = HUD.CREATE_FAKE_MP_GAMER_TAG(pedp,"我是傻逼",false,false,"flakin",0)
 end
 --
 function first_to_upper(str)
@@ -10713,11 +10813,11 @@ BOATS = {}
     for _, veh in pairs(util.get_vehicles()) do 
         local mdl = first_to_upper(veh.name)
         local v_hash = util.joaat(mdl)
-        if WIRI_VEHICLE.IS_THIS_MODEL_A_CAR(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_A_BIKE(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_A_BICYCLE(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_A_QUADBIKE(v_hash) then
+        if VEHICLE.IS_THIS_MODEL_A_CAR(v_hash) or VEHICLE.IS_THIS_MODEL_A_BIKE(v_hash) or VEHICLE.IS_THIS_MODEL_A_BICYCLE(v_hash) or VEHICLE.IS_THIS_MODEL_A_QUADBIKE(v_hash) then
         CARS[#CARS+1] = mdl
-        elseif WIRI_VEHICLE.IS_THIS_MODEL_A_PLANE(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_A_HELI(v_hash) then 
+        elseif VEHICLE.IS_THIS_MODEL_A_PLANE(v_hash) or VEHICLE.IS_THIS_MODEL_A_HELI(v_hash) then 
         PLANES[#PLANES+1] = mdl
-        elseif WIRI_VEHICLE.IS_THIS_MODEL_A_BOAT(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_AN_AMPHIBIOUS_CAR(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_AN_AMPHIBIOUS_QUADBIKE(v_hash) or WIRI_VEHICLE.IS_THIS_MODEL_A_JETSKI(v_hash) then 
+        elseif VEHICLE.IS_THIS_MODEL_A_BOAT(v_hash) or VEHICLE.IS_THIS_MODEL_AN_AMPHIBIOUS_CAR(v_hash) or VEHICLE.IS_THIS_MODEL_AN_AMPHIBIOUS_QUADBIKE(v_hash) or VEHICLE.IS_THIS_MODEL_A_JETSKI(v_hash) then 
         BOATS[#BOATS+1] = mdl
     end
 end
@@ -11273,7 +11373,7 @@ function sugercrash(pid)
     local old_pos = ENTITY.GET_ENTITY_COORDS(user, false)
     WEAPON.GIVE_DELAYED_WEAPON_TO_PED(user, 0xFBAB5776, 100, false)
     PLAYER.SET_PLAYER_HAS_RESERVE_PARACHUTE(players.user())
-    Jinx.SET_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE(players.user(), mdl)
+    PLAYER.SET_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE(players.user(), mdl)
     wait(50)
     local pos = players.get_position(pid)
     pos.z += 300
@@ -11291,7 +11391,7 @@ function sugercrash(pid)
         wait()
     until PED.GET_PED_PARACHUTE_STATE(user) ~= 1
     pcall(TASK.CLEAR_PED_TASKS_IMMEDIATELY, user)
-    Jinx.CLEAR_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE(players.user())
+    PLAYER.CLEAR_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE(players.user())
     pcall(ENTITY.SET_ENTITY_COORDS, user, old_pos.x, old_pos.y, old_pos.z, false, false)
     end)
 end
@@ -12328,7 +12428,7 @@ if players.exists(pid) then
                 wait()
             until PED.GET_PED_PARACHUTE_STATE(user) ~= 1
             pcall(TASK.CLEAR_PED_TASKS_IMMEDIATELY, user)
-            Jinx.CLEAR_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE(players.user())
+            PLAYER.CLEAR_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE(players.user())
             pcall(ENTITY.SET_ENTITY_COORDS, user, old_pos.x,old_pos.y,old_pos.z, false, false)
         end)
     end
@@ -12667,7 +12767,7 @@ wait(0)
 entities.delete_by_handle(vehicle1)
 end
 
---无效载具小飞机
+-- 无效载具小飞机
 function BadOutfitCrashV2(pid)
     local getEntityCoords = ENTITY.GET_ENTITY_COORDS
     local getPlayerPed = PLAYER.GET_PLAYER_PED
@@ -12677,8 +12777,11 @@ function BadOutfitCrashV2(pid)
         util.create_thread(function()
             RqModel(hashes[i])
             local pcoords = getEntityCoords(getPlayerPed(pid))
-            local veh =  VEHICLE.CREATE_VEHICLE(hashes[i], pcoords.x + 1000, pcoords.y + 1000, pcoords.z + 1000, math.random(0, 360), true, true, false)
-            for a = 1, 20 do NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh) end
+            local veh = VEHICLE.CREATE_VEHICLE(hashes[i], pcoords.x + 1000, pcoords.y + 1000, pcoords.z + 1000,
+                math.random(0, 360), true, true, false)
+            for a = 1, 20 do
+                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+            end
             VEHICLE.SET_VEHICLE_MOD_KIT(veh, 0)
             for j = 0, 49 do
                 local mod = VEHICLE.GET_NUM_VEHICLE_MODS(veh, j) - 1
@@ -12686,7 +12789,9 @@ function BadOutfitCrashV2(pid)
                 VEHICLE.TOGGLE_VEHICLE_MOD(veh, mod, true)
             end
             for j = 0, 20 do
-                if VEHICLE.DOES_EXTRA_EXIST(veh, j) then VEHICLE.SET_VEHICLE_EXTRA(veh, j, true) end
+                if VEHICLE.DOES_EXTRA_EXIST(veh, j) then
+                    VEHICLE.SET_VEHICLE_EXTRA(veh, j, true)
+                end
             end
             VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(veh, false)
             VEHICLE.SET_VEHICLE_WINDOW_TINT(veh, 1)
@@ -12698,29 +12803,30 @@ function BadOutfitCrashV2(pid)
                 ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, pcoords.x, pcoords.y, pcoords.z, false, false, false)
                 wait()
             end
-            vehicles[#vehicles+1] = veh
+            vehicles[#vehicles + 1] = veh
         end)
     end
     wait(500)
-    menu.trigger_commands("explode" ..  players.get_name(pid))
+    menu.trigger_commands("explode" .. players.get_name(pid))
     for _, v in pairs(vehicles) do
         NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(v)
         entities.delete_by_handle(v)
     end
 end
-        function RqModel (hash)
-            STREAMING.REQUEST_MODEL(hash)
-            local count = 0
-            notification("正在请求模型...")
-            while not STREAMING.HAS_MODEL_LOADED(hash) and count < 100 do
-                STREAMING.REQUEST_MODEL(hash)
-                count = count + 1
-                wait(10)
-            end
-            if not STREAMING.HAS_MODEL_LOADED(hash) then
-                notification("已尝试1秒,无法加载此指定模型!")
-            end
-        end
+function RqModel(hash)
+    STREAMING.REQUEST_MODEL(hash)
+    local count = 0
+    notification("正在请求...")
+    while not STREAMING.HAS_MODEL_LOADED(hash) and count < 100 do
+        STREAMING.REQUEST_MODEL(hash)
+        count = count + 1
+        wait(10)
+    end
+    if not STREAMING.HAS_MODEL_LOADED(hash) then
+        notification("已尝试但无法加载,请重试")
+    end
+end
+
 --火车
 function BadNetVehicleCrashV2(pid)
     local hashes = {184361638,642617954,586013744,920453016,3186376089,1030400667,240201337}
@@ -12751,7 +12857,7 @@ function BadNetVehicleCrashV2(pid)
             VEHICLE.SET_RANDOM_TRAINS(veh, 1)
             for ai = 1, 50 do
                 NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
-                ENTITYJINX.ATTACH_ENTITY_BONE_TO_ENTITY_BONE_Y_FORWARD(veh)
+                ENTITY.ATTACH_ENTITY_BONE_TO_ENTITY_BONE_Y_FORWARD(veh)
                 pcoords = getEntityCoords(getPlayerPed(pid))
                 ENTITY.SET_ENTITY_COORDS_NO_OFFSET(veh, pcoords.x, pcoords.y, pcoords.z, false, false, false)
                 wait()
@@ -13284,16 +13390,16 @@ function free_cam()
     for _, pid in players.list(false, true, true) do
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
         local ped_ptr = entities.handle_to_pointer(ped)
-        local vehicle = WIRI_PED.GET_VEHICLE_PED_IS_USING(ped)
+        local vehicle = PED.GET_VEHICLE_PED_IS_USING(ped)
         local oldpos = players.get_position(pid)
         wait()
         local currentpos = players.get_position(pid)
         local vel = ENTITY.GET_ENTITY_VELOCITY(ped)
         if not util.is_session_transition_active() and players.exists(pid)
         and GetInteriorPlayerIsIn(pid) == 0 and GetSpawnState(pid) ~= 0
-        and not WIRI_PED.IS_PED_IN_ANY_VEHICLE(ped, false) -- too many false positives occured when players where driving. so fuck them. lol.
-        and not NETWORK.NETWORK_IS_PLAYER_FADING(pid) and ENTITY.IS_ENTITY_VISIBLE(ped) and not WIRI_PED.IS_PED_DEAD_OR_DYING(ped)
-        and not WIRI_PED.IS_PED_CLIMBING(ped) and not WIRI_PED.IS_PED_VAULTING(ped) and not WIRI_PED.IS_PED_USING_SCENARIO2(ped)
+        and not PED.IS_PED_IN_ANY_VEHICLE(ped, false) -- too many false positives occured when players where driving. so fuck them. lol.
+        and not NETWORK.NETWORK_IS_PLAYER_FADING(pid) and ENTITY.IS_ENTITY_VISIBLE(ped) and not PED.IS_PED_DEAD_OR_DYING(ped)
+        and not PED.IS_PED_CLIMBING(ped) and not PED.IS_PED_VAULTING(ped) and not PED.IS_PED_USING_SCENARIO2(ped)
         and not TASK.GET_IS_TASK_ACTIVE(ped, 160) and not TASK.GET_IS_TASK_ACTIVE(ped, 2)
         and v3.distance(players.get_position(players.user()), players.get_position(pid)) <= 395.0 -- 400 was causing false positives
         and ENTITY.GET_ENTITY_HEIGHT_ABOVE_GROUND(ped) > 5.0 and not ENTITY.IS_ENTITY_IN_AIR(ped) and entities.player_info_get_game_state(ped_ptr) == 0
@@ -14039,8 +14145,8 @@ function jesus_help_me()
         PED.SET_PED_INTO_VEHICLE(SelfPlayerPed, Ruiner2, -1)
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Ruiner2, SelfPlayerPos.x, SelfPlayerPos.y, 1000, false, true, true)
         wait(200)
-        WIRI_VEHICLE.VEHICLE_SET_PARACHUTE_MODEL_OVERRIDE(Ruiner2, util.joaat("prop_beach_parasol_05"))
-        WIRI_VEHICLE.VEHICLE_START_PARACHUTING(Ruiner2, true)
+        VEHICLE.VEHICLE_SET_PARACHUTE_MODEL_OVERRIDE(Ruiner2, util.joaat("prop_beach_parasol_05"))
+        VEHICLE.VEHICLE_START_PARACHUTING(Ruiner2, true)
         wait(200)
         entities.delete_by_handle(Ruiner2)
         entities.delete_by_handle(SelfPlayerPed)
@@ -14526,8 +14632,8 @@ function tp_bsupplies()
     end
 
 function tp_payphone()
-    local payPhon = GENERIC_HUD.GET_BLIP_COORDS(GENERIC_HUD.GET_NEXT_BLIP_INFO_ID(817))
-    GENERIC_HUD.GET_BLIP_COORDS(GENERIC_HUD.GET_NEXT_BLIP_INFO_ID(817))
+    local payPhon = HUD.GET_BLIP_COORDS(HUD.GET_NEXT_BLIP_INFO_ID(817))
+    HUD.GET_BLIP_COORDS(HUD.GET_NEXT_BLIP_INFO_ID(817))
         if payPhon.x == 0 and payPhon.y == 0 and payPhon.z == 0 then
             if set.alert then
                 util.toast('未找到公共电话亭')
@@ -14538,8 +14644,8 @@ function tp_payphone()
     end
 
 function tp_eed()
-    if GENERIC_HUD.DOES_BLIP_EXIST(GENERIC_HUD.GET_CLOSEST_BLIP_INFO_ID(780)) then
-        local eDock = GENERIC_HUD.GET_BLIP_COORDS(GENERIC_HUD.GET_CLOSEST_BLIP_INFO_ID(780))
+    if HUD.DOES_BLIP_EXIST(HUD.GET_CLOSEST_BLIP_INFO_ID(780)) then
+        local eDock = HUD.GET_BLIP_COORDS(HUD.GET_CLOSEST_BLIP_INFO_ID(780))
         if  eDock.x == 0 and eDock.y == 0 and eDock.z == 0
         then
          if set.alert then
@@ -15578,7 +15684,7 @@ function blockfireeffect()
 end
 
 function antianimal()
-    if Jinx.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(util.joaat("am_hunt_the_beast")) > 0 then
+    if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(util.joaat("am_hunt_the_beast")) > 0 then
         local host
         repeat
             host = NETWORK.NETWORK_GET_HOST_OF_SCRIPT("am_hunt_the_beast", -1, 0)
@@ -16952,7 +17058,7 @@ function Save_Weapon_Profile()
     for _, weapon in weapons_table do
         local weapon_hash = weapon.hash
 
-        if WEAPON_SAVE_WEAPON.HAS_PED_GOT_WEAPON(player, weapon_hash, false) then
+        if WEAPON.HAS_PED_GOT_WEAPON(player, weapon_hash, false) then
             num_weapons = num_weapons + 1
             if num_weapons > 1 then
                 file:write("," .. charE)
@@ -16961,9 +17067,9 @@ function Save_Weapon_Profile()
             --WEAPON.SET_CURRENT_PED_WEAPON(player, weapon_hash, true)
             local num_attachments = 0
             for attachment_hash, _ in attachments_dict do
-                if (WEAPON_SAVE_WEAPON.DOES_WEAPON_TAKE_WEAPON_COMPONENT(weapon_hash, attachment_hash)) then
+                if (WEAPON.DOES_WEAPON_TAKE_WEAPON_COMPONENT(weapon_hash, attachment_hash)) then
                     --wait(10)
-                    if WEAPON_SAVE_WEAPON.HAS_PED_GOT_WEAPON_COMPONENT(player, weapon_hash, attachment_hash) then
+                    if WEAPON.HAS_PED_GOT_WEAPON_COMPONENT(player, weapon_hash, attachment_hash) then
                         num_attachments = num_attachments + 1
                         if num_attachments == 1 then
                             file:write("{")
@@ -16975,7 +17081,7 @@ function Save_Weapon_Profile()
                     end
                 end
             end
-            local cur_tint = WEAPON_SAVE_WEAPON.GET_PED_WEAPON_TINT_INDEX(player, weapon_hash)
+            local cur_tint = WEAPON.GET_PED_WEAPON_TINT_INDEX(player, weapon_hash)
             if num_attachments > 0 then
                 file:write(charE .. charS .. charS .. "},")
             else
@@ -16984,8 +17090,8 @@ function Save_Weapon_Profile()
             file:write(charE .. charS .. charS .. "[\"tint\"] = " .. cur_tint)
             --- Livery
             for livery_hash, _ in liveries_dict do
-                if WEAPON_SAVE_WEAPON.HAS_PED_GOT_WEAPON_COMPONENT(player, weapon_hash, livery_hash) then
-                    local colour = WEAPON_SAVE_WEAPON.GET_PED_WEAPON_COMPONENT_TINT_INDEX(player, weapon_hash, livery_hash)
+                if WEAPON.HAS_PED_GOT_WEAPON_COMPONENT(player, weapon_hash, livery_hash) then
+                    local colour = WEAPON.GET_PED_WEAPON_COMPONENT_TINT_INDEX(player, weapon_hash, livery_hash)
                     file:write("," .. charE .. charS .. charS .. "[\"livery\"] = {")
                     file:write(charE .. charS .. charS .. charS .. "[\"hash\"] = " .. livery_hash .. ",")
                     file:write(charE .. charS .. charS .. charS .. "[\"colour\"] = " .. colour)
@@ -17004,20 +17110,20 @@ end
 function Load_Out_Weapon()
     if filesystem.exists(STOREDIR .. "loadout.lua") then
         player = players.user_ped()
-        WEAPON_SAVE_WEAPON.REMOVE_ALL_PED_WEAPONS(player, false)
-        WEAPON_SAVE_WEAPON.SET_CAN_PED_SELECT_ALL_WEAPONS(player, true)
+        WEAPON.REMOVE_ALL_PED_WEAPONS(player, false)
+        WEAPON.SET_CAN_PED_SELECT_ALL_WEAPONS(player, true)
         local loadout = require("/lib/" .. '/GTSCRIPTS/' .. '/GTW/' .. "loadout")
         for w_hash, attach_dict in loadout do
-            WEAPON_SAVE_WEAPON.GIVE_WEAPON_TO_PED(player, w_hash, 10, false, true)
+            WEAPON.GIVE_WEAPON_TO_PED(player, w_hash, 10, false, true)
             if attach_dict.attachments ~= nil then
                 for _, hash in attach_dict.attachments do
-                    WEAPON_SAVE_WEAPON.GIVE_WEAPON_COMPONENT_TO_PED(player, w_hash, hash)
+                    WEAPON.GIVE_WEAPON_COMPONENT_TO_PED(player, w_hash, hash)
                 end
             end
-            WEAPON_SAVE_WEAPON.SET_PED_WEAPON_TINT_INDEX(player, w_hash, attach_dict["tint"])
+            WEAPON.SET_PED_WEAPON_TINT_INDEX(player, w_hash, attach_dict["tint"])
             if attach_dict.livery ~= nil then
-                WEAPON_SAVE_WEAPON.GIVE_WEAPON_COMPONENT_TO_PED(player, w_hash, attach_dict.livery.hash)
-                WEAPON_SAVE_WEAPON.SET_PED_WEAPON_COMPONENT_TINT_INDEX(player, w_hash, attach_dict.livery.hash, attach_dict.livery.colour)
+                WEAPON.GIVE_WEAPON_COMPONENT_TO_PED(player, w_hash, attach_dict.livery.hash)
+                WEAPON.SET_PED_WEAPON_COMPONENT_TINT_INDEX(player, w_hash, attach_dict.livery.hash, attach_dict.livery.colour)
             end
         end
         regen_menu()
@@ -17034,7 +17140,7 @@ function Auto_Load_Out_Weapon(on)
 end
 
 function Dele_All_Weapon()
-    WEAPON_SAVE_WEAPON.REMOVE_ALL_PED_WEAPONS(players.user_ped(), false)
+    WEAPON.REMOVE_ALL_PED_WEAPONS(players.user_ped(), false)
     regen_menu()
     util.toast("你的武器被人用了！")
 end
@@ -17061,7 +17167,7 @@ function regen_menu()
         local category = weapon.category
         local weapon_name = util.get_label_text(weapon.label_key)
         local weapon_hash = weapon.hash
-        if WEAPON_SAVE_WEAPON.HAS_PED_GOT_WEAPON(players.user_ped(), weapon_hash, false) then
+        if WEAPON.HAS_PED_GOT_WEAPON(players.user_ped(), weapon_hash, false) then
             generate_for_new_weapon(category, weapon_name, weapon_hash, false)
         else
             weapons_action[weapon_hash] = categories[category]:action(weapon_name .. " (未配备)", {}, "配备 " .. weapon_name,
@@ -17071,16 +17177,16 @@ function regen_menu()
                     end
             )
         end
-        WEAPON_SAVE_WEAPON.ADD_AMMO_TO_PED(players.user_ped(), weapon_hash, 10) --- if a special ammo type has been equipped.. it should get some ammo
+        WEAPON.ADD_AMMO_TO_PED(players.user_ped(), weapon_hash, 10) --- if a special ammo type has been equipped.. it should get some ammo
     end
 end
 
 function equip_comp(category, weapon_name, weapon_hash, attachment_hash)
-    WEAPON_SAVE_WEAPON.GIVE_WEAPON_COMPONENT_TO_PED(players.user_ped(), weapon_hash, attachment_hash)
+    WEAPON.GIVE_WEAPON_COMPONENT_TO_PED(players.user_ped(), weapon_hash, attachment_hash)
 end
 
 function equip_weapon(category, weapon_name, weapon_hash)
-    WEAPON_SAVE_WEAPON.GIVE_WEAPON_TO_PED(players.user_ped(), weapon_hash, 10, false, true)
+    WEAPON.GIVE_WEAPON_TO_PED(players.user_ped(), weapon_hash, 10, false, true)
     wait(10)
     weapon_deletes[weapon_name] = nil
     generate_for_new_weapon(category, weapon_name, weapon_hash, true)
@@ -17089,7 +17195,7 @@ end
 function generate_for_new_weapon(category, weapon_name, weapon_hash, focus)
     weapons_action[weapon_hash] = categories[category]:list(weapon_name, {}, "编辑的附件 " .. weapon_name,
             function()
-                WEAPON_SAVE_WEAPON.SET_CURRENT_PED_WEAPON(players.user_ped(), weapon_hash, true)
+                WEAPON.SET_CURRENT_PED_WEAPON(players.user_ped(), weapon_hash, true)
                 generate_attachments(category, weapon_name, weapon_hash)
             end
     )
@@ -17114,13 +17220,13 @@ function generate_cosmetics(weapon_hash, weapon_name)
     end
     cosmetics_list[weapon_hash] = weapons_action[weapon_hash]:list("表面", {}, "",
             function()
-                local tint_count = WEAPON_SAVE_WEAPON.GET_WEAPON_TINT_COUNT(weapon_hash)
-                local cur_tint = WEAPON_SAVE_WEAPON.GET_PED_WEAPON_TINT_INDEX(player, weapon_hash)
+                local tint_count = WEAPON.GET_WEAPON_TINT_COUNT(weapon_hash)
+                local cur_tint = WEAPON.GET_PED_WEAPON_TINT_INDEX(player, weapon_hash)
 
                 if tints_slider[weapon_hash] == nil then
                     tints_slider[weapon_hash] = cosmetics_list[weapon_hash]:slider("色调", {}, "选择适合你的色调 " .. weapon_name, 0, tint_count - 1, cur_tint, 1,
                             function(change)
-                                WEAPON_SAVE_WEAPON.SET_PED_WEAPON_TINT_INDEX(player, weapon_hash, change)
+                                WEAPON.SET_PED_WEAPON_TINT_INDEX(player, weapon_hash, change)
                             end
                     )
                 end
@@ -17128,7 +17234,7 @@ function generate_cosmetics(weapon_hash, weapon_name)
                 --- livery colour
                 local has_liveries = false
                 for livery_hash, _ in liveries_dict do
-                    if WEAPON_SAVE_WEAPON.DOES_WEAPON_TAKE_WEAPON_COMPONENT(weapon_hash, livery_hash) then
+                    if WEAPON.DOES_WEAPON_TAKE_WEAPON_COMPONENT(weapon_hash, livery_hash) then
                         has_liveries = true
                         break
                     end
@@ -17138,21 +17244,21 @@ function generate_cosmetics(weapon_hash, weapon_name)
                 if has_liveries then
                     --- get current camo component
                     for hash, _ in liveries_dict do
-                        if WEAPON_SAVE_WEAPON.HAS_PED_GOT_WEAPON_COMPONENT(player, weapon_hash, hash) then
+                        if WEAPON.HAS_PED_GOT_WEAPON_COMPONENT(player, weapon_hash, hash) then
                             livery[weapon_hash] = hash
                             break
                         end
                     end
                     --- livery colour slider
                     if livery_colour_slider[weapon_hash] == nil then
-                        local cur_ctint_colour = WEAPON_SAVE_WEAPON.GET_PED_WEAPON_COMPONENT_TINT_INDEX(player, weapon_hash, livery[weapon_hash])
+                        local cur_ctint_colour = WEAPON.GET_PED_WEAPON_COMPONENT_TINT_INDEX(player, weapon_hash, livery[weapon_hash])
                         if cur_ctint_colour == -1 then cur_ctint_colour = 0 end
                         livery_colour_slider[weapon_hash] = cosmetics_list[weapon_hash]:slider("皮肤颜色", {}, "改变你的皮肤颜色", 0, 31, cur_ctint_colour, 1,
                                 function(index)
                                     if livery[weapon_hash] == nil then
                                         util.toast("你的武器上没有皮肤")
                                     else
-                                        WEAPON_SAVE_WEAPON.SET_PED_WEAPON_COMPONENT_TINT_INDEX(player, weapon_hash, livery[weapon_hash], index)
+                                        WEAPON.SET_PED_WEAPON_COMPONENT_TINT_INDEX(player, weapon_hash, livery[weapon_hash], index)
                                     end
                                 end
                         )
@@ -17163,12 +17269,12 @@ function generate_cosmetics(weapon_hash, weapon_name)
                     end
                     --- livery equip actions
                     for livery_hash, label in liveries_dict do
-                        if WEAPON_SAVE_WEAPON.DOES_WEAPON_TAKE_WEAPON_COMPONENT(weapon_hash, livery_hash) and livery_actions[weapon_hash..livery_hash] == nil then
+                        if WEAPON.DOES_WEAPON_TAKE_WEAPON_COMPONENT(weapon_hash, livery_hash) and livery_actions[weapon_hash..livery_hash] == nil then
                             livery_actions[weapon_hash .. livery_hash] = cosmetics_list[weapon_hash]:action(util.get_label_text(label), {}, "",
                                     function()
                                         livery[weapon_hash] = livery_hash
                                         equip_comp(category, weapon_name, weapon_hash, livery_hash)
-                                        WEAPON_SAVE_WEAPON.SET_PED_WEAPON_COMPONENT_TINT_INDEX(player, weapon_hash, livery[weapon_hash], livery_colour_slider[weapon_hash].value)
+                                        WEAPON.SET_PED_WEAPON_COMPONENT_TINT_INDEX(player, weapon_hash, livery[weapon_hash], livery_colour_slider[weapon_hash].value)
                                     end
                             )
                         end
@@ -17182,7 +17288,7 @@ function generate_attachments(category, weapon_name, weapon_hash)
     if weapon_deletes[weapon_name] == nil then
         weapon_deletes[weapon_name] = weapons_action[weapon_hash]:action("删去 " .. weapon_name, {}, "",
                 function()
-                    WEAPON_SAVE_WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), weapon_hash)
+                    WEAPON.REMOVE_WEAPON_FROM_PED(players.user_ped(), weapon_hash)
                     cosmetics_list[weapon_hash]:delete()
                     cosmetics_list[weapon_hash] = nil
                     livery_action_divider[weapon_hash] = nil
@@ -17208,7 +17314,7 @@ function generate_attachments(category, weapon_name, weapon_hash)
 
     local has_attachments = false
     for livery_hash, _ in attachments_dict do
-        if WEAPON_SAVE_WEAPON.DOES_WEAPON_TAKE_WEAPON_COMPONENT(weapon_hash, livery_hash) then
+        if WEAPON.DOES_WEAPON_TAKE_WEAPON_COMPONENT(weapon_hash, livery_hash) then
             has_attachments = true
             break
         end
@@ -17223,13 +17329,13 @@ function generate_attachments(category, weapon_name, weapon_hash)
 
     for attachment_hash, attachment_label in attachments_dict do
         local attachment_name = util.get_label_text(attachment_label)
-        if (WEAPON_SAVE_WEAPON.DOES_WEAPON_TAKE_WEAPON_COMPONENT(weapon_hash, attachment_hash)) then
+        if (WEAPON.DOES_WEAPON_TAKE_WEAPON_COMPONENT(weapon_hash, attachment_hash)) then
             if (attachments_action[weapon_hash .. " " .. attachment_hash] ~= nil) then attachments_action[weapon_hash .. " " .. attachment_hash]:delete() end
             attachments_action[weapon_hash .. " " .. attachment_hash] = weapons_action[weapon_hash]:action(attachment_name, {}, "配备 " .. attachment_name .. " 在您的 " .. weapon_name,
                     function()
                         equip_comp(category, weapon_name, weapon_hash, attachment_hash)
-                        if (string.find(attachment_label, "弹夹") ~= nil or string.find(attachment_label, "炮弹") ~= nil) and WEAPON_SAVE_WEAPON.HAS_PED_GOT_WEAPON_COMPONENT(players.user_ped(), weapon_hash, attachment_hash) then
-                            WEAPON_SAVE_WEAPON.ADD_AMMO_TO_PED(players.user_ped(), weapon_hash, 10)
+                        if (string.find(attachment_label, "弹夹") ~= nil or string.find(attachment_label, "炮弹") ~= nil) and WEAPON.HAS_PED_GOT_WEAPON_COMPONENT(players.user_ped(), weapon_hash, attachment_hash) then
+                            WEAPON.ADD_AMMO_TO_PED(players.user_ped(), weapon_hash, 10)
                         end
                     end
             )
@@ -17991,7 +18097,6 @@ function throwablebullet(toggle)
     end)
 end
 
---this function is from wiriScripts functions
     local function pairsByKeys(t, f)
         local a = {}
         for n in pairs(t) do table.insert(a, n) end
@@ -18637,14 +18742,14 @@ local shootingEffects <const> = {
 
 function shootingeffect()
     local effect = shootingEffects[selectedOpt]
-	if not WIRI.HAS_NAMED_PTFX_ASSET_LOADED(effect.asset) then
-		WIRI.REQUEST_NAMED_PTFX_ASSET(effect.asset)
+	if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(effect.asset) then
+		STREAMING.REQUEST_NAMED_PTFX_ASSET(effect.asset)
 
 	elseif PED.IS_PED_SHOOTING(players.user_ped()) then
-		local weapon = GET_CURRENT_PED_WEAPON_ENTITY_INDEX(players.user_ped(), false)
-		local boneId = WIRI.GET_ENTITY_BONE_INDEX_BY_NAME(weapon, "gun_muzzle")
-		WIRI.USE_PARTICLE_FX_ASSET(effect.asset)
-		WIRI.START_PARTICLE_FX_NON_LOOPED_ON_ENTITY_BONE(
+		local weapon = WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(players.user_ped(), false)
+		local boneId = ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(weapon, "gun_muzzle")
+		GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
+		GRAPHICS.START_PARTICLE_FX_NON_LOOPED_ON_ENTITY_BONE(
 			effect.name,
 			weapon,
 			0.0, 0.0, 0.0,
@@ -18867,7 +18972,7 @@ function airstgun()
 	local raycastResult = get_raycast_result(1000.0)
 	if raycastResult.didHit and PED.IS_PED_SHOOTING(players.user_ped()) then
 		local pos = raycastResult.endCoords
-		WIRI_MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(
+		MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(
 			pos.x, pos.y, pos.z + 35.0,
 			pos.x, pos.y, pos.z,
 			200,
@@ -18900,10 +19005,10 @@ function bulletchanger()
 	PLAYER.IS_PLAYER_FREE_AIMING(players.user()) and timer.elapsed() > math.max(get_time_between_shots(), 80.0) then
 		local weapon = WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(localPed, false)
 		local bone = ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(weapon, "gun_muzzle")
-		local bonePos = WIRI_ENTITY.GET_ENTITY_BONE_POSTION(weapon, bone)
+		local bonePos = ENTITY.GET_ENTITY_BONE_POSTION(weapon, bone)
 		local offset = get_offset_from_cam(30.0)
 
-		WIRI_MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(
+		MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(
 			bonePos.x, bonePos.y, bonePos.z,
 			offset.x, offset.y, offset.z,
 			200,
@@ -18911,11 +19016,11 @@ function bulletchanger()
 			selectedBullet,
 			localPed, true, false, 2000.0
 		)
-		WIRI_PAD.SET_CONTROL_SHAKE(0, 50, 100)
+		PAD.SET_CONTROL_SHAKE(0, 50, 100)
 		timer.reset()
 
 	elseif PAD.IS_DISABLED_CONTROL_JUST_RELEASED(0, 24) then
-		WIRI_PAD.STOP_CONTROL_SHAKE(0)
+		PAD.STOP_CONTROL_SHAKE(0)
 	end
 end
 
@@ -19468,7 +19573,7 @@ local rgb = {cus = 100}
 function RGBNeonKit(pedm)
     local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, false)
     for i = 0, 3 do
-        WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vmod, i, true)
+        VEHICLE.SET_VEHICLE_NEON_ENABLED(vmod, i, true)
     end
 end
 
@@ -19479,9 +19584,9 @@ function rainbow_car()
         local red = (math.random(0, 255))
         local green = (math.random(0, 255))
         local blue = (math.random(0, 255))
-        WIRI_VEHICLE.SET_VEHICLE_NEON_COLOUR(vmod, red, green, blue)
-        WIRI_VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vmod, red, green, blue)
-        WIRI_VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vmod, red, green, blue)
+        VEHICLE.SET_VEHICLE_NEON_COLOUR(vmod, red, green, blue)
+        VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vmod, red, green, blue)
+        VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vmod, red, green, blue)
         wait(rgb.cus)
        end
     end
@@ -19511,12 +19616,12 @@ function rainbow_car_light()
       local vmod = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), true)
       RGBNeonKit(players.user_ped())
       local rcolor = math.random(1, 12)
-      WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vmod, 22, true)
-      WIRI_VEHICLE.SET_VEHICLE_NEON_INDEX_COLOUR(vmod, color[rcolor][1])
-      WIRI_VEHICLE.SET_VEHICLE_COLOURS(vmod, color[rcolor][1], color[rcolor][1])
-      WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vmod, 0, color[rcolor][1])
-      WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vmod, color[rcolor][1])
-      WIRI_VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vmod, color[rcolor][2])
+      VEHICLE.TOGGLE_VEHICLE_MOD(vmod, 22, true)
+      VEHICLE.SET_VEHICLE_NEON_INDEX_COLOUR(vmod, color[rcolor][1])
+      VEHICLE.SET_VEHICLE_COLOURS(vmod, color[rcolor][1], color[rcolor][1])
+      VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vmod, 0, color[rcolor][1])
+      VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vmod, color[rcolor][1])
+      VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vmod, color[rcolor][2])
       wait(srgb.cus)
     end
 end
@@ -20221,32 +20326,32 @@ function SFlsd()
     memory.write_int(memory.script_global(1645739+1121), 1)
     sf.CLEAR_ALL()
     sf.TOGGLE_MOUSE_BUTTONS(false)
-    sf.SET_DATA_SLOT(0,WIRI_PAD.GET_CONTROL_INSTRUCTIONAL_BUTTONS_STRING(0, 86, true), '镭射')
+    sf.SET_DATA_SLOT(0,PAD.GET_CONTROL_INSTRUCTIONAL_BUTTONS_STRING(0, 86, true), '镭射')
     sf.DRAW_INSTRUCTIONAL_BUTTONS()
     sf:draw_fullscreen()
 end
 
 function Vmod(vmod, plate)
-    WIRI_VEHICLE.SET_VEHICLE_FIXED(vmod)
+    VEHICLE.SET_VEHICLE_FIXED(vmod)
     for M=0, 49 do
-        local modn =  WIRI_VEHICLE.GET_NUM_VEHICLE_MODS(vmod, M)
-        WIRI_VEHICLE.SET_VEHICLE_MOD(vmod, M, modn -1, false)
-        WIRI_VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vmod, plate)
-        WIRI_VEHICLE.GET_VEHICLE_MOD_KIT(vmod, 0)
-        WIRI_VEHICLE.SET_VEHICLE_MOD_KIT(vmod, 0)
-        WIRI_VEHICLE.SET_VEHICLE_MOD(vmod, 14, 0)
-        WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vmod, 22, true)
-        WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vmod, 18, true)
-        WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vmod, 20, true)
-        WIRI_VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vmod, 0, 0, 0)
-        WIRI_VEHICLE.SET_VEHICLE_MAX_SPEED(vmod, 100)
-        WIRI_VEHICLE.MODIFY_VEHICLE_TOP_SPEED(vmod, 40)
-        WIRI_VEHICLE.SET_VEHICLE_BURNOUT(vmod, false)
+        local modn =  VEHICLE.GET_NUM_VEHICLE_MODS(vmod, M)
+        VEHICLE.SET_VEHICLE_MOD(vmod, M, modn -1, false)
+        VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vmod, plate)
+        VEHICLE.GET_VEHICLE_MOD_KIT(vmod, 0)
+        VEHICLE.SET_VEHICLE_MOD_KIT(vmod, 0)
+        VEHICLE.SET_VEHICLE_MOD(vmod, 14, 0)
+        VEHICLE.TOGGLE_VEHICLE_MOD(vmod, 22, true)
+        VEHICLE.TOGGLE_VEHICLE_MOD(vmod, 18, true)
+        VEHICLE.TOGGLE_VEHICLE_MOD(vmod, 20, true)
+        VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vmod, 0, 0, 0)
+        VEHICLE.SET_VEHICLE_MAX_SPEED(vmod, 100)
+        VEHICLE.MODIFY_VEHICLE_TOP_SPEED(vmod, 40)
+        VEHICLE.SET_VEHICLE_BURNOUT(vmod, false)
     end
 end
 
 local function SDcreate(pCoor, pedSi)
-    Lsdcar = WIRI_VEHICLE.CREATE_VEHICLE(lsd.hash, pCoor.x, pCoor.y, pCoor.z, 0, true, true, false)
+    Lsdcar = VEHICLE.CREATE_VEHICLE(lsd.hash, pCoor.x, pCoor.y, pCoor.z, 0, true, true, false)
     PED.SET_PED_INTO_VEHICLE(pedSi, Lsdcar, -1)
     Vmod(Lsdcar, '镭射')
    local CV = CAM.GET_GAMEPLAY_CAM_RELATIVE_HEADING()
@@ -20258,9 +20363,9 @@ end)
  
 util.create_tick_handler(function ()
         if PED.IS_PED_IN_VEHICLE(players.user_ped(), Lsdcar, false) ==true then
-        WIRI_VEHICLE.SET_VEHICLE_DIRT_LEVEL(Lsdcar, 0)
+        VEHICLE.SET_VEHICLE_DIRT_LEVEL(Lsdcar, 0)
         ENTITY.SET_ENTITY_INVINCIBLE(Lsdcar, true)
-        WIRI_VEHICLE.SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(Lsdcar, false)
+        VEHICLE.SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(Lsdcar, false)
         SFlsd()
         end
     end)
@@ -20394,14 +20499,14 @@ function Lazer_Space_Car()
             end
 
 
-        elseif WIRI_PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) ==false and not WIRI_ENTITY.DOES_ENTITY_EXIST(Lsdcar) then
+        elseif PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) ==false and not ENTITY.DOES_ENTITY_EXIST(Lsdcar) then
             SDcreate(pCoor, pedSi)
                  if set.alert then
                     util.toast('生成了魔幻激光战马')
                  end
         end
 
-if WIRI_PED.IS_PED_GETTING_INTO_A_VEHICLE(players.user_ped()) ==false and WIRI_PED.IS_PED_IN_VEHICLE(players.user_ped(), Lsdcar , false) ==false
+if PED.IS_PED_GETTING_INTO_A_VEHICLE(players.user_ped()) ==false and PED.IS_PED_IN_VEHICLE(players.user_ped(), Lsdcar , false) ==false
             then
                 if set.alert then
                     util.toast('玩家已离开魔幻激光战马，它已被删除')
@@ -20750,7 +20855,7 @@ end
 
 function IPM(targets, tar1, pname, cage_table, pid)
     local tar2 = ENTITY.GET_ENTITY_COORDS(targets)
-    local disbet = GENERIC_SYSTEM.VDIST2(tar2.x, tar2.y, tar2.z, tar1.x, tar1.y, tar1.z)
+    local disbet = SYSTEM.VDIST2(tar2.x, tar2.y, tar2.z, tar1.x, tar1.y, tar1.z)
     if disbet <= 0.5  then
     if set.alert then
         util.toast(pname..' 已被笼子困住')
@@ -20861,7 +20966,7 @@ function creep(pid)
 
 		request_fx_asset(appears.asset)
 		GRAPHICS.USE_PARTICLE_FX_ASSET(appears.asset)
-		WIRI_GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+		GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
 			appears.name,
 			ped,
 			0.0, 0.0, -1.0,
@@ -20886,7 +20991,7 @@ function creep(pid)
 			elseif pos:distance(targetPos) < 3.0 and request_control(ped) then
 				request_fx_asset(explosion.asset)
 				GRAPHICS.USE_PARTICLE_FX_ASSET(explosion.asset)
-				WIRI_GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
+				GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
 					explosion.name,
 					pos.x, pos.y, pos.z,
 					0.0, 0.0, 0.0,
@@ -21499,7 +21604,7 @@ function menyoo_preprocess_car(vehicle, data)
             -- fucking menyoo.. here they go mixing up wheel indexes with strings
             k = k:gsub('_', '')
             local cure_menyoo_aids = {['FrontLeft'] = 0, ['FrontRight'] = 1, [2] = 2, [3] = 3, ['BackLeft'] = 4, ['BackRight'] = 5, [6]=6, [7]=7, [8]=8}
-            --修复 WIRI_VEHICLE.SET_VEHICLE_TYRE_BURST(vehicle, cure_menyoo_aids[k], false, 0.0)
+            --修复 VEHICLE.SET_VEHICLE_TYRE_BURST(vehicle, cure_menyoo_aids[k], false, 0.0)
         end
     end
     local mods = menyoo_build_properties_table(data['Mods'].kids)
@@ -21507,20 +21612,20 @@ function menyoo_preprocess_car(vehicle, data)
     if mod_extras ~= nil then 
         for k,v in pairs(mod_extras) do
             k = k:gsub('_', '')
-            WIRI_VEHICLE.SET_VEHICLE_EXTRA(vehicle, k, not to_boolean(v))
+            VEHICLE.SET_VEHICLE_EXTRA(vehicle, k, not to_boolean(v))
         end
     end
     
     for k,v in pairs(neons) do
         local comp = {['Left']=0, ['Right']=1, ['Front']=2, ['Back']=3}
-        WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, comp[k], to_boolean(v))
+        VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, comp[k], to_boolean(v))
     end
 
-    WIRI_VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle, tonumber(data['WheelType']))
+    VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle, tonumber(data['WheelType']))
     for k,v in pairs(mods) do
         k = k:gsub('_', '')
         v = split_str(v, ',')
-        WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, tonumber(k), tonumber(v[1]), to_boolean(v[2]))
+        VEHICLE.SET_VEHICLE_MOD(vehicle, tonumber(k), tonumber(v[1]), to_boolean(v[2]))
     end
 
 
@@ -21528,30 +21633,30 @@ function menyoo_preprocess_car(vehicle, data)
         colors[k] = tonumber(v)
     end
 
-    WIRI_VEHICLE.SET_VEHICLE_COLOURS(vehicle, colors['Primary'], colors['Secondary'])
-    WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, colors['Pearl'], colors['Rim'])
-    WIRI_VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, colors['tyreSmoke_R'], colors['tyreSmoke_G'], colors['tyreSmoke_B'])
-    WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vehicle, colors['LrInterior'])
-    WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_6(vehicle, colors['LrDashboard'])
+    VEHICLE.SET_VEHICLE_COLOURS(vehicle, colors['Primary'], colors['Secondary'])
+    VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, colors['Pearl'], colors['Rim'])
+    VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, colors['tyreSmoke_R'], colors['tyreSmoke_G'], colors['tyreSmoke_B'])
+    VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vehicle, colors['LrInterior'])
+    VEHICLE.SET_VEHICLE_EXTRA_COLOUR_6(vehicle, colors['LrDashboard'])
     local livery = tonumber(data['Livery'])
     if livery == -1 then
         livery = 0
     end
-    WIRI_VEHICLE.SET_VEHICLE_LIVERY(vehicle, livery)
-    WIRI_VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, data['NumberPlateText'])
-    WIRI_VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(vehicle, tonumber(data['NumberPlateTextIndex']))
-    WIRI_VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, tonumber(data['WindowTint']))
-    WIRI_VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle, to_boolean(data['BulletProofTyres']))
-    WIRI_VEHICLE. SET_VEHICLE_DIRT_LEVEL(vehicle, tonumber(data['DirtLevel']))
-    WIRI_VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle, tonumber(data['PaintFade']))
-    WIRI_VEHICLE.SET_CONVERTIBLE_ROOF_LATCH_STATE(vehicle, tonumber(data['RoofState']))
-    WIRI_VEHICLE.SET_VEHICLE_SIREN(vehicle, to_boolean(data['SirenActive']))
-    WIRI_VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, to_boolean(data['EngineOn']), true, false)
+    VEHICLE.SET_VEHICLE_LIVERY(vehicle, livery)
+    VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, data['NumberPlateText'])
+    VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(vehicle, tonumber(data['NumberPlateTextIndex']))
+    VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, tonumber(data['WindowTint']))
+    VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle, to_boolean(data['BulletProofTyres']))
+    VEHICLE. SET_VEHICLE_DIRT_LEVEL(vehicle, tonumber(data['DirtLevel']))
+    VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle, tonumber(data['PaintFade']))
+    VEHICLE.SET_CONVERTIBLE_ROOF_LATCH_STATE(vehicle, tonumber(data['RoofState']))
+    VEHICLE.SET_VEHICLE_SIREN(vehicle, to_boolean(data['SirenActive']))
+    VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, to_boolean(data['EngineOn']), true, false)
 
     AUDIO.SET_VEHICLE_RADIO_LOUD(vehicle, to_boolean(data['IsRadioLoud']))
-    WIRI_VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle, tonumber(data['LockStatus']))
+    VEHICLE.SET_VEHICLE_DOORS_LOCKED(vehicle, tonumber(data['LockStatus']))
     if data['EngineHealth'] ~= nil then
-        WIRI_VEHICLE.SET_VEHICLE_ENGINE_HEALTH(vehicle, tonumber(data['EngineHealth']))
+        VEHICLE.SET_VEHICLE_ENGINE_HEALTH(vehicle, tonumber(data['EngineHealth']))
     end
 end
 
@@ -21826,34 +21931,34 @@ end
 function ini_preprocess_vehicle(vehicle, data, ini_type, veh_index) 
     -- vehicle is a handle to an already-spawned vehicle
     if ini_type == 1 then
-        WIRI_VEHICLE.SET_VEHICLE_COLOURS(vehicle, data.Primary or 0, data.Secondary or 0)
-        WIRI_VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, data.SmokeR or 0, data.SmokeG or 0, data.SmokeB or 0)
-        WIRI_VEHICLE.SET_VEHICLE_NEON_COLOUR(vehicle, data.NeonR or 0, data.NeonG or 0, data.NeonB or 0)
-        WIRI_VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, "LANCE")
-        WIRI_VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, data.Dirt or 0)
-        WIRI_VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle, data.PaintFade or 0)
-        WIRI_VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle, data.Wheels or 0)
-        WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, data.Pearl or 0, data.WheelColor or 0)
-        WIRI_VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, data.Tint or 0)
+        VEHICLE.SET_VEHICLE_COLOURS(vehicle, data.Primary or 0, data.Secondary or 0)
+        VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, data.SmokeR or 0, data.SmokeG or 0, data.SmokeB or 0)
+        VEHICLE.SET_VEHICLE_NEON_COLOUR(vehicle, data.NeonR or 0, data.NeonG or 0, data.NeonB or 0)
+        VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, "LANCE")
+        VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, data.Dirt or 0)
+        VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle, data.PaintFade or 0)
+        VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle, data.Wheels or 0)
+        VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, data.Pearl or 0, data.WheelColor or 0)
+        VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, data.Tint or 0)
 
         if data['BulletProofTires'] == 1 then 
-            WIRI_VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle, false)
+            VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle, false)
         end
         for i=1, 4 do 
             if data['Neon' .. i] == 1 then 
-                WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, i, true)
+                VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, i, true)
             end
         end
 
         for i=0, 48 do
             if data[i] ~= nil then 
                 -- idk how we even determine if a car has custom tires in this format
-                WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, i, data[i], false)
+                VEHICLE.SET_VEHICLE_MOD(vehicle, i, data[i], false)
             end
         end
 
         for i=1, 9 do 
-            WIRI_VEHICLE.SET_VEHICLE_EXTRA(vehicle, i, if data['extra' .. i] == 0 then true else false)
+            VEHICLE.SET_VEHICLE_EXTRA(vehicle, i, if data['extra' .. i] == 0 then true else false)
         end
 
     elseif ini_type == 2 then
@@ -21861,90 +21966,90 @@ function ini_preprocess_vehicle(vehicle, data, ini_type, veh_index)
         local v_extras = data['Vehicle Extras']
         local v_toggles = data['Vehicle Toggles']
         local data = data.Vehicle 
-        WIRI_VEHICLE.SET_VEHICLE_COLOURS(vehicle, data['primary paint'] or 0, data['secondary paint'] or 0)
-        WIRI_VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, data['tyre smoke red'] or 0, data['tyre smoke green'] or 0, data['tyre smoke blue'] or 0)
-        WIRI_VEHICLE.SET_VEHICLE_NEON_COLOUR(vehicle, data['neon red'] or 0, data['neon green'] or 0, data['neon blue'] or 0)
-        WIRI_VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, "LANCE")
-        WIRI_VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, data['dirt level'] or 0)
-        --WIRI_VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle, data.PaintFade or 0)
-        WIRI_VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle, data['wheel type'] or 0)
-        WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, data['pearlescent colour'] or 0, data['wheel colour'] or 0)
-        WIRI_VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, data['window tint'] or 0)
-        WIRI_VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(vehicle, data['plate index'] or 0)
+        VEHICLE.SET_VEHICLE_COLOURS(vehicle, data['primary paint'] or 0, data['secondary paint'] or 0)
+        VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, data['tyre smoke red'] or 0, data['tyre smoke green'] or 0, data['tyre smoke blue'] or 0)
+        VEHICLE.SET_VEHICLE_NEON_COLOUR(vehicle, data['neon red'] or 0, data['neon green'] or 0, data['neon blue'] or 0)
+        VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, "LANCE")
+        VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, data['dirt level'] or 0)
+        --VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle, data.PaintFade or 0)
+        VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle, data['wheel type'] or 0)
+        VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, data['pearlescent colour'] or 0, data['wheel colour'] or 0)
+        VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, data['window tint'] or 0)
+        VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(vehicle, data['plate index'] or 0)
 
         if data['bulletproof tyres'] == 1 then 
-            WIRI_VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle, false)
+            VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle, false)
         end
 
         for i=1, 4 do 
             if data['neon ' .. i] == 1 then 
-                WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, i, true)
+                VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, i, true)
             end
         end
 
         for i= 1, 7 do 
             if data['door ' .. i .. ' state'] == 1 then
-                WIRI_VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle, i, false, true)
+                VEHICLE.SET_VEHICLE_DOOR_OPEN(vehicle, i, false, true)
             end
         end
 
         for i=0, 48 do
             if v_mods[i] ~= nil then 
                 -- idk how we even determine if a car has custom tires in this format
-                WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, i, v_mods[i], false)
+                VEHICLE.SET_VEHICLE_MOD(vehicle, i, v_mods[i], false)
             end
         end
 
         for i=1, 9 do 
-            WIRI_VEHICLE.SET_VEHICLE_EXTRA(vehicle, i, if v_extras[i] == 0 then true else false)
+            VEHICLE.SET_VEHICLE_EXTRA(vehicle, i, if v_extras[i] == 0 then true else false)
         end
 
         for i=17, 22 do 
-            WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, i, if v_toggles[i] == 1 then true else false)
+            VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, i, if v_toggles[i] == 1 then true else false)
         end
 
     elseif ini_type == 3 then
-        WIRI_VEHICLE.SET_VEHICLE_COLOURS(vehicle, data.PrimaryPaint or 0, data.SecondaryPaint or 0)
+        VEHICLE.SET_VEHICLE_COLOURS(vehicle, data.PrimaryPaint or 0, data.SecondaryPaint or 0)
         if data.PrimaryPaint == -1 then 
-            WIRI_VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vehicle, data.PrimaryR or 0, data.PrimaryG or 0, data.PrimaryB or 0)
+            VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vehicle, data.PrimaryR or 0, data.PrimaryG or 0, data.PrimaryB or 0)
         end 
         if data.SecondaryPaint == -1 then 
-            WIRI_VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vehicle, data.SecondaryR, data.SecondaryG, data.SecondaryB)
+            VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vehicle, data.SecondaryR, data.SecondaryG, data.SecondaryB)
         end
-        WIRI_VEHICLE.SET_VEHICLE_MOD_COLOR_1(vehicle, data.PrimaryPaintT or 0, data.PrimaryPaint or 0, data.Pearlescent or 0)
-        WIRI_VEHICLE.SET_VEHICLE_MOD_COLOR_2(vehicle, data.SecondaryPaintT or 0, data.SecondaryPaint or 0)
-        WIRI_VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, data.SmokeR or 0, data.SmokeG or 0, data.SmokeB or 0)
-        WIRI_VEHICLE.SET_VEHICLE_NEON_COLOUR(vehicle, data.NeonR or 0, data.NeonG or 0, data.NeonB or 0)
-        WIRI_VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, "LANCE")
-        --WIRI_VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, data.Dirt or 0)
-        WIRI_VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle, data.PaintFade or 0)
-        WIRI_VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle, data.Wheels or 0)
-        WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, data.Pearlescent or 0, data.WheelsColor or 0)
-        WIRI_VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, data.WindowTint or 0)
-        WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_6(vehicle, data.DashColor)
-        WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vehicle, data.DashLightColor)
+        VEHICLE.SET_VEHICLE_MOD_COLOR_1(vehicle, data.PrimaryPaintT or 0, data.PrimaryPaint or 0, data.Pearlescent or 0)
+        VEHICLE.SET_VEHICLE_MOD_COLOR_2(vehicle, data.SecondaryPaintT or 0, data.SecondaryPaint or 0)
+        VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, data.SmokeR or 0, data.SmokeG or 0, data.SmokeB or 0)
+        VEHICLE.SET_VEHICLE_NEON_COLOUR(vehicle, data.NeonR or 0, data.NeonG or 0, data.NeonB or 0)
+        VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, "LANCE")
+        --VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, data.Dirt or 0)
+        VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle, data.PaintFade or 0)
+        VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle, data.Wheels or 0)
+        VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, data.Pearlescent or 0, data.WheelsColor or 0)
+        VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, data.WindowTint or 0)
+        VEHICLE.SET_VEHICLE_EXTRA_COLOUR_6(vehicle, data.DashColor)
+        VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vehicle, data.DashLightColor)
 
         if data.BulletProof == 1 then 
-            WIRI_VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle, false)
+            VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle, false)
         end
         if data.NeonEnabled == 1 then
             for i=1, 4 do 
-                WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, i, true)
+                VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, i, true)
             end
         end
 
         for i=0, 48 do
             if data[i] ~= nil then 
-                WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, i, data[i], data.CustomTyres)
+                VEHICLE.SET_VEHICLE_MOD(vehicle, i, data[i], data.CustomTyres)
             end
         end
 
         for i=17, 22 do 
-            WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, i, if data['TOGGLE_' .. i] == 1 then true else false)
+            VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, i, if data['TOGGLE_' .. i] == 1 then true else false)
         end
 
         for i=1, 9 do 
-            WIRI_VEHICLE.SET_VEHICLE_EXTRA(vehicle, i, if data['Extra_' .. i] == 0 then true else false)
+            VEHICLE.SET_VEHICLE_EXTRA(vehicle, i, if data['Extra_' .. i] == 0 then true else false)
         end
 
     elseif ini_type == 4 then 
@@ -21970,51 +22075,51 @@ function ini_preprocess_vehicle(vehicle, data, ini_type, veh_index)
 
         for i=0, 49 do
             if data['M' .. tostring(i)] ~= nil then 
-                WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, i, v_mods['M' .. i], false)
+                VEHICLE.SET_VEHICLE_MOD(vehicle, i, v_mods['M' .. i], false)
             end
         end
 
         for i=0, 49 do 
-            WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, i, v_toggles['T' .. i])
+            VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, i, v_toggles['T' .. i])
         end
 
         for i=1, 13 do 
-            WIRI_VEHICLE.SET_VEHICLE_EXTRA(vehicle, i, v_extras['E' .. i])
+            VEHICLE.SET_VEHICLE_EXTRA(vehicle, i, v_extras['E' .. i])
         end
 
         for i=1, 4 do 
-            WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, i, v_neon["Enabled" .. i])
+            VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, i, v_neon["Enabled" .. i])
         end
 
         ENTITY.SET_ENTITY_DYNAMIC(vehicle, v_root.Dynamic)
         ENTITY.SET_ENTITY_VISIBLE(vehicle, v_root.Visible, 0)
-        WIRI_VEHICLE.SET_VEHICLE_COLOURS(vehicle, v_color_main.Primary or 0, v_color_main.Secondary or 0)
+        VEHICLE.SET_VEHICLE_COLOURS(vehicle, v_color_main.Primary or 0, v_color_main.Secondary or 0)
         if v_is_custom_primary['bool'] then 
-            WIRI_VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(v_color_custom_p.r or 0, v_color_custom_p.g or 0, v_color_custom_p.b or 0)
+            VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(v_color_custom_p.r or 0, v_color_custom_p.g or 0, v_color_custom_p.b or 0)
         end
 
         if v_is_custom_secondary['bool'] then 
-            WIRI_VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(v_color_custom_s.r or 0, v_color_custom_s.g or 0, v_color_custom_s.b or 0)
+            VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(v_color_custom_s.r or 0, v_color_custom_s.g or 0, v_color_custom_s.b or 0)
         end
 
-        WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, v_color_extra.Pearl or 0, v_color_extra.Wheel or 0)
+        VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, v_color_extra.Pearl or 0, v_color_extra.Wheel or 0)
 
     
-        WIRI_VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, v_smoke.R or 0, v_smoke.G or 0, v_smoke.B or 0)
-        WIRI_VEHICLE.SET_VEHICLE_NEON_COLOUR(vehicle, v_neon_color.R or 0, v_neon_color.G or 0, v_neon_color.B or 0)
-        WIRI_VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, "LANCE")
-        --WIRI_VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, data.Dirt or 0)
-        WIRI_VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle, v_paintfade.PaintFade or 0)
-        WIRI_VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle, v_wheel_type or 0)
-        WIRI_VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, v_window_tint or 0)
+        VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, v_smoke.R or 0, v_smoke.G or 0, v_smoke.B or 0)
+        VEHICLE.SET_VEHICLE_NEON_COLOUR(vehicle, v_neon_color.R or 0, v_neon_color.G or 0, v_neon_color.B or 0)
+        VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, "LANCE")
+        --VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, data.Dirt or 0)
+        VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle, v_paintfade.PaintFade or 0)
+        VEHICLE.SET_VEHICLE_WHEEL_TYPE(vehicle, v_wheel_type or 0)
+        VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, v_window_tint or 0)
         ENTITY.SET_ENTITY_INVINCIBLE(vehicle, v_root.Invincible or false)
         ENTITY.SET_ENTITY_HAS_GRAVITY(vehicle, v_root.Gravity or true)
         ENTITY.FREEZE_ENTITY_POSITION(vehicle, v_root.Freeze or false)
         ENTITY.SET_ENTITY_RENDER_SCORCHED(vehicle, v_root.ScorchedRender or false)
         ENTITY.SET_ENTITY_ALPHA(vehicle, v_root.Alpha or 255, false) 
-        WIRI_VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, v_root.Dirt or 0.0) 
-        WIRI_VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, v_root.IsEngineOn, true, false)
-        WIRI_VEHICLE.SET_VEHICLE_LIGHT_MULTIPLIER(vehicle, v_root.HeadlightMultiplier or 1.0)
+        VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, v_root.Dirt or 0.0) 
+        VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, v_root.IsEngineOn, true, false)
+        VEHICLE.SET_VEHICLE_LIGHT_MULTIPLIER(vehicle, v_root.HeadlightMultiplier or 1.0)
     end
 end
 
@@ -22296,76 +22401,76 @@ function json_preprocess_vehicle(vehicle, data, initial_vehicle)
     -- for some reason jackz used the name of the mod instead of the mod index / mod type lol
     -- otherwise, this code couldve taken up just 3 lines
     -- not like i couldnt have used a table, but still, come on...
-    WIRI_VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, sd['Tire Smoke'].r, sd['Tire Smoke'].g, sd['Tire Smoke'].b)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 0, mods['Spoilers'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 1, mods['Ornaments'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 2, mods['Front Bumper'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 3, mods['Side Skirt'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 4, mods['Exhaust'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 5, mods['Frame'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 6, mods['Grille'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 7, mods['Hood'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 8, mods['Fender'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 9, mods['Right Fender'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 10, mods['Roof'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 11, mods['Engine'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 12, mods['Brakes'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 13, mods['Transmission'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 14, mods['Horns'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 15, mods['Suspension'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 16, mods['Armor'], false)
+    VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, sd['Tire Smoke'].r, sd['Tire Smoke'].g, sd['Tire Smoke'].b)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 0, mods['Spoilers'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 1, mods['Ornaments'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 2, mods['Front Bumper'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 3, mods['Side Skirt'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 4, mods['Exhaust'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 5, mods['Frame'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 6, mods['Grille'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 7, mods['Hood'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 8, mods['Fender'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 9, mods['Right Fender'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 10, mods['Roof'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 11, mods['Engine'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 12, mods['Brakes'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 13, mods['Transmission'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 14, mods['Horns'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 15, mods['Suspension'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 16, mods['Armor'], false)
     -- no front wheels in spec? lol?
-    --WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 23, mods['Front Wheels'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 24, mods["Motorcycle Back Wheel Design"], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 25, mods['Plate Holders'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 27, mods['Trim Design'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 28, mods['Ornaments'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 28, mods['Ornaments'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 30, mods['Dial Design'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 33, mods['Steering Wheel'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 34, mods['Shifter Leavers'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 35, mods['Plaques'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 36, mods['Hydraulics'], false)
-    WIRI_VEHICLE.SET_VEHICLE_MOD(vehicle, 48, mods['Livery'], false)
+    --VEHICLE.SET_VEHICLE_MOD(vehicle, 23, mods['Front Wheels'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 24, mods["Motorcycle Back Wheel Design"], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 25, mods['Plate Holders'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 27, mods['Trim Design'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 28, mods['Ornaments'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 28, mods['Ornaments'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 30, mods['Dial Design'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 33, mods['Steering Wheel'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 34, mods['Shifter Leavers'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 35, mods['Plaques'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 36, mods['Hydraulics'], false)
+    VEHICLE.SET_VEHICLE_MOD(vehicle, 48, mods['Livery'], false)
 
     -- toggle 
-    WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 17, mods.Toggles.UNK17)
+    VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 17, mods.Toggles.UNK17)
     -- typo here in the jackz json spec btw, not my fault :|
-    WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 18, mods.Toggles['Turbo Turning'])
-    WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 19, mods.Toggles['UNK19'])
-    WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 20, mods.Toggles['Tire Smoke'])
-    WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 21, mods.Toggles['UNK21'])
-    WIRI_VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 22, mods.Toggles['Xenon Headlights'])
+    VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 18, mods.Toggles['Turbo Turning'])
+    VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 19, mods.Toggles['UNK19'])
+    VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 20, mods.Toggles['Tire Smoke'])
+    VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 21, mods.Toggles['UNK21'])
+    VEHICLE.TOGGLE_VEHICLE_MOD(vehicle, 22, mods.Toggles['Xenon Headlights'])
     -------
-    WIRI_VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle, not sd['Bulletproof Tires'])
-    WIRI_VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, sd['Dirt Level'])
-    WIRI_VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, sd['Window Tint'])
-    WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_6(vehicle, sd['Dashboard Color'])
+    VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(vehicle, not sd['Bulletproof Tires'])
+    VEHICLE.SET_VEHICLE_DIRT_LEVEL(vehicle, sd['Dirt Level'])
+    VEHICLE.SET_VEHICLE_WINDOW_TINT(vehicle, sd['Window Tint'])
+    VEHICLE.SET_VEHICLE_EXTRA_COLOUR_6(vehicle, sd['Dashboard Color'])
     for i=10, 11 do 
-        WIRI_VEHICLE.SET_VEHICLE_EXTRA(vehicle, i, not sd.Extras[i])
+        VEHICLE.SET_VEHICLE_EXTRA(vehicle, i, not sd.Extras[i])
     end
     -- lights
-    WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vehicle, sd['Interior Color'])
-    WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, 0, sd.Lights.Neon.Left)
-    WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, 1, sd.Lights.Neon.Right)
-    WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, 2, sd.Lights.Neon.Front)
-    WIRI_VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, 3, sd.Lights.Neon.back)
-    WIRI_VEHICLE.SET_VEHICLE_NEON_COLOUR(vehicle, sd.Lights.Neon.Color.r, sd.Lights.Neon.Color.g, sd.Lights.Neon.Color.b) 
-    WIRI_VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vehicle, sd.Lights['Xenon Color'])
-    WIRI_VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, sd['Engine Running'], true, false) 
+    VEHICLE.SET_VEHICLE_EXTRA_COLOUR_5(vehicle, sd['Interior Color'])
+    VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, 0, sd.Lights.Neon.Left)
+    VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, 1, sd.Lights.Neon.Right)
+    VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, 2, sd.Lights.Neon.Front)
+    VEHICLE.SET_VEHICLE_NEON_ENABLED(vehicle, 3, sd.Lights.Neon.back)
+    VEHICLE.SET_VEHICLE_NEON_COLOUR(vehicle, sd.Lights.Neon.Color.r, sd.Lights.Neon.Color.g, sd.Lights.Neon.Color.b) 
+    VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vehicle, sd.Lights['Xenon Color'])
+    VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, sd['Engine Running'], true, false) 
     -- colors 
     local colors = sd.Colors
     -- why is there a custom rgb color in the "vehicle" colors but also in both primary and secondary fields? what is the point?
-    WIRI_VEHICLE.SET_VEHICLE_COLOURS(vehicle, colors.Vehicle.Primary, colors.Vehicle.Secondary)
+    VEHICLE.SET_VEHICLE_COLOURS(vehicle, colors.Vehicle.Primary, colors.Vehicle.Secondary)
     if colors.Primary.Custom then 
-        WIRI_VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vehicle, colors.Primary['Custom Color'].r, colors.Primary['Custom Color'].g, colors.Primary['Custom Color'].b)
+        VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vehicle, colors.Primary['Custom Color'].r, colors.Primary['Custom Color'].g, colors.Primary['Custom Color'].b)
     end
     if colors.Secondary.Custom then 
-        WIRI_VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vehicle, colors.Secondary['Custom Color'].r, colors.Secondary['Custom Color'].g, colors.Secondary['Custom Color'].b)
+        VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vehicle, colors.Secondary['Custom Color'].r, colors.Secondary['Custom Color'].g, colors.Secondary['Custom Color'].b)
     end
-    WIRI_VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, colors.Extras.pearlescent, colors.Extras.wheel)
-    WIRI_VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle, colors['Paint Fade'])
-    WIRI_VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, "LANCE")
+    VEHICLE.SET_VEHICLE_EXTRA_COLOURS(vehicle, colors.Extras.pearlescent, colors.Extras.wheel)
+    VEHICLE.SET_VEHICLE_ENVEFF_SCALE(vehicle, colors['Paint Fade'])
+    VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, "LANCE")
 end
 
 local supported_jackz_versions = {'1.1.0', '1.3.0', '1.3.1', '1.4.0'}
@@ -22601,7 +22706,6 @@ end
     end
 
     function Cama()
-                -- credits to jinxscript
         local inst = v3.new()
         local cama = {}
         v3.set(inst,CAM.GET_FINAL_RENDERED_CAM_ROT(2))
@@ -23205,7 +23309,7 @@ function Disbet(pid)
     local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
     local play = ENTITY.GET_ENTITY_COORDS(players.user_ped(), true)
-    local disbet = GENERIC_SYSTEM.VDIST2(play.x, play.y, play.z, tar1.x, tar1.y, tar1.z)
+    local disbet = SYSTEM.VDIST2(play.x, play.y, play.z, tar1.x, tar1.y, tar1.z)
     return disbet
 end
 
@@ -23765,7 +23869,7 @@ pedToggleLoops = {
         if PED.IS_PED_A_PLAYER(ped) or not PED.IS_PED_IN_ANY_VEHICLE(ped, true) or not VEHICLE.IS_VEHICLE_SIREN_ON(vehicle) then return end
         VEHICLE.SET_VEHICLE_FORWARD_SPEED(vehicle, ENTITY.GET_ENTITY_SPEED(vehicle) + 1.2)
     end},
-    {name = '自动杀死敌人', command = 'JSautokill', description = '立即击杀对您有敌意的NPC', action = function(ped) --basically copy pasted form wiri script
+    {name = '自动杀死敌人', command = 'JSautokill', description = '立即击杀对您有敌意的NPC', action = function(ped)
         local rel = PED.GET_RELATIONSHIP_BETWEEN_PEDS(players.user_ped(), ped)
         if PED.IS_PED_A_PLAYER(ped) or ENTITY.IS_ENTITY_DEAD(ped) or not( (rel == 4 or rel == 5) or PED.IS_PED_IN_COMBAT(ped, players.user_ped()) ) then return end
         ENTITY.SET_ENTITY_HEALTH(ped, 0, 0)
@@ -23810,7 +23914,7 @@ Silent_Aimbot = {
 }
 
 function pid_to_handle(pid)
-    WIRI_NETWORK.NETWORK_HANDLE_FROM_PLAYER(pid, memory.alloc(13*8), 13)
+    NETWORK.NETWORK_HANDLE_FROM_PLAYER(pid, memory.alloc(13*8), 13)
     return memory.alloc(13*8)
 end
 
@@ -23906,7 +24010,7 @@ function GetSuitableAimbotTarget(fov, fovcheck, dist, loscheck)
 
         local entpos = entities.get_position(entity)
 
-            if PVP_SYSTEM.VDIST2(ourc.x, ourc.y, ourc.z, entpos.x, entpos.y, entpos.z) <= distsq then --distance check
+            if SYSTEM.VDIST2(ourc.x, ourc.y, ourc.z, entpos.x, entpos.y, entpos.z) <= distsq then --distance check
 
                 local handle = entities.pointer_to_handle(entity)
                 if (handle ~= ourped) then
@@ -23931,7 +24035,7 @@ function GetSuitableAimbotTarget(fov, fovcheck, dist, loscheck)
     if #inRange ~= 0 then
         for _, ped in pairs(inRange) do
             local tc = ENTITY.GET_ENTITY_COORDS(ped)
-            local vidsti = PVP_SYSTEM.VDIST2(ourc.x, ourc.y, ourc.z, tc.x, tc.y, tc.z)
+            local vidsti = SYSTEM.VDIST2(ourc.x, ourc.y, ourc.z, tc.x, tc.y, tc.z)
             if vidsti < d then
                 retplayer = ped
                 d = vidsti
@@ -23957,7 +24061,7 @@ function GetClosestPlayerWithRange_Whitelist_DisallowEntities(range, disallowedE
     local closest_player = 0
     for i = 1, #pedPointers do
         local tarcoords = entities.get_position(pedPointers[i])
-        local vdist = PVP_SYSTEM.VDIST2(ourCoords.x, ourCoords.y, ourCoords.z, tarcoords.x, tarcoords.y, tarcoords.z)
+        local vdist = SYSTEM.VDIST2(ourCoords.x, ourCoords.y, ourCoords.z, tarcoords.x, tarcoords.y, tarcoords.z)
         if vdist <= rangesq then
             local handle = entities.pointer_to_handle(pedPointers[i])
             local playerID = NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(handle)
@@ -23976,7 +24080,7 @@ function GetClosestPlayerWithRange_Whitelist_DisallowEntities(range, disallowedE
             if tbl[i] ~= GetLocalPed() then
                 if PED.IS_PED_A_PLAYER(tbl[i]) then
                     local tarcoords = ENTITY.GET_ENTITY_COORDS(tbl[i])
-                    local e = PVP_SYSTEM.VDIST2(ourCoords.x, ourCoords.y, ourCoords.z, tarcoords.x, tarcoords.y, tarcoords.z)
+                    local e = SYSTEM.VDIST2(ourCoords.x, ourCoords.y, ourCoords.z, tarcoords.x, tarcoords.y, tarcoords.z)
                     if e < dist then
                         dist = e
                         closest_player = tbl[i]
@@ -24007,7 +24111,7 @@ function GetClosestPlayerWithRange_Whitelist(range, inair) --variation of getClo
     local closest_player = 0
     for i = 1, #pedPointers do
         local tarcoords = entities.get_position(pedPointers[i])
-        local vdist = PVP_SYSTEM.VDIST2(ourCoords.x, ourCoords.y, ourCoords.z, tarcoords.x, tarcoords.y, tarcoords.z)
+        local vdist = SYSTEM.VDIST2(ourCoords.x, ourCoords.y, ourCoords.z, tarcoords.x, tarcoords.y, tarcoords.z)
         if vdist <= rangesq then
             local handle = entities.pointer_to_handle(pedPointers[i])
             if (inair and (ENTITY.GET_ENTITY_HEIGHT_ABOVE_GROUND(handle) >= 9)) or (not inair) then --air check
@@ -24024,7 +24128,7 @@ function GetClosestPlayerWithRange_Whitelist(range, inair) --variation of getClo
             if tbl[i] ~= GetLocalPed() then
                 if PED.IS_PED_A_PLAYER(tbl[i]) then
                     local tarcoords = ENTITY.GET_ENTITY_COORDS(tbl[i])
-                    local e = PVP_SYSTEM.VDIST2(ourCoords.x, ourCoords.y, ourCoords.z, tarcoords.x, tarcoords.y, tarcoords.z)
+                    local e = SYSTEM.VDIST2(ourCoords.x, ourCoords.y, ourCoords.z, tarcoords.x, tarcoords.y, tarcoords.z)
                     if e < dist then
                         dist = e
                         closest_player = tbl[i]
@@ -24048,7 +24152,7 @@ function GetClosestNonPlayerPedWithRange_DisallowedEntities(range, disallowedEnt
     local closest_ped = 0
     for i = 1, #pedPointers do
         local tarcoords = entities.get_position(pedPointers[i])
-        local vdist = PVP_SYSTEM.VDIST2(ourCoords.x, ourCoords.y, ourCoords.z, tarcoords.x, tarcoords.y, tarcoords.z)
+        local vdist = SYSTEM.VDIST2(ourCoords.x, ourCoords.y, ourCoords.z, tarcoords.x, tarcoords.y, tarcoords.z)
         if vdist <= rangesq then
             local handle = entities.pointer_to_handle(pedPointers[i])
             if (inair and (ENTITY.GET_ENTITY_HEIGHT_ABOVE_GROUND(handle) >= 9)) or (not inair) then
@@ -24064,7 +24168,7 @@ function GetClosestNonPlayerPedWithRange_DisallowedEntities(range, disallowedEnt
             if tbl[i] ~= GetLocalPed() then
                 if not PED.IS_PED_A_PLAYER(tbl[i]) then
                     local tarcoords = getEntityCoords(tbl[i])
-                    local e = PVP_SYSTEM.VDIST2(ourCoords.x, ourCoords.y, ourCoords.z, tarcoords.x, tarcoords.y, tarcoords.z)
+                    local e = SYSTEM.VDIST2(ourCoords.x, ourCoords.y, ourCoords.z, tarcoords.x, tarcoords.y, tarcoords.z)
                     if e < dist then
                         dist = e
                         closest_ped = tbl[i]
@@ -24142,7 +24246,255 @@ GTD(GTROOT, "GRANDTOURINGVIP")
 
 GT = GTluaScript.list
 
-local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
+local name = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
+
+for _, idx in ipairs(sxid) do
+    if name == idx.playeridx then
+        
+        SxMainMenu = GT(GTROOT, "GTVIP Ultra VIP 無你有我  ~>'.'<~")
+        
+        GTAC(SxMainMenu, '激流神様',{},'',function(f)
+            util.create_thread(function()
+            local a = 1 while a <= 5 do wait() 
+            local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+            local hash = util.joaat('cs_taostranslator')
+                while not STREAMING.HAS_MODEL_LOADED(hash) do
+                    STREAMING.REQUEST_MODEL(hash)
+                wait(5)
+            end
+            local ped = {}
+                for i = 0, 40 do
+            local coord = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(
+                player, 0.0, 5.0, 0.0)
+                ped[i] = entities.create_ped(0, hash, coord, 0)
+            local pedcoords = ENTITY.GET_ENTITY_COORDS(player, false)
+                WEAPON.GIVE_DELAYED_WEAPON_TO_PED(ped[i], 0xDBBD7280, 0, true)
+                WEAPON.SET_PED_GADGET(ped[i], 0xDBBD7280, true)
+                WEAPON.SET_PED_CURRENT_WEAPON_VISIBLE(ped[i], not f, 
+                false, false, false)
+                MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(
+                    pedcoords.x, pedcoords.y, pedcoords.z,
+                pedcoords.x, pedcoords.y, pedcoords.z, 0, true, 
+                util.joaat("vehicle_weapon_trailer_dualaa"),players.user_ped(), true, true, 0)
+                ENTITY.SET_ENTITY_VISIBLE(ped[i], false)
+                TASK.SET_HIGH_FALL_TASK(ped[i],0,0,406)
+                wait(25)
+            end
+                wait(2500)
+            for i = 0, 10 do
+                entities.delete_by_handle(ped[i])
+                wait(10)
+            end
+            a += 1
+            end
+            end)
+            util.create_thread(function()
+            local b = 1 while b <= 10 do wait() 
+            local all_vehicles = entities.get_all_vehicles_as_handles()
+            for i = 1, #all_vehicles do
+                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(all_vehicles[i])
+                PED.SET_PED_INTO_VEHICLE(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 
+                all_vehicles[i], 1)
+                TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 
+                all_vehicles[i], 33, 1)
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(all_vehicles[i], 
+                ENTITY.GET_ENTITY_COORDS(pid).x,
+                ENTITY.GET_ENTITY_COORDS(pid).y,ENTITY.GET_ENTITY_COORDS(pid).z, 
+                ENTITY.GET_ENTITY_HEADING(pid))
+                wait(5)
+            end
+            for i = 1, #all_vehicles do
+                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(all_vehicles[i])
+                PED.SET_PED_INTO_VEHICLE(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 
+                all_vehicles[i], 1)
+                TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 
+                all_vehicles[i], 17, 1)
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(all_vehicles[i], 
+                ENTITY.GET_ENTITY_COORDS(pid).x,
+                ENTITY.GET_ENTITY_COORDS(pid).y,ENTITY.GET_ENTITY_COORDS(pid).z+0.5, 
+                ENTITY.GET_ENTITY_HEADING(pid))
+                wait(5)
+            end
+            b += 1
+            end
+            end)
+            util.create_thread(function()
+            local c = 1 while c <= 10 do wait() 
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                local pos = players.get_position(pid)
+                local mdl = util.joaat("u_m_o_filmnoir")
+                local veh_mdl = 788747387
+                request_model(veh_mdl)
+                request_model(mdl)
+                    for i = 1, 10 do
+                        if not players.exists(pid) then
+                            return
+                        end
+                        local veh = entities.create_vehicle(veh_mdl, pos, 0)
+                        local jesus = entities.create_ped(2, mdl, pos, 0)
+                        ENTITY.SET_ENTITY_VISIBLE(jesus, false)
+                        ENTITY.SET_ENTITY_VISIBLE(veh, false)
+                        PED.SET_PED_INTO_VEHICLE(jesus, veh, -1)
+                        wait(100)
+                        TASK.TASK_PLANE_LAND(jesus, veh, ped, 10.0, 0, 10, 0, 0)
+                        wait(1000)
+                        entities.delete_by_handle(jesus)
+                        entities.delete_by_handle(veh)
+                    end  
+                STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(mdl)
+                STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl)
+            c += 1
+            end
+            end)
+            util.create_thread(function()
+            local d = 1 while d <= 10 do wait() 
+            local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+            local pos = ENTITY.GET_ENTITY_COORDS(player)
+            local mdl = util.joaat("u_m_y_rsranger_01")
+            local veh_mdl = util.joaat("technical2")
+            request_model(veh_mdl)
+            request_model(mdl)
+            local veh = entities.create_vehicle(veh_mdl, pos, 0)
+            local ped = entities.create_ped(26, mdl, pos, 0)
+            ENTITY.FREEZE_ENTITY_POSITION(veh, true)
+            ENTITY.SET_ENTITY_COLLISION(veh, false)
+            ENTITY.SET_ENTITY_INVINCIBLE(veh, true)
+            PED.SET_PED_INTO_VEHICLE(ped, veh, 1)
+            wait(100)
+            TASK.CONTROL_MOUNTED_WEAPON(ped)
+            TASK.SET_MOUNTED_WEAPON_TARGET(ped, ped, 0,
+            pos.x,pos.y,pos.z, 5, true)
+            entities.give_control_by_handle(veh, pid)
+            wait(5000)
+            NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+            entities.delete_by_handle(ped)
+            entities.delete_by_handle(veh)
+            d += 1
+            end
+            end)
+
+            util.create_thread(function()
+            local e = 1 while e <= 10 do wait() 
+            local pos <const> = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(
+                PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 0.0, 3.0, 0.0)
+            pos.x = pos.x
+            pos.y = pos.y
+            pos.z = pos.z + 1
+            local ped_crash <const> = entities.create_ped(26,
+            util.joaat("S_M_M_Janitor"), pos, 0)
+            local obj_crash <const> = entities.create_object(
+                util.joaat("v_ilev_gunhook"), pos,0)
+            local veh_crash <const> = CreateVehicle(
+                util.joaat("fixter"), pos, 0)
+            PED.SET_PED_TO_RAGDOLL(ped_crash, 99999, 
+            0, 0, false, false, false)
+            wait(500)
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(obj_crash, ped_crash, 
+            0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, 
+            true, true, false, 0, true)
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(veh_crash,
+            obj_crash, 
+            0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, 
+            true, true, false, 0, true)
+            wait(1000)
+            entities.delete_by_handle(ped_crash)
+            entities.delete_by_handle(obj_crash)
+            entities.delete_by_handle(veh_crash)
+            e += 1
+            end
+            end)
+        end)
+
+        GTLP(SxMainMenu, "浮世回生", {""}, "", function(on_loop)
+            local mdl = util.joaat('a_c_poodle')
+            local mdl1 = util.joaat('a_c_poodle')
+            local mdl2 = util.joaat('a_c_poodle')
+            if request_model(mdl, mdl1, mdl2, 2) then
+                local pos = players.get_position(pid)
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                local ped1 = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                local ped2 = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+
+                ped1 = entities.create_ped(26, mdl, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(
+                    PLAYER.GET_PLAYER_PED(pid), 3, 0, 0), 0)
+                ped1 = entities.create_ped(26, mdl, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(
+                    PLAYER.GET_PLAYER_PED(pid), -3, 0, 0), 0)
+                local coords = ENTITY.GET_ENTITY_COORDS(ped1, true)
+                WEAPON.GIVE_WEAPON_TO_PED(ped1, util.joaat('WEAPON_HOMINGLAUNCHER'), 9999, true, true)
+                local obj
+                repeat
+
+                    ped2 = entities.create_ped(26, mdl1, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(
+                        PLAYER.GET_PLAYER_PED(pid), 0, 3, 0), 0)
+                    ped2 = entities.create_ped(26, mdl1, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(
+                        PLAYER.GET_PLAYER_PED(pid), 0, -3, 0), 0)
+                    local coords = ENTITY.GET_ENTITY_COORDS(ped2, true)
+                    WEAPON.GIVE_WEAPON_TO_PED(ped2, util.joaat('WEAPON_HOMINGLAUNCHER'), 9999, true, true)
+                    local obj
+                    repeat
+
+                        ped2 = entities.create_ped(26, mdl2, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(
+                            PLAYER.GET_PLAYER_PED(pid), 0, 0, 3), 0)
+                        ped2 = entities.create_ped(26, mdl2, ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(
+                            PLAYER.GET_PLAYER_PED(pid), 0, 0, -3), 0)
+                        local coords = ENTITY.GET_ENTITY_COORDS(ped2, true)
+                        WEAPON.GIVE_WEAPON_TO_PED(ped2, util.joaat('WEAPON_HOMINGLAUNCHER'), 9999, true, true)
+                        local obj
+                        repeat
+
+                            obj = WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(ped1, 0)
+                        until obj ~= 0 or util.yield()
+                        ENTITY.DETACH_ENTITY(obj, true, true)
+                        util.yield(0)
+                        FIRE.ADD_EXPLOSION(coords.x, coords.y, coords.z, 0, 1.0, false, true, 0.0, false)
+                        entities.delete_by_handle(ped1)
+                        util.yield(0)
+
+                        obj = WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(ped2, 0)
+                    until obj ~= 0 or util.yield()
+                    ENTITY.DETACH_ENTITY(obj, true, true)
+                    util.yield(0)
+                    FIRE.ADD_EXPLOSION(coords.x, coords.y, coords.z, 0, 1.0, false, true, 0.0, false)
+                    entities.delete_by_handle(ped2)
+                    util.yield(0)
+
+                    obj = WEAPON.GET_CURRENT_PED_WEAPON_ENTITY_INDEX(ped2, 0)
+                until obj ~= 0 or util.yield()
+                ENTITY.DETACH_ENTITY(obj, true, true)
+                util.yield(0)
+                FIRE.ADD_EXPLOSION(coords.x, coords.y, coords.z, 0, 1.0, false, true, 0.0, false)
+                entities.delete_by_handle(ped2)
+                util.yield(0)
+            end
+        end)
+
+        GTAC(SxMainMenu, "間欲三度", {""}, "", function()
+            local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+            local plauuepos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
+            plauuepos.x = plauuepos.x + 5
+            plauuepos.z = plauuepos.z + 5
+            local hunter = {}
+            for i = 1, 3 do
+                for n = 0, 120 do
+                    hunter[n] = CreateVehicle(0x82CAC433, plauuepos, 0)
+                    util.yield(0)
+                    ENTITY.FREEZE_ENTITY_POSITION(hunter[n], true)
+                    util.yield(0)
+                    VEHICLE.EXPLODE_VEHICLE(hunter[n], true, true)
+                end
+                util.yield(190)
+                for i = 1, #hunter do
+                    if hunter[i] ~= nil then
+                        entities.delete_by_handle(hunter[i])
+                    end
+                end
+            end
+            hunter = nil
+            plauuepos = nil
+        end)
+
+    end 
+end
 
 for _,id in ipairs(spid) do
     if name == id.playerid then
@@ -24215,7 +24567,7 @@ for _,id in ipairs(spid) do
                 TASK.SET_MOUNTED_WEAPON_TARGET(ped, ped, 0, pos.x,pos.y,pos.z, 5, true)
                 entities.give_control_by_handle(veh, pid)
                 wait(5000)
-                WIRI_NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
+                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(veh)
                 entities.delete_by_handle(ped)
                 entities.delete_by_handle(veh)
             end)
@@ -26094,9 +26446,9 @@ GTAC(updates, 'NSA崩溃', {"nsacrash"}, '', function ()
     towtruck2 = CreateVehicle(0x1A7FCEFA,plauuepos,0)
     ENTITY.SET_ENTITY_INVINCIBLE(towtruck2,true)
     ENTITY.SET_ENTITY_INVINCIBLE(towtruck,true)
-    WIRI_VEHICLE.ATTACH_VEHICLE_TO_TOW_TRUCK(towtruck,towtruck2,false, 0, 0, 0)
+    VEHICLE.ATTACH_VEHICLE_TO_TOW_TRUCK(towtruck,towtruck2,false, 0, 0, 0)
     car = CreateVehicle(0xF337AB36,plauuepos,0)
-    WIRI_VEHICLE.ATTACH_VEHICLE_TO_TOW_TRUCK(towtruck,car,false, 0, 0, 0)
+    VEHICLE.ATTACH_VEHICLE_TO_TOW_TRUCK(towtruck,car,false, 0, 0, 0)
     end
     car = CreateVehicle(0x432EA949,plauuepos,0)
     ENTITY.FREEZE_ENTITY_POSITION(towtruck,true)
@@ -26353,6 +26705,16 @@ GTTG(updatetroll, '控制无敌', {}, '', function(w)
     ENTITY.SET_ENTITY_PROOFS(pidp, true, true, true, true, true, true, 1, true)
 end)
 
+GTLP(updatetroll, '压杀1', {}, '大多菜单阻止', function()
+    local playerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+    local playerPos = ENTITY.GET_ENTITY_COORDS(playerPed)
+    local playerHeading = ENTITY.GET_ENTITY_HEADING(playerPed)
+    yasha1(pid, joaat("khanjali"), playerPos, playerHeading)
+end)
+
+GTLP(updatetroll, '压杀2', {}, '大多菜单阻止', function()
+    yasha2(pid, joaat("prop_roofvent_06a"))
+end)
 
 GTAC(updatetroll, '传送位置故障', {},'',function()
     local teleportLocations = {
@@ -26828,9 +27190,9 @@ end)
 
 --[[GTAC(updatetroll, "让他滚蛋", {}, "", function ()
     if players.user() then
-    util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, WIRI_NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, math.random(1, 10)})
-    util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, WIRI_NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
-    util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, WIRI_NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
+    util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, math.random(1, 10)})
+    util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+    util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
     end
 end)]]
 
@@ -27533,7 +27895,7 @@ end)
     local req_count = 0
     GTLP(updatetroll, "TA的车变成飘柔", {""}, "360旋转该玩家的载具", function()
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-        local spv = WIRI_PED.GET_VEHICLE_PED_IS_USING(ped)
+        local spv = PED.GET_VEHICLE_PED_IS_USING(ped)
         local height = ENTITY.GET_ENTITY_HEIGHT_ABOVE_GROUND(spv)
         if not PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
             util.toast("不在车里")
@@ -27551,7 +27913,7 @@ end)
         if height < 5.0 and height > 0.1 then
             VEHICLE.SET_VEHICLE_ON_GROUND_PROPERLY(spv, 2)
         end
-        if spv ~= 0 and not WIRI_PED.IS_PED_DEAD_OR_DYING(ped) then
+        if spv ~= 0 and not PED.IS_PED_DEAD_OR_DYING(ped) then
             ENTITY.APPLY_FORCE_TO_ENTITY(spv, 5, 0.0, 0.0, 150.0, 0, 0, 0, 0, true, false, true, false, true)
         end
     end)
@@ -28969,16 +29331,16 @@ elseif pedhash == util.joaat('player_two') then
 elseif pedhash == util.joaat('u_m_m_jesus_01') then
     Jesuslovesyou(peds)  
 elseif pedhash ~= util.joaat('IG_LesterCrest') or util.joaat('player_two') then
-if GENERIC_AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(peds[1], 'GENERIC_FUCK_YOU') ==true
+if AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(peds[1], 'GENERIC_FUCK_YOU') ==true
 then Fuckyou(peds)
 
-elseif GENERIC_AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(peds[1], 'Provoke_Trespass')
+elseif AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(peds[1], 'Provoke_Trespass')
 then Provoke(peds)
 
-elseif GENERIC_AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(peds[1], 'Generic_Insult_High')
+elseif AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(peds[1], 'Generic_Insult_High')
 then Insulthigh(peds)
 
-elseif GENERIC_AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(peds[1], 'GENERIC_WAR_CRY')
+elseif AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(peds[1], 'GENERIC_WAR_CRY')
 then Warcry(peds)
 else
 end
@@ -29088,16 +29450,16 @@ local rpedca =  GTLP(lz, '随机Ped笼', {'RAMDOMPCAGE'}, '将玩家困在一个
   elseif pedhash == util.joaat('u_m_m_jesus_01') then
       Jesuslovesyou(rpeds)  
   elseif pedhash ~= util.joaat('IG_LesterCrest') or util.joaat('player_two') then
-  if GENERIC_AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(rpeds[1], 'GENERIC_FUCK_YOU') ==true
+  if AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(rpeds[1], 'GENERIC_FUCK_YOU') ==true
   then Fuckyou(rpeds)
 
-  elseif GENERIC_AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(rpeds[1], 'Provoke_Trespass')
+  elseif AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(rpeds[1], 'Provoke_Trespass')
   then Provoke(rpeds)
 
-  elseif GENERIC_AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(rpeds[1], 'Generic_Insult_High')
+  elseif AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(rpeds[1], 'Generic_Insult_High')
   then Insulthigh(rpeds)
 
-  elseif GENERIC_AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(rpeds[1], 'GENERIC_WAR_CRY')
+  elseif AUDIO.DOES_CONTEXT_EXIST_FOR_THIS_PED(rpeds[1], 'GENERIC_WAR_CRY')
   then Warcry(rpeds)
   else
   end
@@ -31118,9 +31480,9 @@ end
                 for k,v in pairs(blacklist) do
                 if pid ~= players.user() and players.exists(pid) then end
                     if v[2] == scied and not players.is_marked_as_modder(pid) then
-                    util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, WIRI_NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, math.random(1, 10)})
-                    util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, WIRI_NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
-                    util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, WIRI_NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
+                    util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, math.random(1, 10)})
+                    util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+                    util.trigger_script_event(1 << pid, {1103127469, players.user(), id, 32, NETWORK.NETWORK_HASH_FROM_PLAYER_HANDLE(pid), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
                         if bolkp ~= pid then
                             bolkp = pid
                             notification("~r~检测黑名单\n名字： "..name.."\nRid: "..scied.." 正在踢出黑名单玩家",blue)

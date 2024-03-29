@@ -35,11 +35,11 @@ util.create_tick_handler(function()
 	for _, vehicule in ipairs(vehmanagerhandle) do
 		if ENTITY.DOES_ENTITY_EXIST(vehicule) and (vehiclelist[vehicule] == nil) and vehmanager and (INTERIOR.GET_INTERIOR_FROM_ENTITY(plyped()) == 0) then
 			vehhandle[vehicule] = vehicule
-			manufacturer = WIRI_HUD.GET_FILENAME_FOR_AUDIO_CONVERSATION(VEHICLE.GET_MAKE_NAME_FROM_VEHICLE_MODEL(ENTITY.GET_ENTITY_MODEL(vehicule)))
+			manufacturer = HUD.GET_FILENAME_FOR_AUDIO_CONVERSATION(VEHICLE.GET_MAKE_NAME_FROM_VEHICLE_MODEL(ENTITY.GET_ENTITY_MODEL(vehicule)))
 			if (manufacturer == "NULL") then
 				manufacturer = ""
 			end
-			carname = WIRI_HUD.GET_FILENAME_FOR_AUDIO_CONVERSATION(util.reverse_joaat(ENTITY.GET_ENTITY_MODEL(vehicule)))
+			carname = HUD.GET_FILENAME_FOR_AUDIO_CONVERSATION(util.reverse_joaat(ENTITY.GET_ENTITY_MODEL(vehicule)))
 			if (carname == "NULL") then
 				carname = ""
 			end
@@ -100,11 +100,11 @@ util.create_tick_handler(function()
 	end
 	for key, value in pairs(vehiclelist) do
 		if ENTITY.DOES_ENTITY_EXIST(key) and vehmanager and (INTERIOR.GET_INTERIOR_FROM_ENTITY(plyped()) == 0) then
-			manufacturer = WIRI_HUD.GET_FILENAME_FOR_AUDIO_CONVERSATION(VEHICLE.GET_MAKE_NAME_FROM_VEHICLE_MODEL(ENTITY.GET_ENTITY_MODEL(key)))
+			manufacturer = HUD.GET_FILENAME_FOR_AUDIO_CONVERSATION(VEHICLE.GET_MAKE_NAME_FROM_VEHICLE_MODEL(ENTITY.GET_ENTITY_MODEL(key)))
 			if (manufacturer == "NULL") then
 				manufacturer = ""
 			end
-			carname = WIRI_HUD.GET_FILENAME_FOR_AUDIO_CONVERSATION(util.reverse_joaat(ENTITY.GET_ENTITY_MODEL(key)))
+			carname = HUD.GET_FILENAME_FOR_AUDIO_CONVERSATION(util.reverse_joaat(ENTITY.GET_ENTITY_MODEL(key)))
 			if (carname == "NULL") then
 				carname = ""
 			end

@@ -129,13 +129,13 @@ local Bit_IgnoreCrewMembers <const> = 2
 ---@param scale number
 ---@param colour Colour
 local DrawLockonSprite = function (position, scale, colour)
-	if WIRI_GRAPHICS.HAS_STREAMED_TEXTURE_DICT_LOADED("mpsubmarine_periscope") then
+	if GRAPHICS.HAS_STREAMED_TEXTURE_DICT_LOADED("mpsubmarine_periscope") then
 		local txdSizeX = scale * 0.042
-		local txdSizeY = scale * 0.042 * WIRI.GET_ASPECT_RATIO(false)
-		WIRI_GRAPHICS.SET_DRAW_ORIGIN(position.x, position.y, position.z, 0)
-		WIRI_GRAPHICS.DRAW_SPRITE(
+		local txdSizeY = scale * 0.042 * GRAPHICS.GET_ASPECT_RATIO(false)
+		GRAPHICS.SET_DRAW_ORIGIN(position.x, position.y, position.z, 0)
+		GRAPHICS.DRAW_SPRITE(
 			"mpsubmarine_periscope", "target_default", 0.0, 0.0, txdSizeX, txdSizeY, 0.0, colour.r, colour.g, colour.b, colour.a, true, 0)
-		WIRI_GRAPHICS.CLEAR_DRAW_ORIGIN()
+		GRAPHICS.CLEAR_DRAW_ORIGIN()
 	end
 end
 

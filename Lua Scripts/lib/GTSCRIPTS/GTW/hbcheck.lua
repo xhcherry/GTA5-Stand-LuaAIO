@@ -7,7 +7,7 @@ function checkme()
     local vip388 = " GT-VIP Ultra "..GT_version
     local vipme = "  GT-VIP Pro "..GT_version
     local standard = "   Standard "..GT_version
-    local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
+    local name = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
     
     if name == "RhymeBear" then
         return master
@@ -62,7 +62,7 @@ function checkme()
 end
 
 --定义是不是皇榜的玩家
-local name = WIRI_SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
+local name = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
 isSpidPlayer = false
 
 for _, id in ipairs(spid) do

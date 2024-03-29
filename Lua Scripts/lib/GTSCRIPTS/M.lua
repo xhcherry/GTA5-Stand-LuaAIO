@@ -362,7 +362,7 @@ self.mainLoop = function ()
         CAM.SET_CAM_NEAR_DOF(camera, 0.01)
         GRAPHICS.CLEAR_TIMECYCLE_MODIFIER()
         GRAPHICS.SET_TIMECYCLE_MODIFIER("eyeinthesky")
-        WIRI.HARD_ATTACH_CAM_TO_ENTITY(camera, object, 0.0, 0.0, 180.0, 0.0, -0.9, 0.0, true)
+        AUDIO.HARD_ATTACH_CAM_TO_ENTITY(camera, object, 0.0, 0.0, 180.0, 0.0, -0.9, 0.0, true)
         CAM.RENDER_SCRIPT_CAMS(true, false, 0, true, true, 0)
 
         if not AUDIO.IS_AUDIO_SCENE_ACTIVE("dlc_aw_arena_piloted_missile_scene") then

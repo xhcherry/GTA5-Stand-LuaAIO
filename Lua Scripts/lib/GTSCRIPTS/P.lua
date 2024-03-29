@@ -1759,9 +1759,9 @@ menu.action(bodyguard_veh_options, "立即召唤马东锡!!!", {}, "若保镖没
 		VEHICLE.SET_VEHICLE_SEARCHLIGHT(veh, true, true)
         addBlipForEntity(veh, 1, 27)
 		--血量
-		WIRI_ENTITY.SET_ENTITY_INVINCIBLE(veh, bodyguard_veh.veh_godmode)
-		WIRI_ENTITY.SET_ENTITY_MAX_HEALTH(veh, 10000)
-		WIRI_ENTITY.SET_ENTITY_HEALTH(veh, 10000)
+		ENTITY.SET_ENTITY_INVINCIBLE(veh, bodyguard_veh.veh_godmode)
+		ENTITY.SET_ENTITY_MAX_HEALTH(veh, 10000)
+		ENTITY.SET_ENTITY_HEALTH(veh, 10000)
 
 		table.insert(veh_list, veh)
 		end
@@ -1895,9 +1895,9 @@ menu.action(bodyguard_heli_options, "生成保镖直升机", {}, "", function()
         VEHICLE.SET_VEHICLE_SEARCHLIGHT(heli, true, true)
         addBlipForEntity(heli, 422, 26)
         --health
-        WIRI_ENTITY.SET_ENTITY_INVINCIBLE(heli, bodyguard_heli.heli_godmode)
-        WIRI_ENTITY.SET_ENTITY_MAX_HEALTH(heli, 10000)
-        WIRI_ENTITY.SET_ENTITY_HEALTH(heli, 10000)
+        ENTITY.SET_ENTITY_INVINCIBLE(heli, bodyguard_heli.heli_godmode)
+        ENTITY.SET_ENTITY_MAX_HEALTH(heli, 10000)
+        ENTITY.SET_ENTITY_HEALTH(heli, 10000)
 
         table.insert(heli_list, heli)
     end

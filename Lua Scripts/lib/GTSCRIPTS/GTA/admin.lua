@@ -663,7 +663,7 @@ end
 ---@param colour? Colour
 function DRAW_MARKER_SPHERE(coords, radius, colour)
     colour = colour or { r = 200, g = 50, b = 200, a = 0.5 }
-    WIRI_GRAPHICS.DRAW_MARKER_SPHERE(coords.x, coords.y, coords.z, radius, colour.r, colour.g, colour.b, colour.a)
+    GRAPHICS.DRAW_MARKER_SPHERE(coords.x, coords.y, coords.z, radius, colour.r, colour.g, colour.b, colour.a)
 end
 
 local Nearby_Vehicle_options = menu.list(carfly, "战局载具控制面板", {}, "")
@@ -1017,7 +1017,7 @@ function control_nearby_ped.control_peds()
             --向前推进
             if control_nearby_ped.toggles.force_forward then
                 ENTITY.SET_ENTITY_MAX_SPEED(ped, 99999)
-                local vector = WIRI_ENTITY.GET_ENTITY_FORWARD_VECTOR(ped)
+                local vector = ENTITY.GET_ENTITY_FORWARD_VECTOR(ped)
                 local force = Vector.mult(vector, control_nearby_ped.data.forward_degree)
                 ENTITY.APPLY_FORCE_TO_ENTITY(ped, 1, force.x, force.y, force.z, 0.0, 0.0, 0.0, 1, false, true,
                     true, true, true)
@@ -1508,7 +1508,7 @@ local function NearbyPed_Combat(is_once)
             end
 
             if nearby_ped_combat.disable_injured_behaviour then
-                WIRI_PED.DISABLE_PED_INJURED_ON_GROUND_BEHAVIOUR(ped)
+                PED.DISABLE_PED_INJURED_ON_GROUND_BEHAVIOUR(ped)
             end
 
             for id, is_enable in pairs(nearby_ped_combat_attr.setting.toggles) do
