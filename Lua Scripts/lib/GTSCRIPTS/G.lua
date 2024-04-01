@@ -5963,13 +5963,33 @@ end, function()
     entities.delete_by_handle(custom_pet)
     custom_pet = nil
 end)
+
 --超人模式
 Superman_Setting = CONFIG_DIR .. "Superman.txt"
 Current_settings = {}
-superman = {multi = nil, running = nil, friction = nil, fspeed = 3.0, height = 0.6, crosshair = true,
-exp = false, bull = 'WEAPON_TACTICALRIFLE', godmode = nil, breath = 1, nodam = true, vehicle = true}
-xray = {npcs = true, players = true, fov = 3, targetveh = true, espline = true, espbox = false,
-espbones = true}
+superman = {
+    multi = 0,
+    running = 0,
+    friction = 0,
+    fspeed = 3.0,
+    height = 0.6,
+    crosshair = 1,
+    exp = 0,
+    bull = 'WEAPON_TACTICALRIFLE',
+    godmode = 0,
+    breath = 1,
+    nodam = 1,
+    vehicle = 1
+}
+xray = {
+    npcs = 1,
+    players = 1,
+    fov = 3,
+    targetveh = 1,
+    espline = 1,
+    espbox = 0,
+    espbones = 1
+}
 fricref = menu.ref_by_path('Self>Movement>Increased Friction')
 runref = menu.ref_by_path('Self>Movement>Walk And Run Speed')
 multiref = menu.ref_by_path('Self>Weapons>Damage Multiplier')
@@ -5992,168 +6012,164 @@ SuperESPcolor = {
 }
 
 GTLP(super_xrays,'超人模式', {'superman'}, '拥有超人的能力', function (on)
-scope_scaleform2 = GRAPHICS.REQUEST_SCALEFORM_MOVIE('SUBMARINE_MISSILES')
-GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scope_scaleform2, 'SUBMARINE_MISSILES')
-GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scope_scaleform2, 255, 255, 255, 255, 0)
-GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
-HUD.SET_TEXT_SCALE(1.0,0.5)
-HUD.SET_TEXT_FONT(0)
-HUD.SET_TEXT_CENTRE(1)
-HUD.SET_TEXT_OUTLINE(0)
-HUD.SET_TEXT_COLOUR(60, 255, 255, 255)
-util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("提示!!E透视,X原力,Q降落,S加速飞,空格+W向下飞,右键激光眼,空格向上飞")
-HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.4999,0.8798,0)
-if superman.multi == nil  then
-    superman.multi = multiref.value
-else
-end
-if superman.running == nil then
-    superman.running = runref.value
-else
-end
-if superman.friction == nil then
-    superman.friction = fricref.value
-else
-end
-if superman.godmode == nil then
-    superman.godmode = immorref.value
-else
-end
+    scope_scaleform2 = GRAPHICS.REQUEST_SCALEFORM_MOVIE('SUBMARINE_MISSILES')
+    GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scope_scaleform2, 'SUBMARINE_MISSILES')
+    GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scope_scaleform2, 255, 255, 255, 255, 0)
+    GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
+    HUD.SET_TEXT_SCALE(1.0,0.5)
+    HUD.SET_TEXT_FONT(0)
+    HUD.SET_TEXT_CENTRE(1)
+    HUD.SET_TEXT_OUTLINE(0)
+    HUD.SET_TEXT_COLOUR(60, 255, 255, 255)
+    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("提示!!E透视,X原力,Q降落,S加速飞,空格+W向下飞,右键激光眼,空格向上飞")
+    HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.4999,0.8798,0)
+    if superman.multi == 0 then
+        superman.multi = multiref.value
+    else
+    end
+    if superman.running == 0 then
+        superman.running = runref.value
+    else
+    end
+    if superman.friction == 0 then
+        superman.friction = fricref.value
+    else
+    end
+    if superman.godmode == 0 then
+        superman.godmode = immorref.value
+    else
+    end
 
-Current_settings = {
-    ['Immortality'] = superman.godmode,
-    ['Damage Multiplier'] = superman.multi,
-    ['Walk And Run Speed'] = superman.running,
-    ['Increased Friction'] = superman.friction,
-}
+    Current_settings = {
+        ['Immortality'] = superman.godmode,
+        ['Damage Multiplier'] = superman.multi,
+        ['Walk And Run Speed'] = superman.running,
+        ['Increased Friction'] = superman.friction,
+    }
 
-if not filesystem.is_regular_file(Superman_Setting) then
-    util.write_colons_file(Superman_Setting, Current_settings)
-end
+    if not filesystem.is_regular_file(Superman_Setting) then
+        util.write_colons_file(Superman_Setting, Current_settings)
+    end
 
-if set.scale then
-    SFsuper()
-end
-multiref.value = 10000000
-runref.value = Runspeedref.value
-fricref.value = true
-immorref.value = true
+    if set.scale then
+        SFsuper()
+    end
+    multiref.value = 10000000
+    runref.value = Runspeedref.value
+    fricref.value = 1
+    immorref.value = 1
+
     if PAD.IS_CONTROL_PRESSED(0, 22) then
-    cam_pos = CAM.GET_GAMEPLAY_CAM_ROT(0)
-    ENTITY.SET_ENTITY_ROTATION(players.user_ped(), cam_pos.x, cam_pos.y, cam_pos.z, 1, true)
-    local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 0.5, 0.1)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(),pos.x,pos.y,pos.z,true, false, false)
+        cam_pos = CAM.GET_GAMEPLAY_CAM_ROT(0)
+        ENTITY.SET_ENTITY_ROTATION(players.user_ped(), cam_pos.x, cam_pos.y, cam_pos.z, 1, true)
+        local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 0.5, 0.1)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), pos.x, pos.y, pos.z, true, false, false)
     end
-if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 22) then
-    if PAD.IS_CONTROL_PRESSED(0, 32) then
-        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.0, superman.fspeed, superman.height, 0, 0, 0, 0, true, true, true, true)
-    elseif PAD.IS_CONTROL_PRESSED(0, 33) then
-        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.0, superman.fspeed, 0.0, 0, 0, 0, 0, true, true, true, true)
-    end
-end
-
-if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 44) then
-    local groundz = memory.alloc(4)
-    local flycoor = ENTITY.GET_ENTITY_COORDS(players.user_ped())
-    MISC.GET_GROUND_Z_FOR_3D_COORD(flycoor.x, flycoor.y, flycoor.z, groundz, 0, 0)
-    if memory.read_float(groundz) != 0 then
-        SEC(players.user_ped(), flycoor.x, flycoor.y, memory.read_float(groundz), false, true, true, false)
-        TASK.CLEAR_PED_TASKS(players.user_ped())
-    else
-        if set.alert then
-            ACutil(Str_trans('Too high go lower to land'))
+    if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 22) then
+        if PAD.IS_CONTROL_PRESSED(0, 32) then
+            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.0, superman.fspeed, superman.height, 0, 0,
+                0, 0, true, true, true, true)
+        elseif PAD.IS_CONTROL_PRESSED(0, 33) then
+            ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(players.user_ped(), 1, 0.0, superman.fspeed, 0.0, 0, 0, 0, 0, true,
+                true, true, true)
         end
     end
 
-
-
-end
-
-if superman.crosshair then
-    HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
-end
-
-local weap = util.joaat(superman.bull)
-local camrot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
-REQUEST_WEAPON_ASSET(weap)
-local impact = v3.new()
-if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 68) and PAD.IS_CONTROL_PRESSED(0, 69) and superman.vehicle then
-    Super_Breath(superman)
-    ENTITY.SET_ENTITY_ROTATION(entities.get_user_vehicle_as_handle(), 0, 0, camrot.z, 2, true)
-elseif not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 73) then
-    if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 73) then
-        TASK.CLEAR_PED_TASKS(players.user_ped())
-        while not ENTITY.HAS_ENTITY_ANIM_FINISHED(players.user_ped(), 'rcmme_amanda1', "stand_loop_cop", 3) and PAD.IS_CONTROL_PRESSED(0, 73) do
-            ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
-            camrot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
-            local impact = v3.new()
-            Super_Breath(superman)
-            Streamanim('rcmme_amanda1')
-            Runanim(players.user_ped(), 'rcmme_amanda1', "stand_loop_cop")
-            wait()
+    if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 44) then
+        local groundz = memory.alloc(4)
+        local flycoor = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+        MISC.GET_GROUND_Z_FOR_3D_COORD(flycoor.x, flycoor.y, flycoor.z, groundz, 0, 0)
+        if memory.read_float(groundz) != 0 then
+            SEC(players.user_ped(), flycoor.x, flycoor.y, memory.read_float(groundz), false, true, true, false)
+            TASK.CLEAR_PED_TASKS(players.user_ped())
+        else
+            if set.alert then
+                ACutil(Str_trans('Too high go lower to land'))
+            end
         end
-    else
-        TASK.CLEAR_PED_TASKS(players.user_ped())
-        ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
+    end
+
+    if superman.crosshair then
+        HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
+    end
+
+    local weap = util.joaat(superman.bull)
+    local camrot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
+    REQUEST_WEAPON_ASSET(weap)
+    local impact = v3.new()
+    if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 68) and PAD.IS_CONTROL_PRESSED(0, 69) and superman.vehicle then
         Super_Breath(superman)
-    end
-
-
-elseif PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 68) and superman.vehicle then
-    Leyes(superman, impact, camrot, weap)
-    ENTITY.SET_ENTITY_ROTATION(entities.get_user_vehicle_as_handle(), 0, 0, camrot.z, 2, true)
-elseif not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 25) then
-    if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 25) then
-        TASK.CLEAR_PED_TASKS(players.user_ped())
-        while not ENTITY.HAS_ENTITY_ANIM_FINISHED(players.user_ped(), 'rcmme_amanda1', "stand_loop_cop", 3) and PAD.IS_CONTROL_PRESSED(0, 25) do
-            ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
-            camrot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
-            local impact = v3.new()
-            Supereyes(superman, impact, camrot, weap)
-            Streamanim('rcmme_amanda1')
-            Runanim(players.user_ped(), 'rcmme_amanda1', "stand_loop_cop")
-            wait()
+        ENTITY.SET_ENTITY_ROTATION(entities.get_user_vehicle_as_handle(), 0, 0, camrot.z, 2, true)
+    elseif not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 73) then
+        if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 73) then
+            TASK.CLEAR_PED_TASKS(players.user_ped())
+            while not ENTITY.HAS_ENTITY_ANIM_FINISHED(players.user_ped(), 'rcmme_amanda1', "stand_loop_cop", 3) and PAD.IS_CONTROL_PRESSED(0, 73) do
+                ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
+                camrot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
+                local impact = v3.new()
+                Super_Breath(superman)
+                Streamanim('rcmme_amanda1')
+                Runanim(players.user_ped(), 'rcmme_amanda1', "stand_loop_cop")
+                wait()
+            end
+        else
+            TASK.CLEAR_PED_TASKS(players.user_ped())
+            ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
+            Super_Breath(superman)
+        end
+    elseif PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 68) and superman.vehicle then
+        Leyes(superman, impact, camrot, weap)
+        ENTITY.SET_ENTITY_ROTATION(entities.get_user_vehicle_as_handle(), 0, 0, camrot.z, 2, true)
+    elseif not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 25) then
+        if ENTITY.IS_ENTITY_IN_AIR(players.user_ped()) and PAD.IS_CONTROL_PRESSED(0, 25) then
+            TASK.CLEAR_PED_TASKS(players.user_ped())
+            while not ENTITY.HAS_ENTITY_ANIM_FINISHED(players.user_ped(), 'rcmme_amanda1', "stand_loop_cop", 3) and PAD.IS_CONTROL_PRESSED(0, 25) do
+                ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
+                camrot = CAM.GET_FINAL_RENDERED_CAM_ROT(2)
+                local impact = v3.new()
+                Supereyes(superman, impact, camrot, weap)
+                Streamanim('rcmme_amanda1')
+                Runanim(players.user_ped(), 'rcmme_amanda1', "stand_loop_cop")
+                wait()
+            end
+        else
+            TASK.CLEAR_PED_TASKS(players.user_ped())
+            ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
+            Leyes(superman, impact, camrot, weap)
         end
     else
-        TASK.CLEAR_PED_TASKS(players.user_ped())
         ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
-        Leyes(superman, impact, camrot, weap)
+    end
+    if PAD.IS_CONTROL_PRESSED(0, 119) then
+        Xrayvision(xray)
     end
 
-else
-    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
-end
-if PAD.IS_CONTROL_PRESSED(0, 119) then
-    Xrayvision(xray)
-end
-
-
-return superman.multi, superman.running
-end, function ()
-TASK.CLEAR_PED_TASKS(players.user_ped())
-local settings = util.read_colons_and_tabs_file(Superman_Setting)
-for I, V in settings do
-    switch I do
-        case 'Damage Multiplier' :
-            multiref.value = V
-        break
-        case 'Walk And Run Speed' :
-            runref.value = V
-        break
-        case 'Increased Friction' :
-            menu.trigger_command(menu.ref_by_command_name('friction'), V)
-        break
-        case 'Immortality' :
-            menu.trigger_command(menu.ref_by_command_name('god'), V)
-        break
+    return superman.multi, superman.running
+    end, function ()
+    TASK.CLEAR_PED_TASKS(players.user_ped())
+    local settings = util.read_colons_and_tabs_file(Superman_Setting)
+    for I, V in settings do
+        switch I do
+            case 'Damage Multiplier' :
+                multiref.value = V
+            break
+            case 'Walk And Run Speed' :
+                runref.value = V
+            break
+            case 'Increased Friction' :
+                menu.trigger_command(menu.ref_by_command_name('friction'), V)
+            break
+            case 'Immortality' :
+                menu.trigger_command(menu.ref_by_command_name('god'), V)
+            break
+        end
     end
-end
-wait(250)
-io.remove(Superman_Setting)
-superman.multi = nil
-superman.running = nil
-superman.friction = nil
-superman.godmode = nil 
+    wait(250)
+    io.remove(Superman_Setting)
+    superman.multi = 0
+    superman.running = 0
+    superman.friction = 0
+    superman.godmode = 0
 end)
 -------------------------------
 
@@ -6272,8 +6288,8 @@ GTLP(sessionfun, '钢铁侠', {'ironman'}, 'E-噶秋莎,左键-机炮,右键-原
         PED.GIVE_PED_HELMET(players.user_ped(), true, 4096, -1)
         gaveHelmet = true
     end
-    local context = CAM._GET_CAM_ACTIVE_VIEW_MODE_CONTEXT()
-    if startViewMode == nil then
+    local context = CAM.GET_CAM_ACTIVE_VIEW_MODE_CONTEXT()
+    if startViewMode == 0 then
         startViewMode = CAM.GET_CAM_VIEW_MODE_FOR_CONTEXT(context)
     end
     if CAM.GET_CAM_VIEW_MODE_FOR_CONTEXT(context) != 4 then
@@ -6288,7 +6304,7 @@ GTLP(sessionfun, '钢铁侠', {'ironman'}, 'E-噶秋莎,左键-机炮,右键-原
     GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scope_scaleform2, 255, 255, 255, 255, 0)
     GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
     local barrageInput = 'INPUT_PICKUP'
-    if not PAD._IS_USING_KEYBOARD(0) then
+    if not PAD.IS_USING_KEYBOARD_AND_MOUSE(0) then
     barrageInput = 'INPUT_COVER'
     end
     memory.write_int(memory.script_global(1649593 + 1163), 1)
@@ -6344,15 +6360,15 @@ GTLP(sessionfun, '钢铁侠', {'ironman'}, 'E-噶秋莎,左键-机炮,右键-原
     PED.REMOVE_PED_HELMET(players.user_ped(), true)
     gaveHelmet = false
     end
-    HUD._HUD_WEAPON_WHEEL_IGNORE_CONTROL_INPUT(false)
+    HUD._HUD_WEAPON_WHEEL_GET_SELECTED_HASH(false)
     local pScaleform = memory.alloc_int()
     memory.write_int(pScaleform, scope_scaleform)
     GRAPHICS.SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED(pScaleform)
     GTLuaScript.trigger_command(levitationCommand, 'off')
     wait()
-    CAM.SET_CAM_VIEW_MODE_FOR_CONTEXT(CAM._GET_CAM_ACTIVE_VIEW_MODE_CONTEXT(), startViewMode)
-    startViewMode = nil
-    end)
+    CAM.SET_CAM_VIEW_MODE_FOR_CONTEXT(CAM.GET_CAM_ACTIVE_VIEW_MODE_CONTEXT(), startViewMode)
+    startViewMode = 0
+end)
 
 GTTG(sessionfun, "疯狗模式", {""}, "按e使用激光眼", function(state)
     GTLuaScript.trigger_commands("trails")
@@ -14824,6 +14840,7 @@ GTLP(funfeatures_veh, "漂移模式(手动)", {"dshiftdrift"}, "按住shift进�
     end
 end)
 
+--[[
 GTTG(funfeatures_veh, "头文字D模式", {"initiald"}, "应用预定义的载具操纵配置\n使车辆能够产生漂移的效果\n这不会神奇地让你成为漂移高手喔\n也不会神奇地使每辆车都擅长漂移", function(on, click_type)
     initial_d_mode = on
     initial_d_score_thread()
@@ -14836,7 +14853,7 @@ GTTG(funfeatures_veh, "头文字D模式", {"initiald"}, "应用预定义的载�
             end
         end
     end
-end)
+end)]]
 
 GTLP(funfeatures_veh,  "相机方向推力", {"thrustindir"}, "按住X并保持此状态\n将载具推向摄相机的方向视角,用于维持漂移状态", function(on)
     if player_cur_car ~= 0 and PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then 
@@ -23053,7 +23070,7 @@ end)
 zaxiang = GT(other_options, "其他杂项功能")
 
 ZT = GT(zaxiang, "动态主题", {"sszt"}, "")
-util.require_no_lag"lib.GTSCRIPTS.GTW.ZT"
+require "lib.GTSCRIPTS.GTW.ZT"
 
 times_button_pressed = 0
 GTAC(zaxiang,"试试点击", {}, "一个友好的功能哟~\n连点有彩蛋喔~", function(f)

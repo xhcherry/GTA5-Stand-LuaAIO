@@ -33,7 +33,7 @@ gtlog = util.log
 new = {}
 Ini = {}
 --
-GT_version = '3.28'
+GT_version = '3.30'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -41,7 +41,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("自我选项>自我娱乐>新型娱乐>帅痞\n自我选项>自我娱乐>新型娱乐>水遁之术\n自我选项>增强选项>显示鼠标|鼠标样式\n恶搞选项>近期更新>压杀1\n恶搞选项>近期更新>压杀2\n武器选项>新枪械玩法>恕瑞玛飞升枪\n错误修复和皇榜添加")
+    notification("自我选项>自我娱乐>新型娱乐>帅痞\n自我选项>自我娱乐>新型娱乐>水遁之术\n自我选项>增强选项>显示鼠标|鼠标样式\n恶搞选项>近期更新>压杀1\n恶搞选项>近期更新>压杀2\n武器选项>新枪械玩法>恕瑞玛飞升枪\n修复部分通知报错\n修复了钢铁侠与超人模式的报错\n错误修复和皇榜添加")
 end
 --
 hasShownToast = false
@@ -8805,7 +8805,7 @@ spawnedObjects = {}
 spawnedVehicles = {}
 function deleteEntities(entitiesList)
     for _, entityID in ipairs(entitiesList) do
-            entities.delete_by_handle(entityID)
+        entities.delete_by_handle(entityID)
     end
     return {}
 end
@@ -26709,11 +26709,11 @@ GTLP(updatetroll, '压杀1', {}, '大多菜单阻止', function()
     local playerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local playerPos = ENTITY.GET_ENTITY_COORDS(playerPed)
     local playerHeading = ENTITY.GET_ENTITY_HEADING(playerPed)
-    yasha1(pid, joaat("khanjali"), playerPos, playerHeading)
+    yasha1(pid, util.joaat("khanjali"), playerPos, playerHeading)
 end)
 
 GTLP(updatetroll, '压杀2', {}, '大多菜单阻止', function()
-    yasha2(pid, joaat("prop_roofvent_06a"))
+    yasha2(pid, util.joaat("prop_roofvent_06a"))
 end)
 
 GTAC(updatetroll, '传送位置故障', {},'',function()
@@ -26771,7 +26771,7 @@ GTTG(updatetroll, '视觉痉挛', {}, '', function(ft)
 
         local playerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
         local playerCoords = players.get_position(playerPed)
-        request_ptfx("scr_indep_fireworks")
+        request_ptfx_asset("scr_indep_fireworks")
         GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("scr_indep_firework_trail_spawn", playerCoords.x,
             playerCoords.y, playerCoords.z, 0, 0, 0, 1.0, true, true, true)
         local objectHashes = {util.joaat("prop_xmas_ext"), util.joaat("prop_food_van_01")}

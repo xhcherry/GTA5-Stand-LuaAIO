@@ -1,5 +1,4 @@
---Custom By GRANDTOURINGVIP
--- 1663599433
+-- Custom By GRANDTOURINGVIP
 -- DONT RENAME THIS FILE
 -- This should be natives-1663599433.lua wherein 1663599433 represents the version.
 -- Any given version may not be compatible with any given script using this library.
@@ -3916,6 +3915,7 @@ HUD={
 	-- "HUD_QUITTING"                           =  Quiting session
 	-- "KILL_STRIP_IDM"                         = Waiting for to accept
 	-- "MP_SPINLOADING"                      = Loading
+	["_THEFEED_SET_NEXT_POST_BACKGROUND_COLOR"]=function(--[[int]] hudColorIndex)native_invoker.begin_call();native_invoker.push_arg_int(hudColorIndex);native_invoker.end_call("92F0DA1E27DB96DC");end,
 	["_HUD_WEAPON_WHEEL_GET_SELECTED_HASH"]=function()native_invoker.begin_call();native_invoker.end_call("A48931185F0536FE");return native_invoker.get_return_value_int();end,
 	["BEGIN_TEXT_COMMAND_BUSYSPINNER_ON"]=--[[void]] function(--[[string]] string)native_invoker.begin_call()native_invoker.push_arg_string(string)native_invoker.end_call_2(0xABA17D7CE615ADBF)end,
 	-- enum eBusySpinnerType

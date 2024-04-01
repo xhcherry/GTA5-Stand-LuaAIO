@@ -170,6 +170,10 @@ sxid = {{
 }, {
     playeridx = "NASA---RS9"
 }, {
+    playeridx = "TANLUO"
+}, {
+    playeridx = "NeverDieA"
+}, {
     playeridx = ""
 },
 }
@@ -2240,6 +2244,22 @@ spid = {{
     playerid = "colddog66"
 }, {
     playerid = "Eliauk51"
+}, {
+    playerid = "himm__mav520"
+}, {
+    playerid = "18mideikun"
+}, {
+    playerid = "Chinainai_"
+}, {
+    playerid = "clDGta"
+}, {
+    playerid = "penny3512"
+}, {
+    playerid = "KissGentle"
+}, {
+    playerid = "DMzwh1996"
+}, {
+    playerid = "-collapse"
 }, {
     playerid = ""
 },
