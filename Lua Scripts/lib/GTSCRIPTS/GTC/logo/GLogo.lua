@@ -21,6 +21,7 @@ translations.missing_translations = {}
 friends_in_this_session = {}
 modders_in_this_session = {}
 wait = util.yield
+joaat = util.joaat
 --gtoast = util.toast
 GTluaScript = menu
 GT = GTluaScript.list
@@ -33,7 +34,7 @@ gtlog = util.log
 new = {}
 Ini = {}
 --
-GT_version = '3.30'
+GT_version = '4.03'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -41,7 +42,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("自我选项>自我娱乐>新型娱乐>帅痞\n自我选项>自我娱乐>新型娱乐>水遁之术\n自我选项>增强选项>显示鼠标|鼠标样式\n恶搞选项>近期更新>压杀1\n恶搞选项>近期更新>压杀2\n武器选项>新枪械玩法>恕瑞玛飞升枪\n修复部分通知报错\n修复了钢铁侠与超人模式的报错\n错误修复和皇榜添加")
+    notification("载具选项>载具武器>载具武器自瞄[玩家]\n载具选项>载具武器>载具武器自瞄[载具]\n载具选项>载具武器>载具武器自瞄[NPC]\n友好选项>给钱和经验\n战局选项>全局踢出\n恶搞选项>载具恶搞>载具飞升>史车\n恶搞选项>载具恶搞>载具飞升>轮子有几个妹妹\n恶搞选项>载具恶搞>载具飞升>给予荣誉\n恶搞选项>载具恶搞>载具飞升>神奇的输出\n修复了一些功能发生got nil的报错\n修复了尖端炮台的报错\n修复了警车选项功能失效\n错误修复和皇榜添加")
 end
 --
 hasShownToast = false
@@ -52,8 +53,8 @@ currentMonth = tonumber(os.date("%m"))
 currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
-notifyMonth = 3
-notifyDay = 28
+notifyMonth = 4
+notifyDay = 3
 
 _G.daysSince = _G.daysSince or 0
 
@@ -104,7 +105,7 @@ bbtct = "[点击此处加入官方群聊中进行询问]\n\n*加载脚本显示(
 grouplink = "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566"
 
 function toFloat(num)
-return (num / 10) * 10
+    return (num / 10) * 10
 end
 --
 function SETUP_SINGLE_LINE(scaleform)
@@ -3457,7 +3458,7 @@ Hew = {
     T('Chrome Carbon S Racer'),
 }
  
- Lw = {
+Lw = {
     T('Flares'),
     T('Wired'),
     T('Triple Golds'),
@@ -24237,6 +24238,375 @@ function start_silent_aimbot()
 end)
 end
 
+function allplayEvents(events)
+    for _, event in ipairs(events) do
+        util.trigger_script_event(util.get_session_players_bitflag(), event)
+    end
+end
+
+function func388()
+    GTD(mastervip, "Ultra 会员级功能")
+    GTD(mastervip, "请随时关注这里的新功能")
+
+    GTAC(mastervip, '全局忧郁踢', {}, '', function()
+        allplayEvents(kickevents)
+        for _, pid in players.list(false,true, true) do
+            menu.trigger_commands("kick" .. PLAYER.GET_PLAYER_NAME(pid))
+        end
+    end)
+
+    GTTG(mastervip, "武器追踪炮弹", {},'射击武器生效.',function(toggle)
+        gUsingValkRocket = toggle
+        if gUsingValkRocket then
+            local rocket = 0
+            local cam = 0
+            local blip = 0
+            local init = false
+            local timer <const> = newTimer()
+            local draw_rect = function(x, y, z, w)
+                GRAPHICS.DRAW_RECT(x, y, z, w, 255, 255, 255, 255, false)
+            end
+    
+            while gUsingValkRocket do
+                util.yield_once()
+                if PED.IS_PED_SHOOTING(players.user_ped()) and not init then
+                    init = true
+                    timer.reset()
+                elseif init then
+                    if not ENTITY.DOES_ENTITY_EXIST(rocket) then
+                        local offset = get_offset_from_cam(10)
+                        rocket = entities.create_object(util.joaat("w_lr_rpg_rocket"), offset)
+                        ENTITY.SET_ENTITY_INVINCIBLE(rocket, true)
+                        ENTITY.SET_ENTITY_LOAD_COLLISION_FLAG(rocket, true, 1)
+                        NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK.OBJ_TO_NET(rocket), true)
+                        NETWORK.SET_NETWORK_ID_CAN_MIGRATE(NETWORK.OBJ_TO_NET(rocket), false)
+                        ENTITY.SET_ENTITY_RECORDS_COLLISIONS(rocket, true)
+                        ENTITY.SET_ENTITY_HAS_GRAVITY(rocket, false)
+    
+                        CAM.DESTROY_ALL_CAMS(true)
+                        cam = CAM.CREATE_CAM("DEFAULT_SCRIPTED_CAMERA", true)
+                        CAM.SET_CAM_NEAR_CLIP(cam, 0.01)
+                        CAM.SET_CAM_NEAR_DOF(cam, 0.01)
+                        GRAPHICS.CLEAR_TIMECYCLE_MODIFIER()
+                        GRAPHICS.SET_TIMECYCLE_MODIFIER("CAMERA_secuirity")
+                        CAM.HARD_ATTACH_CAM_TO_ENTITY(cam, rocket, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true)
+                        CAM.SET_CAM_ACTIVE(cam, true)
+                        CAM.RENDER_SCRIPT_CAMS(true, false, 0, true, true, 0)
+    
+                        PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), true)
+                        ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
+                    else
+                        local rot = CAM.GET_GAMEPLAY_CAM_ROT(0)
+                        local coords = ENTITY.GET_ENTITY_COORDS(rocket, false)
+                        local force = rot:toDir()
+                        force:mul(40.0)
+    
+                        ENTITY.SET_ENTITY_ROTATION(rocket, rot.x, rot.y, rot.z, 0, true)
+                        STREAMING.SET_FOCUS_POS_AND_VEL(coords.x, coords.y, coords.z, rot.x, rot.y, rot.z)
+                        ENTITY.APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(rocket, 1, force.x, force.y, force.z, false, false, false, false)
+    
+                        HUD.HIDE_HUD_AND_RADAR_THIS_FRAME()
+                        PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), true)
+                        ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
+                        HUD.HUD_SUPPRESS_WEAPON_WHEEL_RESULTS_THIS_FRAME()
+                        draw_rect(0.5, 0.5 - 0.025, 0.050, 0.002)
+                        draw_rect(0.5, 0.5 + 0.025, 0.050, 0.002)
+                        draw_rect(0.5 - 0.025, 0.5, 0.002, 0.052)
+                        draw_rect(0.5 + 0.025, 0.5, 0.002, 0.052)
+                        draw_rect(0.5 + 0.050, 0.5, 0.050, 0.002)
+                        draw_rect(0.5 - 0.050, 0.5, 0.050, 0.002)
+                        draw_rect(0.5, 0.500 + 0.05, 0.002, 0.05)
+                        draw_rect(0.5, 0.500 - 0.05, 0.002, 0.05)
+                        local maxTime = 7000 
+                        local length = 0.5 - 0.5 * (timer.elapsed() / maxTime) 
+                        local perc = length / 0.5
+                        local color = get_blended_colour(perc)
+                        GRAPHICS.DRAW_RECT(0.25, 0.5, 0.03, 0.5, 255, 255, 255, 120, false)
+                        GRAPHICS.DRAW_RECT(0.25, 0.75 - length / 2, 0.03, length, color.r, color.g, color.b, color.a, false)
+    
+                        if ENTITY.HAS_ENTITY_COLLIDED_WITH_ANYTHING(rocket) or length <= 0 then
+                            local impactCoord = ENTITY.GET_ENTITY_COORDS(rocket, false)
+                            FIRE.ADD_EXPLOSION(impactCoord.x, impactCoord.y, impactCoord.z, 32, 1.0, true, false, 0.4, false)
+                            entities.delete_by_handle(rocket)
+                            CAM.RENDER_SCRIPT_CAMS(false, false, 0, true, false, 0)
+                            GRAPHICS.SET_TIMECYCLE_MODIFIER("DEFAULT")
+                            STREAMING.CLEAR_FOCUS()
+                            CAM.DESTROY_CAM(cam, true)
+                            PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), false)
+                            ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
+                            rocket = 0
+                            init = false
+                        end
+                    end
+                end
+            end
+            if rocket and ENTITY.DOES_ENTITY_EXIST(rocket) then
+                local impactCoord = ENTITY.GET_ENTITY_COORDS(rocket, false)
+                FIRE.ADD_EXPLOSION(impactCoord.x, impactCoord.y, impactCoord.z, 32, 1.0, true, false, 0.4, false)
+                entities.delete_by_handle(rocket)
+                STREAMING.CLEAR_FOCUS()
+                CAM.RENDER_SCRIPT_CAMS(false, false, 0, true, false, 0)
+                CAM.DESTROY_CAM(cam, true)
+                GRAPHICS.SET_TIMECYCLE_MODIFIER("DEFAULT")
+                ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
+                PLAYER.DISABLE_PLAYER_FIRING(players.user_ped(), false)
+                if HUD.DOES_BLIP_EXIST(blip) then util.remove_blip(blip) end
+                HUD.UNLOCK_MINIMAP_ANGLE()
+                HUD.UNLOCK_MINIMAP_POSITION()
+            end
+        end
+    end)
+
+    kongx1 = GTTG(mastervip, '模式1',{},'',function(lsqs)
+        luanshes = lsqs
+        while luanshes do wait()
+            local hash<const> = util.joaat("weapon_hominglauncher")
+            local raycastResult = get_raycast_result(1000.0)
+            WEAPON.REQUEST_WEAPON_ASSET(hash, 31, 0)
+            if raycastResult.didHit and PED.IS_PED_SHOOTING(
+                players.user_ped()) then
+            local pos = raycastResult.endCoords
+                for angle = 0, 359, 10 do
+                    local radians = math.rad(angle)
+                    local radius = 7 
+                    local offsetX = radius * math.cos(radians)
+                    local offsetY = radius * math.sin(radians)
+                    MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(
+                        pos.x + offsetX, pos.y + offsetY, pos.z + 35.0,
+                        pos.x + offsetX, pos.y + offsetY, pos.z, 0,
+                        true, hash, players.user_ped(),
+                        true, false, 0)
+                    wait(50)
+                end
+            end
+        end 
+        luanshes = false
+    end)
+    
+    kongx2 = GTTG(mastervip, '模式2',{},'',function(lsq1)
+        luanshe1 = lsq1
+        while luanshe1 do wait()
+            local hash1<const> = util.joaat("weapon_hominglauncher")
+            local raycastResult1 = get_raycast_result(1000.0)
+            WEAPON.REQUEST_WEAPON_ASSET(hash1, 31, 0)
+            if raycastResult1.didHit and PED.IS_PED_SHOOTING(
+                players.user_ped()) then
+            local pos1 = raycastResult1.endCoords
+                for i = 1, 40 do
+                    MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(
+                        pos1.x + math.random(-10, 10),
+                    pos1.y + math.random(-10, 10), pos1.z + 35.0
+                    + math.random(-10, 10), pos1.x
+                    + math.random(-10, 10),pos1.y
+                    + math.random(-10, 10), pos1.z
+                    + math.random(-10, 10), 0,
+                    true, hash1,players.user_ped(),
+                    true, false, 0)
+                    wait(50)
+                end
+            end
+        end luanshe1 = false
+    end)
+    
+    kongx3 = GTTG(mastervip, '模式3',{""},'',function(lsq2)
+        luanshe2 = lsq2
+        while luanshe2 do wait()
+            local hash2<const> = util.joaat("weapon_hominglauncher")
+            local raycastResult2 = get_raycast_result(1000.0)
+            WEAPON.REQUEST_WEAPON_ASSET(hash2, 31, 0)
+            if raycastResult2.didHit and PED.IS_PED_SHOOTING(
+                players.user_ped()) then
+                local pos2 = raycastResult2.endCoords
+                for offset = 1, 20, 1 do
+                    local offsetX1 = offset
+                    local offsetY1 = offset
+                    MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(
+                        pos2.x, pos2.y, pos2.z + 35.0,
+                        pos2.x - offsetX1, pos2.y - offsetY1, pos2.z, 0,
+                        true, hash2, players.user_ped(),
+                        true, false, 0)
+                    MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(
+                        pos2.x, pos2.y, pos2.z + 35.0,
+                        pos2.x + offsetX1, pos2.y + offsetY1, pos2.z, 0,
+                        true, hash2, players.user_ped(),
+                        true, false, 0)
+                    wait(50)
+                end
+            end
+        end 
+        luanshe2 = false
+    end)
+    menu.set_visible(kongx1, false)
+    menu.set_visible(kongx2, false)
+    menu.set_visible(kongx3, false)
+    
+    local func_mode = 1
+    local last_key_state = false
+    local circle_size = {
+        {x = .75, y = .9, radius = 0.025},
+        {x = .8, y = .9, radius = 0.02},
+        {x = .85, y = .9, radius = 0.02}
+    }
+    
+    kxpress = GTLP(mastervip, '空袭枪[功能模式]', {}, '按E切换模式类型\n三种模式三种不同的空袭效果', function()
+
+        for i = 1, 3 do
+            directx.draw_circle(circle_size[i].x, circle_size[i].y, 
+            circle_size[i].radius, 0, 0, 1, 1, -1)
+            directx.draw_text(circle_size[i].x-0.01, circle_size[i].y, '模式' .. i,
+            ALIGN_TOP_LEFT, circle_size[i].radius + 0.48, 0, 1, 0, 1)
+        end
+
+        local current_key_state = util.is_key_down(0x45)
+        if current_key_state and not last_key_state then
+            func_mode = func_mode + 1
+            if func_mode > 3 then
+                func_mode = 1
+            end
+            for i = 1, 3 do
+                circle_size[i].radius = 0.02 
+            end
+            if func_mode == 1 then
+                gtoast("模式1已启用")
+                menu.set_value(kongx1, true)
+                menu.set_value(kongx2, false)
+                menu.set_value(kongx3, false)
+            elseif func_mode == 2 then
+                gtoast("模式2已启用")
+                menu.set_value(kongx1, false)
+                menu.set_value(kongx2, true)
+                menu.set_value(kongx3, false)
+            elseif func_mode == 3 then
+                gtoast("模式3已启用")
+                menu.set_value(kongx1, false)
+                menu.set_value(kongx2, false)
+                menu.set_value(kongx3, true)
+            end
+    
+            circle_size[func_mode].radius = 0.025 
+        end
+        
+        last_key_state = current_key_state
+    end)
+
+    util.create_tick_handler(function ()
+        wait()
+        if menu.get_value(kxpress) == false then
+            kongx1.value = false
+            kongx2.value = false
+            kongx3.value = false
+        end
+    end)
+
+    GTTG(mastervip, '骑妹妹', {}, '可操控走路,按W移动方向即可行走\n妹妹是无敌的', function(on)
+        if on then
+            request_model(0x9CF26183)
+            local mypid = PLAYER.PLAYER_PED_ID()
+            local coods = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+            Mounts1 = PED.CREATE_PED(26, 0x9CF26183, coods.x, coods.y + 1, coods.z, 0, true, false)
+            while not STREAMING.HAS_ANIM_DICT_LOADED("rcmjosh2") do
+                STREAMING.REQUEST_ANIM_DICT("rcmjosh2")
+                wait()
+            end
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(mypid, Mounts1, PED.GET_PED_BONE_INDEX(Mounts1, 0), 0.0, -0.2, 0.60, 0.0, 0.0,
+                180, true, true, true, true, 2, true)
+            ENTITY.SET_ENTITY_INVINCIBLE(Mounts1, true)
+            TASK.TASK_PLAY_ANIM(mypid, "rcmjosh2", "josh_sitting_loop", 3.0, 2.0, -1, 3, 1.0, false, false, false)
+            util.create_tick_handler(function()
+                if (util.is_key_down(0x57)) then
+                    local location = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+                    local CamRot = CAM.GET_GAMEPLAY_CAM_ROT(2)
+                    local Distance = 5
+                    local SpawnPosition = location
+                    SpawnPosition.x = location.x - (math.sin(math.rad(CamRot.z)) * Distance)
+                    SpawnPosition.y = location.y + (math.cos(math.rad(CamRot.z)) * Distance)
+                    SpawnPosition.z = location.z
+                    TASK.TASK_GO_STRAIGHT_TO_COORD(Mounts1, SpawnPosition.x, SpawnPosition.y, SpawnPosition.z, 120, 10,
+                        CamRot.z, 0)
+                end
+            end)
+        else
+            TASK.CLEAR_PED_TASKS(players.user_ped())
+            entities.delete_by_handle(Mounts1)
+        end
+    end)
+
+    GTTG(mastervip, '鬼上身', {}, '被鬼附体', function(on)
+        if on then
+            request_model(0x9CF26183)
+            mypid1 = PLAYER.PLAYER_PED_ID()
+            local ghost_hashes = {util.joaat('m23_1_prop_m31_ghostzombie_01a'),
+                                util.joaat('m23_1_prop_m31_ghostjohnny_01a'),
+                                util.joaat('m23_1_prop_m31_ghostrurmeth_01a'),
+                                util.joaat('m23_1_prop_m31_ghostsalton_01a'),
+                                util.joaat('m23_1_prop_m31_ghostskidrow_01a')}
+            local ghost_hash = ghost_hashes[math.random(#ghost_hashes)]
+            request_model(ghost_hash)
+            local coos<const> = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(players.user_ped()), true)
+            nvgui = PED.CREATE_PED(26, 0x9CF26183, coos.x, coos.y, coos.z, 0, true, false)
+            ghost1 = OBJECT.CREATE_OBJECT(ghost_hash, coos.x, coos.y, coos.z - 1, true, true, false)
+            ENTITY.SET_ENTITY_VISIBLE(nvgui, false)
+            ENTITY.SET_ENTITY_VISIBLE(mypid1, false)
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(ghost1, nvgui, 0, 0, 0, 0, 0, 0, 180, false, false, false, true, 0, true, true)
+            while not STREAMING.HAS_ANIM_DICT_LOADED("rcmjosh2") do
+                STREAMING.REQUEST_ANIM_DICT("rcmjosh2")
+                wait()
+            end
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(nvgui, mypid1, 0, 0.0, 0, 0, 0.0, 0.0, 0, true, true, true, true, 2, true)
+
+        else
+            entities.delete_by_handle(ghost1)
+            entities.delete_by_handle(nvgui)
+            ENTITY.SET_ENTITY_VISIBLE(mypid1, true)
+        end
+    end)
+
+    GTTG(mastervip, '上鬼身', {}, '鬼成为你的座驾', function(on)
+        if on then
+            request_model(0x9CF26183)
+            local mypid = PLAYER.PLAYER_PED_ID()
+            local ghost_hashes = {util.joaat('m23_1_prop_m31_ghostzombie_01a'),
+                                util.joaat('m23_1_prop_m31_ghostjohnny_01a'),
+                                util.joaat('m23_1_prop_m31_ghostrurmeth_01a'),
+                                util.joaat('m23_1_prop_m31_ghostsalton_01a'),
+                                util.joaat('m23_1_prop_m31_ghostskidrow_01a')}
+            local ghost_hash = ghost_hashes[math.random(#ghost_hashes)]
+            request_model(ghost_hash)
+            local coos<const> = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(players.user_ped()), true)
+            meimei = PED.CREATE_PED(26, 0x9CF26183, coos.x, coos.y, coos.z, 0, true, false)
+            ghost = OBJECT.CREATE_OBJECT(ghost_hash, coos.x, coos.y, coos.z, true, true, false)
+            ENTITY.SET_ENTITY_VISIBLE(meimei, false)
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(ghost, meimei, 0, 0, 0, -1, 0, 0, 180, 180, false, false, false, true, 0, true,
+                true)
+            while not STREAMING.HAS_ANIM_DICT_LOADED("rcmjosh2") do
+                STREAMING.REQUEST_ANIM_DICT("rcmjosh2")
+                wait()
+            end
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(mypid, meimei, PED.GET_PED_BONE_INDEX(meimei, 0), 0.0, -0.2, 0.60, 0.0, 0.0, 180,
+                true, true, true, true, 2, true)
+            TASK.TASK_PLAY_ANIM(mypid, "rcmjosh2", "josh_sitting_loop", 3.0, 2.0, -1, 3, 1.0, false, false, false)
+            util.create_tick_handler(function()
+                if (util.is_key_down(0x57)) then
+                    local location = ENTITY.GET_ENTITY_COORDS(players.user_ped())
+                    local CamRot = CAM.GET_GAMEPLAY_CAM_ROT(2)
+                    local Distance = 5
+                    local SpawnPosition = location
+                    SpawnPosition.x = location.x - (math.sin(math.rad(CamRot.z)) * Distance)
+                    SpawnPosition.y = location.y + (math.cos(math.rad(CamRot.z)) * Distance)
+                    SpawnPosition.z = location.z
+                    TASK.TASK_GO_STRAIGHT_TO_COORD(meimei, SpawnPosition.x, SpawnPosition.y, SpawnPosition.z, 120, 10,
+                        CamRot.z, 0)
+                end
+            end)
+        else
+            TASK.CLEAR_PED_TASKS(players.user_ped())
+            entities.delete_by_handle(meimei)
+            entities.delete_by_handle(ghost)
+        end
+    end)
+
+end
+
 function egaoxuanxianggongneng()
 
 function playerActionsSetup(pid)
@@ -28816,9 +29186,191 @@ end)
 
     local playerOtherTrolling = GT(playerMain, "载具恶搞", {}, "")
 
+    updateveh = GT(playerOtherTrolling, "载具飞升")
+
     local player_veh_teleport = GT(playerOtherTrolling, "传送载具", {}, "")
 
-     GTLuaScript.list_action(playerOtherTrolling, "附加车辆", {}, "", {"到他的车", "他的车到我的车", "我的车到他的车", "分离"}, function(index, value, click_type)
+    GTAC(updateveh, '史车', {}, '对方需在车里', function()
+        local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
+        if not PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), false) then
+            return util.toast("不在车辆中. :<")
+        end
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+        for _, boneName in pairs({"seat_pside_r", "bodyshell", "platelight", "attach_female", "bonnet", "windscreen_f",
+                                  "windscreen", "seat_dside_f", "seat_pside_f", "exhaust"}) do
+            local bone = ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(vehicle, boneName)
+            local boojj1 = OBJECT.CREATE_OBJECT(joaat("prop_big_shit_02"), pos.x, pos.y, pos.z, true, true, false)
+            ENTITY.ATTACH_ENTITY_TO_ENTITY(boojj1, vehicle, bone, 0, 0, 0, 0, 0, 0, true, true, false, 0, true)
+        end
+    end)
+    
+    GTTG(updateveh, '轮子有几个妹妹', {}, '对方需在车里', function(gqd)
+        local function createped(type, hash, pos, dir)
+            STREAMING.REQUEST_MODEL(hash)
+            while not STREAMING.HAS_MODEL_LOADED(hash) do
+                wait(10)
+            end
+            local ped = entities.create_ped(type, hash, pos, dir, true, false)
+            STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
+            return ped
+        end
+        if gqd then
+            local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
+            if not PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), false) then
+                return util.toast("不在车辆中. :<")
+            end
+            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+            for _, boneName in pairs({"wheel_lf", "wheel_lr", "wheel_rf", "wheel_rr"}) do
+                local bone = ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(vehicle, boneName)
+                local boojj1 = createped(26, 0x9CF26183, pos, 0)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(boojj1, vehicle, bone, -0.2, 0, 0, 0, 0, 0, true, true, false, 0, true)
+            end
+        else
+            local count = 0
+            for k, ent in pairs(entities.get_all_peds_as_handles()) do
+                ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+                entities.delete_by_handle(ent)
+                count = count + 1
+                wait()
+            end
+        end
+    end)
+    
+    GTTG(updateveh, '给予国家的荣誉', {}, '对方需在车里', function(gqf)
+        if gqf then
+            local vehicle = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
+            if not PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), false) then
+                return util.toast("不在车辆中. :<")
+            end
+            local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+            for _, boneName in pairs({"wheel_lf", "wheel_rf"}) do
+                local bone = ENTITY.GET_ENTITY_BONE_INDEX_BY_NAME(vehicle, boneName)
+                local boojj1 = OBJECT.CREATE_OBJECT(joaat("apa_prop_flag_china"), pos.x, pos.y, pos.z, true, true, false)
+                ENTITY.ATTACH_ENTITY_TO_ENTITY(boojj1, vehicle, bone, 0, 0, 1.3, 0, 0, 0, true, true, false, 0, true)
+            end
+        else
+            local count = 0
+            for k, ent in pairs(entities.get_all_objects_as_handles()) do
+                ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+                entities.delete_by_handle(ent)
+                count = count + 1
+                wait()
+            end
+        end
+    end)
+    
+    local vehicleModels = {
+        "adder", "Airbus", "Airtug", "akula", "akuma", "aleutian", "alkonost", "alpha", "alphaz1", "AMBULANCE", "annihilator", "annihilator2", "apc", "ardent", "armytanker", "armytrailer", "armytrailer2", "asbo", "asea", "asea2", "asterope", "asterope2", "astron", "autarch", "avarus", "avenger", "avenger2", "avenger3", "avenger4", "avisa", "bagger", "baletrailer", "Baller", "baller2", "baller3", "baller4", "baller5", "baller6", "baller7", "baller8", "banshee", "banshee2", "BARRACKS", "BARRACKS2", "BARRACKS3", "barrage", "bati", "bati2", "Benson", "benson2", "besra", "bestiagts", "bf400", "BfInjection", "Biff", "bifta", "bison", "Bison2", "Bison3", "BjXL", "blade", "blazer", "blazer2", "blazer3", "blazer4", "blazer5", "BLIMP", "BLIMP2", "blimp3", "blista", "blista2", "blista3", "BMX", "boattrailer", "boattrailer2", "boattrailer3", "bobcatXL", "Bodhi2", "bombushka", "boor", "boxville", "boxville2", "boxville3", "boxville4", "boxville5", "boxville6", "brawler", "brickade", "brickade2", "brigham", "brioso", "brioso2", "brioso3", "broadway", "bruiser", "bruiser2", "bruiser3", "brutus", "brutus2", "brutus3", "btype", "btype2", "btype3", "buccaneer", "buccaneer2", "buffalo", "buffalo2", "buffalo3", "buffalo4", "buffalo5", "bulldozer", "bullet", "Burrito", "burrito2", "burrito3", "Burrito4", "burrito5", "BUS", "buzzard", "Buzzard2", "cablecar", "caddy", "Caddy2", "caddy3", "calico", "CAMPER", "caracara", "caracara2", "carbonizzare", "carbonrs", "Cargobob", "cargobob2", "Cargobob3", "Cargobob4", "cargoplane", "cargoplane2", "casco", "cavalcade", "cavalcade2", "cavalcade3", "cerberus", "cerberus2", "cerberus3", "champion", "cheburek", "cheetah", "cheetah2", "chernobog", "chimera", "chino", "chino2", "cinquemila", "cliffhanger", "clique", "clique2", "club", "coach", "cog55", "cog552", "cogcabrio", "cognoscenti", "cognoscenti2", "comet2", "comet3", "comet4", "comet5", "comet6", "comet7", "conada", "conada2", "contender", "coquette", "coquette2", "coquette3", "coquette4", "corsita", "coureur", "cruiser", "CRUSADER", "cuban800", "cutter", "cyclone", "cyclone2", "cypher", "daemon", "daemon2", "deathbike", "deathbike2", "deathbike3", "defiler", "deity", "deluxo", "deveste", "deviant", "diablous", "diablous2", "dilettante", "dilettante2", "Dinghy", "dinghy2", "dinghy3", "dinghy4", "dinghy5", "dloader", "docktrailer", "docktug", "dodo", "Dominator", "dominator2", "dominator3", "dominator4", "dominator5", "dominator6", "dominator7", "dominator8", "dominator9", "dorado", "double", "drafter", "draugur", "drifteuros", "driftfr36", "driftfuto", "driftjester", "driftremus", "drifttampa", "driftyosemite", "driftzr350", "dubsta", "dubsta2", "dubsta3", "dukes", "dukes2", "dukes3", "dump", "dune", "dune2", "dune3", "dune4", "dune5", "duster", "Dynasty", "elegy", "elegy2", "ellie", "emerus", "emperor", "Emperor2", "emperor3", "enduro", "entity2", "entity3", "entityxf", "esskey", "eudora", "Euros", "everon", "everon2", "exemplar", "f620", "faction", "faction2", "faction3", "fagaloa", "faggio", "faggio2", "faggio3", "FBI", "FBI2", "fcr", "fcr2", "felon", "felon2", "feltzer2", "feltzer3", "firetruk", "fixter", "flashgt", "FLATBED", "fmj", "FORKLIFT", "formula", "formula2", "fq2", "fr36", "freecrawler", "freight", "freight2", "freightcar", "freightcar2", "freightcont1", "freightcont2", "freightgrain", "freighttrailer", "Frogger", "frogger2", "fugitive", "furia", "furoregt", "fusilade", "futo", "futo2", "gargoyle", "Gauntlet", "gauntlet2", "gauntlet3", "gauntlet4", "gauntlet5", "gauntlet6", "gb200", "gburrito", "gburrito2", "glendale", "glendale2", "gp1", "graintrailer", "GRANGER", "granger2", "greenwood", "gresley", "growler", "gt500", "guardian", "habanero", "hakuchou", "hakuchou2", "halftrack", "handler", "Hauler", "Hauler2", "havok", "hellion", "hermes", "hexer", "hotknife", "hotring", "howard", "hunter", "huntley", "hustler", "hydra", "ignus", "ignus2", "imorgon", "impaler", "impaler2", "impaler3", "impaler4", "impaler5", "impaler6", "imperator", "imperator2", "imperator3", "inductor", "inductor2", "infernus", "infernus2", "ingot", "innovation", "insurgent", "insurgent2", "insurgent3", "intruder", "issi2", "issi3", "issi4", "issi5", "issi6", "issi7", "issi8", "italigtb", "italigtb2", "italigto", "italirsx", "iwagen", "jackal", "jb700", "jb7002", "jester", "jester2", "jester3", "jester4", "jet", "jetmax", "journey", "journey2", "jubilee", "jugular", "kalahari", "kamacho", "kanjo", "kanjosj", "khamelion", "khanjali", "komoda", "kosatka", "krieger", "kuruma", "kuruma2", "l35", "landstalker", "landstalker2", "Lazer", "le7b", "lectro", "lguard", "limo2", "lm87", "locust", "longfin", "lurcher", "luxor", "luxor2", "lynx", "mamba", "mammatus", "manana", "manana2", "manchez", "manchez2", "manchez3", "marquis", "marshall", "massacro", "massacro2", "maverick", "menacer", "MESA", "mesa2", "MESA3", "metrotrain", "michelli", "microlight", "Miljet", "minitank", "minivan", "minivan2", "Mixer", "Mixer2", "mogul", "molotok", "monroe", "monster", "monster3", "monster4", "monster5", "monstrociti", "moonbeam", "moonbeam2", "Mower", "Mule", "Mule2", "Mule3", "mule4", "mule5", "nebula", "nemesis", "neo", "neon", "nero", "nero2", "nightblade", "nightshade", "nightshark", "nimbus", "ninef", "ninef2", "nokota", "Novak", "omnis", "omnisegt", "openwheel1", "openwheel2", "oppressor", "oppressor2", "oracle", "oracle2", "osiris", "outlaw", "Packer", "panthere", "panto", "paradise", "paragon", "paragon2", "pariah", "patriot", "patriot2", "patriot3", "patrolboat", "pbus", "pbus2", "pcj", "penetrator", "penumbra", "penumbra2", "peyote", "peyote2", "peyote3", "pfister811", "Phantom", "phantom2", "phantom3", "Phantom4", "Phoenix", "picador", "pigalle", "polgauntlet", "police", "police2", "police3", "police4", "police5", "policeb", "policeold1", "policeold2", "policet", "polmav", "pony", "pony2", "postlude", "Pounder", "pounder2", "powersurge", "prairie", "pRanger", "Predator", "premier", "previon", "primo", "primo2", "proptrailer", "prototipo", "pyro", "r300", "radi", "raiden", "raiju", "raketrailer", "rallytruck", "RancherXL", "rancherxl2", "RapidGT", "RapidGT2", "rapidgt3", "raptor", "ratbike", "ratel", "ratloader", "ratloader2", "rcbandito", "reaper", "Rebel", "rebel2", "rebla", "reever", "regina", "remus", "Rentalbus", "retinue", "retinue2", "revolter", "rhapsody", "rhinehart", "RHINO", "riata", "RIOT", "riot2", "Ripley", "rocoto", "rogue", "romero", "rrocket", "rt3000", "Rubble", "ruffian", "ruiner", "ruiner2", "ruiner3", "ruiner4", "rumpo", "rumpo2", "rumpo3", "ruston", "s80", "s95", "sabregt", "sabregt2", "Sadler", "sadler2", "Sanchez", "sanchez2", "sanctus", "sandking", "sandking2", "savage", "savestra", "sc1", "scarab", "scarab2", "scarab3", "schafter2", "schafter3", "schafter4", "schafter5", "schafter6", "schlagen", "schwarzer", "scorcher", "scramjet", "scrap", "seabreeze", "seashark", "seashark2", "seashark3", "seasparrow", "seasparrow2", "seasparrow3", "Seminole", "seminole2", "sentinel", "sentinel2", "sentinel3", "sentinel4", "serrano", "SEVEN70", "Shamal", "sheava", "SHERIFF", "sheriff2", "shinobi", "shotaro", "skylift", "slamtruck", "slamvan", "slamvan2", "slamvan3", "slamvan4", "slamvan5", "slamvan6", "sm722", "sovereign", "SPECTER", "SPECTER2", "speeder", "speeder2", "speedo", "speedo2", "speedo4", "speedo5", "squaddie", "squalo", "stafford", "stalion", "stalion2", "stanier", "starling", "stinger", "stingergt", "stingertt", "stockade", "stockade3", "stratum", "streamer216", "streiter", "stretch", "strikeforce", "stromberg", "Stryder", "Stunt", "submersible", "submersible2", "Sugoi", "sultan", "sultan2", "sultan3", "sultanrs", "Suntrap", "superd", "supervolito", "supervolito2", "Surano", "SURFER", "Surfer2", "surfer3", "surge", "swift", "swift2", "swinger", "t20", "Taco", "tahoma", "tailgater", "tailgater2", "taipan", "tampa", "tampa2", "tampa3", "tanker", "tanker2", "tankercar", "taxi", "technical", "technical2", "technical3", "tempesta", "tenf", "tenf2", "terbyte", "terminus", "tezeract", "thrax", "thrust", "thruster", "tigon", "TipTruck", "TipTruck2", "titan", "toreador", "torero", "torero2", "tornado", "tornado2", "tornado3", "tornado4", "tornado5", "tornado6", "toro", "toro2", "toros", "TOURBUS", "TOWTRUCK", "Towtruck2", "towtruck3", "towtruck4", "tr2", "tr3", "tr4", "TRACTOR", "tractor2", "tractor3", "trailerlarge", "trailerlogs", "trailers", "trailers2", "trailers3", "trailers4", "trailers5", "trailersmall", "trailersmall2", "Trash", "trash2", "trflat", "tribike", "tribike2", "tribike3", "trophytruck", "trophytruck2", "tropic", "tropic2", "tropos", "tug", "tula", "tulip", "tulip2", "turismo2", "turismo3", "turismor", "tvtrailer", "tvtrailer2", "tyrant", "tyrus", "utillitruck", "utillitruck2", "Utillitruck3", "vacca", "Vader", "vagner", "vagrant", "valkyrie", "valkyrie2", "vamos", "vectre", "velum", "velum2", "verlierer2", "verus", "vestra", "vetir", "veto", "veto2", "vigero", "vigero2", "vigero3", "vigilante", "vindicator", "virgo", "virgo2", "virgo3", "virtue", "viseris", "visione", "vivanite", "volatol", "volatus", "voltic", "voltic2", "voodoo", "voodoo2", "vortex", "vstr", "warrener", "warrener2", "washington", "wastelander", "weevil", "weevil2", "windsor", "windsor2", "winky", "wolfsbane", "xa21", "xls", "xls2", "yosemite", "yosemite2", "yosemite3", "youga", "youga2", "youga3", "youga4", "z190", "zeno", "zentorno", "zhaba", "zion", "zion2", "zion3", "zombiea", "zombieb", "zorrusso", "zr350", "zr380", "zr3802", "zr3803", "Ztype",
+    }
+    GTLP(updateveh, '载具循环轰炸',{},'',function()
+        if NETWORK.NETWORK_IS_PLAYER_ACTIVE(pid) then
+        local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
+        local randomModel = vehicleModels[math.random(1, #vehicleModels)]
+        local modelHash = MISC.GET_HASH_KEY(randomModel)
+        local vehicle = VEHICLE.CREATE_VEHICLE(modelHash, coords.x, coords.y, coords.z + 20, 0.0, true, true, false)
+            ENTITY.SET_ENTITY_ROTATION(vehicle, 0, 0, 0, 2, true)
+        local networkId = NETWORK.VEH_TO_NET(vehicle)
+            if NETWORK.NETWORK_GET_ENTITY_IS_NETWORKED(vehicle) then
+                NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(networkId, true)
+            end
+        if vehicle then
+            ENTITY.SET_ENTITY_VELOCITY(vehicle, 0, 0, -100000000)
+            VEHICLE.SET_ALLOW_VEHICLE_EXPLODES_ON_CONTACT(vehicle, true)
+        end
+        local vehicle2 = VEHICLE.CREATE_VEHICLE(modelHash, coords.x, coords.y, coords.z - 20, 0.0, true, true, false)
+            ENTITY.SET_ENTITY_ROTATION(vehicle2, 0, 0, 0, 2, true)
+        local networkId = NETWORK.VEH_TO_NET(vehicle2)
+            if NETWORK.NETWORK_GET_ENTITY_IS_NETWORKED(vehicle2) then
+                NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(networkId, true)
+            end
+        if vehicle2 then
+            ENTITY.SET_ENTITY_VELOCITY(vehicle2, 0, 0, 100000000)
+            VEHICLE.SET_ALLOW_VEHICLE_EXPLODES_ON_CONTACT(vehicle2, true)
+        end
+        util.toast("汽车轰炸 " .. PLAYER.GET_PLAYER_NAME(pid))
+        set_entity_as_no_longer_needed(vehicle)
+        set_entity_as_no_longer_needed(vehicle2)
+        end
+    end)
+
+    local balls = {
+        "p_ld_soc_ball_01",
+        "p_ld_am_ball_01",
+        "prop_bowling_ball",
+        "prop_beach_volball01",
+        "prop_beach_volball02",
+        "prop_beachball_02",
+        "v_ilev_exball_blue"
+    }    
+    GTLP(updateveh, '神奇的输出', {}, '即使不在车中也可以使用', function()
+        local vehtable = entities.get_all_vehicles_as_handles()
+        for _, vehs in pairs(vehtable) do
+            local selfpos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
+            local ped = VEHICLE.GET_PED_IN_VEHICLE_SEAT(vehs, -1, false)
+            local player = false
+            for playerId = 0, 31 do
+                if PLAYER.GET_PLAYER_PED(playerId) == ped then
+                    player = true
+                end
+            end
+            if ped ~= 0 and player == false then
+                requestControlLoop(vehs)
+                requestControlLoop(ped)
+                TASK.TASK_VEHICLE_DRIVE_TO_COORD(ped, vehs, selfpos.x, selfpos.y, selfpos.z, 70.0, 1, vehs, 16777216, 0.0, 1)
+            else
+            end
+        end
+        local selectedItem = "prop_cs_dildo_01"
+        local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), false)
+        while not STREAMING.HAS_MODEL_LOADED(joaat(selectedItem)) do
+            STREAMING.REQUEST_MODEL(joaat(selectedItem))
+            wait()
+        end
+        OBJECT.CREATE_AMBIENT_PICKUP(738282662, coords.x, coords.y, coords.z + 1.5, 0, 1, joaat(selectedItem), false, true)
+        local randomIndex = math.random(1, #balls)
+        local selectedItem = balls[randomIndex]
+        local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), false)
+        while not STREAMING.HAS_MODEL_LOADED(joaat(selectedItem)) do
+            STREAMING.REQUEST_MODEL(joaat(selectedItem))
+            wait()
+        end
+        OBJECT.CREATE_AMBIENT_PICKUP(738282662, coords.x, coords.y, coords.z + 2, 0, 1, joaat(selectedItem), false, true)
+        if not PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true) then
+            gtoast("玩家不在车里")
+        else
+            veh = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
+            local time = os.time()
+            local request = false
+            while not request do
+                if os.time() - time >= 5 then
+                    gtoast("无法控制车辆")
+                    break
+                end
+                request = requestControlLoop(veh)
+                wait()
+            end
+            gtoast("旋转的车辆")
+            ENTITY.APPLY_FORCE_TO_ENTITY(veh, 5, 0, 0, 150.0, 0, 0, 0, 0, true, false, true, false, true)
+        end
+        player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        coords = ENTITY.GET_ENTITY_COORDS(player, true)
+        FIRE.ADD_OWNED_EXPLOSION(player, coords.x, coords.y, coords.z - 2.0, 24, 1, true, false, 0)
+        player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        coords = ENTITY.GET_ENTITY_COORDS(player, true)
+        FIRE.ADD_OWNED_EXPLOSION(player, coords.x, coords.y, coords.z - 2.0, 11, 1, true, false, 0)
+        player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        coords = ENTITY.GET_ENTITY_COORDS(player, true)
+        FIRE.ADD_OWNED_EXPLOSION(player, coords.x, coords.y, coords.z - 2.0, 13, 1, true, false, 0)
+        player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        coords = ENTITY.GET_ENTITY_COORDS(player, true)
+        FIRE.ADD_OWNED_EXPLOSION(player, coords.x, coords.y, coords.z - 2.0, 1, 100, true, false, 2147483647)
+        player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+        coords = ENTITY.GET_ENTITY_COORDS(player, true)
+        FIRE.ADD_OWNED_EXPLOSION(player, coords.x, coords.y, coords.z - 2.0, 1, 0, true, false, 2147483647)
+    end)
+    --
+    
+    GTLuaScript.list_action(playerOtherTrolling, "附加车辆", {}, "", {"到他的车", "他的车到我的车", "我的车到他的车", "分离"}, function(index, value, click_type)
     local car = PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true)
     if car ~= 0 then
         request_control_of_entity(car)
@@ -28844,9 +29396,9 @@ end)
                 end
                 ENTITY.DETACH_ENTITY(players.user_ped(), false, false)
                 break
+            end
         end
-    end
-end)
+    end)
 
     GTAC(player_veh_teleport, "传送载具到我", {"tpvtome"}, "如果这不起作用，它不是一个bug", function(on_click)
         tpcartome(pid)
@@ -31525,6 +32077,20 @@ GTLP(friendly, "循环称赞", {}, "", function(on_toggle)
     end
 end)
 
+GTLP(friendly, '给钱和经验',{},'对方很可能会掉线.',function(f)
+    for i = 0, 9 do
+        for v = 0, 20 do
+        util.trigger_script_event(1 << pid, {968269233, 0, i, v, v, v})
+    for n = 0, 16 do
+        util.trigger_script_event(1 << pid, {968269233, n, i, v, v, v})
+        end
+    end
+    util.trigger_script_event(1 << pid, {968269233, 1, i, 1, 1, 1})
+    util.trigger_script_event(1 << pid, {968269233, 3, i, 1, 1, 1})
+    util.trigger_script_event(1 << pid, {968269233, 10, i, 1, 1, 1})
+    util.trigger_script_event(1 << pid, {968269233, 0, i, 1, 1, 1})
+    end
+end)
 
 local hugs = GT(friendly, "拥抱玩家", {"hug"}, "注意: 确保他们站着不动")
 

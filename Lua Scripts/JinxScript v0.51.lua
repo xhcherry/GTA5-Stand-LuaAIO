@@ -2,10 +2,10 @@ util.require_natives("3095a", "g")
 pluto_use "0.8.1"
 native_invoker.accept_bools_as_ints(true)
 
+local isDebugMode = false
 local joaat, toast, yield, draw_debug_text, reverse_joaat = util.joaat, util.toast, util.yield, util.draw_debug_text, util.reverse_joaat
 
-local supported_game_version = "1.68-3095"
-
+local supported_game_version <constexpr> = "1.68-3095"
 local CWeaponDamageEventTrigger = memory.rip(memory.scan("E8 ? ? ? ? 44 8B 65 80 41 FF C7") + 1)
 local ppCNetworkObjectMgr__sm_Instance = memory.rip(memory.scan("48 8B 0D ? ? ? ? 45 33 C0 E8 ? ? ? ? 48 8B F8") + 3) -- credit to sapphire
 local allowDuckingAddr = memory.read_long(memory.read_long(memory.rip(memory.scan("01 48 8B 05 ? ? ? ? 48 8B 48 18") + 4)) + 0x18) -- this too lol
@@ -293,7 +293,7 @@ end
 
 local function isPlayerInInterior(playerID)
 	if not isNetPlayerOk(playerID) then return end
-	  return GET_INTERIOR_GROUP_ID(getPlayerCurrentInterior(playerID)) == 0 and getPlayerCurrentInterior(playerID) != 0 and players.is_in_interior(playerID)
+	  return GET_INTERIOR_GROUP_ID(getPlayerCurrentInterior(playerID)) == 0 and getPlayerCurrentInterior(playerID) != 0 or players.is_in_interior(playerID)
 end
 
 local function callVirtualFunction(pObject: int, iPosition: int, ...args) -- credit to sapphire for these 3 functions too 
@@ -320,10 +320,14 @@ function deleteEntityLocally(entity: int): void
 	DELETE_ENTITY(m)
 end
 
+local function isPlayerInCutscene(playerID)
+	return NETWORK_IS_PLAYER_IN_MP_CUTSCENE(playerID) or IS_PLAYER_IN_CUTSCENE(playerID)
+end
+
 local function isPlayerGodmode(playerID)
 	local pos = players.get_position(playerID)
 	local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
-	if isNetPlayerOk(playerID) and (players.is_godmode(playerID) or entities.is_invulnerable(ped)) and not isPlayerInInterior(playerID) and not NETWORK_IS_PLAYER_IN_MP_CUTSCENE(playerID) 
+	if isNetPlayerOk(playerID) and (players.is_godmode(playerID) or entities.is_invulnerable(ped)) and not isPlayerInInterior(playerID) and not isPlayerInCutscene(playerID) 
 	and isFreemodeActive(playerID) and not players.is_using_rc_vehicle(playerID) and not isPlayerRidingRollerCoaster(playerID) and pos.z > 0.0 then
 		return true
 	end
@@ -360,32 +364,23 @@ local function isDetectionPresent(playerID, detection)
 	return false
 end
 
-local function loadWeaponAsset(weaponName)
-	local projectile = joaat(weaponName)
-	while not HAS_WEAPON_ASSET_LOADED(projectile) do
-		REQUEST_WEAPON_ASSET(projectile, 31, 1)
-		yield()
-	end
-	return projectile
-end
-
 local function loadPtfxAsset(assetName)
-	REQUEST_NAMED_PTFX_ASSET(assetName)
-	while not HAS_NAMED_PTFX_ASSET_LOADED(assetName) do
-		yield()
+  while not HAS_NAMED_PTFX_ASSET_LOADED(assetName) do
+	  REQUEST_NAMED_PTFX_ASSET(assetName)
+	  yield()
 	end
 end
 
 local function requestAnimDict(animDict)
-	REQUEST_ANIM_DICT(animDict)
-	while not HAS_ANIM_DICT_LOADED(animDict) do
+  while not HAS_ANIM_DICT_LOADED(animDict) do
+	  REQUEST_ANIM_DICT(animDict)
 		yield()
 	end
 end
 
 local function requestClipset(clipset)
-	REQUEST_CLIP_SET(clipset)
 	while not HAS_CLIP_SET_LOADED(clipset) do
+		REQUEST_CLIP_SET(clipset)
 		yield()
 	end
 end
@@ -403,9 +398,9 @@ local function getTeamID(playerID)
 end
 
 local function getInstanceID(playerID)
+  if not isNetPlayerOk(playerID) then return end 
 	local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
 	local pPed = entities.handle_to_pointer(ped)
-	if not isNetPlayerOk(playerID) then return end 
 	local net_obj = memory.read_long(pPed + 0xD0)
 	if net_obj == 0 then return end
 	local instanceID = memory.read_byte(net_obj + 0x46A)
@@ -840,7 +835,7 @@ players.on_join(player_list)
 players.on_leave(handle_player_list)
 players.dispatch_on_join()
 
-playerHealth = self:slider("血量", {"playearhealth"}, "", 160, 2147483647, 328, 1, function(health)
+playerHealth = self:slider("血量", {"playerhealth"}, "", 160, 2147483647, 328, 1, function(health)
 	SET_PED_MAX_HEALTH(players.user_ped(), health)
 	SET_ENTITY_HEALTH(players.user_ped(), health, players.user_ped(), 0)
 end)  
@@ -1116,9 +1111,8 @@ world:textslider("清除区域", {}, "", {"NPC", "载具", "物体", "拾取物"
                 util.yield()
             end
             break
-        case 5:
-            local coords = players.get_position(players.user())
-            CLEAR_AREA_OF_PROJECTILES(coords, 1000.0, 0)
+						case 5:
+            CLEAR_AREA_OF_PROJECTILES(players.get_position(players.user()), 1000.0, 0)
             counter = "全部"
             break
         case 6:
@@ -1354,7 +1348,7 @@ spoofing:toggle_loop("虚假重装", {"juggernaut"}, "将你的光点变成骷�
 	local minigunHash = joaat("weapon_minigun")
 	local vehicle = GET_VEHICLE_PED_IS_USING(players.user_ped())
 	if not isNetPlayerOk(players.user()) then return end
-	if NETWORK_IS_ACTIVITY_SESSION() or NETWORK_IS_PLAYER_IN_MP_CUTSCENE(players.user()) or isPlayerInInterior(players.user()) then 
+	if NETWORK_IS_ACTIVITY_SESSION() or isPlayerInCutscene(players.user()) or isPlayerInInterior(players.user()) then 
 		memory.write_int(isPlayerUsingBallisticEquipment(players.user()), 0)
 		return 
 	end
@@ -1607,14 +1601,6 @@ end, function()
 	NETWORK_END_TUTORIAL_SESSION()
 end)
 
-lobby:action("野兽全部", {}, "野兽战局全部玩家", function()
-	for players.list_except() as playerID do
-		if not players.is_marked_as_modder(playerID) then
-			util.trigger_script_event(1 << playerID, {1450115979, players.user(), 8192, 267, 1})
-		end
-	end
-end)
-
 local orbital = lobby:list("反天基炮")
 local spoofOrbital = orbital:list("虚假位置")
 local spoofOrbPly = spoofOrbital:list("虚假他人位置")
@@ -1636,7 +1622,7 @@ util.create_tick_handler(function()
 end)
 
 spoofOrbPly:toggle_loop("启用", {}, "", function()
-	local positonSpoofing = menu.ref_by_path("Online>Spoofing>Position Spoofing>Position Spoofing")
+	positonSpoofing = menu.ref_by_path("Online>Spoofing>Position Spoofing>Position Spoofing")
 	local spoofedPos = menu.ref_by_path("Online>Spoofing>Position Spoofing>Spoofed Position")
 	for players.list_except(true) as playerID do
 		local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
@@ -1800,7 +1786,7 @@ drawOrbitalCannon:colour("颜色", {"markercolor"}, "单击以选择一种颜色
 end)
 
 drawOrbitalCannon:toggle_loop("位置", {}, "", function()
-	for players.list_except() as playerID do
+	for players.list_except(true) as playerID do
 		if isPlayerUsingOrbitalCannon(playerID) then
 			local cam = players.get_cam_pos(playerID)
 			local rot, dir =  v3(), v3()
@@ -1876,7 +1862,6 @@ lobby:toggle_loop("锁定所有", {"lockall"}, "锁定所有载具", function()
 		end
 	end
 end)
-
 
 lobby:toggle_loop("干扰导弹", {"annoy"}, "", function()
 	for _, playerID in players.list_except() do
@@ -2045,7 +2030,7 @@ weapons:toggle_loop("自瞄射击", {"aimbotall"}, "", function()
 		if IS_PLAYER_FREE_AIMING_AT_ENTITY(players.user(), ped) and IS_PED_SHOOTING(players.user_ped()) and not IS_ENTITY_A_GHOST(ped) then
 			boneIndex = bones[math.random(#bones)]
 			local boneCoords = GET_PED_BONE_COORDS(ped, boneIndex, 0.0, 0.0, 0.0)
-			util.call_foreign_function(CWeaponDamageEventTrigger, pedPtr, pPed, boneCoords, 0, 1, wpn, dmg, 0, 0, DF_IsAccurate | DF_AllowHeadShot | DF_IgnoreRemoteDistCheck, 0, 0, 0, 0, 0, 0, 0, 0.0)
+			util.call_foreign_function(CWeaponDamageEventTrigger, pedPtr, pPed, boneCoords, 0, 1, wpn, dmg, 0, 0, DF_IsAccurate | DF_AllowHeadShot | DF_IgnoreRemoteDistCheck, 0, 0, 0, 0, 0, 0, 0, v3())
 		end
 	end
 end)
@@ -2072,7 +2057,6 @@ for id, data in weapon_stuff do
 	local bulletProjectile
 	bulletProjectile = changeBulletProjectile:toggle_loop(name, {}, "", function()
 		overrideBulletProjectile = true
-		local weapon = loadWeaponAsset(weaponName)
 		local wpn = GET_SELECTED_PED_WEAPON(players.user_ped())
 		local shotDelay = GET_WEAPON_TIME_BETWEEN_SHOTS(wpn)
 		local inst = v3.new()
@@ -2080,7 +2064,7 @@ for id, data in weapon_stuff do
 			local finalCoords = GET_FINAL_RENDERED_CAM_ROT(2):toDir():mul(1000):add(players.get_cam_pos(players.user()))
 			local wpEnt = GET_CURRENT_PED_WEAPON_ENTITY_INDEX(players.user_ped(), 0)
 			local wpCoords = GET_ENTITY_BONE_POSTION(wpEnt, GET_ENTITY_BONE_INDEX_BY_NAME(wpEnt, "gun_muzzle"))
-			SHOOT_SINGLE_BULLET_BETWEEN_COORDS(wpCoords, finalCoords, 1, true, weapon, players.user_ped(), true, false, 1000.0)
+			SHOOT_SINGLE_BULLET_BETWEEN_COORDS(wpCoords, finalCoords, 1, true, joaat(weaponName), players.user_ped(), true, false, 1000.0)
 			yield(shotDelay * 1000)
 		end
 	end, function()
@@ -2483,20 +2467,21 @@ local time_since_last_move = 0
 util.create_thread(function()
 	while true do
 		if godmode_detection then
-			local timer = util.current_time_millis() + 7500
+			local timer = util.current_time_millis() + 10000
 			for players.list_except(true) as playerID do
 				local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
+        local pos = players.get_position(playerID)
 				local vehicle = GET_VEHICLE_PED_IS_USING(ped)
 				local zoneID = GET_ZONE_AT_COORDS(players.get_position(playerID))
-        local isPlayerMoving = #NETWORK_GET_LAST_VEL_RECEIVED_OVER_NETWORK(GET_PLAYER_PED_SCRIPT_INDEX(playerID)) != 0
+        local isPlayerMoving = #NETWORK_GET_LAST_VEL_RECEIVED_OVER_NETWORK(GET_PLAYER_PED_SCRIPT_INDEX(playerID)) > 1.5
 				if (zoneID == 1321 and (IS_ENTITY_IN_WATER(vehicle) or IS_ENTITY_IN_WATER(ped))) or players.is_using_rc_vehicle(playerID) or not isNetPlayerOk(players.user()) then 
 					continue 
 				end
 				if isPlayerGodmode(playerID) and not isDetectionPresent(playerID, "无敌") then
 					repeat
-						if not isPlayerMoving and time_since_last_move >= 5 or not players.exists(playerID) or not isPlayerGodmode(playerID) or not isFreemodeActive(playerID) then
+						if not isPlayerMoving and time_since_last_move >= 8 or not players.exists(playerID) or not isPlayerGodmode(playerID) or not isFreemodeActive(playerID) or isPlayerInInterior(playerID) or pos.z < 0.0 then
 							time_since_last_move = 0
-							timer = util.current_time_millis() + 7500
+							timer = util.current_time_millis() + 10000
 							break
 						end
 						yield(1000)
@@ -2504,7 +2489,7 @@ util.create_thread(function()
 					until util.current_time_millis() > timer
 					if util.current_time_millis() > timer and players.exists(playerID) and isFreemodeActive(playerID) then
 						players.add_detection(playerID, "无敌", TOAST_ALL, 100)
-						timer = util.current_time_millis() + 7500
+						timer = util.current_time_millis() + 10000
 						break
 					end
 				end    
@@ -2518,8 +2503,14 @@ util.create_thread(function()
 	while true do
 		if godmode_detection then
 			for players.list_except(true) as playerID do
+				local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
+				local vehicle = GET_VEHICLE_PED_IS_IN(ped)
 				if isPlayerGodmode(playerID) and players.is_visible(playerID) then
-					draw_debug_text($"{players.get_name(playerID)} 无敌")
+					if isDebugMode then
+						draw_debug_text($"{players.get_name(playerID)} 无敌 ({IS_ENTITY_A_GHOST(ped)})")
+					else
+						draw_debug_text($"{players.get_name(playerID)} 无敌")
+					end
 				end
 			end
 		end
@@ -2535,8 +2526,42 @@ modder_detections:toggle_loop("检测载具", {}, "检测载具无敌", function
 		local pos = players.get_position(playerID)
 		local vehicle = GET_VEHICLE_PED_IS_USING(ped)
 		local driver = NETWORK_GET_PLAYER_INDEX_FROM_PED(GET_PED_IN_VEHICLE_SEAT(vehicle, -1))
-		if not isPlayerInInterior(playerID) and not GET_ENTITY_CAN_BE_DAMAGED(vehicle) and isNetPlayerOk(playerID) and playerID == driver and pos.z > 0.0 then
+		if not isPlayerInCutscene(playerID) and not isPlayerInInterior(playerID) and entities.is_invulnerable(vehicle) and not NETWORK_IS_PLAYER_FADING(playerID) and IS_ENTITY_VISIBLE(vehicle) and playerID == driver and pos.z > 0.0 then
 			draw_debug_text($"{players.get_name(driver)} 载具无敌")
+		end
+	end 
+end)
+
+local lastMoveShit = {}
+local playerVisibility = {}
+modder_detections:toggle_loop("检测隐形", {}, "", function()
+	if not isNetPlayerOk(players.user()) then return end
+	local timer = util.current_time_millis() + 10000
+	for players.list_except(true) as playerID do
+		lastMoveShit[playerID] = 0
+		local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
+		local pos = players.get_position(playerID)
+		local blipType = GET_BLIP_INFO_ID_TYPE(GET_BLIP_FROM_ENTITY(ped))
+		local vehicle = GET_VEHICLE_PED_IS_IN(ped)
+		local isPlayerMoving = #NETWORK_GET_LAST_VEL_RECEIVED_OVER_NETWORK(ped) > 1.5 or #NETWORK_GET_LAST_VEL_RECEIVED_OVER_NETWORK(vehicle) > 1.5
+		if not players.is_otr(playerID) and blipType == 0 and isNetPlayerOk(playerID, true, true) and not isPlayerInInterior(playerID) and not players.is_visible(playerID) and isPlayerMoving and pos.z > 0.0 then
+			repeat
+				lastMoveShit[playerID] = lastMoveShit[playerID] == nil ? 0 : lastMoveShit[playerID]
+				if not isPlayerMoving and lastMoveShit[playerID] >= 8 or not isNetPlayerOk(playerID, true, true) or players.is_visible(playerID) or not isFreemodeActive(playerID) or isPlayerInInterior(playerID) or isPlayerInCutscene(playerID) or pos.z < 0.0 then
+					lastMoveShit[playerID] = 0
+					timer = util.current_time_millis() + 10000
+					playerVisibility[playerID] = true
+					break
+				end
+				toast($"检测 {players.get_name(playerID)} 隐形")
+				yield(1000)
+				lastMoveShit[playerID] = not isPlayerMoving ? lastMoveShit[playerID] + 1 : 0
+			until util.current_time_millis() > timer
+			if not playerVisibility[playerID] and not isDetectionPresent(playerID, "隐形") then
+				players.add_detection(playerID, "隐形", TOAST_ALL, 100)
+				lastMoveShit[playerID] = 0
+				timer = util.current_time_millis() + 10000
+			end
 		end
 	end 
 end)
@@ -2753,40 +2778,39 @@ local owner = entities.get_owner(playerID)
 end
 
 modder_detections:toggle_loop("检测伤害", {}, "检测Stand本体检测不到的 修改伤害且反检测的菜单", function()
-	local timer = util.current_time_millis() + 5000
-	if NETWORK_IS_ACTIVITY_SESSION() then return end
-	for players.list_except(true) as playerID do
-		local pos = players.get_position(playerID)
-		local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
-		if not isDetectionPresent(playerID, "修改伤害") then
-			if isNetPlayerOk(players.user()) and isNetPlayerOk(playerID, true, true) and not isPlayerInInterior(playerID) and getPlayerJobPoints(playerID) == 0 then
-				if players.get_weapon_damage_modifier(playerID) == 1 then
-					repeat
-						if players.get_weapon_damage_modifier(playerID) != 1 or not players.exists(playerID) then
-							timer = util.current_time_millis() + 5000
-							break
-						end
-						yield()
-					until util.current_time_millis() > timer
-					if util.current_time_millis() > timer then
-						yield(1000)
-						players.add_detection(playerID, "修改伤害", TOAST_ALL, 100)
-						timer = util.current_time_millis() + 5000
-						break
-					end
+local timer = util.current_time_millis() + 5000
+if NETWORK_IS_ACTIVITY_SESSION() then return end
+for players.list_except(true) as playerID do
+	local pos = players.get_position(playerID)
+	local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
+	if isNetPlayerOk(players.user()) and isNetPlayerOk(playerID, true, true) and not isPlayerInInterior(playerID) and getPlayerJobPoints(playerID) == 0 then
+		if players.get_weapon_damage_modifier(playerID) == 1 then
+			repeat
+				if players.get_weapon_damage_modifier(playerID) != 1 or not players.exists(playerID) then
+					timer = util.current_time_millis() + 5000
+					break
 				end
+				yield()
+			until util.current_time_millis() > timer
+			if util.current_time_millis() > timer and not isDetectionPresent(playerID, "修改伤害") then
+				yield(1000)
+				players.add_detection(playerID, "修改伤害", TOAST_ALL, 100)
+				timer = util.current_time_millis() + 5000
+				break
 			end
-		else
-			if players.get_weapon_damage_modifier(playerID) != 1 then
-				for menu.player_root(playerID):getChildren() as cmd do
-					if cmd:getType() == COMMAND_LIST_CUSTOM_SPECIAL_MEANING then
-						cmd:refByRelPath("修改伤害"):trigger() -- pop the detection in the case of a false positive. (occurs when freemode fails to reset their damage multiplier back to 0.71 on spawn)
-					end
+		end
+	end
+	if isDetectionPresent(playerID, "修改伤害") then
+		if players.get_weapon_damage_modifier(playerID) != 1 then
+			for menu.player_root(playerID):getChildren() as cmd do
+				if cmd:getType() == COMMAND_LIST_CUSTOM_SPECIAL_MEANING then
+					cmd:refByRelPath("修改伤害"):trigger() -- pop the detection in the case of a false positive. (occurs when freemode fails to reset their damage multiplier back to 0.71 on spawn)
 				end
 			end
 		end
 	end
-	yield(250)
+end
+yield(250)
 end)
 
 modder_detections:toggle_loop("检测2T", {}, "检测使用2Take1生成的载具并且驾驶", function()
@@ -2808,7 +2832,7 @@ end)
 
 modder_detections:toggle_loop("检测Yim", {}, "检测使用YimMenu 这也将检测到从YimMenu套壳的菜单 比如空灵", function() -- 检查愚蠢的默认主机令牌，因为到底有谁会手动设置成这样的呢？
 	for players.list() as playerID do
-		if tonumber(players.get_host_token(playerID)) == 41 then --嘿，空灵智障们，想要蹭 YimMenus 的战局主机？真是令人惊讶，你们的开发人员竟然无法自己实现这个世界上最简单的功能。
+		if tonumber(players.get_host_token(playerID)) == 41 then
 			if not isDetectionPresent(playerID, "YimMenu") then
 				players.add_detection(playerID, "YimMenu", TOAST_ALL, 100)
 				menu.trigger_commands($"historynote {players.get_name(playerID)} YimMenu")
@@ -2831,7 +2855,7 @@ modder_detections:toggle_loop("检测观看", {}, "检测是否有人正在使�
 			if IS_PED_IN_ANY_VEHICLE(ped) and driver == playerID then -- ignore players driving by quickly
 				return
 			end
-			if cam_dist < 15.0 and pedDistance > 50.0 and not isPlayerSpectating(playerID) and spectateTarget == -1 and not NETWORK_IS_PLAYER_IN_MP_CUTSCENE(playerID) or spectateTarget == players.user()  then
+			if cam_dist < 15.0 and pedDistance > 50.0 and not isPlayerSpectating(playerID) and spectateTarget == -1 and not isPlayerInCutscene(playerID) or spectateTarget == players.user()  then
 				toast($"{players.get_name(playerID)} 作弊看你")
 				break
 			end
@@ -2917,11 +2941,11 @@ end)
 antibeast:toggle_loop("他人", {}, "防止其他玩家变成野兽", function()
 	if GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("am_hunt_the_Beast")) > 0 then
 		local beast = memory.read_int(memory.script_local("am_hunt_the_Beast", 608))
-		local gameState = memory.script_local("am_hunt_the_Beast", 601)
+		local gameState = memory.script_local("am_hunt_the_Beast", 603)
 		local amLauncherHost = NETWORK_GET_HOST_OF_SCRIPT("am_launcher", -1, 0)
 		local huntTheBeastHost = NETWORK_GET_HOST_OF_SCRIPT("am_hunt_the_Beast", -1, 0)
 		local timer = util.current_time_millis() + 5000
-		if beast != players.user() and beast != -1 and memory.read_int(gameState) != 3 then
+		if --[[ beast != players.user() and ]] beast != -1 and memory.read_int(gameState) != 3 then
 			toast($"阻止野兽目标 {players.get_name(beast)} 可能发起于 {players.get_name(amLauncherHost)}")
 			if huntTheBeastHost != players.user() then
 				memory.write_int(gameState, 3)
@@ -3189,7 +3213,9 @@ end, function()
 	if ballObj != nil then
 		entities.delete(ballObj)
 	end
-	SET_ENTITY_ROTATION(players.user_ped(), pedRot, 2)
+	if pedRot != nil then
+		SET_ENTITY_ROTATION(players.user_ped(), pedRot, 2)
+	end
 	CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
 	SET_ENTITY_VISIBLE(players.user_ped(), true)
 	setFov:trigger(cachedFov)
@@ -3262,7 +3288,7 @@ flipsPerSecondSlider = ninjaJump:slider_float("速度", {"flipspeed"}, "", 0, 10
 end)
 
 local direction = 1
-ninjaJumpSlider = ninjaJump:slider("方向", {"flipdirection"}, "", 1, 2, 1, 2, function(value) -- I dont like list select for here
+ninjaJumpSlider = ninjaJump:slider("方向", {"flipdirection"}, "", 1, 2, 1, 2, function(value) -- boo hoo
 	direction = value
 end)
 menu.add_value_replacement(ninjaJumpSlider, 1, "前空翻")
@@ -3510,12 +3536,11 @@ for id, data in weapon_stuff do
 	local name = data[1]
 	local weaponName = data[2]
 	fingerGun:toggle_loop(name, {}, "", function( )
-		local projectile = loadWeaponAsset(weaponName)
 		if memory.read_int(memory.script_global(4521801 + 930)) == 3 then
 			memory.write_int(memory.script_global(4521801 + 935), GET_NETWORK_TIME())
 			local finalCoords = GET_FINAL_RENDERED_CAM_ROT(2):toDir():mul(1000):add(players.get_cam_pos(players.user()))
 			local fingerPos = GET_PED_BONE_COORDS(players.user_ped(), 4089, 0.4, 0.0, -0.15)
-			SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(fingerPos, finalCoords, 1, true, projectile, 0, true, false, 500.0, players.user_ped(), 0)
+			SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(fingerPos, finalCoords, 1, true, joaat(weaponName), 0, true, false, 500.0, players.user_ped(), 0)
 			yield(100)
 		end
 	end, function()
@@ -3525,24 +3550,19 @@ for id, data in weapon_stuff do
 end
 
 local petJinx = funfeatures:list("宠物")
-local jinxPed = {}
 petJinx:toggle("宠物", {}, "Jinx", function(toggled)
 	if toggled then
 		local jinx = joaat("a_c_cat_01")
 		util.request_model(jinx)
 		local pos = players.get_position(players.user())
-		for i = 1, 1 do -- todo: add spawn amount thingy
-			jinxPed[i] = entities.create_ped(28, jinx, pos, 0)
-			entities.set_can_migrate(jinxPed[i], false)
-			SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(jinxPed[i], true)
-			SET_PED_COMPONENT_VARIATION(jinxPed[i], 0, 0, 1, 0)
-			SET_ENTITY_INVINCIBLE(jinxPed[i], true)
-			TASK_FOLLOW_TO_OFFSET_OF_ENTITY(jinxPed[i], players.user_ped(), 0, -0.3, 0, 10.0, -1, 100.0, true)
-		end
+		jinxPed = entities.create_ped(28, jinx, pos, 0)
+		entities.set_can_migrate(jinxPed, false)
+		SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(jinxPed, true)
+		SET_PED_COMPONENT_VARIATION(jinxPed, 0, 0, 1, 0)
+		SET_ENTITY_INVINCIBLE(jinxPed, true)
+		TASK_FOLLOW_TO_OFFSET_OF_ENTITY(jinxPed, players.user_ped(), 0, -0.3, 0, 10.0, -1, 100.0, true)
 	else
-		for jinxPed as jinxPeds do
-			entities.delete(jinxPeds)
-		end
+		entities.delete(jinxPed)
 	end
 end)
 
@@ -3555,7 +3575,6 @@ petJinx:action("寻找", {}, "Jinx", function()
 	end
 end)
 
-local isDebugMode = false
 misc:toggle("调试模式", {"debugmode"}, "启用有关功能为何未按预期工作或调试通知的额外信息", function(toggled)
 	isDebugMode = toggled
 end)
@@ -4329,8 +4348,7 @@ local function player(playerID)
 		if IS_PLAYER_DEAD(playerID) or not isNetPlayerOk(playerID) then 
 			return 
 		end
-		local timer = util.current_time_millis() + 5000
-        local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
+		    local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
 		isOrbActive = true
         setBit(memory.script_global(GlobalplayerBD + 1 + (players.user() * 463) + 424), 0)
 		yield(1000) -- yielding a second because its a bit iffy on high(ish) ping players (150ms+)
@@ -4437,7 +4455,7 @@ local function player(playerID)
 		local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
 		local vehicle = GET_VEHICLE_PED_IS_USING(ped)
 
-		if isPlayerGodmode(playerID) and (not NETWORK_IS_PLAYER_FADING(playerID) and IS_ENTITY_VISIBLE(ped)) and isNetPlayerOk(playerID) and not NETWORK_IS_PLAYER_IN_MP_CUTSCENE(playerID) and not players.is_using_rc_vehicle(playerID) then
+		if isPlayerGodmode(playerID) and (not NETWORK_IS_PLAYER_FADING(playerID) and IS_ENTITY_VISIBLE(ped)) and isNetPlayerOk(playerID) and not isPlayerInCutscene(playerID) and not players.is_using_rc_vehicle(playerID) then
 			toast($"{players.get_name(playerID)} 无敌 :/")
 			gravitate.value = false
 			util.stop_thread()
@@ -4447,7 +4465,6 @@ local function player(playerID)
 	end)
 	
 	griefing:toggle_loop("随机火箭", {}, "会在地图下产生随机信号弹 使火箭朝随机方向发射", function()
-		loadWeaponAsset(joaat("weapon_flaregun"))
 		local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
 		local pos = players.get_position(playerID)
 		local groundPos = players.get_position(playerID)
@@ -4465,21 +4482,20 @@ local function player(playerID)
 		end
 	end)
 	
-	griefing:toggle_loop("自杀火箭", {}, "会让他们的火箭掉头瞄准自己", function()
-		loadWeaponAsset(joaat("weapon_flaregun"))
-		local things = {-0.1, 0.1}
-		local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
-		local pos = players.get_position(playerID)
-		local pos1 = GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, things[math.random(#things)], -14.0, -2.0)
-		local pos2 = GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.0, 0.0, 0.0)
-		if IS_PED_SHOOTING(ped) and IS_PED_ARMED(ped, 2) then
-			SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos1, pos2, 0, true, joaat("weapon_flaregun"), players.user_ped(), true, false, 0.0)
-			yield(2500)
-			CLEAR_AREA_OF_PROJECTILES(pos, 25.0, 0)
-		end
+	menu.toggle_loop(griefing, "自杀火箭", {}, "会让他们的火箭掉头瞄准自己", function()
+			local things = {-0.1, 0.1}
+			local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
+			local pos = players.get_position(playerID)
+			local pos1 = GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, things[math.random(#things)], -15.0, -2.0)
+			local pos2 = GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.0, 0.0, 0.0)
+			if IS_PED_SHOOTING(ped) and IS_PED_ARMED(ped, 2) then
+					SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos1, pos2, 0, true, util.joaat("weapon_flaregun"), players.user_ped(), true, false, 0.0)
+					yield(2500)
+					CLEAR_AREA_OF_PROJECTILES(pos, 25.0, 0)
+			end
 	end)
 
-	griefing:textslider("无限加载", {}, "玩家在接受邀请后将陷入无限加载屏幕", {"游艇", "办公室", "夜总会", "办公室车库", "改装铺", "公寓"}, function(index)
+	griefing:textslider("无限加载", {}, "如果玩家不在选定的室内 那么玩家接受邀请 就会陷入无限加载屏幕", {"游艇", "办公室", "夜总会", "办公室车库", "改装铺", "公寓"}, function(index)
 		util.trigger_script_event(1 << playerID, {996099702, playerID, index})
 	end)
 
@@ -4498,7 +4514,7 @@ local function player(playerID)
 		until IS_ENTITY_VISIBLE(ped)
 	end)
 
-	griefing:action("发送动画", {"intro"}, "发送到在线模式新手动画", function()
+	griefing:action("发送动画", {"dm"}, "发送到在线模式新手动画", function()
 		local int = memory.read_int(memory.script_global(GlobalplayerBD_FM_3 + 1 + (playerID * 609) + 511)) -- Global_1886967[PLAYER::PLAYER_ID() /*609*/].f_511
 		util.trigger_script_event(1 << playerID, {-366707054, players.user(), 20, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, int})
 		util.trigger_script_event(1 << playerID, {1757622014, players.user(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
@@ -4708,7 +4724,7 @@ local function player(playerID)
 		clearBit(memory.script_global(GlobalplayerBD + 1 + (players.user() * 463) + 424), 0)
     end)
 
-	antigodmode:action("压扁杀", {"squish"}, "对部分菜单有效且没开启不可摔倒", function()
+	antigodmode:action("压扁杀", {"ybs"}, "对部分菜单有效且没开启不可摔倒", function()
 		local khanjali = joaat("khanjali")
 		local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
 		local heading =  GET_ENTITY_HEADING(ped)
@@ -4734,7 +4750,7 @@ local function player(playerID)
 		end
 	end) 
 
-	antigodmode:action("地图杀", {"barrierkill"}, "对开启防止地图杀和高延迟的玩家无效", function()
+	antigodmode:action("地图杀", {"dts"}, "对开启防止地图杀和高延迟的玩家无效", function()
 		local windmill = joaat("prop_windmill_01")
 		local ped = GET_PLAYER_PED_SCRIPT_INDEX(playerID)
 		local pos = players.get_position(playerID)                            
@@ -4782,7 +4798,6 @@ local function player(playerID)
 			util.trigger_script_event(1 << playerID, {1450115979, players.user(), missionType, -1})
 		end)
 	end
-
 
 	local interiorTP = tpPlayer:list("室内传送", {}, lang.get_localised(-748077967))
 	for id, interior in interiorTpList do

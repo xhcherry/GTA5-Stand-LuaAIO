@@ -1193,7 +1193,7 @@ local siren_types = {
     },
 }
 
-menu.list_select(options_menu, "警笛类型", {}, "不同的警笛类型有稍微不同的声音", siren_types, 1, function(index, name)
+--[[menu.list_select(options_menu, "警笛类型", {}, "不同的警笛类型有稍微不同的声音", siren_types, 1, function(index, name)
     local siren_type = siren_types[index]
     config.siren_attachment = {
         name=siren_type[1],
@@ -1229,4 +1229,4 @@ end)
 
 util.create_tick_handler(function()
     return true
-end)
+end)]]

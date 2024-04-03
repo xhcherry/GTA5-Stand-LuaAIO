@@ -174,12 +174,16 @@ sxid = {{
 }, {
     playeridx = "NeverDieA"
 }, {
+    playeridx = "zhanjingxuan"
+}, {
+    playeridx = "bbnomoney0721"
+}, {
     playeridx = ""
 },
 }
 
 spid = {{
-    playerid = "cashboylife"
+    playerid = "xybl0206"
 }, {
     playerid = "RhymeBear"
 }, {
@@ -1875,7 +1879,7 @@ spid = {{
 }, {
     playerid = "Lrop994"
 }, {
-    playerid = "liang_6957"
+    playerid = "Mumuu_xi"
 }, {
     playerid = "X-Lxalingyu"
 }, {
@@ -2231,7 +2235,7 @@ spid = {{
 }, {
     playerid = "Agastopia-"
 }, {
-    playerid = "NaiNai19902"
+    playerid = "Nainai19902"
 }, {
     playerid = "fangtang26"
 }, {
@@ -2260,6 +2264,24 @@ spid = {{
     playerid = "DMzwh1996"
 }, {
     playerid = "-collapse"
+}, {
+    playerid = "zhanjingxuan"
+}, {
+    playerid = "bbnomoney0721"
+}, {
+    playerid = "S-passer"
+}, {
+    playerid = "villen520"
+}, {
+    playerid = "Sakurarevice"
+}, {
+    playerid = "91-Mr_Wang"
+}, {
+    playerid = "ChingSung"
+}, {
+    playerid = "Ffhfb87"
+}, {
+    playerid = "Yoko9446"
 }, {
     playerid = ""
 },

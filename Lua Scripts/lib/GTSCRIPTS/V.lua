@@ -100,6 +100,8 @@ APP={
 	["APP_DELETE_APP_DATA"]=--[[BOOL (bool)]] function(--[[string]] appName)native_invoker.begin_call()native_invoker.push_arg_string(appName)native_invoker.end_call_2(0x44151AEA95C8A003)return native_invoker.get_return_value_bool()end,
 }
 AUDIO={
+	["_SET_SIREN_KEEP_ON"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_bool(toggle);native_invoker.end_call("F584CF8529B51434");end,
+	["_TRIGGER_SIREN"]=--[[void]] function(--[[Vehicle (int)]] vehicle)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.end_call("66C3FB05206041BA");end,
 	-- All found occurrences in b617d, sorted alphabetically and identical lines removed: pastebin.com/RFb4GTny
 	-- 
 	-- AUDIO::PLAY_PED_RINGTONE("Remote_Ring", PLAYER::PLAYER_PED_ID(), 1);
@@ -14530,6 +14532,15 @@ TASK={
 	["IS_PED_CUFFED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x74E559B3BC910685)return native_invoker.get_return_value_bool()end,
 }
 VEHICLE={
+	["_DISABLE_VEHICLE_NEON_LIGHTS"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_bool(toggle);native_invoker.end_call("83F813570FF519DE");end,
+	["_SET_DISABLE_SUPERDUMMY_MODE"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_bool(p1);native_invoker.end_call("B088E9A47AE6EDD5");end,
+	["_REQUEST_VEHICLE_DASHBOARD_SCALEFORM_MOVIE"]=--[[void]] function(--[[Vehicle (int)]] vehicle)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.end_call("DBA3C090E3D74690");end,
+	["_IS_VEHICLE_NEON_LIGHT_ENABLED"]=--[[BOOL (bool)]] function(--[[Vehicle (int)]] vehicle,--[[int]] index)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_int(index);native_invoker.end_call("8C4B92553E4766A5");return native_invoker.get_return_value_bool();end,
+	["_SET_VEHICLE_NEON_LIGHT_ENABLED"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[int]] index,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_int(index);native_invoker.push_arg_bool(toggle);native_invoker.end_call("2AA720E4287BF269");end,
+	["_GET_VEHICLE_NEON_LIGHTS_COLOUR"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[int* (pointer)]] r,--[[int* (pointer)]] g,--[[int* (pointer)]] b)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_pointer(r);native_invoker.push_arg_pointer(g);native_invoker.push_arg_pointer(b);native_invoker.end_call("7619EEE8C886757F");end,
+	["_SET_VEHICLE_NEON_LIGHTS_COLOUR"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[int]] r,--[[int]] g,--[[int]] b)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_int(r);native_invoker.push_arg_int(g);native_invoker.push_arg_int(b);native_invoker.end_call("8E0A582209A62695");end,
+	["_GET_VEHICLE_XENON_LIGHTS_COLOR"]=--[[int]] function(--[[Vehicle (int)]] vehicle)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.end_call("3DFF319A831E0CDB");return native_invoker.get_return_value_int();end,
+	["_SET_VEHICLE_XENON_LIGHTS_COLOR"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[int]] colorIndex)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_int(colorIndex);native_invoker.end_call("E41033B25D003A07");end,
 	-- p7 when set to true allows you to spawn vehicles under -100 z.
 	-- Full list of vehicles by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/vehicles.json
 	["CREATE_VEHICLE"]=--[[Vehicle (int)]] function(--[[Hash (int)]] modelHash,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] heading,--[[BOOL (bool)]] isNetwork,--[[BOOL (bool)]] bScriptHostVeh,--[[BOOL (bool)]] p7)native_invoker.begin_call()native_invoker.push_arg_int(modelHash)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(heading)native_invoker.push_arg_bool(isNetwork)native_invoker.push_arg_bool(bScriptHostVeh)native_invoker.push_arg_bool(p7)native_invoker.end_call_2(0xAF35D0D2583051B0)return native_invoker.get_return_value_int()end,
@@ -16545,6 +16556,10 @@ WATER={
 	["RESET_DEEP_OCEAN_SCALER"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5E5E99285AE812DB)end,
 }
 WEAPON={
+	["_GET_WEAPON_TIME_BETWEEN_SHOTS"]=--[[float]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call();native_invoker.push_arg_int(weaponHash);native_invoker.end_call("065D2AACAD8CF7A4");return native_invoker.get_return_value_float();end,
+	["_SET_FLASH_LIGHT_ENABLED"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_bool(toggle);native_invoker.end_call("988DB6FE9B3AC000");end,
+	["_SET_WEAPON_DAMAGE_MODIFIER_THIS_FRAME"]=--[[void]] function(--[[Hash (int)]] weaponHash,--[[float]] damageMultiplier)native_invoker.begin_call();native_invoker.push_arg_int(weaponHash);native_invoker.push_arg_float(damageMultiplier);native_invoker.end_call("4757F00BC6323CFE");end,
+	["_SET_WEAPON_EXPLOSION_RADIUS_MULTIPLIER"]=--[[void]] function(--[[Hash (int)]] weaponHash,--[[float]] multiplier)native_invoker.begin_call();native_invoker.push_arg_int(weaponHash);native_invoker.push_arg_float(multiplier);native_invoker.end_call("4AE5AC8B852D642C");end,
 	-- Enables laser sight on any weapon.
 	-- 
 	-- It doesn't work. Neither on tick nor OnKeyDown
@@ -17242,6 +17257,324 @@ ZONE={
 	-- Hash h = Function.Call<Hash>(Hash.GET_HASH_OF_MAP_AREA_AT_COORDS, player.Position.X, player.Position.Y, player.Position.Z);
 	["GET_HASH_OF_MAP_AREA_AT_COORDS"]=--[[Hash (int)]] function(--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.end_call_2(0x7EE64D51E8498728)return native_invoker.get_return_value_int()end,
 }
+
+PVP_SYSTEM = {
+    ["VDIST2"] = function( --[[float]] x1, --[[float]] y1, --[[float]] z1, --[[float]] x2, --[[float]] y2, --[[float]]
+        z2)
+        native_invoker.begin_call()
+        native_invoker.push_arg_float(x1)
+        native_invoker.push_arg_float(y1)
+        native_invoker.push_arg_float(z1)
+        native_invoker.push_arg_float(x2)
+        native_invoker.push_arg_float(y2)
+        native_invoker.push_arg_float(z2)
+        native_invoker.end_call_2(0xB7A628320EFF8E47)
+        return native_invoker.get_return_value_float()
+    end
+}
+
+POLICECAR_SYSTEM = {
+    ["VDIST2"] = function( --[[float]] x1, --[[float]] y1, --[[float]] z1, --[[float]] x2, --[[float]] y2, --[[float]]
+        z2)
+        native_invoker.begin_call()
+        native_invoker.push_arg_float(x1)
+        native_invoker.push_arg_float(y1)
+        native_invoker.push_arg_float(z1)
+        native_invoker.push_arg_float(x2)
+        native_invoker.push_arg_float(y2)
+        native_invoker.push_arg_float(z2)
+        native_invoker.end_call_2(0xB7A628320EFF8E47)
+        return native_invoker.get_return_value_float()
+    end
+}
+
+GENERIC_SYSTEM = {
+    ["VDIST2"] = function( --[[float]] x1, --[[float]] y1, --[[float]] z1, --[[float]] x2, --[[float]] y2, --[[float]]
+        z2)
+        native_invoker.begin_call()
+        native_invoker.push_arg_float(x1)
+        native_invoker.push_arg_float(y1)
+        native_invoker.push_arg_float(z1)
+        native_invoker.push_arg_float(x2)
+        native_invoker.push_arg_float(y2)
+        native_invoker.push_arg_float(z2)
+        native_invoker.end_call_2(0xB7A628320EFF8E47)
+        return native_invoker.get_return_value_float()
+    end,
+    ["CEIL"] = function(...)
+        return native_invoker.uno_int(0x11E019C8F43ACC8A, ...)
+    end
+}
+
+C_SYSTEM = {
+    ["VDIST2"] = function( --[[float]] x1, --[[float]] y1, --[[float]] z1, --[[float]] x2, --[[float]] y2, --[[float]]
+        z2)
+        native_invoker.begin_call()
+        native_invoker.push_arg_float(x1)
+        native_invoker.push_arg_float(y1)
+        native_invoker.push_arg_float(z1)
+        native_invoker.push_arg_float(x2)
+        native_invoker.push_arg_float(y2)
+        native_invoker.push_arg_float(z2)
+        native_invoker.end_call_2(0xB7A628320EFF8E47)
+        return native_invoker.get_return_value_float()
+    end
+}
+C_HUD = {
+    ["_THEFEED_SET_NEXT_POST_BACKGROUND_COLOR"] = function( --[[int]] hudColorIndex)
+        native_invoker.begin_call();
+        native_invoker.push_arg_int(hudColorIndex);
+        native_invoker.end_call("92F0DA1E27DB96DC");
+    end
+}
+C_CCHUD = {
+    ["GET_WARNING_SCREEN_MESSAGE_HASH"] = function()
+        native_invoker.begin_call()
+        native_invoker.end_call_2(0x81DF9ABA6C83DFF9)
+        return native_invoker.get_return_value_int()
+    end
+}
+CC_GRAPHICS = {
+    ["START_PARTICLE_FX_NON_LOOPED_ON_ENTITY_BONE"] = function( --[[string]] effectName, --[[Entity (int)]] entity,
+        offsetX, offsetY, offsetZ, rotX, rotY, rotZ, boneIndex, scale, axisX, axisY, axisZ)
+        native_invoker.begin_call()
+        native_invoker.push_arg_string(effectName)
+        native_invoker.push_arg_int(entity)
+        native_invoker.push_arg_float(offsetX)
+        native_invoker.push_arg_float(offsetY)
+        native_invoker.push_arg_float(offsetZ)
+        native_invoker.push_arg_float(rotX)
+        native_invoker.push_arg_float(rotY)
+        native_invoker.push_arg_float(rotZ)
+        native_invoker.push_arg_int(boneIndex)
+        native_invoker.push_arg_float(scale)
+        native_invoker.push_arg_bool(axisX)
+        native_invoker.push_arg_bool(axisY)
+        native_invoker.push_arg_bool(axisZ)
+        native_invoker.end_call_2(0x02B1F2A72E0F5325)
+        return native_invoker.get_return_value_bool()
+    end
+}
+CC_PAD = {
+    ["GET_CONTROL_GROUP_INSTRUCTIONAL_BUTTONS_STRING"] = function( --[[int]] padIndex, --[[int]] controlGroup, --[[BOOL (bool)]]
+        p2)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(padIndex)
+        native_invoker.push_arg_int(controlGroup)
+        native_invoker.push_arg_bool(p2)
+        native_invoker.end_call_2(0x80C2FD58D720C801)
+        return native_invoker.get_return_value_string()
+    end
+}
+CCCC_HUD = {
+    ["_HUD_WEAPON_WHEEL_GET_SELECTED_HASH"] = function()
+        native_invoker.begin_call();
+        native_invoker.end_call("A48931185F0536FE");
+        return native_invoker.get_return_value_int();
+    end
+}
+C_VEHICLE = {
+    ["SET_VEHICLE_NEON_ENABLED"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] index, --[[BOOL (bool)]]
+        toggle)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(index)
+        native_invoker.push_arg_bool(toggle)
+        native_invoker.end_call_2(0x2AA720E4287BF269)
+    end,
+    ["SET_VEHICLE_NEON_COLOUR"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] r, --[[int]] g, --[[int]]
+        b)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(r)
+        native_invoker.push_arg_int(g)
+        native_invoker.push_arg_int(b)
+        native_invoker.end_call_2(0x8E0A582209A62695)
+    end,
+    ["SET_VEHICLE_CUSTOM_PRIMARY_COLOUR"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] r, --[[int]] g, --[[int]]
+        b)
+        native_invoker.begin_call();
+        native_invoker.push_arg_int(vehicle);
+        native_invoker.push_arg_int(r);
+        native_invoker.push_arg_int(g);
+        native_invoker.push_arg_int(b);
+        native_invoker.end_call("7141766F91D15BEA");
+    end,
+    ["SET_VEHICLE_CUSTOM_SECONDARY_COLOUR"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] r, --[[int]]
+        g, --[[int]] b)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(r)
+        native_invoker.push_arg_int(g)
+        native_invoker.push_arg_int(b)
+        native_invoker.end_call_2(0x36CED73BFED89754)
+    end,
+    ["TOGGLE_VEHICLE_MOD"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] modType, --[[BOOL (bool)]]
+        toggle)
+        native_invoker.begin_call();
+        native_invoker.push_arg_int(vehicle);
+        native_invoker.push_arg_int(modType);
+        native_invoker.push_arg_bool(toggle);
+        native_invoker.end_call("2A1F4F37F95BAD08");
+    end,
+    ["SET_VEHICLE_NEON_INDEX_COLOUR"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] index)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(index)
+        native_invoker.end_call_2(0xB93B2867F7B479D1)
+    end,
+    ["SET_VEHICLE_COLOURS"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] colorPrimary, --[[int]]
+        colorSecondary)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(colorPrimary)
+        native_invoker.push_arg_int(colorSecondary)
+        native_invoker.end_call_2(0x4F1D4BE3A7F24601)
+    end,
+    ["SET_VEHICLE_EXTRA_COLOURS"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] pearlescentColor, --[[int]]
+        wheelColor)
+        native_invoker.begin_call();
+        native_invoker.push_arg_int(vehicle);
+        native_invoker.push_arg_int(pearlescentColor);
+        native_invoker.push_arg_int(wheelColor);
+        native_invoker.end_call("2036F561ADD12E33");
+    end,
+    ["SET_VEHICLE_EXTRA_COLOUR_5"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] color)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(color)
+        native_invoker.end_call_2(0xF40DD601A65F7F19)
+    end,
+    ["SET_VEHICLE_XENON_LIGHT_COLOR_INDEX"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] colorIndex)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(colorIndex)
+        native_invoker.end_call_2(0xE41033B25D003A07)
+    end
+}
+C_C_VEHICLE = {
+    ["_SET_VEHICLE_INTERIOR_COLOR"] = function(as, js)
+        a()
+        d(as)
+        d(js)
+        b("F40DD601A65F7F19")
+    end,
+    ["SET_VEHICLE_NEON_COLOUR"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] r, --[[int]] g, --[[int]]
+        b)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(r)
+        native_invoker.push_arg_int(g)
+        native_invoker.push_arg_int(b)
+        native_invoker.end_call_2(0x8E0A582209A62695)
+    end,
+    ["SET_VEHICLE_NEON_ENABLED"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] index, --[[BOOL (bool)]]
+        toggle)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(index)
+        native_invoker.push_arg_bool(toggle)
+        native_invoker.end_call_2(0x2AA720E4287BF269)
+    end,
+    ["SET_VEHICLE_CUSTOM_PRIMARY_COLOUR"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] r, --[[int]] g, --[[int]]
+        b)
+        native_invoker.begin_call();
+        native_invoker.push_arg_int(vehicle);
+        native_invoker.push_arg_int(r);
+        native_invoker.push_arg_int(g);
+        native_invoker.push_arg_int(b);
+        native_invoker.end_call("7141766F91D15BEA");
+    end,
+    ["SET_VEHICLE_CUSTOM_SECONDARY_COLOUR"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] r, --[[int]]
+        g, --[[int]] b)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(r)
+        native_invoker.push_arg_int(g)
+        native_invoker.push_arg_int(b)
+        native_invoker.end_call_2(0x36CED73BFED89754)
+    end,
+    ["TOGGLE_VEHICLE_MOD"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] modType, --[[BOOL (bool)]]
+        toggle)
+        native_invoker.begin_call();
+        native_invoker.push_arg_int(vehicle);
+        native_invoker.push_arg_int(modType);
+        native_invoker.push_arg_bool(toggle);
+        native_invoker.end_call("2A1F4F37F95BAD08");
+    end,
+    ["SET_VEHICLE_NEON_INDEX_COLOUR"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] index)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(index)
+        native_invoker.end_call_2(0xB93B2867F7B479D1)
+    end,
+    ["SET_VEHICLE_COLOURS"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] colorPrimary, --[[int]]
+        colorSecondary)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(colorPrimary)
+        native_invoker.push_arg_int(colorSecondary)
+        native_invoker.end_call_2(0x4F1D4BE3A7F24601)
+    end,
+    ["SET_VEHICLE_EXTRA_COLOURS"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] pearlescentColor, --[[int]]
+        wheelColor)
+        native_invoker.begin_call();
+        native_invoker.push_arg_int(vehicle);
+        native_invoker.push_arg_int(pearlescentColor);
+        native_invoker.push_arg_int(wheelColor);
+        native_invoker.end_call("2036F561ADD12E33");
+    end,
+    ["SET_VEHICLE_EXTRA_COLOUR_5"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] color)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(color)
+        native_invoker.end_call_2(0xF40DD601A65F7F19)
+    end,
+    ["SET_VEHICLE_XENON_LIGHT_COLOR_INDEX"] = --[[void]] function( --[[Vehicle (int)]] vehicle, --[[int]] colorIndex)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(vehicle)
+        native_invoker.push_arg_int(colorIndex)
+        native_invoker.end_call_2(0xE41033B25D003A07)
+    end
+}
+GENERIC_HUD = {
+    ["GET_CLOSEST_BLIP_INFO_ID"] = --[[Blip (int)]] function( --[[int]] blipSprite)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(blipSprite)
+        native_invoker.end_call_2(0xD484BF71050CA1EE)
+        return native_invoker.get_return_value_int()
+    end,
+    ["DOES_BLIP_EXIST"] = --[[BOOL (bool)]] function( --[[Blip (int)]] blip)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(blip)
+        native_invoker.end_call_2(0xA6DB27D19ECBB7DA)
+        return native_invoker.get_return_value_bool()
+    end,
+    ["GET_BLIP_COORDS"] = --[[Vector3 (vector3)]] function( --[[Blip (int)]] blip)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(blip)
+        native_invoker.end_call_2(0x586AFE3FF72D996E)
+        return native_invoker.get_return_value_vector3()
+    end,
+    ["GET_NEXT_BLIP_INFO_ID"] = --[[Blip (int)]] function( --[[int]] blipSprite)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(blipSprite)
+        native_invoker.end_call_2(0x14F96AA50D6FBEA7)
+        return native_invoker.get_return_value_int()
+    end
+}
+GENERIC_AUDIO = {
+    ["DOES_CONTEXT_EXIST_FOR_THIS_PED"] = --[[BOOL (bool)]] function( --[[Ped (int)]] ped, --[[string]] speechName, --[[BOOL (bool)]]
+        unk)
+        native_invoker.begin_call()
+        native_invoker.push_arg_int(ped)
+        native_invoker.push_arg_string(speechName)
+        native_invoker.push_arg_bool(unk)
+        native_invoker.end_call_2(0x49B99BF3FDA89A7A)
+        return native_invoker.get_return_value_bool()
+    end
+}
+-- 
 
 function inputC(windowName, maxInput, defaultText)
     MISC.DISPLAY_ONSCREEN_KEYBOARD(0, windowName, "", defaultText, "", "", "", maxInput);
