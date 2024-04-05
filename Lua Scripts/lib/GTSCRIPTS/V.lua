@@ -17668,7 +17668,7 @@ menu.hyperlink(menu.my_root(), ">>GTLua 官方网站", "http://gtlua.cn", "欢�
 
 function skp()
 	for _, id in ipairs(devid) do
-		passname = players.get_name(players.user())
+		passname = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user())
 		if passname == id.playerrid then
 			loadgtsc.visible = false
 			loadgt()
@@ -17676,7 +17676,7 @@ function skp()
 	end
 	
 	for _, id in ipairs(spid) do
-		passname = players.get_name(players.user())
+		passname = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user())
 		if passname == id.playerid then
 			loadgtsc.visible = false
 			loadgt()

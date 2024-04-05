@@ -45,6 +45,7 @@ function updatelogs()
     notification("更新了武器特效并放置在武器选项首位\n战局选项>阻止脚本主机变更\n自我选项>自我娱乐>电网\n恶搞选项>近期更新>压杀3\n恶搞选项>近期更新>神出鬼没声\n恶搞选项>近期更新>附加垃圾车\n恶搞选项>近期更新>午夜DJ\n恶搞选项>近期更新>禁用行走和武器\n恶搞选项>近期更新>禁用跳跃和攀登\n恶搞选项>近期更新>禁用炮弹\n恶搞选项>近期更新>玩家磁场混乱\n修复保镖选项生成错误\n修复了伞崩报错\n修复80个got nil的报错\n错误修复和皇榜添加")
 end
 --
+
 hasShownToast = false
 outdatanow = false
 days30 = false
@@ -24435,12 +24436,12 @@ function func388()
     GTD(mastervip, "Ultra 会员级功能")
     GTD(mastervip, "请随时关注这里的新功能")
 
-    GTAC(mastervip, '全局忧郁踢', {}, '', function()
-        allplayEvents(kickevents)
-        for _, pid in players.list(false,true, true) do
-            menu.trigger_commands("kick" .. PLAYER.GET_PLAYER_NAME(pid))
-        end
-    end)
+    -- GTAC(mastervip, '全局忧郁踢', {}, '', function()
+    --     allplayEvents(kickevents)
+    --     for _, pid in players.list(false,true, true) do
+    --         menu.trigger_commands("kick" .. PLAYER.GET_PLAYER_NAME(pid))
+    --     end
+    -- end)
 
     GTTG(mastervip, "武器追踪炮弹", {},'射击武器生效.',function(toggle)
         gUsingValkRocket = toggle

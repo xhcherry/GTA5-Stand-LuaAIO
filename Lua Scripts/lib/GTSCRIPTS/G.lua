@@ -131,13 +131,17 @@ GTAC(menu.my_root(), ">>重新启动GTLua", {}, "", function () restartscript() 
 
 Web_Http = GTH(G, ">>GTLua 官方网站", "http://gtlua.cn", "欢迎前来访问GTLua官方网站\n您需要了解的一切内容都在这里")
 
-for _, idx in ipairs(sxid) do
-    local mvip = players.get_name(players.user())
-    if mvip == idx.playeridx then
-        mastervip = GT(G, ">>Ultra级会员功能")
-        func388()
-    end
-end
+mastervip = GT(G, ">>Ultra级会员功能")
+func388()
+
+
+-- for _, idx in ipairs(sxid) do
+--     local mvip = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user())
+--     if mvip == idx.playeridx then
+--         mastervip = GT(G, ">>Ultra级会员功能")
+--         func388()
+--     end
+-- end
 
 enable_options = GTTG(G, ">>快捷入口", {}, "", function (on) 
     Quick_Enable(on) 
@@ -294,7 +298,7 @@ hb_off = GTTG(other_options, "关闭自我皇榜横幅", {}, "可点击F8保存,
 end)
 menu.set_value(hb_off, hboff)
 
-local name = PLAYER.GET_PLAYER_NAME(players.user())
+--local name = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user())
 show_hb_off = false
 for _, id in ipairs(spid) do
     if name == id.playerid then
@@ -443,6 +447,12 @@ notified_sp = {}
 spo = GTTG(players_root, "SPO", {""}, "", function(f)
     spgt = f
     while spgt do
+        wait()
+
+        if players.get_name(players.user()) ~= SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user()) then
+            notified_sp[players.get_name(players.user())] = true
+        end
+
         for pid = 0, 32 do
             playerid = players.get_name(pid)
 
@@ -514,36 +524,45 @@ notified_sx = {}
 sxo = GTTG(players_root, "SXO", {""}, "", function(f)
     spgt = f
     while spgt do
+        wait()
+
+        if players.get_name(players.user()) ~= SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user()) then
+            notified_sx[players.get_name(players.user())] = true
+        end
+
         for pid = 0, 32 do
             playeridx = players.get_name(pid)
             for _, id in ipairs(sxid) do
                 if playeridx == id.playeridx and not notified_sx[id.playeridx] then
                     if pid then
                         if off_hb ~= true then
-                            util.show_corner_help("~h~~q~GRANDTOURINGVIP\n~y~至臻皇榜\n".. playeridx .."\n~y~当前正在该战局")
-                            gtoast("GTVIP至臻皇榜 ".. playeridx .." 当前正在该战局")
+                            util.show_corner_help("~h~~q~GRANDTOURINGVIP\n~y~至臻皇榜\n" .. playeridx ..
+                                                      "\n~y~当前正在该战局")
+                            gtoast("GTVIP至臻皇榜 " .. playeridx .. " 当前正在该战局")
                             mastergt(f, playeridx)
                             wait(1000)
                             notified_sx[id.playeridx] = true
                         elseif off_hb == true then
                             if pid ~= players.user() then
-                                util.show_corner_help("~h~~q~GRANDTOURINGVIP\n~y~至臻皇榜\n".. playeridx .."\n~y~当前正在该战局")
-                                gtoast("GTVIP至臻皇榜 ".. playeridx .." 当前正在该战局")
+                                util.show_corner_help("~h~~q~GRANDTOURINGVIP\n~y~至臻皇榜\n" .. playeridx ..
+                                                          "\n~y~当前正在该战局")
+                                gtoast("GTVIP至臻皇榜 " .. playeridx .. " 当前正在该战局")
                                 mastergt(f, playeridx)
                                 wait(1000)
                                 notified_sx[id.playeridx] = true
                             end
                         end
-
                     end
                 end
             end
         end
         wait(1000)
+
     end
 end)
 sxo.value = true
 sxo.visible = false
+
 
 resetsx = GTTG(players_root, "RESETSX", {}, "", function (f)
     if f then

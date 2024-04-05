@@ -182,6 +182,14 @@ sxid = {{
 }, {
     playeridx = "XIZANGBALUO"
 }, {
+    playeridx = "OMGDFKUMOM"
+}, {
+    playeridx = "Aixle12"
+}, {
+    playeridx = "rong_3"
+}, {
+    playeridx = "StoryHope"
+}, {
     playeridx = ""
 },
 }
@@ -2308,6 +2316,20 @@ spid = {{
     playerid = "Cowboy7w7"
 }, {
     playerid = "Eccenttic-"
+}, {
+    playerid = "rong_3"
+}, {
+    playerid = "Aixle12"
+}, {
+    playerid = "DarkNightSonata"
+}, {
+    playerid = "xinyangbaby"
+}, {
+    playerid = "JackeyLove1134"
+}, {
+    playerid = "xiaobai-0714"
+}, {
+    playerid = "Aimee-Ellis"
 }, {
     playerid = ""
 },
