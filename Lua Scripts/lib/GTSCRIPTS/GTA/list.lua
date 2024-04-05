@@ -178,6 +178,10 @@ sxid = {{
 }, {
     playeridx = "bbnomoney0721"
 }, {
+    playeridx = "wl0214ok"
+}, {
+    playeridx = "XIZANGBALUO"
+}, {
     playeridx = ""
 },
 }
@@ -875,7 +879,7 @@ spid = {{
 }, {
     playerid = "GuBeiAI"
 }, {
-    playerid = "gesegdg"
+    playerid = "GESEGDG"
 }, {
     playerid = "wWHDZWw"
 }, {
@@ -2282,6 +2286,28 @@ spid = {{
     playerid = "Ffhfb87"
 }, {
     playerid = "Yoko9446"
+}, {
+    playerid = "wshkaaaa"
+}, {
+    playerid = "Chinan-Weii"
+}, {
+    playerid = "559866k"
+}, {
+    playerid = "liangce16"
+}, {
+    playerid = "XXS_AWS789"
+}, {
+    playerid = "LING-XU"
+}, {
+    playerid = "A2079751752"
+}, {
+    playerid = "Amaya-Hell"
+}, {
+    playerid = "OMGDFKUMOM"
+}, {
+    playerid = "Cowboy7w7"
+}, {
+    playerid = "Eccenttic-"
 }, {
     playerid = ""
 },

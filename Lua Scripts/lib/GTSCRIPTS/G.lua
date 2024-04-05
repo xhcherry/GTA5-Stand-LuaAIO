@@ -1454,6 +1454,88 @@ end)
 --
 --require "lib.GTSCRIPTS.GTA.wd3"
 --
+
+HitEffect = {colorCanChange = false}
+HitEffect.__index = HitEffect
+setmetatable(HitEffect, Effect)
+
+function HitEffect.new(asset, name, colorCanChange)
+	local inst = setmetatable({}, HitEffect)
+	inst.name = name
+	inst.asset = asset
+	inst.colorCanChange = colorCanChange or false
+	return inst
+end
+hitEffects = {
+	HitEffect.new("scr_rcbarry2", "scr_exp_clown"),
+	HitEffect.new("scr_rcbarry2", "scr_clown_appears"),
+	HitEffect.new("scr_rcpaparazzo1", "scr_mich4_firework_trailburst_spawn", true),
+	HitEffect.new("scr_indep_fireworks", "scr_indep_firework_starburst", true),
+	HitEffect.new("scr_indep_fireworks", "scr_indep_firework_fountain", true),
+	HitEffect.new("scr_rcbarry1", "scr_alien_disintegrate"),
+	HitEffect.new("scr_rcbarry2", "scr_clown_bul"),
+	HitEffect.new("proj_indep_firework", "scr_indep_firework_grd_burst"),
+	HitEffect.new("scr_rcbarry2", "muz_clown"),
+}
+options = {
+	{"猛女子弹"},
+	{"小丑出现"},
+	{"开拓者"},
+	{"星爆"},
+	{"喷泉"},
+	{"外星解体"},
+	{"小丑花"},
+	{"地面冲击波"},
+	{"小丑木兹"},
+    {"毒气"},
+    {"旋风子弹"},
+    {"战火子弹"},
+    {"烟雾子弹"},
+    {"星星子弹"},
+    {"电光子弹"}
+}
+
+effectColour = {r = 0.5, g = 0.0, b = 0.5, a = 1.0}
+selectedOpt = 1
+name =  "彩虹模式"
+helpText = "仅适用于部分特效"
+SetEffectColour = function(colour) effectColour = colour end
+
+WPTFX = weapon_options:list("武器特效", {}, "")
+GTLP(WPTFX, "特效武器开启",{}, '',function()
+	local effect = hitEffects[selectedOpt]
+	if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(effect.asset) then
+		return STREAMING.REQUEST_NAMED_PTFX_ASSET(effect.asset)
+	end
+
+	local hitCoords = v3.new()
+	if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), hitCoords) then
+		local raycastResult = get_raycast_result(1000.0)
+		local rot = raycastResult.surfaceNormal:toRot()
+		GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
+
+		if effect.colorCanChange then
+			local colour = effectColour
+			GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour.r, colour.g, colour.b)
+		end
+		GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
+			effect.name,
+			hitCoords.x, hitCoords.y, hitCoords.z,
+			rot.x - 90.0, rot.y, rot.z,
+			1.0, 
+			false, false, false, false
+		)
+	end
+end)
+
+WPTFX:list_select("设置特效", {}, "", options, 1, function (opt)
+	selectedOpt = opt
+end)
+
+menuColour =
+menu.colour(WPTFX, name, {"effectcolour"}, helpText, effectColour, false, SetEffectColour)
+menu.rainbow(menuColour)
+--
 newweapon = GT(weapon_options, "新枪械玩法")
 
 GTTG(newweapon,'武器准度',{},'子弹射击不会抖动,而达到百分百精准射击点位.',function(on)
@@ -2055,7 +2137,7 @@ end)
 
 phone = GT(helperingame,"手机选项",{},"")
 zhanju_qiehuan = {"第一", "第二", "第三", "第四", "第五"}
-GTLuaScript.slider_text(phone, "手机类型", {}, "", zhanju_qiehuan, function(a, b, c)
+GTLuaScript.textslider(phone, "手机类型", {}, "", zhanju_qiehuan, function(a, b, c)
 switch a do
 case 1:
 MOBILE.CREATE_MOBILE_PHONE(0)
@@ -2519,6 +2601,7 @@ GTLP(aimkrma, "爆炸", {}, "", function()
 end)
 
 newfunc = GT(funfeatures_self, "新型娱乐")
+lightning = GT(funfeatures_self, "电网")
 Xbone = GT(funfeatures_self, "坤弹")
 rppms=GT(funfeatures_self, "软趴趴疾跑", {}, "")
 sessionfun = GT(funfeatures_self, "战局玩乐", {}, "我们将大部分娱乐功能分类此列表中,如果您想寻找更多玩乐,请点击进入~", function(); end)
@@ -2545,6 +2628,49 @@ function paoku1()
     PED.SET_PED_TO_RAGDOLL(players.user_ped(), 6, 20, 20, true, true, true);
     MISC.SET_GRAVITY_LEVEL(2.5);
 end
+
+GridNumber = 1
+GridSize = 100
+GridIntensity = 100
+Gridr = 255
+Gridg = 255
+Gridb = 255
+GTTG(lightning, '电网',{},'',function(YY31)
+y31 = YY31
+    while y31 do
+        GRAPHICS.TERRAINGRID_ACTIVATE(true)
+        GRAPHICS.TERRAINGRID_SET_PARAMS(players.get_position(players.user()).x,players.get_position(players.user()).y,players.get_position(players.user()).z, 0.0, GridNumber, 0.0, GridSize, GridSize, 0.0, GridSize, GridIntensity, 0.0, 0.0)
+        GRAPHICS.TERRAINGRID_SET_COLOURS(Gridr, Gridg, Gridb, Gridr, Gridg, Gridb, Gridr, Gridg, Gridb, Gridr, Gridg, Gridb,255)
+        wait()
+    end
+    if not y31 then
+        GRAPHICS.TERRAINGRID_ACTIVATE(false)
+    end
+end)
+
+lightning:slider('电网粗细', {}, 'lightningline', 1, 1000, 1, 1, function(change)
+    GridNumber = change
+end)
+
+lightning:slider('电网大小', {}, 'lightningsize', 0, 30000, 100, 1, function(changes)
+    GridSize = changes
+end)
+
+lightning:slider('电网强度', {}, 'lightningpower', 0, 1000, 100, 1, function(changess)
+    GridIntensity = changess
+end)
+
+lightning:slider('红色数值', {}, '',0, 255, 255, 10, function(gvalr)
+    Gridr = valr
+end)
+
+lightning:slider('绿色数值', {}, '',0, 255, 255, 10, function(gvalg)
+    Gridg = gvalg
+end)
+
+lightning:slider('蓝色数值', {}, '',0, 255, 255, 10, function(gvalb)
+    Gridb = gvalb
+end)
 
 -- 新型娱乐
 
@@ -3676,7 +3802,7 @@ GTAC(funfeatures_self, "清除小叮当", {}, "", function()
     end
 end)
 
-GTLuaScript.slider_text(funfeatures_self, "获取鸡巴", {}, "请选择你的鸡巴", opt_pp,
+GTLuaScript.textslider(funfeatures_self, "获取鸡巴", {}, "请选择你的鸡巴", opt_pp,
     function(index, value, click_type)
         getbigjb(index, value, click_type)
     end)
@@ -3719,7 +3845,7 @@ GTTG(funfeatures_self, "强奸妓女", {}, "", function(f)
 end)
 
 chuansong = {"向前传送", "向后传送", "向左传送", "向右传送", "向上传送", "向下传送"}
-GTLuaScript.slider_text(funfeatures_self, "快捷传送", {}, "", chuansong, function(a, b, c)
+GTLuaScript.textslider(funfeatures_self, "快捷传送", {}, "", chuansong, function(a, b, c)
 switch a do
 case 1:
 local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 5, 0)
@@ -4272,7 +4398,7 @@ GTTG(appearance, "隐藏开启", {"disguise"}, "", function(state)
     end
 end)
 
-disguise_object_slider = GTLuaScript.slider_text(
+disguise_object_slider = GTLuaScript.textslider(
     appearance, "隐藏选择", {"disguiseobject"}, "", disguise_names, function()end
 )
 --
@@ -4884,7 +5010,7 @@ GTLuaScript.click_slider(collectibles, "拉机能量高空跳伞", {""}, "", 0, 
 end)
 
 zhanju_qiehuan = {"公开单人", "非公开邀请", "单人", "公开战局", "新的公开战局", "退回线下"}
-GTLuaScript.slider_text(helperingame, "战局切换", {}, "", zhanju_qiehuan, function(a, b, c)
+GTLuaScript.textslider(helperingame, "战局切换", {}, "", zhanju_qiehuan, function(a, b, c)
 switch a do
 case 1:
 GTLuaScript.trigger_commands("go solopublic")
@@ -7043,7 +7169,7 @@ GTLP(sessionfun, "力场", {"sforcefield"}, "", function()
     end
 end)
 
-s_forcefield_direction_slider = GTLuaScript.slider_text(
+s_forcefield_direction_slider = GTLuaScript.textslider(
     sessionfun, "力场方向", {"sforcefieldirection"}, "", s_forcefield_names, function()end
 )
 util.create_tick_handler(function()
@@ -8850,19 +8976,19 @@ GTLP(aimkarma, '发送脚本事件崩溃', {''}, '崩溃瞄准您的玩家', fun
     sendscriptcrash()
 end)
 
-GTLP(aimkarma, '无差别崩', {''}, '如果您被瞄准将崩溃全局玩家', function()
+--[[GTLP(aimkarma, '无差别崩', {''}, '如果您被瞄准将崩溃全局玩家', function()
     sendallplayercrash()
-end)
+end)]]
 
-GTLP(aimkarma, '射击', {'JSbulletAimKarma'}, '射击瞄准您的玩家', function()
+GTLP(aimkarma, '射击', {''}, '射击瞄准您的玩家', function()
     bulletaimkarma()
 end)
 
-GTLP(aimkarma, '爆炸', {'JSexpAimKarma'}, '爆炸瞄准您的玩家', function()
+GTLP(aimkarma, '爆炸', {''}, '爆炸瞄准您的玩家', function()
     expaimkarma()
 end)
 
-GTLP(aimkarma, '禁用无敌', {'JSgodAimKarma'}, '如果有人瞄准您将强制他们的游戏画面来禁用他们的无敌模式(对大部分菜单无效)', function()
+GTLP(aimkarma, '禁用无敌', {''}, '如果有人瞄准您将强制他们的游戏画面来禁用他们的无敌模式(对大部分菜单无效)', function()
     godaimkarma()
 end)
 
@@ -11414,7 +11540,7 @@ end, function()
 end)
 
 
-GTLuaScript.slider_text(sessionfun, "力场", {}, "", options_force, function(index)
+GTLuaScript.textslider(sessionfun, "力场", {}, "", options_force, function(index)
 	forcefield_set(index)
 end)
 
@@ -11809,7 +11935,7 @@ local vehicleGun <const> = GT(weapon_options,"车辆枪", {}, "")
 finger_thing = GT(weapon_options, "手指枪", {}, "")
 fingergun()
 entityManipulation = GT(weapon_options, "实体操纵枪", {"emanipulation"}, "对玩家无效")
-Gun_Effect_Shooting_Hit = GT(weapon_options, "武器特效", {}, "")
+Gun_Effect_Shooting_Hit = GT(weapon_options, "子弹特效", {}, "")
 anti_aim_root = GT(weapon_options, "反瞄准", {"antiaim"}, "防止玩家瞄准射击您")
 damage_numbers_list = GT(weapon_options, "伤害数字")
 minecraftgun = GT(weapon_options, '我的世界枪', {}, '')
@@ -12353,14 +12479,13 @@ GTLP(Gun_Effect_Shooting_Hit, "开启", {"shootingfx"}, "", function ()
     shootingeffect()
 end)
 
-GTluaScript.slider_text(Gun_Effect_Shooting_Hit, "切换射击特效", {}, "", {"小丑木兹","小丑花"}, function (index)
+GTluaScript.textslider(Gun_Effect_Shooting_Hit, "切换射击特效", {}, "", {"小丑木兹","小丑花"}, function (index)
 	setshootingeffect(index)
 end)
 
 GTLP(wea_func, '喷火器', {'JSflamethrower'}, '将加特林变成火焰喷射器.', function()
     flamegun()
 end)
-
 
 GTLP(wea_func, "锁定玩家", {}, "允许您使用武装载具上的制导导弹发射器锁定玩家.", function()
     for _, pid in ipairs(players.list(true, true, true)) do
@@ -12506,7 +12631,7 @@ GTLP(weapon_options, "磁铁枪", {"magnetgun"}, "很有趣喔~", function ()
     magnetgun()
 end)
 
-GTluaScript.slider_text(weapon_options, "设置磁铁枪", {}, "", {"平滑的", "混沌模式"}, function(index)
+GTluaScript.textslider(weapon_options, "设置磁铁枪", {}, "", {"平滑的", "混沌模式"}, function(index)
 	setmagnetgun(index)
 end)
 
@@ -12811,24 +12936,8 @@ GTLuaScript.list_select(wea_func, "设置武器子弹", {}, "", {
 	{util.get_label_text("WT_RAYPISTOL")}, {util.get_label_text("WT_GL")},
 	{util.get_label_text("WT_MOLOTOV")}, {util.get_label_text("WT_SNWBALL")},
 	{util.get_label_text("WT_FLAREGUN")}, {util.get_label_text("WT_EMPL")},}, 1, function(opt)
-        bulletchanger_set(opt)
+    bulletchanger_set(opt)
 end)
-
-
-local hitEffectRoot <const> = GT(Gun_Effect_Shooting_Hit, "击打特效", {}, "")
-
-GTLP(hitEffectRoot, "开启", {"hiteffects"}, "", function()
-	hittingeffect()
-end)
-
-GTLuaScript.list_select(hitEffectRoot, "切换子弹特效", {}, "", hiteffectchinese, 1, function (opt)
-	sethiteffect(opt)
-end)
-
-local SetEffectColour = function(colour) effectColour = colour end
-
-local menuColour = GTluaScript.colour(hitEffectRoot, "颜色", {"effectcolour"}, "仅对某些效果有效", effectColour, false, SetEffectColour)
-GTluaScript.rainbow(menuColour)
 
 
 GTTG(wea_func, '友好枪', {'JSfriendlyFire'}, '使您射击NPC时让他们不会攻击您.', function(toggle)
@@ -15675,7 +15784,7 @@ GTTG(veh_func, "GPS导航", {"导航提示"}, "", function(value)
     end
 end)
 
-    GTluaScript.slider_text(jesus_main, "驾驶风格", {}, "单击以选择驾驶风格", style_names, function(index, value)
+    GTluaScript.textslider(jesus_main, "驾驶风格", {}, "单击以选择驾驶风格", style_names, function(index, value)
         pluto_switch value do
             case "正常":
                 style = 786603
@@ -15803,7 +15912,7 @@ GTLP(veh_func, "载具效果", {}, "", function ()
     cargoodeffect()
 end)
 
-GTluaScript.slider_text(veh_func,"设置载具效果", {}, "", carvis, function (index)
+GTluaScript.textslider(veh_func,"设置载具效果", {}, "", carvis, function (index)
     set_carvis(index) 
 end)
 
@@ -15940,6 +16049,17 @@ GTluaScript.click_slider(visuals, "醉酒模式", {}, "", 0, 5, 1, 1, function(v
 end)
 
 visual_setting()
+
+GTTG(custselc, '阻止脚本主机变更', {}, '', function(YY19)
+    y19 = YY19
+    while y19 do
+        if not is_loading() and NETWORK.NETWORK_IS_HOST() then
+            NETWORK.NETWORK_PREVENT_SCRIPT_HOST_MIGRATION()
+        end
+        wait()
+    end
+    y19 = false
+end)
 
 GTAC(custselc, '全局踢出', {},'',function()
     for _, pid in players.list(false,true, true) do
@@ -19287,7 +19407,7 @@ end)
     end)
 
     kick_ad_bot_chat = 1
-    GTluaScript.slider_text(adbotblock, "发送踢出内容", {"blockidiotbot"}, "发送踢出内容到公屏", {"通知","Stand通知","团队聊天不联网", "团队聊天联网", "全局聊天不联网", "全局聊天联网"}, function(s)
+    GTluaScript.textslider(adbotblock, "发送踢出内容", {"blockidiotbot"}, "发送踢出内容到公屏", {"通知","Stand通知","团队聊天不联网", "团队聊天联网", "全局聊天不联网", "全局聊天联网"}, function(s)
         kick_ad_bot_chat = s
     end)
     GTD(adbotblock, "更新选项")
@@ -23306,7 +23426,8 @@ GTTG(minimap,"锁定地图角度", {"lockminimapangle"}, "", function(on)
 	end
 	HUD.UNLOCK_MINIMAP_ANGLE()
 end)
- centermap = off
+
+centermap = off
 GTTG(minimap, "以你为中心的地图", {"centermap"}, "", function(on)
 	centermap = on
 	while centermap do 
@@ -23324,21 +23445,22 @@ GTTG(minimap, "隐藏地图", {}, "", function(on)
 end)
 
 timestamp_toggle = false
-GTAC(nextcons, "复制控制台信息到剪贴板", {}, "将控制台信息的完整的最后x行复制到剪贴板", function()
-util.copy_to_clipboard(full_stdout, true)
+GTAC(nextcons, "复制控制台信息到剪贴板", {}, "将控制台信息的完整的最后x行复制到剪贴板",function()
+    util.copy_to_clipboard(full_stdout, true)
 end)
 
 GTluaScript.slider(nextcons, "最大显示字符", {"nconsolemaxchars"}, "", 1, 1000, 200, 1, function(s)
-max_chars = s
+    max_chars = s
 end)
 
 GTluaScript.slider(nextcons, "最大显示行数", {"nconsolemaxlines"}, "", 1, 60, 25, 1, function(s)
-max_lines = s
+    max_lines = s
 end)
 
 GTluaScript.slider_float(nextcons, "字体大小", {"nconsolemaxlines"}, "", 1, 1000, 35, 1, function(s)
-font_size = s*0.01
+    font_size = s * 0.01
 end)
+
 
 GTTG(nextcons, "显示时间", {"ntime"}, "", function(on)
 timestamp_toggle = on
@@ -23565,9 +23687,7 @@ skills={
     "打炮",
     "考妣",
     "考妣",
-    "考妣",
-    "考妣",
-    "考妣",
+
 }
 rainbowr = 0
 rainbowg = 0

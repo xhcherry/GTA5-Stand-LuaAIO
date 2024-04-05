@@ -1701,16 +1701,14 @@ function relationship:friendly(ped)
     PED.SET_PED_RELATIONSHIP_GROUP_HASH(ped, self.friendly_group)
 end
 
-
- 
- function BodyguardMenu.new(parent, name, command_names)
-	 local self = setmetatable({}, BodyguardMenu)
-	 self.ref = menu.list(parent, name, command_names or {}, "", function()
-		 self.isOpen = true
-	 end, function()
-		 self.isOpen = false
-	 end)
-	 self.group = Group.new()
+function BodyguardMenu.new(parent, name, command_names)
+	local self = setmetatable({}, BodyguardMenu)
+	self.ref = menu.list(parent, name, command_names or {}, "", function()
+		self.isOpen = true
+	end, function()
+		self.isOpen = false
+	end)
+	self.group = Group.new()
 
 ----- 保镖马东锡 -----
 local bodyguard_veh_options = menu.list(self.ref, "马东锡的护法", {}, "100%原创功能,感受拥有保镖的乐趣")
@@ -1747,7 +1745,7 @@ menu.action(bodyguard_veh_options, "立即召唤马东锡!!!", {}, "若保镖没
     veh = entities.create_vehicle(veh_hash, pos, CAM.GET_GAMEPLAY_CAM_ROT(0).z)
 
 	if not ENTITY.DOES_ENTITY_EXIST(veh) then
-        util.toast("创建车辆失败,可能因为触发了Stand实体控制器")
+        util.toast("创建车辆失败")
         return
 		else
 		vehNetId = NETWORK.VEH_TO_NET(veh)
@@ -1825,9 +1823,13 @@ menu.action(bodyguard_veh_options, "立即召唤马东锡!!!", {}, "若保镖没
     --STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(ped_hash)
 end)
 
-menu.action(bodyguard_veh_options, "保镖下车", {}, "让一位保镖从车里下来", function ()
+menu.action(bodyguard_veh_options, "保镖上下车", {}, "让一位保镖从车里下来\n随后将会跟随你", function ()
 	for seat = 0, 32 do
 		TASK.TASK_LEAVE_VEHICLE(ped, veh, seat)
+		PED.SET_PED_AS_GROUP_MEMBER(ped, PLAYER.GET_PLAYER_GROUP(players.user()))
+		PED.SET_PED_AS_GROUP_MEMBER(ped, PLAYER.GET_PLAYER_GROUP(players.user()))
+		PED.SET_PED_NEVER_LEAVES_GROUP(ped, true)
+		PED.SET_GROUP_SEPARATION_RANGE(PLAYER.GET_PLAYER_GROUP(players.user()), 99999)
 	end
 end)
 
@@ -1839,8 +1841,9 @@ menu.action(bodyguard_veh_options, "移除所有护法", {}, "#删除所有保�
         entities.delete_by_handle(ent)
     end
 	for k, ent in pairs(veh_ped_list) do
-    entities.delete_by_handle(pilot)
+    	entities.delete_by_handle(pilot)
 	end
+	
 end)
 
 menu.action(bodyguard_veh_options, "超级清除", {}, "", function ()

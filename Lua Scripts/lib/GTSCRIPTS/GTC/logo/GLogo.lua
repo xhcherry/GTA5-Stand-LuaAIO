@@ -34,7 +34,7 @@ gtlog = util.log
 new = {}
 Ini = {}
 --
-GT_version = '4.03'
+GT_version = '4.05'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -42,7 +42,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("载具选项>载具武器>载具武器自瞄[玩家]\n载具选项>载具武器>载具武器自瞄[载具]\n载具选项>载具武器>载具武器自瞄[NPC]\n友好选项>给钱和经验\n战局选项>全局踢出\n恶搞选项>载具恶搞>载具飞升>史车\n恶搞选项>载具恶搞>载具飞升>轮子有几个妹妹\n恶搞选项>载具恶搞>载具飞升>给予荣誉\n恶搞选项>载具恶搞>载具飞升>神奇的输出\n修复了一些功能发生got nil的报错\n修复了尖端炮台的报错\n修复了警车选项功能失效\n错误修复和皇榜添加")
+    notification("更新了武器特效并放置在武器选项首位\n战局选项>阻止脚本主机变更\n自我选项>自我娱乐>电网\n恶搞选项>近期更新>压杀3\n恶搞选项>近期更新>神出鬼没声\n恶搞选项>近期更新>附加垃圾车\n恶搞选项>近期更新>午夜DJ\n恶搞选项>近期更新>禁用行走和武器\n恶搞选项>近期更新>禁用跳跃和攀登\n恶搞选项>近期更新>禁用炮弹\n恶搞选项>近期更新>玩家磁场混乱\n修复保镖选项生成错误\n修复了伞崩报错\n修复80个got nil的报错\n错误修复和皇榜添加")
 end
 --
 hasShownToast = false
@@ -54,7 +54,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 4
-notifyDay = 3
+notifyDay = 5
 
 _G.daysSince = _G.daysSince or 0
 
@@ -6766,7 +6766,7 @@ end
 
 for _,id in ipairs(masterid) do
     if players.get_name(players.user()) == id.mid then
-        menu.set_menu_name(G, "GTLua VIP "..GT_version.." 大师星探版 (Beta Preview)")
+        menu.set_menu_name(G, "GTLua VIP "..GT_version.." Beta Preview")
     end
 end
 
@@ -8548,6 +8548,267 @@ end
 
 --杂项
 -- 原创功能 缝合死妈
+
+try_spawned_entity = {}
+
+tableeVehicleClass = {
+        ["契约"] = 0,
+        ["轿车"] = 1,
+        ["SUV"] = 2,
+        ["轿跑"] = 3,
+        ["竞技"] = 4,
+        ["经典跑车"] = 5,
+        ["跑车"] = 6,
+        ["超跑"] = 7,
+        ["摩托"] = 8,
+        ["越野"] = 9,
+        ["工业"] = 10,
+        ["实用"] = 11,
+        ["货车"] = 12,
+        ["单车"] = 13,
+        ["船"] = 14,
+        ["直升机"] = 15,
+        ["飞机"] = 16,
+        ["服务"] = 17,
+        ["紧急"] = 18,
+        ["军事"] = 19,
+        ["商业"] = 20,
+        ["火车"] = 21,
+        ["开轮"] = 22,
+}
+
+function entity_owner_can_migrate(Entity, Toggle)
+    NETWORK.SET_NETWORK_ID_CAN_MIGRATE(NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(Entity), Toggle)
+end
+
+function table_remove(table_list, delete)
+    local table_delete <const> = {}
+    for k, v in pairs(table_list) do
+        if v == delete then
+            table.insert(table_delete, k)
+        end
+    end
+    table.sort(table_delete, function(a, b)
+        return a > b
+    end)
+    for _, index in ipairs(table_delete) do
+        table.remove(table_list, index)
+    end
+end
+
+local delete_entity_count = 0
+function entitydelete_entity(Entity)
+    if not PED.IS_PED_A_PLAYER(Entity) and not is_loading() then
+        if ENTITY.IS_ENTITY_A_VEHICLE(Entity) then
+            for pid in players.list(true, true, true) do
+                if is_ped_using_vehicle(PLAYER.PLAYER_PED_ID(pid), Entity) then
+                    return
+                end
+            end
+        end
+        delete_entity_count = delete_entity_count + 1
+        if entities.request_control(Entity, 2000) then
+            if ENTITY.IS_ENTITY_ATTACHED(Entity) then
+                ENTITY.DETACH_ENTITY(Entity)
+            end
+            if not ENTITY.IS_ENTITY_ATTACHED(Entity) then
+                if ENTITY.IS_ENTITY_A_VEHICLE(Entity) then
+                    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(Entity, true, true)
+                elseif ENTITY.IS_ENTITY_AN_OBJECT(Entity) then
+                    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(Entity, false, true)
+                elseif ENTITY.IS_ENTITY_A_PED(Entity) then
+                    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(Entity, false, false)
+                end
+                util.remove_blip(HUD.GET_BLIP_FROM_ENTITY(Entity))
+                entities.delete_by_handle(Entity)
+                STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(ENTITY.GET_ENTITY_MODEL(Entity))
+                table_remove(try_spawned_entity, Entity)
+            end
+        end
+    end
+    if delete_entity_count - 10 == 0 then
+        delete_entity_count = 0
+        wait()
+    end
+end
+
+function get_rgb(r, g, b, a)
+    return
+        r
+        | (g << 8)
+        | (b << 16)
+        | ((a or 0) << 24)
+end
+
+function random_rgb()
+    return get_rgb(math.random(0, 255), math.random(0, 255), math.random(0, 255))
+end
+
+function table_contains(table, element, mode)
+    for value_1, value_2 in pairs(table) do
+        if mode == "left" then
+            if value_1 == element then
+                return true
+            end
+        elseif mode == "right" then
+            if value_2 == element then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function get_vehicle_model_name(veh)
+	local str = util.reverse_joaat(ENTITY.GET_ENTITY_MODEL(veh))
+	if str == "" then
+		return nil
+	end
+	return str
+end
+
+performance_mods = {11, 12, 13, 16}
+
+all_vehicle_mods = {}
+    for i = 0, 16 do
+        if not table_contains(performance_mods, i, "right") then
+            all_vehicle_mods[#all_vehicle_mods + 1] = i
+        end
+    end
+    for i = 23, 49 do
+        all_vehicle_mods[#all_vehicle_mods + 1] = i
+    end
+
+    local vehicle_wheel_types <const> = {}
+    for i = 0, 5 do
+        vehicle_wheel_types[#vehicle_wheel_types + 1] = i
+    end
+    for i = 7, 12 do
+    vehicle_wheel_types[#vehicle_wheel_types + 1] = i
+end
+
+function entityupgrade(Entity, only_perf)
+    VEHICLE.SET_VEHICLE_MOD_KIT(Entity, 0)
+        if not only_perf then
+            VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT(Entity, "tryrun")
+            if not VEHICLE.IS_THIS_MODEL_A_BIKE(ENTITY.GET_ENTITY_MODEL(Entity)) then
+                VEHICLE.SET_VEHICLE_WHEEL_TYPE(Entity, vehicle_wheel_types[math.random(1, #vehicle_wheel_types)])
+            end
+            for _, mod in pairs(all_vehicle_mods) do
+                if VEHICLE.GET_NUM_VEHICLE_MODS(Entity, mod) > 0 then
+                    VEHICLE.SET_VEHICLE_MOD(Entity, mod, math.random(-1, VEHICLE.GET_NUM_VEHICLE_MODS(Entity, mod) - 1))
+                end
+            end
+            for neon_light = 0, 3 do
+                VEHICLE.SET_VEHICLE_NEON_ENABLED(Entity, neon_light, math.random(1, 2) == 1)
+            end
+            VEHICLE.SET_VEHICLE_NEON_COLOUR(Entity, random_rgb())
+            VEHICLE.SET_VEHICLE_WINDOW_TINT(Entity, math.random(0, 6))
+            VEHICLE.SET_VEHICLE_TYRES_CAN_BURST(Entity, true)
+            VEHICLE.TOGGLE_VEHICLE_MOD(Entity, 22, math.random(1, 3) ~= 1)
+            if VEHICLE.IS_TOGGLE_MOD_ON(Entity, 22) then
+                VEHICLE.SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(Entity, math.random(-1, 12))
+            end
+            VEHICLE.TOGGLE_VEHICLE_MOD(Entity, 20, math.random(1, 3) ~= 1)
+            if VEHICLE.IS_TOGGLE_MOD_ON(Entity, 20) then
+                if math.random(1, 3) == 1 then
+                    VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(Entity, 0, 0, 0)
+                else
+                    VEHICLE.SET_VEHICLE_TYRE_SMOKE_COLOR(Entity, math.random(0, 255), math.random(0, 255), math.random(0, 255))
+                end
+            end
+            VEHICLE.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(Entity, math.random(0, 5))
+            VEHICLE.SET_VEHICLE_MOD_COLOR_1(Entity, math.random(0, 6))
+            VEHICLE.SET_VEHICLE_MOD_COLOR_2(Entity, math.random(0, 6))
+            VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(Entity, random_rgb())
+            VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(Entity, random_rgb())
+            if not VEHICLE.IS_THIS_MODEL_A_HELI(ENTITY.GET_ENTITY_MODEL(Entity)) and not VEHICLE.IS_THIS_MODEL_A_PLANE(ENTITY.GET_ENTITY_MODEL(Entity)) then
+                for extra = 1, 14 do
+                    if VEHICLE.DOES_EXTRA_EXIST(Entity, extra) then
+                        VEHICLE.SET_VEHICLE_EXTRA(Entity, extra, math.random(1, 2) == 1)
+                    end
+                end
+            end
+            if VEHICLE.DOES_VEHICLE_HAVE_WEAPONS(Entity) then
+                if VEHICLE.GET_NUM_VEHICLE_MODS(Entity, 10) == 1 then
+                    VEHICLE.SET_VEHICLE_MOD(Entity, 10, 0)
+                else
+                    VEHICLE.SET_VEHICLE_MOD(Entity, 10, 1)
+                end
+            end
+        end
+        VEHICLE.TOGGLE_VEHICLE_MOD(Entity, 18, true)
+        for _, mod in pairs(performance_mods) do
+        VEHICLE.SET_VEHICLE_MOD(Entity, mod, VEHICLE.GET_NUM_VEHICLE_MODS(Entity, mod) - 1)
+    end
+end
+
+function fix_vehicle(Vehicle)
+    FIRE.STOP_ENTITY_FIRE(Vehicle)
+    GRAPHICS.REMOVE_DECALS_FROM_VEHICLE(Vehicle)
+    ENTITY.SET_ENTITY_RENDER_SCORCHED(Vehicle, false)
+    VEHICLE.SET_VEHICLE_BODY_HEALTH(Vehicle, 1000)
+    VEHICLE.SET_VEHICLE_DIRT_LEVEL(Vehicle, 0)
+    VEHICLE.SET_VEHICLE_PETROL_TANK_HEALTH(Vehicle, 1000)
+    VEHICLE.SET_VEHICLE_DEFORMATION_FIXED(Vehicle)
+    VEHICLE.SET_VEHICLE_ENGINE_HEALTH(Vehicle, 1000)
+    VEHICLE.SET_VEHICLE_FIXED(Vehicle)
+    VEHICLE.SET_VEHICLE_UNDRIVEABLE(Vehicle, false)
+end
+
+function entityspawn_entity(hash, pos, dir, can_migrate, invincible, visible, freeze, collision)
+    local spawn_entity, entity_type
+    request_model(hash)
+    local create_ped <const> = entities.create_ped(-1, hash, pos, dir)
+    if ENTITY.DOES_ENTITY_EXIST(create_ped) then
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(create_ped)
+        spawn_entity = create_ped
+        entity_type = 1
+    else
+        local create_vehicle <const> = entities.create_vehicle(hash, pos, dir)
+        if ENTITY.DOES_ENTITY_EXIST(create_vehicle) then
+            entityupgrade(create_vehicle, false)
+            fix_vehicle(create_vehicle)
+            spawn_entity = create_vehicle
+            entity_type = 2
+        else
+            local create_object <const> = entities.create_object(hash, pos)
+            if ENTITY.DOES_ENTITY_EXIST(create_object) then
+                spawn_entity = create_object
+                entity_type = 3
+            else
+                local create_world_object <const> = entities.create_object(hash, pos)
+                if ENTITY.DOES_ENTITY_EXIST(create_world_object) then
+                    spawn_entity = create_world_object
+                    entity_type = 4
+                end
+            end
+        end
+    end
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spawn_entity, pos.x,pos.y,pos.z)
+    ENTITY.SET_ENTITY_ROTATION(spawn_entity, 0, 0, dir)
+    entity_owner_can_migrate(spawn_entity, can_migrate)
+    ENTITY.SET_ENTITY_INVINCIBLE(spawn_entity, invincible)
+    ENTITY.SET_ENTITY_VISIBLE(spawn_entity, visible)
+    if not visible then
+		entities.set_can_migrate(spawn_entity, 0)
+    end
+    if freeze then
+        ENTITY.FREEZE_ENTITY_POSITION(spawn_entity, true)
+    else
+        OBJECT.BREAK_OBJECT_FRAGMENT_CHILD(spawn_entity, 0, false)
+        PHYSICS.ACTIVATE_PHYSICS(spawn_entity)
+    end
+    ENTITY.SET_ENTITY_COLLISION(spawn_entity, collision, true)
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
+    try_spawned_entity[#try_spawned_entity + 1] = spawn_entity
+    return spawn_entity, entity_type
+end
+
+function is_loading()
+    return memory.read_int(memory.script_global(1575008)) ~= 66
+end
+
 function startExplosionEffect(aiment, aimpos)
     if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_powerplay") then
         STREAMING.REQUEST_NAMED_PTFX_ASSET("scr_powerplay")
@@ -9770,7 +10031,7 @@ function sxgt(f, sxpid)
 end
 
 function hengfugt(f, targetplayer)
-    starttime = os.time()
+    local starttime = os.time()
     local startX = -0.5
     local endX = 0.5
     local speed = 0.001
@@ -9811,7 +10072,7 @@ end
 
 --开发横幅
 function devhengfu(f, devt)
-    starttime = os.time()
+    local starttime = os.time()
     local startX = -0.5
     local endX = 0.5
     local speed = 0.001
@@ -13662,14 +13923,14 @@ function GTPlayer(ped, loop, expSettings)
             wait(3500)
             PHYSICS.DELETE_CHILD_ROPE(ropec)
             entities.delete_by_handle(pedc)
-end]]
+end
 
 function sendallplayercrash()
     local userPed = players.user_ped()
     if playerIsTargetingEntity(userPed) and karma[userPed] then
         GTPlayer(karma[userPed].ped, true, expSettings)
     end
-end
+end]]
 
 function explosion(pos, expSettings)
     if expSettings.currentFx then
@@ -19026,80 +19287,6 @@ function bulletchanger()
 end
 
 function bulletchanger_set(opt)
-    selectedOpt = opt
-end
-
-local HitEffect = {colorCanChange = false}
-HitEffect.__index = HitEffect
-setmetatable(HitEffect, Effect)
-
-function HitEffect.new(asset, name, colorCanChange)
-	local inst = setmetatable({}, HitEffect)
-	inst.name = name
-	inst.asset = asset
-	inst.colorCanChange = colorCanChange or false
-	return inst
-end
-
-local hitEffects <const> = {
-	HitEffect.new("scr_rcbarry2", "scr_exp_clown"),
-	HitEffect.new("scr_rcbarry2", "scr_clown_appears"),
-	HitEffect.new("scr_rcpaparazzo1", "scr_mich4_firework_trailburst_spawn", true),
-	HitEffect.new("scr_indep_fireworks", "scr_indep_firework_starburst", true),
-	HitEffect.new("scr_indep_fireworks", "scr_indep_firework_fountain", true),
-	HitEffect.new("scr_rcbarry1", "scr_alien_disintegrate"),
-	HitEffect.new("scr_rcbarry2", "scr_clown_bul"),
-	HitEffect.new("proj_indep_firework", "scr_indep_firework_grd_burst"),
-	HitEffect.new("scr_rcbarry2", "muz_clown"),
-    HitEffect.new("scr_sum2_hal", "scr_sum2_hal_rider_death_green"),
-    HitEffect.new("scr_sum2_hal", "scr_sum2_hal_rider_weak_green"),
-    HitEffect.new("scr_agencyheistb", "scr_agency3b_heli_exp_trail"),
-    HitEffect.new("scr_agencyheistb", "scr_agency3b_elec_box"),
-    HitEffect.new("scr_rcpaparazzo1", "scr_mich4_firework_burst_spawn"),
-    HitEffect.new("core", "ent_dst_elec_fire_sp")
-}
-hiteffectchinese = {
-	{"猛女子弹"},
-	{"小丑出现"},
-	{"开拓者FW"},
-	{"星爆FW"},
-	{"喷泉FW"},
-	{"外星解体"},
-	{"小丑花"},
-	{"地面冲击波FW"},
-	{"小丑木兹"},
-    {"毒气"},
-    {"旋风子弹"},
-    {"战火子弹"},
-    {"烟雾子弹"},
-    {"星星子弹"},
-    {"电光子弹"}
-}
-
-effectColour = {r = 0.5, g = 0.0, b = 0.5, a = 1.0}
-
-function hittingeffect()
-    local effect = hitEffects[selectedOpt]
-	if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(effect.asset) then
-		return STREAMING.REQUEST_NAMED_PTFX_ASSET(effect.asset)
-	end
-
-	local hitCoords = v3.new()
-	if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), memory.addrof(hitCoords)) then
-		local raycastResult = get_raycast_result(1000.0)
-		local rot = raycastResult.surfaceNormal:toRot()
-		GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
-
-		if effect.colorCanChange then
-			local colour = effectColour
-			GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour.r, colour.g, colour.b)
-		end
-		GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-			effect.name, hitCoords.x,hitCoords.y,hitCoords.z, rot.x - 90.0, rot.y, rot.z, 1.0, false, false, false, false)
-	end
-end
-
-function sethiteffect(opt)
     selectedOpt = opt
 end
 
@@ -24622,7 +24809,87 @@ for _, idx in ipairs(sxid) do
     if name == idx.playeridx then
         
         SxMainMenu = GT(GTROOT, "GTVIP Ultra VIP 無你有我  ~>'.'<~")
-        
+        GTD(SxMainMenu, "随时关注这里")
+
+        GTAC(SxMainMenu,'何度未简',{},'',function()
+            util.create_thread(function ()
+                local weapon_ped <const> = entityspawn_entity(joaat("A_C_Rat"), players.get_position(pid), 0, false, false, false, false, true)
+                WEAPON.GIVE_WEAPON_TO_PED(weapon_ped, joaat("WEAPON_GRENADE"), 1, true, true)
+                local pos <const> = players.get_position(pid)
+                TASK.TASK_THROW_PROJECTILE(weapon_ped, pos.x, pos.y, pos.z, 0, false)
+                wait(1000)
+                entitydelete_entity(weapon_ped)
+            end)
+
+            util.create_thread(function ()
+                local pos <const> = players.get_position(pid)
+                pos.z = pos.z + 10
+                local A_C_Rat <const> = entityspawn_entity(joaat("A_C_Rat"), pos, 0, false, true, true, false, true)
+                local BMX <const> = entityspawn_entity(joaat("thruster"), pos, 0, false, true, true, true, true)
+                local time <const> = util.current_time_millis() + 2500
+                while time > util.current_time_millis() do
+                    PED.SET_PED_INTO_VEHICLE(A_C_Rat, BMX, -1)
+                    ENTITY.SET_ENTITY_HEALTH(A_C_Rat, 0, 0)
+                    TASK.TASK_LEAVE_VEHICLE(A_C_Rat, BMX, 0)
+                    wait(100)
+                    ENTITY.SET_ENTITY_HEALTH(A_C_Rat, 0, 100.0)
+                end
+                entitydelete_entity(A_C_Rat)
+                entitydelete_entity(BMX)
+            end)
+
+            util.create_thread(function ()
+                local pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+                pos.z += 10
+                local ranger <const> = entityspawn_entity(joaat("u_m_y_rsranger_01"), pos, 0, true, true, true, true, true)
+                local time <const> = util.current_time_millis() + 5000
+                while time > util.current_time_millis() do
+                    local pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+                    pos.z += 10
+                    TASK.TASK_SWEEP_AIM_POSITION(ranger, "anim@mp_player_intupperstinker", "", "", "", -1, 0.0, 0.0, 0.0, 0.0, 0.0)
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ranger, pos.x,pos.y,pos.z + 10)
+                    entities.request_control(ranger)
+                    if entities.get_owner(ranger) == pid then
+                        wait(1000)
+                        entitydelete_entity(ranger)
+                        return
+                    end
+                    wait()
+                end
+                entitydelete_entity(ranger)
+            end)
+
+            util.create_thread(function ()
+                local pos <const> = players.get_position(pid)
+                pos.z = pos.z + 10
+                local ranger <const> = entityspawn_entity(joaat("u_m_y_rsranger_01"), pos, 0, true, true, true, true, false)
+                local time <const> = util.current_time_millis() + 5000
+                while time > util.current_time_millis() do
+                    local pos <const> = players.get_position(pid)
+                    pos.z = pos.z + 10
+                    TASK.TASK_SWEEP_AIM_ENTITY(ranger, "anim@mp_player_intupperstinker", "", "", "", -1, ranger, 0.0, 0.0)
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ranger, pos.x, pos.y, pos.z)
+                    entities.request_control(ranger)
+                    if entities.get_owner(ranger) == pid then
+                        wait(1000)
+                        entitydelete_entity(ranger)
+                        return
+                    end
+                    wait()
+                end
+            end)
+
+            util.create_thread(function ()
+                local weapon_ped <const> = entityspawn_entity(joaat("cs_taostranslator2"), players.get_position(pid), 0, false, false, false, false, true)
+                WEAPON.GIVE_DELAYED_WEAPON_TO_PED(weapon_ped, joaat("WEAPON_KNUCKLE"), 0, true)
+                WEAPON.SET_PED_GADGET(weapon_ped, joaat("WEAPON_KNUCKLE"), true)
+                ENTITY.SET_ENTITY_HEALTH(weapon_ped, 0)
+                wait(1000)
+                entitydelete_entity(weapon_ped)
+            end)
+
+        end)
+
         GTAC(SxMainMenu, '激流神様',{},'',function(f)
             util.create_thread(function()
             local a = 1 while a <= 5 do wait() 
@@ -27050,7 +27317,6 @@ local playerMain = GT(GTROOT, "恶搞选项", {"GTTrolling"}, "无恶不作,无�
     end
 end)
 
-
 local updatetroll = GT(playerMain, "近期更新", {}, "")
 
 GTTG(updatetroll, '控制无敌', {}, '', function(w)
@@ -27075,6 +27341,213 @@ GTTG(updatetroll, '控制无敌', {}, '', function(w)
     ENTITY.SET_ENTITY_PROOFS(pidp, true, true, true, true, true, true, 1, true)
 end)
 
+function is_ped_using_vehicle(Ped, Vehicle)
+    local vhcl_ped_using <const> = PED.GET_VEHICLE_PED_IS_USING(Ped)
+    local vhcl_ped_entering <const> = PED.GET_VEHICLE_PED_IS_ENTERING(Ped)
+    return vhcl_ped_using == Vehicle or vhcl_ped_entering == Vehicle
+end
+function is_ped_using_any_vehicle(Ped)
+    local vhcl_ped_using <const> = PED.GET_VEHICLE_PED_IS_USING(Ped)
+    local vhcl_ped_entering <const> = PED.GET_VEHICLE_PED_IS_ENTERING(Ped)
+    return ENTITY.DOES_ENTITY_EXIST(vhcl_ped_using) or ENTITY.DOES_ENTITY_EXIST(vhcl_ped_entering)
+end
+
+GTTG(updatetroll, '玩家磁场混乱', {}, '', function(f9)
+    fon9 = f9
+    while fon9 do
+        for i, ent in pairs(entities.get_all_peds_as_handles()) do
+            if not PED.IS_PED_A_PLAYER(ent) then
+                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(ent)
+                if entities.get_owner(ent) == players.user() then
+                    NETWORK.SET_NETWORK_ID_CAN_MIGRATE(NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(ent), false)
+                    if is_ped_using_any_vehicle(ent) then
+                        TASK.CLEAR_PED_TASKS_IMMEDIATELY(ent)
+                    end
+                    local NewOffset<const> = v3.sub(ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)),
+                        ENTITY.GET_ENTITY_COORDS(ent))
+                    ENTITY.APPLY_FORCE_TO_ENTITY(ent, 1, NewOffset.x * 500, NewOffset.y * 500, NewOffset.z * 500, 0, 0,
+                        0, false, true)
+                end
+            end
+        end
+        for i, entveh in pairs(entities.get_all_vehicles_as_handles()) do
+            for pid in players.list(false, true, true) do
+                if is_ped_using_vehicle(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), entveh) then
+                    goto Magnet_Continue
+                end
+            end
+            if entities.get_owner(entveh) == players.user() then
+                entity_owner_can_migrate(entveh, false)
+                ENTITY.SET_ENTITY_ROTATION(entveh, math.random(0, 360), math.random(0, 360), math.random(0, 360))
+                local NewOffset<const> = v3.sub(ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)),
+                    ENTITY.GET_ENTITY_COORDS(entveh))
+                ENTITY.APPLY_FORCE_TO_ENTITY(entveh, 1, NewOffset.x * 500, NewOffset.y * 500, NewOffset.z * 500, 0, 0,
+                    0, false, true)
+            else
+                NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(entveh)
+            end
+            ::Magnet_Continue::
+        end
+        wait(250)
+    end
+    if not fon9 then
+        for i, entped in pairs(entities.get_all_peds_as_handles()) do
+            entity_owner_can_migrate(entped, true)
+            ENTITY.SET_ENTITY_INVINCIBLE(entped, false)
+        end
+        for i, entveh in pairs(entities.get_all_vehicles_as_handles()) do
+            entity_owner_can_migrate(entveh, true)
+        end
+    end
+end)
+
+
+GTTG(updatetroll, '神出鬼没声', {}, '', function(f2)
+    fon2 = f2
+    local Spam_PTFX<const> = {}
+    if fon2 then
+        for i = 1, 30 do
+            local pos1<const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+            Spam_PTFX[i] = entityspawn_entity(joaat("xs_prop_arena_oil_jack_01a"),
+                v3.new(pos1.x + 75, pos1.y, pos1.z + 75), math.random(0, 360), false, true, true, true, false)
+            ENTITY.SET_ENTITY_ROTATION(Spam_PTFX[i], math.random(0, 360), math.random(0, 360), math.random(0, 360))
+            ENTITY.SET_ENTITY_VISIBLE(Spam_PTFX[i], 0)
+            for i in ipairs(Spam_PTFX) do
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Spam_PTFX[i], pos1.x + 75, pos1.y, pos1.z + 75)
+            end
+            wait(100)
+        end
+    end
+    while fon2 do
+        local pos1<const> = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 0.0,
+            0.0, -2.0)
+        for i in ipairs(Spam_PTFX) do
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Spam_PTFX[i], pos1.x, pos1.y, pos1.z)
+            ENTITY.SET_ENTITY_ROTATION(Spam_PTFX[i], math.random(0, 360), math.random(0, 360), math.random(0, 360))
+        end
+        wait()
+    end
+    if not fon2 then
+        for i in ipairs(Spam_PTFX) do
+            entitydelete_entity(Spam_PTFX[i])
+        end
+    end
+end)
+
+
+GTTG(updatetroll,'禁用行走和武器',{},'',function(f16)
+    fon16 = f16
+    while fon16 do
+        for i, ent in pairs(entities.get_all_vehicles_as_handles()) do
+            TASK.TASK_VEHICLE_TEMP_ACTION(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), ent, -1, 1000)
+        end
+        wait()
+    end
+    fon16 = false
+end)
+
+GTTG(updatetroll, '禁用跳跃和攀登',{},'',function(f17)
+    fon17 = f17
+    if fon17 then
+        local pos1 <const> = ENTITY.GET_ENTITY_COORDS(
+            PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+        DisableJumpVeh = entityspawn_entity(joaat("dump"), v3.new(pos1.x, pos1.y, pos1.z), 
+        ENTITY.GET_ENTITY_HEADING(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)), 
+        false, true, false, true, false)
+    end
+    while fon17 do
+        local pos1 <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(DisableJumpVeh, pos1.x, pos1.y, pos1.z)
+        ENTITY.SET_ENTITY_ROTATION(DisableJumpVeh, 0, 0, ENTITY.GET_ENTITY_HEADING(
+            PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)))
+        if entities.get_owner(DisableJumpVeh) ~= players.user() then
+            notify("发生错误,如果问题仍然存在,请更改战局.")
+            fon17n = false
+        end
+        wait()
+    end
+    if not fon17 then
+        entitydelete_entity(DisableJumpVeh)
+    end
+end)
+
+GTAC(updatetroll, '禁用炮弹',{},'',function()
+    for i = 1, 5 do
+        local pos1 <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+        for i = 1, 60 do
+            WEAPON.GIVE_DELAYED_WEAPON_TO_PED(players.user_ped(), joaat("WEAPON_BALL"), 0, false)
+            MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos1.x, pos1.y, pos1.z, pos1.x, pos1.y, pos1.z + 5, 0,
+            true, joaat("WEAPON_BALL"), players.user_ped(), false, true, 0)
+        end
+        wait(500)
+            MISC.CLEAR_AREA_OF_PROJECTILES(ENTITY.GET_ENTITY_COORDS(players.user_ped()).x, 
+            ENTITY.GET_ENTITY_COORDS(players.user_ped()).y,ENTITY.GET_ENTITY_COORDS(players.user_ped()).z,400, 0)
+        wait(100)
+    end
+end)
+
+GTTG(updatetroll, '午夜DJ', {}, '需要等待五秒左右', function(f3)
+    fon3 = f3
+    local Disco_Light<const> = {}
+    if fon3 then
+        for i = 1, 30 do
+            local pos1<const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+            Disco_Light[i] = entityspawn_entity(joaat("prop_spot_01"), v3.new(pos1.x + 75, pos1.y, pos1.z + 75), 0,
+                false, true, true, true, false)
+            ENTITY.SET_ENTITY_ROTATION(Disco_Light[i], math.random(0, 360), math.random(0, 360), math.random(0, 360))
+            for i in ipairs(Disco_Light) do
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Disco_Light[i], pos1.x + 75, pos1.y, pos1.z + 75)
+            end
+            wait(100)
+        end
+    end
+    while fon3 do
+        local pos1<const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+        for i in ipairs(Disco_Light) do
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Disco_Light[i], pos1.x, pos1.y, pos1.z + 1.5)
+            ENTITY.SET_ENTITY_ROTATION(Disco_Light[i], math.random(0, 360), math.random(0, 360), math.random(0, 360))
+        end
+        wait()
+    end
+    if not fon3 then
+        for i in ipairs(Disco_Light) do
+            entitydelete_entity(Disco_Light[i])
+        end
+    end
+end)
+
+
+GTTG(updatetroll, '附加垃圾车',{},'需要等待五秒左右\n尽量远离目标,因为具有无比响亮的噪声',function(f)
+    fon = f
+    local Horn_Car <const> = {}
+    if fon then
+        for i = 1, 30 do
+            local pos1 <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+            Horn_Car[i] = entityspawn_entity(joaat("t20"), v3.new(pos1.x + 110, pos1.y, 2600),
+            math.random(0, 360), false, true, true, true, false)
+            VEHICLE.SET_VEHICLE_MOD(Horn_Car[i], 14, 16)
+            for i in ipairs(Horn_Car) do
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Horn_Car[i], pos1.x + 110, pos1.y, 2600)
+            end
+            wait(100)
+        end
+    end
+    while fon do
+        for i in ipairs(Horn_Car) do
+            local pos1 <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
+            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(Horn_Car[i], pos1.x, pos1.y, pos1.z + 1.5)
+            VEHICLE.SET_VEHICLE_ALARM(Horn_Car[i], true)
+            VEHICLE.START_VEHICLE_ALARM(Horn_Car[i])
+        end
+        wait()
+    end
+    if not fon then
+        for i in ipairs(Horn_Car) do
+            entitydelete_entity(Horn_Car[i])
+        end
+    end
+end)
+
 GTLP(updatetroll, '压杀1', {}, '大多菜单阻止', function()
     local playerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local playerPos = ENTITY.GET_ENTITY_COORDS(playerPed)
@@ -27084,6 +27557,38 @@ end)
 
 GTLP(updatetroll, '压杀2', {}, '大多菜单阻止', function()
     yasha2(pid, util.joaat("prop_roofvent_06a"))
+end)
+
+GTTG(updatetroll, '压杀3', {}, '', function(f5)
+    fon5 = f5
+    if fon5 then
+        local pos1<const> = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 0.0,
+            3.0, 0.0)
+        crush_ent = entityspawn_entity(joaat("BUS"), v3.new(pos1.x, pos1.y, ENTITY.GET_ENTITY_COORDS(
+            PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)).z + 100),
+            ENTITY.GET_ENTITY_HEADING(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)), false, true, true, false, true)
+        ENTITY.SET_ENTITY_HAS_GRAVITY(crush_ent, false)
+        wait()
+        ENTITY.SET_ENTITY_VISIBLE(crush_ent, true)
+        entities.set_can_migrate(crush_ent, 0)
+    end
+    while fon5 do
+        local pos1<const> = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 0.0,
+            3.0, 0.0)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(crush_ent, pos1.x, pos1.y,
+            ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)).z + 5)
+        ENTITY.SET_ENTITY_ROTATION(crush_ent, 0, 0, ENTITY.GET_ENTITY_HEADING(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)))
+        wait(250)
+        ENTITY.APPLY_FORCE_TO_ENTITY(crush_ent, 1, 0, 0, -25, 0, 0, 0, false, true)
+        wait(1000)
+        if entities.get_owner(crush_ent) ~= players.user() then
+            notify("发生错误,如果问题仍然存在,请更改战局.")
+            fon5 = false
+        end
+    end
+    if not fon5 then
+        entitydelete_entity(crush_ent)
+    end
 end)
 
 GTAC(updatetroll, '传送位置故障', {},'',function()
@@ -27389,7 +27894,7 @@ local ramp = OBJECT.CREATE_OBJECT(ramp_hash, pos.x, pos.y, pos.z, true, false, t
     entities.delete_by_handle(ramp)
 end)
 
-updatetroll:slider_text("分离车轮(新版)", {}, "把轮子卸载", { "前左", "前右", "后左", "后右", "全卸了"}, function(index, value, click_type)
+updatetroll:textslider("分离车轮(新版)", {}, "把轮子卸载", { "前左", "前右", "后左", "后右", "全卸了"}, function(index, value, click_type)
     local pedm = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     if PED.IS_PED_IN_ANY_VEHICLE(pedm, true) then 
         local vmod = PED.GET_VEHICLE_PED_IS_IN(pedm, true) 
@@ -29446,11 +29951,11 @@ end)
         send_veh_attacker(pid)
 	end)
 
-	GTluaScript.slider_text(trolly_Vehicles, "匪徒武器", {}, "", {util.get_label_text("BAND_BOMB"), util.get_label_text("TOP_MINE")}, function (index, value)
+	GTluaScript.textslider(trolly_Vehicles, "匪徒武器", {}, "", {util.get_label_text("BAND_BOMB"), util.get_label_text("TOP_MINE")}, function (index, value)
         send_veh_attacker_weapon(index, value)
 	end)
 
-	mineSlider = GTluaScript.slider_text(trolly_Vehicles, "地雷", {}, "", {util.get_label_text("KINET_MINE"), util.get_label_text("EMP_MINE")}, function (index, value)
+	mineSlider = GTluaScript.textslider(trolly_Vehicles, "地雷", {}, "", {util.get_label_text("KINET_MINE"), util.get_label_text("EMP_MINE")}, function (index, value)
 		send_veh_attacker_weapon_mine(index, value)
 	end)
 
@@ -29470,11 +29975,11 @@ end)
         veh_attacker_spawn(pid, index, option)
 	end)
 
-	GTluaScript.slider_text(enemyVehiclesOpt, "迷你坦克武器", {}, "", {util.get_label_text("WT_V_PLRBUL"),util.get_label_text("MINITANK_WEAP2"),util.get_label_text("MINITANK_WEAP3"),}, function(index)
+	GTluaScript.textslider(enemyVehiclesOpt, "迷你坦克武器", {}, "", {util.get_label_text("WT_V_PLRBUL"),util.get_label_text("MINITANK_WEAP2"),util.get_label_text("MINITANK_WEAP3"),}, function(index)
         mintank_weapon(index)
 	end)
 
-	GTluaScript.slider_text(enemyVehiclesOpt, "枪手的武器", {}, "", {util.get_label_text("WT_MG"), util.get_label_text("WT_RPG")}, function(index)
+	GTluaScript.textslider(enemyVehiclesOpt, "枪手的武器", {}, "", {util.get_label_text("WT_MG"), util.get_label_text("WT_RPG")}, function(index)
 		gunner_weapon(index)
 	end)
 
@@ -32063,8 +32568,8 @@ GTAC(friendly, "检测状态", {"checkstats"}, "", function()
     util.show_corner_help("名称 : "..players.get_name(pid).."\n国家: "..language.. "\n等级: "..rank.."\n金钱: "..string.format("%.2f", money/1000000).."M$".."\n杀人/死亡: "..kills.."/"..deaths.."\n比率: "..string.format("%.2f", kdratio))
 end)
 
-GTAC(friendly, "发送好友请求", {"sendfriend"}, "", function()
-    menu.show_command_box("historybefriend " .. PLAYER.GET_PLAYER_NAME(pid))
+GTAC(friendly, "发送好友请求", {""}, "", function()
+    menu.trigger_commands("befriend " .. PLAYER.GET_PLAYER_NAME(pid))
 end, nil, nil, COMMANDPERM_FRIENDLY)
 
 GTLP(friendly, "循环称赞", {}, "", function(on_toggle)

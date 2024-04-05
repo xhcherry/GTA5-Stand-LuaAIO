@@ -100,6 +100,9 @@ APP={
 	["APP_DELETE_APP_DATA"]=--[[BOOL (bool)]] function(--[[string]] appName)native_invoker.begin_call()native_invoker.push_arg_string(appName)native_invoker.end_call_2(0x44151AEA95C8A003)return native_invoker.get_return_value_bool()end,
 }
 AUDIO={
+	["_SET_PED_AUDIO_FOOTSTEP_LOUD"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_bool(toggle);native_invoker.end_call("0653B735BFBDFE87");end,
+	-- Enables/disables ped's "quiet" footstep sound.
+	["_SET_PED_AUDIO_FOOTSTEP_QUIET"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_bool(toggle);native_invoker.end_call("29DA3CA8D8B2692D");end,
 	["_SET_SIREN_KEEP_ON"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_bool(toggle);native_invoker.end_call("F584CF8529B51434");end,
 	["_TRIGGER_SIREN"]=--[[void]] function(--[[Vehicle (int)]] vehicle)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.end_call("66C3FB05206041BA");end,
 	-- All found occurrences in b617d, sorted alphabetically and identical lines removed: pastebin.com/RFb4GTny
@@ -1836,6 +1839,9 @@ DLC={
 	["ON_ENTER_MP"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x0888C3502DBBEEF5)end,
 }
 ENTITY={
+	["_GET_ENTITY_BONE_POSITION_2"]=--[[Vector3 (vector3)]] function(--[[Entity (int)]] entity,--[[int]] boneIndex)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.push_arg_int(boneIndex);native_invoker.end_call("46F8696933A63C9B");return native_invoker.get_return_value_vector3();end,
+	["_SET_ENTITY_CLEANUP_BY_ENGINE"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.push_arg_bool(toggle);native_invoker.end_call("3910051CCECDB00C");end,
+	["_GET_ENTITY_CAN_BE_DAMAGED"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.end_call("D95CC5D2AB15A09F");return native_invoker.get_return_value_bool();end,
 	-- Checks whether an entity exists in the game world.
 	["DOES_ENTITY_EXIST"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x7239B21A38F536BA)return native_invoker.get_return_value_bool()end,
 	["DOES_ENTITY_BELONG_TO_THIS_SCRIPT"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xDDE6DF5AE89981D2)return native_invoker.get_return_value_bool()end,
@@ -2691,6 +2697,18 @@ FIRE={
 	["GET_OWNER_OF_EXPLOSION_IN_ANGLED_AREA"]=--[[Entity (int)]] function(--[[int]] explosionType,--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2,--[[float]] radius)native_invoker.begin_call()native_invoker.push_arg_int(explosionType)native_invoker.push_arg_float(x1)native_invoker.push_arg_float(y1)native_invoker.push_arg_float(z1)native_invoker.push_arg_float(x2)native_invoker.push_arg_float(y2)native_invoker.push_arg_float(z2)native_invoker.push_arg_float(radius)native_invoker.end_call_2(0x14BA4BA137AF6CEC)return native_invoker.get_return_value_int()end,
 }
 GRAPHICS={
+	["_SET_FORCE_PED_FOOTSTEPS_TRACKS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("AEEDAD1420C65CC0");end,
+	-- Forces vehicle trails on all surfaces.
+	-- 
+	-- USE_/USING_*
+	["_SET_FORCE_VEHICLE_TRAILS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("4CC7F0FEA5283FE0");end,
+	["_DRAW_SPHERE"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[int]] red,--[[int]] green,--[[int]] blue,--[[float]] alpha)native_invoker.begin_call();native_invoker.push_arg_float(x);native_invoker.push_arg_float(y);native_invoker.push_arg_float(z);native_invoker.push_arg_float(radius);native_invoker.push_arg_int(red);native_invoker.push_arg_int(green);native_invoker.push_arg_int(blue);native_invoker.push_arg_float(alpha);native_invoker.end_call("799017F9E3B10112");end,
+	["_SEETHROUGH_SET_MAX_THICKNESS"]=--[[void]] function(--[[float]] thickness)native_invoker.begin_call();native_invoker.push_arg_float(thickness);native_invoker.end_call("0C8FAC83902A62DF");end,
+	["_SEETHROUGH_SET_NOISE_AMOUNT_MIN"]=--[[void]] function(--[[float]] amount)native_invoker.begin_call();native_invoker.push_arg_float(amount);native_invoker.end_call("FF5992E1C9E65D05");end,
+	["_SEETHROUGH_SET_NOISE_AMOUNT_MAX"]=--[[void]] function(--[[float]] amount)native_invoker.begin_call();native_invoker.push_arg_float(amount);native_invoker.end_call("FEBFBFDFB66039DE");end,
+	["_SEETHROUGH_SET_HI_LIGHT_INTENSITY"]=--[[void]] function(--[[float]] intensity)native_invoker.begin_call();native_invoker.push_arg_float(intensity);native_invoker.end_call("19E50EB6E33E1D28");end,
+	["_SEETHROUGH_SET_HI_LIGHT_NOISE"]=--[[void]] function(--[[float]] noise)native_invoker.begin_call();native_invoker.push_arg_float(noise);native_invoker.end_call("1636D7FC127B10D2");end,
+	["_DRAW_SPRITE_POLY_2"]=--[[void]] function(--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2,--[[float]] x3,--[[float]] y3,--[[float]] z3,--[[float]] red1,--[[float]] green1,--[[float]] blue1,--[[int]] alpha1,--[[float]] red2,--[[float]] green2,--[[float]] blue2,--[[int]] alpha2,--[[float]] red3,--[[float]] green3,--[[float]] blue3,--[[int]] alpha3,--[[string]] textureDict,--[[string]] textureName,--[[float]] u1,--[[float]] v1,--[[float]] w1,--[[float]] u2,--[[float]] v2,--[[float]] w2,--[[float]] u3,--[[float]] v3,--[[float]] w3)native_invoker.begin_call();native_invoker.push_arg_float(x1);native_invoker.push_arg_float(y1);native_invoker.push_arg_float(z1);native_invoker.push_arg_float(x2);native_invoker.push_arg_float(y2);native_invoker.push_arg_float(z2);native_invoker.push_arg_float(x3);native_invoker.push_arg_float(y3);native_invoker.push_arg_float(z3);native_invoker.push_arg_float(red1);native_invoker.push_arg_float(green1);native_invoker.push_arg_float(blue1);native_invoker.push_arg_int(alpha1);native_invoker.push_arg_float(red2);native_invoker.push_arg_float(green2);native_invoker.push_arg_float(blue2);native_invoker.push_arg_int(alpha2);native_invoker.push_arg_float(red3);native_invoker.push_arg_float(green3);native_invoker.push_arg_float(blue3);native_invoker.push_arg_int(alpha3);native_invoker.push_arg_string(textureDict);native_invoker.push_arg_string(textureName);native_invoker.push_arg_float(u1);native_invoker.push_arg_float(v1);native_invoker.push_arg_float(w1);native_invoker.push_arg_float(u2);native_invoker.push_arg_float(v2);native_invoker.push_arg_float(w2);native_invoker.push_arg_float(u3);native_invoker.push_arg_float(v3);native_invoker.push_arg_float(w3);native_invoker.end_call("736D7AA1B750856B");end,
 	-- NOTE: Debugging functions are not present in the retail version of the game.
 	["SET_DEBUG_LINES_AND_SPHERES_DRAWING_ACTIVE"]=--[[void]] function(--[[BOOL (bool)]] enabled)native_invoker.begin_call()native_invoker.push_arg_bool(enabled)native_invoker.end_call_2(0x175B6BFC15CDD0C5)end,
 	["DRAW_DEBUG_LINE"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4,--[[Any (int)]] p5,--[[Any (int)]] p6,--[[Any (int)]] p7,--[[Any (int)]] p8,--[[Any (int)]] p9)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.push_arg_int(p5)native_invoker.push_arg_int(p6)native_invoker.push_arg_int(p7)native_invoker.push_arg_int(p8)native_invoker.push_arg_int(p9)native_invoker.end_call_2(0x7FDFADE676AA3CB0)end,
@@ -3881,6 +3899,9 @@ GRAPHICS={
 	["ANIMPOSTFX_STOP_AND_FLUSH_REQUESTS"]=--[[void]] function(--[[string]] effectName)native_invoker.begin_call()native_invoker.push_arg_string(effectName)native_invoker.end_call_2(0xD2209BE128B5418C)end,
 }
 HUD={
+	["_SET_MINIMAP_SONAR_ENABLED"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_bool(toggle);native_invoker.end_call("6B50FC8749632EC1");end,
+	["_GET_CLOSEST_BLIP_OF_TYPE"]=--[[Blip (int)]] function(--[[int]] blipSprite)native_invoker.begin_call();native_invoker.push_arg_int(blipSprite);native_invoker.end_call("D484BF71050CA1EE");return native_invoker.get_return_value_int();end,
+	["_SET_PLAYER_CASH_CHANGE"]=--[[void]] function(--[[int]] cash,--[[int]] bank)native_invoker.begin_call();native_invoker.push_arg_int(cash);native_invoker.push_arg_int(bank);native_invoker.end_call("0772DF77852C2E30");end,
 	-- Initializes the text entry for the the text next to a loading prompt. All natives for building UI texts can be used here
 	-- 
 	-- 
@@ -6820,6 +6841,15 @@ NETSHOPPING={
 	["NET_GAMESERVER_SET_TELEMETRY_NONCE_SEED"]=--[[BOOL (bool)]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x9507D4271988E1AE)return native_invoker.get_return_value_bool()end,
 }
 NETWORK={
+	["_SET_RELATIONSHIP_TO_PLAYER"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(player);native_invoker.push_arg_bool(p1);native_invoker.end_call("A7C511FA1C5BDA38");end,
+	-- Must be a value between 1 and 254
+	["_SET_GHOSTED_ENTITY_ALPHA"]=--[[void]] function(--[[int]] alpha)native_invoker.begin_call();native_invoker.push_arg_int(alpha);native_invoker.end_call("658500AE6D723A7E");end,
+	-- Resets the entity ghost alpha to the default value (128)
+	["_RESET_GHOSTED_ENTITY_ALPHA"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("17330EBF2F2124A8");end,
+	["_NETWORK_SET_ENTITY_GHOSTED_WITH_OWNER"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.push_arg_bool(p1);native_invoker.end_call("4BA166079D658ED4");end,
+	["_NETWORK_GET_PLAYER_COORDS"]=--[[Vector3 (vector3)]] function(--[[Player (int)]] player)native_invoker.begin_call();native_invoker.push_arg_int(player);native_invoker.end_call("125E6D638B8605D4");return native_invoker.get_return_value_vector3();end,
+	-- Used by NetBlender
+	["_NETWORK_GET_LAST_VELOCITY_RECEIVED"]=--[[Vector3 (vector3)]] function(--[[Entity (int)]] entity)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.end_call("33DE49EDF4DDE77A");return native_invoker.get_return_value_vector3();end,
 	-- Online version is defined here: update\update.rpf\common\data\version.txt
 	-- 
 	-- Example:
@@ -8425,6 +8455,12 @@ OBJECT={
 	["SET_IS_OBJECT_BALL"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xB5B7742424BD4445)end,
 }
 PAD={
+	["_SET_CONTROL_NORMAL"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control,--[[float]] amount)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.push_arg_float(amount);native_invoker.end_call("E8A25867FBA3B05E");return native_invoker.get_return_value_bool();end,
+	["_IS_USING_KEYBOARD"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("A571D46727E2B718");return native_invoker.get_return_value_bool();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Used to be known as _IS_INPUT_JUST_DISABLED
+	["_IS_USING_KEYBOARD_2"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("13337B38DB572509");return native_invoker.get_return_value_bool();end,
 	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
 	["IS_CONTROL_ENABLED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x1CEA6BFDF248E5D9)return native_invoker.get_return_value_bool()end,
 	-- Returns whether a control is currently pressed.
@@ -8817,6 +8853,8 @@ PATHFIND={
 	["CALCULATE_TRAVEL_DISTANCE_BETWEEN_POINTS"]=--[[float]] function(--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2)native_invoker.begin_call()native_invoker.push_arg_float(x1)native_invoker.push_arg_float(y1)native_invoker.push_arg_float(z1)native_invoker.push_arg_float(x2)native_invoker.push_arg_float(y2)native_invoker.push_arg_float(z2)native_invoker.end_call_2(0xADD95C7005C4A197)return native_invoker.get_return_value_float()end,
 }
 PED={
+	["_SET_PED_HAIR_COLOR"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] colorID,--[[int]] highlightColorID)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_int(colorID);native_invoker.push_arg_int(highlightColorID);native_invoker.end_call("4CFFC65454C93A49");end,
+	["_DOES_RELATIONSHIP_GROUP_EXIST"]=--[[BOOL (bool)]] function(--[[Hash (int)]] groupHash)native_invoker.begin_call();native_invoker.push_arg_int(groupHash);native_invoker.end_call("CC6E3B6BB69501F1");return native_invoker.get_return_value_bool();end,
 	-- https://alloc8or.re/gta5/doc/enums/ePedType.txt
 	-- 
 	-- Full list of peds by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/peds.json
@@ -11339,6 +11377,8 @@ PHYSICS={
 	["SET_IN_ARENA_MODE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xAA6A6098851C396F)end,
 }
 PLAYER={
+	["_GET_PLAYER_HEALTH_RECHARGE_LIMIT"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call();native_invoker.push_arg_int(player);native_invoker.end_call("8BC515BAE4AAF8FF");return native_invoker.get_return_value_float();end,
+	["_SET_PLAYER_HEALTH_RECHARGE_LIMIT"]=--[[void]] function(--[[Player (int)]] player,--[[float]] limit)native_invoker.begin_call();native_invoker.push_arg_int(player);native_invoker.push_arg_float(limit);native_invoker.end_call("C388A0F065F5BC34");end,
 	-- Gets the ped for a specified player index.
 	["GET_PLAYER_PED"]=--[[Ped (int)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x43A66C31C68491C0)return native_invoker.get_return_value_int()end,
 	-- Does the same like PLAYER::GET_PLAYER_PED
@@ -14532,6 +14572,10 @@ TASK={
 	["IS_PED_CUFFED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x74E559B3BC910685)return native_invoker.get_return_value_bool()end,
 }
 VEHICLE={
+	["_SET_VEHICLE_MAX_SPEED"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[float]] speed)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_float(speed);native_invoker.end_call("BAA045B4E42F3C06");end,
+	["_GET_MAKE_NAME_FROM_VEHICLE_MODEL"]=--[[string]] function(--[[Hash (int)]] modelHash)native_invoker.begin_call();native_invoker.push_arg_int(modelHash);native_invoker.end_call("F7AF4F159FF99F97");return native_invoker.get_return_value_string();end,
+	["_SET_VEHICLE_PARACHUTE_ACTIVE"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] active)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_bool(active);native_invoker.end_call("0BFFB028B3DD0A97");end,
+	["_SET_VEHICLE_PARACHUTE_MODEL"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[Hash (int)]] modelHash)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_int(modelHash);native_invoker.end_call("4D610C6B56031351");end,
 	["_DISABLE_VEHICLE_NEON_LIGHTS"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_bool(toggle);native_invoker.end_call("83F813570FF519DE");end,
 	["_SET_DISABLE_SUPERDUMMY_MODE"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.push_arg_bool(p1);native_invoker.end_call("B088E9A47AE6EDD5");end,
 	["_REQUEST_VEHICLE_DASHBOARD_SCALEFORM_MOVIE"]=--[[void]] function(--[[Vehicle (int)]] vehicle)native_invoker.begin_call();native_invoker.push_arg_int(vehicle);native_invoker.end_call("DBA3C090E3D74690");end,
