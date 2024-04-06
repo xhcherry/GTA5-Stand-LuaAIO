@@ -190,6 +190,8 @@ sxid = {{
 }, {
     playeridx = "StoryHope"
 }, {
+    playeridx = "dadwas"
+}, {
     playeridx = ""
 },
 }
@@ -2330,6 +2332,8 @@ spid = {{
     playerid = "xiaobai-0714"
 }, {
     playerid = "Aimee-Ellis"
+}, {
+    playerid = "lie-ma-ren-sbw"
 }, {
     playerid = ""
 },

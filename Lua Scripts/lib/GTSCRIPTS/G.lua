@@ -134,14 +134,13 @@ Web_Http = GTH(G, ">>GTLua 官方网站", "http://gtlua.cn", "欢迎前来访问
 mastervip = GT(G, ">>Ultra级会员功能")
 func388()
 
-
--- for _, idx in ipairs(sxid) do
---     local mvip = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user())
---     if mvip == idx.playeridx then
---         mastervip = GT(G, ">>Ultra级会员功能")
---         func388()
---     end
--- end
+for _, idx in ipairs(sxid) do
+    local mvip = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user())
+    if mvip == idx.playeridx then
+        mastervip = GT(G, ">>Ultra级会员功能")
+        func388()
+    end
+end
 
 enable_options = GTTG(G, ">>快捷入口", {}, "", function (on) 
     Quick_Enable(on) 
@@ -395,6 +394,12 @@ notified_devs = {}
 dev = GTTG(players_root, "DEV", {"devcheck"}, "", function(f)
     devgt = f
     while devgt do
+        wait()
+
+        if players.get_name(players.user()) ~= SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user()) then
+            notified_devs[players.get_name(players.user())] = true
+        end
+
         for pid = 0, 32 do
             playerrid = players.get_name(pid)
             for _, id in ipairs(devid) do

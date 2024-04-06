@@ -34,7 +34,7 @@ gtlog = util.log
 new = {}
 Ini = {}
 --
-GT_version = '4.05'
+GT_version = '4.06'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -42,7 +42,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    notification("更新了武器特效并放置在武器选项首位\n战局选项>阻止脚本主机变更\n自我选项>自我娱乐>电网\n恶搞选项>近期更新>压杀3\n恶搞选项>近期更新>神出鬼没声\n恶搞选项>近期更新>附加垃圾车\n恶搞选项>近期更新>午夜DJ\n恶搞选项>近期更新>禁用行走和武器\n恶搞选项>近期更新>禁用跳跃和攀登\n恶搞选项>近期更新>禁用炮弹\n恶搞选项>近期更新>玩家磁场混乱\n修复保镖选项生成错误\n修复了伞崩报错\n修复80个got nil的报错\n错误修复和皇榜添加")
+    notification("4.06:\n修复了压杀3和禁用跳跃和攀登时而无效\n稳定性优化\n4.05:\n更新了武器特效并放置在武器选项首位\n战局选项>阻止脚本主机变更\n自我选项>自我娱乐>电网\n恶搞选项>近期更新>压杀3\n恶搞选项>近期更新>神出鬼没声\n恶搞选项>近期更新>附加垃圾车\n恶搞选项>近期更新>午夜DJ\n恶搞选项>近期更新>禁用行走和武器\n恶搞选项>近期更新>禁用跳跃和攀登\n恶搞选项>近期更新>禁用炮弹\n恶搞选项>近期更新>玩家磁场混乱\n修复保镖选项生成错误\n修复了伞崩报错\n修复80个got nil的报错\n错误修复和皇榜添加")
 end
 --
 
@@ -55,7 +55,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 4
-notifyDay = 5
+notifyDay = 6
 
 _G.daysSince = _G.daysSince or 0
 
@@ -4357,7 +4357,7 @@ function initial_d_score_thread()
                 else
                     if is_drifting then
                         is_drifting = false
-                        notify("总漂移得分: " .. drift_score)
+                        gtoast("总漂移得分: " .. drift_score)
                     end
                     drift_score = 0
                 end
@@ -21328,7 +21328,7 @@ function TELEPORT(X, Y, Z)
 end
 function cshj()
     if STAT_GET_INT("IH_SUB_OWNED") == 0 then
-        NOTIFY(TRANSLATE("You have not bought Kosatka yet. Buy it first to teleport!"))
+        NOTIFY(TRANSLATE("先把虎鲸喊出来！"))
     else
         TELEPORT(1561.2369, 385.8771, -49.689915)
         SET_HEADING(175)
@@ -24436,12 +24436,12 @@ function func388()
     GTD(mastervip, "Ultra 会员级功能")
     GTD(mastervip, "请随时关注这里的新功能")
 
-    -- GTAC(mastervip, '全局忧郁踢', {}, '', function()
-    --     allplayEvents(kickevents)
-    --     for _, pid in players.list(false,true, true) do
-    --         menu.trigger_commands("kick" .. PLAYER.GET_PLAYER_NAME(pid))
-    --     end
-    -- end)
+    GTAC(mastervip, '全局忧郁踢', {}, '', function()
+        allplayEvents(kickevents)
+        for _, pid in players.list(false,true, true) do
+            menu.trigger_commands("kick" .. PLAYER.GET_PLAYER_NAME(pid))
+        end
+    end)
 
     GTTG(mastervip, "武器追踪炮弹", {},'射击武器生效.',function(toggle)
         gUsingValkRocket = toggle
@@ -27462,7 +27462,7 @@ GTTG(updatetroll, '禁用跳跃和攀登',{},'',function(f17)
         ENTITY.SET_ENTITY_ROTATION(DisableJumpVeh, 0, 0, ENTITY.GET_ENTITY_HEADING(
             PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)))
         if entities.get_owner(DisableJumpVeh) ~= players.user() then
-            notify("发生错误,如果问题仍然存在,请更改战局.")
+            gtoast("发生错误,如果问题仍然存在,请更改战局.")
             fon17n = false
         end
         wait()
@@ -27583,7 +27583,7 @@ GTTG(updatetroll, '压杀3', {}, '', function(f5)
         ENTITY.APPLY_FORCE_TO_ENTITY(crush_ent, 1, 0, 0, -25, 0, 0, 0, false, true)
         wait(1000)
         if entities.get_owner(crush_ent) ~= players.user() then
-            notify("发生错误,如果问题仍然存在,请更改战局.")
+            gtoast("发生错误,如果问题仍然存在,请更改战局.")
             fon5 = false
         end
     end
