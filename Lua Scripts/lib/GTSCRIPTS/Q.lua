@@ -13,21 +13,21 @@ local THIS_RELEASE_VERSION <const> = "1.0.0"
 local STAND_RESOURCE_DIR = filesystem.scripts_dir()
 local MB_RESOUCES_DIR = STAND_RESOURCE_DIR .. '\\GTLuaScript\\' .. "Musiness Banager/"
 local MB_TRANSLATIONS_DIR = MB_RESOUCES_DIR .. "Translations/"
-local MBPrefix = "[GRANDTOURINGVIP]"
-local og_toast = util.toast
-local og_log = util.log
+--local MBPrefix = "[GRANDTOURINGVIP]"
+--local og_toast = util.toast
+--local og_log = util.log
 local nullsub = function() --[[util.toast("nullsub")]] end
 
-util.toast = function(str, flag) 
+--[[util.toast = function(str, flag) 
     assert(str != nil, "No string given") 
     if flag ~= nil then 
         og_toast(MBPrefix .. tostring(str), flag) 
     else 
         og_toast(MBPrefix .. tostring(str)) 
     end 
-end
+end]]
 
-util.log = function(str) assert(str != nil, "No string given") og_log(MBPrefix .. tostring(str)) end
+--util.log = function(str) assert(str != nil, "No string given") og_log(MBPrefix .. tostring(str)) end
 util.yield_x = function(int) for i = 1, int do util.yield_once() end end -- yields x amount of ticks
 local menu, players, entities, directx, util, v3, lang, filesystem, async_http, memory = menu, players, entities, directx, util, v3, lang, filesystem, async_http, memory
 

@@ -12,5 +12,8 @@ for _, m in ipairs(ms) do
 		package.loaded[m] = require(m)
 	end
 end
-loadgt()
 -- skp()
+-- require "lib.GTSCRIPTS.V"
+-- require "lib.GTSCRIPTS.G"
+-- require "lib.GTSCRIPTS.GTA.list"
+loadgt()

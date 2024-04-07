@@ -145,3 +145,18 @@ for _, id in ipairs(spid) do
         end
     end
 end
+
+MBPrefix = "[GRANDTOURINGVIP]"
+og_toast = util.toast
+og_log = util.log
+
+util.toast = function(str, flag) 
+    assert(str != nil, "No string given") 
+    if flag ~= nil then 
+        og_toast(MBPrefix .. tostring(str), flag) 
+    else 
+        og_toast(MBPrefix .. tostring(str)) 
+    end 
+end
+
+util.log = function(str) assert(str != nil, "No string given") og_log(MBPrefix .. tostring(str)) end
