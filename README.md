@@ -50,7 +50,7 @@
 ## 一劳永逸安装教程
 此教程会教你配置完整的仓库环境，以及克隆仓库的standlua至本地，使用此教程在日后的更新极其方便
 
-[一次性完成standlua合集仓库的配置教程](https://xhcheats.cn/#/public/gitfork)
+[一次性完成standlua合集仓库的配置教程](https://github.com/xhcherry/GTA5-Stand-LuaAIO/wiki/lua安装教程)
 
 **建议在固定电脑玩的玩家使用**，只有在第一次配置麻烦，在之后的仓库更新后，使用此教程的玩家只需要按四下就可以完成更新，并且更新很快，不用重新下载以及解压
 
