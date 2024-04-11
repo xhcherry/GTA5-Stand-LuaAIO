@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 12/15/2023 10:33:11 PM
-# Heist Control Version: V 3.3.9
+# Generated Date: 12/17/2023 01:20:00 AM
+# Heist Control Version: V 3.3.10
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -680,13 +680,9 @@ Crew ID = ID de Crew
 Current Crew Level = Niveau actuel de Crew
 Choose Crew Level = Choisir le niveau de Crew
 Set Crew Level = Régler le niveau de Crew
-
-
-# Start of newly updated translations.
-# Translate them!
-
-
 But, all features of HC should work without any patches! = Cependant toutes les options du HC devraient fonctionner sans aucun correctif !
 HC is needed to be patched by the developer. Please be patient. = Le HC doit être corrigé par le développeur. Veuillez patienter.
 You won't get money if you don't keep money limitation! = Vous ne gagnerez pas d'argent si vous n'en respectez pas les limites!
 There is cooldown time when after you do play any heists once. The cooldown time is 20 mins, so this let you know the time passed or not. = Il y a une temporisation de 20 minutes lorsque vous faites un braquage. Cette option vous permet de savoir si le temps est écoulé ou non.
+Modify Contracts payout - $1 Million = Modifier le paiement des contrats - 1 million de dollars
+Always keep this option enabled before starting a contract = Cette option doit toujours être activée avant le début d'un contrat
