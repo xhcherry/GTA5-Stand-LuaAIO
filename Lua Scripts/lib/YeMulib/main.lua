@@ -801,7 +801,7 @@ function acknowledgement()
     util.toast("快进来,劝你耗子尾汁！~")
     end)
     menu.hyperlink(script_meta_menu, "加入新夜幕官方用户群", "https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=VzopCmy2xBEAkYmSU8ya4xQbllzQFQHv&authKey=NHDDDI56aESkD3ZS9E2W51WBf7MyvDkVkd5J5bGODrKpEL%2B0khMEESePgDemnlSV&noverify=0&group_code=859074951")
-    menu.readonly(script_meta_menu, "夜幕官方网站", "暂无官网")
+    menu.hyperlink(script_meta_menu, "夜幕官方网站", "http://www.nightfalls.xyz")
 
     menu.divider(script_meta_menu, "夜幕主要负责")
     menu.readonly(script_meta_menu, "技术支持", "夜幕团队")

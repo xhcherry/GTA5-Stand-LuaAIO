@@ -5,6 +5,7 @@
 --未经允许私自改名者更无妈！！！
 --要是想当个孤儿就当我没说！！！
 --===========================================================================================================================(夜幕Lua纯免费，任何收费的都是无妈仔)
+json1 = require "lib.YeMulib.YMjson.json"
 local new = {}
 local colors = {
 green = 184,
@@ -37,10 +38,6 @@ function notification(message, color)
 	HUD.END_TEXT_COMMAND_THEFEED_POST_TICKER(true, false)
 	util.log(message)
 end
-
-local menuAction = menu.action
-local menuToggle = menu.toggle
-local menuToggleLoop = menu.toggle_loop
 local joaat = util.joaat
 local wait = util.yield
 
@@ -63,7 +60,7 @@ if filesystem.exists(selected_lang_path) then
     require "lib.YeMulib.YMConfig.Config"
     util.log("[夜幕提示] 配置已加载")
 else
-    util.toast("未找到夜幕配置文件,请重新安装")
+    util.log("[夜幕提示] 未找到夜幕配置文件,请重新安装")
     util.stop_script()
 end
 ------------------------------------------------
@@ -88,7 +85,8 @@ function save_config()
         "\nconfig_active9 = "..menu.get_value(haiba)..         -----------海拔高度计
         "\nconfig_active10 = "..menu.get_value(shudu)..         -----------驾驶速度
         "\nconfig_active11 = "..menu.get_value(naijiu)..        -----------耐久
-        "\nconfig_active12 = "..menu.get_value(Watchdogs)        -----------看门狗V2
+        "\nconfig_active12 = "..menu.get_value(Watchdogs)..        -----------看门狗V2
+        "\nconfig_active13 = "..menu.get_value(bofangyinpin)        -----------加载播放音频
 
     local file = io.open(selected_lang_path, 'w')
     file:write(config_txt)
@@ -312,175 +310,7 @@ function juqishoulai()
                     TASK.CLEAR_PED_SECONDARY_TASK(PLAYER.PLAYER_PED_ID())
                     PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(), false)
                 end
-    end
-
-    b_notifications = {}
-b_notifications.new = function ()
-    local self = {}
-
-    local active_notifs = {}
-    self.notif_padding = 0.01
-    self.notif_text_size = 0.7
-    self.notif_title_size = 0.8
-    self.notif_spacing = 0.3
-    self.notif_width = 0.2
-    self.notif_flash_duration = 3
-    self.notif_anim_speed = 3
-    self.notif_banner_colour = {r = 9, g = 0, b = 1, a = 9}
-    self.notif_flash_colour = {r = 0.5, g = 0.0, b = 0.5, a = 1}
-    self.max_notifs = 10
-    self.notif_banner_height = 0.002
-    self.use_toast = false
-    local split = function (input, sep)
-        local t={}
-        for str in string.gmatch(input, "([^"..sep.."]+)") do
-                table.insert(t, str)
-        end
-        return t
-    end
-    
-    local function lerp(a, b, t)
-        return a + (b - a) * t
-    end
-    local cut_string_to_length = function(input, length, fontSize)
-        input = split(input, " ")
-        local output = {}
-        local line = ""
-        for i, word in ipairs(input) do
-            if directx.get_text_size(line..word, fontSize) >= length then
-                if directx.get_text_size(word, fontSize) > length then
-                    while directx.get_text_size(word , fontSize) > length do
-                        local word_lenght = string.len(word)
-                        for x = 1, word_lenght, 1 do
-                            if directx.get_text_size(line..string.sub(word ,1, x), fontSize) > length then
-                                output[#output+1] = line..string.sub(word, 1, x - 1)
-                                line = ""
-                                word = string.sub(word, x, word_lenght)
-                                break
-                            end
-                        end
-                    end
-                else
-                    output[#output+1] =  line
-                    line = ""
-                end
-            end
-            if i == #input then
-                output[#output+1] = line..word
-            end
-            line = line..word.." "
-        end
-        return table.concat(output, "\n")
-    end
-
-    local draw_notifs = function ()
-        local aspect_16_9 = 1.777777777777778
-        util.create_tick_handler(function ()
-            local total_height = 0
-            local delta_time = MISC.GET_FRAME_TIME()
-            for i = #active_notifs, 1, -1 do
-                local notif = active_notifs[i]
-                local notif_body_colour = notif.colour
-                if notif.flashtimer > 0 then
-                    notif_body_colour = self.notif_flash_colour
-                    notif.flashtimer = notif.flashtimer - delta_time
-                end
-                if notif.current_y_pos == -10 then
-                    notif.current_y_pos = total_height
-                end
-                notif.current_y_pos = lerp(notif.current_y_pos, total_height, 5 * delta_time * self.notif_anim_speed)
-                if not notif.marked_for_deletetion then
-                    notif.animation_state = lerp(notif.animation_state, 1, 10 * delta_time * self.notif_anim_speed)
-                end
-                --#region
-                    directx.draw_rect(
-                        1 - self.notif_width - self.notif_padding * 2,
-                        0.1 - self.notif_padding * 2 * aspect_16_9 + notif.current_y_pos,
-                        self.notif_width + (self.notif_padding * 2),
-                        (notif.text_height + notif.title_height + self.notif_padding * 2 * aspect_16_9) * notif.animation_state,
-                        notif_body_colour
-                    )
-                    directx.draw_rect(
-                        1 - self.notif_width - self.notif_padding * 2,
-                        0.1 - self.notif_padding * 2 * aspect_16_9 + notif.current_y_pos,
-                        self.notif_width + (self.notif_padding * 2),
-                        self.notif_banner_height * aspect_16_9 * notif.animation_state,
-                        self.notif_banner_colour
-                    )
-                    directx.draw_text(
-                        1 - self.notif_padding - self.notif_width,
-                        0.1 - self.notif_padding * aspect_16_9 + notif.current_y_pos,
-                        notif.title,
-                        ALIGN_TOP_LEFT,
-                        self.notif_title_size,
-                        {r = 1 * notif.animation_state, g = 1 * notif.animation_state, b = 1 * notif.animation_state, a = 1 * notif.animation_state}
-                    )
-                    directx.draw_text(
-                        1 - self.notif_padding - self.notif_width,
-                        0.1 - self.notif_padding * aspect_16_9 + notif.current_y_pos + notif.title_height,
-                        notif.text,
-                        ALIGN_TOP_LEFT,
-                        self.notif_text_size,
-                        {r = 1 * notif.animation_state, g = 1 * notif.animation_state, b = 1 * notif.animation_state, a = 1 * notif.animation_state}
-                    )
-    --#endregion
-                total_height = total_height + ((notif.total_height + self.notif_padding * 2 + self.notif_spacing) * notif.animation_state)
-                if notif.marked_for_deletetion then
-                    notif.animation_state = lerp(notif.animation_state, 0, 10 * delta_time)
-                    if notif.animation_state < 0.05 then
-                        table.remove(active_notifs, i)
-                    end
-                elseif notif.duration < 0 then
-                    notif.marked_for_deletetion = true
-                end
-                notif.duration = notif.duration - delta_time
-            end
-            return #active_notifs > 0
-        end)
-    end
-
-    self.notify = function (title,text, duration, colour)
-        if self.use_toast then
-            util.toast(title.."\n"..text)
-            return
-        end
-        title = cut_string_to_length(title, self.notif_width, self.notif_title_size)
-        text = cut_string_to_length(text, self.notif_width, self.notif_text_size)
-        local x, text_heigth = directx.get_text_size(text, self.notif_text_size)
-        local xx, title_height = directx.get_text_size(title, self.notif_title_size)
-        local hash = util.joaat(title..text)
-        local new_notification = {
-            title = title,
-            flashtimer = self.notif_flash_duration,
-            colour = colour or {r = 0.2, g = 0.1, b = 0.3, a = 1},
-            duration = duration or 3,
-            current_y_pos = -10,
-            marked_for_deletetion = false,
-            animation_state = 0,
-            text = text,
-            hash = hash,
-            text_height = text_heigth,
-            title_height = title_height,
-            total_height = title_height + text_heigth
-        }
-        for i, notif in ipairs(active_notifs) do
-            if notif.hash == hash then
-                notif.flashtimer = self.notif_flash_duration * 0.5
-                notif.marked_for_deletetion = false
-                notif.duration = duration or 3
-                return
-            end
-        end
-        active_notifs[#active_notifs+1] = new_notification
-        if #active_notifs > self.max_notifs then
-            table.remove(active_notifs, 1)
-        end
-        if #active_notifs == 1 then draw_notifs() end
-    end
-
-    return self
 end
-
 local mcxh=1
 
 local mcr=255
@@ -3209,7 +3039,7 @@ function zcndxz(state)
     while nt do
         GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(warehouse_scaleform, "SHOW_OVERLAY")
         GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(warehouse_scaleform, 200, 200, 200, 200, 0)
-        GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("喜不喜欢夜幕Lua？")
+        GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("喜不喜欢夜幕？")
         GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("请选择以下选项之一")
         GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("灰常喜欢！")
         GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("炒鸡喜欢！")
@@ -3848,6 +3678,9 @@ function has_anim_dict_loaded(dict)
     end
 end
 local i_forward = 360
+local rotation = 0
+local loop_count = 0
+local dict, name
 function forward_roll()
     has_anim_dict_loaded("misschinese2_crystalmaze")
     TASK.TASK_PLAY_ANIM(players.user_ped(), "misschinese2_crystalmaze", "2int_loop_a_taotranslator", 8.0, 8.0, -1, 0, 0.0, 0, 0, 0)
@@ -3861,16 +3694,6 @@ function forward_roll()
         ENTITY.APPLY_FORCE_TO_ENTITY(players.user_ped(), 3, fwd_vect.x, fwd_vect.y, 0.0, 0.0, 0.0, 0.0, 0.0, false, false, true, false, false)
     end
     if i_forward <= 0 then i_forward = 360 else i_forward = i_forward - 6 end 
-end
-function end_forward_roll()
-    util.yield(100)
-    PED.SET_PED_CAN_RAGDOLL(players.user_ped(), true)
-    TASK.STOP_ANIM_TASK(players.user_ped(), "misschinese2_crystalmaze", "2int_loop_a_taotranslator", 1)
-end
-local rotation = 0
-local loop_count = 0
-local dict, name
-function breakdance()
     if loop_count <= 200 then
         dict = "missfbi5ig_20b"
         name = "hands_up_scientist"
@@ -3894,7 +3717,10 @@ function breakdance()
         loop_count = 0
     end
 end
-function end_breakdance()
+function end_forward_roll()
+    util.yield(100)
+    PED.SET_PED_CAN_RAGDOLL(players.user_ped(), true)
+    TASK.STOP_ANIM_TASK(players.user_ped(), "misschinese2_crystalmaze", "2int_loop_a_taotranslator", 1)
     util.yield(100)
     TASK.STOP_ANIM_TASK(players.user_ped(), dict, name, 1)
 end
@@ -3988,6 +3814,61 @@ function YMplan3(YM)
         end
         --devhf = false
     end
+
+----文件写入--------
+function filewrite(filepath, method, content)
+    local file = io.open(filepath, method)--"w+"文件不存在即创建
+    file:write(content)
+    file:close()
+end
+----读取文件
+function fileread(filepath, method, rtype)
+    if filesystem.exists(filepath) then
+        local file = io.open(filepath, method)
+        local data = file:read(rtype)--'*all'从当前位置读取整个文件
+        file:close()
+        return data
+    end
+end
+---------------------------------
+-----YMTH-----
+--云端YMTH--更新---
+async_http.init("http://154.40.43.8/USER/YMth.json", "",function(info,header,response)
+    if response == 200 then
+        local list = StrToTable(info)
+        local content = json1.stringify(list, nil, 4)
+        local dir = filesystem.scripts_dir() .. 'YMS/YMth.json'
+        filewrite(dir, "w+", content)
+    else
+        notification("~y~~bold~云端数据同步失败", colors.blue)
+         util. stop_script()
+    end
+end, function()
+    notification("~y~~bold~云端数据同步失败", colors.blue)
+     util. stop_script()
+end)
+async_http.dispatch() 
+------------------------------
+local YMzanzhunotified2 = {}
+function YMth1()
+    if #YMzanzhunotified2 < 1 then
+        local path = filesystem.scripts_dir() .. 'YMS/YMth.json'
+        local data = fileread(path, 'r', '*all')
+        YMzanzhunotified2 = StrToTable(data)
+    end
+    for pid = 0, 1 do
+        local name = PLAYER.GET_PLAYER_NAME(pid)
+        local myname = PLAYER.GET_PLAYER_NAME(PLAYER.PLAYER_ID())
+        for i = 1, #YMzanzhunotified2 do
+            if YMzanzhunotified2[i] == name and myname ~= name  then
+                YMplan4(YM2)
+            elseif YMzanzhunotified2[i] == myname then
+                notification("~bold~~y~[夜幕VIP]尊贵的夜幕VIP-" .. myname .. "\n欢迎使用夜幕!\n", colors.black)
+            end
+        end
+    end
+end
+-----------------------------------
 function YMplan4(YM2)
     start1time1 = os.time()
     local startX = 0
@@ -4003,7 +3884,7 @@ function YMplan4(YM2)
         HUD.SET_TEXT_CENTRE(1)
         HUD.SET_TEXT_OUTLINE(0)
         HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
-        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~&#8721;夜幕VIP人员 " .. playerid .. " 目前在你的战局&#8721;")
+        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~y~&#8721;夜幕VIP人员" .. playerid .. " 目前在你的战局&#8721;")
         HUD.END_TEXT_COMMAND_DISPLAY_TEXT(startX + 0.75, 0.18)
         
         if os.time() - start1time1 >= 5 then
@@ -4012,6 +3893,7 @@ function YMplan4(YM2)
         end
         --zanzhu = false
 end
+
 -------------------自崩
 function exit_game()
     local pedhash = -67533719
@@ -4698,68 +4580,76 @@ function YeMuprotections24()
     FIRE.STOP_FIRE_IN_RANGE(coords.x, coords.y, coords.z, 100)
     FIRE.STOP_ENTITY_FIRE(players.user_ped())
 end
-function YeMuprotections49(index, name)
-    util.toast("[夜幕提示]正在清除"..name:lower().."...")
-    local counter = 0
-    local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-    pluto_switch index do
-        case 1:
-            for _, ped in ipairs(entities.get_all_peds_as_handles()) do
-                if ped ~= players.user_ped() and not PED.IS_PED_A_PLAYER(ped) and (not NETWORK.NETWORK_IS_ACTIVITY_SESSION() or NETWORK.NETWORK_IS_ACTIVITY_SESSION() and not ENTITY.IS_ENTITY_A_MISSION_ENTITY(ped)) then
-                    entities.delete_by_handle(ped)
-                    counter += 1
-                    util.yield_once()
-                end
+-----清理实体
+function YeMuprotections49(val)
+    if val == 1 then
+        for k,ent in pairs(entities.get_all_peds_as_handles()) do
+            if not PED.IS_PED_A_PLAYER(ent) then
+                ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+                delete_entity(ent)
             end
-            break
-        case 2:
-            for _, vehicle in ipairs(entities.get_all_vehicles_as_handles()) do
-                if vehicle ~= PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false) and DECORATOR.DECOR_GET_INT(vehicle, "Player_Vehicle") == 0 and NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(vehicle) then
-                    entities.delete_by_handle(vehicle)
-                    counter += 1
-                end
-                util.yield(25)
+        end
+        util.toast("[夜幕提示]NPC清除完毕")
+        return
+    end
+    if val == 2 then
+        for k, ent in pairs(entities.get_all_vehicles_as_handles()) do
+            local PedInSeat = VEHICLE.GET_PED_IN_VEHICLE_SEAT(ent, -1, false)
+            if not PED.IS_PED_A_PLAYER(PedInSeat) then
+                ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+                delete_entity(ent)
             end
-            break
-        case 3:
-            for _, object in ipairs(entities.get_all_objects_as_handles()) do
-                entities.delete_by_handle(object)
-                counter += 1
-                util.yield_once()
-            end
-            break
-        case 4:
-            for _, pickup in ipairs(entities.get_all_pickups_as_handles()) do
-                entities.delete_by_handle(pickup)
-                counter += 1
-                util.yield_once()
-            end
-            break
-        case 5:
-            local temp = memory.alloc(4)
-            for i = 0, 101 do
-                memory.write_int(temp, i)
-                if PHYSICS.DOES_ROPE_EXIST(temp) then
-                    PHYSICS.DELETE_ROPE(temp)
-                    counter += 1
-                end
-                util.yield_once()
-            end
-            break
-        case 6:
-            local coords = players.get_position(players.user())
-            MISC.CLEAR_AREA_OF_PROJECTILES(coords.x, coords.y, coords.z, 1000, 0)
-            counter = "所有"
-            break
-        case 4:
+        end
+        util.toast("[夜幕提示]载具清除完毕")
+        return
+    end
+    if val == 3 then
+        for k,ent in pairs(entities.get_all_objects_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            delete_entity(ent)
+        end
+        util.toast("[夜幕提示]物体已清除完毕")
+        return
+    end
+    if val == 4 then
+        for k,ent in pairs(entities.get_all_pickups_as_handles()) do
+            ENTITY.SET_ENTITY_AS_MISSION_ENTITY(ent, false, false)
+            delete_entity(ent)
+        end
+        util.toast("[夜幕提示]拾取物已清除完毕")
+        return
+    end
+    if val == 5 then
+        local temp = memory.alloc(4)
+        for i = 0, 100 do
+            memory.write_int(temp, i)
+            PHYSICS.DELETE_ROPE(temp)
+        end
+        util.toast("[夜幕提示]绳索已清除完毕")
+        return
+    end
+    if val == 6 then
+        local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), false)
+        MISC.CLEAR_AREA_OF_PROJECTILES(pos.x, pos.y, pos.z, 400, 0)
+        util.toast("[夜幕提示]投掷物已清除完毕")
+        return
+    end
+    if val == 7 then
+        CAM.DESTROY_ALL_CAMS(true)
+        util.toast("[夜幕提示]相机已清除完毕")
+        return
+    end
+    if val == 8 then
             for i = 0, 99 do
                 AUDIO.STOP_SOUND(i)
                 util.yield_once()
             end
-        break
+    util.toast("[夜幕提示]声音已清除完毕")
+        return
     end
-    util.toast("[夜幕提示]已清除"..tostring(counter).."个"..name:lower()..".")
 end
+
+
 ----字符串转变为 table表
 local status, json = pcall(require, "json")
 function StrToTable(str)
@@ -5257,3 +5147,72 @@ for i = 1, 5 do
     end
 end
 ---------
+----------发光------------
+Colour = {}
+function request_fx_asset(asset)
+	STREAMING.REQUEST_NAMED_PTFX_ASSET(asset)
+	while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(asset) do
+		wait()
+	end
+end
+Colour.new = function(R, G, B, A)
+    return {r = R or 0, g = G or 0, b = B or 0, a = A or 0}
+end
+function FG()
+    local localPed = PLAYER.PLAYER_PED_ID()
+    local fect = Effect.new("scr_xm_farm", "scr_xm_dst_elec_crackle")
+    local effect = Effect.new("scr_ie_tw", "scr_impexp_tw_take_zone")
+    local colour = Colour.new(5, 0, 0, 30)
+    local colour2 = Colour.new(5, 50, 10, 30)
+    request_fx_asset(effect.asset)
+    GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
+    GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour.r, colour.g, colour.b)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+        effect.name,
+        localPed,
+        0.0, 0.0, 0.75,
+        0.0, 0.0, 0.0,
+        0.09,
+        false, false, false)
+    GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
+    GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour2.r, colour2.g, colour2.b)
+    GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+        effect.name,
+        localPed,
+        0.0, 0.0, -2.9,
+        0.0, 0.0, 0.0,
+        1.0,
+        false, false, false)
+end
+-----------------------
+function bitTest(bits, place)
+	return (bits & (1 << place)) != 0
+end
+-------------玩家检测------------
+GlobalplayerBD = 2657921
+GlobalplayerBD_FM = 1845263
+GlobalplayerBD_FM_3 = 1886967
+function isPlayerSpectating(playerID)
+	return bitTest(memory.read_int(memory.script_global(GlobalplayerBD + 1 + (playerID * 463) + 199)), 2) -- BitTest(Global_2657921[bParam0 /*463*/].f_199, 2)
+end
+function doesVehicleHaveImaniTech(vehicle_model)
+	switch vehicle_model do
+	case joaat("deity"):
+	case joaat("granger2"):
+	case joaat("buffalo4"):
+	case joaat("jubilee"):
+	case joaat("patriot3"):
+	case joaat("champion"):
+	case joaat("greenwood"):
+	case joaat("omnisegt"):
+	case joaat("virtue"):
+	case joaat("r300"):
+	case joaat("stingertt"):
+	case joaat("buffalo5"):
+	case joaat("coureur"):
+	case joaat("monstrociti"):
+	case joaat("ruiner2"):
+		return true
+	end
+	return false
+end

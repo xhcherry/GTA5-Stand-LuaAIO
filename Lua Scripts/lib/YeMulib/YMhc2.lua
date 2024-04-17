@@ -350,11 +350,6 @@ doomsday = menu.list(Heist_Control2, "末日豪杰", {}, "")
           end
       end)
 
-------赌场刷钱
-casino_brush_money = menu.list(Heist_Control2, "全自动赌场刷钱", {}, "")
-    require "lib.sakuralib.SlotBot"
-
-
 menu.action(Heist_Control2, "将拾取物传送到自己", {}, "", function()
     local counter = 0
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())

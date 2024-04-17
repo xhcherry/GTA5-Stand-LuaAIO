@@ -1,6 +1,6 @@
 ------------------------------------夜幕LUA------------------------------
 require "lib.YeMulib.YeMulib"
-Version5 = 6.3
+Version5 = 6.4
 local net = "夜幕LUA暂时无法连接到服务器！"
 ----播放音频
 --来自https://github.com/calamity-inc/Soup-Lua-Bindings/blob/main/LUA_API.md
@@ -233,7 +233,7 @@ function xianshijiaoben1(state)
                 mcb=mcb-1
             end
         end
-    draw_string(string.format("~italic~¦~bold~欢迎使用夜幕-V" .. Version5 ..  ""), 0.38,0.05, 0.57,5)
+    draw_string(string.format("~italic~¦~bold~夜幕LUA-V" .. Version5 ..  ""), 0.15,0.02, 0.57,5)
     util.yield()
     end
 end
@@ -289,7 +289,7 @@ local colors = {
     purple = 49, 
     blue = 11
     }
-    function notification(message, color)
+    function notification1(message, color)
         local picture = "CHAR_SOCIAL_CLUB"
         util.spoof_script("main_persistent", function()
             GRAPHICS.REQUEST_STREAMED_TEXTURE_DICT(picture, 0)
@@ -307,14 +307,14 @@ local colors = {
         HUD.END_TEXT_COMMAND_THEFEED_POST_TICKER(true, false)
         util.log(message)
     end
-     notification("你好，尊贵的夜幕用户!\n&#8721;已连接！\n""[" .. YMencouragement[random_notify] .. "]", colors.black)
+     notification1("你好，尊贵的夜幕用户!\n&#8721;已连接！\n""[" .. YMencouragement[random_notify] .. "]", colors.black)
     util.on_stop(function()
-     notification("下次遇见会更好!", colors.gray)
+     notification1("下次遇见会更好!", colors.gray)
     end)
 function YMdet()
     if not async_http.have_access() then
         local y = net
-        notification("~bold~请为夜幕LUA启用互联网访问&#8721;", math.random(0, 50))
+        notification1("~bold~请为夜幕LUA启用互联网访问&#8721;", math.random(0, 50))
         util. stop_script()
     end
     --util.toast(net)
@@ -346,7 +346,6 @@ end
 	GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("left")
 	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
 end
-
 YMplanid = {{playerrid = "Hilovewould"}}
 YMth = {{playerid = "muyusd"},{playerid = "Dust-wine"},{playerid = "Maple_1999"},{playerid = "Xzzz_polar"},{playerid = "Hf19172798591"},{playerid = "dabaixiong0415"},{playerid = "sshiwga"},{playerid = "jasmine7294"},{playerid = "Admin-Stand"},{playerid = "hujkilsr"},{playerid = "Lyccchi"},{playerid = "dandanshinimenba"},{playerid = "Bronya_15644"},{playerid = "Royston7294"},{playerid = "liangzihui0522"},{playerid = "xx-bai"},{playerid = "--KZboy-SSR--"},{playerid = "RESERVEDBOSS"},{playerid = "Moldoveanuu07"},{playerid = "tiantian_qwq"},{playerid = "PowerByAndroid"},{playerid = "HeezyLua"},{playerid = "smithnsksmsmzk"},{playerid = "JiYanaa"},{playerid = "daxingxingrule"},{playerid = "sfasafafasfa"}}
 YMblacklist = {{playerrrid = "Angel00512"}}
