@@ -85,13 +85,17 @@ Theme：中文标签与主题文件
 
 学习Lua基础语法：[Lua基础教程](https://www.tutorialspoint.com/lua/index.htm)
 
+pluto: [pluto](https://pluto-lang.org/)
+
 学习stand lua API：[Stand Lua开发文档](https://stand.gg/help/lua-api-documentation)
 
-学习统计数据，全局和局部变量:[UnknownCheats](https://www.unknowncheats.me/forum/grand-theft-auto-v/)
+游戏原生功能：[GTA5原生功能](https://nativedb.dotindustries.dev/gta5/natives)
+
+游戏原生功能2：[GTA5原生功能2](https://alloc8or.re/gta5/nativedb/)
 
 学习控件、Blip等:[FiveM Docs-Game References](https://docs.fivem.net/docs/game-references/)
 
-学习标签:[GitHub Labels](https://github.com/root-cause/v-labels)
+soup lua bindings：[soup lua bindings](https://github.com/calamity-inc/Soup-Lua-Bindings/blob/main/LUA_API.md#soup-lua-bindings)
 
 查找统计数据、全局和局部变量:
 - 常用freemode.c和tuneables_processing.c

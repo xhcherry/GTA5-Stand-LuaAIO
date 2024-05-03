@@ -1,0 +1,215 @@
+@Author=zzzz#5116
+@Version=0.3.2
+! Thank you for choosing to translate Musiness Banager into your language!
+! Please do not change anything before the "="!,
+! Additions in the labels list will be marked with "+ " before the label, but without the quotes. You can search the file for "+ " every update to find the new labels!
+! Deletions in the labels list will be marked with "- " before the label. PLEASE DELETE THE ENTIRE LINE. The deletions are left in to help you understand if something was replaced!
+! For lines that begin with "+ ", remove the "+ ".
+! Lines with a "!" or "+" or "@" at the beginnning mark the line as a comment and that line will be ignored.
+! The labels that contain "{x}" where x is a number, indicate an additional piece of text. Do not add or remove or change the numbers inside of them.
+! You may however, move them around. For example if a line is "Press {1} to open {2}", you can move them around in any way you want such as "To open {2} press {1}".
+! It has been added to make it easier for languages that read right to left instead of the usual left to right.
+! One more thing: the two characters "\n" represents a new line. In game, there will be a new line where "\n" is.
+
+BUNKER=地堡
+BUSINESS=产业
+MCBUSINESS=摩托帮产业
+WAREHOUSE=仓库
+NIGHTCLUB=夜总会
+NIGHTCLUBSAFE=夜总会保险箱
+SPECIALCARGO=特种货物
+SELLMISSION=出售任务
+BUYMISSION=购买任务
+START=开始
+MONEY=金钱
+STOCK=库存
+SUPPLIES=补给品
+CRATES=板条箱
+PRODUCT=产品
+INFOOVERLAY=信息显示
+TERRORBYTE=恐霸
+! STOCK, SUPPLIES, PRODUCT should all be what the game calls it, or something equivalent
+! You might want to leave TERRORBYTE the same, unless the game calls it something different
+
+HTTPGIVEUP=无法建立与远程的连接.
+HTTPINVALID=收到来自远程的无效响应! 这可能是由于 Cloudflare 或您的杀毒软件阻止了连接. 请使用VPN连接或切换网络.
+HTTPFAILSAFE=由于故障保护而激活自毁开关.
+SCRIPTOUTOFDATE=脚本过时了! 请重新启动脚本以从仓库中获取最新版本！
+
+KILLSWITCH_SAFELOOP=由于自毁开关,强制关闭了夜总会保险箱刷钱
+KILLSWITCH_SPECIALCARGO=由于自毁开关,强制关闭了特种货物
+KILLSWITCH_MAXSELLPRICE=由于自毁开关,强制关闭了最大出售价格
+KILLSWITCH_AUTOCOMPLETE=由于自毁开关,强制关闭了自动完成
+
+TRANSACTIONSSTUCK_TOAST=您的交易似乎卡住了. 请切换战局或重新启动游戏.
+BEALONE_TOAST=您的战局里有太多玩家! 正在卡单
+
+PREFIX_SAFELOOP=\n[保险箱刷钱] {1}
+PREFIX_SPECIALCARGO=\n[特种货物] {1}
+PREFIX_TOTALEARNED=总收入: {1}
+PREFIX_MOTD=\n今日信息: {1}
+! {1} is a number, the amount of money earned in total.
+PREFIX={1} {2}
+! This can be '[x1] x2' where x1 is the prefix, and x2 is the message. This might go unused though..
+
+INFO_SCWAREHOUSE=特种货物仓库 {1}: {2}/{3}
+! {1} is slot {2} is amount {3} is capacity
+INFO_HUBBUSINESS=夜总会仓库 {1}: {2}/{3}
+! {1} is name {2} is stock {3} is max capacity
+INFO_NCSAFE=夜总会保险箱 $: {1}
+! {1} is value
+INFO_MCBUSINESS=摩托帮 {1}: {2}% | {3}/{4}
+! {1} is name {2} is supplies {3} is product {4} is capacity
+INFO_BUNKER=地堡: {1}% | {2}/{3}
+! {1} is supplies {2} is product {3} is capacity
+
+FINDSAFERWAYS=寻找更安全的赚钱方式
+FINDSAFERWAYS_DESC=在继续使用下面的金钱选项之前,请至少先阅读此内容.
+
+
+MAXSELLPRICE=最大销售价格
+MAXSELLPRICE_DESC=以尽可能高的价格出售您的{1},无论您有多少{2}.
+! {1} and {2} are the same, and may be one of the following: [STOCK], [SUPPLIES], or [PRODUCT]
+
+MONITOR=显示器
+
+MONITOR_EXTRA=显示器 {1}
+MONITOR_DESC=使用 {3} 显示您{2}的{1}数量.
+! {1} could be [STOCK], [SUPPLIES], [PRODUCT], or [MONEY]. {2} could be [NIGHTCLUBSAFE], [BUSINESS], or [WAREHOUSE]. {3} is [INFOOVERLAY] for now, but could be changed in the future.
+
+BYPASSCOOLDOWN=绕过 {1} 冷却
+! {1} may be one of the following: [SELLMISSION], [BUYMISSION]
+BYPASSCOOLDOWN_DESC=让您无需等待冷却即可{1}另一个新的{2}.
+! {1} is [START] for now, and {2} could be [SELLMISSION] or [BUYMISSION] for now.
+
+SETPRODUCT=设置产品
+SETPRODUCT_DESC=直接设置您有多少此库存产品.
+SETPRODUCT_TOAST=产品已设置.
+
+MAXPRODUCTALL=最大产品
+MAXPRODUCTALL_DESC=将您的所有库存产品的数量设置为最大值.
+MAXPRODUCTALL_TOAST=已将所有库存产品的数量修改为最大值.
+
+MAXPRODUCTIONSPEED=最大生产速度
+MCMAXPRODUCTIONSPEED_DESC=立即生效.
+NCMAXPRODUCTIONSPEED_DESC=将在一个产品完成生产后生效.
+MAXPRODUCTIONSPEED_TOAST=已最大化生产速度.
+MAXPRODUCTIONSPEEDSLOW_TOAST=已最大化生产速度. 将在生产出一个产品后生效.
+
+MAXIMUMCAPACITY=最大容量
+MAXIMUMCAPACITY_DESC=影响您库存可持有的最大容量.
+MAXIMUMCAPACITY_TOAST=已修改最大容量.
+
+SUPPLYPRODUCTRATIO=原材料->产品比例
+SUPPLYPRODUCTRATIO_DESC=设置生产一种产品所需的原材料数量. 较低的值意味着更高的效率.
+SUPPLYPRODUCTRATIO_TOAST=比例已修改.
+
+RESUPPLY=补满原材料
+RESUPPLY_DESC=将立即免费为您的企业补满原材料.
+
+TRIGGERPRODUCTION=修改保险箱金额
+TRIGGERPRODUCTION_DESC=使每日收入立即生效.
+TRIGGERPRODUCTION_TOAST=每日收入已触发.
+
+ENFORCEEASIESTMISSION=执行最简单的任务
+ENFORCEEASIESTMISSION_DESC=这将确保您始终获得最快和最简单的出售任务. 虽然,如果您太快,您可能不会得到报酬?
+
+SPECIALCARGOLIST_DESC=注意: 出售价格的上限是 $600万.
+
+SPECIALCARGOWAREHOUSE_DESC=选择要显示和修改的仓库,因为您最多可以拥有5个仓库.
+SPECIALCARGOMONITOR_DESC=显示您在所选的仓库中有多少特种货物板条箱.
+SPECIALCARGONOWAREHOUSE=未购买仓库
+SPECIALCARGONOWAREHOUSE_DESC=您在此槽位中没有仓库!
+SPECIALCARGOMAXSELLPRICE_DESC=将您的特种货物板条箱的出售价格更改为$600万.\n保持启用以确保对未来出售的正确计算.
+OPENSCREEN=打开 {1} 屏幕
+OPENSCREEN_DESC=打开 {1} 屏幕.
+! {1} could be [TERRORBYTE] or [WAREHOUSE]
+SELLACRATE=出售一个特种货物板条箱
+SELLACRATE_DESC=自动出售一个特种货物板条箱.
+
+NOTINSELECTEDWAREHOUSE_TOAST=您不在您当前选择的仓库里!
+
+AUTOCOMPLETE=自动完成 {1}
+AUTOCOMPLETE_DESC=使 {1} 自动完成.
+! {1} could be [SELLMISSION] or [BUYMISSION]
+
+NCLIST_DESC=注意: 出售价格的上限是 $400万.\n不要试图"出售全部货物"
+NCREVENUE=每日收入
+NCREVENUE_DESC=编辑您夜总会获得的收入,无论人气值是多少.
+NCREVENUE_TOAST=每日收入已设置.
+
+NCMAXPOPULARITY=满夜总会人气
+NCMAXPOPULARITY_DESC=将您的夜总会人气设置为 100%.
+NCMAXPOPULARITY_TOAST=已最大化夜总会的人气.
+
+NCSAFELOOP=挂机循环刷钱
+NCSAFELOOP_DESC=在使用此功能前请先打开您的夜总会保险箱!\n将使您大约每4-5秒获得$30万.
+
+NCSAFELOOPDELAY=循环延迟
+NCSAFELOOPDELAY_DESC=将设置挂机循环刷钱在主要步骤之间等待多长时间(毫秒).
+NCSAFELOOPDELAY_TOAST=延迟修改.
+
+NCSAFELOOPTRANSACTIONTIMEOUT=交易超时
+NCSAFELOOPTRANSACTIONTIMEOUT_DESC=设置在因交易时间过长放弃之前等待的交易处理时间(毫秒).
+NCSAFELOOPTIMEOUTMODIFIED_TOAST=交易超时已修改.
+
+NCSAFELOOPSTOP=设置到 $x 后停止
+NCSAFELOOPSTOP_DESC=当金钱到达设定的金额后将自动停止挂机循环刷钱.
+NCSAFELOOPSTOP_TOAST=限制设置.
+
+NCRESETSAFEVALUE=重置保险箱数值
+! Referenced in [NCSAFELOOPSAFEOVERLIMIT_TOAST]
+NCRESETSAFEVALUE_DESC=如果您的夜总会保险箱高于$30万或低于$0,那该功能应该可以解决此问题.
+NCRESETSAFEVALUEWAIT_TOAST=正在重置您的夜总会保险箱,请稍候.
+NCRESETSAFEVALUESUCCESS_TOAST=您的夜总会保险箱现在应该已被重置.
+NCRESETSAFEVALUESKIP_TOAST=您的夜总会保险箱似乎没问题.
+
+NCSAFELOOPMAXIMUMVALUEREACHED_TOAST=已达到最大值!
+NCSAFELOOPNOTINNIGHTCLUB_TOAST=您似乎不在您的夜总会里. 在使用此功能之前,请确保您在您的夜总会里并打开了保险箱!
+NCSAFELOOPTIMEOUT_TOAST=好像您遇到了交易超时.
+NCSAFELOOPSAFEOVERLIMIT_TOAST=呃噢,好像保险箱超出了限制. 请使用 "重置保险箱数值" 然后重试.
+! References [NCRESETSAFEVALUE]
+NCSAFELOOPSOMETHINGWENTWRONG_TOAST=事情没有按预期方式进行...如果您可以重现此问题,请到Discord报告.
+
+MCLIST_DESC=注意: 出售价格的上限是 $250万.
+
+BUNKERLIST_DESC=注意: 出售价格的上限是 $270万.
+
+TELEPORTTO=传送到 {1}
+TELEPORTTO_DESC=传送您到您的 {1}.
+! {1} may be one of the following: [PROPERTY], [WAREHOUSE], [NIGHTCLUB], or [NIGHTCLUBSAFE]
+
+NOTINNIGHTCLUB_TOAST=您不在您的夜总会!
+
+
+SHOWMOTDBLANK_TOAST=今日信息为空.
+WARNINGRISKY_TOAST=警告:此脚本中的所有功能都被认为是有风险的! 您有可能会在未来的未知天数内被封号(封号有随机延迟). 您已经被警告过.
+
+! Nightclub
+ALREADYINPROPERTY=您已在您的 {1}!
+! {1} may be [NIGHTCLUB], [WAREHOUSE], [BUSINESS]
+
+! Nightclub categories
+HUBCARGO=运输货物
+HUBWEED=有机农产品
+HUBWEAPONS=体育用品
+HUBMETH=药学研究产品
+HUBCOCAINE=南美进口货
+HUBCASH=印钞
+HUBFORGERY=印刷品
+
+! MC categories
+MCFORGERY=伪造证件
+MCWEED=大麻
+MCCASH=假钞
+MCMETH=冰毒
+MCCOCAINE=可卡因
+MCBUNKER=地堡
+
+! Special Cargo
+SPECIALCARGONOMORECRATES=您的仓库里已经没有板条箱了!
+SPECIALCARGONEEDCEO=您目前在摩托帮里! 您需要成为CEO.
+SPECIALCARGOMAXCRATESOURCE=最大板条箱获取量
+SPECIALCARGOMAXCRATESOURCE_DESC=设置您的员工将交付的板条箱数量
+SPECIALCARGOSETDELIVERTIME=尽量缩短交货时间
+SPECIALCARGOSETDELIVERTIME_DESC=将员工交付之前经过的时间数值设置为零

@@ -1,0 +1,9 @@
+Language: Chinese - 中文
+Notification Type: Stand
+Notification Icon: HC Logo
+Notification Icon Code: Logo
+Notification Color: Black
+Notification Color Code: 140
+Timer Color: White
+Timer Color Code: FFFFFFFF
+Saved Command Name: N/A

@@ -1,0 +1,219 @@
+@Author=Leif.Erickson#7120
+@Version=0.3.2
+! Thank you for choosing to translate Musiness Banager into your language!
+! Please do not change anything before the "="!
+! Additions in the labels list will be marked with "+ " before the label, but without the quotes. You can search the file for "+ " every update to find the new labels!
+! Deletions in the labels list will be marked with "- " before the label. PLEASE DELETE THE ENTIRE LINE. The deletions are left in to help you understand if something was replaced!
+! For lines that begin with "+ ", remove the "+ ".
+! Lines with a "!" or "+" or "@" at the beginnning mark the line as a comment and that line will be ignored.
+! The labels that contain "{x}" where x is a number, indicate an additional piece of text. Do not add or remove or change the numbers inside of them.
+! You may however, move them around. For example if a line is "Press {1} to open {2}", you can move them around in any way you want such as "To open {2} press {1}".
+! It has been added to make it easier for languages that read right to left instead of the usual left to right.
+! One more thing: the two characters "\n" represents a new line. In game, there will be a new line where "\n" is.
+
+BUNKER=Bunker
+BUSINESS=PDG
+MCBUSINESS=Affaires de Club de Motards
+WAREHOUSE=Entrepôt
+NIGHTCLUB=Boite de nuit
+NIGHTCLUBSAFE=Coffre-fort de Boite de nuit
+SPECIALCARGO=Marchandises spéciales
+SELLMISSION=Mission de vente
+BUYMISSION=Mission d'achat
+START=Début
+MONEY=argent
+STOCK=stock
+SUPPLIES=fournitures
+CRATES=caisses
+PRODUCT=productions
+INFOOVERLAY=Infos superposées
+TERRORBYTE=Terrorbyte
+! STOCK, SUPPLIES, PRODUCT should all be what the game calls it, or something equivalent
+! You might want to leave TERRORBYTE the same, unless the game calls it something different
+
+HTTPGIVEUP=Erreur de connexion avec le serveur distant.
+HTTPINVALID=Réponse invalide reçue du serveur distant ! Cela peut être dû à Cloudflare ou à votre antivirus qui bloque la connexion. Veuillez établir une nouvelle connexion VPN ou changer de réseau.
+HTTPFAILSAFE=Activation des coupe-circuits en raison du mode sans échec
+SCRIPTOUTOFDATE=Le script n'est plus à jour ! Veuillez redémarrer le script pour obtenir la dernière version du répertoire!
+
+KILLSWITCH_SAFELOOP=Désactivation de la boucle AFK du coffre-fort par le coupe-circuit
+KILLSWITCH_SPECIALCARGO=Désactivation de la vente de cargaison spéciale par le coupe-circuit
+KILLSWITCH_MAXSELLPRICE=Désactivation de la vente au prix maximum par le coupe-circuit
+KILLSWITCH_AUTOCOMPLETE=Désactivation de l'auto-complete par le coupe-circuit
+
+TRANSACTIONSSTUCK_TOAST=Il semble que vos transactions soient bloquées. Veuillez changer de session ou redémarrer le jeu.
+BEALONE_TOAST=Il y a trop de joueurs dans votre lobby ! On vide la session.
+
+PREFIX_SAFELOOP=[Boucle Boite de nuit] {1}
+PREFIX_SPECIALCARGO=[Cargaisons Spéciales] {1}
+PREFIX_TOTALEARNED=Total gagné: {1}
+PREFIX_MOTD=Annonce du jour: {1}
+! {1} is a number, the amount of money earned in total.
+PREFIX={1} {2}
+! This can be '[x1] x2' where x1 is the prefix, and x2 is the message. This might go unused though..
+
+INFO_SCWAREHOUSE=Entrepôt SC{1}: {2}/{3}
+! {1} is slot {2} is amount {3} is capacity
+INFO_HUBBUSINESS=Entrepôt Discothèque {1}: {2}/{3}
+! {1} is name {2} is stock {3} is max capacity
+INFO_NCSAFE=Coffre-fort boite de nuit $: {1}
+! {1} is value
+INFO_MCBUSINESS=Club de Motards {1}: {2}% | {3}/{4}
+! {1} is name {2} is supplies {3} is product {4} is capacity
+INFO_BUNKER=Bunker: {1}% | {2}/{3}
+! {1} is supplies {2} is product {3} is capacity
+
+FINDSAFERWAYS=Trouvez des moyens plus sûrs de gagner de l'argent
+FINDSAFERWAYS_DESC=Veuillez au moins lire ceci avant d'utiliser les options d'argent ci-dessous
+RETREIVINGINFO=Récupération des infos ...
+
+SALESABUSE_DIVIDER=Ventes hors-limites
+
+MAXSELLPRICE=Vente au prix maximum
+MAXSELLPRICE_DESC=Vendez votre/vos {1} au prix maximum possible, quelle que soit la quantité de {2} que vous avez
+! {1} and {2} are the same, and may be one of the following: [STOCK], [SUPPLIES], or [PRODUCT]
+
+MONITOR=Monitorer
+MONITOR_EXTRA=Monitore les {1}
+MONITOR_DESC=Montre la quantité de {1} que vous avez dans votre {2}, en utilisant les {3}
+! {1} could be [STOCK], [SUPPLIES], [PRODUCT], or [MONEY] {2} could be [NIGHTCLUBSAFE], [BUSINESS], or [WAREHOUSE]. {3} is [INFOOVERLAY] for now, but could be changed in the future.
+
+BYPASSCOOLDOWN=Contourner tempo de {1} 
+! {1} may be one of the following: [SELLMISSION], [BUYMISSION]
+BYPASSCOOLDOWN_DESC=Permet de {1} une autre mission de {2} sans avoir à attendre un certain délai
+! {1} is [START] for now, and {2} could be [SELLMISSION] or [BUYMISSION] for now.
+
+SETPRODUCT=Définir la quantité de produits
+SETPRODUCT_DESC=Définit la quantité de produit que vous avez directement
+SETPRODUCT_TOAST=Définir la quantité de produits
+
+MAXPRODUCTALL=Prix maximum pour toutes les productions
+MAXPRODUCTALL_DESC=Fixe le montant de toutes vos productions au maximum
+MAXPRODUCTALL_TOAST=Prix maximum pour toutes les productions
+
+MAXPRODUCTIONSPEED=Vitesse de production maximale
+MCMAXPRODUCTIONSPEED_DESC=Prend effet instantanément
+NCMAXPRODUCTIONSPEED_DESC=Prend effet dès qu'une unité a fini de produire
+MAXPRODUCTIONSPEED_TOAST=Vitesse de production maximale
+MAXPRODUCTIONSPEEDSLOW_TOAST=Vitesse de production maximale. Elle prendra effet dès qu'un bien aura été produit
+
+MAXIMUMCAPACITY=Capacité maximale
+MAXIMUMCAPACITY_DESC=Affecte la quantité de stock que vous pouvez potentiellement détenir
+MAXIMUMCAPACITY_TOAST=Capacité modifiée
+
+SUPPLYPRODUCTRATIO=Ratio offre/produit
+SUPPLYPRODUCTRATIO_DESC=Définit la quantité d'approvisionnement nécessaire pour fabriquer un produit. Des valeurs plus faibles signifient une meilleure efficacité
+SUPPLYPRODUCTRATIO_TOAST=Ratio modifié
+
+RESUPPLY=Réapprovisionnement
+RESUPPLY_DESC=Livrera instantanément des fournitures à votre entreprise, gratuitement
+
+TRIGGERPRODUCTION=Déclencher la production
+TRIGGERPRODUCTION_DESC=Met immédiatement la production en route
+TRIGGERPRODUCTION_TOAST=Déclenchement de la production
+
+ENFORCEEASIESTMISSION=Sélectionne la mission de vente la plus facile
+ENFORCEEASIESTMISSION_DESC=Cela vous permettra de toujours obtenir la mission de vente la plus rapide et la plus facile. Cependant, si vous êtes trop rapide, vous risquez de ne pas être payé...
+
+SPECIALCARGOLIST_DESC=Notez que les valeurs de vente sont limitées à 6 millions de dollars
+SPECIALCARGOWAREHOUSE_DESC=Sélectionnez l'entrepôt à surveiller et à modifier, puisque vous pouvez en posséder cinq
+SPECIALCARGOMONITOR_DESC=Affiche le nombre de caisses de marchandises spéciales que vous avez dans l'entrepôt sélectionné
+SPECIALCARGONOWAREHOUSE=Aucun entrepôt
+SPECIALCARGONOWAREHOUSE_DESC=Vous n'avez pas d'entrepôt dans cet emplacement !
+SPECIALCARGOMAXSELLPRICE_DESC=Change le prix de vente des caisses de cargaison spéciale de votre PDG à 6 millions de dollars. Gardez cette option activée pour assurer un calcul correct des ventes futures
+
+OPENSCREEN=Ouvrir écran {1} 
+OPENSCREEN_DESC=Ouvre l'écran {1}
+! {1} could be [TERRORBYTE] or [WAREHOUSE]
+SELLACRATE=Sélectionner pour vendre une caisse
+SELLACRATE_DESC=Vendre automatiquement une caisse de cargaison spéciale
+
+NOTINSELECTEDWAREHOUSE_TOAST=Vous n'êtes pas dans l'entrepôt que vous avez sélectionné !
+
+AUTOCOMPLETE=Auto-compléter la {1}
+AUTOCOMPLETE_DESC=Termine automatiquement la {1}
+! {1} could be [SELLMISSION] or [BUYMISSION]
+
+
+NCLIST_DESC=Notez que les valeurs de vente sont limitées à 4 millions de dollars. \nN'essayez PAS de tout vendre d'un seul coup
+NCREVENUE=Revenu de la boite de nuit
+NCREVENUE_DESC=Modifie le montant des revenus de votre boite de nuit, quelle que soit votre popularité
+NCREVENUE_TOAST=Revenu défini.
+
+NCMAXPOPULARITY=Maximise la popularité de votre boite de nuit
+NCMAXPOPULARITY_DESC=Définit la popularité de votre boîte de nuit à 100%
+NCMAXPOPULARITY_TOAST=Maximise la popularité de votre boite de nuit
+
+NCSAFELIST_DESC=
+
+NCSAFELOOP=Boucle d'argent AFK
+NCSAFELOOP_DESC=Ouvrez votre coffre-fort de boîte de nuit avant d'activer cette fonction!\nVous permettra de gagner passivement 300 000 $ toutes les ~4-5 secondes
+
+NCSAFELOOPDELAY=Délai de temporisation
+NCSAFELOOPDELAY_DESC=Définit le temps d'attente de la boucle afk (en millisecondes) entre les étapes majeures
+NCSAFELOOPDELAY_TOAST=Délai modifié.
+
+NCSAFELOOPTRANSACTIONTIMEOUT=Limite de temps de transaction
+NCSAFELOOPTRANSACTIONTIMEOUT_DESC=Définit le temps d'attente pour le traitement d'une transaction avant abandon
+NCSAFELOOPTIMEOUTMODIFIED_TOAST=Limite de temps de transaction modifiée
+
+NCSAFELOOPSTOP=Arrêter la boucle après un montant de xxx $ 
+NCSAFELOOPSTOP_DESC=Arrêtera la boucle d'argent AFK après avoir gagné le montant défini
+NCSAFELOOPSTOP_TOAST=Limite fixée.
+
+NCRESETSAFEVALUE=Réinitialiser la valeur du coffre-fort 
+!  Referenced in [NCSAFELOOPSAFEOVERLIMIT_TOAST]
+NCRESETSAFEVALUE_DESC=Si le montant du coffre-fort de votre boîte de nuit est supérieur à 300 000 $ ou inférieur à 0 $, ceci devrait le corriger
+NCRESETSAFEVALUEWAIT_TOAST=Veuillez patienter pendant que le montant de votre coffre-fort de boîte de nuit est réinitialisé
+NCRESETSAFEVALUESUCCESS_TOAST=Le montant de votre coffre-fort de boîte de nuit devrait être réinitialisé maintenant
+NCRESETSAFEVALUESKIP_TOAST=Votre coffre-fort semble être okay maintenant
+
+NCSAFELOOPMAXIMUMVALUEREACHED_TOAST=La valeur maximale a été atteinte
+NCSAFELOOPNOTINNIGHTCLUB_TOAST=Vous ne semblez pas être dans votre boîte de nuit. Assurez-vous d'être dans votre boite de nuit avec le coffre ouvert avant d'utiliser cette fonction !
+NCSAFELOOPTIMEOUT_TOAST=Il semble que vous ayez atteint le délai d'attente de la transaction
+NCSAFELOOPSAFEOVERLIMIT_TOAST=Huhum, il semble que le coffre-fort ait dépassé la limite. Utilisez [Réinitialiser la valeur du coffre-fort] puis réessayez 
+! -- Références NCRESETSAFEVALUE
+NCSAFELOOPSOMETHINGWENTWRONG_TOAST=Quelque chose ne s'est pas passé comme prévu... si vous pouvez reproduire ce problème, merci de le signaler
+
+! MCLIST=Business de Clubs de Motards
+MCLIST_DESC=Merci de noter que les valeurs de vente sont limitées à 2,5 millions de dollars
+
+BUNKERLIST_DESC=Merci de noter que les ventes sont limitées à 2,7 millions de dollars
+
+TELEPORTTO=TP à votre {1}
+TELEPORTTO_DESC=Vous téléporte à votre {1}
+! {1} may be one of the following: [PROPERTY], [WAREHOUSE], [NIGHTCLUB], or [NIGHTCLUBSAFE]
+NOTINNIGHTCLUB_TOAST=Vous n'êtes pas dans votre Boite de Nuit!
+
+JOINDISCORD=Rejoignez le Discord
+SHOWMOTD=Afficher l'annonce du jour
+SHOWMOTDBLANK_TOAST=L'annonce du jour est vide
+WARNINGRISKY_TOAST=AVERTISSEMENT : Toutes les fonctionnalités de ce script sont considérées comme risquées ! Il y a une chance que vous soyez banni dans un nombre inconnu de jours (les bannissements sont retardés de façon aléatoire). Vous avez été averti.
+
+ALREADYINPROPERTY=Vous êtes déjà dans votre {1}!
+! {1} may be [NIGHTCLUB], [WAREHOUSE], [BUSINESS]
+
+! Nightclub categories
+HUBCARGO=Marchandises
+HUBWEED=Cannabis
+HUBWEAPONS=Armes
+HUBMETH=Méth
+HUBCOCAINE=Cocaine
+HUBCASH=Fausse Monnaie
+HUBFORGERY=Contrefaçon
+
+! MC categories
+MCFORGERY=Contrefaçon
+MCWEED=Cannabis
+MCCASH=Fausse monnaie
+MCMETH=Méth
+MCCOCAINE=Cocaine
+MCBUNKER=Bunker
+
+! Special Cargo
+SPECIALCARGONOMORECRATES=Vous n'avez plus de caisses dans votre entrepôt !
+SPECIALCARGONEEDCEO=Vous êtes dans un Club de Motards ! Vous devez être dans un PDG.
+SPECIALCARGOMAXCRATESOURCE=Nombre maximum de caisses
+SPECIALCARGOMAXCRATESOURCE_DESC=Définit la quantité de caisses que votre personnel livrera.
+SPECIALCARGOSETDELIVERTIME=Réduire le délai de livraison
+SPECIALCARGOSETDELIVERTIME_DESC=Met à zéro le temps qui doit s'écouler avant que votre personnel n'effectue la livraison.
