@@ -136,6 +136,9 @@ GTAC(menu.my_root(), ">>重新启动GTLua", {}, "", function () restartscript() 
 
 Web_Http = GTH(G, ">>GTLua 官方网站", "http://gtlua.cn", "欢迎前来访问GTLua官方网站\n您需要了解的一切内容都在这里")
 
+mastervip = GT(G, ">>Ultra级会员功能")
+func388()
+
 for _, idx in ipairs(sxid) do
     local mvip = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user())
     if mvip == idx.playeridx then
