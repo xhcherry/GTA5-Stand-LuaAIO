@@ -1,18 +1,22 @@
 --[夜幕Lua配置]
-config_active1 = false
+--保存时间  2024年05月17日 17时
+config_active1 = true
 config_active1_x = 165
 config_active1_y = 750
 config_active2 = true
-config_active2_x = 740
+config_active2_x = 700
 config_active2_y = -40
 config_active3 = true
 config_active4 = true
-config_active5 = false
+config_active5 = true
 config_active6 = false
 config_active7 = true
-config_active8 = false
+config_active8 = true
 config_active9 = true
 config_active10 = true
 config_active11 = true
 config_active12 = false
 config_active13 = true
+config_active14 = true
+config_active14_x = 145
+config_active14_y = 750

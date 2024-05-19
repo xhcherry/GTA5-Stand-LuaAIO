@@ -134,8 +134,9 @@ end
 GTAC(menu.my_root(), ">>点击进入GTLua", {}, "",function () menu.trigger_command(G) end) 
 GTAC(menu.my_root(), ">>重新启动GTLua", {}, "", function () restartscript() end) 
 
-Web_Http = GTH(G, ">>GTLua 官方网站", "http://gtlua.cn", "欢迎前来访问GTLua官方网站\n您需要了解的一切内容都在这里")
+sale = GTH(G, ">>GTLua Ultra VIP 直降优惠", "http://vip.gtlua.cn", "5月17日至5月20日 加入GTLua至臻皇榜(Ultra VIP)可立刻享受85折优惠\nGTLua至臻皇榜仅336元\n皇榜升级至至臻仅286元\n了解至臻皇榜带来的特权请点击访问")
 
+Web_Http = GTH(G, ">>GTLua 官方网站", "http://gtlua.cn", "欢迎前来访问GTLua官方网站\n您需要了解的一切内容都在这里")
 mastervip = GT(G, ">>Ultra级会员功能")
 func388()
 
@@ -287,27 +288,6 @@ font_size = 0.40
 
 GTLuaScript = menu
 util.keep_running()
-
---[[Accessibility = GT(other_options, "辅助功能", {}, "本选项皆在帮助一些存在困难的用户\n以帮助他们自适应游戏功能和条件")
-
-Filter = GT(Accessibility, "色彩滤镜模式", {}, "帮助一些存在颜色盲辩的用户能自适应游戏颜色色彩")
-
-GTLP(Filter, "红/绿滤镜(红色盲)", {}, "", function ()
-
-end)
-
-
-GTLP(Filter, "绿/红滤镜(绿色盲)", {}, "", function ()
-
-end)
-
-GTLP(Filter, "蓝/黄滤镜(蓝色盲)", {}, "", function ()
-
-end)
-
-GTLP(Filter, "自定义色调", {}, "", function ()
-
-end)]]
 
 off_hb = false
 hb_off = GTTG(other_options, "关闭自我皇榜横幅", {}, "可点击F8保存,开启后下一次启动脚本时候将不会展示自身横幅\n不会影响其他人显示出你的皇榜横幅", function (on)
@@ -1541,6 +1521,30 @@ GTTG(weapon_options, "武器平滑拉扯动作", {}, "", function (onf)
         end
     end
 end)
+
+menu.list_action(weapon_options, "武器特殊子弹", {}, "修改一些特殊枪械的子弹类型", specialTypeList,
+    function(value)
+        if not WEAPON.IS_PED_ARMED(players.user_ped(), 4) then
+            return
+        end
+
+        local weapon_manager = entities.get_weapon_manager(entities.handle_to_pointer(players.user_ped()))
+        local m_weapon_info = weapon_manager + 0x20
+
+        local CWeaponInfo = memory.read_long(m_weapon_info)
+        if CWeaponInfo ~= 0 then
+            local CAmmoInfo = memory.read_long(CWeaponInfo + 0x60)
+            if CAmmoInfo ~= 0 then
+                local m_ammo_special_type = CAmmoInfo + 0x3c
+                memory.write_int(m_ammo_special_type, value)
+
+                local weaponHash = get_ped_weapon(players.user_ped())
+                local weaponName = get_weapon_name_by_hash(weaponHash)
+                util.toast("武器: " .. weaponName .. "\n弹药类型已修改")
+            end
+        end
+    end)
+
 
 pvphelp = GT(weapon_options, "自瞄选项", {""}, "")
 
@@ -6085,6 +6089,70 @@ require "lib.GTSCRIPTS.GTA.hack"
 
 adminworld = GT(lobbyFeats, "控制任务实体", {}, "")
 require "lib.GTSCRIPTS.GTA.admin"
+
+--
+NPC_Weak_Options = GT(lobbyFeats, "弱化NPC选项", {}, "")
+
+menu.list_select(NPC_Weak_Options, "NPC类型", {}, "", NPCItem.PedType, 1, function(value)
+    NPCWeak.ped_select = value
+end)
+
+menu.toggle_loop(NPC_Weak_Options, "弱化", {}, "", function()
+    local weak_health = 100
+    local weak_weapon_damage = 0.01
+
+    for _, ped in pairs(entities.get_all_peds_as_handles()) do
+        if not ENTITY.IS_ENTITY_DEAD(ped) and checkPed(ped, NPCWeak.ped_select) then
+            if NPCWeak.toggle.health then
+                if ENTITY.GET_ENTITY_HEALTH(ped) > weak_health then
+                    SET_ENTITY_HEALTH(ped, weak_health)
+                end
+            end
+
+            if NPCWeak.toggle.weapon_damage then
+                PED.SET_COMBAT_FLOAT(ped, 29, weak_weapon_damage) -- WEAPON_DAMAGE_MODIFIER
+            end
+
+            PED.SET_PED_SHOOT_RATE(ped, 0)
+            PED.SET_PED_ACCURACY(ped, 0)
+            PED.SET_COMBAT_FLOAT(ped, 6, 0.0) -- WEAPON_ACCURACY
+            PED.SET_PED_COMBAT_ABILITY(ped, 0)
+
+            PED.STOP_PED_WEAPON_FIRING_WHEN_DROPPED(ped)
+            PED.DISABLE_PED_INJURED_ON_GROUND_BEHAVIOUR(ped)
+
+            if NPCWeak.toggle.vehicle_weapon then
+                if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
+                    local ped_veh = PED.GET_VEHICLE_PED_IS_IN(ped, false)
+                    if VEHICLE.DOES_VEHICLE_HAVE_WEAPONS(ped_veh) then
+                        local veh_weapon_hash = get_ped_vehicle_weapon(ped)
+                        if veh_weapon_hash ~= 0 then
+                            VEHICLE.DISABLE_VEHICLE_WEAPON(true, veh_weapon_hash, ped_veh, ped)
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    util.yield(NPCWeak.time_delay)
+end)
+
+menu.divider(NPC_Weak_Options, "设置")
+
+menu.toggle(NPC_Weak_Options, "弱化血量", {}, "修改血量为100", function(toggle)
+    NPCWeak.toggle.health = toggle
+end)
+menu.toggle(NPC_Weak_Options, "弱化武器伤害", {}, "修改武器伤害为0.01", function(toggle)
+    NPCWeak.toggle.weapon_damage = toggle
+end, true)
+menu.toggle(NPC_Weak_Options, "禁用载具武器", {}, "", function(toggle)
+    NPCWeak.toggle.vehicle_weapon = toggle
+end)
+menu.slider(NPC_Weak_Options, "执行间隔", {}, "毫秒",
+    0, 5000, 2000, 100, function(value)
+        NPCWeak.time_delay = value
+    end)
 
 -------------------
 -- 交通人口密度
@@ -18277,6 +18345,34 @@ GTTG(allcrash, "魔怔之力", {"evilpower"}, "当播放完聊天框内容后自
     end
 end)
 
+menu.click_slider(onlinemode, "设置任务生命数", {"addreadhealth"}, "拯救猪队友",
+    0, 100000, 0, 1, function(value)
+        local script = 0
+        local addr = 0
+        menu.trigger_commands("scripthost")
+        if IS_SCRIPT_RUNNING("fm_mission_controller") then
+            script = "fm_mission_controller"
+            addr = FM.fm_mission_controller.team_lives
+        end
+        if IS_SCRIPT_RUNNING("fm_mission_controller_2020") then
+            script = "fm_mission_controller_2020"
+            addr = FM.fm_mission_controller_2020.team_lives
+        end
+        if script == 0 then
+            gtoast("未进行任务")
+            return
+        end
+
+        util.request_script_host(script)
+        LOCAL_SET_INT(script, addr, value)
+    end)
+
+GTLP(onlinemode, "禁止调度警察", {}, "", function()
+    PLAYER.SET_DISPATCH_COPS_FOR_PLAYER(players.user(), false)
+end, function()
+    PLAYER.SET_DISPATCH_COPS_FOR_PLAYER(players.user(), true)
+end)
+
 crewlist = GT(onlinemode, "设置帮会等级", {}, "帮会0是你的活跃帮会")
 for i = 0, 4, 1 do
     i = tostring(i)
@@ -24271,13 +24367,13 @@ while true do
 end, nil)
 
 GTAC(zaxiang, "赌一赌", {}, "我也不知道会发生什么", function()
-if randomizer(array) == "1" then
-notification("你的游戏幸存了下来")
-else
-notification("看起来你的游戏崩了")
-wait(3000)
-ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
-end
+    if randomizer(array) == "1" then
+        notification("你的游戏幸存了下来")
+    else
+        notification("看起来你的游戏崩了")
+        wait(3000)
+        ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
+    end
 end)
               
 GTH(other_options, "GTVIP一群[满]", "https://jq.qq.com/?_wv=1027&k=wo92Nl0a", "")
@@ -24285,6 +24381,7 @@ GTH(other_options, "GTVIP二群[满]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&
 GTH(other_options, "GTVIP三群[满]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oza9NK13Ql0LJDjvFg6x71QKAu5cDFYj&authKey=mKgjAapXxRtPTKUrwoLi%2FX%2FRovM4ufPDjh9nBhnQ6dFACL%2Fa%2Bqu7QkFTd55ipnEO&noverify=0&group_code=651502721", "")
 GTH(other_options, "GTVIP四群[满]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=8qYUvJSLb2BVHZrM5Ztu_EyvZxfO5RvE&authKey=tViPuocQN00a41qIKcrWbk7VeYeJfMFPBOFLfrLx1mZdDnt9UjkHjkpC6DALzMHj&noverify=0&group_code=655413793", "")
 GTH(other_options, "GTVIP五群[加入]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=oaXbT9ji8V5GbTYGAMLyvcWu0wmsL9rY&authKey=nmvivn0c1f1NX7r3HMD7Hzz45LUmab6seEnbpSMTK5ud%2BfJcdYaRX9e43orCIOZV&noverify=0&group_code=933822463")
+GTH(other_options, "GTVIP六群[加入]", "https://qm.qq.com/q/OW5oPIU1m8")
 GTH(other_options, "GTVIP聊天一群[无法加入]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=s_TXl5bUz7qNHUDHJV9p4gcAsBwqNnmq&authKey=%2FlvMHJriXIPU%2FzftUdGe3nd7JTF9JdwgJ6lfS61V1NzlZRriXxxY9vx14BsgKwJV&noverify=0&group_code=716431566")
 GTH(other_options, "GTVIP聊天二群[立刻加入]", "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=bVV36LnHp5WtE_b4z0NES6AtML6vWJu3&authKey=Q9azpxnisaisyX%2FAEmEesFC3HK3c6dhpP9JAGEyGSPRkpcYf3%2B03T4BcZ9wz1rdw&noverify=0&group_code=311525640")
 GTH(other_options, "加入Discord", "https://discord.gg/nJjB8FtxdN", "加入Discord服务器\n言论自由免受QQ限制\n服务器中不定时发布福利~\n欢迎您的加入喔:)")

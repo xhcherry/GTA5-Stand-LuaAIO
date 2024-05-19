@@ -1,7 +1,6 @@
 AUDIO1={
     ["SET_PED_AUDIO_FOOTSTEP_LOUD"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(ped);native_invoker.push_arg_bool(toggle);native_invoker.end_call("0653B735BFBDFE87");end,
 }
-
 VEHICLE1={
     ["_SET_VEHICLE_CAN_BE_LOCKED_ON"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] canBeLockedOn,--[[BOOL (bool)]] unk)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(canBeLockedOn)native_invoker.push_arg_bool(unk)native_invoker.end_call_2(0x1DDA078D12879EEE)end,
     ["_SET_VEHICLE_REDUCE_TRACTION"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[int]] val)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_int(val)native_invoker.end_call_2(0x6DEE944E1EE90CFB)end,
@@ -50,14 +49,5126 @@ PAD2={
 PED1={
     ["_SET_PED_HAIR_COLOR"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] colorID,--[[int]] highlightColorID)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(colorID)native_invoker.push_arg_int(highlightColorID)native_invoker.end_call_2(0x4CFFC65454C93A49)end,
     ["CREATE_RANDOM_PED"]=function(...)return native_invoker.uno_int(0xB4AC7D0CF06BFE8F,...)end,
+["CREATE_PED"]=--[[Ped (int)]] function(--[[int]] pedType,--[[Hash (int)]] modelHash,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] heading,--[[BOOL (bool)]] isNetwork,--[[BOOL (bool)]] bScriptHostPed)native_invoker.begin_call()native_invoker.push_arg_int(pedType)native_invoker.push_arg_int(modelHash)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(heading)native_invoker.push_arg_bool(isNetwork)native_invoker.push_arg_bool(bScriptHostPed)native_invoker.end_call_2(0xD49F9B0955C367DE)return native_invoker.get_return_value_int()end,
+	-- Deletes the specified ped, then sets the handle pointed to by the pointer to NULL.
+	["DELETE_PED"]=--[[void]] function(--[[Ped* (pointer)]] ped)native_invoker.begin_call()native_invoker.push_arg_pointer(ped)native_invoker.end_call_2(0x9614299DCB53E54B)end,
+	["CLONE_PED"]=--[[Ped (int)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] isNetwork,--[[BOOL (bool)]] bScriptHostPed,--[[BOOL (bool)]] copyHeadBlendFlag)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(isNetwork)native_invoker.push_arg_bool(bScriptHostPed)native_invoker.push_arg_bool(copyHeadBlendFlag)native_invoker.end_call_2(0xEF29A16337FACADB)return native_invoker.get_return_value_int()end,
+	["CLONE_PED_ALT"]=--[[Ped (int)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] isNetwork,--[[BOOL (bool)]] bScriptHostPed,--[[BOOL (bool)]] copyHeadBlendFlag,--[[BOOL (bool)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(isNetwork)native_invoker.push_arg_bool(bScriptHostPed)native_invoker.push_arg_bool(copyHeadBlendFlag)native_invoker.push_arg_bool(p4)native_invoker.end_call_2(0x668FD40BCBA5DE48)return native_invoker.get_return_value_int()end,
+	-- Copies ped's components and props to targetPed.
+	["CLONE_PED_TO_TARGET"]=--[[void]] function(--[[Ped (int)]] ped,--[[Ped (int)]] targetPed)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(targetPed)native_invoker.end_call_2(0xE952D6431689AD9A)end,
+	["CLONE_PED_TO_TARGET_ALT"]=--[[void]] function(--[[Ped (int)]] ped,--[[Ped (int)]] targetPed,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(targetPed)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x148B08C2D2ACB884)end,
+	-- Gets a value indicating whether the specified ped is in the specified vehicle.
+	-- 
+	-- If 'atGetIn' is false, the function will not return true until the ped is sitting in the vehicle and is about to close the door. If it's true, the function returns true the moment the ped starts to get onto the seat (after opening the door). Eg. if false, and the ped is getting into a submersible, the function will not return true until the ped has descended down into the submersible and gotten into the seat, while if it's true, it'll return true the moment the hatch has been opened and the ped is about to descend into the submersible.
+	["IS_PED_IN_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] atGetIn)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(atGetIn)native_invoker.end_call_2(0xA3EE4A07279BB9DB)return native_invoker.get_return_value_bool()end,
+	["IS_PED_IN_MODEL"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] modelHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(modelHash)native_invoker.end_call_2(0x796D90EFB19AA332)return native_invoker.get_return_value_bool()end,
+	-- Gets a value indicating whether the specified ped is in any vehicle.
+	-- 
+	-- If 'atGetIn' is false, the function will not return true until the ped is sitting in the vehicle and is about to close the door. If it's true, the function returns true the moment the ped starts to get onto the seat (after opening the door). Eg. if false, and the ped is getting into a submersible, the function will not return true until the ped has descended down into the submersible and gotten into the seat, while if it's true, it'll return true the moment the hatch has been opened and the ped is about to descend into the submersible.
+	["IS_PED_IN_ANY_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] atGetIn)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(atGetIn)native_invoker.end_call_2(0x997ABD671D25CA0B)return native_invoker.get_return_value_bool()end,
+	-- xyz - relative to the world origin.
+	["IS_COP_PED_IN_AREA_3D"]=--[[BOOL (bool)]] function(--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2)native_invoker.begin_call()native_invoker.push_arg_float(x1)native_invoker.push_arg_float(y1)native_invoker.push_arg_float(z1)native_invoker.push_arg_float(x2)native_invoker.push_arg_float(y2)native_invoker.push_arg_float(z2)native_invoker.end_call_2(0x16EC4839969F9F5E)return native_invoker.get_return_value_bool()end,
+	-- Gets a value indicating whether this ped's health is below its injured threshold.
+	-- 
+	-- The default threshold is 100.
+	["IS_PED_INJURED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x84A2DD9AC37C35C1)return native_invoker.get_return_value_bool()end,
+	-- Returns whether the specified ped is hurt.
+	["IS_PED_HURT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x5983BB449D7FDB12)return native_invoker.get_return_value_bool()end,
+	-- Gets a value indicating whether this ped's health is below its fatally injured threshold. The default threshold is 100.
+	-- If the handle is invalid, the function returns true.
+	["IS_PED_FATALLY_INJURED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xD839450756ED5A80)return native_invoker.get_return_value_bool()end,
+	-- Seems to consistently return true if the ped is dead.
+	-- 
+	-- p1 is always passed 1 in the scripts.
+	-- 
+	-- I suggest to remove "OR_DYING" part, because it does not detect dying phase.
+	-- 
+	-- That's what the devs call it, cry about it.
+	-- 
+	-- lol
+	["IS_PED_DEAD_OR_DYING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x3317DEDB88C95038)return native_invoker.get_return_value_bool()end,
+	["IS_CONVERSATION_PED_DEAD"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xE0A0AEC214B1FABA)return native_invoker.get_return_value_bool()end,
+	["IS_PED_AIMING_FROM_COVER"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x3998B1276A3300E5)return native_invoker.get_return_value_bool()end,
+	-- Returns whether the specified ped is reloading.
+	["IS_PED_RELOADING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x24B100C68C645951)return native_invoker.get_return_value_bool()end,
+	-- Returns true if the given ped has a valid pointer to CPlayerInfo in its CPed class. That's all.
+	["IS_PED_A_PLAYER"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x12534C348C6CB68B)return native_invoker.get_return_value_bool()end,
+	-- pedType: see CREATE_PED
+	-- 
+	-- Full list of peds by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/peds.json
+	["CREATE_PED_INSIDE_VEHICLE"]=--[[Ped (int)]] function(--[[Vehicle (int)]] vehicle,--[[int]] pedType,--[[Hash (int)]] modelHash,--[[int]] seat,--[[BOOL (bool)]] isNetwork,--[[BOOL (bool)]] bScriptHostPed)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_int(pedType)native_invoker.push_arg_int(modelHash)native_invoker.push_arg_int(seat)native_invoker.push_arg_bool(isNetwork)native_invoker.push_arg_bool(bScriptHostPed)native_invoker.end_call_2(0x7DD959874C1FD534)return native_invoker.get_return_value_int()end,
+	["SET_PED_DESIRED_HEADING"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] heading)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(heading)native_invoker.end_call_2(0xAA5A7ECE2AA8FE70)end,
+	["FORCE_ALL_HEADING_VALUES_TO_ALIGN"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xFF287323B0E2C69A)end,
+	-- angle is ped's view cone
+	["IS_PED_FACING_PED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Ped (int)]] otherPed,--[[float]] angle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(otherPed)native_invoker.push_arg_float(angle)native_invoker.end_call_2(0xD71649DB0A545AA3)return native_invoker.get_return_value_bool()end,
+	-- Notes: The function only returns true while the ped is: 
+	-- A.) Swinging a random melee attack (including pistol-whipping)
+	-- 
+	-- B.) Reacting to being hit by a melee attack (including pistol-whipping)
+	-- 
+	-- C.) Is locked-on to an enemy (arms up, strafing/skipping in the default fighting-stance, ready to dodge+counter). 
+	-- 
+	-- You don't have to be holding the melee-targetting button to be in this stance; you stay in it by default for a few seconds after swinging at someone. If you do a sprinting punch, it returns true for the duration of the punch animation and then returns false again, even if you've punched and made-angry many peds
+	["IS_PED_IN_MELEE_COMBAT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x4E209B2C1EAD5159)return native_invoker.get_return_value_bool()end,
+	-- Returns true if the ped doesn't do any movement. If the ped is being pushed forwards by using APPLY_FORCE_TO_ENTITY for example, the function returns false.
+	["IS_PED_STOPPED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x530944F6F4B8A214)return native_invoker.get_return_value_bool()end,
+	["IS_PED_SHOOTING_IN_AREA"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2,--[[BOOL (bool)]] p7,--[[BOOL (bool)]] p8)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(x1)native_invoker.push_arg_float(y1)native_invoker.push_arg_float(z1)native_invoker.push_arg_float(x2)native_invoker.push_arg_float(y2)native_invoker.push_arg_float(z2)native_invoker.push_arg_bool(p7)native_invoker.push_arg_bool(p8)native_invoker.end_call_2(0x7E9DFE24AC1E58EF)return native_invoker.get_return_value_bool()end,
+	["IS_ANY_PED_SHOOTING_IN_AREA"]=--[[BOOL (bool)]] function(--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2,--[[BOOL (bool)]] p6,--[[BOOL (bool)]] p7)native_invoker.begin_call()native_invoker.push_arg_float(x1)native_invoker.push_arg_float(y1)native_invoker.push_arg_float(z1)native_invoker.push_arg_float(x2)native_invoker.push_arg_float(y2)native_invoker.push_arg_float(z2)native_invoker.push_arg_bool(p6)native_invoker.push_arg_bool(p7)native_invoker.end_call_2(0xA0D3D71EA1086C55)return native_invoker.get_return_value_bool()end,
+	-- Returns whether the specified ped is shooting.
+	["IS_PED_SHOOTING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x34616828CD07F1A1)return native_invoker.get_return_value_bool()end,
+	-- accuracy = 0-100, 100 being perfectly accurate
+	["SET_PED_ACCURACY"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] accuracy)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(accuracy)native_invoker.end_call_2(0x7AEFB85C1D49DEB6)end,
+	["GET_PED_ACCURACY"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x37F4AD56ECBC0CD6)return native_invoker.get_return_value_int()end,
+	["SET_AMBIENT_LAW_PED_ACCURACY_MODIFIER"]=--[[void]] function(--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0x87DDEB611B329A9C)end,
+	["IS_PED_MODEL"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] modelHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(modelHash)native_invoker.end_call_2(0xC9D55B1A358A5BF7)return native_invoker.get_return_value_bool()end,
+	-- Forces the ped to fall back and kills it.
+	-- 
+	-- It doesn't really explode the ped's head but it kills the ped
+	["EXPLODE_PED_HEAD"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x2D05CED3A38D0F3A)end,
+	-- Judging purely from a quick disassembly, if the ped is in a vehicle, the ped will be deleted immediately. If not, it'll be marked as no longer needed. - very elegant..
+	["REMOVE_PED_ELEGANTLY"]=--[[void]] function(--[[Ped* (pointer)]] ped)native_invoker.begin_call()native_invoker.push_arg_pointer(ped)native_invoker.end_call_2(0xAC6D445B994DF95E)end,
+	-- Same as SET_PED_ARMOUR, but ADDS 'amount' to the armor the Ped already has.
+	["ADD_ARMOUR_TO_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(amount)native_invoker.end_call_2(0x5BA652A0CD14DF2F)end,
+	-- Sets the armor of the specified ped.
+	-- 
+	-- ped: The Ped to set the armor of.
+	-- amount: A value between 0 and 100 indicating the value to set the Ped's armor to.
+	["SET_PED_ARMOUR"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(amount)native_invoker.end_call_2(0xCEA04D83135264CC)end,
+	-- Ped: The ped to warp.
+	-- vehicle: The vehicle to warp the ped into.
+	-- Seat_Index: [-1 is driver seat, -2 first free passenger seat]
+	-- 
+	-- Moreinfo of Seat Index
+	-- DriverSeat = -1
+	-- Passenger = 0
+	-- Left Rear = 1
+	-- RightRear = 2
+	["SET_PED_INTO_VEHICLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[Vehicle (int)]] vehicle,--[[int]] seatIndex)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(vehicle)native_invoker.push_arg_int(seatIndex)native_invoker.end_call_2(0xF75B0D629E1C063D)end,
+	["SET_PED_ALLOW_VEHICLES_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x3C028C636A414ED9)end,
+	["CAN_CREATE_RANDOM_PED"]=--[[BOOL (bool)]] function(--[[BOOL (bool)]] unk)native_invoker.begin_call()native_invoker.push_arg_bool(unk)native_invoker.end_call_2(0x3E8349C08E4B82E4)return native_invoker.get_return_value_bool()end,
+	-- vb.net
+	-- Dim ped_handle As Integer
+	--                     With Game.Player.Character
+	--                         Dim pos As Vector3 = .Position + .ForwardVector * 3
+	--                         ped_handle = Native.Function.Call(Of Integer)(Hash.CREATE_RANDOM_PED, pos.X, pos.Y, pos.Z)
+	--                     End With
+	-- 
+	-- Creates a Ped at the specified location, returns the Ped Handle.  
+	-- Ped will not act until SET_PED_AS_NO_LONGER_NEEDED is called.
+	["CREATE_RANDOM_PED"]=--[[Ped (int)]] function(--[[float]] posX,--[[float]] posY,--[[float]] posZ)native_invoker.begin_call()native_invoker.push_arg_float(posX)native_invoker.push_arg_float(posY)native_invoker.push_arg_float(posZ)native_invoker.end_call_2(0xB4AC7D0CF06BFE8F)return native_invoker.get_return_value_int()end,
+	["CREATE_RANDOM_PED_AS_DRIVER"]=--[[Ped (int)]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] returnHandle)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(returnHandle)native_invoker.end_call_2(0x9B62392B474F44A0)return native_invoker.get_return_value_int()end,
+	["CAN_CREATE_RANDOM_DRIVER"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB8EB95E5B4E56978)return native_invoker.get_return_value_bool()end,
+	["CAN_CREATE_RANDOM_BIKE_RIDER"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xEACEEDA81751915C)return native_invoker.get_return_value_bool()end,
+	["SET_PED_MOVE_ANIMS_BLEND_OUT"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x9E8C908F41584ECD)end,
+	["SET_PED_CAN_BE_DRAGGED_OUT"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xC1670E958EEE24E5)end,
+	-- ntoggle was always false except in one instance (b678).
+	-- 
+	-- The one time this is set to true seems to do with when you fail the mission.
+	["SET_PED_ALLOW_HURT_COMBAT_FOR_ALL_MISSION_PEDS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xF2BEBCDFAFDAA19E)end,
+	-- Returns true/false if the ped is/isn't male.
+	["IS_PED_MALE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x6D9F5FAA7488BA46)return native_invoker.get_return_value_bool()end,
+	-- Returns true/false if the ped is/isn't humanoid.
+	["IS_PED_HUMAN"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xB980061DA992779D)return native_invoker.get_return_value_bool()end,
+	-- Gets the vehicle the specified Ped is in. Returns 0 if the ped is/was not in a vehicle.
+	-- If the Ped is not in a vehicle and includeLastVehicle is true, the vehicle they were last in is returned.
+	["GET_VEHICLE_PED_IS_IN"]=--[[Vehicle (int)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] includeLastVehicle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(includeLastVehicle)native_invoker.end_call_2(0x9A9112A0FE9A4713)return native_invoker.get_return_value_int()end,
+	-- Resets the value for the last vehicle driven by the Ped.
+	["RESET_PED_LAST_VEHICLE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xBB8DE8CF6A8DD8BB)end,
+	["SET_PED_DENSITY_MULTIPLIER_THIS_FRAME"]=--[[void]] function(--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0x95E3D6257B166CF2)end,
+	["SET_SCENARIO_PED_DENSITY_MULTIPLIER_THIS_FRAME"]=--[[void]] function(--[[float]] p0,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_float(p0)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0x7A556143A1C03898)end,
+	["SUPPRESS_AMBIENT_PED_AGGRESSIVE_CLEANUP_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5A7F62FDA59759BD)end,
+	["SET_SCRIPTED_CONVERSION_COORD_THIS_FRAME"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.end_call_2(0x5086C7843552CF85)end,
+	-- The distance between these points, is the diagonal of a box (remember it's 3D).
+	["SET_PED_NON_CREATION_AREA"]=--[[void]] function(--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2)native_invoker.begin_call()native_invoker.push_arg_float(x1)native_invoker.push_arg_float(y1)native_invoker.push_arg_float(z1)native_invoker.push_arg_float(x2)native_invoker.push_arg_float(y2)native_invoker.push_arg_float(z2)native_invoker.end_call_2(0xEE01041D559983EA)end,
+	["CLEAR_PED_NON_CREATION_AREA"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x2E05208086BA0651)end,
+	["INSTANTLY_FILL_PED_POPULATION"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x4759CC730F947C81)end,
+	-- Same function call as PED::GET_MOUNT, aka just returns 0
+	["IS_PED_ON_MOUNT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x460BC76A0E10655E)return native_invoker.get_return_value_bool()end,
+	-- 
+	-- Function just returns 0
+	-- void __fastcall ped__get_mount(NativeContext *a1)
+	-- {
+	--   NativeContext *v1; // rbx@1
+	-- 
+	--   v1 = a1;
+	--   GetAddressOfPedFromScriptHandle(a1->Args->Arg1);
+	--   v1->Returns->Item1= 0;
+	-- }
+	["GET_MOUNT"]=--[[Ped (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xE7E11B8DCBED1058)return native_invoker.get_return_value_int()end,
+	-- Gets a value indicating whether the specified ped is on top of any vehicle.
+	-- 
+	-- Return 1 when ped is on vehicle.
+	-- Return 0 when ped is not on a vehicle.
+	-- 
+	["IS_PED_ON_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x67722AEB798E5FAB)return native_invoker.get_return_value_bool()end,
+	["IS_PED_ON_SPECIFIC_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Vehicle (int)]] vehicle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(vehicle)native_invoker.end_call_2(0xEC5F66E459AF3BB2)return native_invoker.get_return_value_bool()end,
+	-- Maximum possible amount of money on MP is 2000. ~JX
+	-- 
+	-- -----------------------------------------------------------------------------
+	-- 
+	-- Maximum amount that a ped can theoretically have is 65535 (0xFFFF) since the amount is stored as an unsigned short (uint16_t) value.
+	["SET_PED_MONEY"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(amount)native_invoker.end_call_2(0xA9C8960E8684C1B5)end,
+	["GET_PED_MONEY"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x3F69145BBA87BAE7)return native_invoker.get_return_value_int()end,
+	-- Related to Peds dropping pickup_health_snack; p0 is a value between [0.0, 1.0] that corresponds to drop rate
+	["SET_HEALTH_SNACKS_CARRIED_BY_ALL_NEW_PEDS"]=--[[void]] function(--[[float]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_float(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xFF4803BC019852D9)end,
+	["SET_AMBIENT_PEDS_DROP_MONEY"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x6B0E6172C9A4D902)end,
+	["SET_BLOCKING_OF_NON_TEMPORARY_EVENTS_FOR_AMBIENT_PEDS_THIS_FRAME"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x9911F4A24485F653)end,
+	-- Ped no longer takes critical damage modifiers if set to FALSE.
+	-- Example: Headshotting a player no longer one shots them. Instead they will take the same damage as a torso shot.
+	["SET_PED_SUFFERS_CRITICAL_HITS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xEBD76F2359F190AC)end,
+	["SET_PED_UPPER_BODY_DAMAGE_ONLY"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xAFC976FD0580C7B3)end,
+	-- Detect if ped is sitting in the specified vehicle
+	-- [True/False]
+	["IS_PED_SITTING_IN_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Vehicle (int)]] vehicle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(vehicle)native_invoker.end_call_2(0xA808AA1D79230FC2)return native_invoker.get_return_value_bool()end,
+	-- Detect if ped is in any vehicle
+	-- [True/False]
+	["IS_PED_SITTING_IN_ANY_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x826AA586EDB9FEF8)return native_invoker.get_return_value_bool()end,
+	["IS_PED_ON_FOOT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x01FEE67DB37F59B2)return native_invoker.get_return_value_bool()end,
+	["IS_PED_ON_ANY_BIKE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x94495889E22C6479)return native_invoker.get_return_value_bool()end,
+	["IS_PED_PLANTING_BOMB"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xC70B5FAE151982D8)return native_invoker.get_return_value_bool()end,
+	["GET_DEAD_PED_PICKUP_COORDS"]=--[[Vector3 (vector3)]] function(--[[Ped (int)]] ped,--[[float]] p1,--[[float]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.end_call_2(0xCD5003B097200F36)return native_invoker.get_return_value_vector3()end,
+	["IS_PED_IN_ANY_BOAT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x2E0E1C2B4F6CB339)return native_invoker.get_return_value_bool()end,
+	["IS_PED_IN_ANY_SUB"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xFBFC01CCFB35D99E)return native_invoker.get_return_value_bool()end,
+	["IS_PED_IN_ANY_HELI"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x298B91AE825E5705)return native_invoker.get_return_value_bool()end,
+	["IS_PED_IN_ANY_PLANE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x5FFF4CFC74D8FB80)return native_invoker.get_return_value_bool()end,
+	["IS_PED_IN_FLYING_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x9134873537FA419C)return native_invoker.get_return_value_bool()end,
+	["SET_PED_DIES_IN_WATER"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x56CEF0AC79073BDE)end,
+	["GET_PED_DIES_IN_WATER"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x65671A4FB8218930)return native_invoker.get_return_value_bool()end,
+	["SET_PED_DIES_IN_SINKING_VEHICLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xD718A22995E2B4BC)end,
+	["GET_PED_ARMOUR"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x9483AF821605B1D8)return native_invoker.get_return_value_int()end,
+	["SET_PED_STAY_IN_VEHICLE_WHEN_JACKED"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xEDF4079F9D54C9A1)end,
+	["SET_PED_CAN_BE_SHOT_IN_VEHICLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xC7EF1BA83230BA07)end,
+	["GET_PED_LAST_DAMAGE_BONE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int* (pointer)]] outBone)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_pointer(outBone)native_invoker.end_call_2(0xD75960F6BD9EA49C)return native_invoker.get_return_value_bool()end,
+	["CLEAR_PED_LAST_DAMAGE_BONE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x8EF6B7AC68E2F01B)end,
+	["SET_AI_WEAPON_DAMAGE_MODIFIER"]=--[[void]] function(--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_float(value)native_invoker.end_call_2(0x1B1E2A40A65B8521)end,
+	["RESET_AI_WEAPON_DAMAGE_MODIFIER"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xEA16670E7BA4743C)end,
+	["SET_AI_MELEE_WEAPON_DAMAGE_MODIFIER"]=--[[void]] function(--[[float]] modifier)native_invoker.begin_call()native_invoker.push_arg_float(modifier)native_invoker.end_call_2(0x66460DEDDD417254)end,
+	["RESET_AI_MELEE_WEAPON_DAMAGE_MODIFIER"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x46E56A7CD1D63C3F)end,
+	["SET_TREAT_AS_AMBIENT_PED_FOR_DRIVER_LOCKON"]=--[[void]] function(--[[Any (int)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x2F3C3D9F50681DE4)end,
+	["SET_PED_CAN_BE_TARGETTED"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x63F58F7C80513AAD)end,
+	["SET_PED_CAN_BE_TARGETTED_BY_TEAM"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] team,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(team)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xBF1CA77833E58F2C)end,
+	["SET_PED_CAN_BE_TARGETTED_BY_PLAYER"]=--[[void]] function(--[[Ped (int)]] ped,--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x66B57B72E0836A76)end,
+	["SET_ALLOW_LOCKON_TO_PED_IF_FRIENDLY"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x061CB768363D6424)end,
+	["SET_USE_CAMERA_HEADING_FOR_DESIRED_DIRECTION_LOCK_ON_TEST"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xFD325494792302D7)end,
+	["IS_PED_IN_ANY_POLICE_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x0BD04E29640C9C12)return native_invoker.get_return_value_bool()end,
+	["FORCE_PED_TO_OPEN_PARACHUTE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x16E42E800B472221)end,
+	["IS_PED_IN_PARACHUTE_FREE_FALL"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x7DCE8BDA0F1C1200)return native_invoker.get_return_value_bool()end,
+	["IS_PED_FALLING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xFB92A102F1C4DFA3)return native_invoker.get_return_value_bool()end,
+	["IS_PED_JUMPING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xCEDABC5900A0BF97)return native_invoker.get_return_value_bool()end,
+	["IS_PED_LANDING"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x412F1364FA066CFB)return native_invoker.get_return_value_int()end,
+	["IS_PED_DOING_A_BEAST_JUMP"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x451D05012CCEC234)return native_invoker.get_return_value_int()end,
+	["IS_PED_CLIMBING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x53E8CB4F48BFE623)return native_invoker.get_return_value_bool()end,
+	["IS_PED_VAULTING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x117C70D1F5730B5E)return native_invoker.get_return_value_bool()end,
+	["IS_PED_DIVING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x5527B8246FEF9B11)return native_invoker.get_return_value_bool()end,
+	["IS_PED_JUMPING_OUT_OF_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x433DDFFE2044B636)return native_invoker.get_return_value_bool()end,
+	-- Returns true if the ped is currently opening a door (CTaskOpenDoor).
+	["IS_PED_OPENING_DOOR"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x26AF0E8E30BD2A2C)return native_invoker.get_return_value_bool()end,
+	-- Returns:
+	-- 
+	-- -1: Normal
+	-- 0: Wearing parachute on back
+	-- 1: Parachute opening
+	-- 2: Parachute open
+	-- 3: Falling to doom (e.g. after exiting parachute)
+	-- 
+	-- Normal means no parachute?
+	["GET_PED_PARACHUTE_STATE"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x79CFD9827CC979B6)return native_invoker.get_return_value_int()end,
+	-- -1: no landing
+	-- 0: landing on both feet
+	-- 1: stumbling
+	-- 2: rolling
+	-- 3: ragdoll
+	["GET_PED_PARACHUTE_LANDING_TYPE"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x8B9F1FC6AE8166C0)return native_invoker.get_return_value_int()end,
+	["SET_PED_PARACHUTE_TINT_INDEX"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] tintIndex)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(tintIndex)native_invoker.end_call_2(0x333FC8DB079B7186)end,
+	["GET_PED_PARACHUTE_TINT_INDEX"]=--[[void]] function(--[[Ped (int)]] ped,--[[int* (pointer)]] outTintIndex)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_pointer(outTintIndex)native_invoker.end_call_2(0xEAF5F7E5AE7C6C9D)end,
+	["SET_PED_RESERVE_PARACHUTE_TINT_INDEX"]=--[[void]] function(--[[Ped (int)]] ped,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xE88DA0751C22A2AD)end,
+	["CREATE_PARACHUTE_BAG_OBJECT"]=--[[Object (int)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x8C4F3BF23B6237DB)return native_invoker.get_return_value_int()end,
+	-- This is the SET_CHAR_DUCKING from GTA IV, that makes Peds duck. This function does nothing in GTA V. It cannot set the ped as ducking in vehicles, and IS_PED_DUCKING will always return false.
+	["SET_PED_DUCKING"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x030983CA930B692D)end,
+	["IS_PED_DUCKING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xD125AE748725C6BC)return native_invoker.get_return_value_bool()end,
+	["IS_PED_IN_ANY_TAXI"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x6E575D6A898AB852)return native_invoker.get_return_value_bool()end,
+	["SET_PED_ID_RANGE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0xF107E836A70DCE05)end,
+	["SET_PED_HIGHLY_PERCEPTIVE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x52D59AB61DDC05DD)end,
+	["SET_COP_PERCEPTION_OVERRIDES"]=--[[void]] function(--[[float]] seeingRange,--[[float]] seeingRangePeripheral,--[[float]] hearingRange,--[[float]] visualFieldMinAzimuthAngle,--[[float]] visualFieldMaxAzimuthAngle,--[[float]] fieldOfGazeMaxAngle,--[[float]] p6)native_invoker.begin_call()native_invoker.push_arg_float(seeingRange)native_invoker.push_arg_float(seeingRangePeripheral)native_invoker.push_arg_float(hearingRange)native_invoker.push_arg_float(visualFieldMinAzimuthAngle)native_invoker.push_arg_float(visualFieldMaxAzimuthAngle)native_invoker.push_arg_float(fieldOfGazeMaxAngle)native_invoker.push_arg_float(p6)native_invoker.end_call_2(0x2F074C904D85129E)end,
+	["SET_PED_INJURED_ON_GROUND_BEHAVIOUR"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] unk)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(unk)native_invoker.end_call_2(0xEC4B4B3B9908052A)end,
+	["DISABLE_PED_INJURED_ON_GROUND_BEHAVIOUR"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x733C87D4CE22BEA2)end,
+	["SET_PED_SEEING_RANGE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0xF29CF591C4BF6CEE)end,
+	["SET_PED_HEARING_RANGE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0x33A8F7F7D5F7F33C)end,
+	["SET_PED_VISUAL_FIELD_MIN_ANGLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0x2DB492222FB21E26)end,
+	["SET_PED_VISUAL_FIELD_MAX_ANGLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0x70793BDCA1E854D4)end,
+	-- This native refers to the field of vision the ped has below them, starting at 0 degrees. The angle value should be negative.
+	-- -90f should let the ped see 90 degrees below them, for example.
+	["SET_PED_VISUAL_FIELD_MIN_ELEVATION_ANGLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] angle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(angle)native_invoker.end_call_2(0x7A276EB2C224D70F)end,
+	-- This native refers to the field of vision the ped has above them, starting at 0 degrees. 90f would let the ped see enemies directly above of them.
+	["SET_PED_VISUAL_FIELD_MAX_ELEVATION_ANGLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] angle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(angle)native_invoker.end_call_2(0x78D0B67629D75856)end,
+	["SET_PED_VISUAL_FIELD_PERIPHERAL_RANGE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] range)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(range)native_invoker.end_call_2(0x9C74B0BC831B753A)end,
+	["SET_PED_VISUAL_FIELD_CENTER_ANGLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] angle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(angle)native_invoker.end_call_2(0x3B6405E8AB34A907)end,
+	["GET_PED_VISUAL_FIELD_CENTER_ANGLE"]=--[[float]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xEF2C71A32CAD5FBD)return native_invoker.get_return_value_float()end,
+	-- p1 is usually 0 in the scripts. action is either 0 or a pointer to "DEFAULT_ACTION".
+	["SET_PED_STEALTH_MOVEMENT"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1,--[[string]] action)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.push_arg_string(action)native_invoker.end_call_2(0x88CBB5CEB96B7BD2)end,
+	-- Returns whether the entity is in stealth mode
+	["GET_PED_STEALTH_MOVEMENT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x7C2AC9CA66575FBF)return native_invoker.get_return_value_bool()end,
+	-- Creates a new ped group.
+	-- Groups can contain up to 8 peds.
+	-- 
+	-- The parameter is unused.
+	-- 
+	-- Returns a handle to the created group, or 0 if a group couldn't be created.
+	["CREATE_GROUP"]=--[[int]] function(--[[int]] unused)native_invoker.begin_call()native_invoker.push_arg_int(unused)native_invoker.end_call_2(0x90370EBE0FEE1A3D)return native_invoker.get_return_value_int()end,
+	["SET_PED_AS_GROUP_LEADER"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] groupId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(groupId)native_invoker.end_call_2(0x2A7819605465FBCE)end,
+	["SET_PED_AS_GROUP_MEMBER"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] groupId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(groupId)native_invoker.end_call_2(0x9F3480FE65DB31B5)end,
+	-- This only will teleport the ped to the group leader if the group leader teleports (sets coords).
+	-- 
+	-- Only works in singleplayer
+	["SET_PED_CAN_TELEPORT_TO_GROUP_LEADER"]=--[[void]] function(--[[Ped (int)]] pedHandle,--[[int]] groupHandle,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pedHandle)native_invoker.push_arg_int(groupHandle)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x2E2F4240B3F24647)end,
+	["REMOVE_GROUP"]=--[[void]] function(--[[int]] groupId)native_invoker.begin_call()native_invoker.push_arg_int(groupId)native_invoker.end_call_2(0x8EB2F69076AF7053)end,
+	["REMOVE_PED_FROM_GROUP"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xED74007FFB146BC2)end,
+	["IS_PED_GROUP_MEMBER"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int]] groupId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(groupId)native_invoker.end_call_2(0x9BB01E3834671191)return native_invoker.get_return_value_bool()end,
+	["IS_PED_HANGING_ON_TO_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x1C86D8AEF8254B78)return native_invoker.get_return_value_bool()end,
+	-- Sets the range at which members will automatically leave the group.
+	["SET_GROUP_SEPARATION_RANGE"]=--[[void]] function(--[[int]] groupHandle,--[[float]] separationRange)native_invoker.begin_call()native_invoker.push_arg_int(groupHandle)native_invoker.push_arg_float(separationRange)native_invoker.end_call_2(0x4102C7858CFEE4E4)end,
+	-- Ped will stay on the ground after being stunned for at lest ms time. (in milliseconds)
+	["SET_PED_MIN_GROUND_TIME_FOR_STUNGUN"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] ms)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(ms)native_invoker.end_call_2(0xFA0675AB151073FA)end,
+	["IS_PED_PRONE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xD6A86331A537A7B9)return native_invoker.get_return_value_bool()end,
+	-- Checks to see if ped and target are in combat with eachother. Only goes one-way: if target is engaged in combat with ped but ped has not yet reacted, the function will return false until ped starts fighting back.
+	-- 
+	-- p1 is usually 0 in the scripts because it gets the ped id during the task sequence. For instance: PED::IS_PED_IN_COMBAT(l_42E[4/*14*/], PLAYER::PLAYER_PED_ID()) // armenian2.ct4: 43794
+	["IS_PED_IN_COMBAT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Ped (int)]] target)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(target)native_invoker.end_call_2(0x4859F1FC66A6278E)return native_invoker.get_return_value_bool()end,
+	["GET_PED_TARGET_FROM_COMBAT_PED"]=--[[Entity (int)]] function(--[[Ped (int)]] ped,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x32C27A11307B01CC)return native_invoker.get_return_value_int()end,
+	["CAN_PED_IN_COMBAT_SEE_TARGET"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Ped (int)]] target)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(target)native_invoker.end_call_2(0xEAD42DE3610D0721)return native_invoker.get_return_value_bool()end,
+	["IS_PED_DOING_DRIVEBY"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xB2C086CC1BF8F2BF)return native_invoker.get_return_value_bool()end,
+	["IS_PED_JACKING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x4AE4FF911DFB61DA)return native_invoker.get_return_value_bool()end,
+	["IS_PED_BEING_JACKED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x9A497FE2DF198913)return native_invoker.get_return_value_bool()end,
+	-- p1 is always 0
+	["IS_PED_BEING_STUNNED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x4FBACCE3B4138EE8)return native_invoker.get_return_value_bool()end,
+	["GET_PEDS_JACKER"]=--[[Ped (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x9B128DC36C1E04CF)return native_invoker.get_return_value_int()end,
+	["GET_JACK_TARGET"]=--[[Ped (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x5486A79D9FBD342D)return native_invoker.get_return_value_int()end,
+	["IS_PED_FLEEING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xBBCCE00B381F8482)return native_invoker.get_return_value_bool()end,
+	-- p1 is nearly always 0 in the scripts. 
+	["IS_PED_IN_COVER"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] exceptUseWeapon)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(exceptUseWeapon)native_invoker.end_call_2(0x60DFD0691A170B88)return native_invoker.get_return_value_bool()end,
+	["IS_PED_IN_COVER_FACING_LEFT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x845333B3150583AB)return native_invoker.get_return_value_bool()end,
+	["IS_PED_IN_HIGH_COVER"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x6A03BF943D767C93)return native_invoker.get_return_value_bool()end,
+	["IS_PED_GOING_INTO_COVER"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x9F65DBC537E59AD5)return native_invoker.get_return_value_bool()end,
+	-- i could be time. Only example in the decompiled scripts uses it as -1.
+	["SET_PED_PINNED_DOWN"]=--[[Any (int)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] pinned,--[[int]] i)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(pinned)native_invoker.push_arg_int(i)native_invoker.end_call_2(0xAAD6D1ACF08F4612)return native_invoker.get_return_value_int()end,
+	["GET_SEAT_PED_IS_TRYING_TO_ENTER"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x6F4C85ACD641BCD2)return native_invoker.get_return_value_int()end,
+	["GET_VEHICLE_PED_IS_TRYING_TO_ENTER"]=--[[Vehicle (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x814FA8BE5449445D)return native_invoker.get_return_value_int()end,
+	-- Returns the Entity (Ped, Vehicle, or ?Object?) that killed the 'ped'
+	-- 
+	-- Is best to check if the Ped is dead before asking for its killer.
+	["GET_PED_SOURCE_OF_DEATH"]=--[[Entity (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x93C8B64DEB84728C)return native_invoker.get_return_value_int()end,
+	-- Returns the hash of the weapon/model/object that killed the ped.
+	["GET_PED_CAUSE_OF_DEATH"]=--[[Hash (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x16FFE42AB2D2DC59)return native_invoker.get_return_value_int()end,
+	["GET_PED_TIME_OF_DEATH"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x1E98817B311AE98A)return native_invoker.get_return_value_int()end,
+	["COUNT_PEDS_IN_COMBAT_WITH_TARGET"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x5407B7288D0478B7)return native_invoker.get_return_value_int()end,
+	["COUNT_PEDS_IN_COMBAT_WITH_TARGET_WITHIN_RADIUS"]=--[[int]] function(--[[Ped (int)]] ped,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.end_call_2(0x336B3D200AB007CB)return native_invoker.get_return_value_int()end,
+	["SET_PED_RELATIONSHIP_GROUP_DEFAULT_HASH"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] hash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(hash)native_invoker.end_call_2(0xADB3F206518799E8)end,
+	["SET_PED_RELATIONSHIP_GROUP_HASH"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] hash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(hash)native_invoker.end_call_2(0xC80A74AC829DDD92)end,
+	-- Sets the relationship between two groups. This should be called twice (once for each group).
+	-- 
+	-- Relationship types:
+	-- 0 = Companion
+	-- 1 = Respect
+	-- 2 = Like
+	-- 3 = Neutral
+	-- 4 = Dislike
+	-- 5 = Hate
+	-- 255 = Pedestrians
+	-- 
+	-- Example:
+	-- PED::SET_RELATIONSHIP_BETWEEN_GROUPS(2, l_1017, 0xA49E591C);
+	-- PED::SET_RELATIONSHIP_BETWEEN_GROUPS(2, 0xA49E591C, l_1017);
+	["SET_RELATIONSHIP_BETWEEN_GROUPS"]=--[[void]] function(--[[int]] relationship,--[[Hash (int)]] group1,--[[Hash (int)]] group2)native_invoker.begin_call()native_invoker.push_arg_int(relationship)native_invoker.push_arg_int(group1)native_invoker.push_arg_int(group2)native_invoker.end_call_2(0xBF25EB89375A37AD)end,
+	-- Clears the relationship between two groups. This should be called twice (once for each group).
+	-- 
+	-- Relationship types:
+	-- 0 = Companion
+	-- 1 = Respect
+	-- 2 = Like
+	-- 3 = Neutral
+	-- 4 = Dislike
+	-- 5 = Hate
+	-- 255 = Pedestrians
+	-- (Credits: Inco)
+	-- 
+	-- Example:
+	-- PED::CLEAR_RELATIONSHIP_BETWEEN_GROUPS(2, l_1017, 0xA49E591C);
+	-- PED::CLEAR_RELATIONSHIP_BETWEEN_GROUPS(2, 0xA49E591C, l_1017);
+	["CLEAR_RELATIONSHIP_BETWEEN_GROUPS"]=--[[void]] function(--[[int]] relationship,--[[Hash (int)]] group1,--[[Hash (int)]] group2)native_invoker.begin_call()native_invoker.push_arg_int(relationship)native_invoker.push_arg_int(group1)native_invoker.push_arg_int(group2)native_invoker.end_call_2(0x5E29243FB56FC6D4)end,
+	-- Can't select void. This function returns nothing. The hash of the created relationship group is output in the second parameter.
+	["ADD_RELATIONSHIP_GROUP"]=--[[Any (int)]] function(--[[string]] name,--[[Hash* (pointer)]] groupHash)native_invoker.begin_call()native_invoker.push_arg_string(name)native_invoker.push_arg_pointer(groupHash)native_invoker.end_call_2(0xF372BC22FCB88606)return native_invoker.get_return_value_int()end,
+	["REMOVE_RELATIONSHIP_GROUP"]=--[[void]] function(--[[Hash (int)]] groupHash)native_invoker.begin_call()native_invoker.push_arg_int(groupHash)native_invoker.end_call_2(0xB6BA2444AB393DA2)end,
+	["DOES_RELATIONSHIP_GROUP_EXIST"]=--[[BOOL (bool)]] function(--[[Hash (int)]] groupHash)native_invoker.begin_call()native_invoker.push_arg_int(groupHash)native_invoker.end_call_2(0xCC6E3B6BB69501F1)return native_invoker.get_return_value_bool()end,
+	-- Gets the relationship between two peds. This should be called twice (once for each ped).
+	-- 
+	-- Relationship types:
+	-- 0 = Companion
+	-- 1 = Respect
+	-- 2 = Like
+	-- 3 = Neutral
+	-- 4 = Dislike
+	-- 5 = Hate
+	-- 255 = Pedestrians
+	-- (Credits: Inco)
+	-- 
+	-- Example:
+	-- PED::GET_RELATIONSHIP_BETWEEN_PEDS(2, l_1017, 0xA49E591C);
+	-- PED::GET_RELATIONSHIP_BETWEEN_PEDS(2, 0xA49E591C, l_1017);
+	["GET_RELATIONSHIP_BETWEEN_PEDS"]=--[[int]] function(--[[Ped (int)]] ped1,--[[Ped (int)]] ped2)native_invoker.begin_call()native_invoker.push_arg_int(ped1)native_invoker.push_arg_int(ped2)native_invoker.end_call_2(0xEBA5AD3A0EAF7121)return native_invoker.get_return_value_int()end,
+	["GET_PED_RELATIONSHIP_GROUP_DEFAULT_HASH"]=--[[Hash (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x42FDD0F017B1E38E)return native_invoker.get_return_value_int()end,
+	["GET_PED_RELATIONSHIP_GROUP_HASH"]=--[[Hash (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x7DBDD04862D95F04)return native_invoker.get_return_value_int()end,
+	-- Gets the relationship between two groups. This should be called twice (once for each group).
+	-- 
+	-- Relationship types:
+	-- 0 = Companion
+	-- 1 = Respect
+	-- 2 = Like
+	-- 3 = Neutral
+	-- 4 = Dislike
+	-- 5 = Hate
+	-- 255 = Pedestrians
+	-- 
+	-- Example:
+	-- PED::GET_RELATIONSHIP_BETWEEN_GROUPS(l_1017, 0xA49E591C);
+	-- PED::GET_RELATIONSHIP_BETWEEN_GROUPS(0xA49E591C, l_1017);
+	["GET_RELATIONSHIP_BETWEEN_GROUPS"]=--[[int]] function(--[[Hash (int)]] group1,--[[Hash (int)]] group2)native_invoker.begin_call()native_invoker.push_arg_int(group1)native_invoker.push_arg_int(group2)native_invoker.end_call_2(0x9E6B70061662AE5C)return native_invoker.get_return_value_int()end,
+	["SET_RELATIONSHIP_GROUP_AFFECTS_WANTED_LEVEL"]=--[[void]] function(--[[Hash (int)]] group,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(group)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x5615E0C5EB2BC6E2)end,
+	["TELL_GROUP_PEDS_IN_AREA_TO_ATTACK"]=--[[void]] function(--[[Ped (int)]] ped,--[[Any (int)]] p1,--[[float]] p2,--[[Hash (int)]] hash,--[[Any (int)]] p4,--[[Any (int)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_int(hash)native_invoker.push_arg_int(p4)native_invoker.push_arg_int(p5)native_invoker.end_call_2(0xAD27D957598E49E9)end,
+	["SET_PED_CAN_BE_TARGETED_WITHOUT_LOS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x4328652AE5769C71)end,
+	["SET_PED_TO_INFORM_RESPECTED_FRIENDS"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] radius,--[[int]] maxFriends)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(radius)native_invoker.push_arg_int(maxFriends)native_invoker.end_call_2(0x112942C6E708F70B)end,
+	["IS_PED_RESPONDING_TO_EVENT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Any (int)]] event)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(event)native_invoker.end_call_2(0x625B774D75C87068)return native_invoker.get_return_value_bool()end,
+	["GET_POS_FROM_FIRED_EVENT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int]] eventType,--[[Any* (pointer)]] outData)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(eventType)native_invoker.push_arg_pointer(outData)native_invoker.end_call_2(0xBA656A3BB01BDEA3)return native_invoker.get_return_value_bool()end,
+	-- FIRING_PATTERN_BURST_FIRE = 0xD6FF6D61 ( 1073727030 )
+	-- FIRING_PATTERN_BURST_FIRE_IN_COVER = 0x026321F1 ( 40051185 )
+	-- FIRING_PATTERN_BURST_FIRE_DRIVEBY = 0xD31265F2 ( -753768974 )
+	-- FIRING_PATTERN_FROM_GROUND = 0x2264E5D6 ( 577037782 )
+	-- FIRING_PATTERN_DELAY_FIRE_BY_ONE_SEC = 0x7A845691 ( 2055493265 )
+	-- FIRING_PATTERN_FULL_AUTO = 0xC6EE6B4C ( -957453492 )
+	-- FIRING_PATTERN_SINGLE_SHOT = 0x5D60E4E0 ( 1566631136 )
+	-- FIRING_PATTERN_BURST_FIRE_PISTOL = 0xA018DB8A ( -1608983670 )
+	-- FIRING_PATTERN_BURST_FIRE_SMG = 0xD10DADEE ( 1863348768 )
+	-- FIRING_PATTERN_BURST_FIRE_RIFLE = 0x9C74B406 ( -1670073338 )
+	-- FIRING_PATTERN_BURST_FIRE_MG = 0xB573C5B4 ( -1250703948 )
+	-- FIRING_PATTERN_BURST_FIRE_PUMPSHOTGUN = 0x00BAC39B ( 12239771 )
+	-- FIRING_PATTERN_BURST_FIRE_HELI = 0x914E786F ( -1857128337 )
+	-- FIRING_PATTERN_BURST_FIRE_MICRO = 0x42EF03FD ( 1122960381 )
+	-- FIRING_PATTERN_SHORT_BURSTS = 0x1A92D7DF ( 445831135 )
+	-- FIRING_PATTERN_SLOW_FIRE_TANK = 0xE2CA3A71 ( -490063247 )
+	-- 
+	-- if anyone is interested firing pattern info: pastebin.com/Px036isB
+	["SET_PED_FIRING_PATTERN"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] patternHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(patternHash)native_invoker.end_call_2(0x9AC577F5A12AD8A9)end,
+	-- shootRate 0-1000
+	["SET_PED_SHOOT_RATE"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] shootRate)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(shootRate)native_invoker.end_call_2(0x614DA022990752DC)end,
+	-- combatType can be between 0-14. See GET_COMBAT_FLOAT below for a list of possible parameters.
+	["SET_COMBAT_FLOAT"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] combatType,--[[float]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(combatType)native_invoker.push_arg_float(p2)native_invoker.end_call_2(0xFF41B4B141ED981C)end,
+	-- p0: Ped Handle
+	-- p1: int i | 0 <= i <= 27
+	-- 
+	-- p1 probably refers to the attributes configured in combatbehavior.meta. There are 13. Example:
+	-- 
+	-- <BlindFireChance value="0.1"/>
+	-- <WeaponShootRateModifier value="1.0"/>
+	-- <TimeBetweenBurstsInCover value="1.25"/>
+	-- <BurstDurationInCover value="2.0"/>
+	-- <TimeBetweenPeeks value="10.0"/>
+	-- <WeaponAccuracy value="0.18"/>
+	-- <FightProficiency value="0.8"/>
+	-- <StrafeWhenMovingChance value="1.0"/>
+	-- <WalkWhenStrafingChance value="0.0"/>
+	-- <AttackWindowDistanceForCover value="55.0"/>
+	-- <TimeToInvalidateInjuredTarget value="9.0"/>
+	-- <TriggerChargeTime_Near value="4.0"/>
+	-- <TriggerChargeTime_Far value="10.0"/>
+	-- 
+	-- -------------Confirmed by editing combatbehavior.meta:
+	-- p1:
+	-- 0=BlindFireChance
+	-- 1=BurstDurationInCover
+	-- 3=TimeBetweenBurstsInCover
+	-- 4=TimeBetweenPeeks
+	-- 5=StrafeWhenMovingChance
+	-- 8=WalkWhenStrafingChance
+	-- 11=AttackWindowDistanceForCover
+	-- 12=TimeToInvalidateInjuredTarget
+	-- 16=OptimalCoverDistance
+	-- 
+	["GET_COMBAT_FLOAT"]=--[[float]] function(--[[Ped (int)]] ped,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x52DFF8A10508090A)return native_invoker.get_return_value_float()end,
+	-- p1 may be a BOOL representing whether or not the group even exists
+	["GET_GROUP_SIZE"]=--[[void]] function(--[[int]] groupID,--[[Any* (pointer)]] unknown,--[[int* (pointer)]] sizeInMembers)native_invoker.begin_call()native_invoker.push_arg_int(groupID)native_invoker.push_arg_pointer(unknown)native_invoker.push_arg_pointer(sizeInMembers)native_invoker.end_call_2(0x8DE69FE35CA09A45)end,
+	["DOES_GROUP_EXIST"]=--[[BOOL (bool)]] function(--[[int]] groupId)native_invoker.begin_call()native_invoker.push_arg_int(groupId)native_invoker.end_call_2(0x7C6B0C22F9F40BBE)return native_invoker.get_return_value_bool()end,
+	-- Returns the group id of which the specified ped is a member of.
+	["GET_PED_GROUP_INDEX"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xF162E133B4E7A675)return native_invoker.get_return_value_int()end,
+	["IS_PED_IN_GROUP"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x5891CAC5D4ACFF74)return native_invoker.get_return_value_bool()end,
+	["GET_PLAYER_PED_IS_FOLLOWING"]=--[[Player (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x6A3975DEA89F9A17)return native_invoker.get_return_value_int()end,
+	-- 0: Default
+	-- 1: Circle Around Leader
+	-- 2: Alternative Circle Around Leader
+	-- 3: Line, with Leader at center
+	["SET_GROUP_FORMATION"]=--[[void]] function(--[[int]] groupId,--[[int]] formationType)native_invoker.begin_call()native_invoker.push_arg_int(groupId)native_invoker.push_arg_int(formationType)native_invoker.end_call_2(0xCE2F5FC3AF7E8C1E)end,
+	["SET_GROUP_FORMATION_SPACING"]=--[[void]] function(--[[int]] groupId,--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call()native_invoker.push_arg_int(groupId)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.end_call_2(0x1D9D45004C28C916)end,
+	["RESET_GROUP_FORMATION_DEFAULT_SPACING"]=--[[void]] function(--[[int]] groupHandle)native_invoker.begin_call()native_invoker.push_arg_int(groupHandle)native_invoker.end_call_2(0x63DAB4CCB3273205)end,
+	-- Gets ID of vehicle player using. It means it can get ID at any interaction with vehicle. Enter\exit for example. And that means it is faster than GET_VEHICLE_PED_IS_IN but less safe.
+	["GET_VEHICLE_PED_IS_USING"]=--[[Vehicle (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x6094AD011A2EA87D)return native_invoker.get_return_value_int()end,
+	["GET_VEHICLE_PED_IS_ENTERING"]=--[[Vehicle (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xF92691AED837A5FC)return native_invoker.get_return_value_int()end,
+	-- enable or disable the gravity of a ped
+	-- 
+	-- Examples:
+	-- PED::SET_PED_GRAVITY(PLAYER::PLAYER_PED_ID(), 0x00000001);
+	-- PED::SET_PED_GRAVITY(Local_289[iVar0 /*20*/], 0x00000001);
+	["SET_PED_GRAVITY"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x9FF447B6B6AD960A)end,
+	-- damages a ped with the given amount
+	["APPLY_DAMAGE_TO_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] damageAmount,--[[BOOL (bool)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(damageAmount)native_invoker.push_arg_bool(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0x697157CED63F18D4)end,
+	["GET_TIME_PED_DAMAGED_BY_WEAPON"]=--[[int]] function(--[[Ped (int)]] ped,--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0x36B77BB84687C318)return native_invoker.get_return_value_int()end,
+	["SET_PED_ALLOWED_TO_DUCK"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xDA1F1B7BE1A8766F)end,
+	["SET_PED_NEVER_LEAVES_GROUP"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x3DBFC55D5C9BB447)end,
+	-- https://alloc8or.re/gta5/doc/enums/ePedType.txt
+	["GET_PED_TYPE"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xFF059E1E4C01E63C)return native_invoker.get_return_value_int()end,
+	-- Turns the desired ped into a cop. If you use this on the player ped, you will become almost invisible to cops dispatched for you. You will also report your own crimes, get a generic cop voice, get a cop-vision-cone on the radar, and you will be unable to shoot at other cops. SWAT and Army will still shoot at you. Toggling ped as "false" has no effect; you must change p0's ped model to disable the effect.
+	["SET_PED_AS_COP"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xBB03C38DD3FB7FFD)end,
+	["SET_PED_HEALTH_PENDING_LAST_DAMAGE_EVENT_OVERRIDE_FLAG"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xB3352E018D6F89DF)end,
+	-- sets the maximum health of a ped
+	-- 
+	-- I think it's never been used in any script
+	["SET_PED_MAX_HEALTH"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(value)native_invoker.end_call_2(0xF5F6378C4F3419D3)end,
+	["GET_PED_MAX_HEALTH"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x4700A416E8324EF3)return native_invoker.get_return_value_int()end,
+	["SET_PED_MAX_TIME_IN_WATER"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0x43C851690662113D)end,
+	["SET_PED_MAX_TIME_UNDERWATER"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0x6BA428C528D9E522)end,
+	["SET_CORPSE_RAGDOLL_FRICTION"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0x2735233A786B1BEF)end,
+	-- seatIndex must be <= 2
+	["SET_PED_VEHICLE_FORCED_SEAT_USAGE"]=--[[void]] function(--[[Ped (int)]] ped,--[[Vehicle (int)]] vehicle,--[[int]] seatIndex,--[[int]] flags,--[[Any (int)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(vehicle)native_invoker.push_arg_int(seatIndex)native_invoker.push_arg_int(flags)native_invoker.push_arg_int(p4)native_invoker.end_call_2(0x952F06BEECD775CC)end,
+	["CLEAR_ALL_PED_VEHICLE_FORCED_SEAT_USAGE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xE6CA85E7259CE16B)end,
+	-- This native does absolutely nothing, just a nullsub
+	["SET_PED_CAN_BE_KNOCKED_OFF_BIKE"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xB282749D5E028163)end,
+	-- state: https://alloc8or.re/gta5/doc/enums/eKnockOffVehicle.txt
+	["SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] state)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(state)native_invoker.end_call_2(0x7A6535691B477C48)end,
+	["CAN_KNOCK_PED_OFF_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x51AC07A44D4F5B8A)return native_invoker.get_return_value_bool()end,
+	["KNOCK_PED_OFF_VEHICLE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x45BBCBA77C29A841)end,
+	["SET_PED_COORDS_NO_GANG"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] posX,--[[float]] posY,--[[float]] posZ)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(posX)native_invoker.push_arg_float(posY)native_invoker.push_arg_float(posZ)native_invoker.end_call_2(0x87052FE446E07247)end,
+	-- from fm_mission_controller.c4 (variable names changed for clarity):
+	-- 
+	-- int groupID = PLAYER::GET_PLAYER_GROUP(PLAYER::PLAYER_ID());
+	-- PED::GET_GROUP_SIZE(group, &unused, &groupSize);
+	-- if (groupSize >= 1) {
+	-- . . . . for (int memberNumber = 0; memberNumber < groupSize; memberNumber++) {
+	-- . . . . . . . . Ped ped1 = PED::GET_PED_AS_GROUP_MEMBER(groupID, memberNumber);
+	-- . . . . . . . . //and so on
+	["GET_PED_AS_GROUP_MEMBER"]=--[[Ped (int)]] function(--[[int]] groupID,--[[int]] memberNumber)native_invoker.begin_call()native_invoker.push_arg_int(groupID)native_invoker.push_arg_int(memberNumber)native_invoker.end_call_2(0x51455483CF23ED97)return native_invoker.get_return_value_int()end,
+	["GET_PED_AS_GROUP_LEADER"]=--[[Ped (int)]] function(--[[int]] groupID)native_invoker.begin_call()native_invoker.push_arg_int(groupID)native_invoker.end_call_2(0x5CCE68DBD5FE93EC)return native_invoker.get_return_value_int()end,
+	["SET_PED_KEEP_TASK"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x971D38760FBC02EF)end,
+	["SET_PED_ALLOW_MINOR_REACTIONS_AS_MISSION_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x49E50BDB8BA4DAB2)end,
+	["IS_PED_SWIMMING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x9DE327631295B4C2)return native_invoker.get_return_value_bool()end,
+	["IS_PED_SWIMMING_UNDER_WATER"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xC024869A53992F34)return native_invoker.get_return_value_bool()end,
+	-- teleports ped to coords along with the vehicle ped is in
+	["SET_PED_COORDS_KEEP_VEHICLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] posX,--[[float]] posY,--[[float]] posZ)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(posX)native_invoker.push_arg_float(posY)native_invoker.push_arg_float(posZ)native_invoker.end_call_2(0x9AFEFF481A85AB2E)end,
+	["SET_PED_DIES_IN_VEHICLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x2A30922C90C9B42C)end,
+	["SET_CREATE_RANDOM_COPS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x102E68B2024D536D)end,
+	["SET_CREATE_RANDOM_COPS_NOT_ON_SCENARIOS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x8A4986851C4EF6E7)end,
+	["SET_CREATE_RANDOM_COPS_ON_SCENARIOS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x444CB7D7DBE6973D)end,
+	["CAN_CREATE_RANDOM_COPS"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5EE2CAFF7F17770D)return native_invoker.get_return_value_bool()end,
+	["SET_PED_AS_ENEMY"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x02A0C9720B854BFA)end,
+	["SET_PED_CAN_SMASH_GLASS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x1CCE141467FF42A2)end,
+	["IS_PED_IN_ANY_TRAIN"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x6F972C1AB75A1ED0)return native_invoker.get_return_value_bool()end,
+	["IS_PED_GETTING_INTO_A_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xBB062B2B5722478E)return native_invoker.get_return_value_bool()end,
+	["IS_PED_TRYING_TO_ENTER_A_LOCKED_VEHICLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x44D28D5DDFE5F68C)return native_invoker.get_return_value_bool()end,
+	-- ped can not pull out a weapon when true
+	["SET_ENABLE_HANDCUFFS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xDF1AF8B5D56542FA)end,
+	-- Used with SET_ENABLE_HANDCUFFS in decompiled scripts. From my observations, I have noticed that while being ragdolled you are not able to get up but you can still run. Your legs can also bend.
+	["SET_ENABLE_BOUND_ANKLES"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xC52E0F855C58FC2E)end,
+	-- Enables diving motion when underwater.
+	["SET_ENABLE_SCUBA"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xF99F62004024D506)end,
+	-- Setting ped to true allows the ped to shoot "friendlies".
+	-- 
+	-- p2 set to true when toggle is also true seams to make peds permanently unable to aim at, even if you set p2 back to false.
+	-- 
+	-- p1 = false & p2 = false for unable to aim at.
+	-- p1 = true & p2 = false for able to aim at. 
+	["SET_CAN_ATTACK_FRIENDLY"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xB3B1CB349FF9C75D)end,
+	-- Returns the ped's alertness (0-3).
+	-- 
+	-- Values : 
+	-- 
+	-- 0 : Neutral
+	-- 1 : Heard something (gun shot, hit, etc)
+	-- 2 : Knows (the origin of the event)
+	-- 3 : Fully alerted (is facing the event?)
+	-- 
+	-- If the Ped does not exist, returns -1.
+	["GET_PED_ALERTNESS"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xF6AA118530443FD2)return native_invoker.get_return_value_int()end,
+	-- value ranges from 0 to 3.
+	["SET_PED_ALERTNESS"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(value)native_invoker.end_call_2(0xDBA71115ED9941A6)end,
+	["SET_PED_GET_OUT_UPSIDE_DOWN_VEHICLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xBC0ED94165A48BC2)end,
+	-- transitionSpeed is the time in seconds it takes to transition from one movement clipset to another.	ransitionSpeed is usually 1.0f
+	-- 
+	-- List of movement clipsets:
+	-- Thanks to elsewhat for list.
+	-- 
+	--  "ANIM_GROUP_MOVE_BALLISTIC"
+	--  "ANIM_GROUP_MOVE_LEMAR_ALLEY"
+	--  "clipset@move@trash_fast_turn"
+	--  "FEMALE_FAST_RUNNER"
+	--  "missfbi4prepp1_garbageman"
+	--  "move_characters@franklin@fire"
+	--  "move_characters@Jimmy@slow@"
+	--  "move_characters@michael@fire"
+	--  "move_f@flee@a"
+	--  "move_f@scared"
+	--  "move_f@sexy@a"
+	--  "move_heist_lester"
+	--  "move_injured_generic"
+	--  "move_lester_CaneUp"
+	--  "move_m@bag"
+	--  "MOVE_M@BAIL_BOND_NOT_TAZERED"
+	--  "MOVE_M@BAIL_BOND_TAZERED"
+	--  "move_m@brave"
+	--  "move_m@casual@d"
+	--  "move_m@drunk@moderatedrunk"
+	--  "MOVE_M@DRUNK@MODERATEDRUNK"
+	--  "MOVE_M@DRUNK@MODERATEDRUNK_HEAD_UP"
+	--  "MOVE_M@DRUNK@SLIGHTLYDRUNK"
+	--  "MOVE_M@DRUNK@VERYDRUNK"
+	--  "move_m@fire"
+	--  "move_m@gangster@var_e"
+	--  "move_m@gangster@var_f"
+	--  "move_m@gangster@var_i"
+	--  "move_m@JOG@"
+	--  "MOVE_M@PRISON_GAURD"
+	--  "MOVE_P_M_ONE"
+	--  "MOVE_P_M_ONE_BRIEFCASE"
+	--  "move_p_m_zero_janitor"
+	--  "move_p_m_zero_slow"
+	--  "move_ped_bucket"
+	--  "move_ped_crouched"
+	--  "move_ped_mop"
+	--  "MOVE_M@FEMME@"
+	--  "MOVE_F@FEMME@"
+	--  "MOVE_M@GANGSTER@NG"
+	--  "MOVE_F@GANGSTER@NG"
+	--  "MOVE_M@POSH@"
+	--  "MOVE_F@POSH@"
+	--  "MOVE_M@TOUGH_GUY@"
+	--  "MOVE_F@TOUGH_GUY@"
+	-- 
+	-- ~ NotCrunchyTaco
+	-- 
+	-- Full list of movement clipsets by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/movementClipsetsCompact.json
+	["SET_PED_MOVEMENT_CLIPSET"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] clipSet,--[[float]] transitionSpeed)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(clipSet)native_invoker.push_arg_float(transitionSpeed)native_invoker.end_call_2(0xAF8A94EDE7712BEF)end,
+	-- If p1 is 0.0, I believe you are back to normal. 
+	-- If p1 is 1.0, it looks like you can only rotate the ped, not walk.
+	-- 
+	-- Using the following code to reset back to normal
+	-- PED::RESET_PED_MOVEMENT_CLIPSET(PLAYER::PLAYER_PED_ID(), 0.0);
+	["RESET_PED_MOVEMENT_CLIPSET"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0xAA74EC0CB0AAEA2C)end,
+	-- Full list of movement clipsets by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/movementClipsetsCompact.json
+	["SET_PED_STRAFE_CLIPSET"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] clipSet)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(clipSet)native_invoker.end_call_2(0x29A28F3F8CF6D854)end,
+	["RESET_PED_STRAFE_CLIPSET"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x20510814175EA477)end,
+	["SET_PED_WEAPON_MOVEMENT_CLIPSET"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] clipSet)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(clipSet)native_invoker.end_call_2(0x2622E35B77D3ACA2)end,
+	["RESET_PED_WEAPON_MOVEMENT_CLIPSET"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x97B0DB5B4AA74E77)end,
+	["SET_PED_DRIVE_BY_CLIPSET_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] clipset)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(clipset)native_invoker.end_call_2(0xED34AB6C5CB36520)end,
+	["CLEAR_PED_DRIVE_BY_CLIPSET_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x4AFE3690D7E0B5AC)end,
+	-- Found in the b617d scripts:
+	-- PED::_9DBA107B4937F809(v_7, "trevor_heist_cover_2h");
+	["SET_PED_MOTION_IN_COVER_CLIPSET_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(p1)native_invoker.end_call_2(0x9DBA107B4937F809)end,
+	["CLEAR_PED_MOTION_IN_COVER_CLIPSET_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xC79196DCB36F6121)end,
+	["CLEAR_PED_FALL_UPPER_BODY_CLIPSET_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x80054D7FCC70EEC6)end,
+	-- PED::SET_PED_IN_VEHICLE_CONTEXT(l_128, MISC::GET_HASH_KEY("MINI_PROSTITUTE_LOW_PASSENGER"));
+	-- PED::SET_PED_IN_VEHICLE_CONTEXT(l_128, MISC::GET_HASH_KEY("MINI_PROSTITUTE_LOW_RESTRICTED_PASSENGER"));
+	-- PED::SET_PED_IN_VEHICLE_CONTEXT(l_3212, MISC::GET_HASH_KEY("MISS_FAMILY1_JIMMY_SIT"));
+	-- PED::SET_PED_IN_VEHICLE_CONTEXT(l_3212, MISC::GET_HASH_KEY("MISS_FAMILY1_JIMMY_SIT_REAR"));
+	-- PED::SET_PED_IN_VEHICLE_CONTEXT(l_95, MISC::GET_HASH_KEY("MISS_FAMILY2_JIMMY_BICYCLE"));
+	-- PED::SET_PED_IN_VEHICLE_CONTEXT(num3, MISC::GET_HASH_KEY("MISSFBI2_MICHAEL_DRIVEBY"));
+	-- PED::SET_PED_IN_VEHICLE_CONTEXT(PLAYER::PLAYER_PED_ID(), MISC::GET_HASH_KEY("MISS_ARMENIAN3_FRANKLIN_TENSE"));
+	-- PED::SET_PED_IN_VEHICLE_CONTEXT(PLAYER::PLAYER_PED_ID(), MISC::GET_HASH_KEY("MISSFBI5_TREVOR_DRIVING"));
+	["SET_PED_IN_VEHICLE_CONTEXT"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] context)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(context)native_invoker.end_call_2(0x530071295899A8C6)end,
+	["RESET_PED_IN_VEHICLE_CONTEXT"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x22EF8FF8778030EB)end,
+	-- Full list of animation dictionaries and anims by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/animDictsCompact.json
+	["IS_SCRIPTED_SCENARIO_PED_USING_CONDITIONAL_ANIM"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[string]] animDict,--[[string]] anim)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(animDict)native_invoker.push_arg_string(anim)native_invoker.end_call_2(0x6EC47A344923E1ED)return native_invoker.get_return_value_bool()end,
+	-- Full list of animation dictionaries and anims by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/animDictsCompact.json
+	-- 
+	-- Full list of movement clipsets by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/movementClipsetsCompact.json
+	["SET_PED_ALTERNATE_WALK_ANIM"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] animDict,--[[string]] animName,--[[float]] p3,--[[BOOL (bool)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(animDict)native_invoker.push_arg_string(animName)native_invoker.push_arg_float(p3)native_invoker.push_arg_bool(p4)native_invoker.end_call_2(0x6C60394CB4F75E9A)end,
+	["CLEAR_PED_ALTERNATE_WALK_ANIM"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0x8844BBFCE30AA9E9)end,
+	-- stance:
+	-- 0 = idle
+	-- 1 = walk
+	-- 2 = running
+	-- 
+	-- p5 = usually set to true
+	-- 
+	-- Full list of animation dictionaries and anims by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/animDictsCompact.json
+	-- 
+	-- Full list of movement clipsets by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/movementClipsetsCompact.json
+	["SET_PED_ALTERNATE_MOVEMENT_ANIM"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] stance,--[[string]] animDictionary,--[[string]] animationName,--[[float]] p4,--[[BOOL (bool)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(stance)native_invoker.push_arg_string(animDictionary)native_invoker.push_arg_string(animationName)native_invoker.push_arg_float(p4)native_invoker.push_arg_bool(p5)native_invoker.end_call_2(0x90A43CC281FFAB46)end,
+	["CLEAR_PED_ALTERNATE_MOVEMENT_ANIM"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] stance,--[[float]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(stance)native_invoker.push_arg_float(p2)native_invoker.end_call_2(0xD8D19675ED5FBDCE)end,
+	-- From the scripts:
+	-- PED::SET_PED_GESTURE_GROUP(PLAYER::PLAYER_PED_ID(),
+	-- "ANIM_GROUP_GESTURE_MISS_FRA0");
+	-- PED::SET_PED_GESTURE_GROUP(PLAYER::PLAYER_PED_ID(),
+	-- "ANIM_GROUP_GESTURE_MISS_DocksSetup1");
+	["SET_PED_GESTURE_GROUP"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] animGroupGesture)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(animGroupGesture)native_invoker.end_call_2(0xDDF803377F94AAA8)end,
+	-- Full list of animation dictionaries and anims by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/animDictsCompact.json
+	["GET_ANIM_INITIAL_OFFSET_POSITION"]=--[[Vector3 (vector3)]] function(--[[string]] animDict,--[[string]] animName,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] xRot,--[[float]] yRot,--[[float]] zRot,--[[float]] p8,--[[int]] p9)native_invoker.begin_call()native_invoker.push_arg_string(animDict)native_invoker.push_arg_string(animName)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(xRot)native_invoker.push_arg_float(yRot)native_invoker.push_arg_float(zRot)native_invoker.push_arg_float(p8)native_invoker.push_arg_int(p9)native_invoker.end_call_2(0xBE22B26DD764C040)return native_invoker.get_return_value_vector3()end,
+	-- Full list of animation dictionaries and anims by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/animDictsCompact.json
+	["GET_ANIM_INITIAL_OFFSET_ROTATION"]=--[[Vector3 (vector3)]] function(--[[string]] animDict,--[[string]] animName,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] xRot,--[[float]] yRot,--[[float]] zRot,--[[float]] p8,--[[int]] p9)native_invoker.begin_call()native_invoker.push_arg_string(animDict)native_invoker.push_arg_string(animName)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(xRot)native_invoker.push_arg_float(yRot)native_invoker.push_arg_float(zRot)native_invoker.push_arg_float(p8)native_invoker.push_arg_int(p9)native_invoker.end_call_2(0x4B805E6046EE9E47)return native_invoker.get_return_value_vector3()end,
+	-- Ids
+	-- 0 - Head
+	-- 1 - Beard
+	-- 2 - Hair
+	-- 3 - Torso
+	-- 4 - Legs
+	-- 5 - Hands
+	-- 6 - Foot
+	-- 7 - ------
+	-- 8 - Accessories 1
+	-- 9 - Accessories 2
+	-- 10- Decals
+	-- 11 - Auxiliary parts for torso
+	["GET_PED_DRAWABLE_VARIATION"]=--[[int]] function(--[[Ped (int)]] ped,--[[int]] componentId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(componentId)native_invoker.end_call_2(0x67F3780DD425D4FC)return native_invoker.get_return_value_int()end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["GET_NUMBER_OF_PED_DRAWABLE_VARIATIONS"]=--[[int]] function(--[[Ped (int)]] ped,--[[int]] componentId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(componentId)native_invoker.end_call_2(0x27561561732A7842)return native_invoker.get_return_value_int()end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["GET_PED_TEXTURE_VARIATION"]=--[[int]] function(--[[Ped (int)]] ped,--[[int]] componentId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(componentId)native_invoker.end_call_2(0x04A355E041E004E6)return native_invoker.get_return_value_int()end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["GET_NUMBER_OF_PED_TEXTURE_VARIATIONS"]=--[[int]] function(--[[Ped (int)]] ped,--[[int]] componentId,--[[int]] drawableId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(componentId)native_invoker.push_arg_int(drawableId)native_invoker.end_call_2(0x8F7156A3142A6BAD)return native_invoker.get_return_value_int()end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS"]=--[[int]] function(--[[Ped (int)]] ped,--[[int]] propId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(propId)native_invoker.end_call_2(0x5FAF9754E789FB47)return native_invoker.get_return_value_int()end,
+	-- Need to check behavior when drawableId = -1
+	-- 
+	-- - Doofy.Ass
+	-- Why this function doesn't work and return nill value?
+	-- GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS(PLAYER.PLAYER_PED_ID(), 0, 5)
+	-- 
+	-- tick: scripts/addins/menu_execute.lua:51: attempt to call field 'GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS' (a nil value)
+	-- 
+	-- 
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS"]=--[[int]] function(--[[Ped (int)]] ped,--[[int]] propId,--[[int]] drawableId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(propId)native_invoker.push_arg_int(drawableId)native_invoker.end_call_2(0xA6E7F1CEB523E171)return native_invoker.get_return_value_int()end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["GET_PED_PALETTE_VARIATION"]=--[[int]] function(--[[Ped (int)]] ped,--[[int]] componentId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(componentId)native_invoker.end_call_2(0xE3DD5F2A84B42281)return native_invoker.get_return_value_int()end,
+	["GET_MP_OUTFIT_DATA_FROM_METADATA"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0x9E30E91FB03A2CAF)return native_invoker.get_return_value_bool()end,
+	["GET_FM_MALE_SHOP_PED_APPAREL_ITEM_INDEX"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x1E77FA7A62EE6C4C)return native_invoker.get_return_value_int()end,
+	["GET_FM_FEMALE_SHOP_PED_APPAREL_ITEM_INDEX"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xF033419D1B81FAE8)return native_invoker.get_return_value_int()end,
+	-- Checks if the component variation is valid, this works great for randomizing components using loops.
+	-- 
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	-- 
+	-- Full list of ped components by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pedComponentVariations.json
+	["IS_PED_COMPONENT_VARIATION_VALID"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int]] componentId,--[[int]] drawableId,--[[int]] textureId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(componentId)native_invoker.push_arg_int(drawableId)native_invoker.push_arg_int(textureId)native_invoker.end_call_2(0xE825F6B6CEA7671D)return native_invoker.get_return_value_bool()end,
+	-- paletteId: 0 to 3.
+	-- 
+	-- componentId:
+	-- enum ePedVarComp
+	-- {
+	-- 	PV_COMP_INVALID = -1,
+	-- 	PV_COMP_HEAD,
+	-- 	PV_COMP_BERD,
+	-- 	PV_COMP_HAIR,
+	-- 	PV_COMP_UPPR,
+	-- 	PV_COMP_LOWR,
+	-- 	PV_COMP_HAND,
+	-- 	PV_COMP_FEET,
+	-- 	PV_COMP_TEEF,
+	-- 	PV_COMP_ACCS,
+	-- 	PV_COMP_TASK,
+	-- 	PV_COMP_DECL,
+	-- 	PV_COMP_JBIB,
+	-- 	PV_COMP_MAX
+	-- };
+	-- 
+	-- Examples: https://gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	-- 
+	-- Full list of ped components by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pedComponentVariations.json
+	["SET_PED_COMPONENT_VARIATION"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] componentId,--[[int]] drawableId,--[[int]] textureId,--[[int]] paletteId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(componentId)native_invoker.push_arg_int(drawableId)native_invoker.push_arg_int(textureId)native_invoker.push_arg_int(paletteId)native_invoker.end_call_2(0x262B14F48D29DE80)end,
+	-- p1 is always 0 in R* scripts.
+	-- 
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["SET_PED_RANDOM_COMPONENT_VARIATION"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xC8A9481A01E63C28)end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["SET_PED_RANDOM_PROPS"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xC44AA05345C992C6)end,
+	-- Sets Ped Default Clothes
+	["SET_PED_DEFAULT_COMPONENT_VARIATION"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x45EEE61580806D63)end,
+	["SET_PED_BLEND_FROM_PARENTS"]=--[[void]] function(--[[Ped (int)]] ped,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[float]] p3,--[[float]] p4)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.end_call_2(0x137BBD05230DB22D)end,
+	-- The "shape" parameters control the shape of the ped's face. The "skin" parameters control the skin tone. ShapeMix and skinMix control how much the first and second IDs contribute,(typically mother and father.) ThirdMix overrides the others in favor of the third IDs. IsParent is set for "children" of the player character's grandparents during old-gen character creation. It has unknown effect otherwise.
+	-- 
+	-- The IDs start at zero and go Male Non-DLC, Female Non-DLC, Male DLC, and Female DLC.
+	-- 
+	-- !!!Can someone add working example for this???
+	-- 
+	-- try this:
+	--        headBlendData headData;
+	--        GET_PED_HEAD_BLEND_DATA(PLAYER_PED_ID(), &headData);
+	-- 
+	--        SET_PED_HEAD_BLEND_DATA(PLAYER_PED_ID(), headData.shapeFirst, headData.shapeSecond, headData.shapeThird, headData.skinFirst, headData.skinSecond
+	--           , headData.skinThird, headData.shapeMix, headData.skinMix, headData.skinThird, 0);
+	-- 
+	-- 
+	-- For more info please refer to this topic. 
+	-- gtaforums.com/topic/858970-all-gtao-face-ids-pedset-ped-head-blend-data-explained
+	["SET_PED_HEAD_BLEND_DATA"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] shapeFirstID,--[[int]] shapeSecondID,--[[int]] shapeThirdID,--[[int]] skinFirstID,--[[int]] skinSecondID,--[[int]] skinThirdID,--[[float]] shapeMix,--[[float]] skinMix,--[[float]] thirdMix,--[[BOOL (bool)]] isParent)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(shapeFirstID)native_invoker.push_arg_int(shapeSecondID)native_invoker.push_arg_int(shapeThirdID)native_invoker.push_arg_int(skinFirstID)native_invoker.push_arg_int(skinSecondID)native_invoker.push_arg_int(skinThirdID)native_invoker.push_arg_float(shapeMix)native_invoker.push_arg_float(skinMix)native_invoker.push_arg_float(thirdMix)native_invoker.push_arg_bool(isParent)native_invoker.end_call_2(0x9414E18B9434C2FE)end,
+	-- The pointer is to a padded struct that matches the arguments to SET_PED_HEAD_BLEND_DATA(...). There are 4 bytes of padding after each field.
+	-- pass this struct in the second parameter 
+	-- struct headBlendData
+	-- {
+	--     int shapeFirst;
+	--     int padding1;
+	--     int shapeSecond;
+	--     int padding2;
+	--     int shapeThird;
+	--     int padding3;
+	--     int skinFirst;
+	--     int padding4;
+	--     int skinSecond;
+	--     int padding5;
+	--     int skinThird;
+	--     int padding6;
+	--     float shapeMix;
+	--     int padding7;
+	--     float skinMix;
+	--     int padding8;
+	--     float thirdMix;
+	--     int padding9;
+	--     bool isParent;
+	-- };
+	["GET_PED_HEAD_BLEND_DATA"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Any* (pointer)]] headBlendData)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_pointer(headBlendData)native_invoker.end_call_2(0x2746BD9D88C5C5D0)return native_invoker.get_return_value_bool()end,
+	-- See SET_PED_HEAD_BLEND_DATA().
+	["UPDATE_PED_HEAD_BLEND_DATA"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] shapeMix,--[[float]] skinMix,--[[float]] thirdMix)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(shapeMix)native_invoker.push_arg_float(skinMix)native_invoker.push_arg_float(thirdMix)native_invoker.end_call_2(0x723538F61C647C5A)end,
+	-- Used for freemode (online) characters.
+	-- 
+	-- For some reason, the scripts use a rounded float for the index.
+	-- Indexes:
+	-- 1. black
+	-- 2. very light blue/green
+	-- 3. dark blue
+	-- 4. brown
+	-- 5. darker brown
+	-- 6. light brown
+	-- 7. blue
+	-- 8. light blue
+	-- 9. pink
+	-- 10. yellow
+	-- 11. purple
+	-- 12. black
+	-- 13. dark green
+	-- 14. light brown
+	-- 15. yellow/black pattern
+	-- 16. light colored spiral pattern
+	-- 17. shiny red
+	-- 18. shiny half blue/half red
+	-- 19. half black/half light blue
+	-- 20. white/red perimter
+	-- 21. green snake
+	-- 22. red snake
+	-- 23. dark blue snake
+	-- 24. dark yellow
+	-- 25. bright yellow
+	-- 26. all black
+	-- 28. red small pupil
+	-- 29. devil blue/black
+	-- 30. white small pupil
+	-- 31. glossed over
+	["SET_HEAD_BLEND_EYE_COLOR"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(index)native_invoker.end_call_2(0x50B56988B170AFDF)end,
+	-- A getter for _SET_PED_EYE_COLOR. Returns -1 if fails to get.
+	["GET_HEAD_BLEND_EYE_COLOR"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x76BBA2CEE66D47E9)return native_invoker.get_return_value_int()end,
+	-- OverlayID ranges from 0 to 12, index from 0 to _GET_NUM_OVERLAY_VALUES(overlayID)-1, and opacity from 0.0 to 1.0. 
+	-- 
+	-- overlayID       Part                  Index, to disable
+	-- 0               Blemishes             0 - 23, 255
+	-- 1               Facial Hair           0 - 28, 255
+	-- 2               Eyebrows              0 - 33, 255
+	-- 3               Ageing                0 - 14, 255
+	-- 4               Makeup                0 - 74, 255
+	-- 5               Blush                 0 - 6, 255
+	-- 6               Complexion            0 - 11, 255
+	-- 7               Sun Damage            0 - 10, 255
+	-- 8               Lipstick              0 - 9, 255
+	-- 9               Moles/Freckles        0 - 17, 255
+	-- 10              Chest Hair            0 - 16, 255
+	-- 11              Body Blemishes        0 - 11, 255
+	-- 12              Add Body Blemishes    0 - 1, 255
+	["SET_PED_HEAD_OVERLAY"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] overlayID,--[[int]] index,--[[float]] opacity)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(overlayID)native_invoker.push_arg_int(index)native_invoker.push_arg_float(opacity)native_invoker.end_call_2(0x48F44967FA05CC1E)end,
+	-- Likely a char, if that overlay is not set, e.i. "None" option, returns 255;
+	-- 
+	-- This might be the once removed native GET_PED_HEAD_OVERLAY.
+	["GET_PED_HEAD_OVERLAY"]=--[[int]] function(--[[Ped (int)]] ped,--[[int]] overlayID)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(overlayID)native_invoker.end_call_2(0xA60EF3B6461A4D43)return native_invoker.get_return_value_int()end,
+	-- Used with freemode (online) characters.
+	["GET_PED_HEAD_OVERLAY_NUM"]=--[[int]] function(--[[int]] overlayID)native_invoker.begin_call()native_invoker.push_arg_int(overlayID)native_invoker.end_call_2(0xCF1CE768BB43480E)return native_invoker.get_return_value_int()end,
+	-- Used for freemode (online) characters.
+	-- 
+	-- ColorType is 1 for eyebrows, beards, and chest hair; 2 for blush and lipstick; and 0 otherwise, though not called in those cases.
+	-- 
+	-- Called after SET_PED_HEAD_OVERLAY().
+	["SET_PED_HEAD_OVERLAY_TINT"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] overlayID,--[[int]] colorType,--[[int]] colorID,--[[int]] secondColorID)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(overlayID)native_invoker.push_arg_int(colorType)native_invoker.push_arg_int(colorID)native_invoker.push_arg_int(secondColorID)native_invoker.end_call_2(0x497BF74A7B9CB952)end,
+	-- Used for freemode (online) characters.
+	["SET_PED_HAIR_TINT"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] colorID,--[[int]] highlightColorID)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(colorID)native_invoker.push_arg_int(highlightColorID)native_invoker.end_call_2(0x4CFFC65454C93A49)end,
+	-- Used for freemode (online) characters.
+	["GET_NUM_PED_HAIR_TINTS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xE5C0CF872C2AD150)return native_invoker.get_return_value_int()end,
+	["GET_NUM_PED_MAKEUP_TINTS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD1F7CA1535D22818)return native_invoker.get_return_value_int()end,
+	-- Input: Haircolor index, value between 0 and 63 (inclusive).
+	-- Output: RGB values for the haircolor specified in the input.
+	-- 
+	-- This is used with the hair color swatches scaleform.
+	-- Use `_0x013E5CFC38CD5387` to get the makeup colors.
+	["GET_PED_HAIR_TINT_COLOR"]=--[[void]] function(--[[int]] hairColorIndex,--[[int* (pointer)]] outR,--[[int* (pointer)]] outG,--[[int* (pointer)]] outB)native_invoker.begin_call()native_invoker.push_arg_int(hairColorIndex)native_invoker.push_arg_pointer(outR)native_invoker.push_arg_pointer(outG)native_invoker.push_arg_pointer(outB)native_invoker.end_call_2(0x4852FC386E2E1BB5)end,
+	-- Input: Makeup color index, value between 0 and 63 (inclusive).
+	-- Output: RGB values for the makeup color specified in the input.
+	-- 
+	-- This is used with the makeup color swatches scaleform.
+	-- Use `_0x4852FC386E2E1BB5` to get the hair colors.
+	["GET_PED_MAKEUP_TINT_COLOR"]=--[[void]] function(--[[int]] makeupColorIndex,--[[int* (pointer)]] outR,--[[int* (pointer)]] outG,--[[int* (pointer)]] outB)native_invoker.begin_call()native_invoker.push_arg_int(makeupColorIndex)native_invoker.push_arg_pointer(outR)native_invoker.push_arg_pointer(outG)native_invoker.push_arg_pointer(outB)native_invoker.end_call_2(0x013E5CFC38CD5387)end,
+	["IS_PED_HAIR_TINT_FOR_CREATOR"]=--[[BOOL (bool)]] function(--[[int]] colorId)native_invoker.begin_call()native_invoker.push_arg_int(colorId)native_invoker.end_call_2(0xED6D8E27A43B8CDE)return native_invoker.get_return_value_bool()end,
+	["GET_DEFAULT_SECONDARY_TINT_FOR_CREATOR"]=--[[int]] function(--[[int]] colorId)native_invoker.begin_call()native_invoker.push_arg_int(colorId)native_invoker.end_call_2(0xEA9960D07DADCF10)return native_invoker.get_return_value_int()end,
+	["IS_PED_LIPSTICK_TINT_FOR_CREATOR"]=--[[BOOL (bool)]] function(--[[int]] colorId)native_invoker.begin_call()native_invoker.push_arg_int(colorId)native_invoker.end_call_2(0x3E802F11FBE27674)return native_invoker.get_return_value_bool()end,
+	["IS_PED_BLUSH_TINT_FOR_CREATOR"]=--[[BOOL (bool)]] function(--[[int]] colorId)native_invoker.begin_call()native_invoker.push_arg_int(colorId)native_invoker.end_call_2(0xF41B5D290C99A3D6)return native_invoker.get_return_value_bool()end,
+	["IS_PED_HAIR_TINT_FOR_BARBER"]=--[[BOOL (bool)]] function(--[[int]] colorID)native_invoker.begin_call()native_invoker.push_arg_int(colorID)native_invoker.end_call_2(0xE0D36E5D9E99CC21)return native_invoker.get_return_value_bool()end,
+	["GET_DEFAULT_SECONDARY_TINT_FOR_BARBER"]=--[[Any (int)]] function(--[[int]] colorID)native_invoker.begin_call()native_invoker.push_arg_int(colorID)native_invoker.end_call_2(0xAAA6A3698A69E048)return native_invoker.get_return_value_int()end,
+	["IS_PED_LIPSTICK_TINT_FOR_BARBER"]=--[[BOOL (bool)]] function(--[[int]] colorID)native_invoker.begin_call()native_invoker.push_arg_int(colorID)native_invoker.end_call_2(0x0525A2C2562F3CD4)return native_invoker.get_return_value_bool()end,
+	["IS_PED_BLUSH_TINT_FOR_BARBER"]=--[[BOOL (bool)]] function(--[[int]] colorID)native_invoker.begin_call()native_invoker.push_arg_int(colorID)native_invoker.end_call_2(0x604E810189EE3A59)return native_invoker.get_return_value_bool()end,
+	["IS_PED_BLUSH_FACEPAINT_TINT_FOR_BARBER"]=--[[BOOL (bool)]] function(--[[int]] colorId)native_invoker.begin_call()native_invoker.push_arg_int(colorId)native_invoker.end_call_2(0x09E7ECA981D9B210)return native_invoker.get_return_value_bool()end,
+	["GET_TINT_INDEX_FOR_LAST_GEN_HAIR_TEXTURE"]=--[[Any (int)]] function(--[[Hash (int)]] modelHash,--[[int]] drawableId,--[[int]] textureId)native_invoker.begin_call()native_invoker.push_arg_int(modelHash)native_invoker.push_arg_int(drawableId)native_invoker.push_arg_int(textureId)native_invoker.end_call_2(0xC56FBF2F228E1DAC)return native_invoker.get_return_value_int()end,
+	-- Sets the various freemode face features, e.g. nose length, chin shape. Scale ranges from -1.0 to 1.0.
+	-- 
+	-- 
+	-- 
+	-- 0 - Nose Width (Thin/Wide)
+	-- 
+	-- 1 - Nose Peak (Up/Down)
+	-- 
+	-- 2 - Nose Length (Long/Short)
+	-- 
+	-- 3 - Nose Bone Curveness (Crooked/Curved)
+	-- 
+	-- 4 - Nose Tip (Up/Down)
+	-- 
+	-- 5 - Nose Bone Twist (Left/Right)
+	-- 
+	-- 6 - Eyebrow (Up/Down)
+	-- 
+	-- 7 - Eyebrow (In/Out)
+	-- 
+	-- 8 - Cheek Bones (Up/Down)
+	-- 
+	-- 9 - Cheek Sideways Bone Size (In/Out)
+	-- 
+	-- 10 - Cheek Bones Width (Puffed/Gaunt)
+	-- 
+	-- 11 - Eye Opening (Both) (Wide/Squinted)
+	-- 
+	-- 12 - Lip Thickness (Both) (Fat/Thin)
+	-- 
+	-- 13 - Jaw Bone Width (Narrow/Wide)
+	-- 
+	-- 14 - Jaw Bone Shape (Round/Square)
+	-- 
+	-- 15 - Chin Bone (Up/Down)
+	-- 
+	-- 16 - Chin Bone Length (In/Out or Backward/Forward)
+	-- 
+	-- 17 - Chin Bone Shape (Pointed/Square)
+	-- 
+	-- 18 - Chin Hole (Chin Bum)
+	-- 
+	-- 19 - Neck Thickness (Thin/Thick)
+	["SET_PED_MICRO_MORPH"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] index,--[[float]] scale)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(index)native_invoker.push_arg_float(scale)native_invoker.end_call_2(0x71A5C1DBA060049E)end,
+	["HAS_PED_HEAD_BLEND_FINISHED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x654CD0A825161131)return native_invoker.get_return_value_bool()end,
+	["FINALIZE_HEAD_BLEND"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x4668D80430D6C299)end,
+	-- p4 seems to vary from 0 to 3.
+	-- Preview: https://gfycat.com/MaleRareAmazonparrot
+	["SET_HEAD_BLEND_PALETTE_COLOR"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] r,--[[int]] g,--[[int]] b,--[[int]] id)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(r)native_invoker.push_arg_int(g)native_invoker.push_arg_int(b)native_invoker.push_arg_int(id)native_invoker.end_call_2(0xCC9682B8951C5229)end,
+	["DISABLE_HEAD_BLEND_PALETTE_COLOR"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xA21C118553BBDF02)end,
+	-- Type equals 0 for male non-dlc, 1 for female non-dlc, 2 for male dlc, and 3 for female dlc.
+	-- 
+	-- Used when calling SET_PED_HEAD_BLEND_DATA.
+	["GET_PED_HEAD_BLEND_FIRST_INDEX"]=--[[int]] function(--[[int]] type)native_invoker.begin_call()native_invoker.push_arg_int(type)native_invoker.end_call_2(0x68D353AB88B97E0C)return native_invoker.get_return_value_int()end,
+	-- Type equals 0 for male non-dlc, 1 for female non-dlc, 2 for male dlc, and 3 for female dlc.
+	["GET_PED_HEAD_BLEND_NUM_HEADS"]=--[[int]] function(--[[int]] type)native_invoker.begin_call()native_invoker.push_arg_int(type)native_invoker.end_call_2(0x5EF37013A6539C9D)return native_invoker.get_return_value_int()end,
+	-- from extreme3.c4
+	-- PED::_39D55A620FCB6A3A(PLAYER::PLAYER_PED_ID(), 8, PED::GET_PED_DRAWABLE_VARIATION(PLAYER::PLAYER_PED_ID(), 8), PED::GET_PED_TEXTURE_VARIATION(PLAYER::PLAYER_PED_ID(), 8));
+	-- 
+	-- p1 is probably componentId
+	["SET_PED_PRELOAD_VARIATION_DATA"]=--[[Any (int)]] function(--[[Ped (int)]] ped,--[[int]] slot,--[[int]] drawableId,--[[int]] textureId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(slot)native_invoker.push_arg_int(drawableId)native_invoker.push_arg_int(textureId)native_invoker.end_call_2(0x39D55A620FCB6A3A)return native_invoker.get_return_value_int()end,
+	["HAS_PED_PRELOAD_VARIATION_DATA_FINISHED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x66680A92700F43DF)return native_invoker.get_return_value_bool()end,
+	["RELEASE_PED_PRELOAD_VARIATION_DATA"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x5AAB586FFEC0FD96)end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["SET_PED_PRELOAD_PROP_DATA"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int]] componentId,--[[int]] drawableId,--[[int]] TextureId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(componentId)native_invoker.push_arg_int(drawableId)native_invoker.push_arg_int(TextureId)native_invoker.end_call_2(0x2B16A3BFF1FBCE49)return native_invoker.get_return_value_bool()end,
+	["HAS_PED_PRELOAD_PROP_DATA_FINISHED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x784002A632822099)return native_invoker.get_return_value_bool()end,
+	["RELEASE_PED_PRELOAD_PROP_DATA"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xF79F9DEF0AADE61A)end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["GET_PED_PROP_INDEX"]=--[[int]] function(--[[Ped (int)]] ped,--[[int]] componentId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(componentId)native_invoker.end_call_2(0x898CC20EA75BACD8)return native_invoker.get_return_value_int()end,
+	-- ComponentId can be set to various things based on what category you're wanting to set
+	-- enum PedPropsData
+	-- {
+	--     PED_PROP_HATS = 0,
+	--     PED_PROP_GLASSES = 1,
+	--  PED_PROP_EARS = 2,
+	--     PED_PROP_WATCHES = 3,
+	-- };
+	-- Usage: SET_PED_PROP_INDEX(playerPed, PED_PROP_HATS, GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS(playerPed, PED_PROP_HATS), GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS(playerPed, PED_PROP_HATS, 0), TRUE);
+	-- 
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["SET_PED_PROP_INDEX"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] componentId,--[[int]] drawableId,--[[int]] TextureId,--[[BOOL (bool)]] attach)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(componentId)native_invoker.push_arg_int(drawableId)native_invoker.push_arg_int(TextureId)native_invoker.push_arg_bool(attach)native_invoker.end_call_2(0x93376B65A266EB5F)end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["KNOCK_OFF_PED_PROP"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2,--[[BOOL (bool)]] p3,--[[BOOL (bool)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.push_arg_bool(p3)native_invoker.push_arg_bool(p4)native_invoker.end_call_2(0x6FD7816A36615F48)end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["CLEAR_PED_PROP"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] propId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(propId)native_invoker.end_call_2(0x0943E5B8E078E76E)end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["CLEAR_ALL_PED_PROPS"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xCD8A7537A9B52F06)end,
+	["DROP_AMBIENT_PROP"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xAFF4710E2A0A6C12)end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["GET_PED_PROP_TEXTURE_INDEX"]=--[[int]] function(--[[Ped (int)]] ped,--[[int]] componentId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(componentId)native_invoker.end_call_2(0xE131A28626F81AB2)return native_invoker.get_return_value_int()end,
+	["CLEAR_PED_PARACHUTE_PACK_VARIATION"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x1280804F7CFD2D6C)end,
+	-- This native sets a scuba mask for freemode models and an oxygen bottle for player_* models. It works on freemode and player_* models.
+	["SET_PED_SCUBA_GEAR_VARIATION"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x36C6984C3ED0C911)end,
+	-- Removes the scubagear (for mp male: component id: 8, drawableId: 123, textureId: any) from peds. Does not play the 'remove scuba gear' animation, but instantly removes it.
+	["CLEAR_PED_SCUBA_GEAR_VARIATION"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xB50EB4CCB29704AC)end,
+	["IS_USING_PED_SCUBA_GEAR_VARIATION"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xFEC9A3B1820F3331)return native_invoker.get_return_value_bool()end,
+	-- works with TASK::TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS to make a ped completely oblivious to all events going on around him
+	["SET_BLOCKING_OF_NON_TEMPORARY_EVENTS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x9F8AA94D6D97DBF4)end,
+	["SET_PED_BOUNDS_ORIENTATION"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] p1,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[float]] p5)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.end_call_2(0x4F5F651ACCC9C4CF)end,
+	-- PED::REGISTER_TARGET(l_216, PLAYER::PLAYER_PED_ID()); from re_prisonbreak.txt.
+	-- 
+	-- l_216 = RECSBRobber1
+	["REGISTER_TARGET"]=--[[void]] function(--[[Ped (int)]] ped,--[[Ped (int)]] target)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(target)native_invoker.end_call_2(0x2F25D9AEFA34FBA2)end,
+	-- Based on TASK_COMBAT_HATED_TARGETS_AROUND_PED, the parameters are likely similar (PedHandle, and area to attack in).
+	["REGISTER_HATED_TARGETS_AROUND_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] radius)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(radius)native_invoker.end_call_2(0x9222F300BF8354FE)end,
+	-- Gets a random ped in the x/y/zRadius near the x/y/z coordinates passed. 
+	-- 
+	-- Ped Types:
+	-- Any = -1
+	-- Player = 1
+	-- Male = 4 
+	-- Female = 5 
+	-- Cop = 6
+	-- Human = 26
+	-- SWAT = 27 
+	-- Animal = 28
+	-- Army = 29
+	["GET_RANDOM_PED_AT_COORD"]=--[[Ped (int)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] xRadius,--[[float]] yRadius,--[[float]] zRadius,--[[int]] pedType)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(xRadius)native_invoker.push_arg_float(yRadius)native_invoker.push_arg_float(zRadius)native_invoker.push_arg_int(pedType)native_invoker.end_call_2(0x876046A8E3A4B71C)return native_invoker.get_return_value_int()end,
+	-- Gets the closest ped in a radius.
+	-- 
+	-- Ped Types:
+	-- Any ped = -1
+	-- Player = 1
+	-- Male = 4 
+	-- Female = 5 
+	-- Cop = 6
+	-- Human = 26
+	-- SWAT = 27 
+	-- Animal = 28
+	-- Army = 29
+	-- 
+	-- ------------------
+	-- P4 P5 P7 P8
+	-- 1  0  x  x  = return nearest walking Ped
+	-- 1  x  0  x  = return nearest walking Ped
+	-- x  1  1  x  = return Ped you are using
+	-- 0  0  x  x  = no effect
+	-- 0  x  0  x  = no effect
+	-- 
+	-- x = can be 1 or 0. Does not have any obvious changes.
+	-- 
+	-- This function does not return ped who is:
+	-- 1. Standing still
+	-- 2. Driving
+	-- 3. Fleeing
+	-- 4. Attacking
+	-- 
+	-- This function only work if the ped is:
+	-- 1. walking normally.
+	-- 2. waiting to cross a road.
+	-- 
+	-- Note: PED::GET_PED_NEARBY_PEDS works for more peds.
+	["GET_CLOSEST_PED"]=--[[BOOL (bool)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[BOOL (bool)]] p4,--[[BOOL (bool)]] p5,--[[Ped* (pointer)]] outPed,--[[BOOL (bool)]] p7,--[[BOOL (bool)]] p8,--[[int]] pedType)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.push_arg_bool(p4)native_invoker.push_arg_bool(p5)native_invoker.push_arg_pointer(outPed)native_invoker.push_arg_bool(p7)native_invoker.push_arg_bool(p8)native_invoker.push_arg_int(pedType)native_invoker.end_call_2(0xC33AB876A77F8164)return native_invoker.get_return_value_bool()end,
+	-- Sets a value indicating whether scenario peds should be returned by the next call to a command that returns peds. Eg. GET_CLOSEST_PED.
+	["SET_SCENARIO_PEDS_TO_BE_RETURNED_BY_NEXT_COMMAND"]=--[[void]] function(--[[BOOL (bool)]] value)native_invoker.begin_call()native_invoker.push_arg_bool(value)native_invoker.end_call_2(0x14F19A8782C8071E)end,
+	["GET_CAN_PED_BE_GRABBED_BY_SCRIPT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2,--[[BOOL (bool)]] p3,--[[BOOL (bool)]] p4,--[[BOOL (bool)]] p5,--[[BOOL (bool)]] p6,--[[BOOL (bool)]] p7,--[[Any (int)]] p8)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.push_arg_bool(p3)native_invoker.push_arg_bool(p4)native_invoker.push_arg_bool(p5)native_invoker.push_arg_bool(p6)native_invoker.push_arg_bool(p7)native_invoker.push_arg_int(p8)native_invoker.end_call_2(0x03EA03AF85A85CB7)return native_invoker.get_return_value_bool()end,
+	-- Scripts use 0.2, 0.5 and 1.0. Value must be >= 0.0 && <= 1.0
+	["SET_DRIVER_RACING_MODIFIER"]=--[[void]] function(--[[Ped (int)]] driver,--[[float]] modifier)native_invoker.begin_call()native_invoker.push_arg_int(driver)native_invoker.push_arg_float(modifier)native_invoker.end_call_2(0xDED5AF5A0EA4B297)end,
+	-- The function specifically verifies the value is equal to, or less than 1.0f. If it is greater than 1.0f, the function does nothing at all.
+	["SET_DRIVER_ABILITY"]=--[[void]] function(--[[Ped (int)]] driver,--[[float]] ability)native_invoker.begin_call()native_invoker.push_arg_int(driver)native_invoker.push_arg_float(ability)native_invoker.end_call_2(0xB195FFA8042FC5C3)end,
+	-- range 0.0f - 1.0f
+	["SET_DRIVER_AGGRESSIVENESS"]=--[[void]] function(--[[Ped (int)]] driver,--[[float]] aggressiveness)native_invoker.begin_call()native_invoker.push_arg_int(driver)native_invoker.push_arg_float(aggressiveness)native_invoker.end_call_2(0xA731F608CA104E3C)end,
+	-- Prevents the ped from going limp.
+	-- 
+	-- [Example: Can prevent peds from falling when standing on moving vehicles.]
+	["CAN_PED_RAGDOLL"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x128F79EDCECE4FD5)return native_invoker.get_return_value_bool()end,
+	-- p4/p5: Unused in TU27
+	-- Ragdoll Types:
+	-- **0**: CTaskNMRelax
+	-- **1**: CTaskNMScriptControl: Hardcoded not to work in networked environments.
+	-- **Else**: CTaskNMBalance
+	-- time1- Time(ms) Ped is in ragdoll mode; only applies to ragdoll types 0 and not 1.
+	-- 
+	-- time2- Unknown time, in milliseconds
+	-- 
+	-- ragdollType-
+	-- 0 : Normal ragdoll
+	-- 1 : Falls with stiff legs/body
+	-- 2 : Narrow leg stumble(may not fall)
+	-- 3 : Wide leg stumble(may not fall)
+	-- 
+	-- p4, p5, p6- No idea. In R*'s scripts they are usually either "true, true, false" or "false, false, false".
+	-- 
+	-- 
+	-- 
+	-- 
+	-- EDIT 3/11/16: unclear what 'mircoseconds' mean-- a microsecond is 1000x a ms, so time2 must be 1000x time1?  more testing needed.  -sob
+	-- 
+	-- Edit Mar 21, 2017: removed part about time2 being the microseconds version of time1. this just isn't correct. time2 is in milliseconds, and time1 and time2 don't seem to be connected in any way.
+	["SET_PED_TO_RAGDOLL"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int]] time1,--[[int]] time2,--[[int]] ragdollType,--[[BOOL (bool)]] p4,--[[BOOL (bool)]] p5,--[[BOOL (bool)]] p6)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(time1)native_invoker.push_arg_int(time2)native_invoker.push_arg_int(ragdollType)native_invoker.push_arg_bool(p4)native_invoker.push_arg_bool(p5)native_invoker.push_arg_bool(p6)native_invoker.end_call_2(0xAE99FB955581844A)return native_invoker.get_return_value_bool()end,
+	-- Return variable is never used in R*'s scripts.
+	-- 
+	-- Not sure what p2 does. It seems like it would be a time judging by it's usage in R*'s scripts, but didn't seem to affect anything in my testings.
+	-- 
+	-- x, y, and z are coordinates, most likely to where the ped will fall.
+	-- 
+	-- p7 is probably the force of the fall, but untested, so I left the variable name the same.
+	-- 
+	-- p8 to p13 are always 0f in R*'s scripts.
+	-- 
+	-- (Simplified) Example of the usage of the function from R*'s scripts:
+	-- ped::set_ped_to_ragdoll_with_fall(ped, 1500, 2000, 1, -entity::get_entity_forward_vector(ped), 1f, 0f, 0f, 0f, 0f, 0f, 0f);
+	-- 
+	["SET_PED_TO_RAGDOLL_WITH_FALL"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int]] time,--[[int]] p2,--[[int]] ragdollType,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] p7,--[[float]] p8,--[[float]] p9,--[[float]] p10,--[[float]] p11,--[[float]] p12,--[[float]] p13)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(time)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(ragdollType)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(p7)native_invoker.push_arg_float(p8)native_invoker.push_arg_float(p9)native_invoker.push_arg_float(p10)native_invoker.push_arg_float(p11)native_invoker.push_arg_float(p12)native_invoker.push_arg_float(p13)native_invoker.end_call_2(0xD76632D99E4966C8)return native_invoker.get_return_value_bool()end,
+	-- Causes Ped to ragdoll on collision with any object (e.g Running into trashcan). If applied to player you will sometimes trip on the sidewalk.
+	["SET_PED_RAGDOLL_ON_COLLISION"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xF0A4F1BBF4FA7497)end,
+	-- If the ped handle passed through the parenthesis is in a ragdoll state this will return true.
+	["IS_PED_RAGDOLL"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x47E4E977581C5B55)return native_invoker.get_return_value_bool()end,
+	["IS_PED_RUNNING_RAGDOLL_TASK"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xE3B6097CC25AA69E)return native_invoker.get_return_value_bool()end,
+	["SET_PED_RAGDOLL_FORCE_FALL"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x01F6594B923B9251)end,
+	["RESET_PED_RAGDOLL_TIMER"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x9FA4664CF62E47E8)end,
+	["SET_PED_CAN_RAGDOLL"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xB128377056A54E2A)end,
+	["IS_PED_RUNNING_MELEE_TASK"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xD1871251F3B5ACD7)return native_invoker.get_return_value_bool()end,
+	["IS_PED_RUNNING_MOBILE_PHONE_TASK"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x2AFE52F782F25775)return native_invoker.get_return_value_bool()end,
+	["IS_MOBILE_PHONE_TO_PED_EAR"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xA3F3564A5B3646C0)return native_invoker.get_return_value_bool()end,
+	-- Works for both player and peds, but some flags don't seem to work for the player (1, for example)
+	-- 
+	-- 1 - Blocks ragdolling when shot.
+	-- 2 - Blocks ragdolling when hit by a vehicle. The ped still might play a falling animation.
+	-- 4 - Blocks ragdolling when set on fire.
+	-- 
+	-- -----------------------------------------------------------------------
+	-- 
+	-- There seem to be 26 flags
+	["SET_RAGDOLL_BLOCKING_FLAGS"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] flags)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(flags)native_invoker.end_call_2(0x26695EC767728D84)end,
+	-- There seem to be 26 flags
+	["CLEAR_RAGDOLL_BLOCKING_FLAGS"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] flags)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(flags)native_invoker.end_call_2(0xD86D101FCFD00A4B)end,
+	["SET_PED_ANGLED_DEFENSIVE_AREA"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] p1,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[float]] p5,--[[float]] p6,--[[float]] p7,--[[BOOL (bool)]] p8,--[[BOOL (bool)]] p9)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.push_arg_float(p6)native_invoker.push_arg_float(p7)native_invoker.push_arg_bool(p8)native_invoker.push_arg_bool(p9)native_invoker.end_call_2(0xC7F76DF27A5045A1)end,
+	["SET_PED_SPHERE_DEFENSIVE_AREA"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[BOOL (bool)]] p5,--[[BOOL (bool)]] p6)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.push_arg_bool(p5)native_invoker.push_arg_bool(p6)native_invoker.end_call_2(0x9D3151A373974804)end,
+	["SET_PED_DEFENSIVE_SPHERE_ATTACHED_TO_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[Ped (int)]] target,--[[float]] xOffset,--[[float]] yOffset,--[[float]] zOffset,--[[float]] radius,--[[BOOL (bool)]] p6)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(target)native_invoker.push_arg_float(xOffset)native_invoker.push_arg_float(yOffset)native_invoker.push_arg_float(zOffset)native_invoker.push_arg_float(radius)native_invoker.push_arg_bool(p6)native_invoker.end_call_2(0xF9B8F91AAD3B953E)end,
+	["SET_PED_DEFENSIVE_SPHERE_ATTACHED_TO_VEHICLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[Vehicle (int)]] target,--[[float]] xOffset,--[[float]] yOffset,--[[float]] zOffset,--[[float]] radius,--[[BOOL (bool)]] p6)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(target)native_invoker.push_arg_float(xOffset)native_invoker.push_arg_float(yOffset)native_invoker.push_arg_float(zOffset)native_invoker.push_arg_float(radius)native_invoker.push_arg_bool(p6)native_invoker.end_call_2(0xE4723DB6E736CCFF)end,
+	["SET_PED_DEFENSIVE_AREA_ATTACHED_TO_PED"]=--[[void]] function(--[[Ped (int)]] ped,--[[Ped (int)]] attachPed,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[float]] p5,--[[float]] p6,--[[float]] p7,--[[float]] p8,--[[BOOL (bool)]] p9,--[[BOOL (bool)]] p10)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(attachPed)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.push_arg_float(p6)native_invoker.push_arg_float(p7)native_invoker.push_arg_float(p8)native_invoker.push_arg_bool(p9)native_invoker.push_arg_bool(p10)native_invoker.end_call_2(0x4EF47FE21698A8B6)end,
+	["SET_PED_DEFENSIVE_AREA_DIRECTION"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] p1,--[[float]] p2,--[[float]] p3,--[[BOOL (bool)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_bool(p4)native_invoker.end_call_2(0x413C6C763A4AFFAD)end,
+	-- Ped will no longer get angry when you stay near him.
+	["REMOVE_PED_DEFENSIVE_AREA"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x74D4E028107450A9)end,
+	["GET_PED_DEFENSIVE_AREA_POSITION"]=--[[Vector3 (vector3)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x3C06B8786DD94CD1)return native_invoker.get_return_value_vector3()end,
+	["IS_PED_DEFENSIVE_AREA_ACTIVE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xBA63D9FE45412247)return native_invoker.get_return_value_bool()end,
+	["SET_PED_PREFERRED_COVER_SET"]=--[[void]] function(--[[Ped (int)]] ped,--[[Any (int)]] itemSet)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(itemSet)native_invoker.end_call_2(0x8421EB4DA7E391B9)end,
+	["REMOVE_PED_PREFERRED_COVER_SET"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xFDDB234CF74073D9)end,
+	-- It will revive/cure the injured ped. The condition is ped must not be dead.
+	-- 
+	-- Upon setting and converting the health int, found, if health falls below 5, the ped will lay on the ground in pain(Maximum default health is 100).
+	-- 
+	-- This function is well suited there.
+	["REVIVE_INJURED_PED"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x8D8ACD8388CD99CE)end,
+	-- This function will simply bring the dead person back to life.
+	-- 
+	-- Try not to use it alone, since using this function alone, will make peds fall through ground in hell(well for the most of the times).
+	-- 
+	-- Instead, before calling this function, you may want to declare the position, where your Resurrected ped to be spawn at.(For instance, Around 2 floats of Player's current position.) 
+	-- 
+	-- Also, disabling any assigned task immediately helped in the number of scenarios, where If you want peds to perform certain decided tasks.
+	["RESURRECT_PED"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x71BC8E838B9C6035)end,
+	-- NOTE: Debugging functions are not present in the retail version of the game.
+	-- 
+	-- *untested but char *name could also be a hash for a localized string
+	["SET_PED_NAME_DEBUG"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] name)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(name)native_invoker.end_call_2(0x98EFA132A4117BE1)end,
+	-- Gets the offset the specified ped has moved since the previous tick.
+	-- 
+	-- If worldSpace is false, the returned offset is relative to the ped. That is, if the ped has moved 1 meter right and 5 meters forward, it'll return 1,5,0.
+	-- 
+	-- If worldSpace is true, the returned offset is relative to the world. That is, if the ped has moved 1 meter on the X axis and 5 meters on the Y axis, it'll return 1,5,0.
+	["GET_PED_EXTRACTED_DISPLACEMENT"]=--[[Vector3 (vector3)]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] worldSpace)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(worldSpace)native_invoker.end_call_2(0xE0AF41401ADF87E3)return native_invoker.get_return_value_vector3()end,
+	["SET_PED_DIES_WHEN_INJURED"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x5BA7919BED300023)end,
+	["SET_PED_ENABLE_WEAPON_BLOCKING"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x97A790315D3831FD)end,
+	-- p1 was always 1 (true).
+	-- 
+	-- Kicks the ped from the current vehicle and keeps the rendering-focus on this ped (also disables its collision). If doing this for your player ped, you'll still be able to drive the vehicle.
+	-- 
+	-- Actual name begins with 'S'
+	["SPECIAL_FUNCTION_DO_NOT_USE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xF9ACF4A08098EA25)end,
+	["RESET_PED_VISIBLE_DAMAGE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x3AC1F7B898F30C05)end,
+	["APPLY_PED_BLOOD_DAMAGE_BY_ZONE"]=--[[void]] function(--[[Ped (int)]] ped,--[[Any (int)]] p1,--[[float]] p2,--[[float]] p3,--[[Any (int)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_int(p4)native_invoker.end_call_2(0x816F6981C60BF53B)end,
+	-- woundTypes:
+	-- - soak_splat
+	-- - wound_sheet
+	-- - BulletSmall
+	-- - BulletLarge
+	-- - ShotgunSmall
+	-- - ShotgunSmallMonolithic
+	-- - ShotgunLarge
+	-- - ShotgunLargeMonolithic
+	-- - NonFatalHeadshot
+	-- - stab
+	-- - BasicSlash
+	-- - Scripted_Ped_Splash_Back
+	-- - BackSplash
+	["APPLY_PED_BLOOD"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] boneIndex,--[[float]] xRot,--[[float]] yRot,--[[float]] zRot,--[[string]] woundType)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(boneIndex)native_invoker.push_arg_float(xRot)native_invoker.push_arg_float(yRot)native_invoker.push_arg_float(zRot)native_invoker.push_arg_string(woundType)native_invoker.end_call_2(0x83F7E01C7B769A26)end,
+	["APPLY_PED_BLOOD_BY_ZONE"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] p1,--[[float]] p2,--[[float]] p3,--[[string]] p4)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_string(p4)native_invoker.end_call_2(0x3311E47B91EDCBBC)end,
+	["APPLY_PED_BLOOD_SPECIFIC"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] p1,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[float]] p5,--[[int]] p6,--[[float]] p7,--[[string]] p8)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.push_arg_int(p6)native_invoker.push_arg_float(p7)native_invoker.push_arg_string(p8)native_invoker.end_call_2(0xEF0D582CBF2D9B0F)end,
+	-- enum eDamageZone
+	-- {
+	-- 	DZ_Torso = 0,
+	-- 	DZ_Head,
+	-- 	DZ_LeftArm,
+	-- 	DZ_RightArm,
+	-- 	DZ_LeftLeg,
+	-- 	DZ_RightLeg,
+	-- };
+	-- 
+	-- Decal Names:
+	-- scar
+	-- blushing
+	-- cs_flush_anger
+	-- cs_flush_anger_face
+	-- bruise
+	-- bruise_large
+	-- herpes
+	-- ArmorBullet
+	-- basic_dirt_cloth
+	-- basic_dirt_skin
+	-- cs_trev1_dirt
+	-- 
+	-- APPLY_PED_DAMAGE_DECAL(ped, 1, 0.5f, 0.513f, 0f, 1f, unk, 0, 0, "blushing");
+	["APPLY_PED_DAMAGE_DECAL"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] damageZone,--[[float]] xOffset,--[[float]] yOffset,--[[float]] heading,--[[float]] scale,--[[float]] alpha,--[[int]] variation,--[[BOOL (bool)]] fadeIn,--[[string]] decalName)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(damageZone)native_invoker.push_arg_float(xOffset)native_invoker.push_arg_float(yOffset)native_invoker.push_arg_float(heading)native_invoker.push_arg_float(scale)native_invoker.push_arg_float(alpha)native_invoker.push_arg_int(variation)native_invoker.push_arg_bool(fadeIn)native_invoker.push_arg_string(decalName)native_invoker.end_call_2(0x397C38AA7B4A5F83)end,
+	-- Damage Packs:
+	-- 
+	-- "SCR_TrevorTreeBang"
+	-- "HOSPITAL_0"
+	-- "HOSPITAL_1"
+	-- "HOSPITAL_2"
+	-- "HOSPITAL_3"
+	-- "HOSPITAL_4"
+	-- "HOSPITAL_5"
+	-- "HOSPITAL_6"
+	-- "HOSPITAL_7"
+	-- "HOSPITAL_8"
+	-- "HOSPITAL_9"
+	-- "SCR_Dumpster"
+	-- "BigHitByVehicle"
+	-- "SCR_Finale_Michael_Face"
+	-- "SCR_Franklin_finb"
+	-- "SCR_Finale_Michael"
+	-- "SCR_Franklin_finb2"
+	-- "Explosion_Med"
+	-- "SCR_Torture"
+	-- "SCR_TracySplash"
+	-- "Skin_Melee_0"
+	-- 
+	-- Additional damage packs:
+	-- 
+	-- gist.github.com/alexguirre/f3f47f75ddcf617f416f3c8a55ae2227
+	-- Full list of ped damage packs by DurtyFree https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pedDamagePacks.json
+	["APPLY_PED_DAMAGE_PACK"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] damagePack,--[[float]] damage,--[[float]] mult)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(damagePack)native_invoker.push_arg_float(damage)native_invoker.push_arg_float(mult)native_invoker.end_call_2(0x46DF918788CB093F)end,
+	["CLEAR_PED_BLOOD_DAMAGE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x8FE22675A5A45817)end,
+	-- Somehow related to changing ped's clothes.
+	["CLEAR_PED_BLOOD_DAMAGE_BY_ZONE"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x56E3B78C5408D9F4)end,
+	["HIDE_PED_BLOOD_DAMAGE_BY_ZONE"]=--[[void]] function(--[[Ped (int)]] ped,--[[Any (int)]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x62AB793144DE75DC)end,
+	-- p1: from 0 to 5 in the b617d scripts.
+	-- p2: "blushing" and "ALL" found in the b617d scripts.
+	["CLEAR_PED_DAMAGE_DECAL_BY_ZONE"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] p1,--[[string]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.push_arg_string(p2)native_invoker.end_call_2(0x523C79AEEFCC4A2A)end,
+	["GET_PED_DECORATIONS_STATE"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x71EAB450D86954A1)return native_invoker.get_return_value_int()end,
+	["MARK_PED_DECORATIONS_AS_CLONED_FROM_LOCAL_PLAYER"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x2B694AFCF64E6994)end,
+	-- It clears the wetness of the selected Ped/Player. Clothes have to be wet to notice the difference.
+	["CLEAR_PED_WETNESS"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x9C720776DAA43E7E)end,
+	-- It adds the wetness level to the player clothing/outfit. As if player just got out from water surface.
+	-- 
+	-- 
+	["SET_PED_WETNESS_HEIGHT"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] height)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(height)native_invoker.end_call_2(0x44CB6447D2571AA0)end,
+	-- combined with PED::SET_PED_WETNESS_HEIGHT(), this native makes the ped drenched in water up to the height specified in the other function
+	["SET_PED_WETNESS_ENABLED_THIS_FRAME"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xB5485E4907B53019)end,
+	["CLEAR_PED_ENV_DIRT"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x6585D955A68452A5)end,
+	-- Sweat is set to 100.0 or 0.0 in the decompiled scripts.
+	["SET_PED_SWEAT"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] sweat)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(sweat)native_invoker.end_call_2(0x27B0405F59637D1F)end,
+	-- Applies an Item from a PedDecorationCollection to a ped. These include tattoos and shirt decals.
+	-- 
+	-- collection - PedDecorationCollection filename hash
+	-- overlay - Item name hash
+	-- 
+	-- Example:
+	-- Entry inside "mpbeach_overlays.xml" -
+	-- <Item>
+	--   <uvPos x="0.500000" y="0.500000" />
+	--   <scale x="0.600000" y="0.500000" />
+	--   <rotation value="0.000000" />
+	--   <nameHash>FM_Hair_Fuzz</nameHash>
+	--   <txdHash>mp_hair_fuzz</txdHash>
+	--   <txtHash>mp_hair_fuzz</txtHash>
+	--   <zone>ZONE_HEAD</zone>
+	--   <type>TYPE_TATTOO</type>
+	--   <faction>FM</faction>
+	--   <garment>All</garment>
+	--   <gender>GENDER_DONTCARE</gender>
+	--   <award />
+	--   <awardLevel />
+	-- </Item>
+	-- 
+	-- Code:
+	-- PED::_0x5F5D1665E352A839(PLAYER::PLAYER_PED_ID(), MISC::GET_HASH_KEY("mpbeach_overlays"), MISC::GET_HASH_KEY("fm_hair_fuzz"))
+	-- 
+	-- Full list of ped overlays / decorations by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pedOverlayCollections.json
+	["ADD_PED_DECORATION_FROM_HASHES"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] collection,--[[Hash (int)]] overlay)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(collection)native_invoker.push_arg_int(overlay)native_invoker.end_call_2(0x5F5D1665E352A839)end,
+	-- Full list of ped overlays / decorations by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pedOverlayCollections.json
+	["ADD_PED_DECORATION_FROM_HASHES_IN_CORONA"]=--[[void]] function(--[[Ped (int)]] ped,--[[Hash (int)]] collection,--[[Hash (int)]] overlay)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(collection)native_invoker.push_arg_int(overlay)native_invoker.end_call_2(0x5619BFA07CFD7833)end,
+	-- Returns the zoneID for the overlay if it is a member of collection.
+	-- enum ePedDecorationZone
+	-- {
+	-- 	ZONE_TORSO = 0,
+	-- 	ZONE_HEAD = 1,
+	-- 	ZONE_LEFT_ARM = 2,
+	-- 	ZONE_RIGHT_ARM = 3,
+	-- 	ZONE_LEFT_LEG = 4,
+	-- 	ZONE_RIGHT_LEG = 5,
+	-- 	ZONE_MEDALS = 6,
+	-- 	ZONE_INVALID = 7
+	-- };
+	-- 
+	-- Full list of ped overlays / decorations by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pedOverlayCollections.json
+	["GET_PED_DECORATION_ZONE_FROM_HASHES"]=--[[int]] function(--[[Hash (int)]] collection,--[[Hash (int)]] overlay)native_invoker.begin_call()native_invoker.push_arg_int(collection)native_invoker.push_arg_int(overlay)native_invoker.end_call_2(0x9FD452BFBE7A7A8B)return native_invoker.get_return_value_int()end,
+	["CLEAR_PED_DECORATIONS"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x0E5173C163976E38)end,
+	["CLEAR_PED_DECORATIONS_LEAVE_SCARS"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xE3B27E70CEAB9F0C)end,
+	-- Despite this function's name, it simply returns whether the specified handle is a Ped.
+	["WAS_PED_SKELETON_UPDATED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x11B499C1E0FF8559)return native_invoker.get_return_value_bool()end,
+	-- Gets the position of the specified bone of the specified ped.
+	-- 
+	-- ped: The ped to get the position of a bone from.
+	-- boneId: The ID of the bone to get the position from. This is NOT the index.
+	-- offsetX: The X-component of the offset to add to the position relative to the bone's rotation.
+	-- offsetY: The Y-component of the offset to add to the position relative to the bone's rotation.
+	-- offsetZ: The Z-component of the offset to add to the position relative to the bone's rotation.
+	["GET_PED_BONE_COORDS"]=--[[Vector3 (vector3)]] function(--[[Ped (int)]] ped,--[[int]] boneId,--[[float]] offsetX,--[[float]] offsetY,--[[float]] offsetZ)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(boneId)native_invoker.push_arg_float(offsetX)native_invoker.push_arg_float(offsetY)native_invoker.push_arg_float(offsetZ)native_invoker.end_call_2(0x17C07FC640E86B4E)return native_invoker.get_return_value_vector3()end,
+	-- Creates a new NaturalMotion message.
+	-- 
+	-- startImmediately: If set to true, the character will perform the message the moment it receives it by GIVE_PED_NM_MESSAGE. If false, the Ped will get the message but won't perform it yet. While it's a boolean value, if negative, the message will not be initialized.
+	-- messageId: The ID of the NaturalMotion message.
+	-- 
+	-- If a message already exists, this function does nothing. A message exists until the point it has been successfully dispatched by GIVE_PED_NM_MESSAGE.
+	["CREATE_NM_MESSAGE"]=--[[void]] function(--[[BOOL (bool)]] startImmediately,--[[int]] messageId)native_invoker.begin_call()native_invoker.push_arg_bool(startImmediately)native_invoker.push_arg_int(messageId)native_invoker.end_call_2(0x418EF2A1BCE56685)end,
+	-- Sends the message that was created by a call to CREATE_NM_MESSAGE to the specified Ped.
+	-- 
+	-- If a message hasn't been created already, this function does nothing.
+	-- If the Ped is not ragdolled with Euphoria enabled, this function does nothing.
+	-- The following call can be used to ragdoll the Ped with Euphoria enabled: SET_PED_TO_RAGDOLL(ped, 4000, 5000, 1, 1, 1, 0);
+	-- 
+	-- Call order:
+	-- SET_PED_TO_RAGDOLL
+	-- CREATE_NM_MESSAGE
+	-- GIVE_PED_NM_MESSAGE
+	-- 
+	-- Multiple messages can be chained. Eg. to make the ped stagger and swing his arms around, the following calls can be made:
+	-- SET_PED_TO_RAGDOLL(ped, 4000, 5000, 1, 1, 1, 0);
+	-- CREATE_NM_MESSAGE(true, 0); // stopAllBehaviours - Stop all other behaviours, in case the Ped is already doing some Euphoria stuff.
+	-- GIVE_PED_NM_MESSAGE(ped); // Dispatch message to Ped.
+	-- CREATE_NM_MESSAGE(true, 1151); // staggerFall - Attempt to walk while falling.
+	-- GIVE_PED_NM_MESSAGE(ped); // Dispatch message to Ped.
+	-- CREATE_NM_MESSAGE(true, 372); // armsWindmill - Swing arms around.
+	-- GIVE_PED_NM_MESSAGE(ped); // Dispatch message to Ped.
+	["GIVE_PED_NM_MESSAGE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xB158DFCCC56E5C5B)end,
+	["ADD_SCENARIO_BLOCKING_AREA"]=--[[int]] function(--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2,--[[BOOL (bool)]] p6,--[[BOOL (bool)]] p7,--[[BOOL (bool)]] p8,--[[BOOL (bool)]] p9)native_invoker.begin_call()native_invoker.push_arg_float(x1)native_invoker.push_arg_float(y1)native_invoker.push_arg_float(z1)native_invoker.push_arg_float(x2)native_invoker.push_arg_float(y2)native_invoker.push_arg_float(z2)native_invoker.push_arg_bool(p6)native_invoker.push_arg_bool(p7)native_invoker.push_arg_bool(p8)native_invoker.push_arg_bool(p9)native_invoker.end_call_2(0x1B5C85C612E5256E)return native_invoker.get_return_value_int()end,
+	["REMOVE_SCENARIO_BLOCKING_AREAS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD37401D78A929A49)end,
+	["REMOVE_SCENARIO_BLOCKING_AREA"]=--[[void]] function(--[[Any (int)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x31D16B74C6E29D66)end,
+	["SET_SCENARIO_PEDS_SPAWN_IN_SPHERE_AREA"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] range,--[[int]] p4)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(range)native_invoker.push_arg_int(p4)native_invoker.end_call_2(0x28157D43CF600981)end,
+	["DOES_SCENARIO_BLOCKING_AREA_EXISTS"]=--[[BOOL (bool)]] function(--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2)native_invoker.begin_call()native_invoker.push_arg_float(x1)native_invoker.push_arg_float(y1)native_invoker.push_arg_float(z1)native_invoker.push_arg_float(x2)native_invoker.push_arg_float(y2)native_invoker.push_arg_float(z2)native_invoker.end_call_2(0x8A24B067D175A7BD)return native_invoker.get_return_value_bool()end,
+	-- Full list of ped scenarios by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/scenariosCompact.json
+	["IS_PED_USING_SCENARIO"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[string]] scenario)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(scenario)native_invoker.end_call_2(0x1BF094736DD62C2E)return native_invoker.get_return_value_bool()end,
+	["IS_PED_USING_ANY_SCENARIO"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x57AB4A3080F85143)return native_invoker.get_return_value_bool()end,
+	["SET_PED_PANIC_EXIT_SCENARIO"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xFE07FF6495D52E2A)return native_invoker.get_return_value_int()end,
+	["TOGGLE_SCENARIO_PED_COWER_IN_PLACE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x9A77DFD295E29B09)end,
+	["TRIGGER_PED_SCENARIO_PANICEXITTOFLEE"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0x25361A96E0F7E419)return native_invoker.get_return_value_int()end,
+	["SET_PED_SHOULD_PLAY_DIRECTED_NORMAL_SCENARIO_EXIT"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xEC6935EBE0847B90)return native_invoker.get_return_value_int()end,
+	["SET_PED_SHOULD_PLAY_NORMAL_SCENARIO_EXIT"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xA3A9299C4F2ADB98)end,
+	["SET_PED_SHOULD_PLAY_IMMEDIATE_SCENARIO_EXIT"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xF1C03A5352243A30)end,
+	["SET_PED_SHOULD_PLAY_FLEE_SCENARIO_EXIT"]=--[[Any (int)]] function(--[[Ped (int)]] ped,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xEEED8FAFEC331A70)return native_invoker.get_return_value_int()end,
+	["SET_PED_SHOULD_IGNORE_SCENARIO_EXIT_COLLISION_CHECKS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x425AECF167663F48)end,
+	["SET_PED_SHOULD_IGNORE_SCENARIO_NAV_CHECKS"]=--[[void]] function(--[[Any (int)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x5B6010B3CBC29095)end,
+	["SET_PED_SHOULD_PROBE_FOR_SCENARIO_EXITS_IN_ONE_FRAME"]=--[[void]] function(--[[Any (int)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xCEDA60A74219D064)end,
+	["IS_PED_GESTURING"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xC30BDAEE47256C13)return native_invoker.get_return_value_int()end,
+	-- Full list of animation dictionaries and anims by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/animDictsCompact.json
+	["PLAY_FACIAL_ANIM"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] animName,--[[string]] animDict)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(animName)native_invoker.push_arg_string(animDict)native_invoker.end_call_2(0xE1E65CA8AC9C00ED)end,
+	-- Clipsets:
+	-- facials@gen_female@base
+	-- facials@gen_male@base
+	-- facials@p_m_zero@base
+	-- 
+	-- Typically followed with SET_FACIAL_IDLE_ANIM_OVERRIDE:
+	-- mood_drunk_1
+	-- mood_stressed_1
+	-- mood_happy_1
+	-- mood_talking_1
+	-- 
+	["SET_FACIAL_CLIPSET"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] animDict)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(animDict)native_invoker.end_call_2(0x5687C7F05B39E401)end,
+	-- Full list of animation dictionaries and anims by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/animDictsCompact.json
+	["SET_FACIAL_IDLE_ANIM_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] animName,--[[string]] animDict)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(animName)native_invoker.push_arg_string(animDict)native_invoker.end_call_2(0xFFC24B988B938B38)end,
+	["CLEAR_FACIAL_IDLE_ANIM_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x726256CC1EEB182F)end,
+	["SET_PED_CAN_PLAY_GESTURE_ANIMS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xBAF20C5432058024)end,
+	-- p2 usually 0
+	["SET_PED_CAN_PLAY_VISEME_ANIMS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xF833DDBA3B104D43)end,
+	["SET_PED_IS_IGNORED_BY_AUTO_OPEN_DOORS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x33A60D8BDD6E508C)end,
+	["SET_PED_CAN_PLAY_AMBIENT_ANIMS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x6373D1349925A70E)end,
+	["SET_PED_CAN_PLAY_AMBIENT_BASE_ANIMS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x0EB0585D15254740)end,
+	["TRIGGER_IDLE_ANIMATION_ON_PED"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xC2EE020F5FB4DB53)end,
+	["SET_PED_CAN_ARM_IK"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x6C3B4D6D13B4C841)end,
+	["SET_PED_CAN_HEAD_IK"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xC11C18092C5530DC)end,
+	["SET_PED_CAN_LEG_IK"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x73518ECE2485412B)end,
+	["SET_PED_CAN_TORSO_IK"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xF2B7106D37947CE0)end,
+	["SET_PED_CAN_TORSO_REACT_IK"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xF5846EDB26A98A24)end,
+	["SET_PED_CAN_TORSO_VEHICLE_IK"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x6647C5F6F5792496)end,
+	["SET_PED_CAN_USE_AUTO_CONVERSATION_LOOKAT"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xEC4686EC06434678)end,
+	["IS_PED_HEADTRACKING_PED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped1,--[[Ped (int)]] ped2)native_invoker.begin_call()native_invoker.push_arg_int(ped1)native_invoker.push_arg_int(ped2)native_invoker.end_call_2(0x5CD3CB88A7F8850D)return native_invoker.get_return_value_bool()end,
+	["IS_PED_HEADTRACKING_ENTITY"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x813A0A7C9D2E831F)return native_invoker.get_return_value_bool()end,
+	-- This is only called once in the scripts.
+	-- 
+	-- sub_1CD9(&l_49, 0, getElem(3, &l_34, 4), "MICHAEL", 0, 1);
+	--                     sub_1CA8("WORLD_HUMAN_SMOKING", 2);
+	--                     PED::SET_PED_PRIMARY_LOOKAT(getElem(3, &l_34, 4), PLAYER::PLAYER_PED_ID());
+	["SET_PED_PRIMARY_LOOKAT"]=--[[void]] function(--[[Ped (int)]] ped,--[[Ped (int)]] lookAt)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(lookAt)native_invoker.end_call_2(0xCD17B554996A8D9E)end,
+	["SET_PED_CLOTH_PIN_FRAMES"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x78C4E9961DB3EB5B)end,
+	["SET_PED_CLOTH_PACKAGE_INDEX"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x82A3D6D9CC2CB8E3)end,
+	["SET_PED_CLOTH_PRONE"]=--[[void]] function(--[[Any (int)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xA660FAF550EB37E5)end,
+	-- enum ePedConfigFlags
+	-- {
+	-- 	_CPED_CONFIG_FLAG_0x67D1A445 = 0,
+	-- 	_CPED_CONFIG_FLAG_0xC63DE95E = 1,
+	-- 	CPED_CONFIG_FLAG_NoCriticalHits = 2,
+	-- 	CPED_CONFIG_FLAG_DrownsInWater = 3,
+	-- 	CPED_CONFIG_FLAG_DisableReticuleFixedLockon = 4,
+	-- 	_CPED_CONFIG_FLAG_0x37D196F4 = 5,
+	-- 	_CPED_CONFIG_FLAG_0xE2462399 = 6,
+	-- 	CPED_CONFIG_FLAG_UpperBodyDamageAnimsOnly = 7,
+	-- 	_CPED_CONFIG_FLAG_0xEDDEB838 = 8,
+	-- 	_CPED_CONFIG_FLAG_0xB398B6FD = 9,
+	-- 	_CPED_CONFIG_FLAG_0xF6664E68 = 10,
+	-- 	_CPED_CONFIG_FLAG_0xA05E7CA3 = 11,
+	-- 	_CPED_CONFIG_FLAG_0xCE394045 = 12,
+	-- 	CPED_CONFIG_FLAG_NeverLeavesGroup = 13,
+	-- 	_CPED_CONFIG_FLAG_0xCD8D1411 = 14,
+	-- 	_CPED_CONFIG_FLAG_0xB031F1A9 = 15,
+	-- 	_CPED_CONFIG_FLAG_0xFE65BEE3 = 16,
+	-- 	CPED_CONFIG_FLAG_BlockNonTemporaryEvents = 17,
+	-- 	_CPED_CONFIG_FLAG_0x380165BD = 18,
+	-- 	_CPED_CONFIG_FLAG_0x07C045C7 = 19,
+	-- 	_CPED_CONFIG_FLAG_0x583B5E2D = 20,
+	-- 	_CPED_CONFIG_FLAG_0x475EDA58 = 21,
+	-- 	_CPED_CONFIG_FLAG_0x8629D05B = 22,
+	-- 	_CPED_CONFIG_FLAG_0x1522968B = 23,
+	-- 	CPED_CONFIG_FLAG_IgnoreSeenMelee = 24,
+	-- 	_CPED_CONFIG_FLAG_0x4CC09C4B = 25,
+	-- 	_CPED_CONFIG_FLAG_0x034F3053 = 26,
+	-- 	_CPED_CONFIG_FLAG_0xD91BA7CC = 27,
+	-- 	_CPED_CONFIG_FLAG_0x5C8DC66E = 28,
+	-- 	_CPED_CONFIG_FLAG_0x8902EAA0 = 29,
+	-- 	_CPED_CONFIG_FLAG_0x6580B9D2 = 30,
+	-- 	_CPED_CONFIG_FLAG_0x0EF7A297 = 31,
+	-- 	_CPED_CONFIG_FLAG_CanFlyThruWindscreen = 32, // 0x6BF86E5B
+	-- 	CPED_CONFIG_FLAG_DieWhenRagdoll = 33,
+	-- 	CPED_CONFIG_FLAG_HasHelmet = 34,
+	-- 	CPED_CONFIG_FLAG_UseHelmet = 35,
+	-- 	_CPED_CONFIG_FLAG_0xEEB3D630 = 36,
+	-- 	_CPED_CONFIG_FLAG_0xB130D17B = 37,
+	-- 	_CPED_CONFIG_FLAG_0x5F071200 = 38,
+	-- 	CPED_CONFIG_FLAG_DisableEvasiveDives = 39,
+	-- 	_CPED_CONFIG_FLAG_0xC287AAFF = 40,
+	-- 	_CPED_CONFIG_FLAG_0x203328CC = 41,
+	-- 	CPED_CONFIG_FLAG_DontInfluenceWantedLevel = 42,
+	-- 	CPED_CONFIG_FLAG_DisablePlayerLockon = 43,
+	-- 	CPED_CONFIG_FLAG_DisableLockonToRandomPeds = 44,
+	-- 	_CPED_CONFIG_FLAG_0xEC4A8ACF = 45,
+	-- 	_CPED_CONFIG_FLAG_0xDB115BFA = 46,
+	-- 	CPED_CONFIG_FLAG_PedBeingDeleted = 47,
+	-- 	CPED_CONFIG_FLAG_BlockWeaponSwitching = 48,
+	-- 	_CPED_CONFIG_FLAG_0xF8E99565 = 49,
+	-- 	_CPED_CONFIG_FLAG_0xDD17FEE6 = 50,
+	-- 	_CPED_CONFIG_FLAG_0x7ED9B2C9 = 51,
+	-- 	_CPED_CONFIG_FLAG_NoCollison = 52, // 0x655E8618
+	-- 	_CPED_CONFIG_FLAG_0x5A6C1F6E = 53,
+	-- 	_CPED_CONFIG_FLAG_0xD749FC41 = 54,
+	-- 	_CPED_CONFIG_FLAG_0x357F63F3 = 55,
+	-- 	_CPED_CONFIG_FLAG_0xC5E60961 = 56,
+	-- 	_CPED_CONFIG_FLAG_0x29275C3E = 57,
+	-- 	CPED_CONFIG_FLAG_IsFiring = 58,
+	-- 	CPED_CONFIG_FLAG_WasFiring = 59,
+	-- 	CPED_CONFIG_FLAG_IsStanding = 60,
+	-- 	CPED_CONFIG_FLAG_WasStanding = 61,
+	-- 	CPED_CONFIG_FLAG_InVehicle = 62,
+	-- 	CPED_CONFIG_FLAG_OnMount = 63,
+	-- 	CPED_CONFIG_FLAG_AttachedToVehicle = 64,
+	-- 	CPED_CONFIG_FLAG_IsSwimming = 65,
+	-- 	CPED_CONFIG_FLAG_WasSwimming = 66,
+	-- 	CPED_CONFIG_FLAG_IsSkiing = 67,
+	-- 	CPED_CONFIG_FLAG_IsSitting = 68,
+	-- 	CPED_CONFIG_FLAG_KilledByStealth = 69,
+	-- 	CPED_CONFIG_FLAG_KilledByTakedown = 70,
+	-- 	CPED_CONFIG_FLAG_Knockedout = 71,
+	-- 	_CPED_CONFIG_FLAG_0x3E3C4560 = 72,
+	-- 	_CPED_CONFIG_FLAG_0x2994C7B7 = 73,
+	-- 	_CPED_CONFIG_FLAG_0x6D59D275 = 74,
+	-- 	CPED_CONFIG_FLAG_UsingCoverPoint = 75,
+	-- 	CPED_CONFIG_FLAG_IsInTheAir = 76,
+	-- 	_CPED_CONFIG_FLAG_0x2D493FB7 = 77,
+	-- 	CPED_CONFIG_FLAG_IsAimingGun = 78,
+	-- 	_CPED_CONFIG_FLAG_0x14D69875 = 79,
+	-- 	_CPED_CONFIG_FLAG_0x40B05311 = 80,
+	-- 	_CPED_CONFIG_FLAG_0x8B230BC5 = 81,
+	-- 	_CPED_CONFIG_FLAG_0xC74E5842 = 82,
+	-- 	_CPED_CONFIG_FLAG_0x9EA86147 = 83,
+	-- 	_CPED_CONFIG_FLAG_0x674C746C = 84,
+	-- 	_CPED_CONFIG_FLAG_0x3E56A8C2 = 85,
+	-- 	_CPED_CONFIG_FLAG_0xC144A1EF = 86,
+	-- 	_CPED_CONFIG_FLAG_0x0548512D = 87,
+	-- 	_CPED_CONFIG_FLAG_0x31C93909 = 88,
+	-- 	_CPED_CONFIG_FLAG_0xA0269315 = 89,
+	-- 	_CPED_CONFIG_FLAG_0xD4D59D4D = 90,
+	-- 	_CPED_CONFIG_FLAG_0x411D4420 = 91,
+	-- 	_CPED_CONFIG_FLAG_0xDF4AEF0D = 92,
+	-- 	CPED_CONFIG_FLAG_ForcePedLoadCover = 93,
+	-- 	_CPED_CONFIG_FLAG_0x300E4CD3 = 94,
+	-- 	_CPED_CONFIG_FLAG_0xF1C5BF04 = 95,
+	-- 	_CPED_CONFIG_FLAG_0x89C2EF13 = 96,
+	-- 	CPED_CONFIG_FLAG_VaultFromCover = 97,
+	-- 	_CPED_CONFIG_FLAG_0x02A852C8 = 98,
+	-- 	_CPED_CONFIG_FLAG_0x3D9407F1 = 99,
+	-- 	_CPED_CONFIG_FLAG_IsDrunk = 100, // 0x319B4558
+	-- 	CPED_CONFIG_FLAG_ForcedAim = 101,
+	-- 	_CPED_CONFIG_FLAG_0xB942D71A = 102,
+	-- 	_CPED_CONFIG_FLAG_0xD26C55A8 = 103,
+	-- 	_CPED_CONFIG_FLAG_0xB89E703B = 104,
+	-- 	CPED_CONFIG_FLAG_ForceReload = 105,
+	-- 	_CPED_CONFIG_FLAG_0xD9E73DA2 = 106,
+	-- 	_CPED_CONFIG_FLAG_0xFF71DC2C = 107,
+	-- 	_CPED_CONFIG_FLAG_0x1E27E8D8 = 108,
+	-- 	_CPED_CONFIG_FLAG_0xF2C53966 = 109,
+	-- 	_CPED_CONFIG_FLAG_0xC4DBE247 = 110,
+	-- 	_CPED_CONFIG_FLAG_0x83C0A4BF = 111,
+	-- 	_CPED_CONFIG_FLAG_0x0E0FAF8C = 112,
+	-- 	_CPED_CONFIG_FLAG_0x26616660 = 113,
+	-- 	_CPED_CONFIG_FLAG_0x43B80B79 = 114,
+	-- 	_CPED_CONFIG_FLAG_0x0D2A9309 = 115,
+	-- 	_CPED_CONFIG_FLAG_0x12C1C983 = 116,
+	-- 	CPED_CONFIG_FLAG_BumpedByPlayer = 117,
+	-- 	_CPED_CONFIG_FLAG_0xE586D504 = 118,
+	-- 	_CPED_CONFIG_FLAG_0x52374204 = 119,
+	-- 	CPED_CONFIG_FLAG_IsHandCuffed = 120,
+	-- 	CPED_CONFIG_FLAG_IsAnkleCuffed = 121,
+	-- 	CPED_CONFIG_FLAG_DisableMelee = 122,
+	-- 	_CPED_CONFIG_FLAG_0xFE714397 = 123,
+	-- 	_CPED_CONFIG_FLAG_0xB3E660BD = 124,
+	-- 	_CPED_CONFIG_FLAG_0x5FED6BFD = 125,
+	-- 	_CPED_CONFIG_FLAG_0xC9D6F66F = 126,
+	-- 	_CPED_CONFIG_FLAG_0x519BC986 = 127,
+	-- 	CPED_CONFIG_FLAG_CanBeAgitated = 128,
+	-- 	_CPED_CONFIG_FLAG_0x9A4B617C = 129,
+	-- 	_CPED_CONFIG_FLAG_0xDAB70E9F = 130,
+	-- 	_CPED_CONFIG_FLAG_0xE569438A = 131,
+	-- 	_CPED_CONFIG_FLAG_0xBBC77D6D = 132,
+	-- 	_CPED_CONFIG_FLAG_0xCB59EF0F = 133,
+	-- 	_CPED_CONFIG_FLAG_0x8C5EA971 = 134,
+	-- 	CPED_CONFIG_FLAG_IsScuba = 135,
+	-- 	CPED_CONFIG_FLAG_WillArrestRatherThanJack = 136,
+	-- 	_CPED_CONFIG_FLAG_0xDCE59B58 = 137,
+	-- 	CPED_CONFIG_FLAG_RidingTrain = 138,
+	-- 	CPED_CONFIG_FLAG_ArrestResult = 139,
+	-- 	CPED_CONFIG_FLAG_CanAttackFriendly = 140,
+	-- 	_CPED_CONFIG_FLAG_0x98A4BE43 = 141,
+	-- 	_CPED_CONFIG_FLAG_0x6901E731 = 142,
+	-- 	_CPED_CONFIG_FLAG_0x9EC9BF6C = 143,
+	-- 	_CPED_CONFIG_FLAG_0x42841A8F = 144,
+	-- 	CPED_CONFIG_FLAG_ShootingAnimFlag = 145,
+	-- 	CPED_CONFIG_FLAG_DisableLadderClimbing = 146,
+	-- 	CPED_CONFIG_FLAG_StairsDetected = 147,
+	-- 	CPED_CONFIG_FLAG_SlopeDetected = 148,
+	-- 	_CPED_CONFIG_FLAG_0x1A15670B = 149,
+	-- 	_CPED_CONFIG_FLAG_0x61786EE5 = 150,
+	-- 	_CPED_CONFIG_FLAG_0xCB9186BD = 151,
+	-- 	_CPED_CONFIG_FLAG_0xF0710152 = 152,
+	-- 	_CPED_CONFIG_FLAG_0x43DFE310 = 153,
+	-- 	_CPED_CONFIG_FLAG_0xC43C624E = 154,
+	-- 	CPED_CONFIG_FLAG_CanPerformArrest = 155,
+	-- 	CPED_CONFIG_FLAG_CanPerformUncuff = 156,
+	-- 	CPED_CONFIG_FLAG_CanBeArrested = 157,
+	-- 	_CPED_CONFIG_FLAG_0xF7960FF5 = 158,
+	-- 	_CPED_CONFIG_FLAG_0x59564113 = 159,
+	-- 	_CPED_CONFIG_FLAG_0x0C6C3099 = 160,
+	-- 	_CPED_CONFIG_FLAG_0x645F927A = 161,
+	-- 	_CPED_CONFIG_FLAG_0xA86549B9 = 162,
+	-- 	_CPED_CONFIG_FLAG_0x8AAF337A = 163,
+	-- 	_CPED_CONFIG_FLAG_0x13BAA6E7 = 164,
+	-- 	_CPED_CONFIG_FLAG_0x5FB9D1F5 = 165,
+	-- 	CPED_CONFIG_FLAG_IsInjured = 166,
+	-- 	_CPED_CONFIG_FLAG_0x6398A20B = 167,
+	-- 	_CPED_CONFIG_FLAG_0xD8072639 = 168,
+	-- 	_CPED_CONFIG_FLAG_0xA05B1845 = 169,
+	-- 	_CPED_CONFIG_FLAG_0x83F6D220 = 170,
+	-- 	_CPED_CONFIG_FLAG_0xD8430331 = 171,
+	-- 	_CPED_CONFIG_FLAG_0x4B547520 = 172,
+	-- 	_CPED_CONFIG_FLAG_0xE66E1406 = 173,
+	-- 	_CPED_CONFIG_FLAG_0x1C4BFE0C = 174,
+	-- 	_CPED_CONFIG_FLAG_0x90008BFA = 175,
+	-- 	_CPED_CONFIG_FLAG_0x07C7A910 = 176,
+	-- 	_CPED_CONFIG_FLAG_0xF15F8191 = 177,
+	-- 	_CPED_CONFIG_FLAG_0xCE4E8BE2 = 178,
+	-- 	_CPED_CONFIG_FLAG_0x1D46E4F2 = 179,
+	-- 	CPED_CONFIG_FLAG_IsInCustody = 180,
+	-- 	_CPED_CONFIG_FLAG_0xE4FD9B3A = 181,
+	-- 	_CPED_CONFIG_FLAG_0x67AE0812 = 182,
+	-- 	CPED_CONFIG_FLAG_IsAgitated = 183,
+	-- 	CPED_CONFIG_FLAG_PreventAutoShuffleToDriversSeat = 184,
+	-- 	_CPED_CONFIG_FLAG_0x7B2D325E = 185,
+	-- 	CPED_CONFIG_FLAG_EnableWeaponBlocking = 186,
+	-- 	CPED_CONFIG_FLAG_HasHurtStarted = 187,
+	-- 	CPED_CONFIG_FLAG_DisableHurt = 188,
+	-- 	CPED_CONFIG_FLAG_PlayerIsWeird = 189,
+	-- 	_CPED_CONFIG_FLAG_0x32FC208B = 190,
+	-- 	_CPED_CONFIG_FLAG_0x0C296E5A = 191,
+	-- 	_CPED_CONFIG_FLAG_0xE63B73EC = 192,
+	-- 	_CPED_CONFIG_FLAG_0x04E9CC80 = 193,
+	-- 	CPED_CONFIG_FLAG_UsingScenario = 194,
+	-- 	CPED_CONFIG_FLAG_VisibleOnScreen = 195,
+	-- 	_CPED_CONFIG_FLAG_0xD88C58A1 = 196,
+	-- 	_CPED_CONFIG_FLAG_0x5A3DCF43 = 197,
+	-- 	_CPED_CONFIG_FLAG_0xEA02B420 = 198,
+	-- 	_CPED_CONFIG_FLAG_0x3F559CFF = 199,
+	-- 	_CPED_CONFIG_FLAG_0x8C55D029 = 200,
+	-- 	_CPED_CONFIG_FLAG_0x5E6466F6 = 201,
+	-- 	_CPED_CONFIG_FLAG_0xEB5AD706 = 202,
+	-- 	_CPED_CONFIG_FLAG_0x0EDDDDE7 = 203,
+	-- 	_CPED_CONFIG_FLAG_0xA64F7B1D = 204,
+	-- 	_CPED_CONFIG_FLAG_0x48532CBA = 205,
+	-- 	_CPED_CONFIG_FLAG_0xAA25A9E7 = 206,
+	-- 	_CPED_CONFIG_FLAG_0x415B26B9 = 207,
+	-- 	CPED_CONFIG_FLAG_DisableExplosionReactions = 208,
+	-- 	CPED_CONFIG_FLAG_DodgedPlayer = 209,
+	-- 	_CPED_CONFIG_FLAG_0x67405504 = 210,
+	-- 	_CPED_CONFIG_FLAG_0x75DDD68C = 211,
+	-- 	_CPED_CONFIG_FLAG_0x2AD879B4 = 212,
+	-- 	_CPED_CONFIG_FLAG_0x51486F91 = 213,
+	-- 	_CPED_CONFIG_FLAG_0x32F79E21 = 214,
+	-- 	_CPED_CONFIG_FLAG_0xBF099213 = 215,
+	-- 	_CPED_CONFIG_FLAG_0x054AC8E2 = 216,
+	-- 	_CPED_CONFIG_FLAG_0x14E495CC = 217,
+	-- 	_CPED_CONFIG_FLAG_0x3C7DF9DF = 218,
+	-- 	_CPED_CONFIG_FLAG_0x848FFEF2 = 219,
+	-- 	CPED_CONFIG_FLAG_DontEnterLeadersVehicle = 220,
+	-- 	_CPED_CONFIG_FLAG_0x2618E1CF = 221,
+	-- 	_CPED_CONFIG_FLAG_0x84F722FA = 222,
+	-- 	_CPED_CONFIG_FLAG_Shrink = 223, // 0xD1B87B1F
+	-- 	_CPED_CONFIG_FLAG_0x728AA918 = 224,
+	-- 	CPED_CONFIG_FLAG_DisablePotentialToBeWalkedIntoResponse = 225,
+	-- 	CPED_CONFIG_FLAG_DisablePedAvoidance = 226,
+	-- 	_CPED_CONFIG_FLAG_0x59E91185 = 227,
+	-- 	_CPED_CONFIG_FLAG_0x1EA7225F = 228,
+	-- 	CPED_CONFIG_FLAG_DisablePanicInVehicle = 229,
+	-- 	_CPED_CONFIG_FLAG_0x6DCA7D88 = 230,
+	-- 	_CPED_CONFIG_FLAG_0xFC3E572D = 231,
+	-- 	_CPED_CONFIG_FLAG_0x08E9F9CF = 232,
+	-- 	_CPED_CONFIG_FLAG_0x2D3BA52D = 233,
+	-- 	_CPED_CONFIG_FLAG_0xFD2F53EA = 234,
+	-- 	_CPED_CONFIG_FLAG_0x31A1B03B = 235,
+	-- 	CPED_CONFIG_FLAG_IsHoldingProp = 236,
+	-- 	CPED_CONFIG_FLAG_BlocksPathingWhenDead = 237,
+	-- 	_CPED_CONFIG_FLAG_0xCE57C9A3 = 238,
+	-- 	_CPED_CONFIG_FLAG_0x26149198 = 239,
+	-- 	_CPED_CONFIG_FLAG_0x1B33B598 = 240,
+	-- 	_CPED_CONFIG_FLAG_0x719B6E87 = 241,
+	-- 	_CPED_CONFIG_FLAG_0x13E8E8E8 = 242,
+	-- 	_CPED_CONFIG_FLAG_0xF29739AE = 243,
+	-- 	_CPED_CONFIG_FLAG_0xABEA8A74 = 244,
+	-- 	_CPED_CONFIG_FLAG_0xB60EA2BA = 245,
+	-- 	_CPED_CONFIG_FLAG_0x536B0950 = 246,
+	-- 	_CPED_CONFIG_FLAG_0x0C754ACA = 247,
+	-- 	CPED_CONFIG_FLAG_CanPlayInCarIdles = 248,
+	-- 	_CPED_CONFIG_FLAG_0x12659168 = 249,
+	-- 	_CPED_CONFIG_FLAG_0x1BDF2F04 = 250,
+	-- 	_CPED_CONFIG_FLAG_0x7728FAA3 = 251,
+	-- 	_CPED_CONFIG_FLAG_0x6A807ED8 = 252,
+	-- 	CPED_CONFIG_FLAG_OnStairs = 253,
+	-- 	_CPED_CONFIG_FLAG_0xE1A2F73F = 254,
+	-- 	_CPED_CONFIG_FLAG_0x5B3697C8 = 255,
+	-- 	_CPED_CONFIG_FLAG_0xF1EB20A9 = 256,
+	-- 	_CPED_CONFIG_FLAG_0x8B7DF407 = 257,
+	-- 	_CPED_CONFIG_FLAG_0x329DCF1A = 258,
+	-- 	_CPED_CONFIG_FLAG_0x8D90DD1B = 259,
+	-- 	_CPED_CONFIG_FLAG_0xB8A292B7 = 260,
+	-- 	_CPED_CONFIG_FLAG_0x8374B087 = 261,
+	-- 	_CPED_CONFIG_FLAG_0x2AF558F0 = 262,
+	-- 	_CPED_CONFIG_FLAG_0x82251455 = 263,
+	-- 	_CPED_CONFIG_FLAG_0x30CF498B = 264,
+	-- 	_CPED_CONFIG_FLAG_0xE1CD50AF = 265,
+	-- 	_CPED_CONFIG_FLAG_0x72E4AE48 = 266,
+	-- 	_CPED_CONFIG_FLAG_0xC2657EA1 = 267,
+	-- 	_CPED_CONFIG_FLAG_0x29FF6030 = 268,
+	-- 	_CPED_CONFIG_FLAG_0x8248A5EC = 269,
+	-- 	CPED_CONFIG_FLAG_OnStairSlope = 270,
+	-- 	_CPED_CONFIG_FLAG_0xA0897933 = 271,
+	-- 	CPED_CONFIG_FLAG_DontBlipCop = 272,
+	-- 	CPED_CONFIG_FLAG_ClimbedShiftedFence = 273,
+	-- 	_CPED_CONFIG_FLAG_0xF7823618 = 274,
+	-- 	_CPED_CONFIG_FLAG_0xDC305CCE = 275,
+	-- 	CPED_CONFIG_FLAG_EdgeDetected = 276,
+	-- 	_CPED_CONFIG_FLAG_0x92B67896 = 277,
+	-- 	_CPED_CONFIG_FLAG_0xCAD677C9 = 278,
+	-- 	CPED_CONFIG_FLAG_AvoidTearGas = 279,
+	-- 	_CPED_CONFIG_FLAG_0x5276AC7B = 280,
+	-- 	_CPED_CONFIG_FLAG_NoWrithe = 281, // 0x1032692A
+	-- 	_CPED_CONFIG_FLAG_0xDA23E7F1 = 282,
+	-- 	_CPED_CONFIG_FLAG_0x9139724D = 283,
+	-- 	_CPED_CONFIG_FLAG_0xA1457461 = 284,
+	-- 	_CPED_CONFIG_FLAG_0x4186E095 = 285,
+	-- 	_CPED_CONFIG_FLAG_0xAC68E2EB = 286,
+	-- 	CPED_CONFIG_FLAG_RagdollingOnBoat = 287,
+	-- 	CPED_CONFIG_FLAG_HasBrandishedWeapon = 288,
+	-- 	_CPED_CONFIG_FLAG_0x1B9EE8A1 = 289,
+	-- 	_CPED_CONFIG_FLAG_0xF3F5758C = 290,
+	-- 	_CPED_CONFIG_FLAG_0x2A9307F1 = 291,
+	-- 	_CPED_CONFIG_FLAG_FreezePosition = 292, // 0x7403D216
+	-- 	_CPED_CONFIG_FLAG_0xA06A3C6C = 293,
+	-- 	CPED_CONFIG_FLAG_DisableShockingEvents = 294,
+	-- 	_CPED_CONFIG_FLAG_0xF8DA25A5 = 295,
+	-- 	_CPED_CONFIG_FLAG_0x7EF55802 = 296,
+	-- 	_CPED_CONFIG_FLAG_0xB31F1187 = 297,
+	-- 	_CPED_CONFIG_FLAG_0x84315402 = 298,
+	-- 	_CPED_CONFIG_FLAG_0x0FD69867 = 299,
+	-- 	_CPED_CONFIG_FLAG_0xC7829B67 = 300,
+	-- 	CPED_CONFIG_FLAG_DisablePedConstraints = 301,
+	-- 	_CPED_CONFIG_FLAG_0x6D23CF25 = 302,
+	-- 	_CPED_CONFIG_FLAG_0x2ADA871B = 303,
+	-- 	_CPED_CONFIG_FLAG_0x47BC8A58 = 304,
+	-- 	_CPED_CONFIG_FLAG_0xEB692FA5 = 305,
+	-- 	_CPED_CONFIG_FLAG_0x4A133C50 = 306,
+	-- 	_CPED_CONFIG_FLAG_0xC58099C3 = 307,
+	-- 	_CPED_CONFIG_FLAG_0xF3D76D41 = 308,
+	-- 	_CPED_CONFIG_FLAG_0xB0EEE9F2 = 309,
+	-- 	CPED_CONFIG_FLAG_IsInCluster = 310,
+	-- 	_CPED_CONFIG_FLAG_0x0FA153EF = 311,
+	-- 	_CPED_CONFIG_FLAG_0xD73F5CD3 = 312,
+	-- 	_CPED_CONFIG_FLAG_0xD4136C22 = 313,
+	-- 	_CPED_CONFIG_FLAG_0xE404CA6B = 314,
+	-- 	_CPED_CONFIG_FLAG_0xB9597446 = 315,
+	-- 	_CPED_CONFIG_FLAG_0xD5C98277 = 316,
+	-- 	_CPED_CONFIG_FLAG_0xD5060A9C = 317,
+	-- 	_CPED_CONFIG_FLAG_0x3E5F1CBB = 318,
+	-- 	_CPED_CONFIG_FLAG_0xD8BE1D54 = 319,
+	-- 	_CPED_CONFIG_FLAG_0x0B1F191F = 320,
+	-- 	_CPED_CONFIG_FLAG_0xC995167A = 321,
+	-- 	CPED_CONFIG_FLAG_HasHighHeels = 322,
+	-- 	_CPED_CONFIG_FLAG_0x86B01E54 = 323,
+	-- 	_CPED_CONFIG_FLAG_0x3A56FE15 = 324,
+	-- 	_CPED_CONFIG_FLAG_0xC03B736C = 325, // SpawnedAtScenario?
+	-- 	_CPED_CONFIG_FLAG_0xBBF47729 = 326,
+	-- 	_CPED_CONFIG_FLAG_0x22B668A8 = 327,
+	-- 	_CPED_CONFIG_FLAG_0x2624D4D4 = 328,
+	-- 	CPED_CONFIG_FLAG_DisableTalkTo = 329,
+	-- 	CPED_CONFIG_FLAG_DontBlip = 330,
+	-- 	CPED_CONFIG_FLAG_IsSwitchingWeapon = 331,
+	-- 	_CPED_CONFIG_FLAG_0x630F55F3 = 332,
+	-- 	_CPED_CONFIG_FLAG_0x150468FD = 333,
+	-- 	_CPED_CONFIG_FLAG_0x914EBD6B = 334,
+	-- 	_CPED_CONFIG_FLAG_0x79AF3B6D = 335,
+	-- 	_CPED_CONFIG_FLAG_0x75C7A632 = 336,
+	-- 	_CPED_CONFIG_FLAG_0x52D530E2 = 337,
+	-- 	_CPED_CONFIG_FLAG_0xDB2A90E0 = 338,
+	-- 	_CPED_CONFIG_FLAG_0x5922763D = 339,
+	-- 	_CPED_CONFIG_FLAG_0x12ADB567 = 340,
+	-- 	_CPED_CONFIG_FLAG_0x105C8518 = 341,
+	-- 	_CPED_CONFIG_FLAG_0x106F703D = 342,
+	-- 	_CPED_CONFIG_FLAG_0xED152C3E = 343,
+	-- 	_CPED_CONFIG_FLAG_0xA0EFE6A8 = 344,
+	-- 	_CPED_CONFIG_FLAG_0xBF348C82 = 345,
+	-- 	_CPED_CONFIG_FLAG_0xCDDFE830 = 346,
+	-- 	_CPED_CONFIG_FLAG_0x7B59BD9B = 347,
+	-- 	_CPED_CONFIG_FLAG_0x0124C788 = 348,
+	-- 	CPED_CONFIG_FLAG_EquipJetpack = 349,
+	-- 	_CPED_CONFIG_FLAG_0x08D361A5 = 350,
+	-- 	_CPED_CONFIG_FLAG_0xE13D1F7C = 351,
+	-- 	_CPED_CONFIG_FLAG_0x40E25FB9 = 352,
+	-- 	_CPED_CONFIG_FLAG_0x930629D9 = 353,
+	-- 	_CPED_CONFIG_FLAG_0xECCF0C7F = 354,
+	-- 	_CPED_CONFIG_FLAG_0xB6E9613B = 355,
+	-- 	_CPED_CONFIG_FLAG_0x490C0478 = 356,
+	-- 	_CPED_CONFIG_FLAG_0xE8865BEA = 357,
+	-- 	_CPED_CONFIG_FLAG_0xF3C34A29 = 358,
+	-- 	CPED_CONFIG_FLAG_IsDuckingInVehicle = 359,
+	-- 	_CPED_CONFIG_FLAG_0xF660E115 = 360,
+	-- 	_CPED_CONFIG_FLAG_0xAB0E6DED = 361,
+	-- 	CPED_CONFIG_FLAG_HasReserveParachute = 362,
+	-- 	CPED_CONFIG_FLAG_UseReserveParachute = 363,
+	-- 	_CPED_CONFIG_FLAG_0x5C5D9CD3 = 364,
+	-- 	_CPED_CONFIG_FLAG_0x8F7701F3 = 365,
+	-- 	_CPED_CONFIG_FLAG_0xBC4436AD = 366,
+	-- 	_CPED_CONFIG_FLAG_0xD7E07D37 = 367,
+	-- 	_CPED_CONFIG_FLAG_0x03C4FD24 = 368,
+	-- 	_CPED_CONFIG_FLAG_0x7675789A = 369,
+	-- 	_CPED_CONFIG_FLAG_0xB7288A88 = 370,
+	-- 	_CPED_CONFIG_FLAG_0xC06B6291 = 371,
+	-- 	_CPED_CONFIG_FLAG_0x95A4A805 = 372,
+	-- 	_CPED_CONFIG_FLAG_0xA8E9A042 = 373,
+	-- 	CPED_CONFIG_FLAG_NeverLeaveTrain = 374,
+	-- 	_CPED_CONFIG_FLAG_0xBAC674B3 = 375,
+	-- 	_CPED_CONFIG_FLAG_0x147F1FFB = 376,
+	-- 	_CPED_CONFIG_FLAG_0x4376DD79 = 377,
+	-- 	_CPED_CONFIG_FLAG_0xCD3DB518 = 378,
+	-- 	_CPED_CONFIG_FLAG_0xFE4BA4B6 = 379,
+	-- 	_CPED_CONFIG_FLAG_0x5DF03A55 = 380,
+	-- 	_CPED_CONFIG_FLAG_0xBCD816CD = 381,
+	-- 	_CPED_CONFIG_FLAG_0xCF02DD69 = 382,
+	-- 	_CPED_CONFIG_FLAG_0xF73AFA2E = 383,
+	-- 	_CPED_CONFIG_FLAG_0x80B9A9D0 = 384,
+	-- 	_CPED_CONFIG_FLAG_0xF601F7EE = 385,
+	-- 	_CPED_CONFIG_FLAG_0xA91350FC = 386,
+	-- 	_CPED_CONFIG_FLAG_0x3AB23B96 = 387,
+	-- 	CPED_CONFIG_FLAG_IsClimbingLadder = 388,
+	-- 	CPED_CONFIG_FLAG_HasBareFeet = 389,
+	-- 	_CPED_CONFIG_FLAG_0xB4B1CD4C = 390,
+	-- 	_CPED_CONFIG_FLAG_0x5459AFB8 = 391,
+	-- 	_CPED_CONFIG_FLAG_0x54F27667 = 392,
+	-- 	_CPED_CONFIG_FLAG_0xC11D3E8F = 393,
+	-- 	_CPED_CONFIG_FLAG_0x5419EB3E = 394,
+	-- 	_CPED_CONFIG_FLAG_0x82D8DBB4 = 395,
+	-- 	_CPED_CONFIG_FLAG_0x33B02D2F = 396,
+	-- 	_CPED_CONFIG_FLAG_0xAE66176D = 397,
+	-- 	_CPED_CONFIG_FLAG_0xA2692593 = 398,
+	-- 	_CPED_CONFIG_FLAG_0x714C7E31 = 399,
+	-- 	_CPED_CONFIG_FLAG_0xEC488AC7 = 400,
+	-- 	_CPED_CONFIG_FLAG_0xAE398504 = 401,
+	-- 	_CPED_CONFIG_FLAG_0xABC58D72 = 402,
+	-- 	_CPED_CONFIG_FLAG_0x5E5B9591 = 403,
+	-- 	_CPED_CONFIG_FLAG_0x6BA1091E = 404,
+	-- 	_CPED_CONFIG_FLAG_0x77840177 = 405,
+	-- 	_CPED_CONFIG_FLAG_0x1C7ACAC4 = 406,
+	-- 	_CPED_CONFIG_FLAG_0x124420E9 = 407,
+	-- 	_CPED_CONFIG_FLAG_0x75A65587 = 408,
+	-- 	_CPED_CONFIG_FLAG_0xDFD2D55B = 409,
+	-- 	_CPED_CONFIG_FLAG_0xBDD39919 = 410,
+	-- 	_CPED_CONFIG_FLAG_0x43DEC267 = 411,
+	-- 	_CPED_CONFIG_FLAG_0xE42B7797 = 412,
+	-- 	CPED_CONFIG_FLAG_IsHolsteringWeapon = 413,
+	-- 	_CPED_CONFIG_FLAG_0x4F8149F5 = 414,
+	-- 	_CPED_CONFIG_FLAG_0xDD9ECA7A = 415,
+	-- 	_CPED_CONFIG_FLAG_0x9E7EF9D2 = 416,
+	-- 	_CPED_CONFIG_FLAG_0x2C6ED942 = 417,
+	-- 	CPED_CONFIG_FLAG_IsSwitchingHelmetVisor = 418,
+	-- 	_CPED_CONFIG_FLAG_0xA488727D = 419,
+	-- 	_CPED_CONFIG_FLAG_0xCFF5F6DE = 420,
+	-- 	_CPED_CONFIG_FLAG_0x6D614599 = 421,
+	-- 	CPED_CONFIG_FLAG_DisableVehicleCombat = 422,
+	-- 	_CPED_CONFIG_FLAG_0xFE401D26 = 423,
+	-- 	CPED_CONFIG_FLAG_FallsLikeAircraft = 424,
+	-- 	_CPED_CONFIG_FLAG_0x2B42AE82 = 425,
+	-- 	_CPED_CONFIG_FLAG_0x7A95734F = 426,
+	-- 	_CPED_CONFIG_FLAG_0xDF4D8617 = 427,
+	-- 	_CPED_CONFIG_FLAG_0x578F1F14 = 428,
+	-- 	CPED_CONFIG_FLAG_DisableStartEngine = 429,
+	-- 	CPED_CONFIG_FLAG_IgnoreBeingOnFire = 430,
+	-- 	_CPED_CONFIG_FLAG_0x153C9500 = 431,
+	-- 	_CPED_CONFIG_FLAG_0xCB7A632E = 432,
+	-- 	_CPED_CONFIG_FLAG_0xDE727981 = 433,
+	-- 	CPED_CONFIG_FLAG_DisableHomingMissileLockon = 434,
+	-- 	_CPED_CONFIG_FLAG_0x12BBB935 = 435,
+	-- 	_CPED_CONFIG_FLAG_0xAD0A1277 = 436,
+	-- 	_CPED_CONFIG_FLAG_0xEA6AA46A = 437,
+	-- 	CPED_CONFIG_FLAG_DisableHelmetArmor = 438,
+	-- 	_CPED_CONFIG_FLAG_0xCB7F3A1E = 439,
+	-- 	_CPED_CONFIG_FLAG_0x50178878 = 440,
+	-- 	_CPED_CONFIG_FLAG_0x051B4F0D = 441,
+	-- 	_CPED_CONFIG_FLAG_0x2FC3DECC = 442,
+	-- 	_CPED_CONFIG_FLAG_0xC0030B0B = 443,
+	-- 	_CPED_CONFIG_FLAG_0xBBDAF1E9 = 444,
+	-- 	_CPED_CONFIG_FLAG_0x944FE59C = 445,
+	-- 	_CPED_CONFIG_FLAG_0x506FBA39 = 446,
+	-- 	_CPED_CONFIG_FLAG_0xDD45FE84 = 447,
+	-- 	_CPED_CONFIG_FLAG_0xE698AE75 = 448,
+	-- 	_CPED_CONFIG_FLAG_0x199633F8 = 449,
+	-- 	CPED_CONFIG_FLAG_PedIsArresting = 450,
+	-- 	CPED_CONFIG_FLAG_IsDecoyPed = 451,
+	-- 	_CPED_CONFIG_FLAG_0x3A251D83 = 452,
+	-- 	_CPED_CONFIG_FLAG_0xA56F6986 = 453,
+	-- 	_CPED_CONFIG_FLAG_0x1D19C622 = 454,
+	-- 	_CPED_CONFIG_FLAG_0xB68D3EAB = 455,
+	-- 	CPED_CONFIG_FLAG_CanBeIncapacitated = 456,
+	-- 	_CPED_CONFIG_FLAG_0x4BD5EBAD = 457,
+	-- 	_CPED_CONFIG_FLAG_0xFCC5EBC5 = 458
+	-- };
+	["SET_PED_CONFIG_FLAG"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] flagId,--[[BOOL (bool)]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(flagId)native_invoker.push_arg_bool(value)native_invoker.end_call_2(0x1913FE4CBF41C463)end,
+	-- PED::SET_PED_RESET_FLAG(PLAYER::PLAYER_PED_ID(), 240, 1);
+	-- Known values:
+	-- PRF_PreventGoingIntoStillInVehicleState = 236 *(fanatic2.c)*
+	["SET_PED_RESET_FLAG"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] flagId,--[[BOOL (bool)]] doReset)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(flagId)native_invoker.push_arg_bool(doReset)native_invoker.end_call_2(0xC1E8A365BF3B29F2)end,
+	-- See SET_PED_CONFIG_FLAG
+	["GET_PED_CONFIG_FLAG"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int]] flagId,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(flagId)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x7EE53118C892B513)return native_invoker.get_return_value_bool()end,
+	["GET_PED_RESET_FLAG"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int]] flagId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(flagId)native_invoker.end_call_2(0xAF9E59B1B1FBF2A0)return native_invoker.get_return_value_bool()end,
+	["SET_PED_GROUP_MEMBER_PASSENGER_INDEX"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(index)native_invoker.end_call_2(0x0BDDB8D9EC6BCF3C)end,
+	["SET_PED_CAN_EVASIVE_DIVE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x6B7A646C242A7059)end,
+	-- Presumably returns the Entity that the Ped is currently diving out of the way of.
+	-- 
+	-- var num3;
+	--     if (PED::IS_PED_EVASIVE_DIVING(A_0, &num3) != 0)
+	--         if (ENTITY::IS_ENTITY_A_VEHICLE(num3) != 0)
+	["IS_PED_EVASIVE_DIVING"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Entity* (pointer)]] evadingEntity)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_pointer(evadingEntity)native_invoker.end_call_2(0x414641C26E105898)return native_invoker.get_return_value_bool()end,
+	["SET_PED_SHOOTS_AT_COORD"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] x,--[[float]] y,--[[float]] z,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x96A05E4FB321B1BA)end,
+	-- Full list of peds by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/peds.json
+	["SET_PED_MODEL_IS_SUPPRESSED"]=--[[void]] function(--[[Hash (int)]] modelHash,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(modelHash)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xE163A4BCE4DE6F11)end,
+	["STOP_ANY_PED_MODEL_BEING_SUPPRESSED"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB47BD05FA66B40CF)end,
+	["SET_PED_CAN_BE_TARGETED_WHEN_INJURED"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x638C03B0F9878F57)end,
+	["SET_PED_GENERATES_DEAD_BODY_EVENTS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x7FB17BA2E7DECA5B)end,
+	["BLOCK_PED_FROM_GENERATING_DEAD_BODY_EVENTS_WHEN_DEAD"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xE43A13C9E4CCCBCF)end,
+	["SET_PED_WILL_ONLY_ATTACK_WANTED_PLAYER"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x3E9679C1DFCF422C)end,
+	["SET_PED_CAN_RAGDOLL_FROM_PLAYER_IMPACT"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xDF993EE5E90ABA25)end,
+	-- PoliceMotorcycleHelmet   1024    
+	-- RegularMotorcycleHelmet   4096    
+	-- FiremanHelmet 16384   
+	-- PilotHeadset  32768   
+	-- PilotHelmet   65536
+	-- --
+	-- p2 is generally 4096 or 16384 in the scripts. p1 varies between 1 and 0.
+	["GIVE_PED_HELMET"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] cannotRemove,--[[int]] helmetFlag,--[[int]] textureIndex)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(cannotRemove)native_invoker.push_arg_int(helmetFlag)native_invoker.push_arg_int(textureIndex)native_invoker.end_call_2(0x54C7C4A94367717E)end,
+	["REMOVE_PED_HELMET"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] instantly)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(instantly)native_invoker.end_call_2(0xA7B2458D0AD6DED8)end,
+	["IS_PED_TAKING_OFF_HELMET"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x14590DDBEDB1EC85)return native_invoker.get_return_value_bool()end,
+	["SET_PED_HELMET"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] canWearHelmet)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(canWearHelmet)native_invoker.end_call_2(0x560A43136EB58105)end,
+	["SET_PED_HELMET_FLAG"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] helmetFlag)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(helmetFlag)native_invoker.end_call_2(0xC0E78D5C2CE3EB25)end,
+	-- List of component/props ID
+	-- gtaxscripting.blogspot.com/2016/04/gta-v-peds-component-and-props.html
+	["SET_PED_HELMET_PROP_INDEX"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] propIndex,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(propIndex)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x26D83693ED99291C)end,
+	["SET_PED_HELMET_VISOR_PROP_INDICES"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1,--[[int]] p2,--[[int]] p3)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0x3F7325574E41B44D)end,
+	["IS_PED_HELMET_VISOR_UP"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xB9496CE47546DB2C)return native_invoker.get_return_value_bool()end,
+	["SET_PED_HELMET_TEXTURE_INDEX"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] textureIndex)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(textureIndex)native_invoker.end_call_2(0xF1550C4BD22582E2)end,
+	-- Returns true if the ped passed through the parenthesis is wearing a helmet.
+	["IS_PED_WEARING_HELMET"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xF33BDFE19B309B19)return native_invoker.get_return_value_bool()end,
+	["CLEAR_PED_STORED_HAT_PROP"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x687C0B594907D2E8)end,
+	["GET_PED_HELMET_STORED_HAT_PROP_INDEX"]=--[[Any (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x451294E859ECC018)return native_invoker.get_return_value_int()end,
+	["GET_PED_HELMET_STORED_HAT_TEX_INDEX"]=--[[Any (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x9D728C1E12BF5518)return native_invoker.get_return_value_int()end,
+	["IS_CURRENT_HEAD_PROP_A_HELMET"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xF2385935BFFD4D92)return native_invoker.get_return_value_bool()end,
+	["SET_PED_TO_LOAD_COVER"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x332B562EEDA62399)end,
+	-- It simply makes the said ped to cower behind cover object(wall, desk, car)
+	-- 
+	-- Peds flee attributes must be set to not to flee, first. Else, most of the peds, will just flee from gunshot sounds or any other panic situations.
+	["SET_PED_CAN_COWER_IN_COVER"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xCB7553CDCEF4A735)end,
+	["SET_PED_CAN_PEEK_IN_COVER"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xC514825C507E3736)end,
+	-- This native does absolutely nothing, just a nullsub
+	["SET_PED_PLAYS_HEAD_ON_HORN_ANIM_WHEN_DIES_IN_VEHICLE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x94D94BF1A75AED3D)end,
+	-- "IK" stands for "Inverse kinematics." I assume this has something to do with how the ped uses his legs to balance. In the scripts, the second parameter is always an int with a value of 2, 0, or sometimes 1
+	["SET_PED_LEG_IK_MODE"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] mode)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(mode)native_invoker.end_call_2(0xC396F5B86FF9FEBD)end,
+	["SET_PED_MOTION_BLUR"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x0A986918B102B448)end,
+	["SET_PED_CAN_SWITCH_WEAPON"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xED7F7EFE9FABF340)end,
+	["SET_PED_DIES_INSTANTLY_IN_WATER"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xEEB64139BA29A7CF)end,
+	-- Only appears in lamar1 script.
+	["SET_LADDER_CLIMB_INPUT_STATE"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x1A330D297AAC6BC1)end,
+	["STOP_PED_WEAPON_FIRING_WHEN_DROPPED"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xC158D28142A34608)end,
+	["SET_SCRIPTED_ANIM_SEAT_OFFSET"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0x5917BBA32D06C230)end,
+	-- enum eCombatMovement // 0x4F456B61
+	-- {
+	-- 	CM_Stationary,
+	-- 	CM_Defensive,
+	-- 	CM_WillAdvance,
+	-- 	CM_WillRetreat
+	-- };
+	["SET_PED_COMBAT_MOVEMENT"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] combatMovement)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(combatMovement)native_invoker.end_call_2(0x4D9CA1009AFBD057)end,
+	-- See SET_PED_COMBAT_MOVEMENT
+	["GET_PED_COMBAT_MOVEMENT"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xDEA92412FCAEB3F5)return native_invoker.get_return_value_int()end,
+	-- enum eCombatAbility // 0xE793438C
+	-- {
+	-- 	CA_Poor,
+	-- 	CA_Average,
+	-- 	CA_Professional,
+	-- 	CA_NumTypes
+	-- };
+	["SET_PED_COMBAT_ABILITY"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] abilityLevel)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(abilityLevel)native_invoker.end_call_2(0xC7622C0D36B2FDA8)end,
+	-- enum eCombatRange // 0xB69160F5
+	-- {
+	-- 	CR_Near,
+	-- 	CR_Medium,
+	-- 	CR_Far,
+	-- 	CR_VeryFar,
+	-- 	CR_NumRanges
+	-- };
+	["SET_PED_COMBAT_RANGE"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] combatRange)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(combatRange)native_invoker.end_call_2(0x3C606747B23E497B)end,
+	-- See SET_PED_COMBAT_RANGE
+	["GET_PED_COMBAT_RANGE"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xF9D9F7F2DB8E2FA0)return native_invoker.get_return_value_int()end,
+	-- enum eCombatAttributes // 0x0E8E7201
+	-- {
+	-- 	BF_CanUseCover = 0,
+	-- 	BF_CanUseVehicles = 1,
+	-- 	BF_CanDoDrivebys = 2,
+	-- 	BF_CanLeaveVehicle = 3,
+	-- 	BF_CanUseDynamicStrafeDecisions = 4,
+	-- 	BF_AlwaysFight = 5,
+	-- 	BF_0x66BB9FCC = 6,
+	-- 	BF_0x6837DA41 = 7,
+	-- 	BF_0xB4A13A5A = 8,
+	-- 	BF_0xEE326AAD = 9,
+	-- 	BF_0x7DF2CCFA = 10,
+	-- 	BF_0x0036D422 = 11,
+	-- 	BF_BlindFireWhenInCover = 12,
+	-- 	BF_Aggressive = 13,
+	-- 	BF_CanInvestigate = 14,
+	-- 	BF_HasRadio = 15,
+	-- 	BF_0x6BDE28D1 = 16,
+	-- 	BF_AlwaysFlee = 17,
+	-- 	BF_0x7852797D = 18,
+	-- 	BF_0x33497B95 = 19,
+	-- 	BF_CanTauntInVehicle = 20,
+	-- 	BF_CanChaseTargetOnFoot = 21,
+	-- 	BF_WillDragInjuredPedsToSafety = 22,
+	-- 	BF_0xCD7168B8 = 23,
+	-- 	BF_UseProximityFiringRate = 24,
+	-- 	BF_0x48F914F8 = 25,
+	-- 	BF_0x2EA543D0 = 26,
+	-- 	BF_PerfectAccuracy = 27,
+	-- 	BF_CanUseFrustratedAdvance = 28,
+	-- 	BF_0x3D131AC1 = 29,
+	-- 	BF_0x3AD95F27 = 30,
+	-- 	BF_MaintainMinDistanceToTarget = 31,
+	-- 	BF_0xEAD68AD2 = 32,
+	-- 	BF_0xA206C2E0 = 33,
+	-- 	BF_CanUsePeekingVariations = 34,
+	-- 	BF_0xA5715184 = 35,
+	-- 	BF_0xD5265533 = 36,
+	-- 	BF_0x2B84C2BF = 37,
+	-- 	BF_DisableBulletReactions = 38,
+	-- 	BF_CanBust = 39,
+	-- 	BF_0xAA525726 = 40,
+	-- 	BF_CanCommandeerVehicles = 41,
+	-- 	BF_CanFlank = 42,
+	-- 	BF_SwitchToAdvanceIfCantFindCover = 43,
+	-- 	BF_SwitchToDefensiveIfInCover = 44,
+	-- 	BF_0xEB4786A0 = 45,
+	-- 	BF_CanFightArmedPedsWhenNotArmed = 46,
+	-- 	BF_0xA08E9402 = 47,
+	-- 	BF_0x952EAD7D = 48,
+	-- 	BF_UseEnemyAccuracyScaling = 49,
+	-- 	BF_CanCharge = 50,
+	-- 	BF_0xDA8C2BD3 = 51,
+	-- 	BF_0x6562F017 = 52,
+	-- 	BF_0xA2C3D53B = 53,
+	-- 	BF_AlwaysEquipBestWeapon = 54,
+	-- 	BF_CanSeeUnderwaterPeds = 55,
+	-- 	BF_0xF619486B = 56,
+	-- 	BF_0x61EB63A3 = 57,
+	-- 	BF_DisableFleeFromCombat = 58,
+	-- 	BF_0x8976D12B = 59,
+	-- 	BF_CanThrowSmokeGrenade = 60,
+	-- 	BF_NonMissionPedsFleeFromThisPedUnlessArmed = 61,
+	-- 	BF_0x5452A10C = 62,
+	-- 	BF_FleesFromInvincibleOpponents = 63,
+	-- 	BF_DisableBlockFromPursueDuringVehicleChase = 64,
+	-- 	BF_DisableSpinOutDuringVehicleChase = 65,
+	-- 	BF_DisableCruiseInFrontDuringBlockDuringVehicleChase = 66,
+	-- 	BF_0x0B404731 = 67,
+	-- 	BF_DisableReactToBuddyShot = 68,
+	-- 	BF_0x7FFD6AEB = 69,
+	-- 	BF_0x51F4AEF8 = 70,
+	-- 	BF_PermitChargeBeyondDefensiveArea = 71,
+	-- 	BF_0x63E0A8E2 = 72,
+	-- 	BF_0xDF974436 = 73,
+	-- 	BF_0x556C080B = 74,
+	-- 	BF_0xA4D50035 = 75,
+	-- 	BF_SetDisableShoutTargetPositionOnCombatStart = 76,
+	-- 	BF_DisableRespondedToThreatBroadcast = 77,
+	-- 	BF_0xCBB01765 = 78,
+	-- 	BF_0x4F862ED4 = 79,
+	-- 	BF_0xEF9C7C40 = 80,
+	-- 	BF_0xE51B494F = 81,
+	-- 	BF_0x054D0199 = 82,
+	-- 	BF_0xD36BCE94 = 83,
+	-- 	BF_0xFB11F690 = 84,
+	-- 	BF_0xD208A9AD = 85,
+	-- 	BF_AllowDogFighting = 86,
+	-- 	BF_0x07A6E531 = 87,
+	-- 	BF_0x34F9317B = 88,
+	-- 	BF_0x4240F5A9 = 89,
+	-- 	BF_0xEE129DBD = 90,
+	-- 	BF_0x053AEAD9 = 91
+	-- };
+	["SET_PED_COMBAT_ATTRIBUTES"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] attributeId,--[[BOOL (bool)]] enabled)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(attributeId)native_invoker.push_arg_bool(enabled)native_invoker.end_call_2(0x9F7794730795E019)end,
+	-- enum eTargetLossResponseType
+	-- {
+	-- 	TLR_ExitTask,
+	-- 	TLR_NeverLoseTarget,
+	-- 	TLR_SearchForTarget
+	-- };
+	["SET_PED_TARGET_LOSS_RESPONSE"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] responseType)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(responseType)native_invoker.end_call_2(0x0703B9079823DA4A)end,
+	["IS_PED_PERFORMING_MELEE_ACTION"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xDCCA191DF9980FD7)return native_invoker.get_return_value_bool()end,
+	["IS_PED_PERFORMING_STEALTH_KILL"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xFD4CCDBCC59941B7)return native_invoker.get_return_value_bool()end,
+	["IS_PED_PERFORMING_A_COUNTER_ATTACK"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xEBD0EDBA5BE957CF)return native_invoker.get_return_value_bool()end,
+	["IS_PED_BEING_STEALTH_KILLED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x863B23EFDE9C5DF2)return native_invoker.get_return_value_bool()end,
+	["GET_MELEE_TARGET_FOR_PED"]=--[[Ped (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x18A3E9EE1297FD39)return native_invoker.get_return_value_int()end,
+	["WAS_PED_KILLED_BY_STEALTH"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xF9800AA1A771B000)return native_invoker.get_return_value_bool()end,
+	["WAS_PED_KILLED_BY_TAKEDOWN"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x7F08E26039C7347C)return native_invoker.get_return_value_bool()end,
+	["WAS_PED_KNOCKED_OUT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x61767F73EACEED21)return native_invoker.get_return_value_bool()end,
+	-- bit 1 (0x2) = use vehicle
+	-- bit 15 (0x8000) = force cower
+	["SET_PED_FLEE_ATTRIBUTES"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] attributeFlags,--[[BOOL (bool)]] enable)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(attributeFlags)native_invoker.push_arg_bool(enable)native_invoker.end_call_2(0x70A2D1137C8ED7C9)end,
+	-- p1: Only "CODE_HUMAN_STAND_COWER" found in the b617d scripts.
+	["SET_PED_COWER_HASH"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(p1)native_invoker.end_call_2(0xA549131166868ED3)end,
+	["SET_PED_STEERS_AROUND_DEAD_BODIES"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x2016C603D6B8987C)end,
+	["SET_PED_STEERS_AROUND_PEDS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x46F2193B3AD1D891)end,
+	["SET_PED_STEERS_AROUND_OBJECTS"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x1509C089ADC208BF)end,
+	["SET_PED_STEERS_AROUND_VEHICLES"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xEB6FB9D48DDE23EC)end,
+	["SET_PED_IS_AVOIDED_BY_OTHERS"]=--[[void]] function(--[[Any (int)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xA9B61A329BFDCBEA)end,
+	["SET_PED_INCREASED_AVOIDANCE_RADIUS"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x570389D1C3DE3C6B)end,
+	["SET_PED_BLOCKS_PATHING_WHEN_DEAD"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x576594E8D64375E2)end,
+	["SET_PED_NO_TIME_DELAY_BEFORE_SHOT"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xA52D5247A4227E14)end,
+	["IS_ANY_PED_NEAR_POINT"]=--[[BOOL (bool)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.end_call_2(0x083961498679DC9F)return native_invoker.get_return_value_bool()end,
+	["FORCE_PED_AI_AND_ANIMATION_UPDATE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x2208438012482A1A)end,
+	["IS_PED_HEADING_TOWARDS_POSITION"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] p4)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(p4)native_invoker.end_call_2(0xFCF37A457CB96DC0)return native_invoker.get_return_value_bool()end,
+	["REQUEST_PED_VISIBILITY_TRACKING"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x7D7A2E43E74E2EB8)end,
+	["REQUEST_PED_VEHICLE_VISIBILITY_TRACKING"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x2BC338A7B21F4608)end,
+	["REQUEST_PED_RESTRICTED_VEHICLE_VISIBILITY_TRACKING"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xCD018C591F94CB43)end,
+	["REQUEST_PED_USE_SMALL_BBOX_VISIBILITY_TRACKING"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x75BA1CB3B7D40CAF)end,
+	-- returns whether or not a ped is visible within your FOV, not this check auto's to false after a certain distance.
+	-- 
+	-- 
+	-- Target needs to be tracked.. won't work otherwise.
+	["IS_TRACKED_PED_VISIBLE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x91C8E617F64188AC)return native_invoker.get_return_value_bool()end,
+	["GET_TRACKED_PED_PIXELCOUNT"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x511F1A683387C7E2)return native_invoker.get_return_value_int()end,
+	["IS_PED_TRACKED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x4C5E1F087CD10BB7)return native_invoker.get_return_value_bool()end,
+	["HAS_PED_RECEIVED_EVENT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int]] eventId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(eventId)native_invoker.end_call_2(0x8507BCB710FA6DC0)return native_invoker.get_return_value_bool()end,
+	["CAN_PED_SEE_HATED_PED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped1,--[[Ped (int)]] ped2)native_invoker.begin_call()native_invoker.push_arg_int(ped1)native_invoker.push_arg_int(ped2)native_invoker.end_call_2(0x6CD5A433374D4CFB)return native_invoker.get_return_value_bool()end,
+	["CAN_PED_SHUFFLE_TO_OR_FROM_TURRET_SEAT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0x9C6A6C19B6C0C496)return native_invoker.get_return_value_bool()end,
+	["CAN_PED_SHUFFLE_TO_OR_FROM_EXTRA_SEAT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0x2DFC81C9B9608549)return native_invoker.get_return_value_bool()end,
+	-- no bone= -1
+	-- 
+	-- boneIds:
+	--         SKEL_ROOT = 0x0,
+	--    SKEL_Pelvis = 0x2e28,
+	--  SKEL_L_Thigh = 0xe39f,
+	--     SKEL_L_Calf = 0xf9bb,
+	--  SKEL_L_Foot = 0x3779,
+	--  SKEL_L_Toe0 = 0x83c,
+	--   IK_L_Foot = 0xfedd,
+	--    PH_L_Foot = 0xe175,
+	--    MH_L_Knee = 0xb3fe,
+	--    SKEL_R_Thigh = 0xca72,
+	--     SKEL_R_Calf = 0x9000,
+	--  SKEL_R_Foot = 0xcc4d,
+	--  SKEL_R_Toe0 = 0x512d,
+	--  IK_R_Foot = 0x8aae,
+	--    PH_R_Foot = 0x60e6,
+	--    MH_R_Knee = 0x3fcf,
+	--    RB_L_ThighRoll = 0x5c57,
+	--   RB_R_ThighRoll = 0x192a,
+	--   SKEL_Spine_Root = 0xe0fd,
+	--  SKEL_Spine0 = 0x5c01,
+	--  SKEL_Spine1 = 0x60f0,
+	--  SKEL_Spine2 = 0x60f1,
+	--  SKEL_Spine3 = 0x60f2,
+	--  SKEL_L_Clavicle = 0xfcd9,
+	--  SKEL_L_UpperArm = 0xb1c5,
+	--  SKEL_L_Forearm = 0xeeeb,
+	--   SKEL_L_Hand = 0x49d9,
+	--  SKEL_L_Finger00 = 0x67f2,
+	--  SKEL_L_Finger01 = 0xff9,
+	--   SKEL_L_Finger02 = 0xffa,
+	--   SKEL_L_Finger10 = 0x67f3,
+	--  SKEL_L_Finger11 = 0x1049,
+	--  SKEL_L_Finger12 = 0x104a,
+	--  SKEL_L_Finger20 = 0x67f4,
+	--  SKEL_L_Finger21 = 0x1059,
+	--  SKEL_L_Finger22 = 0x105a,
+	--  SKEL_L_Finger30 = 0x67f5,
+	--  SKEL_L_Finger31 = 0x1029,
+	--  SKEL_L_Finger32 = 0x102a,
+	--  SKEL_L_Finger40 = 0x67f6,
+	--  SKEL_L_Finger41 = 0x1039,
+	--  SKEL_L_Finger42 = 0x103a,
+	--  PH_L_Hand = 0xeb95,
+	--    IK_L_Hand = 0x8cbd,
+	--    RB_L_ForeArmRoll = 0xee4f,
+	--     RB_L_ArmRoll = 0x1470,
+	--     MH_L_Elbow = 0x58b7,
+	--   SKEL_R_Clavicle = 0x29d2,
+	--  SKEL_R_UpperArm = 0x9d4d,
+	--  SKEL_R_Forearm = 0x6e5c,
+	--   SKEL_R_Hand = 0xdead,
+	--  SKEL_R_Finger00 = 0xe5f2,
+	--  SKEL_R_Finger01 = 0xfa10,
+	--  SKEL_R_Finger02 = 0xfa11,
+	--  SKEL_R_Finger10 = 0xe5f3,
+	--  SKEL_R_Finger11 = 0xfa60,
+	--  SKEL_R_Finger12 = 0xfa61,
+	--  SKEL_R_Finger20 = 0xe5f4,
+	--  SKEL_R_Finger21 = 0xfa70,
+	--  SKEL_R_Finger22 = 0xfa71,
+	--  SKEL_R_Finger30 = 0xe5f5,
+	--  SKEL_R_Finger31 = 0xfa40,
+	--  SKEL_R_Finger32 = 0xfa41,
+	--  SKEL_R_Finger40 = 0xe5f6,
+	--  SKEL_R_Finger41 = 0xfa50,
+	--  SKEL_R_Finger42 = 0xfa51,
+	--  PH_R_Hand = 0x6f06,
+	--    IK_R_Hand = 0x188e,
+	--    RB_R_ForeArmRoll = 0xab22,
+	--     RB_R_ArmRoll = 0x90ff,
+	--     MH_R_Elbow = 0xbb0,
+	--    SKEL_Neck_1 = 0x9995,
+	--  SKEL_Head = 0x796e,
+	--    IK_Head = 0x322c,
+	--  FACIAL_facialRoot = 0xfe2c,
+	--    FB_L_Brow_Out_000 = 0xe3db,
+	--    FB_L_Lid_Upper_000 = 0xb2b6,
+	--   FB_L_Eye_000 = 0x62ac,
+	--     FB_L_CheekBone_000 = 0x542e,
+	--   FB_L_Lip_Corner_000 = 0x74ac,
+	--  FB_R_Lid_Upper_000 = 0xaa10,
+	--   FB_R_Eye_000 = 0x6b52,
+	--     FB_R_CheekBone_000 = 0x4b88,
+	--   FB_R_Brow_Out_000 = 0x54c,
+	--     FB_R_Lip_Corner_000 = 0x2ba6,
+	--  FB_Brow_Centre_000 = 0x9149,
+	--   FB_UpperLipRoot_000 = 0x4ed2,
+	--  FB_UpperLip_000 = 0xf18f,
+	--  FB_L_Lip_Top_000 = 0x4f37,
+	--     FB_R_Lip_Top_000 = 0x4537,
+	--     FB_Jaw_000 = 0xb4a0,
+	--   FB_LowerLipRoot_000 = 0x4324,
+	--  FB_LowerLip_000 = 0x508f,
+	--  FB_L_Lip_Bot_000 = 0xb93b,
+	--     FB_R_Lip_Bot_000 = 0xc33b,
+	--     FB_Tongue_000 = 0xb987,
+	--    RB_Neck_1 = 0x8b93,
+	--    IK_Root = 0xdd1c
+	["GET_PED_BONE_INDEX"]=--[[int]] function(--[[Ped (int)]] ped,--[[int]] boneId)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(boneId)native_invoker.end_call_2(0x3F428D08BE5AAE31)return native_invoker.get_return_value_int()end,
+	["GET_PED_RAGDOLL_BONE_INDEX"]=--[[int]] function(--[[Ped (int)]] ped,--[[int]] bone)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(bone)native_invoker.end_call_2(0x2057EF813397A772)return native_invoker.get_return_value_int()end,
+	-- Values look to be between 0.0 and 1.0
+	-- From decompiled scripts: 0.0, 0.6, 0.65, 0.8, 1.0
+	-- 
+	-- You are correct, just looked in IDA it breaks from the function if it's less than 0.0f or greater than 1.0f.
+	["SET_PED_ENVEFF_SCALE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0xBF29516833893561)end,
+	["GET_PED_ENVEFF_SCALE"]=--[[float]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x9C14D30395A51A3C)return native_invoker.get_return_value_float()end,
+	["SET_ENABLE_PED_ENVEFF_SCALE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xD2C5AA0C0E8D0F1E)end,
+	-- In agency_heist3b.c4, its like this 90% of the time:
+	-- 
+	-- PED::_110F526AB784111F(ped, 0.099);
+	-- PED::SET_PED_ENVEFF_SCALE(ped, 1.0);
+	-- PED::_D69411AA0CEBF9E9(ped, 87, 81, 68);
+	-- PED::SET_ENABLE_PED_ENVEFF_SCALE(ped, 1);
+	-- 
+	-- and its like this 10% of the time:
+	-- 
+	-- PED::_110F526AB784111F(ped, 0.2);
+	-- PED::SET_PED_ENVEFF_SCALE(ped, 0.65);
+	-- PED::_D69411AA0CEBF9E9(ped, 74, 69, 60);
+	-- PED::SET_ENABLE_PED_ENVEFF_SCALE(ped, 1);
+	["SET_PED_ENVEFF_CPV_ADD"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0x110F526AB784111F)end,
+	-- Something related to the environmental effects natives.
+	-- In the "agency_heist3b" script, p1 - p3 are always under 100 - usually they are {87, 81, 68}. If SET_PED_ENVEFF_SCALE is set to 0.65 (instead of the usual 1.0), they use {74, 69, 60}
+	["SET_PED_ENVEFF_COLOR_MODULATOR"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] p1,--[[int]] p2,--[[int]] p3)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xD69411AA0CEBF9E9)end,
+	-- intensity: 0.0f - 1.0f
+	-- 
+	-- This native sets the emissive intensity for the given ped. It is used for different 'glow' levels on illuminated clothing.
+	["SET_PED_EMISSIVE_SCALE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] intensity)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(intensity)native_invoker.end_call_2(0x4E90D746056E273D)end,
+	-- Use 0x4E90D746056E273D to set the illuminated clothing glow intensity for a specific ped.
+	-- Returns a float between 0.0 and 1.0 representing the current illuminated clothing glow intensity.
+	["GET_PED_EMISSIVE_SCALE"]=--[[float]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x1461B28A06717D68)return native_invoker.get_return_value_float()end,
+	["IS_PED_SHADER_READY"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x81AA517FBBA05D39)return native_invoker.get_return_value_bool()end,
+	["SET_PED_ENABLE_CREW_EMBLEM"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xE906EC930F5FE7C8)end,
+	-- This native does absolutely nothing, just a nullsub
+	["REQUEST_RAGDOLL_BOUNDS_UPDATE"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x1216E0BFA72CC703)end,
+	-- Enable/disable ped shadow (ambient occlusion). https://gfycat.com/thankfulesteemedgecko
+	["SET_PED_AO_BLOB_RENDERING"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x2B5AA717A181FB4C)end,
+	["IS_PED_SHELTERED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xB8B52E498014F5B0)return native_invoker.get_return_value_bool()end,
+	-- p6 always 2 (but it doesnt seem to matter...)
+	-- 
+	-- roll and pitch 0
+	-- yaw to Ped.rotation
+	["CREATE_SYNCHRONIZED_SCENE"]=--[[int]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] roll,--[[float]] pitch,--[[float]] yaw,--[[int]] p6)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(roll)native_invoker.push_arg_float(pitch)native_invoker.push_arg_float(yaw)native_invoker.push_arg_int(p6)native_invoker.end_call_2(0x8C18E0F9080ADD73)return native_invoker.get_return_value_int()end,
+	["CREATE_SYNCHRONIZED_SCENE_AT_MAP_OBJECT"]=--[[int]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[Hash (int)]] object)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.push_arg_int(object)native_invoker.end_call_2(0x62EC273D00187DCA)return native_invoker.get_return_value_int()end,
+	-- Returns true if a synchronized scene is running
+	["IS_SYNCHRONIZED_SCENE_RUNNING"]=--[[BOOL (bool)]] function(--[[int]] sceneId)native_invoker.begin_call()native_invoker.push_arg_int(sceneId)native_invoker.end_call_2(0x25D39B935A038A26)return native_invoker.get_return_value_bool()end,
+	["SET_SYNCHRONIZED_SCENE_ORIGIN"]=--[[void]] function(--[[int]] sceneID,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] roll,--[[float]] pitch,--[[float]] yaw,--[[BOOL (bool)]] p7)native_invoker.begin_call()native_invoker.push_arg_int(sceneID)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(roll)native_invoker.push_arg_float(pitch)native_invoker.push_arg_float(yaw)native_invoker.push_arg_bool(p7)native_invoker.end_call_2(0x6ACF6B7225801CD7)end,
+	["SET_SYNCHRONIZED_SCENE_PHASE"]=--[[void]] function(--[[int]] sceneID,--[[float]] phase)native_invoker.begin_call()native_invoker.push_arg_int(sceneID)native_invoker.push_arg_float(phase)native_invoker.end_call_2(0x734292F4F0ABF6D0)end,
+	["GET_SYNCHRONIZED_SCENE_PHASE"]=--[[float]] function(--[[int]] sceneID)native_invoker.begin_call()native_invoker.push_arg_int(sceneID)native_invoker.end_call_2(0xE4A310B1D7FA73CC)return native_invoker.get_return_value_float()end,
+	["SET_SYNCHRONIZED_SCENE_RATE"]=--[[void]] function(--[[int]] sceneID,--[[float]] rate)native_invoker.begin_call()native_invoker.push_arg_int(sceneID)native_invoker.push_arg_float(rate)native_invoker.end_call_2(0xB6C49F8A5E295A5D)end,
+	["GET_SYNCHRONIZED_SCENE_RATE"]=--[[float]] function(--[[int]] sceneID)native_invoker.begin_call()native_invoker.push_arg_int(sceneID)native_invoker.end_call_2(0xD80932D577274D40)return native_invoker.get_return_value_float()end,
+	["SET_SYNCHRONIZED_SCENE_LOOPED"]=--[[void]] function(--[[int]] sceneID,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(sceneID)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xD9A897A4C6C2974F)end,
+	["IS_SYNCHRONIZED_SCENE_LOOPED"]=--[[BOOL (bool)]] function(--[[int]] sceneID)native_invoker.begin_call()native_invoker.push_arg_int(sceneID)native_invoker.end_call_2(0x62522002E0C391BA)return native_invoker.get_return_value_bool()end,
+	["SET_SYNCHRONIZED_SCENE_HOLD_LAST_FRAME"]=--[[void]] function(--[[int]] sceneID,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(sceneID)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x394B9CD12435C981)end,
+	["IS_SYNCHRONIZED_SCENE_HOLD_LAST_FRAME"]=--[[BOOL (bool)]] function(--[[int]] sceneID)native_invoker.begin_call()native_invoker.push_arg_int(sceneID)native_invoker.end_call_2(0x7F2F4F13AC5257EF)return native_invoker.get_return_value_bool()end,
+	["ATTACH_SYNCHRONIZED_SCENE_TO_ENTITY"]=--[[void]] function(--[[int]] sceneID,--[[Entity (int)]] entity,--[[int]] boneIndex)native_invoker.begin_call()native_invoker.push_arg_int(sceneID)native_invoker.push_arg_int(entity)native_invoker.push_arg_int(boneIndex)native_invoker.end_call_2(0x272E4723B56A3B96)end,
+	["DETACH_SYNCHRONIZED_SCENE"]=--[[void]] function(--[[int]] sceneID)native_invoker.begin_call()native_invoker.push_arg_int(sceneID)native_invoker.end_call_2(0x6D38F1F04CBB37EA)end,
+	["TAKE_OWNERSHIP_OF_SYNCHRONIZED_SCENE"]=--[[void]] function(--[[int]] scene)native_invoker.begin_call()native_invoker.push_arg_int(scene)native_invoker.end_call_2(0xCD9CC7E200A52A6F)end,
+	-- Regarding p2, p3 and p4: Most common is 0, 0, 0); followed by 0, 1, 0); and 1, 1, 0); in R* scripts. p4 is very rarely something other than 0.
+	-- 
+	-- enum eMotionState // 0x92A659FE
+	-- {
+	-- 	MotionState_None = 0xEE717723,
+	-- 	MotionState_Idle = 0x9072A713,
+	-- 	MotionState_Walk = 0xD827C3DB,
+	-- 	MotionState_Run = 0xFFF7E7A4,
+	-- 	MotionState_Sprint = 0xBD8817DB,
+	-- 	MotionState_Crouch_Idle = 0x43FB099E,
+	-- 	MotionState_Crouch_Walk = 0x08C31A98,
+	-- 	MotionState_Crouch_Run = 0x3593CF09,
+	-- 	MotionState_DoNothing = 0x0EC17E58,
+	-- 	MotionState_AnimatedVelocity = 0x551AAC43,
+	-- 	MotionState_InVehicle = 0x94D9D58D,
+	-- 	MotionState_Aiming = 0x3F67C6AF,
+	-- 	MotionState_Diving_Idle = 0x4848CDED,
+	-- 	MotionState_Diving_Swim = 0x916E828C,
+	-- 	MotionState_Swimming_TreadWater = 0xD1BF11C7,
+	-- 	MotionState_Dead = 0x0DBB071C,
+	-- 	MotionState_Stealth_Idle = 0x422D7A25,
+	-- 	MotionState_Stealth_Walk = 0x042AB6A2,
+	-- 	MotionState_Stealth_Run = 0xFB0B79E1,
+	-- 	MotionState_Parachuting = 0xBAC0F10B,
+	-- 	MotionState_ActionMode_Idle = 0xDA40A0DC,
+	-- 	MotionState_ActionMode_Walk = 0xD2905EA7,
+	-- 	MotionState_ActionMode_Run = 0x31BADE14,
+	-- 	MotionState_Jetpack = 0x535E6A5E
+	-- };
+	["FORCE_PED_MOTION_STATE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Hash (int)]] motionStateHash,--[[BOOL (bool)]] p2,--[[int]] p3,--[[BOOL (bool)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(motionStateHash)native_invoker.push_arg_bool(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_bool(p4)native_invoker.end_call_2(0xF28965D04F570DCA)return native_invoker.get_return_value_bool()end,
+	["GET_PED_CURRENT_MOVE_BLEND_RATIO"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[float* (pointer)]] speedX,--[[float* (pointer)]] speedY)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_pointer(speedX)native_invoker.push_arg_pointer(speedY)native_invoker.end_call_2(0xF60165E1D2C5370B)return native_invoker.get_return_value_bool()end,
+	["SET_PED_MAX_MOVE_BLEND_RATIO"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0x433083750C5E064A)end,
+	["SET_PED_MIN_MOVE_BLEND_RATIO"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0x01A898D26E2333DD)end,
+	-- Min: 0.00
+	-- Max: 10.00
+	-- 
+	-- Can be used in combo with fast run cheat.
+	-- 
+	-- When value is set to 10.00:
+	-- Sprinting without fast run cheat: 66 m/s
+	-- Sprinting with fast run cheat: 77 m/s
+	-- 
+	-- Needs to be looped!
+	-- 
+	-- Note: According to IDA for the Xbox360 xex, when they check bgt they seem to have the min to 0.0f, but the max set to 1.15f not 10.0f.
+	["SET_PED_MOVE_RATE_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0x085BF80FA50A39D1)end,
+	["SET_PED_MOVE_RATE_IN_WATER_OVERRIDE"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x0B3E35AC043707D9)end,
+	-- Checks if the specified unknown flag is set in the ped's model.
+	-- The engine itself seems to exclusively check for flags 1 and 4 (Might be inlined code of the check that checks for other flags).
+	-- Game scripts exclusively check for flags 1 and 4.
+	["PED_HAS_SEXINESS_FLAG_SET"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[int]] flag)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(flag)native_invoker.end_call_2(0x46B05BCAE43856B0)return native_invoker.get_return_value_bool()end,
+	-- Returns size of array, passed into the second variable.
+	-- 
+	-- See below for usage information.
+	-- 
+	-- This function actually requires a struct, where the first value is the maximum number of elements to return.  Here is a sample of how I was able to get it to work correctly, without yet knowing the struct format.
+	-- 
+	-- //Setup the array
+	--  const int numElements = 10;
+	--    const int arrSize = numElements * 2 + 2;
+	--   Any veh[arrSize];
+	--  //0 index is the size of the array
+	--     veh[0] = numElements;
+	-- 
+	--    int count = PED::GET_PED_NEARBY_VEHICLES(PLAYER::PLAYER_PED_ID(), veh);
+	-- 
+	--  if (veh != NULL)
+	--   {
+	--      //Simple loop to go through results
+	--        for (int i = 0; i < count; i++)
+	--         {
+	--          int offsettedID = i * 2 + 2;
+	--           //Make sure it exists
+	--          if (veh[offsettedID] != NULL && ENTITY::DOES_ENTITY_EXIST(veh[offsettedID]))
+	--           {
+	--              //Do something
+	--             }
+	--      }
+	--  }  
+	["GET_PED_NEARBY_VEHICLES"]=--[[int]] function(--[[Ped (int)]] ped,--[[Any* (pointer)]] sizeAndVehs)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_pointer(sizeAndVehs)native_invoker.end_call_2(0xCFF869CBFA210D82)return native_invoker.get_return_value_int()end,
+	-- sizeAndPeds - is a pointer to an array. The array is filled with peds found nearby the ped supplied to the first argument.
+	-- ignore - ped type to ignore
+	-- 
+	-- Return value is the number of peds found and added to the array passed.
+	-- 
+	-- -----------------------------------
+	-- 
+	-- To make this work in most menu bases at least in C++ do it like so,
+	-- 
+	--  Formatted Example: pastebin.com/D8an9wwp
+	-- 
+	-- -----------------------------------
+	-- 
+	-- Example: gtaforums.com/topic/789788-function-args-to-pedget-ped-nearby-peds/?p=1067386687
+	["GET_PED_NEARBY_PEDS"]=--[[int]] function(--[[Ped (int)]] ped,--[[Any* (pointer)]] sizeAndPeds,--[[int]] ignore)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_pointer(sizeAndPeds)native_invoker.push_arg_int(ignore)native_invoker.end_call_2(0x23F8F5FC7E8C4A6B)return native_invoker.get_return_value_int()end,
+	["HAVE_ALL_STREAMING_REQUESTS_COMPLETED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x7350823473013C02)return native_invoker.get_return_value_bool()end,
+	["IS_PED_USING_ACTION_MODE"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x00E73468D085F745)return native_invoker.get_return_value_bool()end,
+	-- p2 is usually -1 in the scripts. action is either 0 or "DEFAULT_ACTION".
+	["SET_PED_USING_ACTION_MODE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1,--[[int]] p2,--[[string]] action)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_string(action)native_invoker.end_call_2(0xD75ACCF5E0FB5367)end,
+	-- name: "MP_FEMALE_ACTION" found multiple times in the b617d scripts.
+	["SET_MOVEMENT_MODE_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped,--[[string]] name)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_string(name)native_invoker.end_call_2(0x781DE8FA214E87D2)end,
+	-- Overrides the ped's collision capsule radius for the current tick.
+	-- Must be called every tick to be effective.
+	-- 
+	-- Setting this to 0.001 will allow warping through some objects.
+	["SET_PED_CAPSULE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0x364DF566EC833DE2)end,
+	-- gtaforums.com/topic/885580-ped-headshotmugshot-txd/
+	["REGISTER_PEDHEADSHOT"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x4462658788425076)return native_invoker.get_return_value_int()end,
+	["REGISTER_PEDHEADSHOT_HIRES"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xBA8805A1108A2515)return native_invoker.get_return_value_int()end,
+	-- Similar to REGISTER_PEDHEADSHOT but creates a transparent background instead of black. Example: https://i.imgur.com/iHz8ztn.png
+	["REGISTER_PEDHEADSHOT_TRANSPARENT"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x953563CE563143AF)return native_invoker.get_return_value_int()end,
+	-- gtaforums.com/topic/885580-ped-headshotmugshot-txd/
+	["UNREGISTER_PEDHEADSHOT"]=--[[void]] function(--[[int]] id)native_invoker.begin_call()native_invoker.push_arg_int(id)native_invoker.end_call_2(0x96B1361D9B24C2FF)end,
+	-- gtaforums.com/topic/885580-ped-headshotmugshot-txd/
+	["IS_PEDHEADSHOT_VALID"]=--[[BOOL (bool)]] function(--[[int]] id)native_invoker.begin_call()native_invoker.push_arg_int(id)native_invoker.end_call_2(0xA0A9668F158129A2)return native_invoker.get_return_value_bool()end,
+	-- gtaforums.com/topic/885580-ped-headshotmugshot-txd/
+	["IS_PEDHEADSHOT_READY"]=--[[BOOL (bool)]] function(--[[int]] id)native_invoker.begin_call()native_invoker.push_arg_int(id)native_invoker.end_call_2(0x7085228842B13A67)return native_invoker.get_return_value_bool()end,
+	-- gtaforums.com/topic/885580-ped-headshotmugshot-txd/
+	["GET_PEDHEADSHOT_TXD_STRING"]=--[[string]] function(--[[int]] id)native_invoker.begin_call()native_invoker.push_arg_int(id)native_invoker.end_call_2(0xDB4EACD4AD0A5D6B)return native_invoker.get_return_value_string()end,
+	["REQUEST_PEDHEADSHOT_IMG_UPLOAD"]=--[[BOOL (bool)]] function(--[[int]] id)native_invoker.begin_call()native_invoker.push_arg_int(id)native_invoker.end_call_2(0xF0DAEF2F545BEE25)return native_invoker.get_return_value_bool()end,
+	["RELEASE_PEDHEADSHOT_IMG_UPLOAD"]=--[[void]] function(--[[int]] id)native_invoker.begin_call()native_invoker.push_arg_int(id)native_invoker.end_call_2(0x5D517B27CF6ECD04)end,
+	["IS_PEDHEADSHOT_IMG_UPLOAD_AVAILABLE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xEBB376779A760AA8)return native_invoker.get_return_value_bool()end,
+	["HAS_PEDHEADSHOT_IMG_UPLOAD_FAILED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x876928DDDFCCC9CD)return native_invoker.get_return_value_bool()end,
+	["HAS_PEDHEADSHOT_IMG_UPLOAD_SUCCEEDED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xE8A169E666CBC541)return native_invoker.get_return_value_bool()end,
+	["SET_PED_HEATSCALE_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] heatScale)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(heatScale)native_invoker.end_call_2(0xC1F6EBF9A3D55538)end,
+	["DISABLE_PED_HEATSCALE_OVERRIDE"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x600048C60D5C2C51)end,
+	["SPAWNPOINTS_START_SEARCH"]=--[[void]] function(--[[float]] p0,--[[float]] p1,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[int]] interiorFlags,--[[float]] scale,--[[int]] duration)native_invoker.begin_call()native_invoker.push_arg_float(p0)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_int(interiorFlags)native_invoker.push_arg_float(scale)native_invoker.push_arg_int(duration)native_invoker.end_call_2(0x2DF9038C90AD5264)end,
+	["SPAWNPOINTS_START_SEARCH_IN_ANGLED_AREA"]=--[[void]] function(--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2,--[[float]] width,--[[int]] interiorFlags,--[[float]] scale,--[[int]] duration)native_invoker.begin_call()native_invoker.push_arg_float(x1)native_invoker.push_arg_float(y1)native_invoker.push_arg_float(z1)native_invoker.push_arg_float(x2)native_invoker.push_arg_float(y2)native_invoker.push_arg_float(z2)native_invoker.push_arg_float(width)native_invoker.push_arg_int(interiorFlags)native_invoker.push_arg_float(scale)native_invoker.push_arg_int(duration)native_invoker.end_call_2(0xB2AFF10216DEFA2F)end,
+	["SPAWNPOINTS_CANCEL_SEARCH"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFEE4A5459472A9F8)end,
+	["SPAWNPOINTS_IS_SEARCH_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x3C67506996001F5E)return native_invoker.get_return_value_bool()end,
+	["SPAWNPOINTS_IS_SEARCH_COMPLETE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA586FBEB32A53DBB)return native_invoker.get_return_value_bool()end,
+	["SPAWNPOINTS_IS_SEARCH_FAILED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF445DE8DA80A1792)return native_invoker.get_return_value_bool()end,
+	["SPAWNPOINTS_GET_NUM_SEARCH_RESULTS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA635C11B8C44AFC2)return native_invoker.get_return_value_int()end,
+	["SPAWNPOINTS_GET_SEARCH_RESULT"]=--[[void]] function(--[[int]] randomInt,--[[float* (pointer)]] x,--[[float* (pointer)]] y,--[[float* (pointer)]] z)native_invoker.begin_call()native_invoker.push_arg_int(randomInt)native_invoker.push_arg_pointer(x)native_invoker.push_arg_pointer(y)native_invoker.push_arg_pointer(z)native_invoker.end_call_2(0x280C7E3AC7F56E90)end,
+	["SPAWNPOINTS_GET_SEARCH_RESULT_FLAGS"]=--[[void]] function(--[[int]] p0,--[[int* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0xB782F8238512BAD5)end,
+	["SET_IK_TARGET"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] ikIndex,--[[Entity (int)]] entityLookAt,--[[int]] boneLookAt,--[[float]] offsetX,--[[float]] offsetY,--[[float]] offsetZ,--[[Any (int)]] p7,--[[int]] blendInDuration,--[[int]] blendOutDuration)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(ikIndex)native_invoker.push_arg_int(entityLookAt)native_invoker.push_arg_int(boneLookAt)native_invoker.push_arg_float(offsetX)native_invoker.push_arg_float(offsetY)native_invoker.push_arg_float(offsetZ)native_invoker.push_arg_int(p7)native_invoker.push_arg_int(blendInDuration)native_invoker.push_arg_int(blendOutDuration)native_invoker.end_call_2(0xC32779C16FCEECD9)end,
+	["FORCE_INSTANT_LEG_IK_SETUP"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xED3C76ADFA6D07C4)end,
+	["REQUEST_ACTION_MODE_ASSET"]=--[[void]] function(--[[string]] asset)native_invoker.begin_call()native_invoker.push_arg_string(asset)native_invoker.end_call_2(0x290E2780BB7AA598)end,
+	["HAS_ACTION_MODE_ASSET_LOADED"]=--[[BOOL (bool)]] function(--[[string]] asset)native_invoker.begin_call()native_invoker.push_arg_string(asset)native_invoker.end_call_2(0xE4B5F4BF2CB24E65)return native_invoker.get_return_value_bool()end,
+	["REMOVE_ACTION_MODE_ASSET"]=--[[void]] function(--[[string]] asset)native_invoker.begin_call()native_invoker.push_arg_string(asset)native_invoker.end_call_2(0x13E940F88470FA51)end,
+	["REQUEST_STEALTH_MODE_ASSET"]=--[[void]] function(--[[string]] asset)native_invoker.begin_call()native_invoker.push_arg_string(asset)native_invoker.end_call_2(0x2A0A62FCDEE16D4F)end,
+	["HAS_STEALTH_MODE_ASSET_LOADED"]=--[[BOOL (bool)]] function(--[[string]] asset)native_invoker.begin_call()native_invoker.push_arg_string(asset)native_invoker.end_call_2(0xE977FC5B08AF3441)return native_invoker.get_return_value_bool()end,
+	["REMOVE_STEALTH_MODE_ASSET"]=--[[void]] function(--[[string]] asset)native_invoker.begin_call()native_invoker.push_arg_string(asset)native_invoker.end_call_2(0x9219857D21F0E842)end,
+	["SET_PED_LOD_MULTIPLIER"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0xDC2C5C242AAC342B)end,
+	["SET_PED_CAN_LOSE_PROPS_ON_DAMAGE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle,--[[int]] p2)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0xE861D0B05C7662B8)end,
+	["SET_FORCE_FOOTSTEP_UPDATE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x129466ED55140F8D)end,
+	["SET_FORCE_STEP_TYPE"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] p1,--[[int]] type,--[[int]] p3)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p1)native_invoker.push_arg_int(type)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xCB968B53FC7F916D)end,
+	["IS_ANY_HOSTILE_PED_NEAR_POINT"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.end_call_2(0x68772DB2B2526F9F)return native_invoker.get_return_value_bool()end,
+	-- Toggles config flag CPED_CONFIG_FLAG_CanPlayInCarIdles.
+	["SET_PED_CAN_PLAY_IN_CAR_IDLES"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x820E9892A77E97CD)end,
+	["IS_TARGET_PED_IN_PERCEPTION_AREA"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Ped (int)]] targetPed,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[float]] p5)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(targetPed)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.end_call_2(0x06087579E7AA85A9)return native_invoker.get_return_value_bool()end,
+	-- Min and max are usually 100.0 and 200.0
+	["SET_POP_CONTROL_SPHERE_THIS_FRAME"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] min,--[[float]] max)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(min)native_invoker.push_arg_float(max)native_invoker.end_call_2(0xD8C3BE3EE94CAF2D)end,
+	["FORCE_ZERO_MASS_IN_COLLISIONS"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xD33DAA36272177C4)end,
+	["SET_DISABLE_HIGH_FALL_DEATH"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x711794453CFD692B)end,
+	["SET_PED_PHONE_PALETTE_IDX"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x83A169EABCDB10A2)end,
+	["SET_PED_STEER_BIAS"]=--[[void]] function(--[[Ped (int)]] ped,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_float(value)native_invoker.end_call_2(0x288DF530C92DAD6F)end,
+	["IS_PED_SWITCHING_WEAPON"]=--[[BOOL (bool)]] function(--[[Ped (int)]] Ped)native_invoker.begin_call()native_invoker.push_arg_int(Ped)native_invoker.end_call_2(0x3795688A307E1EB6)return native_invoker.get_return_value_bool()end,
+	["SET_PED_TREATED_AS_FRIENDLY"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x0F62619393661D6E)end,
+	["SET_DISABLE_PED_MAP_COLLISION"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xDFE68C4B787E1BFB)end,
+	["ENABLE_MP_LIGHT"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xEE2476B9EE4A094F)end,
+	["GET_MP_LIGHT_ENABLED"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x88274C11CF0D866D)return native_invoker.get_return_value_bool()end,
+	["CLEAR_COVER_POINT_FOR_PED"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x637822DC2AFEEBF8)end,
+	["SET_ALLOW_STUNT_JUMP_CAMERA"]=--[[void]] function(--[[Ped (int)]] ped,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xFAB944D4D481ACCB)end,
+}
+PHYSICS={
+	-- Creates a rope at the specific position, that extends in the specified direction when not attached to any entities.
+	-- __
+	-- 
+	-- Add_Rope(pos.x,pos.y,pos.z,0.0,0.0,0.0,20.0,4,20.0,1.0,0.0,false,false,false,5.0,false,NULL)
+	-- 
+	-- When attached, Position<vector> does not matter
+	-- When attached, Angle<vector> does not matter
+	-- 
+	-- Rope Type:
+	-- 4 and bellow is a thick rope
+	-- 5 and up are small metal wires
+	-- 0 crashes the game
+	-- 
+	-- Max_length - Rope is forced to this length, generally best to keep this the same as your rope length.
+	-- 
+	-- windingSpeed - Speed the Rope is being winded, using native START_ROPE_WINDING. Set positive for winding and negative for unwinding.
+	-- 
+	-- Rigid - If max length is zero, and this is set to false the rope will become rigid (it will force a specific distance, what ever length is, between the objects).
+	-- 
+	-- breakable - Whether or not shooting the rope will break it.
+	-- 
+	-- unkPtr - unknown ptr, always 0 in orig scripts
+	-- __
+	-- 
+	-- Lengths can be calculated like so:
+	-- 
+	-- float distance = abs(x1 - x2) + abs(y1 - y2) + abs(z1 - z2); // Rope length
+	-- 
+	-- 
+	-- NOTES:
+	-- 
+	-- Rope does NOT interact with anything you attach it to, in some cases it make interact with the world AFTER it breaks (seems to occur if you set the type to -1).
+	-- 
+	-- Rope will sometimes contract and fall to the ground like you'd expect it to, but since it doesn't interact with the world the effect is just jaring.
+	["ADD_ROPE"]=--[[int]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] rotX,--[[float]] rotY,--[[float]] rotZ,--[[float]] length,--[[int]] ropeType,--[[float]] maxLength,--[[float]] minLength,--[[float]] windingSpeed,--[[BOOL (bool)]] p11,--[[BOOL (bool)]] p12,--[[BOOL (bool)]] rigid,--[[float]] p14,--[[BOOL (bool)]] breakWhenShot,--[[Any* (pointer)]] unkPtr)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(rotX)native_invoker.push_arg_float(rotY)native_invoker.push_arg_float(rotZ)native_invoker.push_arg_float(length)native_invoker.push_arg_int(ropeType)native_invoker.push_arg_float(maxLength)native_invoker.push_arg_float(minLength)native_invoker.push_arg_float(windingSpeed)native_invoker.push_arg_bool(p11)native_invoker.push_arg_bool(p12)native_invoker.push_arg_bool(rigid)native_invoker.push_arg_float(p14)native_invoker.push_arg_bool(breakWhenShot)native_invoker.push_arg_pointer(unkPtr)native_invoker.end_call_2(0xE832D760399EB220)return native_invoker.get_return_value_int()end,
+	["DELETE_ROPE"]=--[[void]] function(--[[int* (pointer)]] ropeId)native_invoker.begin_call()native_invoker.push_arg_pointer(ropeId)native_invoker.end_call_2(0x52B4829281364649)end,
+	["DELETE_CHILD_ROPE"]=--[[void]] function(--[[int]] ropeId)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.end_call_2(0xAA5D6B1888E4DB20)end,
+	["DOES_ROPE_EXIST"]=--[[BOOL (bool)]] function(--[[int* (pointer)]] ropeId)native_invoker.begin_call()native_invoker.push_arg_pointer(ropeId)native_invoker.end_call_2(0xFD5448BE3111ED96)return native_invoker.get_return_value_bool()end,
+	["ROPE_DRAW_ENABLED"]=--[[void]] function(--[[int* (pointer)]] ropeId,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(ropeId)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xA1AE736541B0FCA3)end,
+	["ROPE_DRAW_SHADOW_ENABLED"]=--[[void]] function(--[[int* (pointer)]] ropeId,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_pointer(ropeId)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xF159A63806BB5BA8)end,
+	-- Rope presets can be found in the gamefiles. One example is "ropeFamily3", it is NOT a hash but rather a string.
+	["LOAD_ROPE_DATA"]=--[[void]] function(--[[int]] ropeId,--[[string]] rope_preset)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_string(rope_preset)native_invoker.end_call_2(0xCBB203C04D1ABD27)end,
+	["PIN_ROPE_VERTEX"]=--[[void]] function(--[[int]] ropeId,--[[int]] vertex,--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_int(vertex)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.end_call_2(0x2B320CF14146B69A)end,
+	["UNPIN_ROPE_VERTEX"]=--[[void]] function(--[[int]] ropeId,--[[int]] vertex)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_int(vertex)native_invoker.end_call_2(0x4B5AE2EEE4A8F180)end,
+	["GET_ROPE_VERTEX_COUNT"]=--[[int]] function(--[[int]] ropeId)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.end_call_2(0x3655F544CD30F0B5)return native_invoker.get_return_value_int()end,
+	-- Attaches entity 1 to entity 2.
+	["ATTACH_ENTITIES_TO_ROPE"]=--[[void]] function(--[[int]] ropeId,--[[Entity (int)]] ent1,--[[Entity (int)]] ent2,--[[float]] ent1_x,--[[float]] ent1_y,--[[float]] ent1_z,--[[float]] ent2_x,--[[float]] ent2_y,--[[float]] ent2_z,--[[float]] length,--[[BOOL (bool)]] p10,--[[BOOL (bool)]] p11,--[[Any* (pointer)]] p12,--[[Any* (pointer)]] p13)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_int(ent1)native_invoker.push_arg_int(ent2)native_invoker.push_arg_float(ent1_x)native_invoker.push_arg_float(ent1_y)native_invoker.push_arg_float(ent1_z)native_invoker.push_arg_float(ent2_x)native_invoker.push_arg_float(ent2_y)native_invoker.push_arg_float(ent2_z)native_invoker.push_arg_float(length)native_invoker.push_arg_bool(p10)native_invoker.push_arg_bool(p11)native_invoker.push_arg_pointer(p12)native_invoker.push_arg_pointer(p13)native_invoker.end_call_2(0x3D95EC8B6D940AC3)end,
+	-- The position supplied can be anywhere, and the entity should anchor relative to that point from it's origin.
+	["ATTACH_ROPE_TO_ENTITY"]=--[[void]] function(--[[int]] ropeId,--[[Entity (int)]] entity,--[[float]] x,--[[float]] y,--[[float]] z,--[[BOOL (bool)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_int(entity)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_bool(p5)native_invoker.end_call_2(0x4B490A6832559A65)end,
+	["DETACH_ROPE_FROM_ENTITY"]=--[[void]] function(--[[int]] ropeId,--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_int(entity)native_invoker.end_call_2(0xBCF3026912A8647D)end,
+	["ROPE_SET_UPDATE_PINVERTS"]=--[[void]] function(--[[int]] ropeId)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.end_call_2(0xC8D667EE52114ABA)end,
+	["ROPE_SET_UPDATE_ORDER"]=--[[void]] function(--[[int]] ropeId,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xDC57A637A20006ED)end,
+	["ROPE_SET_SMOOTH_REELIN"]=--[[void]] function(--[[int]] ropeId,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x36CCB9BE67B970FD)end,
+	["IS_ROPE_ATTACHED_AT_BOTH_ENDS"]=--[[BOOL (bool)]] function(--[[int* (pointer)]] ropeId)native_invoker.begin_call()native_invoker.push_arg_pointer(ropeId)native_invoker.end_call_2(0x84DE3B5FB3E666F0)return native_invoker.get_return_value_bool()end,
+	["GET_ROPE_LAST_VERTEX_COORD"]=--[[Vector3 (vector3)]] function(--[[int]] ropeId)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.end_call_2(0x21BB0FBD3E217C2D)return native_invoker.get_return_value_vector3()end,
+	["GET_ROPE_VERTEX_COORD"]=--[[Vector3 (vector3)]] function(--[[int]] ropeId,--[[int]] vertex)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_int(vertex)native_invoker.end_call_2(0xEA61CA8E80F09E4D)return native_invoker.get_return_value_vector3()end,
+	["START_ROPE_WINDING"]=--[[void]] function(--[[int]] ropeId)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.end_call_2(0x1461C72C889E343E)end,
+	["STOP_ROPE_WINDING"]=--[[void]] function(--[[int]] ropeId)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.end_call_2(0xCB2D4AB84A19AA7C)end,
+	["START_ROPE_UNWINDING_FRONT"]=--[[void]] function(--[[int]] ropeId)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.end_call_2(0x538D1179EC1AA9A9)end,
+	["STOP_ROPE_UNWINDING_FRONT"]=--[[void]] function(--[[int]] ropeId)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.end_call_2(0xFFF3A50779EFBBB3)end,
+	["ROPE_CONVERT_TO_SIMPLE"]=--[[void]] function(--[[int]] ropeId)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.end_call_2(0x5389D48EFA2F079A)end,
+	-- Loads rope textures for all ropes in the current scene.
+	["ROPE_LOAD_TEXTURES"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9B9039DBF2D258C1)end,
+	["ROPE_ARE_TEXTURES_LOADED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF2D0E6A75CC05597)return native_invoker.get_return_value_bool()end,
+	-- Unloads rope textures for all ropes in the current scene.
+	["ROPE_UNLOAD_TEXTURES"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x6CE36C35C1AC8163)end,
+	["DOES_SCRIPT_OWN_ROPE"]=--[[BOOL (bool)]] function(--[[int]] ropeId)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.end_call_2(0x271C9D3ACA5D6409)return native_invoker.get_return_value_bool()end,
+	["ROPE_ATTACH_VIRTUAL_BOUND_GEOM"]=--[[void]] function(--[[int]] ropeId,--[[int]] p1,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[float]] p5,--[[float]] p6,--[[float]] p7,--[[float]] p8,--[[float]] p9,--[[float]] p10,--[[float]] p11,--[[float]] p12,--[[float]] p13)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_int(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.push_arg_float(p6)native_invoker.push_arg_float(p7)native_invoker.push_arg_float(p8)native_invoker.push_arg_float(p9)native_invoker.push_arg_float(p10)native_invoker.push_arg_float(p11)native_invoker.push_arg_float(p12)native_invoker.push_arg_float(p13)native_invoker.end_call_2(0xBC0CE682D4D05650)end,
+	["ROPE_CHANGE_SCRIPT_OWNER"]=--[[void]] function(--[[Any (int)]] p0,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xB1B6216CA2E7B55E)end,
+	["ROPE_SET_REFFRAMEVELOCITY_COLLIDERORDER"]=--[[void]] function(--[[int]] ropeId,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xB743F735C03D7810)end,
+	["ROPE_GET_DISTANCE_BETWEEN_ENDS"]=--[[float]] function(--[[int]] ropeId)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.end_call_2(0x73040398DFF9A4A6)return native_invoker.get_return_value_float()end,
+	-- Forces a rope to a certain length.
+	["ROPE_FORCE_LENGTH"]=--[[void]] function(--[[int]] ropeId,--[[float]] length)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_float(length)native_invoker.end_call_2(0xD009F759A723DB1B)end,
+	-- Reset a rope to a certain length.
+	["ROPE_RESET_LENGTH"]=--[[void]] function(--[[int]] ropeId,--[[float]] length)native_invoker.begin_call()native_invoker.push_arg_int(ropeId)native_invoker.push_arg_float(length)native_invoker.end_call_2(0xC16DE94D9BEA14A0)end,
+	["APPLY_IMPULSE_TO_CLOTH"]=--[[void]] function(--[[float]] posX,--[[float]] posY,--[[float]] posZ,--[[float]] vecX,--[[float]] vecY,--[[float]] vecZ,--[[float]] impulse)native_invoker.begin_call()native_invoker.push_arg_float(posX)native_invoker.push_arg_float(posY)native_invoker.push_arg_float(posZ)native_invoker.push_arg_float(vecX)native_invoker.push_arg_float(vecY)native_invoker.push_arg_float(vecZ)native_invoker.push_arg_float(impulse)native_invoker.end_call_2(0xE37F721824571784)end,
+	["SET_DAMPING"]=--[[void]] function(--[[Entity (int)]] entity,--[[int]] vertex,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_int(vertex)native_invoker.push_arg_float(value)native_invoker.end_call_2(0xEEA3B200A6FEB65B)end,
+	["ACTIVATE_PHYSICS"]=--[[void]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x710311ADF0E20730)end,
+	["SET_CGOFFSET"]=--[[void]] function(--[[Entity (int)]] entity,--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.end_call_2(0xD8FA3908D7B86904)end,
+	["GET_CGOFFSET"]=--[[Vector3 (vector3)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x8214A4B5A7A33612)return native_invoker.get_return_value_vector3()end,
+	["SET_CG_AT_BOUNDCENTER"]=--[[void]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0xBE520D9761FF811F)end,
+	["BREAK_ENTITY_GLASS"]=--[[void]] function(--[[Entity (int)]] entity,--[[float]] p1,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[float]] p5,--[[float]] p6,--[[float]] p7,--[[float]] p8,--[[Any (int)]] p9,--[[BOOL (bool)]] p10)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.push_arg_float(p6)native_invoker.push_arg_float(p7)native_invoker.push_arg_float(p8)native_invoker.push_arg_int(p9)native_invoker.push_arg_bool(p10)native_invoker.end_call_2(0x2E648D16F6E308F3)end,
+	["GET_IS_ENTITY_A_FRAG"]=--[[BOOL (bool)]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0x0C112765300C7E1E)return native_invoker.get_return_value_bool()end,
+	["SET_DISABLE_BREAKING"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x5CEC1A84620E7D5B)end,
+	["RESET_DISABLE_BREAKING"]=--[[void]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0xCC6E963682533882)end,
+	["SET_DISABLE_FRAG_DAMAGE"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x01BA3AED21C16CFB)end,
+	-- PED_RAGDOLL_BUMP Proof?
+	["SET_USE_KINEMATIC_PHYSICS"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x15F944730C832252)end,
+	["SET_IN_STUNT_MODE"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x9EBD751E5787BAF2)end,
+	-- Related to the lower-end of a vehicles fTractionCurve, e.g., from standing starts and acceleration from low/zero speeds.
+	["SET_IN_ARENA_MODE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xAA6A6098851C396F)end,
+}
+PLAYER={
+	-- Gets the ped for a specified player index.
+	["GET_PLAYER_PED"]=--[[Ped (int)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x43A66C31C68491C0)return native_invoker.get_return_value_int()end,
+	-- Does the same like PLAYER::GET_PLAYER_PED
+	["GET_PLAYER_PED_SCRIPT_INDEX"]=--[[Ped (int)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x50FAC3A3E030A6E1)return native_invoker.get_return_value_int()end,
+	-- Set the model for a specific Player. Be aware that this will destroy the current Ped for the Player and create a new one, any reference to the old ped should be reset
+	-- Make sure to request the model first and wait until it has loaded.
+	["SET_PLAYER_MODEL"]=--[[void]] function(--[[Player (int)]] player,--[[Hash (int)]] model)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(model)native_invoker.end_call_2(0x00A1CADD00108836)end,
+	["CHANGE_PLAYER_PED"]=--[[void]] function(--[[Player (int)]] player,--[[Ped (int)]] ped,--[[BOOL (bool)]] p2,--[[BOOL (bool)]] resetDamage)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(ped)native_invoker.push_arg_bool(p2)native_invoker.push_arg_bool(resetDamage)native_invoker.end_call_2(0x048189FAC643DEEE)end,
+	["GET_PLAYER_RGB_COLOUR"]=--[[void]] function(--[[Player (int)]] player,--[[int* (pointer)]] r,--[[int* (pointer)]] g,--[[int* (pointer)]] b)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_pointer(r)native_invoker.push_arg_pointer(g)native_invoker.push_arg_pointer(b)native_invoker.end_call_2(0xE902EF951DCE178F)end,
+	-- Gets the number of players in the current session.
+	-- If not multiplayer, always returns 1.
+	["GET_NUMBER_OF_PLAYERS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x407C7F91DDB46C16)return native_invoker.get_return_value_int()end,
+	-- Gets the player's team.
+	-- Does nothing in singleplayer.
+	["GET_PLAYER_TEAM"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x37039302F4E0A008)return native_invoker.get_return_value_int()end,
+	-- Set player team on deathmatch and last team standing..
+	["SET_PLAYER_TEAM"]=--[[void]] function(--[[Player (int)]] player,--[[int]] team)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(team)native_invoker.end_call_2(0x0299FA38396A4940)end,
+	["GET_NUMBER_OF_PLAYERS_IN_TEAM"]=--[[int]] function(--[[int]] team)native_invoker.begin_call()native_invoker.push_arg_int(team)native_invoker.end_call_2(0x1FC200409F10E6F1)return native_invoker.get_return_value_int()end,
+	["GET_PLAYER_NAME"]=--[[string]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x6D0DE6A7B5DA71F8)return native_invoker.get_return_value_string()end,
+	-- Remnant from GTA IV. Does nothing in GTA V.
+	["GET_WANTED_LEVEL_RADIUS"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x085DEB493BE80812)return native_invoker.get_return_value_float()end,
+	["GET_PLAYER_WANTED_CENTRE_POSITION"]=--[[Vector3 (vector3)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x0C92BA89F1AF26F8)return native_invoker.get_return_value_vector3()end,
+	-- # Predominant call signatures
+	-- PLAYER::SET_PLAYER_WANTED_CENTRE_POSITION(PLAYER::PLAYER_ID(), ENTITY::GET_ENTITY_COORDS(PLAYER::PLAYER_PED_ID(), 1));
+	-- 
+	-- # Parameter value ranges
+	-- P0: PLAYER::PLAYER_ID()
+	-- P1: ENTITY::GET_ENTITY_COORDS(PLAYER::PLAYER_PED_ID(), 1)
+	-- P2: Not set by any call
+	["SET_PLAYER_WANTED_CENTRE_POSITION"]=--[[void]] function(--[[Player (int)]] player,--[[Vector3* (pointer)]] position,--[[BOOL (bool)]] p2,--[[BOOL (bool)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_pointer(position)native_invoker.push_arg_bool(p2)native_invoker.push_arg_bool(p3)native_invoker.end_call_2(0x520E541A97A13354)end,
+	-- Drft
+	["GET_WANTED_LEVEL_THRESHOLD"]=--[[int]] function(--[[int]] wantedLevel)native_invoker.begin_call()native_invoker.push_arg_int(wantedLevel)native_invoker.end_call_2(0xFDD179EAF45B556C)return native_invoker.get_return_value_int()end,
+	-- Call SET_PLAYER_WANTED_LEVEL_NOW for immediate effect
+	-- 
+	-- wantedLevel is an integer value representing 0 to 5 stars even though the game supports the 6th wanted level but no police will appear since no definitions are present for it in the game files
+	-- 
+	-- disableNoMission-  Disables When Off Mission- appears to always be false
+	-- 
+	["SET_PLAYER_WANTED_LEVEL"]=--[[void]] function(--[[Player (int)]] player,--[[int]] wantedLevel,--[[BOOL (bool)]] disableNoMission)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(wantedLevel)native_invoker.push_arg_bool(disableNoMission)native_invoker.end_call_2(0x39FF19C64EF7DA5B)end,
+	-- p2 is always false in R* scripts
+	["SET_PLAYER_WANTED_LEVEL_NO_DROP"]=--[[void]] function(--[[Player (int)]] player,--[[int]] wantedLevel,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(wantedLevel)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x340E61DE7F471565)end,
+	-- Forces any pending wanted level to be applied to the specified player immediately.
+	-- 
+	-- Call SET_PLAYER_WANTED_LEVEL with the desired wanted level, followed by SET_PLAYER_WANTED_LEVEL_NOW.
+	-- 
+	-- Second parameter is unknown (always false).
+	["SET_PLAYER_WANTED_LEVEL_NOW"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xE0A7D1E497FFCD6F)end,
+	["ARE_PLAYER_FLASHING_STARS_ABOUT_TO_DROP"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xAFAF86043E5874E9)return native_invoker.get_return_value_bool()end,
+	["ARE_PLAYER_STARS_GREYED_OUT"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x0A6EB355EE14A2DB)return native_invoker.get_return_value_bool()end,
+	["IS_WANTED_AND_HAS_BEEN_SEEN_BY_COPS"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x7E07C78925D5FD96)return native_invoker.get_return_value_bool()end,
+	["SET_DISPATCH_COPS_FOR_PLAYER"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xDB172424876553F4)end,
+	["IS_PLAYER_WANTED_LEVEL_GREATER"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[int]] wantedLevel)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(wantedLevel)native_invoker.end_call_2(0x238DB2A2C23EE9EF)return native_invoker.get_return_value_bool()end,
+	-- This executes at the same as speed as PLAYER::SET_PLAYER_WANTED_LEVEL(player, 0, false);
+	-- 
+	-- PLAYER::GET_PLAYER_WANTED_LEVEL(player); executes in less than half the time. Which means that it's worth first checking if the wanted level needs to be cleared before clearing. However, this is mostly about good code practice and can important in other situations. The difference in time in this example is negligible. 
+	["CLEAR_PLAYER_WANTED_LEVEL"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xB302540597885499)end,
+	["IS_PLAYER_DEAD"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x424D4687FA1E5652)return native_invoker.get_return_value_bool()end,
+	["IS_PLAYER_PRESSING_HORN"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xFA1E2BF8B10598F9)return native_invoker.get_return_value_bool()end,
+	-- Flags:
+	-- SPC_AMBIENT_SCRIPT = (1 << 1),
+	-- SPC_CLEAR_TASKS = (1 << 2),
+	-- SPC_REMOVE_FIRES = (1 << 3),
+	-- SPC_REMOVE_EXPLOSIONS = (1 << 4),
+	-- SPC_REMOVE_PROJECTILES = (1 << 5),
+	-- SPC_DEACTIVATE_GADGETS = (1 << 6),
+	-- SPC_REENABLE_CONTROL_ON_DEATH = (1 << 7),
+	-- SPC_LEAVE_CAMERA_CONTROL_ON = (1 << 8),
+	-- SPC_ALLOW_PLAYER_DAMAGE = (1 << 9),
+	-- SPC_DONT_STOP_OTHER_CARS_AROUND_PLAYER = (1 << 10),
+	-- SPC_PREVENT_EVERYBODY_BACKOFF = (1 << 11),
+	-- SPC_ALLOW_PAD_SHAKE = (1 << 12)
+	-- 
+	-- See: https://alloc8or.re/gta5/doc/enums/eSetPlayerControlFlag.txt
+	["SET_PLAYER_CONTROL"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] bHasControl,--[[int]] flags)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(bHasControl)native_invoker.push_arg_int(flags)native_invoker.end_call_2(0x8D32347D6D4C40A2)end,
+	["GET_PLAYER_WANTED_LEVEL"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xE28E54788CE8F12D)return native_invoker.get_return_value_int()end,
+	["SET_MAX_WANTED_LEVEL"]=--[[void]] function(--[[int]] maxWantedLevel)native_invoker.begin_call()native_invoker.push_arg_int(maxWantedLevel)native_invoker.end_call_2(0xAA5F02DB48D704B9)end,
+	-- If toggle is set to false:
+	--  The police won't be shown on the (mini)map
+	-- 
+	-- If toggle is set to true:
+	--  The police will be shown on the (mini)map
+	["SET_POLICE_RADAR_BLIPS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x43286D561B72B8BF)end,
+	-- The player will be ignored by the police if toggle is set to true
+	["SET_POLICE_IGNORE_PLAYER"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x32C62AA929C2DA6A)end,
+	-- Checks whether the specified player has a Ped, the Ped is not dead, is not injured and is not arrested.
+	["IS_PLAYER_PLAYING"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x5E9564D8246B909A)return native_invoker.get_return_value_bool()end,
+	["SET_EVERYONE_IGNORE_PLAYER"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x8EEDA153AD141BA4)end,
+	["SET_ALL_RANDOM_PEDS_FLEE"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x056E0FE8534C2949)end,
+	["SET_ALL_RANDOM_PEDS_FLEE_THIS_FRAME"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x471D2FF42A94B4F2)end,
+	["SET_ALL_NEUTRAL_RANDOM_PEDS_FLEE"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xDE45D1A1EF45EE61)end,
+	-- - This is called after SET_ALL_RANDOM_PEDS_FLEE_THIS_FRAME
+	-- 
+	["SET_ALL_NEUTRAL_RANDOM_PEDS_FLEE_THIS_FRAME"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xC3376F42B1FACCC6)end,
+	["SET_LAW_PEDS_CAN_ATTACK_NON_WANTED_PLAYER_THIS_FRAME"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xFAC75988A7D078D3)end,
+	["SET_IGNORE_LOW_PRIORITY_SHOCKING_EVENTS"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x596976B02B6B5700)end,
+	["SET_WANTED_LEVEL_MULTIPLIER"]=--[[void]] function(--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0x020E5F00CDA207BA)end,
+	-- Max value is 1.0
+	["SET_WANTED_LEVEL_DIFFICULTY"]=--[[void]] function(--[[Player (int)]] player,--[[float]] difficulty)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(difficulty)native_invoker.end_call_2(0x9B0BB33B04405E7A)end,
+	["RESET_WANTED_LEVEL_DIFFICULTY"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xB9D0DD990DC141DD)end,
+	["GET_WANTED_LEVEL_TIME_TO_ESCAPE"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA72200F51875FEA4)return native_invoker.get_return_value_int()end,
+	["SET_WANTED_LEVEL_HIDDEN_ESCAPE_TIME"]=--[[void]] function(--[[Player (int)]] player,--[[int]] wantedLevel,--[[int]] lossTime)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(wantedLevel)native_invoker.push_arg_int(lossTime)native_invoker.end_call_2(0x49B856B1360C47C7)end,
+	["RESET_WANTED_LEVEL_HIDDEN_ESCAPE_TIME"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x823EC8E82BA45986)end,
+	["START_FIRING_AMNESTY"]=--[[void]] function(--[[int]] duration)native_invoker.begin_call()native_invoker.push_arg_int(duration)native_invoker.end_call_2(0xBF9BD71691857E48)end,
+	-- PLAYER::REPORT_CRIME(PLAYER::PLAYER_ID(), 37, PLAYER::GET_WANTED_LEVEL_THRESHOLD(1));
+	-- 
+	-- From am_armybase.ysc.c4:
+	-- 
+	-- PLAYER::REPORT_CRIME(PLAYER::PLAYER_ID(4), 36, PLAYER::GET_WANTED_LEVEL_THRESHOLD(4));
+	-- 
+	-- -----
+	-- 
+	-- This was taken from the GTAV.exe v1.334. The function is called sub_140592CE8. For a full decompilation of the function, see here: pastebin.com/09qSMsN7 
+	-- 
+	-- -----
+	-- crimeType:
+	-- 1: Firearms possession
+	-- 2: Person running a red light ("5-0-5")
+	-- 3: Reckless driver
+	-- 4: Speeding vehicle (a "5-10")
+	-- 5: Traffic violation (a "5-0-5")
+	-- 6: Motorcycle rider without a helmet
+	-- 7: Vehicle theft (a "5-0-3")
+	-- 8: Grand Theft Auto
+	-- 9: ???
+	-- 10: ???
+	-- 11: Assault on a civilian (a "2-40")
+	-- 12: Assault on an officer
+	-- 13: Assault with a deadly weapon (a "2-45")
+	-- 14: Officer shot (a "2-45")
+	-- 15: Pedestrian struck by a vehicle
+	-- 16: Officer struck by a vehicle
+	-- 17: Helicopter down (an "AC"?)
+	-- 18: Civilian on fire (a "2-40")
+	-- 19: Officer set on fire (a "10-99")
+	-- 20: Car on fire
+	-- 21: Air unit down (an "AC"?)
+	-- 22: An explosion (a "9-96")
+	-- 23: A stabbing (a "2-45") (also something else I couldn't understand)
+	-- 24: Officer stabbed (also something else I couldn't understand)
+	-- 25: Attack on a vehicle ("MDV"?)
+	-- 26: Damage to property
+	-- 27: Suspect threatening officer with a firearm
+	-- 28: Shots fired
+	-- 29: ???
+	-- 30: ???
+	-- 31: ???
+	-- 32: ???
+	-- 33: ???
+	-- 34: A "2-45"
+	-- 35: ???
+	-- 36: A "9-25"
+	-- 37: ???
+	-- 38: ???
+	-- 39: ???
+	-- 40: ???
+	-- 41: ???
+	-- 42: ???
+	-- 43: Possible disturbance
+	-- 44: Civilian in need of assistance
+	-- 45: ???
+	-- 46: ???
+	["REPORT_CRIME"]=--[[void]] function(--[[Player (int)]] player,--[[int]] crimeType,--[[int]] wantedLvlThresh)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(crimeType)native_invoker.push_arg_int(wantedLvlThresh)native_invoker.end_call_2(0xE9B09589827545E7)end,
+	-- crimeType: see REPORT_CRIME
+	["SUPPRESS_CRIME_THIS_FRAME"]=--[[void]] function(--[[Player (int)]] player,--[[int]] crimeType)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(crimeType)native_invoker.end_call_2(0x9A987297ED8BD838)end,
+	-- This native is used in both singleplayer and multiplayer scripts.
+	-- 
+	-- Always used like this in scripts
+	-- PLAYER::_BC9490CA15AEA8FB(PLAYER::PLAYER_ID());
+	["UPDATE_WANTED_POSITION_THIS_FRAME"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xBC9490CA15AEA8FB)end,
+	-- This has been found in use in the decompiled files.
+	["SUPPRESS_LOSING_WANTED_LEVEL_IF_HIDDEN_THIS_FRAME"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x4669B3ED80F24B4E)end,
+	["ALLOW_EVASION_HUD_IF_DISABLING_HIDDEN_EVASION_THIS_FRAME"]=--[[void]] function(--[[Player (int)]] player,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x2F41A3BAE005E5FA)end,
+	-- This has been found in use in the decompiled files.
+	["FORCE_START_HIDDEN_EVASION"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xAD73CE5A09E42D12)end,
+	["SUPPRESS_WITNESSES_CALLING_POLICE_THIS_FRAME"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x36F1B38855F2A8DF)end,
+	["REPORT_POLICE_SPOTTED_PLAYER"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xDC64D2C53493ED12)end,
+	-- PLAYER::0xBF6993C7(rPtr((&l_122) + 71)); // Found in decompilation
+	-- 
+	-- ***
+	-- 
+	-- In "am_hold_up.ysc" used once:
+	-- 
+	-- l_8d._f47 = MISC::GET_RANDOM_FLOAT_IN_RANGE(18.0, 28.0);
+	-- PLAYER::_B45EFF719D8427A6((l_8d._f47));
+	["SET_LAW_RESPONSE_DELAY_OVERRIDE"]=--[[void]] function(--[[float]] p0)native_invoker.begin_call()native_invoker.push_arg_float(p0)native_invoker.end_call_2(0xB45EFF719D8427A6)end,
+	-- 2 matches in 1 script - am_hold_up
+	-- 
+	-- Used in multiplayer scripts?
+	["RESET_LAW_RESPONSE_DELAY_OVERRIDE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x0032A6DBA562C518)end,
+	["CAN_PLAYER_START_MISSION"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xDE7465A27D403C06)return native_invoker.get_return_value_bool()end,
+	["IS_PLAYER_READY_FOR_CUTSCENE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x908CBECC2CAA3690)return native_invoker.get_return_value_bool()end,
+	["IS_PLAYER_TARGETTING_ENTITY"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x7912F7FC4F6264B6)return native_invoker.get_return_value_bool()end,
+	-- Assigns the handle of locked-on melee target to *entity that you pass it.
+	-- Returns false if no entity found.
+	["GET_PLAYER_TARGET_ENTITY"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[Entity* (pointer)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_pointer(entity)native_invoker.end_call_2(0x13EDE1A5DBF797C9)return native_invoker.get_return_value_bool()end,
+	-- Gets a value indicating whether the specified player is currently aiming freely.
+	["IS_PLAYER_FREE_AIMING"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x2E397FD2ECD37C87)return native_invoker.get_return_value_bool()end,
+	-- Gets a value indicating whether the specified player is currently aiming freely at the specified entity.
+	["IS_PLAYER_FREE_AIMING_AT_ENTITY"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x3C06B5C839B38F7B)return native_invoker.get_return_value_bool()end,
+	-- Returns TRUE if it found an entity in your crosshair within range of your weapon. Assigns the handle of the target to the *entity that you pass it.
+	-- Returns false if no entity found.
+	["GET_ENTITY_PLAYER_IS_FREE_AIMING_AT"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[Entity* (pointer)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_pointer(entity)native_invoker.end_call_2(0x2975C866E6713290)return native_invoker.get_return_value_bool()end,
+	-- Affects the range of auto aim target.
+	["SET_PLAYER_LOCKON_RANGE_OVERRIDE"]=--[[void]] function(--[[Player (int)]] player,--[[float]] range)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(range)native_invoker.end_call_2(0x29961D490E5814FD)end,
+	-- Set whether this player should be able to do drive-bys.
+	-- 
+	-- "A drive-by is when a ped is aiming/shooting from vehicle. This includes middle finger taunts. By setting this value to false I confirm the player is unable to do all that. Tested on tick."
+	-- 
+	["SET_PLAYER_CAN_DO_DRIVE_BY"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x6E8834B52EC20C77)end,
+	-- Sets whether this player can be hassled by gangs.
+	["SET_PLAYER_CAN_BE_HASSLED_BY_GANGS"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xD5E460AD7020A246)end,
+	-- Sets whether this player can take cover.
+	["SET_PLAYER_CAN_USE_COVER"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xD465A8599DFF6814)end,
+	-- Gets the maximum wanted level the player can get.
+	-- Ranges from 0 to 5.
+	["GET_MAX_WANTED_LEVEL"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x462E0DB9B137DC5F)return native_invoker.get_return_value_int()end,
+	["IS_PLAYER_TARGETTING_ANYTHING"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x78CFE51896B6B8A4)return native_invoker.get_return_value_bool()end,
+	["SET_PLAYER_SPRINT"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xA01B8075D8B92DF4)end,
+	["RESET_PLAYER_STAMINA"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xA6F312FCCE9C1DFE)end,
+	["RESTORE_PLAYER_STAMINA"]=--[[void]] function(--[[Player (int)]] player,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0xA352C1B864CAFD33)end,
+	["GET_PLAYER_SPRINT_STAMINA_REMAINING"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x3F9F16F8E65A7ED7)return native_invoker.get_return_value_float()end,
+	["GET_PLAYER_SPRINT_TIME_REMAINING"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x1885BC9B108B4C99)return native_invoker.get_return_value_float()end,
+	["GET_PLAYER_UNDERWATER_TIME_REMAINING"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xA1FCF8E6AF40B731)return native_invoker.get_return_value_float()end,
+	["SET_PLAYER_UNDERWATER_BREATH_PERCENT_REMAINING"]=--[[Any (int)]] function(--[[Player (int)]] player,--[[float]] time)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(time)native_invoker.end_call_2(0xA0D3E4F7AAFB7E78)return native_invoker.get_return_value_int()end,
+	-- Returns the group ID the player is member of.
+	["GET_PLAYER_GROUP"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x0D127585F77030AF)return native_invoker.get_return_value_int()end,
+	["GET_PLAYER_MAX_ARMOUR"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x92659B4CE1863CB3)return native_invoker.get_return_value_int()end,
+	-- Can the player control himself, used to disable controls for player for things like a cutscene.
+	-- 
+	-- ---
+	-- 
+	-- You can't disable controls with this, use SET_PLAYER_CONTROL(...) for this. 
+	["IS_PLAYER_CONTROL_ON"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x49C32D60007AFA47)return native_invoker.get_return_value_bool()end,
+	-- Returns true when the player is not able to control the cam i.e. when running a benchmark test, switching the player or viewing a cutscene.
+	-- 
+	-- Note: I am not 100% sure if the native actually checks if the cam control is disabled but it seems promising.
+	["GET_ARE_CAMERA_CONTROLS_DISABLED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x7C814D2FB49F40C0)return native_invoker.get_return_value_bool()end,
+	["IS_PLAYER_SCRIPT_CONTROL_ON"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x8A876A65283DD7D7)return native_invoker.get_return_value_bool()end,
+	-- Returns TRUE if the player ('s ped) is climbing at the moment.
+	["IS_PLAYER_CLIMBING"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x95E8F73DC65EFB9C)return native_invoker.get_return_value_bool()end,
+	-- Return true while player is being arrested / busted.
+	-- 
+	-- If atArresting is set to 1, this function will return 1 when player is being arrested (while player is putting his hand up, but still have control)
+	-- 
+	-- If atArresting is set to 0, this function will return 1 only when the busted screen is shown.
+	["IS_PLAYER_BEING_ARRESTED"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[BOOL (bool)]] atArresting)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(atArresting)native_invoker.end_call_2(0x388A47C51ABDAC8E)return native_invoker.get_return_value_bool()end,
+	["RESET_PLAYER_ARREST_STATE"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x2D03E13C460760D6)end,
+	-- Alternative: GET_VEHICLE_PED_IS_IN(PLAYER_PED_ID(), 1);
+	["GET_PLAYERS_LAST_VEHICLE"]=--[[Vehicle (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB6997A7EB3F5C8C0)return native_invoker.get_return_value_int()end,
+	-- Returns the same as PLAYER_ID and NETWORK_PLAYER_ID_TO_INT
+	["GET_PLAYER_INDEX"]=--[[Player (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA5EDC40EF369B48D)return native_invoker.get_return_value_int()end,
+	-- Simply returns whatever is passed to it (Regardless of whether the handle is valid or not).
+	["INT_TO_PLAYERINDEX"]=--[[Player (int)]] function(--[[int]] value)native_invoker.begin_call()native_invoker.push_arg_int(value)native_invoker.end_call_2(0x41BD2A6B006AF756)return native_invoker.get_return_value_int()end,
+	-- Simply returns whatever is passed to it (Regardless of whether the handle is valid or not).
+	-- --------------------------------------------------------
+	-- if (NETWORK::NETWORK_IS_PARTICIPANT_ACTIVE(PLAYER::INT_TO_PARTICIPANTINDEX(i)))
+	-- 
+	["INT_TO_PARTICIPANTINDEX"]=--[[int]] function(--[[int]] value)native_invoker.begin_call()native_invoker.push_arg_int(value)native_invoker.end_call_2(0x9EC6603812C24710)return native_invoker.get_return_value_int()end,
+	["GET_TIME_SINCE_PLAYER_HIT_VEHICLE"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x5D35ECF3A81A0EE0)return native_invoker.get_return_value_int()end,
+	["GET_TIME_SINCE_PLAYER_HIT_PED"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xE36A25322DC35F42)return native_invoker.get_return_value_int()end,
+	["GET_TIME_SINCE_PLAYER_DROVE_ON_PAVEMENT"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xD559D2BE9E37853B)return native_invoker.get_return_value_int()end,
+	["GET_TIME_SINCE_PLAYER_DROVE_AGAINST_TRAFFIC"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xDB89591E290D9182)return native_invoker.get_return_value_int()end,
+	["IS_PLAYER_FREE_FOR_AMBIENT_TASK"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xDCCFD3F106C36AB4)return native_invoker.get_return_value_bool()end,
+	-- This returns YOUR 'identity' as a Player type.
+	-- 
+	-- Always returns 0 in story mode.
+	["PLAYER_ID"]=--[[Player (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x4F8644AF03D0E0D6)return native_invoker.get_return_value_int()end,
+	-- Returns current player ped
+	["PLAYER_PED_ID"]=--[[Ped (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD80958FC74E988A6)return native_invoker.get_return_value_int()end,
+	-- Does exactly the same thing as PLAYER_ID()
+	["NETWORK_PLAYER_ID_TO_INT"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xEE68096F9F37341E)return native_invoker.get_return_value_int()end,
+	["HAS_FORCE_CLEANUP_OCCURRED"]=--[[BOOL (bool)]] function(--[[int]] cleanupFlags)native_invoker.begin_call()native_invoker.push_arg_int(cleanupFlags)native_invoker.end_call_2(0xC968670BFACE42D9)return native_invoker.get_return_value_bool()end,
+	-- used with 1,2,8,64,128 in the scripts
+	["FORCE_CLEANUP"]=--[[void]] function(--[[int]] cleanupFlags)native_invoker.begin_call()native_invoker.push_arg_int(cleanupFlags)native_invoker.end_call_2(0xBC8983F38F78ED51)end,
+	-- PLAYER::FORCE_CLEANUP_FOR_ALL_THREADS_WITH_THIS_NAME("pb_prostitute", 1); // Found in decompilation
+	["FORCE_CLEANUP_FOR_ALL_THREADS_WITH_THIS_NAME"]=--[[void]] function(--[[string]] name,--[[int]] cleanupFlags)native_invoker.begin_call()native_invoker.push_arg_string(name)native_invoker.push_arg_int(cleanupFlags)native_invoker.end_call_2(0x4C68DDDDF0097317)end,
+	["FORCE_CLEANUP_FOR_THREAD_WITH_THIS_ID"]=--[[void]] function(--[[int]] id,--[[int]] cleanupFlags)native_invoker.begin_call()native_invoker.push_arg_int(id)native_invoker.push_arg_int(cleanupFlags)native_invoker.end_call_2(0xF745B37630DF176B)end,
+	["GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9A41CF4674A12272)return native_invoker.get_return_value_int()end,
+	["SET_PLAYER_MAY_ONLY_ENTER_THIS_VEHICLE"]=--[[void]] function(--[[Player (int)]] player,--[[Vehicle (int)]] vehicle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(vehicle)native_invoker.end_call_2(0x8026FF78F208978A)end,
+	["SET_PLAYER_MAY_NOT_ENTER_ANY_VEHICLE"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x1DE37BBF9E9CC14A)end,
+	-- 1 - Welcome to Los Santos
+	-- 2 - A Friendship Resurrected
+	-- 3 - A Fair Day's Pay
+	-- 4 - The Moment of Truth
+	-- 5 - To Live or Die in Los Santos
+	-- 6 - Diamond Hard
+	-- 7 - Subversive
+	-- 8 - Blitzed
+	-- 9 - Small Town, Big Job
+	-- 10 - The Government Gimps
+	-- 11 - The Big One!
+	-- 12 - Solid Gold, Baby!
+	-- 13 - Career Criminal
+	-- 14 - San Andreas Sightseer
+	-- 15 - All's Fare in Love and War
+	-- 16 - TP Industries Arms Race
+	-- 17 - Multi-Disciplined
+	-- 18 - From Beyond the Stars
+	-- 19 - A Mystery, Solved
+	-- 20 - Waste Management
+	-- 21 - Red Mist
+	-- 22 - Show Off
+	-- 23 - Kifflom!
+	-- 24 - Three Man Army
+	-- 25 - Out of Your Depth
+	-- 26 - Altruist Acolyte
+	-- 27 - A Lot of Cheddar
+	-- 28 - Trading Pure Alpha
+	-- 29 - Pimp My Sidearm
+	-- 30 - Wanted: Alive Or Alive
+	-- 31 - Los Santos Customs
+	-- 32 - Close Shave
+	-- 33 - Off the Plane
+	-- 34 - Three-Bit Gangster
+	-- 35 - Making Moves
+	-- 36 - Above the Law
+	-- 37 - Numero Uno
+	-- 38 - The Midnight Club
+	-- 39 - Unnatural Selection
+	-- 40 - Backseat Driver
+	-- 41 - Run Like The Wind
+	-- 42 - Clean Sweep
+	-- 43 - Decorated
+	-- 44 - Stick Up Kid
+	-- 45 - Enjoy Your Stay
+	-- 46 - Crew Cut
+	-- 47 - Full Refund
+	-- 48 - Dialling Digits
+	-- 49 - American Dream
+	-- 50 - A New Perspective
+	-- 51 - Be Prepared
+	-- 52 - In the Name of Science
+	-- 53 - Dead Presidents
+	-- 54 - Parole Day
+	-- 55 - Shot Caller
+	-- 56 - Four Way
+	-- 57 - Live a Little
+	-- 58 - Can't Touch This
+	-- 59 - Mastermind
+	-- 60 - Vinewood Visionary
+	-- 61 - Majestic
+	-- 62 - Humans of Los Santos
+	-- 63 - First Time Director
+	-- 64 - Animal Lover
+	-- 65 - Ensemble Piece
+	-- 66 - Cult Movie
+	-- 67 - Location Scout
+	-- 68 - Method Actor
+	-- 69 - Cryptozoologist
+	-- 70 - Getting Started
+	-- 71 - The Data Breaches
+	-- 72 - The Bogdan Problem
+	-- 73 - The Doomsday Scenario
+	-- 74 - A World Worth Saving
+	-- 75 - Orbital Obliteration
+	-- 76 - Elitist
+	-- 77 - Masterminds
+	["GIVE_ACHIEVEMENT_TO_PLAYER"]=--[[BOOL (bool)]] function(--[[int]] achievementId)native_invoker.begin_call()native_invoker.push_arg_int(achievementId)native_invoker.end_call_2(0xBEC7076D64130195)return native_invoker.get_return_value_bool()end,
+	-- For Steam.
+	-- Does nothing and always returns false in the retail version of the game.
+	["SET_ACHIEVEMENT_PROGRESS"]=--[[BOOL (bool)]] function(--[[int]] achievementId,--[[int]] progress)native_invoker.begin_call()native_invoker.push_arg_int(achievementId)native_invoker.push_arg_int(progress)native_invoker.end_call_2(0xC2AFFFDABBDC2C5C)return native_invoker.get_return_value_bool()end,
+	-- For Steam.
+	-- Always returns 0 in retail version of the game.
+	["GET_ACHIEVEMENT_PROGRESS"]=--[[int]] function(--[[int]] achievementId)native_invoker.begin_call()native_invoker.push_arg_int(achievementId)native_invoker.end_call_2(0x1C186837D0619335)return native_invoker.get_return_value_int()end,
+	-- See GIVE_ACHIEVEMENT_TO_PLAYER
+	["HAS_ACHIEVEMENT_BEEN_PASSED"]=--[[BOOL (bool)]] function(--[[int]] achievementId)native_invoker.begin_call()native_invoker.push_arg_int(achievementId)native_invoker.end_call_2(0x867365E111A3B6EB)return native_invoker.get_return_value_bool()end,
+	-- Returns TRUE if the game is in online mode and FALSE if in offline mode.
+	-- 
+	-- This is an alias for NETWORK_IS_SIGNED_ONLINE.
+	["IS_PLAYER_ONLINE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF25D331DC2627BBC)return native_invoker.get_return_value_bool()end,
+	-- this function is hard-coded to always return 0.
+	["IS_PLAYER_LOGGING_IN_NP"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x74556E1420867ECA)return native_invoker.get_return_value_bool()end,
+	-- Purpose of the BOOL currently unknown.
+	-- Both, true and false, work
+	["DISPLAY_SYSTEM_SIGNIN_UI"]=--[[void]] function(--[[BOOL (bool)]] unk)native_invoker.begin_call()native_invoker.push_arg_bool(unk)native_invoker.end_call_2(0x94DD7888C10A979E)end,
+	["IS_SYSTEM_UI_BEING_DISPLAYED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5D511E3867C87139)return native_invoker.get_return_value_bool()end,
+	-- Simply sets you as invincible (Health will not deplete).
+	-- 
+	-- Use 0x733A643B5B0C53C1 instead if you want Ragdoll enabled, which is equal to:
+	-- *(DWORD *)(playerPedAddress + 0x188) |= (1 << 9);
+	["SET_PLAYER_INVINCIBLE"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x239528EACDC3E7DE)end,
+	-- Returns the Player's Invincible status.
+	-- 
+	-- This function will always return false if 0x733A643B5B0C53C1 is used to set the invincibility status. To always get the correct result, use this:
+	-- 
+	--  bool IsPlayerInvincible(Player player)
+	--     {
+	--      auto addr = getScriptHandleBaseAddress(GET_PLAYER_PED(player)); 
+	-- 
+	--         if (addr)
+	--      {
+	--          DWORD flag = *(DWORD *)(addr + 0x188);
+	--             return ((flag & (1 << 8)) != 0) || ((flag & (1 << 9)) != 0);
+	--       }
+	-- 
+	--        return false;
+	--  }
+	-- 
+	-- 
+	["GET_PLAYER_INVINCIBLE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xB721981B2B939E07)return native_invoker.get_return_value_bool()end,
+	-- Always returns false.
+	["GET_PLAYER_DEBUG_INVINCIBLE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xDCC07526B8EC45AF)return native_invoker.get_return_value_bool()end,
+	["SET_PLAYER_INVINCIBLE_BUT_HAS_REACTIONS"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x6BC97F4F4BB3C04B)end,
+	["SET_PLAYER_CAN_COLLECT_DROPPED_MONEY"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xCAC57395B151135F)end,
+	["REMOVE_PLAYER_HELMET"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xF3AC26D3CC576528)end,
+	["GIVE_PLAYER_RAGDOLL_CONTROL"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x3C49C870E66F0A28)end,
+	-- Example from fm_mission_controler.ysc.c4:
+	-- 
+	-- PLAYER::SET_PLAYER_LOCKON(PLAYER::PLAYER_ID(), 1);
+	-- 
+	-- All other decompiled scripts using this seem to be using the player id as the first parameter, so I feel the need to confirm it as so.
+	-- 
+	-- No need to confirm it says PLAYER_ID() so it uses PLAYER_ID() lol.
+	["SET_PLAYER_LOCKON"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x5C8B2F450EE4328E)end,
+	-- Sets your targeting mode.
+	-- 0 = Assisted Aim - Full
+	-- 1 = Assisted Aim - Partial
+	-- 2 = Free Aim - Assisted
+	-- 3 = Free Aim
+	["SET_PLAYER_TARGETING_MODE"]=--[[void]] function(--[[int]] targetMode)native_invoker.begin_call()native_invoker.push_arg_int(targetMode)native_invoker.end_call_2(0xB1906895227793F3)end,
+	["SET_PLAYER_TARGET_LEVEL"]=--[[void]] function(--[[int]] targetLevel)native_invoker.begin_call()native_invoker.push_arg_int(targetLevel)native_invoker.end_call_2(0x5702B917B99DB1CD)end,
+	-- Returns profile setting 237.
+	["GET_IS_USING_FPS_THIRD_PERSON_COVER"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB9CF1F793A9F1BF1)return native_invoker.get_return_value_bool()end,
+	-- Returns profile setting 243.
+	["GET_IS_USING_HOOD_CAMERA"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xCB645E85E97EA48B)return native_invoker.get_return_value_bool()end,
+	["CLEAR_PLAYER_HAS_DAMAGED_AT_LEAST_ONE_PED"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xF0B67A4DE6AB5F98)end,
+	["HAS_PLAYER_DAMAGED_AT_LEAST_ONE_PED"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x20CE80B0C2BF4ACC)return native_invoker.get_return_value_bool()end,
+	["CLEAR_PLAYER_HAS_DAMAGED_AT_LEAST_ONE_NON_ANIMAL_PED"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x4AACB96203D11A31)end,
+	["HAS_PLAYER_DAMAGED_AT_LEAST_ONE_NON_ANIMAL_PED"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xE4B90F367BD81752)return native_invoker.get_return_value_bool()end,
+	-- This can be between 1.0f - 14.9f 
+	-- 
+	-- You can change the max in IDA from 15.0. I say 15.0 as the function blrs if what you input is greater than or equal to 15.0 hence why it's 14.9 max default.
+	-- 
+	-- 
+	["SET_AIR_DRAG_MULTIPLIER_FOR_PLAYERS_VEHICLE"]=--[[void]] function(--[[Player (int)]] player,--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0xCA7DC8329F0A1E9E)end,
+	-- Swim speed multiplier.
+	-- Multiplier goes up to 1.49
+	-- 
+	-- Just call it one time, it is not required to be called once every tick. - Note copied from below native.
+	-- 
+	-- Note: At least the IDA method if you change the max float multiplier from 1.5 it will change it for both this and RUN_SPRINT below. I say 1.5 as the function blrs if what you input is greater than or equal to 1.5 hence why it's 1.49 max default.
+	["SET_SWIM_MULTIPLIER_FOR_PLAYER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0xA91C6F0FF7D16A13)end,
+	-- Multiplier goes up to 1.49 any value above will be completely overruled by the game and the multiplier will not take effect, this can be edited in memory however.
+	-- 
+	-- Just call it one time, it is not required to be called once every tick.
+	-- 
+	-- Note: At least the IDA method if you change the max float multiplier from 1.5 it will change it for both this and SWIM above. I say 1.5 as the function blrs if what you input is greater than or equal to 1.5 hence why it's 1.49 max default.
+	["SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0x6DB47AA77FD94E09)end,
+	-- Returns the time since the character was arrested in (ms) milliseconds.
+	-- 
+	-- example
+	-- 
+	-- var time = Function.call<int>(Hash.GET_TIME_SINCE_LAST_ARREST();
+	-- 
+	-- UI.DrawSubtitle(time.ToString());
+	-- 
+	-- if player has not been arrested, the int returned will be -1.
+	["GET_TIME_SINCE_LAST_ARREST"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5063F92F07C2A316)return native_invoker.get_return_value_int()end,
+	-- Returns the time since the character died in (ms) milliseconds.
+	-- 
+	-- example
+	-- 
+	-- var time = Function.call<int>(Hash.GET_TIME_SINCE_LAST_DEATH();
+	-- 
+	-- UI.DrawSubtitle(time.ToString());
+	-- 
+	-- if player has not died, the int returned will be -1.
+	["GET_TIME_SINCE_LAST_DEATH"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC7034807558DDFCA)return native_invoker.get_return_value_int()end,
+	["ASSISTED_MOVEMENT_CLOSE_ROUTE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xAEBF081FFC0A0E5E)end,
+	["ASSISTED_MOVEMENT_FLUSH_ROUTE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x8621390F0CDCFE1F)end,
+	["SET_PLAYER_FORCED_AIM"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x0FEE4F80AC44A726)end,
+	["SET_PLAYER_FORCED_ZOOM"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x75E7D505F2B15902)end,
+	["SET_PLAYER_FORCE_SKIP_AIM_INTRO"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x7651BC64AE59E128)end,
+	-- Inhibits the player from using any method of combat including melee and firearms.
+	-- 
+	-- NOTE: Only disables the firing for one frame
+	["DISABLE_PLAYER_FIRING"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x5E6CC07646BBEAB8)end,
+	-- Used only once in R* scripts (freemode.ysc).
+	["DISABLE_PLAYER_THROW_GRENADE_WHILE_USING_GUN"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB885852C39CC265D)end,
+	["SET_DISABLE_AMBIENT_MELEE_MOVE"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x2E8AABFA40A84F8C)end,
+	-- Default is 100. Use player id and not ped id. For instance: PLAYER::SET_PLAYER_MAX_ARMOUR(PLAYER::PLAYER_ID(), 100); // main_persistent.ct4
+	["SET_PLAYER_MAX_ARMOUR"]=--[[void]] function(--[[Player (int)]] player,--[[int]] value)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(value)native_invoker.end_call_2(0x77DFCCF5948B8C71)end,
+	-- p1 is always 0 in the scripts
+	["SPECIAL_ABILITY_ACTIVATE"]=--[[void]] function(--[[Player (int)]] player,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x821FDC827D6F4090)end,
+	["SET_SPECIAL_ABILITY_MP"]=--[[void]] function(--[[Player (int)]] player,--[[int]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0xB214D570EAD7F81A)end,
+	-- p1 is always 0 in the scripts
+	["SPECIAL_ABILITY_DEACTIVATE_MP"]=--[[void]] function(--[[Player (int)]] player,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x17F7471EACA78290)end,
+	["SPECIAL_ABILITY_DEACTIVATE"]=--[[void]] function(--[[Player (int)]] player,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xD6A953C6D1492057)end,
+	["SPECIAL_ABILITY_DEACTIVATE_FAST"]=--[[void]] function(--[[Player (int)]] player,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x9CB5CE07A3968D5A)end,
+	["SPECIAL_ABILITY_RESET"]=--[[void]] function(--[[Player (int)]] player,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x375F0E738F861A94)end,
+	["SPECIAL_ABILITY_CHARGE_ON_MISSION_FAILED"]=--[[void]] function(--[[Player (int)]] player,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xC9A763D8FE87436A)end,
+	-- Every occurrence of p1 & p2 were both true.
+	["SPECIAL_ABILITY_CHARGE_SMALL"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0x2E7B9B683481687D)end,
+	-- Only 1 match. Both p1 & p2 were true.
+	["SPECIAL_ABILITY_CHARGE_MEDIUM"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xF113E3AA9BC54613)end,
+	-- 2 matches. p1 was always true.
+	["SPECIAL_ABILITY_CHARGE_LARGE"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xF733F45FA4497D93)end,
+	-- p1 appears to always be 1 (only comes up twice)
+	["SPECIAL_ABILITY_CHARGE_CONTINUOUS"]=--[[void]] function(--[[Player (int)]] player,--[[Ped (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0xED481732DFF7E997)end,
+	-- p1 appears as 5, 10, 15, 25, or 30. p2 is always true.
+	["SPECIAL_ABILITY_CHARGE_ABSOLUTE"]=--[[void]] function(--[[Player (int)]] player,--[[int]] p1,--[[BOOL (bool)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.push_arg_bool(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xB7B0870EB531D08D)end,
+	-- 
+	-- normalizedValue is from 0.0 - 1.0
+	-- p2 is always 1
+	["SPECIAL_ABILITY_CHARGE_NORMALIZED"]=--[[void]] function(--[[Player (int)]] player,--[[float]] normalizedValue,--[[BOOL (bool)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(normalizedValue)native_invoker.push_arg_bool(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xA0696A65F009EE18)end,
+	-- Also known as _RECHARGE_SPECIAL_ABILITY
+	["SPECIAL_ABILITY_FILL_METER"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x3DACA8DDC6FD4980)end,
+	-- p1 was always true.
+	["SPECIAL_ABILITY_DEPLETE_METER"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x1D506DBBBC51E64B)end,
+	["SPECIAL_ABILITY_LOCK"]=--[[void]] function(--[[Hash (int)]] playerModel,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(playerModel)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x6A09D0D590A47D13)end,
+	["SPECIAL_ABILITY_UNLOCK"]=--[[void]] function(--[[Hash (int)]] playerModel,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(playerModel)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xF145F3BE2EFA9A3B)end,
+	["IS_SPECIAL_ABILITY_UNLOCKED"]=--[[BOOL (bool)]] function(--[[Hash (int)]] playerModel)native_invoker.begin_call()native_invoker.push_arg_int(playerModel)native_invoker.end_call_2(0xC6017F6A6CDFA694)return native_invoker.get_return_value_bool()end,
+	["IS_SPECIAL_ABILITY_ACTIVE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x3E5F7FC85D854E15)return native_invoker.get_return_value_bool()end,
+	["IS_SPECIAL_ABILITY_METER_FULL"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x05A1FE504B7F2587)return native_invoker.get_return_value_bool()end,
+	["ENABLE_SPECIAL_ABILITY"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x181EC197DAEFE121)end,
+	["IS_SPECIAL_ABILITY_ENABLED"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xB1D200FE26AEF3CB)return native_invoker.get_return_value_bool()end,
+	["SET_SPECIAL_ABILITY_MULTIPLIER"]=--[[void]] function(--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0xA49C426ED0CA4AB7)end,
+	["UPDATE_SPECIAL_ABILITY_FROM_STAT"]=--[[void]] function(--[[Player (int)]] player,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xFFEE8FA29AB9A18E)end,
+	-- Appears once in "re_dealgonewrong"
+	["GET_IS_PLAYER_DRIVING_ON_HIGHWAY"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x5FC472C501CCADB3)return native_invoker.get_return_value_bool()end,
+	-- Only 1 occurrence. p1 was 2.
+	["GET_IS_PLAYER_DRIVING_WRECKLESS"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xF10B44FD479D69F3)return native_invoker.get_return_value_bool()end,
+	-- 2 occurrences in agency_heist3a. p1 was 0.7f then 0.4f.
+	["GET_IS_MOPPING_AREA_FREE_IN_FRONT_OF_PLAYER"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0xDD2620B7B9D16FF1)return native_invoker.get_return_value_bool()end,
+	-- `findCollisionLand`: This teleports the player to land when set to true and will not consider the Z coordinate parameter provided by you. It will automatically put the Z coordinate so that you don't fall from sky.
+	["START_PLAYER_TELEPORT"]=--[[void]] function(--[[Player (int)]] player,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] heading,--[[BOOL (bool)]] p5,--[[BOOL (bool)]] findCollisionLand,--[[BOOL (bool)]] p7)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(heading)native_invoker.push_arg_bool(p5)native_invoker.push_arg_bool(findCollisionLand)native_invoker.push_arg_bool(p7)native_invoker.end_call_2(0xAD15F075A4DA0FDE)end,
+	["UPDATE_PLAYER_TELEPORT"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xE23D5873C2394C61)return native_invoker.get_return_value_bool()end,
+	-- Disables the player's teleportation
+	["STOP_PLAYER_TELEPORT"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC449EDED9D73009C)end,
+	["IS_PLAYER_TELEPORT_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x02B15662D7F8886F)return native_invoker.get_return_value_bool()end,
+	["GET_PLAYER_CURRENT_STEALTH_NOISE"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x2F395D61F3A1F877)return native_invoker.get_return_value_float()end,
+	-- `regenRate`: The recharge multiplier, a value between 0.0 and 1.0.
+	-- Use 1.0 to reset it back to normal
+	["SET_PLAYER_HEALTH_RECHARGE_MULTIPLIER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] regenRate)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(regenRate)native_invoker.end_call_2(0x5DB660B38DD98A31)end,
+	["GET_PLAYER_HEALTH_RECHARGE_MAX_PERCENT"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x8BC515BAE4AAF8FF)return native_invoker.get_return_value_float()end,
+	["SET_PLAYER_HEALTH_RECHARGE_MAX_PERCENT"]=--[[void]] function(--[[Player (int)]] player,--[[float]] limit)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(limit)native_invoker.end_call_2(0xC388A0F065F5BC34)end,
+	["SET_PLAYER_FALL_DISTANCE_TO_TRIGGER_RAGDOLL_OVERRIDE"]=--[[void]] function(--[[Player (int)]] player,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0xEFD79FA81DFBA9CB)end,
+	-- This modifies the damage value of your weapon. Whether it is a multiplier or base damage is unknown. 
+	-- 
+	-- Based on tests, it is unlikely to be a multiplier.
+	-- 
+	-- modifier's min value is 0.1
+	["SET_PLAYER_WEAPON_DAMAGE_MODIFIER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] modifier)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(modifier)native_invoker.end_call_2(0xCE07B9F7817AADA3)end,
+	-- modifier's min value is 0.1
+	["SET_PLAYER_WEAPON_DEFENSE_MODIFIER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] modifier)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(modifier)native_invoker.end_call_2(0x2D83BC011CA14A3C)end,
+	-- modifier's min value is 0.1
+	["SET_PLAYER_WEAPON_MINIGUN_DEFENSE_MODIFIER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] modifier)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(modifier)native_invoker.end_call_2(0xBCFDE9EDE4CF27DC)end,
+	-- modifier's min value is 0.1
+	["SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] modifier,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(modifier)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x4A3DC7ECCC321032)end,
+	-- modifier's min value is 0.1
+	["SET_PLAYER_MELEE_WEAPON_DEFENSE_MODIFIER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] modifier)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(modifier)native_invoker.end_call_2(0xAE540335B4ABC4E2)end,
+	-- modifier's min value is 0.1
+	["SET_PLAYER_VEHICLE_DAMAGE_MODIFIER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] modifier)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(modifier)native_invoker.end_call_2(0xA50E117CDDF82F0C)end,
+	-- modifier's min value is 0.1
+	["SET_PLAYER_VEHICLE_DEFENSE_MODIFIER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] modifier)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(modifier)native_invoker.end_call_2(0x4C60E6EFDAFF2462)end,
+	["SET_PLAYER_MAX_EXPLOSIVE_DAMAGE"]=--[[void]] function(--[[Player (int)]] player,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0x8D768602ADEF2245)end,
+	["SET_PLAYER_EXPLOSIVE_DAMAGE_MODIFIER"]=--[[void]] function(--[[Player (int)]] player,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xD821056B9ACF8052)end,
+	["SET_PLAYER_WEAPON_TAKEDOWN_DEFENSE_MODIFIER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0x31E90B8873A4CD3B)end,
+	-- Tints:
+	--    None = -1,
+	--     Rainbow = 0,
+	--   Red = 1,
+	--   SeasideStripes = 2,
+	--    WidowMaker = 3,
+	--    Patriot = 4,
+	--   Blue = 5,
+	--  Black = 6,
+	--     Hornet = 7,
+	--    AirFocce = 8,
+	--  Desert = 9,
+	--    Shadow = 10,
+	--   HighAltitude = 11,
+	--     Airbone = 12,
+	--  Sunrise = 13,
+	-- 
+	["SET_PLAYER_PARACHUTE_TINT_INDEX"]=--[[void]] function(--[[Player (int)]] player,--[[int]] tintIndex)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(tintIndex)native_invoker.end_call_2(0xA3D0E54541D9A5E5)end,
+	-- Tints:
+	--   None = -1,
+	--     Rainbow = 0,
+	--   Red = 1,
+	--   SeasideStripes = 2,
+	--    WidowMaker = 3,
+	--    Patriot = 4,
+	--   Blue = 5,
+	--  Black = 6,
+	--     Hornet = 7,
+	--    AirFocce = 8,
+	--  Desert = 9,
+	--    Shadow = 10,
+	--   HighAltitude = 11,
+	--     Airbone = 12,
+	--  Sunrise = 13,
+	["GET_PLAYER_PARACHUTE_TINT_INDEX"]=--[[void]] function(--[[Player (int)]] player,--[[int* (pointer)]] tintIndex)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_pointer(tintIndex)native_invoker.end_call_2(0x75D3F7A1B0D9B145)end,
+	-- Tints:
+	--    None = -1,
+	--     Rainbow = 0,
+	--   Red = 1,
+	--   SeasideStripes = 2,
+	--    WidowMaker = 3,
+	--    Patriot = 4,
+	--   Blue = 5,
+	--  Black = 6,
+	--     Hornet = 7,
+	--    AirFocce = 8,
+	--  Desert = 9,
+	--    Shadow = 10,
+	--   HighAltitude = 11,
+	--     Airbone = 12,
+	--  Sunrise = 13,
+	["SET_PLAYER_RESERVE_PARACHUTE_TINT_INDEX"]=--[[void]] function(--[[Player (int)]] player,--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(index)native_invoker.end_call_2(0xAF04C87F5DC1DF38)end,
+	-- Tints:
+	--   None = -1,
+	--     Rainbow = 0,
+	--   Red = 1,
+	--   SeasideStripes = 2,
+	--    WidowMaker = 3,
+	--    Patriot = 4,
+	--   Blue = 5,
+	--  Black = 6,
+	--     Hornet = 7,
+	--    AirFocce = 8,
+	--  Desert = 9,
+	--    Shadow = 10,
+	--   HighAltitude = 11,
+	--     Airbone = 12,
+	--  Sunrise = 13,
+	["GET_PLAYER_RESERVE_PARACHUTE_TINT_INDEX"]=--[[void]] function(--[[Player (int)]] player,--[[int* (pointer)]] index)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_pointer(index)native_invoker.end_call_2(0xD5A016BC3C09CF40)end,
+	-- tints 0- 13
+	-- 0 - unkown
+	-- 1 - unkown
+	-- 2 - unkown
+	-- 3 - unkown
+	-- 4 - unkown
+	["SET_PLAYER_PARACHUTE_PACK_TINT_INDEX"]=--[[void]] function(--[[Player (int)]] player,--[[int]] tintIndex)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(tintIndex)native_invoker.end_call_2(0x93B0FB27C9A04060)end,
+	["GET_PLAYER_PARACHUTE_PACK_TINT_INDEX"]=--[[void]] function(--[[Player (int)]] player,--[[int* (pointer)]] tintIndex)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_pointer(tintIndex)native_invoker.end_call_2(0x6E9C742F340CE5A2)end,
+	["SET_PLAYER_HAS_RESERVE_PARACHUTE"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x7DDAB28D31FAC363)end,
+	["GET_PLAYER_HAS_RESERVE_PARACHUTE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x5DDFE2FF727F3CA3)return native_invoker.get_return_value_bool()end,
+	["SET_PLAYER_CAN_LEAVE_PARACHUTE_SMOKE_TRAIL"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] enabled)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(enabled)native_invoker.end_call_2(0xF401B182DBA8AF53)end,
+	["SET_PLAYER_PARACHUTE_SMOKE_TRAIL_COLOR"]=--[[void]] function(--[[Player (int)]] player,--[[int]] r,--[[int]] g,--[[int]] b)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(r)native_invoker.push_arg_int(g)native_invoker.push_arg_int(b)native_invoker.end_call_2(0x8217FD371A4625CF)end,
+	["GET_PLAYER_PARACHUTE_SMOKE_TRAIL_COLOR"]=--[[void]] function(--[[Player (int)]] player,--[[int* (pointer)]] r,--[[int* (pointer)]] g,--[[int* (pointer)]] b)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_pointer(r)native_invoker.push_arg_pointer(g)native_invoker.push_arg_pointer(b)native_invoker.end_call_2(0xEF56DBABD3CD4887)end,
+	-- example:
+	-- 
+	-- flags: 0-6
+	-- 
+	-- PLAYER::SET_PLAYER_RESET_FLAG_PREFER_REAR_SEATS(PLAYER::PLAYER_ID(), 6);
+	-- 
+	-- wouldnt the flag be the seatIndex?
+	["SET_PLAYER_PHONE_PALETTE_IDX"]=--[[void]] function(--[[Player (int)]] player,--[[int]] flags)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(flags)native_invoker.end_call_2(0x11D5F725F0E780E0)end,
+	["SET_PLAYER_NOISE_MULTIPLIER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0xDB89EF50FF25FCE9)end,
+	-- Values around 1.0f to 2.0f used in game scripts.
+	["SET_PLAYER_SNEAKING_NOISE_MULTIPLIER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0xB2C1A29588A9F47C)end,
+	["CAN_PED_HEAR_PLAYER"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xF297383AA91DCA29)return native_invoker.get_return_value_bool()end,
+	-- This is to make the player walk without accepting input from INPUT.
+	-- 
+	-- gaitType is in increments of 100s. 2000, 500, 300, 200, etc.
+	-- 
+	-- p4 is always 1 and p5 is always 0.
+	-- 
+	-- C# Example :
+	-- 
+	-- Function.Call(Hash.SIMULATE_PLAYER_INPUT_GAIT, Game.Player, 1.0f, 100, 1.0f, 1, 0); //Player will go forward for 100ms
+	["SIMULATE_PLAYER_INPUT_GAIT"]=--[[void]] function(--[[Player (int)]] player,--[[float]] amount,--[[int]] gaitType,--[[float]] speed,--[[BOOL (bool)]] p4,--[[BOOL (bool)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(amount)native_invoker.push_arg_int(gaitType)native_invoker.push_arg_float(speed)native_invoker.push_arg_bool(p4)native_invoker.push_arg_bool(p5)native_invoker.end_call_2(0x477D5D63E63ECA5D)end,
+	["RESET_PLAYER_INPUT_GAIT"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x19531C47A2ABD691)end,
+	["SET_AUTO_GIVE_PARACHUTE_WHEN_ENTER_PLANE"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x9F343285A00B4BB6)end,
+	["SET_AUTO_GIVE_SCUBA_GEAR_WHEN_EXIT_VEHICLE"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xD2B315B6689D537D)end,
+	["SET_PLAYER_STEALTH_PERCEPTION_MODIFIER"]=--[[void]] function(--[[Player (int)]] player,--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(value)native_invoker.end_call_2(0x4E9021C1FCDD507A)end,
+	["IS_REMOTE_PLAYER_IN_NON_CLONED_VEHICLE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x690A61A6D13583F6)return native_invoker.get_return_value_bool()end,
+	["INCREASE_PLAYER_JUMP_SUPPRESSION_RANGE"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x9EDD76E87D5D51BA)end,
+	["SET_PLAYER_SIMULATE_AIMING"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xC54C95DA968EC5B5)end,
+	["SET_PLAYER_CLOTH_PIN_FRAMES"]=--[[void]] function(--[[Player (int)]] player,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x749FADDF97DFE930)end,
+	-- Every occurrence was either 0 or 2.
+	["SET_PLAYER_CLOTH_PACKAGE_INDEX"]=--[[void]] function(--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(index)native_invoker.end_call_2(0x9F7BBA2EA6372500)end,
+	-- 6 matches across 4 scripts. 5 occurrences were 240. The other was 255.
+	["SET_PLAYER_CLOTH_LOCK_COUNTER"]=--[[void]] function(--[[int]] value)native_invoker.begin_call()native_invoker.push_arg_int(value)native_invoker.end_call_2(0x14D913B777DFF5DA)end,
+	-- Only 1 match. ob_sofa_michael.
+	-- 
+	-- PLAYER::PLAYER_ATTACH_VIRTUAL_BOUND(-804.5928f, 173.1801f, 71.68436f, 0f, 0f, 0.590625f, 1f, 0.7f);1.0.335.2, 1.0.350.1/2, 1.0.372.2, 1.0.393.2, 1.0.393.4, 1.0.463.1;
+	["PLAYER_ATTACH_VIRTUAL_BOUND"]=--[[void]] function(--[[float]] p0,--[[float]] p1,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[float]] p5,--[[float]] p6,--[[float]] p7)native_invoker.begin_call()native_invoker.push_arg_float(p0)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.push_arg_float(p6)native_invoker.push_arg_float(p7)native_invoker.end_call_2(0xED51733DC73AED51)end,
+	-- 1.0.335.2, 1.0.350.1/2, 1.0.372.2, 1.0.393.2, 1.0.393.4, 1.0.463.1;
+	["PLAYER_DETACH_VIRTUAL_BOUND"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x1DD5897E2FA6E7C9)end,
+	["HAS_PLAYER_BEEN_SPOTTED_IN_STOLEN_VEHICLE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xD705740BB0A1CF4C)return native_invoker.get_return_value_bool()end,
+	-- Returns true if an unk value is greater than 0.0f
+	["IS_PLAYER_BATTLE_AWARE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x38D28DA81E4E9BF9)return native_invoker.get_return_value_bool()end,
+	-- var num3 = PLAYER::GET_PLAYER_PED(l_2171); // proof l_2171 is a player
+	-- 
+	-- var num17 = PLAYER::0x9DF75B2A(l_2171, 100, 0); // l_2171
+	-- 
+	-- .ysc:
+	--     if (PLAYER::GET_PLAYER_WANTED_LEVEL(l_6EF) < v_4) { // l_6EF is a player
+	--         PLAYER::SET_PLAYER_WANTED_LEVEL(l_6EF, v_4, 0); // l_6EF
+	--         PLAYER::SET_PLAYER_WANTED_LEVEL_NOW(l_6EF, 0); // l_6EF
+	--     } else { 
+	--         PLAYER::_4669B3ED80F24B4E(l_6EF); // l_6EF
+	--         HUD::_BA8D65C1C65702E5(1);
+	--         a_0 = 1;
+	--     }
+	-- 
+	--         if (l_4B24[l_6F2/*156*/]._f8C != PLAYER::_BC0753C9CA14B506(l_6EF, 100, 0)) { // l_6EF
+	--             l_4B24[l_6F2/*156*/]._f8C = PLAYER::_BC0753C9CA14B506(l_6EF, 100, 0); // l_6EF
+	--         }
+	-- 
+	-- Both was taken from fm_mission_controller
+	["GET_PLAYER_RECEIVED_BATTLE_EVENT_RECENTLY"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[int]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xBC0753C9CA14B506)return native_invoker.get_return_value_bool()end,
+	-- Appears only 3 times in the scripts, more specifically in michael1.ysc
+	-- 
+	-- -
+	-- This can be used to prevent dying if you are "out of the world"
+	["EXTEND_WORLD_BOUNDARY_FOR_PLAYER"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.end_call_2(0x5006D96C995A5827)end,
+	["RESET_WORLD_BOUNDARY_FOR_PLAYER"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xDA1DF03D5A315F4E)end,
+	-- Returns true if the player is riding a train.
+	["IS_PLAYER_RIDING_TRAIN"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x4EC12697209F2196)return native_invoker.get_return_value_bool()end,
+	["HAS_PLAYER_LEFT_THE_WORLD"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xD55DDFB47991A294)return native_invoker.get_return_value_bool()end,
+	["SET_PLAYER_LEAVE_PED_BEHIND"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xFF300C7649724A0B)end,
+	-- p1 was always 5.
+	-- p4 was always false.
+	["SET_PLAYER_PARACHUTE_VARIATION_OVERRIDE"]=--[[void]] function(--[[Player (int)]] player,--[[int]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[BOOL (bool)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_bool(p4)native_invoker.end_call_2(0xD9284A8C0D48352C)end,
+	["CLEAR_PLAYER_PARACHUTE_VARIATION_OVERRIDE"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x0F4CC924CF8C7B21)end,
+	["SET_PLAYER_PARACHUTE_MODEL_OVERRIDE"]=--[[void]] function(--[[Player (int)]] player,--[[Hash (int)]] model)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(model)native_invoker.end_call_2(0x977DB4641F6FC3DB)end,
+	["SET_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE"]=--[[void]] function(--[[Player (int)]] player,--[[Hash (int)]] model)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(model)native_invoker.end_call_2(0x0764486AEDE748DB)end,
+	["GET_PLAYER_PARACHUTE_MODEL_OVERRIDE"]=--[[Hash (int)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xC219887CA3E65C41)return native_invoker.get_return_value_int()end,
+	["GET_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE"]=--[[Hash (int)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x37FAAA68DCA9D08D)return native_invoker.get_return_value_int()end,
+	["CLEAR_PLAYER_PARACHUTE_MODEL_OVERRIDE"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x8753997EB5F6EE3F)end,
+	["CLEAR_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x290D248E25815AE8)end,
+	["SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE"]=--[[void]] function(--[[Player (int)]] player,--[[Hash (int)]] model)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(model)native_invoker.end_call_2(0xDC80A4C2F18A2B64)end,
+	["CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x10C54E4389C12B42)end,
+	["DISABLE_PLAYER_VEHICLE_REWARDS"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xC142BE3BB9CE125F)end,
+	-- Used with radios:
+	-- 
+	-- void sub_cf383(auto _a0) {
+	--     if ((a_0)==1) {
+	--         if (MISC::IS_BIT_SET((g_240005._f1), 3)) {
+	--             PLAYER::_2F7CEB6520288061(0);
+	--             AUDIO::SET_AUDIO_FLAG("AllowRadioDuringSwitch", 0);
+	--             AUDIO::SET_MOBILE_PHONE_RADIO_STATE(0);
+	--             AUDIO::SET_AUDIO_FLAG("MobileRadioInGame", 0);
+	--         }
+	--         sub_cf3f6(1);
+	--     } else { 
+	--         if (MISC::IS_BIT_SET((g_240005._f1), 3)) {
+	--             PLAYER::_2F7CEB6520288061(1);
+	--             AUDIO::SET_AUDIO_FLAG("AllowRadioDuringSwitch", 1);
+	--             AUDIO::SET_MOBILE_PHONE_RADIO_STATE(1);
+	--             AUDIO::SET_AUDIO_FLAG("MobileRadioInGame", 1);
+	--         }
+	--         sub_cf3f6(0);
+	--     }
+	-- }
+	-- 
+	-- SET_PLAYER_S*
+	["SET_PLAYER_SPECTATED_VEHICLE_RADIO_OVERRIDE"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x2F7CEB6520288061)end,
+	["SET_PLAYER_BLUETOOTH_STATE"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] state)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(state)native_invoker.end_call_2(0x5DC40A8869C22141)end,
+	["IS_PLAYER_BLUETOOTH_ENABLE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x65FAEE425DE637B0)return native_invoker.get_return_value_bool()end,
+	["DISABLE_CAMERA_VIEW_MODE_CYCLE"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x5501B7A5CDB79D37)end,
+	["GET_PLAYER_FAKE_WANTED_LEVEL"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x56105E599CAB0EFA)return native_invoker.get_return_value_int()end,
+	["SET_PLAYER_CAN_DAMAGE_PLAYER"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x55FCC0C390620314)end,
+	["SET_APPLY_WAYPOINT_OF_PLAYER"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x2382AB11450AE7BA)end,
+	["IS_PLAYER_VEHICLE_WEAPON_TOGGLED_TO_NON_HOMING"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x6E4361FF3E8CD7CA)return native_invoker.get_return_value_int()end,
+	-- Unsets playerPed+330 if the current weapon has certain flags.
+	["SET_PLAYER_VEHICLE_WEAPON_TO_NON_HOMING"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x237440E46D918649)end,
+	["SET_PLAYER_HOMING_DISABLED_FOR_ALL_VEHICLE_WEAPONS"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xEE4EBDD2593BA844)end,
+	["ADD_PLAYER_TARGETABLE_ENTITY"]=--[[void]] function(--[[Player (int)]] player,--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x9097EB6D4BB9A12A)end,
+	["REMOVE_PLAYER_TARGETABLE_ENTITY"]=--[[void]] function(--[[Player (int)]] player,--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x9F260BFB59ADBCA3)end,
+	["SET_PLAYER_PREVIOUS_VARIATION_DATA"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4,--[[Any (int)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.push_arg_int(p5)native_invoker.end_call_2(0x7BAE68775557AE0B)end,
+	-- Resets values set by SET_SCRIPT_FIRE_POSITION
+	["REMOVE_SCRIPT_FIRE_POSITION"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x7148E0F43D11F0D9)end,
+	["SET_SCRIPT_FIRE_POSITION"]=--[[void]] function(--[[float]] coordX,--[[float]] coordY,--[[float]] coordZ)native_invoker.begin_call()native_invoker.push_arg_float(coordX)native_invoker.push_arg_float(coordY)native_invoker.push_arg_float(coordZ)native_invoker.end_call_2(0x70A382ADEC069DD3)end,
+}
+RECORDING={
+	["REPLAY_START_EVENT"]=--[[void]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x48621C9FCA3EBD28)end,
+	["REPLAY_STOP_EVENT"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x81CBAE94390F9F89)end,
+	["REPLAY_CANCEL_EVENT"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x13B350B8AD0EEE10)end,
+	["REPLAY_RECORD_BACK_FOR_TIME"]=--[[void]] function(--[[float]] p0,--[[float]] p1,--[[int]] p2)native_invoker.begin_call()native_invoker.push_arg_float(p0)native_invoker.push_arg_float(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x293220DA1B46CEBC)end,
+	-- -This function appears to be deprecated/ unused. Tracing the call internally leads to a _nullsub -
+	-- 
+	-- first one seems to be a string of a mission name, second one seems to be a bool/toggle
+	-- 
+	-- p1 was always 0.
+	-- 
+	["REPLAY_CHECK_FOR_EVENT_THIS_FRAME"]=--[[void]] function(--[[string]] missionNameLabel,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_string(missionNameLabel)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x208784099002BC30)end,
+	-- This disable the recording feature and has to be called every frame.
+	["REPLAY_PREVENT_RECORDING_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xEB2D525B57F42B40)end,
+	["REPLAY_RESET_EVENT_INFO"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF854439EFBB3B583)end,
+	-- This will disable the ability to make camera changes in R* Editor.
+	["REPLAY_DISABLE_CAMERA_MOVEMENT_THIS_FRAME"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xAF66DCEE6609B148)end,
+	-- Does nothing (it's a nullsub).
+	["RECORD_GREATEST_MOMENT"]=--[[void]] function(--[[int]] p0,--[[int]] p1,--[[int]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x66972397E0757E7A)end,
+	-- Starts recording a replay.
+	-- If mode is 0, turns on action replay.
+	-- If mode is 1, starts recording.
+	-- If already recording a replay, does nothing.
+	["START_REPLAY_RECORDING"]=--[[void]] function(--[[int]] mode)native_invoker.begin_call()native_invoker.push_arg_int(mode)native_invoker.end_call_2(0xC3AC2FFF9612AC81)end,
+	-- Stops recording and saves the recorded clip.
+	["STOP_REPLAY_RECORDING"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x071A5197D6AFC8B3)end,
+	-- Stops recording and discards the recorded clip.
+	["CANCEL_REPLAY_RECORDING"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x88BB3507ED41A240)end,
+	["SAVE_REPLAY_RECORDING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x644546EC5287471B)return native_invoker.get_return_value_bool()end,
+	-- Checks if you're recording, returns TRUE when you start recording (F1) or turn on action replay (F2)
+	-- 
+	-- mov al, cs:g_bIsRecordingGameplay // byte_141DD0CD0 in b944
+	-- retn
+	["IS_REPLAY_RECORDING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x1897CA71995A90B4)return native_invoker.get_return_value_bool()end,
+	["IS_REPLAY_INITIALIZED"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xDF4B952F7D381B95)return native_invoker.get_return_value_int()end,
+	["IS_REPLAY_AVAILABLE"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x4282E08174868BE3)return native_invoker.get_return_value_int()end,
+	["IS_REPLAY_RECORD_SPACE_AVAILABLE"]=--[[BOOL (bool)]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x33D47E85B476ABCD)return native_invoker.get_return_value_bool()end,
 }
 
-NETWORK1={
+NETWORK={
     ["_NETWORK_SET_ENTITY_INVISIBLE_TO_NETWORK"]=function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.push_arg_bool(toggle);native_invoker.end_call("F1CA12B18AEF5298");end,
     ["_GET_ONLINE_VERSION"]=function()native_invoker.begin_call();native_invoker.end_call("FCA9373EF340AC0A");return native_invoker.get_return_value_string();end,
     ["_NETWORK_GET_AVERAGE_LATENCY_FOR_PLAYER"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call();native_invoker.push_arg_int(player);native_invoker.end_call("D414BE129BB81B32");return native_invoker.get_return_value_float();end,
     ["_SHUTDOWN_AND_LOAD_MOST_RECENT_SAVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("9ECA15ADFE141431");return native_invoker.get_return_value_bool();end,
     ["NETWORK_GET_AVERAGE_LATENCY"]=function(...)return native_invoker.uno_float(0xD414BE129BB81B32,...)end,
+	["_SET_RELATIONSHIP_TO_PLAYER"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(player);native_invoker.push_arg_bool(p1);native_invoker.end_call("A7C511FA1C5BDA38");end,
+	-- Must be a value between 1 and 254
+	["_SET_GHOSTED_ENTITY_ALPHA"]=--[[void]] function(--[[int]] alpha)native_invoker.begin_call();native_invoker.push_arg_int(alpha);native_invoker.end_call("658500AE6D723A7E");end,
+	-- Resets the entity ghost alpha to the default value (128)
+	["_RESET_GHOSTED_ENTITY_ALPHA"]=--[[void]] function()native_invoker.begin_call();native_invoker.end_call("17330EBF2F2124A8");end,
+	["_NETWORK_SET_ENTITY_GHOSTED_WITH_OWNER"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] p1)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.push_arg_bool(p1);native_invoker.end_call("4BA166079D658ED4");end,
+	["_NETWORK_GET_PLAYER_COORDS"]=--[[Vector3 (vector3)]] function(--[[Player (int)]] player)native_invoker.begin_call();native_invoker.push_arg_int(player);native_invoker.end_call("125E6D638B8605D4");return native_invoker.get_return_value_vector3();end,
+["NETWORK_GET_NP_UNAVAILABLE_REASON"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x74FB3E29E6D10FA9)return native_invoker.get_return_value_int()end,
+	-- MulleDK19: This function is hard-coded to always return 1.
+	["NETWORK_IS_CONNETED_TO_NP_PRESENCE"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x7808619F31FF22DB)return native_invoker.get_return_value_int()end,
+	-- MulleDK19: This function is hard-coded to always return 0.
+	["NETWORK_IS_LOGGED_IN_TO_PSN"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA0FA4EC6A05DA44E)return native_invoker.get_return_value_int()end,
+	-- Returns whether the signed-in user has valid Rockstar Online Services (ROS) credentials.
+	["NETWORK_HAS_VALID_ROS_CREDENTIALS"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x85443FF4C328F53B)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_REFRESHING_ROS_CREDENTIALS"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x8D11E61A4ABF49CC)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_CLOUD_AVAILABLE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9A4CF4F48AD77302)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_SOCIAL_CLUB_ACCOUNT"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x67A5589628E0CFF6)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ARE_SOCIAL_CLUB_POLICIES_CURRENT"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xBA9775570DB788CF)return native_invoker.get_return_value_bool()end,
+	-- If you are host, returns true else returns false.
+	["NETWORK_IS_HOST"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x8DB296B814EDDA07)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_HOST_PLAYER_INDEX"]=--[[Player (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x8251FB94DC4FDFC8)return native_invoker.get_return_value_int()end,
+	["NETWORK_WAS_GAME_SUSPENDED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x4237E822315D8BA9)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAVE_ONLINE_PRIVILEGES"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x25CB5A9F37BFD063)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_AGE_RESTRICTIONS"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x1353F87E89946207)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAVE_USER_CONTENT_PRIVILEGES"]=--[[BOOL (bool)]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x72D918C99BCACC54)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAVE_COMMUNICATION_PRIVILEGES"]=--[[BOOL (bool)]] function(--[[int]] p0,--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(player)native_invoker.end_call_2(0xAEEF48CDF5B6CE7C)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CHECK_ONLINE_PRIVILEGES"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x78321BEA235FD8CD)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CHECK_USER_CONTENT_PRIVILEGES"]=--[[BOOL (bool)]] function(--[[int]] p0,--[[int]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x595F028698072DD9)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CHECK_COMMUNICATION_PRIVILEGES"]=--[[BOOL (bool)]] function(--[[int]] p0,--[[int]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x83F28CE49FBBFFBA)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CHECK_TEXT_COMMUNICATION_PRIVILEGES"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x07EAB372C8841D99)return native_invoker.get_return_value_int()end,
+	["NETWORK_IS_USING_ONLINE_PROMOTION"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x906CA41A4B74ECA4)return native_invoker.get_return_value_int()end,
+	["NETWORK_SHOULD_SHOW_PROMOTION_ALERT_SCREEN"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x023ACAB2DC9DC4A4)return native_invoker.get_return_value_int()end,
+	["NETWORK_HAS_SOCIAL_NETWORKING_SHARING_PRIV"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x76BF03FADBF154F5)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_AGE_GROUP"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9614B71F8ADB982B)return native_invoker.get_return_value_int()end,
+	["NETWORK_CHECK_PRIVILEGES"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x0CF6CC51AA18F0F8)return native_invoker.get_return_value_int()end,
+	-- Hardcoded to return false.
+	["NETWORK_IS_PRIVILEGE_CHECK_IN_PROGRESS"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x64E5C4CC82847B73)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_PRIVILEGE_CHECK_RESULT_NOT_NEEDED"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x1F7BC3539F9E0224)end,
+	-- Hardcoded to return true.
+	["NETWORK_RESOLVE_PRIVILEGE_USER_CONTENT"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xDE9225854F37BF72)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAVE_PLATFORM_SUBSCRIPTION"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5EA784D197556507)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_PLATFORM_SUBSCRIPTION_CHECK_PENDING"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA8ACB6459542A8C8)return native_invoker.get_return_value_int()end,
+	["NETWORK_SHOW_ACCOUNT_UPGRADE_UI"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x83FE8D7229593017)end,
+	["NETWORK_IS_SHOWING_SYSTEM_UI_OR_RECENTLY_REQUESTED_UPSELL"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x7788DFE15016A182)return native_invoker.get_return_value_bool()end,
+	["NETWORK_NEED_TO_START_NEW_GAME_BUT_BLOCKED"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x53C10C8BD774F2C9)return native_invoker.get_return_value_int()end,
+	["NETWORK_CAN_BAIL"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x580CE4438479CC61)return native_invoker.get_return_value_bool()end,
+	["NETWORK_BAIL"]=--[[void]] function(--[[int]] p0,--[[int]] p1,--[[int]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x95914459A87EBA28)end,
+	["NETWORK_ON_RETURN_TO_SINGLE_PLAYER"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x283B6062A2C01E9B)end,
+	["NETWORK_TRANSITION_START"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0x8B4FFC790CA131EF)return native_invoker.get_return_value_int()end,
+	["NETWORK_TRANSITION_ADD_STAGE"]=--[[void]] function(--[[Hash (int)]] hash,--[[int]] p1,--[[int]] p2,--[[int]] state,--[[int]] p4)native_invoker.begin_call()native_invoker.push_arg_int(hash)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(state)native_invoker.push_arg_int(p4)native_invoker.end_call_2(0xC3BFED92026A2AAD)end,
+	["NETWORK_TRANSITION_FINISH"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x04918A41BC9B8157)return native_invoker.get_return_value_int()end,
+	-- 11 - Need to download tunables.
+	-- 12 - Need to download background script.
+	-- 
+	-- Returns 1 if the multiplayer is loaded, otherwhise 0.
+	["NETWORK_CAN_ACCESS_MULTIPLAYER"]=--[[BOOL (bool)]] function(--[[int* (pointer)]] loadingState)native_invoker.begin_call()native_invoker.push_arg_pointer(loadingState)native_invoker.end_call_2(0xAF50DA1A3F8B1BA4)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_MULTIPLAYER_DISABLED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9747292807126EDA)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CAN_ENTER_MULTIPLAYER"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x7E782A910C362C25)return native_invoker.get_return_value_bool()end,
+	-- unknown params
+	-- 
+	-- p0 = 0, 2, or 999 (The global is 999 by default.)
+	-- p1 = 0 (Always in every script it's found in atleast.)
+	-- p2 = 0, 3, or 4 (Based on a var that is determined by a function.)
+	-- p3 = maxPlayers (It's obvious in x360 scripts it's always 18)
+	-- p4 = 0 (Always in every script it's found in atleast.)
+	-- p5 = 0 or 1. (1 if network_can_enter_multiplayer, but set to 0 if other checks after that are passed.)
+	-- p5 is reset to 0 if,
+	-- Global_1315318 = 0 or Global_1315323 = 9 or 12 or (Global_1312629 = 0 && Global_1312631 = true/1) those are passed.
+	["NETWORK_SESSION_DO_FREEROAM_QUICKMATCH"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[int]] maxPlayers,--[[Any (int)]] p4,--[[Any (int)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(maxPlayers)native_invoker.push_arg_int(p4)native_invoker.push_arg_int(p5)native_invoker.end_call_2(0x330ED4D05491934F)return native_invoker.get_return_value_int()end,
+	["NETWORK_SESSION_DO_FRIEND_MATCHMAKING"]=--[[BOOL (bool)]] function(--[[int]] p0,--[[int]] p1,--[[int]] maxPlayers,--[[BOOL (bool)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(maxPlayers)native_invoker.push_arg_bool(p3)native_invoker.end_call_2(0x2CFC76E0D087C994)return native_invoker.get_return_value_bool()end,
+	-- p4 seems to be unused in 1.60/build 2628
+	["NETWORK_SESSION_DO_CREW_MATCHMAKING"]=--[[BOOL (bool)]] function(--[[int]] crewId,--[[int]] p1,--[[int]] p2,--[[int]] maxPlayers,--[[BOOL (bool)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(crewId)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(maxPlayers)native_invoker.push_arg_bool(p4)native_invoker.end_call_2(0x94BC51E9449D917F)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_DO_ACTIVITY_QUICKMATCH"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.end_call_2(0xBE3E347A87ACEB82)return native_invoker.get_return_value_bool()end,
+	-- Does nothing in online but in offline it will cause the screen to fade to black. Nothing happens past then, the screen will sit at black until you restart GTA. Other stuff must be needed to actually host a session.
+	["NETWORK_SESSION_HOST"]=--[[BOOL (bool)]] function(--[[int]] p0,--[[int]] maxPlayers,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(maxPlayers)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x6F3D4ED9BEE4E61D)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_HOST_CLOSED"]=--[[BOOL (bool)]] function(--[[int]] p0,--[[int]] maxPlayers)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(maxPlayers)native_invoker.end_call_2(0xED34C0C02C098BB7)return native_invoker.get_return_value_bool()end,
+	-- Does nothing in online but in offline it will cause the screen to fade to black. Nothing happens past then, the screen will sit at black until you restart GTA. Other stuff must be needed to actually host a session.
+	["NETWORK_SESSION_HOST_FRIENDS_ONLY"]=--[[BOOL (bool)]] function(--[[int]] p0,--[[int]] maxPlayers)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(maxPlayers)native_invoker.end_call_2(0xB9CFD27A5D578D83)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_IS_CLOSED_FRIENDS"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFBCFA2EA2E206890)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_IS_CLOSED_CREW"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x74732C6CA90DA2B4)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_IS_SOLO"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF3929C2379B60CCE)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_IS_PRIVATE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xCEF70AA5B3F89BA1)return native_invoker.get_return_value_bool()end,
+	-- p0 is always false and p1 varies.
+	-- NETWORK_SESSION_END(0, 1)
+	-- NETWORK_SESSION_END(0, 0)
+	-- Results in: "Connection to session lost due to an unknown network error. Please return to Grand Theft Auto V and try again later."
+	["NETWORK_SESSION_END"]=--[[BOOL (bool)]] function(--[[BOOL (bool)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xA02E59562D711006)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_LEAVE"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xB9351A07A0D458B1)return native_invoker.get_return_value_int()end,
+	-- Only works as host.
+	["NETWORK_SESSION_KICK_PLAYER"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xFA8904DC5F304220)end,
+	["NETWORK_SESSION_GET_KICK_VOTE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xD6D09A6F32F49EF1)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_RESERVE_SLOTS_TRANSITION"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x041C7F2A6C9894E6)return native_invoker.get_return_value_int()end,
+	["NETWORK_JOIN_PREVIOUSLY_FAILED_SESSION"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x59DF79317F85A7E0)return native_invoker.get_return_value_bool()end,
+	["NETWORK_JOIN_PREVIOUSLY_FAILED_TRANSITION"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFFE1E5B792D92B34)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_SET_MATCHMAKING_GROUP"]=--[[void]] function(--[[int]] matchmakingGroup)native_invoker.begin_call()native_invoker.push_arg_int(matchmakingGroup)native_invoker.end_call_2(0x49EC8030F5015F8B)end,
+	-- playerType is an unsigned int from 0 to 4
+	-- 0 = regular joiner
+	-- 4 = spectator
+	["NETWORK_SESSION_SET_MATCHMAKING_GROUP_MAX"]=--[[void]] function(--[[int]] playerType,--[[int]] playerCount)native_invoker.begin_call()native_invoker.push_arg_int(playerType)native_invoker.push_arg_int(playerCount)native_invoker.end_call_2(0x8B6A4DD0AF9CE215)end,
+	["NETWORK_SESSION_GET_MATCHMAKING_GROUP_FREE"]=--[[int]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x56CE820830EF040B)return native_invoker.get_return_value_int()end,
+	-- groupId range: [0, 4]
+	["NETWORK_SESSION_ADD_ACTIVE_MATCHMAKING_GROUP"]=--[[void]] function(--[[int]] groupId)native_invoker.begin_call()native_invoker.push_arg_int(groupId)native_invoker.end_call_2(0xCAE55F48D3D7875C)end,
+	["NETWORK_SESSION_SET_UNIQUE_CREW_LIMIT"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xF49ABC20D8552257)end,
+	["NETWORK_SESSION_SET_UNIQUE_CREW_LIMIT_TRANSITION"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x4811BBAC21C5FCD5)end,
+	["NETWORK_SESSION_SET_UNIQUE_CREW_ONLY_CREWS_TRANSITION"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x5539C3EBF104A53A)end,
+	["NETWORK_SESSION_SET_CREW_LIMIT_MAX_MEMBERS_TRANSITION"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x702BC4D605522539)end,
+	["NETWORK_SESSION_SET_MATCHMAKING_PROPERTY_ID"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x3F52E880AAF6C8CA)end,
+	["NETWORK_SESSION_SET_MATCHMAKING_MENTAL_STATE"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xF1EEA2DDA9FFA69D)end,
+	["NETWORK_SESSION_SET_NUM_BOSSES"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x59D421683D31835A)end,
+	["NETWORK_SESSION_SET_SCRIPT_VALIDATE_JOIN"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x1153FA02A659051C)end,
+	["NETWORK_SESSION_VALIDATE_JOIN"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0xC19F6C8E7865A6FF)end,
+	-- ..
+	["NETWORK_ADD_FOLLOWERS"]=--[[void]] function(--[[int* (pointer)]] p0,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x236406F60CF216D6)end,
+	["NETWORK_CLEAR_FOLLOWERS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x058F43EC59A8631A)end,
+	["NETWORK_GET_GLOBAL_MULTIPLAYER_CLOCK"]=--[[void]] function(--[[int* (pointer)]] hours,--[[int* (pointer)]] minutes,--[[int* (pointer)]] seconds)native_invoker.begin_call()native_invoker.push_arg_pointer(hours)native_invoker.push_arg_pointer(minutes)native_invoker.push_arg_pointer(seconds)native_invoker.end_call_2(0x6D03BFBD643B2A02)end,
+	["NETWORK_SESSION_SET_GAMEMODE"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x600F8CB31C7AAB6E)end,
+	["NETWORK_SESSION_GET_HOST_AIM_PREFERENCE"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xDFFA5BE8381C3314)return native_invoker.get_return_value_int()end,
+	["NETWORK_FIND_GAMERS_IN_CREW"]=--[[BOOL (bool)]] function(--[[int]] crewId)native_invoker.begin_call()native_invoker.push_arg_int(crewId)native_invoker.end_call_2(0xE532D6811B3A4D2A)return native_invoker.get_return_value_bool()end,
+	-- Uses attributes to find players with similar stats. Upper/Lower limit must be above zero or the fallback limit +/-0.1 is used.
+	-- There can be up to 15 attributes, they are as follows:
+	-- 
+	-- 0 = Races
+	-- 1 = Parachuting
+	-- 2 = Horde
+	-- 3 = Darts
+	-- 4 = Arm Wrestling
+	-- 5 = Tennis
+	-- 6 = Golf
+	-- 7 = Shooting Range
+	-- 8 = Deathmatch
+	-- 9 = MPPLY_MCMWIN/MPPLY_CRMISSION
+	["NETWORK_FIND_MATCHED_GAMERS"]=--[[BOOL (bool)]] function(--[[int]] attribute,--[[float]] fallbackLimit,--[[float]] lowerLimit,--[[float]] upperLimit)native_invoker.begin_call()native_invoker.push_arg_int(attribute)native_invoker.push_arg_float(fallbackLimit)native_invoker.push_arg_float(lowerLimit)native_invoker.push_arg_float(upperLimit)native_invoker.end_call_2(0xF7B2CFDE5C9F700D)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_FINDING_GAMERS"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xDDDF64C91BFCF0AA)return native_invoker.get_return_value_bool()end,
+	["NETWORK_DID_FIND_GAMERS_SUCCEED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF9B83B77929D8863)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_NUM_FOUND_GAMERS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA1B043EE79A916FB)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_FOUND_GAMER"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x9DCFF2AFB68B3476)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLEAR_FOUND_GAMERS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x6D14CCEE1B40381A)end,
+	["NETWORK_QUEUE_GAMER_FOR_STATUS"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x85A0EF54A500882C)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_GAMER_STATUS_FROM_QUEUE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x2CC848A861D01493)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_GETTING_GAMER_STATUS"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x94A8394D150B013A)return native_invoker.get_return_value_bool()end,
+	["NETWORK_DID_GET_GAMER_STATUS_SUCCEED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5AE17C6B0134B7F1)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_GAMER_STATUS_RESULT"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x02A8BEC6FD9AF660)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLEAR_GET_GAMER_STATUS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x86E0660E4F5C956D)end,
+	["NETWORK_SESSION_JOIN_INVITE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC6F8AB8A4189CF3A)end,
+	["NETWORK_SESSION_CANCEL_INVITE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x2FBF47B1B36D36F9)end,
+	["NETWORK_SESSION_FORCE_CANCEL_INVITE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA29177F7703B5644)end,
+	["NETWORK_HAS_PENDING_INVITE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xAC8C7B9B88C4A668)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_CONFIRMED_INVITE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC42DD763159F3461)return native_invoker.get_return_value_bool()end,
+	-- Triggers a CEventNetworkInviteConfirmed event
+	["NETWORK_REQUEST_INVITE_CONFIRMED_EVENT"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x62A0296C1BB1CEB3)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_WAS_INVITED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x23DFB504655D0CE4)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_GET_INVITER"]=--[[void]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xE57397B4A3429DD0)end,
+	-- Seems to be true while "Getting GTA Online session details" shows up.
+	["NETWORK_SESSION_IS_AWAITING_INVITE_RESPONSE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD313DE83394AF134)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_IS_DISPLAYING_INVITE_CONFIRMATION"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xBDB6F89C729CF388)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SUPPRESS_INVITE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xA0682D67EF1FBA3D)end,
+	["NETWORK_BLOCK_INVITES"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x34F9E9049454A7A0)end,
+	["NETWORK_BLOCK_JOIN_QUEUE_INVITES"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xCFEB8AF24FC1D0BB)end,
+	["NETWORK_SET_CAN_RECEIVE_RS_INVITES"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x68980414688F7F9D)end,
+	["NETWORK_STORE_INVITE_THROUGH_RESTART"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF814FEC6A19FD6E0)end,
+	["NETWORK_ALLOW_INVITE_PROCESS_IN_PLAYER_SWITCH"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x6B07B9CE4D390375)end,
+	["NETWORK_SET_SCRIPT_READY_FOR_EVENTS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x7AC752103856FB20)end,
+	["NETWORK_IS_OFFLINE_INVITE_PENDING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x74698374C45701D2)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLEAR_OFFLINE_INVITE_PENDING"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x140E6A44870A11CE)end,
+	-- Loads up the map that is loaded when beeing in mission creator
+	-- Player gets placed in a mix between online/offline mode
+	-- p0 is always 2 in R* scripts.
+	-- 
+	-- Appears to be patched in gtav b757 (game gets terminated) alonside with most other network natives to prevent online modding ~ghost30812
+	["NETWORK_SESSION_HOST_SINGLE_PLAYER"]=--[[void]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xC74C33FCA52856D5)end,
+	["NETWORK_SESSION_LEAVE_SINGLE_PLAYER"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x3442775428FD2DAA)end,
+	["NETWORK_IS_GAME_IN_PROGRESS"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x10FAB35428CCC9D7)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_SESSION_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD83C2B94E7508980)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_IN_SESSION"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xCA97246103B63917)return native_invoker.get_return_value_bool()end,
+	-- This checks if player is playing on gta online or not.
+	-- Please add an if and block your mod if this is "true".
+	["NETWORK_IS_SESSION_STARTED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9DE624D2FC4B603F)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_SESSION_BUSY"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF4435D66A8E2905E)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CAN_SESSION_END"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x4EEBC3694E49C572)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_GAME_MODE"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x4C9034162368E206)return native_invoker.get_return_value_int()end,
+	["NETWORK_SESSION_MARK_VISIBLE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x271CC6AB59EBF9A5)end,
+	["NETWORK_SESSION_IS_VISIBLE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xBA416D68C631496A)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_BLOCK_JOIN_REQUESTS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xA73667484D7037C3)end,
+	["NETWORK_SESSION_CHANGE_SLOTS"]=--[[void]] function(--[[int]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xB4AB419E0D86ACAE)end,
+	["NETWORK_SESSION_GET_PRIVATE_SLOTS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x53AFD64C6758F2F9)return native_invoker.get_return_value_int()end,
+	["NETWORK_SESSION_VOICE_HOST"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9C1556705F864230)end,
+	["NETWORK_SESSION_VOICE_LEAVE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x6793E42BE02B575D)end,
+	-- Only one occurence in the scripts:
+	-- 
+	-- auto sub_cb43(auto a_0, auto a_1) {
+	--     if (g_2594CB._f1) {
+	--         if (NETWORK::_855BC38818F6F684()) {
+	--             NETWORK::_ABD5E88B8A2D3DB2(&a_0._fB93);
+	--             g_2594CB._f14/*{13}*/ = a_0._fB93;
+	--             g_2594CB._f4/*"64"*/ = a_1;
+	--             return 1;
+	--         }
+	--     }
+	--     return 0;
+	-- }
+	-- 
+	-- other:
+	-- looks like it passes a player in the paramater
+	-- 
+	-- Contains string "NETWORK_VOICE_CONNECT_TO_PLAYER" in ida
+	["NETWORK_SESSION_VOICE_CONNECT_TO_PLAYER"]=--[[void]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0xABD5E88B8A2D3DB2)end,
+	["NETWORK_SESSION_VOICE_RESPOND_TO_REQUEST"]=--[[void]] function(--[[BOOL (bool)]] p0,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x7F8413B7FC2AA6B9)end,
+	["NETWORK_SESSION_VOICE_SET_TIMEOUT"]=--[[void]] function(--[[int]] timeout)native_invoker.begin_call()native_invoker.push_arg_int(timeout)native_invoker.end_call_2(0x5B8ED3DB018927B1)end,
+	["NETWORK_SESSION_IS_IN_VOICE_SESSION"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x855BC38818F6F684)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SESSION_IS_VOICE_SESSION_ACTIVE"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB5D3453C98456528)return native_invoker.get_return_value_int()end,
+	["NETWORK_SESSION_IS_VOICE_SESSION_BUSY"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xEF0912DDF7C4CB4B)return native_invoker.get_return_value_bool()end,
+	-- Message is limited to 64 characters.
+	["NETWORK_SEND_TEXT_MESSAGE"]=--[[BOOL (bool)]] function(--[[string]] message,--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_string(message)native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x3A214F2EC889B100)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_ACTIVITY_SPECTATOR"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x75138790B4359A74)end,
+	["NETWORK_IS_ACTIVITY_SPECTATOR"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x12103B9E0C9F92FB)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_ACTIVITY_PLAYER_MAX"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x0E4F77F7B9D74D84)end,
+	["NETWORK_SET_ACTIVITY_SPECTATOR_MAX"]=--[[void]] function(--[[int]] maxSpectators)native_invoker.begin_call()native_invoker.push_arg_int(maxSpectators)native_invoker.end_call_2(0x9D277B76D1D12222)end,
+	["NETWORK_GET_ACTIVITY_PLAYER_NUM"]=--[[int]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x73E2B500410DA5A2)return native_invoker.get_return_value_int()end,
+	["NETWORK_IS_ACTIVITY_SPECTATOR_FROM_HANDLE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x2763BBAA72A7BCB9)return native_invoker.get_return_value_bool()end,
+	-- p0: Unknown int
+	-- p1: Unknown int
+	-- p2: Unknown int
+	-- p3: Unknown int
+	-- p4: Unknown always 0 in decompiled scripts
+	-- p5: BOOL purpose unknown, both 0 and 1 are used in decompiled scripts.
+	-- p6: BOOL purpose unknown, both 0 and 1 are used in decompiled scripts.
+	-- p7: Unknown int, it's an int according to decompiled scripts, however the value is always 0 or 1.
+	-- p8: Unknown int, it's an int according to decompiled scripts, however the value is always 0 or 1.
+	-- p9: Unknown int, sometimes 0, but also 32768 or 16384 appear in decompiled scripst, maybe a flag of some sort?
+	-- 
+	-- From what I can tell it looks like it does the following:
+	-- Creates/hosts a new transition to another online session, using this in FiveM will result in other players being disconencted from the server/preventing them from joining. This is most likely because I entered the wrong session parameters since they're pretty much all unknown right now.
+	-- You also need to use `NetworkJoinTransition(Player player)` and `NetworkLaunchTransition()`.
+	["NETWORK_HOST_TRANSITION"]=--[[BOOL (bool)]] function(--[[int]] p0,--[[int]] p1,--[[int]] p2,--[[int]] p3,--[[Any (int)]] p4,--[[BOOL (bool)]] p5,--[[BOOL (bool)]] p6,--[[int]] p7,--[[Any (int)]] p8,--[[int]] p9)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.push_arg_bool(p5)native_invoker.push_arg_bool(p6)native_invoker.push_arg_int(p7)native_invoker.push_arg_int(p8)native_invoker.push_arg_int(p9)native_invoker.end_call_2(0xA60BB5CE242BB254)return native_invoker.get_return_value_bool()end,
+	["NETWORK_DO_TRANSITION_QUICKMATCH"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4,--[[Any (int)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.push_arg_int(p5)native_invoker.end_call_2(0x71FB0EBCD4915D56)return native_invoker.get_return_value_bool()end,
+	["NETWORK_DO_TRANSITION_QUICKMATCH_ASYNC"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4,--[[Any (int)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.push_arg_int(p5)native_invoker.end_call_2(0xA091A5E44F0072E5)return native_invoker.get_return_value_bool()end,
+	["NETWORK_DO_TRANSITION_QUICKMATCH_WITH_GROUP"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any* (pointer)]] p4,--[[Any (int)]] p5,--[[Any (int)]] p6,--[[Any (int)]] p7)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_pointer(p4)native_invoker.push_arg_int(p5)native_invoker.push_arg_int(p6)native_invoker.push_arg_int(p7)native_invoker.end_call_2(0x9C4AB58491FDC98A)return native_invoker.get_return_value_bool()end,
+	["NETWORK_JOIN_GROUP_ACTIVITY"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA06509A691D12BE4)return native_invoker.get_return_value_int()end,
+	["NETWORK_CLEAR_GROUP_ACTIVITY"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x1888694923EF4591)end,
+	["NETWORK_RETAIN_ACTIVITY_GROUP"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB13E88E655E5A3BC)end,
+	["NETWORK_IS_TRANSITION_CLOSED_FRIENDS"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x6512765E3BE78C50)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_TRANSITION_CLOSED_CREW"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x0DBD5D7E3C5BEC3B)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_TRANSITION_SOLO"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5DC577201723960A)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_TRANSITION_PRIVATE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5A6AA44FF8E931E6)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_NUM_TRANSITION_NON_ASYNC_GAMERS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x617F49C2668E6155)return native_invoker.get_return_value_int()end,
+	["NETWORK_MARK_AS_PREFERRED_ACTIVITY"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x261E97AD7BCF3D40)end,
+	["NETWORK_MARK_AS_WAITING_ASYNC"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x39917E1B4CB0F911)end,
+	["NETWORK_SET_IN_PROGRESS_FINISH_TIME"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x2CE9D95E4051AECD)end,
+	["NETWORK_SET_TRANSITION_CREATOR_HANDLE"]=--[[void]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0xEF26739BCD9907D5)end,
+	["NETWORK_CLEAR_TRANSITION_CREATOR_HANDLE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFB3272229A82C759)end,
+	["NETWORK_INVITE_GAMERS_TO_TRANSITION"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x4A595C32F77DFF76)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_GAMER_INVITED_TO_TRANSITION"]=--[[void]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xCA2C8073411ECDB6)end,
+	["NETWORK_LEAVE_TRANSITION"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD23A1A815D21DB19)return native_invoker.get_return_value_bool()end,
+	["NETWORK_LAUNCH_TRANSITION"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x2DCF46CB1A4F0884)return native_invoker.get_return_value_bool()end,
+	-- Appears to set whether a transition should be started when the session is migrating.
+	["NETWORK_SET_DO_NOT_LAUNCH_FROM_JOIN_AS_MIGRATED_HOST"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xA2E9C1AB8A92E8CD)end,
+	["NETWORK_CANCEL_TRANSITION_MATCHMAKING"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x023782EFC70585EE)end,
+	["NETWORK_BAIL_TRANSITION"]=--[[void]] function(--[[int]] p0,--[[int]] p1,--[[int]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0xEAA572036990CD1B)end,
+	["NETWORK_DO_TRANSITION_TO_GAME"]=--[[BOOL (bool)]] function(--[[BOOL (bool)]] p0,--[[int]] maxPlayers)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.push_arg_int(maxPlayers)native_invoker.end_call_2(0x3E9BB38102A589B0)return native_invoker.get_return_value_bool()end,
+	["NETWORK_DO_TRANSITION_TO_NEW_GAME"]=--[[BOOL (bool)]] function(--[[BOOL (bool)]] p0,--[[int]] maxPlayers,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.push_arg_int(maxPlayers)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x4665F51EFED00034)return native_invoker.get_return_value_bool()end,
+	-- p2 is true 3/4 of the occurrences I found.
+	-- 'players' is the number of players for a session. On PS3/360 it's always 18. On PC it's 32.
+	["NETWORK_DO_TRANSITION_TO_FREEMODE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any (int)]] p1,--[[BOOL (bool)]] p2,--[[int]] players,--[[BOOL (bool)]] p4)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_bool(p2)native_invoker.push_arg_int(players)native_invoker.push_arg_bool(p4)native_invoker.end_call_2(0x3AAD8B2FCA1E289F)return native_invoker.get_return_value_bool()end,
+	["NETWORK_DO_TRANSITION_TO_NEW_FREEMODE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any (int)]] p1,--[[int]] players,--[[BOOL (bool)]] p3,--[[BOOL (bool)]] p4,--[[BOOL (bool)]] p5)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(players)native_invoker.push_arg_bool(p3)native_invoker.push_arg_bool(p4)native_invoker.push_arg_bool(p5)native_invoker.end_call_2(0x9E80A5BA8109F974)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_TRANSITION_TO_GAME"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9D7696D8F4FA6CB7)return native_invoker.get_return_value_bool()end,
+	-- Returns count.
+	["NETWORK_GET_TRANSITION_MEMBERS"]=--[[int]] function(--[[Any* (pointer)]] data,--[[int]] dataCount)native_invoker.begin_call()native_invoker.push_arg_pointer(data)native_invoker.push_arg_int(dataCount)native_invoker.end_call_2(0x73B000F7FBC55829)return native_invoker.get_return_value_int()end,
+	["NETWORK_APPLY_TRANSITION_PARAMETER"]=--[[void]] function(--[[int]] p0,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x521638ADA1BA0D18)end,
+	["NETWORK_APPLY_TRANSITION_PARAMETER_STRING"]=--[[void]] function(--[[int]] p0,--[[string]] string,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_string(string)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xEBEFC2E77084F599)end,
+	["NETWORK_SEND_TRANSITION_GAMER_INSTRUCTION"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle,--[[string]] p1,--[[int]] p2,--[[int]] p3,--[[BOOL (bool)]] p4)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_string(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_bool(p4)native_invoker.end_call_2(0x31D1D2B858D25E6B)return native_invoker.get_return_value_bool()end,
+	["NETWORK_MARK_TRANSITION_GAMER_AS_FULLY_JOINED"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x5728BB6D63E3FF1D)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_TRANSITION_HOST"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x0B824797C9BF2159)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_TRANSITION_HOST_FROM_HANDLE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x6B5C83BA3EFE6A10)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_TRANSITION_HOST"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x65042B9774C4435E)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_IN_TRANSITION"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x68049AEFF83D8F0A)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_TRANSITION_STARTED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x53FA83401D9C07FE)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_TRANSITION_BUSY"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x520F3282A53D26B7)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_TRANSITION_MATCHMAKING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x292564C735375EDF)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_TRANSITION_LEAVE_POSTPONED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC571D0E77D8BBC29)return native_invoker.get_return_value_bool()end,
+	["NETWORK_TRANSITION_SET_IN_PROGRESS"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x1398582B7F72B3ED)end,
+	["NETWORK_TRANSITION_SET_CONTENT_CREATOR"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x1F8E00FB18239600)end,
+	["NETWORK_TRANSITION_SET_ACTIVITY_ISLAND"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xF6F4383B7C92F11A)end,
+	["NETWORK_OPEN_TRANSITION_MATCHMAKING"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x2B3A8F7CA3A38FDE)end,
+	["NETWORK_CLOSE_TRANSITION_MATCHMAKING"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x43F4DBA69710E01E)end,
+	["NETWORK_IS_TRANSITION_OPEN_TO_MATCHMAKING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x37A4494483B9F5C9)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_TRANSITION_VISIBILITY_LOCK"]=--[[void]] function(--[[BOOL (bool)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x0C978FDA19692C2C)end,
+	["NETWORK_IS_TRANSITION_VISIBILITY_LOCKED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD0A484CB2F829FBE)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_TRANSITION_ACTIVITY_ID"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x30DE938B516F0AD2)end,
+	["NETWORK_CHANGE_TRANSITION_SLOTS"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xEEEDA5E6D7080987)end,
+	["NETWORK_TRANSITION_BLOCK_JOIN_REQUESTS"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x973D76AA760A6CB6)end,
+	["NETWORK_HAS_PLAYER_STARTED_TRANSITION"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x9AC9CCBFA8C29795)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ARE_TRANSITION_DETAILS_VALID"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x2615AA2A695930C1)return native_invoker.get_return_value_bool()end,
+	-- int handle[76];
+	--           NETWORK_HANDLE_FROM_FRIEND(iSelectedPlayer, &handle[0], 13);
+	--           Player uVar2 = NETWORK_GET_PLAYER_FROM_GAMER_HANDLE(&handle[0]);
+	--           NETWORK_JOIN_TRANSITION(uVar2);
+	-- nothing doin.
+	["NETWORK_JOIN_TRANSITION"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x9D060B08CD63321A)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_INVITED_GAMER_TO_TRANSITION"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x7284A47B3540E6CF)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_TRANSITION_INVITE_BEEN_ACKED"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x3F9990BF5F22759C)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_ACTIVITY_SESSION"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x05095437424397FA)return native_invoker.get_return_value_bool()end,
+	["NETWORK_DISABLE_REALTIME_MULTIPLAYER"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x236905C700FDB54D)end,
+	-- Does nothing. It's just a nullsub.
+	["NETWORK_SET_PRESENCE_SESSION_INVITES_BLOCKED"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x4A9FDE3A5A6D0437)end,
+	["NETWORK_SEND_INVITE_VIA_PRESENCE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle,--[[string]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_string(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xC3C7A6AFDB244624)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SEND_TRANSITION_INVITE_VIA_PRESENCE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle,--[[string]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_string(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xC116FF9B4D488291)return native_invoker.get_return_value_bool()end,
+	-- Contains the string "NETWORK_SEND_PRESENCE_TRANSITION_INVITE" but so does 0xC116FF9B4D488291; seems to fit alphabetically here, tho.
+	["NETWORK_SEND_IMPORTANT_TRANSITION_INVITE_VIA_PRESENCE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle,--[[string]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_string(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0x1171A97A3D3981B6)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_PRESENCE_INVITE_INDEX_BY_ID"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x742B58F723233ED9)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_NUM_PRESENCE_INVITES"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xCEFA968912D0F78D)return native_invoker.get_return_value_int()end,
+	["NETWORK_ACCEPT_PRESENCE_INVITE"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xFA91550DF9318B22)return native_invoker.get_return_value_bool()end,
+	["NETWORK_REMOVE_PRESENCE_INVITE"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xF0210268DB0974B1)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_PRESENCE_INVITE_ID"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xDFF09646E12EC386)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_PRESENCE_INVITE_INVITER"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x4962CC4AA2F345B7)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_PRESENCE_INVITE_HANDLE"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0x38D5B0FEBB086F75)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_PRESENCE_INVITE_SESSION_ID"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x26E1CD96B0903D60)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_PRESENCE_INVITE_CONTENT_ID"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x24409FC4C55CB22D)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_PRESENCE_INVITE_PLAYLIST_LENGTH"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xD39B3FFF8FFDD5BF)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_PRESENCE_INVITE_PLAYLIST_CURRENT"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x728C4CC7920CD102)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_PRESENCE_INVITE_FROM_ADMIN"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x3DBF2DF0AEB7D289)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_PRESENCE_INVITE_IS_TOURNAMENT"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x8806CEBFABD3CE05)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_FOLLOW_INVITE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x76D9B976C4C09FDE)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ACTION_FOLLOW_INVITE"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC88156EBB786F8D5)return native_invoker.get_return_value_int()end,
+	["NETWORK_CLEAR_FOLLOW_INVITE"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x439BFDE3CD0610F6)return native_invoker.get_return_value_int()end,
+	["NETWORK_REMOVE_AND_CANCEL_ALL_INVITES"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xEBF8284D8CADEB53)end,
+	["NETWORK_REMOVE_TRANSITION_INVITE"]=--[[void]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x7524B431B2E6F7EE)end,
+	["NETWORK_REMOVE_ALL_TRANSITION_INVITE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x726E0375C7A26368)end,
+	["NETWORK_REMOVE_AND_CANCEL_ALL_TRANSITION_INVITES"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF083835B70BA9BFE)end,
+	["NETWORK_INVITE_GAMERS"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any (int)]] p1,--[[Any* (pointer)]] p2,--[[Any* (pointer)]] p3)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_pointer(p2)native_invoker.push_arg_pointer(p3)native_invoker.end_call_2(0x9D80CD1D0E6327DE)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_INVITED_GAMER"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x4D86CD31E8976ECE)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_MADE_INVITE_DECISION"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x71DC455F5CD1C2B1)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_INVITE_REPLY_STATUS"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x3855FB5EB2C5E8B2)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_CURRENTLY_SELECTED_GAMER_HANDLE_FROM_INVITE_MENU"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x74881E6BCAE2327C)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_CURRENTLY_SELECTED_GAMER_HANDLE_FROM_INVITE_MENU"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x7206F674F2A3B1BB)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_INVITE_ON_CALL_FOR_INVITE_MENU"]=--[[void]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x66F010A4B031A331)end,
+	["NETWORK_CHECK_DATA_MANAGER_SUCCEEDED_FOR_HANDLE"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0x44B37CDCAE765AAE)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CHECK_DATA_MANAGER_FOR_HANDLE"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x4AD490AE1536933B)return native_invoker.get_return_value_int()end,
+	["NETWORK_SET_INVITE_FAILED_MESSAGE_FOR_INVITE_MENU"]=--[[void]] function(--[[Any* (pointer)]] p0,--[[Any* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0x0D77A82DC2D0DA59)end,
+	["FILLOUT_PM_PLAYER_LIST"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0xCBBD7C4991B64809)return native_invoker.get_return_value_bool()end,
+	["FILLOUT_PM_PLAYER_LIST_WITH_NAMES"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any* (pointer)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_pointer(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0x716B6DB9D1886106)return native_invoker.get_return_value_bool()end,
+	["REFRESH_PLAYER_LIST_STATS"]=--[[BOOL (bool)]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xE26CCFF8094D8C74)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_CURRENT_DATA_MANAGER_HANDLE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x796A87B3B68D1F3D)return native_invoker.get_return_value_bool()end,
+	-- Hardcoded to return false.
+	["NETWORK_IS_IN_PLATFORM_PARTY"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x2FC5650B0271CB57)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_PLATFORM_PARTY_MEMBER_COUNT"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x01ABCE5E7CBDA196)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_PLATFORM_PARTY_MEMBERS"]=--[[int]] function(--[[Any* (pointer)]] data,--[[int]] dataSize)native_invoker.begin_call()native_invoker.push_arg_pointer(data)native_invoker.push_arg_int(dataSize)native_invoker.end_call_2(0x120364DE2845DAF8)return native_invoker.get_return_value_int()end,
+	-- Hardcoded to return false.
+	["NETWORK_IS_IN_PLATFORM_PARTY_CHAT"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFD8B834A8BA05048)return native_invoker.get_return_value_bool()end,
+	-- This would be nice to see if someone is in party chat, but 2 sad notes.
+	-- 1) It only becomes true if said person is speaking in that party at the time.
+	-- 2) It will never, become true unless you are in that party with said person.
+	["NETWORK_IS_CHATTING_IN_PLATFORM_PARTY"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x8DE9945BCC9AEC52)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CAN_QUEUE_FOR_PREVIOUS_SESSION_JOIN"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x2BF66D2E7414F686)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_QUEUING_FOR_SESSION_JOIN"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x14922ED3E38761F0)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLEAR_QUEUED_JOIN_REQUEST"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x6CE50E47F5543D0C)end,
+	["NETWORK_SEND_QUEUED_JOIN_REQUEST"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFA2888E3833C8E96)end,
+	["NETWORK_REMOVE_ALL_QUEUED_JOIN_REQUESTS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x25D990F8E0E3F13C)end,
+	["NETWORK_SEED_RANDOM_NUMBER_GENERATOR"]=--[[void]] function(--[[int]] seed)native_invoker.begin_call()native_invoker.push_arg_int(seed)native_invoker.end_call_2(0xF1B84178F8674195)end,
+	["NETWORK_GET_RANDOM_INT"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x599E4FA1F87EB5FF)return native_invoker.get_return_value_int()end,
+	-- Same as GET_RANDOM_INT_IN_RANGE
+	["NETWORK_GET_RANDOM_INT_RANGED"]=--[[int]] function(--[[int]] rangeStart,--[[int]] rangeEnd)native_invoker.begin_call()native_invoker.push_arg_int(rangeStart)native_invoker.push_arg_int(rangeEnd)native_invoker.end_call_2(0xE30CF56F1EFA5F43)return native_invoker.get_return_value_int()end,
+	["NETWORK_PLAYER_IS_CHEATER"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x655B91F1495A9090)return native_invoker.get_return_value_bool()end,
+	["NETWORK_PLAYER_GET_CHEATER_REASON"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x172F75B6EE2233BA)return native_invoker.get_return_value_int()end,
+	["NETWORK_PLAYER_IS_BADSPORT"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x19D8DA0E5A68045A)return native_invoker.get_return_value_bool()end,
+	-- p1 = 6
+	["TRIGGER_PLAYER_CRC_HACKER_CHECK"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[int]] p1,--[[Hash (int)]] scriptHash)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(scriptHash)native_invoker.end_call_2(0x46FB3ED415C7641C)return native_invoker.get_return_value_bool()end,
+	["TRIGGER_TUNING_CRC_HACKER_CHECK"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA12D3A5A3753CC23)return native_invoker.get_return_value_int()end,
+	["TRIGGER_FILE_CRC_HACKER_CHECK"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF287F506767CC8A9)return native_invoker.get_return_value_int()end,
+	["REMOTE_CHEATER_PLAYER_DETECTED"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[int]] a,--[[int]] b)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(a)native_invoker.push_arg_int(b)native_invoker.end_call_2(0x472841A026D26D8B)return native_invoker.get_return_value_bool()end,
+	["BAD_SPORT_PLAYER_LEFT_DETECTED"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle,--[[int]] event,--[[int]] amountReceived)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_int(event)native_invoker.push_arg_int(amountReceived)native_invoker.end_call_2(0xEC5E3AF5289DCA81)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ADD_INVALID_OBJECT_MODEL"]=--[[void]] function(--[[Hash (int)]] modelHash)native_invoker.begin_call()native_invoker.push_arg_int(modelHash)native_invoker.end_call_2(0x7F562DBC212E81F9)end,
+	["NETWORK_REMOVE_INVALID_OBJECT_MODEL"]=--[[void]] function(--[[Hash (int)]] modelHash)native_invoker.begin_call()native_invoker.push_arg_int(modelHash)native_invoker.end_call_2(0x791EDB5803B2F468)end,
+	["NETWORK_CLEAR_INVALID_OBJECT_MODELS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x03B2F03A53D85E41)end,
+	["NETWORK_APPLY_PED_SCAR_DATA"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xE66C690248F11150)end,
+	["NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT"]=--[[void]] function(--[[int]] maxNumMissionParticipants,--[[BOOL (bool)]] p1,--[[int]] instanceId)native_invoker.begin_call()native_invoker.push_arg_int(maxNumMissionParticipants)native_invoker.push_arg_bool(p1)native_invoker.push_arg_int(instanceId)native_invoker.end_call_2(0x1CA59E306ECB80A5)end,
+	["NETWORK_TRY_TO_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[BOOL (bool)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0xD1110739EEADB592)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_THIS_SCRIPT_IS_NETWORK_SCRIPT"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x2910669969E9535E)return native_invoker.get_return_value_bool()end,
+	-- Seems to always return 0, but it's used in quite a few loops.
+	-- 
+	-- for (num3 = 0; num3 < NETWORK::0xCCD8C02D(); num3++)
+	--     {
+	--         if (NETWORK::NETWORK_IS_PARTICIPANT_ACTIVE(PLAYER::0x98F3B274(num3)) != 0)
+	--         {
+	--             var num5 = NETWORK::NETWORK_GET_PLAYER_INDEX(PLAYER::0x98F3B274(num3));
+	["NETWORK_GET_MAX_NUM_PARTICIPANTS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA6C90FBC38E395EE)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_NUM_PARTICIPANTS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x18D0456E86604654)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_SCRIPT_STATUS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x57D158647A6BFABF)return native_invoker.get_return_value_int()end,
+	["NETWORK_REGISTER_HOST_BROADCAST_VARIABLES"]=--[[void]] function(--[[int* (pointer)]] vars,--[[int]] numVars,--[[string]] debugName)native_invoker.begin_call()native_invoker.push_arg_pointer(vars)native_invoker.push_arg_int(numVars)native_invoker.push_arg_string(debugName)native_invoker.end_call_2(0x3E9B2F01C50DF595)end,
+	["NETWORK_REGISTER_PLAYER_BROADCAST_VARIABLES"]=--[[void]] function(--[[int* (pointer)]] vars,--[[int]] numVars,--[[string]] debugName)native_invoker.begin_call()native_invoker.push_arg_pointer(vars)native_invoker.push_arg_int(numVars)native_invoker.push_arg_string(debugName)native_invoker.end_call_2(0x3364AA97340CA215)end,
+	["NETWORK_REGISTER_HIGH_FREQUENCY_HOST_BROADCAST_VARIABLES"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0xEA8C0DDB10E2822A)end,
+	["NETWORK_REGISTER_HIGH_FREQUENCY_PLAYER_BROADCAST_VARIABLES"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0xD6D7478CA62B8D41)end,
+	["NETWORK_FINISH_BROADCASTING_DATA"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x64F62AFB081E260D)end,
+	["NETWORK_HAS_RECEIVED_HOST_BROADCAST_DATA"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5D10B3795F3FC886)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_PLAYER_INDEX"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x24FB80D107371267)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_PARTICIPANT_INDEX"]=--[[int]] function(--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(index)native_invoker.end_call_2(0x1B84DF6AF2A46938)return native_invoker.get_return_value_int()end,
+	-- Returns the Player associated to a given Ped when in an online session.
+	["NETWORK_GET_PLAYER_INDEX_FROM_PED"]=--[[Player (int)]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x6C0E2E0125610278)return native_invoker.get_return_value_int()end,
+	-- Returns the amount of players connected in the current session. Only works when connected to a session/server.
+	["NETWORK_GET_NUM_CONNECTED_PLAYERS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA4A79DD2D9600654)return native_invoker.get_return_value_int()end,
+	["NETWORK_IS_PLAYER_CONNECTED"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x93DC1BE4E1ABE9D1)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_TOTAL_NUM_PLAYERS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xCF61D4B4702EE9EB)return native_invoker.get_return_value_int()end,
+	["NETWORK_IS_PARTICIPANT_ACTIVE"]=--[[BOOL (bool)]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x6FF8FF40B6357D45)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_PLAYER_ACTIVE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xB8DFD30D6973E135)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_PLAYER_A_PARTICIPANT"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x3CA58F6CB7CBD784)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_HOST_OF_THIS_SCRIPT"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x83CD99A1E6061AB5)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_HOST_OF_THIS_SCRIPT"]=--[[Player (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC7B4D79B01FA7A5C)return native_invoker.get_return_value_int()end,
+	-- scriptName examples:
+	-- "freemode", "AM_CR_SecurityVan", ...
+	-- 
+	-- Most of the time, these values are used:
+	-- instance_id = -1
+	-- position_hash = 0
+	["NETWORK_GET_HOST_OF_SCRIPT"]=--[[Player (int)]] function(--[[string]] scriptName,--[[int]] instance_id,--[[int]] position_hash)native_invoker.begin_call()native_invoker.push_arg_string(scriptName)native_invoker.push_arg_int(instance_id)native_invoker.push_arg_int(position_hash)native_invoker.end_call_2(0x1D6A14F1F9A736FC)return native_invoker.get_return_value_int()end,
+	["NETWORK_SET_MISSION_FINISHED"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x3B3D11CD9FFCDFC9)end,
+	["NETWORK_IS_SCRIPT_ACTIVE"]=--[[BOOL (bool)]] function(--[[string]] scriptName,--[[int]] instance_id,--[[BOOL (bool)]] p2,--[[int]] position_hash)native_invoker.begin_call()native_invoker.push_arg_string(scriptName)native_invoker.push_arg_int(instance_id)native_invoker.push_arg_bool(p2)native_invoker.push_arg_int(position_hash)native_invoker.end_call_2(0x9D40DF90FAD26098)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_SCRIPT_ACTIVE_BY_HASH"]=--[[BOOL (bool)]] function(--[[Hash (int)]] scriptHash,--[[int]] p1,--[[BOOL (bool)]] p2,--[[int]] p3)native_invoker.begin_call()native_invoker.push_arg_int(scriptHash)native_invoker.push_arg_int(p1)native_invoker.push_arg_bool(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xDA7DE67F5FE5EE13)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_THREAD_A_NETWORK_SCRIPT"]=--[[BOOL (bool)]] function(--[[int]] threadId)native_invoker.begin_call()native_invoker.push_arg_int(threadId)native_invoker.end_call_2(0x560B423D73015E77)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_NUM_SCRIPT_PARTICIPANTS"]=--[[int]] function(--[[string]] scriptName,--[[int]] instance_id,--[[int]] position_hash)native_invoker.begin_call()native_invoker.push_arg_string(scriptName)native_invoker.push_arg_int(instance_id)native_invoker.push_arg_int(position_hash)native_invoker.end_call_2(0x3658E8CD94FC121A)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_INSTANCE_ID_OF_THIS_SCRIPT"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x638A3A81733086DB)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_POSITION_HASH_OF_THIS_SCRIPT"]=--[[Hash (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x257ED0FADF750BCF)return native_invoker.get_return_value_int()end,
+	["NETWORK_IS_PLAYER_A_PARTICIPANT_ON_SCRIPT"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[string]] script,--[[int]] instance_id)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_string(script)native_invoker.push_arg_int(instance_id)native_invoker.end_call_2(0x1AD5B71586B94820)return native_invoker.get_return_value_bool()end,
+	["NETWORK_PREVENT_SCRIPT_HOST_MIGRATION"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x2302C0264EA58D31)end,
+	["NETWORK_REQUEST_TO_BE_HOST_OF_THIS_SCRIPT"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x741A3D8380319A81)end,
+	-- Return the local Participant ID
+	["PARTICIPANT_ID"]=--[[Player (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x90986E8876CE0A83)return native_invoker.get_return_value_int()end,
+	-- Return the local Participant ID.
+	-- 
+	-- This native is exactly the same as 'PARTICIPANT_ID' native.
+	["PARTICIPANT_ID_TO_INT"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x57A3BDDAD8E5AA0A)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_KILLER_OF_PLAYER"]=--[[Any (int)]] function(--[[Player (int)]] player,--[[Hash* (pointer)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_pointer(weaponHash)native_invoker.end_call_2(0x2DA41ED6E1FCD7A5)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_DESTROYER_OF_NETWORK_ID"]=--[[int]] function(--[[int]] netId,--[[Hash* (pointer)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.push_arg_pointer(weaponHash)native_invoker.end_call_2(0x7A1ADEEF01740A24)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_DESTROYER_OF_ENTITY"]=--[[Any (int)]] function(--[[Entity (int)]] entity,--[[Hash* (pointer)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_pointer(weaponHash)native_invoker.end_call_2(0xC434133D9BA52777)return native_invoker.get_return_value_int()end,
+	-- NETWORK_GET_ASSISTED_DAMAGE_OF_ENTITY that ensures the entity is dead (IS_ENTITY_DEAD)
+	["NETWORK_GET_ASSISTED_KILL_OF_ENTITY"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[Entity (int)]] entity,--[[int* (pointer)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(entity)native_invoker.push_arg_pointer(p2)native_invoker.end_call_2(0x83660B734994124D)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_ASSISTED_DAMAGE_OF_ENTITY"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[Entity (int)]] entity,--[[int* (pointer)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(entity)native_invoker.push_arg_pointer(p2)native_invoker.end_call_2(0x4CACA84440FA26F6)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_ENTITY_KILLER_OF_PLAYER"]=--[[Entity (int)]] function(--[[Player (int)]] player,--[[Hash* (pointer)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_pointer(weaponHash)native_invoker.end_call_2(0x42B2DAA6B596F5F8)return native_invoker.get_return_value_int()end,
+	["NETWORK_SET_CURRENT_PUBLIC_CONTENT_ID"]=--[[void]] function(--[[string]] missionId)native_invoker.begin_call()native_invoker.push_arg_string(missionId)native_invoker.end_call_2(0x2C863ACDCD12B3DB)end,
+	-- mpSettingSpawn:
+	-- 
+	-- enum eMpSettingSpawn
+	-- {
+	-- 	MP_SETTING_SPAWN_NULL,
+	-- 	MP_SETTING_SPAWN_PROPERTY,
+	-- 	MP_SETTING_SPAWN_LAST_POSITION,
+	-- 	MP_SETTING_SPAWN_GARAGE,
+	-- 	MP_SETTING_SPAWN_RANDOM,
+	-- 	MP_SETTING_SPAWN_PRIVATE_YACHT,
+	-- 	MP_SETTING_SPAWN_OFFICE,
+	-- 	MP_SETTING_SPAWN_CLUBHOUSE,
+	-- 	MP_SETTING_SPAWN_IE_WAREHOUSE,
+	-- 	MP_SETTING_SPAWN_BUNKER,
+	-- 	MP_SETTING_SPAWN_HANGAR,
+	-- 	MP_SETTING_SPAWN_DEFUNCT_BASE,
+	-- 	MP_SETTING_SPAWN_NIGHTCLUB,
+	-- 	MP_SETTING_SPAWN_ARENA_GARAGE,
+	-- 	MP_SETTING_SPAWN_CASINO_APARTMENT,
+	-- 	MP_SETTING_SPAWN_ARCADE,
+	-- 	MP_SETTING_SPAWN_SUBMARINE,
+	-- 	MP_SETTING_SPAWN_CAR_MEET,
+	-- 	MP_SETTING_SPAWN_AUTO_SHOP,
+	-- 	MP_SETTING_SPAWN_FIXER_HQ,
+	-- 	MP_SETTING_SPAWN_MAX,
+	-- };
+	["NETWORK_SET_CURRENT_SPAWN_LOCATION_OPTION"]=--[[void]] function(--[[Hash (int)]] mpSettingSpawn)native_invoker.begin_call()native_invoker.push_arg_int(mpSettingSpawn)native_invoker.end_call_2(0xAA6D5451DC3448B6)end,
+	-- Used by MetricVEHICLE_DIST_DRIVEN
+	["NETWORK_SET_VEHICLE_DRIVEN_IN_TEST_DRIVE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x8C70252FC40F320B)end,
+	["NETWORK_RESURRECT_LOCAL_PLAYER"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] heading,--[[BOOL (bool)]] unk,--[[BOOL (bool)]] changetime,--[[BOOL (bool)]] p6,--[[int]] p7,--[[int]] p8)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(heading)native_invoker.push_arg_bool(unk)native_invoker.push_arg_bool(changetime)native_invoker.push_arg_bool(p6)native_invoker.push_arg_int(p7)native_invoker.push_arg_int(p8)native_invoker.end_call_2(0xEA23C49EAA83ACFB)end,
+	["NETWORK_SET_LOCAL_PLAYER_INVINCIBLE_TIME"]=--[[void]] function(--[[int]] time)native_invoker.begin_call()native_invoker.push_arg_int(time)native_invoker.end_call_2(0x2D95C7E2D7E07307)end,
+	["NETWORK_IS_LOCAL_PLAYER_INVINCIBLE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x8A8694B48715B000)return native_invoker.get_return_value_bool()end,
+	["NETWORK_DISABLE_INVINCIBLE_FLASHING"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x9DD368BF06983221)end,
+	["NETWORK_PATCH_POST_CUTSCENE_HS4F_TUN_ENT"]=--[[void]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xF0BC9BCD24A511D5)end,
+	["NETWORK_SET_LOCAL_PLAYER_SYNC_LOOK_AT"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x524FF0AEFF9C3973)end,
+	["NETWORK_HAS_ENTITY_BEEN_REGISTERED_WITH_THIS_THREAD"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0xB07D3185E11657A5)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_NETWORK_ID_FROM_ENTITY"]=--[[int]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0xA11700682F3AD45C)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_ENTITY_FROM_NETWORK_ID"]=--[[Entity (int)]] function(--[[int]] netId)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.end_call_2(0xCE4E5D9B0A4FF560)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_ENTITY_IS_NETWORKED"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0xC7827959479DCC78)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_ENTITY_IS_LOCAL"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x0991549DE4D64762)return native_invoker.get_return_value_bool()end,
+	["NETWORK_REGISTER_ENTITY_AS_NETWORKED"]=--[[void]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x06FAACD625D80CAA)end,
+	["NETWORK_UNREGISTER_NETWORKED_ENTITY"]=--[[void]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x7368E683BB9038D6)end,
+	["NETWORK_DOES_NETWORK_ID_EXIST"]=--[[BOOL (bool)]] function(--[[int]] netId)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.end_call_2(0x38CE16C96BD11344)return native_invoker.get_return_value_bool()end,
+	["NETWORK_DOES_ENTITY_EXIST_WITH_NETWORK_ID"]=--[[BOOL (bool)]] function(--[[int]] netId)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.end_call_2(0x18A47D074708FD68)return native_invoker.get_return_value_bool()end,
+	["NETWORK_REQUEST_CONTROL_OF_NETWORK_ID"]=--[[BOOL (bool)]] function(--[[int]] netId)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.end_call_2(0xA670B3662FAFFBD0)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_CONTROL_OF_NETWORK_ID"]=--[[BOOL (bool)]] function(--[[int]] netId)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.end_call_2(0x4D36070FE0215186)return native_invoker.get_return_value_bool()end,
+	-- Returns true if the specified network id is controlled by someone else.
+	["NETWORK_IS_NETWORK_ID_REMOTELY_CONTROLLED"]=--[[BOOL (bool)]] function(--[[int]] netId)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.end_call_2(0x7242F8B741CE1086)return native_invoker.get_return_value_bool()end,
+	["NETWORK_REQUEST_CONTROL_OF_ENTITY"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0xB69317BF5E782347)return native_invoker.get_return_value_bool()end,
+	["NETWORK_REQUEST_CONTROL_OF_DOOR"]=--[[BOOL (bool)]] function(--[[int]] doorID)native_invoker.begin_call()native_invoker.push_arg_int(doorID)native_invoker.end_call_2(0x870DDFD5A4A796E4)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_CONTROL_OF_ENTITY"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x01BF60A500E28887)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_CONTROL_OF_PICKUP"]=--[[BOOL (bool)]] function(--[[Pickup (int)]] pickup)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.end_call_2(0x5BC9495F0B3B6FA6)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_CONTROL_OF_DOOR"]=--[[BOOL (bool)]] function(--[[Hash (int)]] doorHash)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.end_call_2(0xCB3C68ADB06195DF)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_DOOR_NETWORKED"]=--[[BOOL (bool)]] function(--[[Hash (int)]] doorHash)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.end_call_2(0xC01E93FAC20C3346)return native_invoker.get_return_value_bool()end,
+	-- calls from vehicle to net.
+	-- 
+	["VEH_TO_NET"]=--[[int]] function(--[[Vehicle (int)]] vehicle)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.end_call_2(0xB4C94523F023419C)return native_invoker.get_return_value_int()end,
+	-- gets the network id of a ped
+	["PED_TO_NET"]=--[[int]] function(--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x0EDEC3C276198689)return native_invoker.get_return_value_int()end,
+	-- Lets objects spawn online simply do it like this:
+	-- 
+	-- int createdObject = OBJ_TO_NET(CREATE_OBJECT_NO_OFFSET(oball, pCoords.x, pCoords.y, pCoords.z, 1, 0, 0));
+	["OBJ_TO_NET"]=--[[int]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0x99BFDC94A603E541)return native_invoker.get_return_value_int()end,
+	["NET_TO_VEH"]=--[[Vehicle (int)]] function(--[[int]] netHandle)native_invoker.begin_call()native_invoker.push_arg_int(netHandle)native_invoker.end_call_2(0x367B936610BA360C)return native_invoker.get_return_value_int()end,
+	-- gets the ped id of a network id
+	["NET_TO_PED"]=--[[Ped (int)]] function(--[[int]] netHandle)native_invoker.begin_call()native_invoker.push_arg_int(netHandle)native_invoker.end_call_2(0xBDCD95FC216A8B3E)return native_invoker.get_return_value_int()end,
+	-- gets the object id of a network id
+	["NET_TO_OBJ"]=--[[Object (int)]] function(--[[int]] netHandle)native_invoker.begin_call()native_invoker.push_arg_int(netHandle)native_invoker.end_call_2(0xD8515F5FEA14CB3F)return native_invoker.get_return_value_int()end,
+	-- gets the entity id of a network id
+	["NET_TO_ENT"]=--[[Entity (int)]] function(--[[int]] netHandle)native_invoker.begin_call()native_invoker.push_arg_int(netHandle)native_invoker.end_call_2(0xBFFEAB45A9A9094A)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_LOCAL_HANDLE"]=--[[void]] function(--[[Any* (pointer)]] gamerHandle,--[[int]] gamerHandleSize)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_int(gamerHandleSize)native_invoker.end_call_2(0xE86051786B66CD8E)end,
+	["NETWORK_HANDLE_FROM_USER_ID"]=--[[void]] function(--[[string]] userId,--[[Any* (pointer)]] gamerHandle,--[[int]] gamerHandleSize)native_invoker.begin_call()native_invoker.push_arg_string(userId)native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_int(gamerHandleSize)native_invoker.end_call_2(0xDCD51DD8F87AEC5C)end,
+	["NETWORK_HANDLE_FROM_MEMBER_ID"]=--[[void]] function(--[[string]] memberId,--[[Any* (pointer)]] gamerHandle,--[[int]] gamerHandleSize)native_invoker.begin_call()native_invoker.push_arg_string(memberId)native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_int(gamerHandleSize)native_invoker.end_call_2(0xA0FD21BED61E5C4C)end,
+	["NETWORK_HANDLE_FROM_PLAYER"]=--[[void]] function(--[[Player (int)]] player,--[[Any* (pointer)]] gamerHandle,--[[int]] gamerHandleSize)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_int(gamerHandleSize)native_invoker.end_call_2(0x388EB2B86C73B6B3)end,
+	["NETWORK_HASH_FROM_PLAYER_HANDLE"]=--[[Hash (int)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xBC1D768F2F5D6C05)return native_invoker.get_return_value_int()end,
+	["NETWORK_HASH_FROM_GAMER_HANDLE"]=--[[Hash (int)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x58575AC3CF2CA8EC)return native_invoker.get_return_value_int()end,
+	["NETWORK_HANDLE_FROM_FRIEND"]=--[[void]] function(--[[int]] friendIndex,--[[Any* (pointer)]] gamerHandle,--[[int]] gamerHandleSize)native_invoker.begin_call()native_invoker.push_arg_int(friendIndex)native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_int(gamerHandleSize)native_invoker.end_call_2(0xD45CB817D7E177D2)end,
+	["NETWORK_GAMERTAG_FROM_HANDLE_START"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x9F0C0A981D73FA56)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GAMERTAG_FROM_HANDLE_PENDING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB071E27958EF4CF0)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GAMERTAG_FROM_HANDLE_SUCCEEDED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFD00798DBA7523DD)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_GAMERTAG_FROM_HANDLE"]=--[[string]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x426141162EBE5CDB)return native_invoker.get_return_value_string()end,
+	-- Hardcoded to return -1.
+	["NETWORK_DISPLAYNAMES_FROM_HANDLES_START"]=--[[int]] function(--[[Any* (pointer)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xD66C9E72B3CC4982)return native_invoker.get_return_value_int()end,
+	-- MulleDK19: This function is hard-coded to always return 0.
+	["NETWORK_GET_DISPLAYNAMES_FROM_HANDLES"]=--[[int]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x58CC181719256197)return native_invoker.get_return_value_int()end,
+	["NETWORK_ARE_HANDLES_THE_SAME"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle1,--[[Any* (pointer)]] gamerHandle2)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle1)native_invoker.push_arg_pointer(gamerHandle2)native_invoker.end_call_2(0x57DBA049E110F217)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_HANDLE_VALID"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle,--[[int]] gamerHandleSize)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_int(gamerHandleSize)native_invoker.end_call_2(0x6F79B93B0A8E4133)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_PLAYER_FROM_GAMER_HANDLE"]=--[[Player (int)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xCE5F689CF5A0A49D)return native_invoker.get_return_value_int()end,
+	["NETWORK_MEMBER_ID_FROM_GAMER_HANDLE"]=--[[string]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xC82630132081BB6F)return native_invoker.get_return_value_string()end,
+	["NETWORK_IS_GAMER_IN_MY_SESSION"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x0F10B05DDF8D16E9)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SHOW_PROFILE_UI"]=--[[void]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x859ED1CEA343FCA8)end,
+	-- Returns the name of a given player. Returns "**Invalid**" if rlGamerInfo of the given player cannot be retrieved or the player doesn't exist.
+	["NETWORK_PLAYER_GET_NAME"]=--[[string]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x7718D2E2060837D2)return native_invoker.get_return_value_string()end,
+	-- Returns a string of the player's Rockstar Id. 
+	-- Takes a 24 char buffer. Returns the buffer or "**Invalid**" if rlGamerInfo of the given player cannot be retrieved or the player doesn't exist.
+	["NETWORK_PLAYER_GET_USERID"]=--[[string]] function(--[[Player (int)]] player,--[[int* (pointer)]] userID)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_pointer(userID)native_invoker.end_call_2(0x4927FC39CD0869A0)return native_invoker.get_return_value_string()end,
+	-- Checks if a specific value (BYTE) in CNetGamePlayer is nonzero.
+	-- Returns always false in Singleplayer.
+	-- 
+	-- No longer used for dev checks since first mods were released on PS3 & 360.
+	-- R* now checks with the IS_DLC_PRESENT native for the dlc hash 2532323046,
+	-- if that is present it will unlock dev stuff.
+	["NETWORK_PLAYER_IS_ROCKSTAR_DEV"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x544ABDDA3B409B6D)return native_invoker.get_return_value_bool()end,
+	["NETWORK_PLAYER_INDEX_IS_CHEATER"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x565E430DB3B05BEC)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ENTITY_GET_OBJECT_ID"]=--[[int]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x815F18AD865F057F)return native_invoker.get_return_value_int()end,
+	-- I've had this return the player's ped handle sometimes, but also other random entities.
+	-- Whatever p0 is, it's at least not synced to other players.
+	-- At least not all the time, some p0 values actually output the same entity, (different handle of course, but same entity).
+	-- But another p0 value may return an entity for player x, but not for player y (it'll just return -1 even if the entity exists on both clients).
+	-- 
+	-- Returns an entity handle or -1, value changes based on p0's value.
+	["NETWORK_GET_ENTITY_FROM_OBJECT_ID"]=--[[int]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x37D5F739FD494675)return native_invoker.get_return_value_int()end,
+	["NETWORK_IS_INACTIVE_PROFILE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x7E58745504313A2E)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_MAX_FRIENDS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xAFEBB0D5D8F687D2)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_FRIEND_COUNT"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x203F1CFD823B27A4)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_FRIEND_NAME"]=--[[string]] function(--[[int]] friendIndex)native_invoker.begin_call()native_invoker.push_arg_int(friendIndex)native_invoker.end_call_2(0xE11EBBB2A783FE8B)return native_invoker.get_return_value_string()end,
+	["NETWORK_GET_FRIEND_DISPLAY_NAME"]=--[[string]] function(--[[int]] friendIndex)native_invoker.begin_call()native_invoker.push_arg_int(friendIndex)native_invoker.end_call_2(0x4164F227D052E293)return native_invoker.get_return_value_string()end,
+	["NETWORK_IS_FRIEND_ONLINE"]=--[[BOOL (bool)]] function(--[[string]] name)native_invoker.begin_call()native_invoker.push_arg_string(name)native_invoker.end_call_2(0x425A44533437B64D)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_FRIEND_HANDLE_ONLINE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x87EB7A3FFCB314DB)return native_invoker.get_return_value_bool()end,
+	-- In scripts R* calls 'NETWORK_GET_FRIEND_NAME' in this param.
+	["NETWORK_IS_FRIEND_IN_SAME_TITLE"]=--[[BOOL (bool)]] function(--[[string]] friendName)native_invoker.begin_call()native_invoker.push_arg_string(friendName)native_invoker.end_call_2(0x2EA9A3BEDF3F17B8)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_FRIEND_IN_MULTIPLAYER"]=--[[BOOL (bool)]] function(--[[string]] friendName)native_invoker.begin_call()native_invoker.push_arg_string(friendName)native_invoker.end_call_2(0x57005C18827F3A28)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_FRIEND"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x1A24A179F9B31654)return native_invoker.get_return_value_bool()end,
+	-- This function is hard-coded to always return 0.
+	["NETWORK_IS_PENDING_FRIEND"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x0BE73DA6984A6E33)return native_invoker.get_return_value_int()end,
+	["NETWORK_IS_ADDING_FRIEND"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x6EA101606F6E4D81)return native_invoker.get_return_value_int()end,
+	["NETWORK_ADD_FRIEND"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle,--[[string]] message)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_string(message)native_invoker.end_call_2(0x8E02D73914064223)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_FRIEND_INDEX_ONLINE"]=--[[BOOL (bool)]] function(--[[int]] friendIndex)native_invoker.begin_call()native_invoker.push_arg_int(friendIndex)native_invoker.end_call_2(0xBAD8F2A42B844821)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_PLAYER_IS_PASSIVE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x1B857666604B1A74)end,
+	["NETWORK_GET_PLAYER_OWNS_WAYPOINT"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x82377B65E943F72D)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CAN_SET_WAYPOINT"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC927EC229934AF60)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IGNORE_REMOTE_WAYPOINTS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x4C2A9FDC22377075)end,
+	["NETWORK_SET_SCRIPT_AUTOMUTED"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xB309EBEA797E001F)return native_invoker.get_return_value_int()end,
+	["NETWORK_HAS_AUTOMUTE_OVERRIDE"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x26F07DD83A5F7F98)return native_invoker.get_return_value_int()end,
+	["NETWORK_HAS_HEADSET"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xE870F9F1F7B4F1FA)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_LOOK_AT_TALKERS"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x7D395EA61622E116)end,
+	["NETWORK_IS_PUSH_TO_TALK_ACTIVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC0D2AF00BCC234CA)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GAMER_HAS_HEADSET"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xF2FD55CB574BCC55)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_GAMER_TALKING"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x71C33B22606CD88A)return native_invoker.get_return_value_bool()end,
+	["NETWORK_PERMISSIONS_HAS_GAMER_RECORD"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x559EBF901A8C68E0)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CAN_COMMUNICATE_WITH_GAMER"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x8F5D1AD832AEB06C)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CAN_TEXT_CHAT_WITH_GAMER"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xA150A4F065806B1F)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_GAMER_MUTED_BY_ME"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xCE60DE011B6C7978)return native_invoker.get_return_value_bool()end,
+	["NETWORK_AM_I_MUTED_BY_GAMER"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xDF02A2C93F1F26DA)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_GAMER_BLOCKED_BY_ME"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xE944C4F5AF1B5883)return native_invoker.get_return_value_bool()end,
+	["NETWORK_AM_I_BLOCKED_BY_GAMER"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x15337C7C268A27B2)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CAN_VIEW_GAMER_USER_CONTENT"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xB57A49545BA53CE7)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_VIEW_GAMER_USER_CONTENT_RESULT"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xCCA4318E1AB03F1F)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CAN_PLAY_MULTIPLAYER_WITH_GAMER"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x07DD29D5E22763F1)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CAN_GAMER_PLAY_MULTIPLAYER_WITH_ME"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x135F9B7B7ADD2185)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CAN_SEND_LOCAL_INVITE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x021ABCBD98EC4320)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CAN_RECEIVE_LOCAL_INVITE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0x421E34C55F125964)return native_invoker.get_return_value_bool()end,
+	-- returns true if someone is screaming or talking in a microphone
+	["NETWORK_IS_PLAYER_TALKING"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x031E11F3D447647E)return native_invoker.get_return_value_bool()end,
+	["NETWORK_PLAYER_HAS_HEADSET"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x3FB99A8B08D18FD6)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_PLAYER_MUTED_BY_ME"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x8C71288AE68EDE39)return native_invoker.get_return_value_bool()end,
+	["NETWORK_AM_I_MUTED_BY_PLAYER"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x9D6981DFC91A8604)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_PLAYER_BLOCKED_BY_ME"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x57AF1F8E27483721)return native_invoker.get_return_value_bool()end,
+	["NETWORK_AM_I_BLOCKED_BY_PLAYER"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x87F395D957D4353D)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_PLAYER_LOUDNESS"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x21A1684A25C2867F)return native_invoker.get_return_value_float()end,
+	["NETWORK_SET_TALKER_PROXIMITY"]=--[[void]] function(--[[float]] value)native_invoker.begin_call()native_invoker.push_arg_float(value)native_invoker.end_call_2(0xCBF12D65F95AD686)end,
+	["NETWORK_GET_TALKER_PROXIMITY"]=--[[float]] function()native_invoker.begin_call()native_invoker.end_call_2(0x84F0F13120B4E098)return native_invoker.get_return_value_float()end,
+	["NETWORK_SET_VOICE_ACTIVE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xBABEC9E69A91C57B)end,
+	["NETWORK_REMAIN_IN_GAME_CHAT"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0xCFEB46DCD7D8D5EB)end,
+	["NETWORK_OVERRIDE_TRANSITION_CHAT"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0xAF66059A131AA269)end,
+	["NETWORK_SET_TEAM_ONLY_CHAT"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xD5B4883AC32F24C3)end,
+	["NETWORK_SET_SCRIPT_CONTROLLING_TEAMS"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x265559DA40B3F327)end,
+	["NETWORK_SET_SAME_TEAM_AS_LOCAL_PLAYER"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x4348BFDA56023A2F)return native_invoker.get_return_value_int()end,
+	["NETWORK_OVERRIDE_TEAM_RESTRICTIONS"]=--[[void]] function(--[[int]] team,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(team)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x6F697A66CE78674E)end,
+	["NETWORK_SET_OVERRIDE_SPECTATOR_MODE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x70DA3BF8DACD3210)end,
+	["NETWORK_SET_OVERRIDE_TUTORIAL_SESSION_CHAT"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x3C5C1E2C2FF814B1)end,
+	["NETWORK_SET_PROXIMITY_AFFECTS_TEAM"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x9D7AFCBF21C51712)end,
+	["NETWORK_SET_NO_SPECTATOR_CHAT"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xF46A1E03E8755980)end,
+	["NETWORK_SET_IGNORE_SPECTATOR_CHAT_LIMITS_SAME_TEAM"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x6A5D89D7769A40D8)end,
+	-- Could possibly bypass being muted or automatically muted
+	["NETWORK_OVERRIDE_CHAT_RESTRICTIONS"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x3039AE5AD2C9C0C4)end,
+	-- This is used alongside the native,
+	-- 'NETWORK_OVERRIDE_RECEIVE_RESTRICTIONS'. Read its description for more info.
+	["NETWORK_OVERRIDE_SEND_RESTRICTIONS"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x97DD4C5944CC2E6A)end,
+	["NETWORK_OVERRIDE_SEND_RESTRICTIONS_ALL"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x57B192B4D4AD23D5)end,
+	-- R* uses this to hear all player when spectating. 
+	-- It allows you to hear other online players when their chat is on none, crew and or friends
+	["NETWORK_OVERRIDE_RECEIVE_RESTRICTIONS"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xDDF73E2B1FEC5AB4)end,
+	-- p0 is always false in scripts.
+	["NETWORK_OVERRIDE_RECEIVE_RESTRICTIONS_ALL"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x0FF2862B61A58AF9)end,
+	["NETWORK_SET_VOICE_CHANNEL"]=--[[void]] function(--[[int]] channel)native_invoker.begin_call()native_invoker.push_arg_int(channel)native_invoker.end_call_2(0xEF6212C2EFEF1A23)end,
+	["NETWORK_CLEAR_VOICE_CHANNEL"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xE036A705F989E049)end,
+	["NETWORK_APPLY_VOICE_PROXIMITY_OVERRIDE"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.end_call_2(0xDBD2056652689917)end,
+	["NETWORK_CLEAR_VOICE_PROXIMITY_OVERRIDE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF03755696450470C)end,
+	["NETWORK_ENABLE_VOICE_BANDWIDTH_RESTRICTION"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x5E3AA4CA2B6FB0EE)end,
+	["NETWORK_DISABLE_VOICE_BANDWIDTH_RESTRICTION"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xCA575C391FEA25CC)end,
+	-- NETWORK_GET_M[A-U]
+	["NETWORK_GET_MUTE_COUNT_FOR_PLAYER"]=--[[void]] function(--[[Player (int)]] p0,--[[float* (pointer)]] p1,--[[float* (pointer)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_pointer(p1)native_invoker.push_arg_pointer(p2)native_invoker.end_call_2(0xADB57E5B663CCA8B)end,
+	["NETWORK_SET_SPECTATOR_TO_NON_SPECTATOR_TEXT_CHAT"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x8EF52ACAECC51D9C)end,
+	-- Same as _IS_TEXT_CHAT_ACTIVE, except it does not check if the text chat HUD component is initialized, and therefore may crash.
+	["NETWORK_TEXT_CHAT_IS_TYPING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5FCF4D7069B09026)return native_invoker.get_return_value_bool()end,
+	-- Starts a new singleplayer game (at the prologue).
+	["SHUTDOWN_AND_LAUNCH_SINGLE_PLAYER_GAME"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x593850C16A36B692)end,
+	-- In singleplayer this will re-load your game.
+	-- 
+	-- In FiveM / GTA:Online this disconnects you from the session, and starts loading single player, however you still remain connected to the server (only if you're the host, if you're not then you also (most likely) get disconnected from the server) and other players will not be able to join until you exit the game.
+	-- 
+	-- You might need to DoScreenFadeIn and ShutdownLoadingScreen otherwise you probably won't end up loading into SP at all.
+	-- 
+	-- Somewhat related note: opening the pause menu after loading into this 'singleplayer' mode crashes the game.
+	["SHUTDOWN_AND_LOAD_MOST_RECENT_SAVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9ECA15ADFE141431)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_FRIENDLY_FIRE_OPTION"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xF808475FA571D823)end,
+	-- This native does absolutely nothing, just a nullsub
+	["NETWORK_SET_RICH_PRESENCE"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0x1DCCACDCFC569362)end,
+	-- This native does absolutely nothing, just a nullsub
+	["NETWORK_SET_RICH_PRESENCE_STRING"]=--[[void]] function(--[[int]] p0,--[[string]] textLabel)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_string(textLabel)native_invoker.end_call_2(0x3E200C2BCF4164EB)end,
+	["NETWORK_GET_TIMEOUT_TIME"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5ED0356A0CE3A34F)return native_invoker.get_return_value_int()end,
+	-- p4 and p5 are always 0 in scripts
+	["NETWORK_LEAVE_PED_BEHIND_BEFORE_WARP"]=--[[void]] function(--[[Player (int)]] player,--[[float]] x,--[[float]] y,--[[float]] z,--[[BOOL (bool)]] p4,--[[BOOL (bool)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_bool(p4)native_invoker.push_arg_bool(p5)native_invoker.end_call_2(0x9769F811D1785B03)end,
+	["NETWORK_LEAVE_PED_BEHIND_BEFORE_CUTSCENE"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xBF22E0F32968E967)end,
+	-- entity must be a valid entity; ped can be NULL
+	["REMOVE_ALL_STICKY_BOMBS_FROM_ENTITY"]=--[[void]] function(--[[Entity (int)]] entity,--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x715135F4B82AC90D)end,
+	["NETWORK_KEEP_ENTITY_COLLISION_DISABLED_AFTER_ANIM_SCENE"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x17C9E241111A674D)end,
+	["NETWORK_IS_ANY_PLAYER_NEAR"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4,--[[Any (int)]] p5,--[[Any (int)]] p6)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.push_arg_int(p5)native_invoker.push_arg_int(p6)native_invoker.end_call_2(0x2E4C123D1C8A710E)return native_invoker.get_return_value_int()end,
+	["NETWORK_CLAN_SERVICE_IS_VALID"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x579CCED0265D4896)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_PLAYER_IS_ACTIVE"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xB124B57F571D8F18)return native_invoker.get_return_value_bool()end,
+	-- bufferSize is 35 in the scripts.
+	-- 
+	-- bufferSize is the elementCount of p0(desc), sizeof(p0) == 280 == p1*8 == 35 * 8, p2(netHandle) is obtained from NETWORK::NETWORK_HANDLE_FROM_PLAYER.  And no, I can't explain why 35 * sizeof(int) == 280 and not 140, but I'll get back to you on that.
+	-- 
+	-- the answer is: because p0 an int64_t* / int64_t[35].  and FYI p2 is an int64_t[13]
+	-- 
+	-- pastebin.com/cSZniHak
+	["NETWORK_CLAN_PLAYER_GET_DESC"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] clanDesc,--[[int]] bufferSize,--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(clanDesc)native_invoker.push_arg_int(bufferSize)native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xEEE6EACBE8874FBA)return native_invoker.get_return_value_bool()end,
+	-- bufferSize is 35 in the scripts.
+	["NETWORK_CLAN_IS_ROCKSTAR_CLAN"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] clanDesc,--[[int]] bufferSize)native_invoker.begin_call()native_invoker.push_arg_pointer(clanDesc)native_invoker.push_arg_int(bufferSize)native_invoker.end_call_2(0x7543BB439F63792B)return native_invoker.get_return_value_bool()end,
+	-- bufferSize is 35 in the scripts.
+	["NETWORK_CLAN_GET_UI_FORMATTED_TAG"]=--[[void]] function(--[[Any* (pointer)]] clanDesc,--[[int]] bufferSize,--[[char* (pointer)]] formattedTag)native_invoker.begin_call()native_invoker.push_arg_pointer(clanDesc)native_invoker.push_arg_int(bufferSize)native_invoker.push_arg_pointer(formattedTag)native_invoker.end_call_2(0xF45352426FF3A4F0)end,
+	["NETWORK_CLAN_GET_LOCAL_MEMBERSHIPS_COUNT"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x1F471B79ACC90BEF)return native_invoker.get_return_value_int()end,
+	["NETWORK_CLAN_GET_MEMBERSHIP_DESC"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] memberDesc,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(memberDesc)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x48DE78AF2C8885B8)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_DOWNLOAD_MEMBERSHIP"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] gamerHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.end_call_2(0xA989044E70010ABE)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_DOWNLOAD_MEMBERSHIP_PENDING"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x5B9E023DC6EBEDC0)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_ANY_DOWNLOAD_MEMBERSHIP_PENDING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB3F64A6A91432477)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_REMOTE_MEMBERSHIPS_ARE_IN_CACHE"]=--[[BOOL (bool)]] function(--[[int* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0xBB6E6FEE99D866B2)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_GET_MEMBERSHIP_COUNT"]=--[[int]] function(--[[int* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0xAAB11F6C4ADBC2C1)return native_invoker.get_return_value_int()end,
+	["NETWORK_CLAN_GET_MEMBERSHIP_VALID"]=--[[BOOL (bool)]] function(--[[int* (pointer)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x48A59CF88D43DF0E)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_GET_MEMBERSHIP"]=--[[BOOL (bool)]] function(--[[int* (pointer)]] p0,--[[Any* (pointer)]] clanMembership,--[[int]] p2)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_pointer(clanMembership)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0xC8BC2011F67B3411)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_JOIN"]=--[[BOOL (bool)]] function(--[[int]] clanDesc)native_invoker.begin_call()native_invoker.push_arg_int(clanDesc)native_invoker.end_call_2(0x9FAAA4F4FC71F87F)return native_invoker.get_return_value_bool()end,
+	-- Only documented...
+	-- 
+	-- Full list of animation dictionaries and anims by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/animDictsCompact.json
+	["NETWORK_CLAN_CREWINFO_GET_STRING_VALUE"]=--[[BOOL (bool)]] function(--[[string]] animDict,--[[string]] animName)native_invoker.begin_call()native_invoker.push_arg_string(animDict)native_invoker.push_arg_string(animName)native_invoker.end_call_2(0x729E3401F0430686)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_CREWINFO_GET_CREWRANKTITLE"]=--[[BOOL (bool)]] function(--[[int]] p0,--[[string]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_string(p1)native_invoker.end_call_2(0x2B51EDBEFC301339)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_HAS_CREWINFO_METADATA_BEEN_RECEIVED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC32EA7A2F6CA7557)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_GET_EMBLEM_TXD_NAME"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] netHandle,--[[char* (pointer)]] txdName)native_invoker.begin_call()native_invoker.push_arg_pointer(netHandle)native_invoker.push_arg_pointer(txdName)native_invoker.end_call_2(0x5835D9CD92E83184)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_REQUEST_EMBLEM"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x13518FF1C6B28938)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_IS_EMBLEM_READY"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0xA134777FF7F33331)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CLAN_RELEASE_EMBLEM"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x113E6E3E50E286B0)end,
+	["NETWORK_GET_PRIMARY_CLAN_DATA_CLEAR"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9AA46BADAD0E27ED)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_PRIMARY_CLAN_DATA_CANCEL"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x042E4B70B93E6054)end,
+	["NETWORK_GET_PRIMARY_CLAN_DATA_START"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xCE86D8191B762107)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_PRIMARY_CLAN_DATA_PENDING"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB5074DB804E28CE7)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_PRIMARY_CLAN_DATA_SUCCESS"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5B4F04F19376A0BA)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_PRIMARY_CLAN_DATA_NEW"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0xC080FF658B2E41DA)return native_invoker.get_return_value_bool()end,
+	-- Whether or not another player is allowed to take control of the entity
+	["SET_NETWORK_ID_CAN_MIGRATE"]=--[[void]] function(--[[int]] netId,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x299EEB23175895FC)end,
+	["SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES"]=--[[void]] function(--[[int]] netId,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xE05E81A888FA63C8)end,
+	["SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER"]=--[[void]] function(--[[int]] netId,--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xA8A024587329F36A)end,
+	-- "No Reassign" in CPhysicalScriptGameStateDataNode
+	["SET_NETWORK_ID_CAN_BE_REASSIGNED"]=--[[void]] function(--[[int]] netId,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x9D724B400A7E8FFC)end,
+	["NETWORK_SET_ENTITY_CAN_BLEND"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xD830567D88A1E873)end,
+	["NETWORK_SET_OBJECT_CAN_BLEND_WHEN_FIXED"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x0379DAF89BA09AA5)end,
+	-- if set to true other network players can't see it
+	-- if set to false other network player can see it
+	-- =========================================
+	-- ^^ I attempted this by grabbing an object with GET_ENTITY_PLAYER_IS_FREE_AIMING_AT and setting this naive no matter the toggle he could still see it.
+	-- 
+	-- pc or last gen?
+	-- 
+	-- ^^ last-gen
+	["NETWORK_SET_ENTITY_ONLY_EXISTS_FOR_PARTICIPANTS"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xF1CA12B18AEF5298)end,
+	["SET_NETWORK_ID_VISIBLE_IN_CUTSCENE"]=--[[void]] function(--[[int]] netId,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xA6928482543022B4)end,
+	["SET_NETWORK_ID_VISIBLE_IN_CUTSCENE_HACK"]=--[[void]] function(--[[int]] netId,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x32EBD154CB6B8B99)end,
+	["SET_NETWORK_ID_VISIBLE_IN_CUTSCENE_REMAIN_HACK"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x76B3F29D3F967692)end,
+	["SET_NETWORK_CUTSCENE_ENTITIES"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xAAA553E7DD28A457)end,
+	-- Getter for SET_NETWORK_CUTSCENE_ENTITIES.
+	["ARE_CUTSCENE_ENTITIES_NETWORKED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x66D6A5E9C511214A)return native_invoker.get_return_value_bool()end,
+	["SET_NETWORK_ID_PASS_CONTROL_IN_TUTORIAL"]=--[[void]] function(--[[int]] netId,--[[BOOL (bool)]] state)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.push_arg_bool(state)native_invoker.end_call_2(0x3FA36981311FA4FF)end,
+	["IS_NETWORK_ID_OWNED_BY_PARTICIPANT"]=--[[BOOL (bool)]] function(--[[int]] netId)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.end_call_2(0xA1607996431332DF)return native_invoker.get_return_value_bool()end,
+	["SET_LOCAL_PLAYER_VISIBLE_IN_CUTSCENE"]=--[[void]] function(--[[BOOL (bool)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xD1065D68947E7B6E)end,
+	["SET_LOCAL_PLAYER_INVISIBLE_LOCALLY"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0xE5F773C1A1D9D168)end,
+	["SET_LOCAL_PLAYER_VISIBLE_LOCALLY"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x7619364C82D3BF14)end,
+	["SET_PLAYER_INVISIBLE_LOCALLY"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x12B37D54667DB0B8)end,
+	["SET_PLAYER_VISIBLE_LOCALLY"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xFAA10F1FAFB11AF2)end,
+	-- Hardcoded to not work in SP.
+	["FADE_OUT_LOCAL_PLAYER"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x416DBD4CD6ED8DD2)end,
+	-- normal - transition like when your coming out of LSC
+	-- slow - transition like when you walk into a mission
+	--  
+	["NETWORK_FADE_OUT_ENTITY"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] normal,--[[BOOL (bool)]] slow)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(normal)native_invoker.push_arg_bool(slow)native_invoker.end_call_2(0xDE564951F95E09ED)end,
+	-- state - 0 does 5 fades
+	-- state - 1 does 6 fades
+	-- 
+	-- p3: setting to 1 made vehicle fade in slower, probably "slow" as per NETWORK_FADE_OUT_ENTITY
+	["NETWORK_FADE_IN_ENTITY"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] state,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(state)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x1F4ED342ACEFE62D)end,
+	["NETWORK_IS_PLAYER_FADING"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x631DC5DFF4B110E3)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_ENTITY_FADING"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x422F32CC7E56ABAD)return native_invoker.get_return_value_bool()end,
+	["IS_PLAYER_IN_CUTSCENE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xE73092F4157CD126)return native_invoker.get_return_value_bool()end,
+	["SET_ENTITY_VISIBLE_IN_CUTSCENE"]=--[[void]] function(--[[Any (int)]] p0,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xE0031D3C8F36AB82)end,
+	-- Makes the provided entity visible for yourself for the current frame.
+	["SET_ENTITY_LOCALLY_INVISIBLE"]=--[[void]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0xE135A9FF3F5D05D8)end,
+	["SET_ENTITY_LOCALLY_VISIBLE"]=--[[void]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x241E289B5C059EDC)end,
+	["IS_DAMAGE_TRACKER_ACTIVE_ON_NETWORK_ID"]=--[[BOOL (bool)]] function(--[[int]] netID)native_invoker.begin_call()native_invoker.push_arg_int(netID)native_invoker.end_call_2(0x6E192E33AD436366)return native_invoker.get_return_value_bool()end,
+	["ACTIVATE_DAMAGE_TRACKER_ON_NETWORK_ID"]=--[[void]] function(--[[int]] netID,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(netID)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xD45B1FFCCD52FF19)end,
+	["IS_DAMAGE_TRACKER_ACTIVE_ON_PLAYER"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xB2092A1EAA7FD45F)return native_invoker.get_return_value_bool()end,
+	["ACTIVATE_DAMAGE_TRACKER_ON_PLAYER"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xBEC0816FF5ACBCDA)end,
+	["IS_SPHERE_VISIBLE_TO_ANOTHER_MACHINE"]=--[[BOOL (bool)]] function(--[[float]] p0,--[[float]] p1,--[[float]] p2,--[[float]] p3)native_invoker.begin_call()native_invoker.push_arg_float(p0)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.end_call_2(0xD82CF8E64C8729D8)return native_invoker.get_return_value_bool()end,
+	["IS_SPHERE_VISIBLE_TO_PLAYER"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[float]] p1,--[[float]] p2,--[[float]] p3,--[[float]] p4)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.end_call_2(0xDC3A310219E5DA62)return native_invoker.get_return_value_bool()end,
+	["RESERVE_NETWORK_MISSION_OBJECTS"]=--[[void]] function(--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(amount)native_invoker.end_call_2(0x4E5C93BD0C32FBF8)end,
+	["RESERVE_NETWORK_MISSION_PEDS"]=--[[void]] function(--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(amount)native_invoker.end_call_2(0xB60FEBA45333D36F)end,
+	["RESERVE_NETWORK_MISSION_VEHICLES"]=--[[void]] function(--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(amount)native_invoker.end_call_2(0x76B02E21ED27A469)end,
+	["RESERVE_LOCAL_NETWORK_MISSION_OBJECTS"]=--[[void]] function(--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(amount)native_invoker.end_call_2(0x797F9C5E661D920E)end,
+	["RESERVE_LOCAL_NETWORK_MISSION_PEDS"]=--[[void]] function(--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(amount)native_invoker.end_call_2(0x2C8DF5D129595281)end,
+	["RESERVE_LOCAL_NETWORK_MISSION_VEHICLES"]=--[[void]] function(--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(amount)native_invoker.end_call_2(0x42613035157E4208)end,
+	["CAN_REGISTER_MISSION_OBJECTS"]=--[[BOOL (bool)]] function(--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(amount)native_invoker.end_call_2(0x800DD4721A8B008B)return native_invoker.get_return_value_bool()end,
+	["CAN_REGISTER_MISSION_PEDS"]=--[[BOOL (bool)]] function(--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(amount)native_invoker.end_call_2(0xBCBF4FEF9FA5D781)return native_invoker.get_return_value_bool()end,
+	["CAN_REGISTER_MISSION_VEHICLES"]=--[[BOOL (bool)]] function(--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(amount)native_invoker.end_call_2(0x7277F1F2E085EE74)return native_invoker.get_return_value_bool()end,
+	["CAN_REGISTER_MISSION_PICKUPS"]=--[[BOOL (bool)]] function(--[[int]] amount)native_invoker.begin_call()native_invoker.push_arg_int(amount)native_invoker.end_call_2(0x0A49D1CB6E34AF72)return native_invoker.get_return_value_bool()end,
+	["CAN_REGISTER_MISSION_DOORS"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xE16AA70CE9BEEDC3)return native_invoker.get_return_value_int()end,
+	["CAN_REGISTER_MISSION_ENTITIES"]=--[[BOOL (bool)]] function(--[[int]] ped_amt,--[[int]] vehicle_amt,--[[int]] object_amt,--[[int]] pickup_amt)native_invoker.begin_call()native_invoker.push_arg_int(ped_amt)native_invoker.push_arg_int(vehicle_amt)native_invoker.push_arg_int(object_amt)native_invoker.push_arg_int(pickup_amt)native_invoker.end_call_2(0x69778E7564BADE6D)return native_invoker.get_return_value_bool()end,
+	-- p0 appears to be for MP
+	["GET_NUM_RESERVED_MISSION_OBJECTS"]=--[[int]] function(--[[BOOL (bool)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xAA81B5F10BC43AC2)return native_invoker.get_return_value_int()end,
+	-- p0 appears to be for MP
+	["GET_NUM_RESERVED_MISSION_PEDS"]=--[[int]] function(--[[BOOL (bool)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x1F13D5AE5CB17E17)return native_invoker.get_return_value_int()end,
+	-- p0 appears to be for MP
+	["GET_NUM_RESERVED_MISSION_VEHICLES"]=--[[int]] function(--[[BOOL (bool)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xCF3A965906452031)return native_invoker.get_return_value_int()end,
+	["GET_NUM_CREATED_MISSION_OBJECTS"]=--[[int]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x12B6281B6C6706C0)return native_invoker.get_return_value_int()end,
+	["GET_NUM_CREATED_MISSION_PEDS"]=--[[int]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0xCB215C4B56A7FAE7)return native_invoker.get_return_value_int()end,
+	["GET_NUM_CREATED_MISSION_VEHICLES"]=--[[int]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x0CD9AB83489430EA)return native_invoker.get_return_value_int()end,
+	["GET_RESERVED_MISSION_ENTITIES_IN_AREA"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4,--[[Any (int)]] p5,--[[Any (int)]] p6)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.push_arg_int(p5)native_invoker.push_arg_int(p6)native_invoker.end_call_2(0xE42D626EEC94E5D9)end,
+	["GET_MAX_NUM_NETWORK_OBJECTS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC7BE335216B5EC7C)return native_invoker.get_return_value_int()end,
+	["GET_MAX_NUM_NETWORK_PEDS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x0C1F7D49C39D2289)return native_invoker.get_return_value_int()end,
+	["GET_MAX_NUM_NETWORK_VEHICLES"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x0AFCE529F69B21FF)return native_invoker.get_return_value_int()end,
+	["GET_MAX_NUM_NETWORK_PICKUPS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA72835064DD63E4C)return native_invoker.get_return_value_int()end,
+	["NETWORK_SET_OBJECT_SCOPE_DISTANCE"]=--[[void]] function(--[[Object (int)]] object,--[[float]] range)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_float(range)native_invoker.end_call_2(0xBA7F0B77D80A4EB7)end,
+	["NETWORK_ALLOW_CLONING_WHILE_IN_TUTORIAL"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x0F1A4B45B7693B95)end,
+	-- A value between 1.0 and 5.0
+	-- 
+	-- _NETWORK_SET_TASK_CUTSCENE_PROXIMITY_SCALE?
+	["NETWORK_SET_TASK_CUTSCENE_INSCOPE_MULTIPLER"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xC6FCEE21C6FCEE21)end,
+	["GET_NETWORK_TIME"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x7A5487FE9FAA6B48)return native_invoker.get_return_value_int()end,
+	-- Returns the same value as GET_NETWORK_TIME in freemode, but as opposed to `GET_NETWORK_TIME` it always gets the most recent time, instead of once per tick.
+	-- Could be used for benchmarking since it can return times in ticks.
+	["GET_NETWORK_TIME_ACCURATE"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x89023FBBF9200E9F)return native_invoker.get_return_value_int()end,
+	["HAS_NETWORK_TIME_STARTED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x46718ACEEDEAFC84)return native_invoker.get_return_value_bool()end,
+	-- Adds the first argument to the second.
+	["GET_TIME_OFFSET"]=--[[int]] function(--[[int]] timeA,--[[int]] timeB)native_invoker.begin_call()native_invoker.push_arg_int(timeA)native_invoker.push_arg_int(timeB)native_invoker.end_call_2(0x017008CCDAD48503)return native_invoker.get_return_value_int()end,
+	-- Subtracts the second argument from the first, then returns whether the result is negative.
+	["IS_TIME_LESS_THAN"]=--[[BOOL (bool)]] function(--[[int]] timeA,--[[int]] timeB)native_invoker.begin_call()native_invoker.push_arg_int(timeA)native_invoker.push_arg_int(timeB)native_invoker.end_call_2(0xCB2CF5148012C8D0)return native_invoker.get_return_value_bool()end,
+	-- Subtracts the first argument from the second, then returns whether the result is negative.
+	["IS_TIME_MORE_THAN"]=--[[BOOL (bool)]] function(--[[int]] timeA,--[[int]] timeB)native_invoker.begin_call()native_invoker.push_arg_int(timeA)native_invoker.push_arg_int(timeB)native_invoker.end_call_2(0xDE350F8651E4346C)return native_invoker.get_return_value_bool()end,
+	-- Returns true if the two times are equal; otherwise returns false.
+	["IS_TIME_EQUAL_TO"]=--[[BOOL (bool)]] function(--[[int]] timeA,--[[int]] timeB)native_invoker.begin_call()native_invoker.push_arg_int(timeA)native_invoker.push_arg_int(timeB)native_invoker.end_call_2(0xF5BC95857BD6D512)return native_invoker.get_return_value_bool()end,
+	-- Subtracts the second argument from the first.
+	["GET_TIME_DIFFERENCE"]=--[[int]] function(--[[int]] timeA,--[[int]] timeB)native_invoker.begin_call()native_invoker.push_arg_int(timeA)native_invoker.push_arg_int(timeB)native_invoker.end_call_2(0xA2C6FC031D46FFF0)return native_invoker.get_return_value_int()end,
+	["GET_TIME_AS_STRING"]=--[[string]] function(--[[int]] time)native_invoker.begin_call()native_invoker.push_arg_int(time)native_invoker.end_call_2(0x9E23B1777A927DAD)return native_invoker.get_return_value_string()end,
+	-- Same as GET_CLOUD_TIME_AS_INT but returns the value as a hex string (%I64X).
+	["GET_CLOUD_TIME_AS_STRING"]=--[[string]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF12E6CD06C73D69E)return native_invoker.get_return_value_string()end,
+	-- Returns POSIX timestamp, an int representing the cloud time.
+	["GET_CLOUD_TIME_AS_INT"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9A73240B49945C76)return native_invoker.get_return_value_int()end,
+	-- Takes the specified time and writes it to the structure specified in the second argument.
+	-- 
+	-- struct date_time
+	-- {
+	--     int year;
+	--     int PADDING1;
+	--     int month;
+	--     int PADDING2;
+	--     int day;
+	--     int PADDING3;
+	--     int hour;
+	--     int PADDING4;
+	--     int minute;
+	--     int PADDING5;
+	--     int second;
+	--     int PADDING6;
+	-- };
+	["CONVERT_POSIX_TIME"]=--[[void]] function(--[[int]] posixTime,--[[Any* (pointer)]] timeStructure)native_invoker.begin_call()native_invoker.push_arg_int(posixTime)native_invoker.push_arg_pointer(timeStructure)native_invoker.end_call_2(0xAC97AF97FA68E5D5)end,
+	["NETWORK_SET_IN_SPECTATOR_MODE"]=--[[void]] function(--[[BOOL (bool)]] toggle,--[[Ped (int)]] playerPed)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.push_arg_int(playerPed)native_invoker.end_call_2(0x423DE3854BB50894)end,
+	["NETWORK_SET_IN_SPECTATOR_MODE_EXTENDED"]=--[[void]] function(--[[BOOL (bool)]] toggle,--[[Ped (int)]] playerPed,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.push_arg_int(playerPed)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x419594E137637120)end,
+	["NETWORK_SET_IN_FREE_CAM_MODE"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xFC18DB55AE19E046)end,
+	["NETWORK_SET_ANTAGONISTIC_TO_PLAYER"]=--[[void]] function(--[[BOOL (bool)]] toggle,--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.push_arg_int(player)native_invoker.end_call_2(0x5C707A667DF8B9FA)end,
+	["NETWORK_IS_IN_SPECTATOR_MODE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x048746E388762E11)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_IN_MP_CUTSCENE"]=--[[void]] function(--[[BOOL (bool)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x9CA5DE655269FEC4)end,
+	["NETWORK_IS_IN_MP_CUTSCENE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x6CC27C9FA2040220)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_PLAYER_IN_MP_CUTSCENE"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x63F9EE203C3619F2)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HIDE_PROJECTILE_IN_CUTSCENE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFAC18E7356BD3210)end,
+	["SET_NETWORK_VEHICLE_RESPOT_TIMER"]=--[[void]] function(--[[int]] netId,--[[int]] time,--[[Any (int)]] p2,--[[Any (int)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.push_arg_int(time)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0xEC51713AB6EC36E8)end,
+	["SET_NETWORK_VEHICLE_AS_GHOST"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x6274C4712850841E)end,
+	-- rage::netBlenderLinInterp::GetPositionMaxForUpdateLevel
+	["SET_NETWORK_VEHICLE_MAX_POSITION_DELTA_MULTIPLIER"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0xA2A707979FE754DC)end,
+	-- Enables a periodic ShapeTest within the NetBlender and invokes rage::netBlenderLinInterp::GoStraightToTarget (or some functional wrapper).
+	["SET_NETWORK_ENABLE_HIGH_SPEED_EDGE_FALL_DETECTION"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x838DA0936A24ED4D)end,
+	["SET_LOCAL_PLAYER_AS_GHOST"]=--[[void]] function(--[[BOOL (bool)]] toggle,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x5FFE9B4144F9712F)end,
+	["IS_ENTITY_A_GHOST"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x21D04D7BC538C146)return native_invoker.get_return_value_bool()end,
+	["SET_NON_PARTICIPANTS_OF_THIS_SCRIPT_AS_GHOSTS"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x13F1FCB111B820B0)end,
+	-- Enables ghosting between specific players
+	["SET_REMOTE_PLAYER_AS_GHOST"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xA7C511FA1C5BDA38)end,
+	-- Must be a value between 1 and 254
+	["SET_GHOST_ALPHA"]=--[[void]] function(--[[int]] alpha)native_invoker.begin_call()native_invoker.push_arg_int(alpha)native_invoker.end_call_2(0x658500AE6D723A7E)end,
+	-- Resets the entity ghost alpha to the default value (128)
+	["RESET_GHOST_ALPHA"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x17330EBF2F2124A8)end,
+	["SET_ENTITY_GHOSTED_FOR_GHOST_PLAYERS"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x4BA166079D658ED4)end,
+	["SET_INVERT_GHOSTING"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0xD7B6C73CAD419BCF)end,
+	["IS_ENTITY_IN_GHOST_COLLISION"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x7EF7649B64D7FF10)return native_invoker.get_return_value_bool()end,
+	["USE_PLAYER_COLOUR_INSTEAD_OF_TEAM_COLOUR"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x77758139EC9B66C7)end,
+	["NETWORK_CREATE_SYNCHRONISED_SCENE"]=--[[int]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] xRot,--[[float]] yRot,--[[float]] zRot,--[[int]] rotationOrder,--[[BOOL (bool)]] useOcclusionPortal,--[[BOOL (bool)]] looped,--[[float]] p9,--[[float]] animTime,--[[float]] p11)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(xRot)native_invoker.push_arg_float(yRot)native_invoker.push_arg_float(zRot)native_invoker.push_arg_int(rotationOrder)native_invoker.push_arg_bool(useOcclusionPortal)native_invoker.push_arg_bool(looped)native_invoker.push_arg_float(p9)native_invoker.push_arg_float(animTime)native_invoker.push_arg_float(p11)native_invoker.end_call_2(0x7CD6BC4C2BBDD526)return native_invoker.get_return_value_int()end,
+	["NETWORK_ADD_PED_TO_SYNCHRONISED_SCENE"]=--[[void]] function(--[[Ped (int)]] ped,--[[int]] netScene,--[[string]] animDict,--[[string]] animnName,--[[float]] speed,--[[float]] speedMultiplier,--[[int]] duration,--[[int]] flag,--[[float]] playbackRate,--[[Any (int)]] p9)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(netScene)native_invoker.push_arg_string(animDict)native_invoker.push_arg_string(animnName)native_invoker.push_arg_float(speed)native_invoker.push_arg_float(speedMultiplier)native_invoker.push_arg_int(duration)native_invoker.push_arg_int(flag)native_invoker.push_arg_float(playbackRate)native_invoker.push_arg_int(p9)native_invoker.end_call_2(0x742A637471BCECD9)end,
+	["NETWORK_ADD_PED_TO_SYNCHRONISED_SCENE_WITH_IK"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4,--[[Any (int)]] p5,--[[Any (int)]] p6,--[[Any (int)]] p7,--[[Any (int)]] p8,--[[Any (int)]] p9)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.push_arg_int(p5)native_invoker.push_arg_int(p6)native_invoker.push_arg_int(p7)native_invoker.push_arg_int(p8)native_invoker.push_arg_int(p9)native_invoker.end_call_2(0xA5EAFE473E45C442)end,
+	["NETWORK_ADD_ENTITY_TO_SYNCHRONISED_SCENE"]=--[[void]] function(--[[Entity (int)]] entity,--[[int]] netScene,--[[string]] animDict,--[[string]] animName,--[[float]] speed,--[[float]] speedMulitiplier,--[[int]] flag)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_int(netScene)native_invoker.push_arg_string(animDict)native_invoker.push_arg_string(animName)native_invoker.push_arg_float(speed)native_invoker.push_arg_float(speedMulitiplier)native_invoker.push_arg_int(flag)native_invoker.end_call_2(0xF2404D68CBC855FA)end,
+	-- Similar structure as NETWORK_ADD_ENTITY_TO_SYNCHRONISED_SCENE but it includes this time a hash.
+	-- In casino_slots it is used one time in a synced scene involving a ped and the slot machine?
+	["NETWORK_ADD_MAP_ENTITY_TO_SYNCHRONISED_SCENE"]=--[[void]] function(--[[int]] netScene,--[[Hash (int)]] modelHash,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] p5,--[[string]] p6,--[[float]] p7,--[[float]] p8,--[[int]] flags)native_invoker.begin_call()native_invoker.push_arg_int(netScene)native_invoker.push_arg_int(modelHash)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(p5)native_invoker.push_arg_string(p6)native_invoker.push_arg_float(p7)native_invoker.push_arg_float(p8)native_invoker.push_arg_int(flags)native_invoker.end_call_2(0x45F35C0EDC33B03B)end,
+	["NETWORK_ADD_SYNCHRONISED_SCENE_CAMERA"]=--[[void]] function(--[[int]] netScene,--[[string]] animDict,--[[string]] animName)native_invoker.begin_call()native_invoker.push_arg_int(netScene)native_invoker.push_arg_string(animDict)native_invoker.push_arg_string(animName)native_invoker.end_call_2(0xCF8BD3B0BD6D42D7)end,
+	["NETWORK_ATTACH_SYNCHRONISED_SCENE_TO_ENTITY"]=--[[void]] function(--[[int]] netScene,--[[Entity (int)]] entity,--[[int]] bone)native_invoker.begin_call()native_invoker.push_arg_int(netScene)native_invoker.push_arg_int(entity)native_invoker.push_arg_int(bone)native_invoker.end_call_2(0x478DCBD2A98B705A)end,
+	["NETWORK_START_SYNCHRONISED_SCENE"]=--[[void]] function(--[[int]] netScene)native_invoker.begin_call()native_invoker.push_arg_int(netScene)native_invoker.end_call_2(0x9A1B3FCDB36C8697)end,
+	["NETWORK_STOP_SYNCHRONISED_SCENE"]=--[[void]] function(--[[int]] netScene)native_invoker.begin_call()native_invoker.push_arg_int(netScene)native_invoker.end_call_2(0xC254481A4574CB2F)end,
+	["NETWORK_GET_LOCAL_SCENE_FROM_NETWORK_ID"]=--[[int]] function(--[[int]] netId)native_invoker.begin_call()native_invoker.push_arg_int(netId)native_invoker.end_call_2(0x02C40BF885C567B6)return native_invoker.get_return_value_int()end,
+	["NETWORK_FORCE_LOCAL_USE_OF_SYNCED_SCENE_CAMERA"]=--[[void]] function(--[[int]] netScene)native_invoker.begin_call()native_invoker.push_arg_int(netScene)native_invoker.end_call_2(0xC9B43A33D09CADA7)end,
+	["NETWORK_ALLOW_REMOTE_SYNCED_SCENE_LOCAL_PLAYER_REQUESTS"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x144DA052257AE7D8)end,
+	-- p0 is always 0. p1 is pointing to a global.
+	["NETWORK_FIND_LARGEST_BUNCH_OF_PLAYERS"]=--[[Any (int)]] function(--[[int]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xFB1F9381E80FA13F)return native_invoker.get_return_value_int()end,
+	-- One of the first things it does is get the players ped.
+	-- Then it calls a function that is used in some tasks and ped based functions.
+	-- p5, p6, p7 is another coordinate (or zero), often related to `GET_BLIP_COORDS, in the decompiled scripts.
+	["NETWORK_START_RESPAWN_SEARCH_FOR_PLAYER"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[float]] p5,--[[float]] p6,--[[float]] p7,--[[int]] flags)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.push_arg_float(p5)native_invoker.push_arg_float(p6)native_invoker.push_arg_float(p7)native_invoker.push_arg_int(flags)native_invoker.end_call_2(0x5A6FFA2433E2F14C)return native_invoker.get_return_value_bool()end,
+	-- p8, p9, p10 is another coordinate, or zero, often related to `GET_BLIP_COORDS in the decompiled scripts.
+	["NETWORK_START_RESPAWN_SEARCH_IN_ANGLED_AREA_FOR_PLAYER"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2,--[[float]] width,--[[float]] p8,--[[float]] p9,--[[float]] p10,--[[int]] flags)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_float(x1)native_invoker.push_arg_float(y1)native_invoker.push_arg_float(z1)native_invoker.push_arg_float(x2)native_invoker.push_arg_float(y2)native_invoker.push_arg_float(z2)native_invoker.push_arg_float(width)native_invoker.push_arg_float(p8)native_invoker.push_arg_float(p9)native_invoker.push_arg_float(p10)native_invoker.push_arg_int(flags)native_invoker.end_call_2(0x4BA92A18502BCA61)return native_invoker.get_return_value_bool()end,
+	["NETWORK_QUERY_RESPAWN_RESULTS"]=--[[Any (int)]] function(--[[Any* (pointer)]] p0)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.end_call_2(0x3C891A251567DFCE)return native_invoker.get_return_value_int()end,
+	["NETWORK_CANCEL_RESPAWN_SEARCH"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFB8F2A6F3DF08CBE)end,
+	-- Based on scripts such as in freemode.c how they call their vars vVar and fVar the 2nd and 3rd param it a Vector3 and Float, but the first is based on get_random_int_in_range..
+	["NETWORK_GET_RESPAWN_RESULT"]=--[[void]] function(--[[int]] randomInt,--[[Vector3* (pointer)]] coordinates,--[[float* (pointer)]] heading)native_invoker.begin_call()native_invoker.push_arg_int(randomInt)native_invoker.push_arg_pointer(coordinates)native_invoker.push_arg_pointer(heading)native_invoker.end_call_2(0x371EA43692861CF1)end,
+	["NETWORK_GET_RESPAWN_RESULT_FLAGS"]=--[[int]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x6C34F1208B8923FD)return native_invoker.get_return_value_int()end,
+	-- *
+	["NETWORK_START_SOLO_TUTORIAL_SESSION"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x17E0198B3882C2CB)end,
+	-- teamId must be < 3, instanceId must be < 64
+	["NETWORK_ALLOW_GANG_TO_JOIN_TUTORIAL_SESSION"]=--[[void]] function(--[[int]] teamId,--[[int]] instanceId)native_invoker.begin_call()native_invoker.push_arg_int(teamId)native_invoker.push_arg_int(instanceId)native_invoker.end_call_2(0xFB680D403909DC70)end,
+	["NETWORK_END_TUTORIAL_SESSION"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD0AFAFF5A51D72F7)end,
+	["NETWORK_IS_IN_TUTORIAL_SESSION"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xADA24309FE08DACF)return native_invoker.get_return_value_bool()end,
+	["NETWORK_WAITING_POP_CLEAR_TUTORIAL_SESSION"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB37E4E6A2388CA7B)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_TUTORIAL_SESSION_CHANGE_PENDING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x35F0B98A8387274D)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_PLAYER_TUTORIAL_SESSION_INSTANCE"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x3B39236746714134)return native_invoker.get_return_value_int()end,
+	["NETWORK_ARE_PLAYERS_IN_SAME_TUTORIAL_SESSION"]=--[[BOOL (bool)]] function(--[[Player (int)]] player,--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(index)native_invoker.end_call_2(0x9DE986FC9A87C474)return native_invoker.get_return_value_bool()end,
+	["NETWORK_BLOCK_PROXY_MIGRATION_BETWEEN_TUTORIAL_SESSIONS"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xFEA7A352DDB34D52)end,
+	["NETWORK_CONCEAL_PLAYER"]=--[[void]] function(--[[Player (int)]] player,--[[BOOL (bool)]] toggle,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_bool(toggle)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xBBDF066252829606)end,
+	["NETWORK_IS_PLAYER_CONCEALED"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x919B3C98ED8292F9)return native_invoker.get_return_value_bool()end,
+	["NETWORK_CONCEAL_ENTITY"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x1632BE0AC1E62876)end,
+	-- Note: This only works for vehicles, which appears to be a bug (since the setter _does_ work for every entity type and the name is 99% correct).
+	["NETWORK_IS_ENTITY_CONCEALED"]=--[[BOOL (bool)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x71302EC70689052A)return native_invoker.get_return_value_bool()end,
+	-- Works in Singleplayer too.
+	-- Passing wrong data (e.g. hours above 23) will cause the game to crash.
+	["NETWORK_OVERRIDE_CLOCK_TIME"]=--[[void]] function(--[[int]] hours,--[[int]] minutes,--[[int]] seconds)native_invoker.begin_call()native_invoker.push_arg_int(hours)native_invoker.push_arg_int(minutes)native_invoker.push_arg_int(seconds)native_invoker.end_call_2(0xE679E3E06E363892)end,
+	["NETWORK_OVERRIDE_CLOCK_RATE"]=--[[void]] function(--[[int]] ms)native_invoker.begin_call()native_invoker.push_arg_int(ms)native_invoker.end_call_2(0x42BF1D2E723B6D7E)end,
+	["NETWORK_CLEAR_CLOCK_TIME_OVERRIDE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD972DF67326F966E)end,
+	["NETWORK_IS_CLOCK_TIME_OVERRIDDEN"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD7C95D322FF57522)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ADD_ENTITY_AREA"]=--[[Any (int)]] function(--[[float]] p0,--[[float]] p1,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[float]] p5)native_invoker.begin_call()native_invoker.push_arg_float(p0)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.end_call_2(0x494C8FB299290269)return native_invoker.get_return_value_int()end,
+	-- To remove, see: NETWORK_REMOVE_ENTITY_AREA
+	-- See IS_POINT_IN_ANGLED_AREA for the definition of an angled area.
+	["NETWORK_ADD_ENTITY_ANGLED_AREA"]=--[[Any (int)]] function(--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2,--[[float]] width)native_invoker.begin_call()native_invoker.push_arg_float(x1)native_invoker.push_arg_float(y1)native_invoker.push_arg_float(z1)native_invoker.push_arg_float(x2)native_invoker.push_arg_float(y2)native_invoker.push_arg_float(z2)native_invoker.push_arg_float(width)native_invoker.end_call_2(0x376C6375BA60293A)return native_invoker.get_return_value_int()end,
+	["NETWORK_ADD_CLIENT_ENTITY_AREA"]=--[[Any (int)]] function(--[[float]] p0,--[[float]] p1,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[float]] p5)native_invoker.begin_call()native_invoker.push_arg_float(p0)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.end_call_2(0x25B99872D588A101)return native_invoker.get_return_value_int()end,
+	["NETWORK_ADD_CLIENT_ENTITY_ANGLED_AREA"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4,--[[Any (int)]] p5,--[[Any (int)]] p6)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.push_arg_int(p5)native_invoker.push_arg_int(p6)native_invoker.end_call_2(0x2B1C623823DB0D9D)return native_invoker.get_return_value_int()end,
+	["NETWORK_REMOVE_ENTITY_AREA"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x93CF869BAA0C4874)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ENTITY_AREA_DOES_EXIST"]=--[[BOOL (bool)]] function(--[[int]] areaHandle)native_invoker.begin_call()native_invoker.push_arg_int(areaHandle)native_invoker.end_call_2(0xE64A3CA08DFA37A9)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ENTITY_AREA_HAVE_ALL_REPLIED"]=--[[BOOL (bool)]] function(--[[int]] areaHandle)native_invoker.begin_call()native_invoker.push_arg_int(areaHandle)native_invoker.end_call_2(0x4DF7CFFF471A7FB1)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ENTITY_AREA_IS_OCCUPIED"]=--[[BOOL (bool)]] function(--[[int]] areaHandle)native_invoker.begin_call()native_invoker.push_arg_int(areaHandle)native_invoker.end_call_2(0x4A2D4E8BF4265B0F)return native_invoker.get_return_value_bool()end,
+	["NETWORK_USE_HIGH_PRECISION_BLENDING"]=--[[void]] function(--[[int]] netID,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(netID)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x2B1813ABA29016C5)end,
+	["NETWORK_SET_CUSTOM_ARENA_BALL_PARAMS"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xA6FCECCF4721D679)end,
+	["NETWORK_ENTITY_USE_HIGH_PRECISION_ROTATION"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x95BAF97C82464629)end,
+	["NETWORK_REQUEST_CLOUD_BACKGROUND_SCRIPTS"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x924426BFFD82E915)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_CLOUD_BACKGROUND_SCRIPT_REQUEST_PENDING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x8132C0EB8B2B3293)return native_invoker.get_return_value_bool()end,
+	["NETWORK_REQUEST_CLOUD_TUNABLES"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x42FB3B532D526E6C)end,
+	["NETWORK_IS_TUNABLE_CLOUD_REQUEST_PENDING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x0467C11ED88B7D28)return native_invoker.get_return_value_bool()end,
+	-- Actually returns the version (TUNABLE_VERSION)
+	["NETWORK_GET_TUNABLE_CLOUD_CRC"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x10BD227A753B0D84)return native_invoker.get_return_value_int()end,
+	["NETWORK_DOES_TUNABLE_EXIST"]=--[[BOOL (bool)]] function(--[[string]] tunableContext,--[[string]] tunableName)native_invoker.begin_call()native_invoker.push_arg_string(tunableContext)native_invoker.push_arg_string(tunableName)native_invoker.end_call_2(0x85E5F8B9B898B20A)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ACCESS_TUNABLE_INT"]=--[[BOOL (bool)]] function(--[[string]] tunableContext,--[[string]] tunableName,--[[int* (pointer)]] value)native_invoker.begin_call()native_invoker.push_arg_string(tunableContext)native_invoker.push_arg_string(tunableName)native_invoker.push_arg_pointer(value)native_invoker.end_call_2(0x8BE1146DFD5D4468)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ACCESS_TUNABLE_FLOAT"]=--[[BOOL (bool)]] function(--[[string]] tunableContext,--[[string]] tunableName,--[[float* (pointer)]] value)native_invoker.begin_call()native_invoker.push_arg_string(tunableContext)native_invoker.push_arg_string(tunableName)native_invoker.push_arg_pointer(value)native_invoker.end_call_2(0xE5608CA7BC163A5F)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ACCESS_TUNABLE_BOOL"]=--[[BOOL (bool)]] function(--[[string]] tunableContext,--[[string]] tunableName)native_invoker.begin_call()native_invoker.push_arg_string(tunableContext)native_invoker.push_arg_string(tunableName)native_invoker.end_call_2(0xAA6A47A573ABB75A)return native_invoker.get_return_value_bool()end,
+	["NETWORK_DOES_TUNABLE_EXIST_HASH"]=--[[BOOL (bool)]] function(--[[Hash (int)]] tunableContext,--[[Hash (int)]] tunableName)native_invoker.begin_call()native_invoker.push_arg_int(tunableContext)native_invoker.push_arg_int(tunableName)native_invoker.end_call_2(0xE4E53E1419D81127)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ACCESS_TUNABLE_MODIFICATION_DETECTION_CLEAR"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFAFC23AEE23868DB)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ACCESS_TUNABLE_INT_HASH"]=--[[BOOL (bool)]] function(--[[Hash (int)]] tunableContext,--[[Hash (int)]] tunableName,--[[int* (pointer)]] value)native_invoker.begin_call()native_invoker.push_arg_int(tunableContext)native_invoker.push_arg_int(tunableName)native_invoker.push_arg_pointer(value)native_invoker.end_call_2(0x40FCE03E50E8DBE8)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ACCESS_TUNABLE_INT_MODIFICATION_DETECTION_REGISTRATION_HASH"]=--[[BOOL (bool)]] function(--[[Hash (int)]] contextHash,--[[Hash (int)]] nameHash,--[[int* (pointer)]] value)native_invoker.begin_call()native_invoker.push_arg_int(contextHash)native_invoker.push_arg_int(nameHash)native_invoker.push_arg_pointer(value)native_invoker.end_call_2(0x3A8B55FDA4C8DDEF)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ACCESS_TUNABLE_FLOAT_HASH"]=--[[BOOL (bool)]] function(--[[Hash (int)]] tunableContext,--[[Hash (int)]] tunableName,--[[float* (pointer)]] value)native_invoker.begin_call()native_invoker.push_arg_int(tunableContext)native_invoker.push_arg_int(tunableName)native_invoker.push_arg_pointer(value)native_invoker.end_call_2(0x972BC203BBC4C4D5)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ACCESS_TUNABLE_FLOAT_MODIFICATION_DETECTION_REGISTRATION_HASH"]=--[[BOOL (bool)]] function(--[[Hash (int)]] contextHash,--[[Hash (int)]] nameHash,--[[float* (pointer)]] value)native_invoker.begin_call()native_invoker.push_arg_int(contextHash)native_invoker.push_arg_int(nameHash)native_invoker.push_arg_pointer(value)native_invoker.end_call_2(0x1950DAE9848A4739)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ACCESS_TUNABLE_BOOL_HASH"]=--[[BOOL (bool)]] function(--[[Hash (int)]] tunableContext,--[[Hash (int)]] tunableName)native_invoker.begin_call()native_invoker.push_arg_int(tunableContext)native_invoker.push_arg_int(tunableName)native_invoker.end_call_2(0xEA16B69D93D71A45)return native_invoker.get_return_value_bool()end,
+	["NETWORK_ACCESS_TUNABLE_BOOL_MODIFICATION_DETECTION_REGISTRATION_HASH"]=--[[BOOL (bool)]] function(--[[Hash (int)]] contextHash,--[[Hash (int)]] nameHash,--[[BOOL* (pointer)]] value)native_invoker.begin_call()native_invoker.push_arg_int(contextHash)native_invoker.push_arg_int(nameHash)native_invoker.push_arg_pointer(value)native_invoker.end_call_2(0x697F508861875B42)return native_invoker.get_return_value_bool()end,
+	-- Returns defaultValue if the tunable doesn't exist.
+	["NETWORK_TRY_ACCESS_TUNABLE_BOOL_HASH"]=--[[BOOL (bool)]] function(--[[Hash (int)]] tunableContext,--[[Hash (int)]] tunableName,--[[BOOL (bool)]] defaultValue)native_invoker.begin_call()native_invoker.push_arg_int(tunableContext)native_invoker.push_arg_int(tunableName)native_invoker.push_arg_bool(defaultValue)native_invoker.end_call_2(0xC7420099936CE286)return native_invoker.get_return_value_bool()end,
+	-- Return the content modifier id (the tunables context if you want) of a specific content.
+	-- 
+	-- It takes the content hash (which is the mission id hash), and return the content modifier id, used as the tunables context.
+	-- 
+	-- The mission id can be found on the Social club, for example, 'socialclub.rockstargames.com/games/gtav/jobs/job/A8M6Bz8MLEC5xngvDCzGwA'
+	-- 
+	-- 'A8M6Bz8MLEC5xngvDCzGwA' is the mission id, so the game hash this and use it as the parameter for this native.
+	-- 
+	["NETWORK_GET_CONTENT_MODIFIER_LIST_ID"]=--[[int]] function(--[[Hash (int)]] contentHash)native_invoker.begin_call()native_invoker.push_arg_int(contentHash)native_invoker.end_call_2(0x187382F8A3E0A6C3)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_BONE_ID_OF_FATAL_HIT"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x7DB53B37A2F211A0)return native_invoker.get_return_value_int()end,
+	["NETWORK_RESET_BODY_TRACKER"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x72433699B4E6DD64)end,
+	["NETWORK_GET_NUMBER_BODY_TRACKER_HITS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD38C4A6D047C019D)return native_invoker.get_return_value_int()end,
+	["NETWORK_HAS_BONE_BEEN_HIT_BY_KILLER"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x2E0BF682CC778D49)return native_invoker.get_return_value_bool()end,
+	["NETWORK_SET_ATTRIBUTE_DAMAGE_TO_PLAYER"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(player)native_invoker.end_call_2(0x0EDE326D47CD0F3E)return native_invoker.get_return_value_bool()end,
+	-- Allows vehicle wheels to be destructible even when the vehicle entity is invincible.
+	["NETWORK_TRIGGER_DAMAGE_EVENT_FOR_ZERO_DAMAGE"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x890E2C5ABED7236D)end,
+	["NETWORK_TRIGGER_DAMAGE_EVENT_FOR_ZERO_WEAPON_HASH"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x38B7C51AB1EDC7D8)end,
+	-- nullsub, doesn't do anything
+	["NETWORK_SET_NO_LONGER_NEEDED"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x3FC795691834481D)end,
+	-- In the console script dumps, this is only referenced once. 
+	-- NETWORK::NETWORK_EXPLODE_VEHICLE(vehicle, 1, 0, 0);
+	-- 
+	-- ^^^^^ That must be PC script dumps? In X360 Script Dumps it is reference a few times with 2 differences in the parameters.
+	-- Which as you see below is 1, 0, 0 + 1, 1, 0 + 1, 0, and a *param?
+	-- 
+	-- am_plane_takedown.c 
+	-- network_explode_vehicle(net_to_veh(Local_40.imm_2), 1, 1, 0);
+	-- 
+	-- armenian2.c 
+	-- network_explode_vehicle(Local_80[6 <2>], 1, 0, 0);
+	-- 
+	-- fm_horde_controler.c
+	-- network_explode_vehicle(net_to_veh(*uParam0), 1, 0, *uParam0);
+	-- 
+	-- fm_mission_controller.c, has 6 hits so not going to list them.
+	-- 
+	-- Side note, setting the first parameter to 0 seems to mute sound or so?
+	-- 
+	-- Seems it's like ADD_EXPLOSION, etc. the first 2 params. The 3rd atm no need to worry since it always seems to be 0.
+	-- 
+	["NETWORK_EXPLODE_VEHICLE"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] isAudible,--[[BOOL (bool)]] isInvisible,--[[int]] netId)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(isAudible)native_invoker.push_arg_bool(isInvisible)native_invoker.push_arg_int(netId)native_invoker.end_call_2(0x301A42153C9AD707)end,
+	["NETWORK_EXPLODE_HELI"]=--[[void]] function(--[[Vehicle (int)]] vehicle,--[[BOOL (bool)]] isAudible,--[[BOOL (bool)]] isInvisible,--[[int]] netId)native_invoker.begin_call()native_invoker.push_arg_int(vehicle)native_invoker.push_arg_bool(isAudible)native_invoker.push_arg_bool(isInvisible)native_invoker.push_arg_int(netId)native_invoker.end_call_2(0x2A5E0621DD815A9A)end,
+	["NETWORK_USE_LOGARITHMIC_BLENDING_THIS_FRAME"]=--[[void]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0xCD71A4ECAB22709E)end,
+	["NETWORK_OVERRIDE_COORDS_AND_HEADING"]=--[[void]] function(--[[Entity (int)]] entity,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] heading)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(heading)native_invoker.end_call_2(0xA7E30DE9272B6D49)end,
+	["NETWORK_ENABLE_EXTRA_VEHICLE_ORIENTATION_BLEND_CHECKS"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xE6717E652B8C8D8A)end,
+	["NETWORK_DISABLE_PROXIMITY_MIGRATION"]=--[[void]] function(--[[int]] netID)native_invoker.begin_call()native_invoker.push_arg_int(netID)native_invoker.end_call_2(0x407091CF6037118E)end,
+	-- value must be < 255
+	["NETWORK_SET_PROPERTY_ID"]=--[[void]] function(--[[int]] id)native_invoker.begin_call()native_invoker.push_arg_int(id)native_invoker.end_call_2(0x1775961C2FBBCB5C)end,
+	["NETWORK_CLEAR_PROPERTY_ID"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC2B82527CA77053E)end,
+	["NETWORK_SET_PLAYER_MENTAL_STATE"]=--[[void]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x367EF5E2F439B4C6)end,
+	["NETWORK_SET_MINIMUM_RANK_FOR_MISSION"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x94538037EE44F5CF)end,
+	["NETWORK_CACHE_LOCAL_PLAYER_HEAD_BLEND_DATA"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xBD0BE0BFC927EAC1)end,
+	["NETWORK_HAS_CACHED_PLAYER_HEAD_BLEND_DATA"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x237D5336A9A54108)return native_invoker.get_return_value_bool()end,
+	["NETWORK_APPLY_CACHED_PLAYER_HEAD_BLEND_DATA"]=--[[BOOL (bool)]] function(--[[Ped (int)]] ped,--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(ped)native_invoker.push_arg_int(player)native_invoker.end_call_2(0x99B72C7ABDE5C910)return native_invoker.get_return_value_bool()end,
+	["GET_NUM_COMMERCE_ITEMS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xF2EAC213D5EA0623)return native_invoker.get_return_value_int()end,
+	["IS_COMMERCE_DATA_VALID"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xEA14EEF5B7CD2C30)return native_invoker.get_return_value_bool()end,
+	-- Does nothing (it's a nullsub).
+	["TRIGGER_COMMERCE_DATA_FETCH"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xB606E6CC59664972)end,
+	["IS_COMMERCE_DATA_FETCH_IN_PROGRESS"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x1D4DC17C38FEAFF0)return native_invoker.get_return_value_bool()end,
+	["GET_COMMERCE_ITEM_ID"]=--[[string]] function(--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(index)native_invoker.end_call_2(0x662635855957C411)return native_invoker.get_return_value_string()end,
+	["GET_COMMERCE_ITEM_NAME"]=--[[string]] function(--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(index)native_invoker.end_call_2(0xB4271092CA7EDF48)return native_invoker.get_return_value_string()end,
+	["GET_COMMERCE_PRODUCT_PRICE"]=--[[string]] function(--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(index)native_invoker.end_call_2(0xCA94551B50B4932C)return native_invoker.get_return_value_string()end,
+	["GET_COMMERCE_ITEM_NUM_CATS"]=--[[int]] function(--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(index)native_invoker.end_call_2(0x2A7776C709904AB0)return native_invoker.get_return_value_int()end,
+	-- index2 is unused
+	["GET_COMMERCE_ITEM_CAT"]=--[[string]] function(--[[int]] index,--[[int]] index2)native_invoker.begin_call()native_invoker.push_arg_int(index)native_invoker.push_arg_int(index2)native_invoker.end_call_2(0x6F44CBF56D79FAC0)return native_invoker.get_return_value_string()end,
+	["OPEN_COMMERCE_STORE"]=--[[void]] function(--[[string]] p0,--[[string]] p1,--[[int]] p2)native_invoker.begin_call()native_invoker.push_arg_string(p0)native_invoker.push_arg_string(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x58C21165F6545892)end,
+	["IS_COMMERCE_STORE_OPEN"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x2EAC52B4019E2782)return native_invoker.get_return_value_bool()end,
+	-- Access to the store for shark cards etc...
+	["SET_STORE_ENABLED"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x9641A9FF718E9C5E)end,
+	["REQUEST_COMMERCE_ITEM_IMAGE"]=--[[BOOL (bool)]] function(--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(index)native_invoker.end_call_2(0xA2F952104FC6DD4B)return native_invoker.get_return_value_bool()end,
+	["RELEASE_ALL_COMMERCE_ITEM_IMAGES"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x72D0706CD6CCDB58)end,
+	["GET_COMMERCE_ITEM_TEXTURENAME"]=--[[string]] function(--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(index)native_invoker.end_call_2(0x722F5D28B61C5EA8)return native_invoker.get_return_value_string()end,
+	["IS_STORE_AVAILABLE_TO_USER"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x883D79C4071E18B3)return native_invoker.get_return_value_bool()end,
+	["DELAY_MP_STORE_OPEN"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x265635150FB0D82E)end,
+	["RESET_STORE_NETWORK_GAME_TRACKING"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x444C4525ECE0A4B9)end,
+	["IS_USER_OLD_ENOUGH_TO_ACCESS_STORE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x59328EB08C5CEB2B)return native_invoker.get_return_value_bool()end,
+	["SET_LAST_VIEWED_SHOP_ITEM"]=--[[void]] function(--[[Hash (int)]] p0,--[[int]] p1,--[[Hash (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0xFAE628F1E9ADB239)end,
+	-- Checks some commerce stuff
+	["GET_USER_PREMIUM_ACCESS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x754615490A029508)return native_invoker.get_return_value_int()end,
+	-- Checks some commerce stuff
+	["GET_USER_STARTER_ACCESS"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x155467ACA0F55705)return native_invoker.get_return_value_int()end,
+	["CLOUD_DELETE_MEMBER_FILE"]=--[[int]] function(--[[string]] p0)native_invoker.begin_call()native_invoker.push_arg_string(p0)native_invoker.end_call_2(0xC64DED7EF0D2FE37)return native_invoker.get_return_value_int()end,
+	["CLOUD_HAS_REQUEST_COMPLETED"]=--[[BOOL (bool)]] function(--[[int]] handle)native_invoker.begin_call()native_invoker.push_arg_int(handle)native_invoker.end_call_2(0x4C61B39930D045DA)return native_invoker.get_return_value_bool()end,
+	["CLOUD_DID_REQUEST_SUCCEED"]=--[[BOOL (bool)]] function(--[[int]] handle)native_invoker.begin_call()native_invoker.push_arg_int(handle)native_invoker.end_call_2(0x3A3D5568AF297CD5)return native_invoker.get_return_value_bool()end,
+	-- Downloads prod.cloud.rockstargames.com/titles/gta5/[platform]/check.json
+	["CLOUD_CHECK_AVAILABILITY"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x4F18196C8D38768D)end,
+	["CLOUD_IS_CHECKING_AVAILABILITY"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC7ABAC5DE675EE3B)return native_invoker.get_return_value_bool()end,
+	["CLOUD_GET_AVAILABILITY_CHECK_RESULT"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x0B0CC10720653F3B)return native_invoker.get_return_value_bool()end,
+	-- MulleDK19: This function is hard-coded to always return 0.
+	["GET_CONTENT_TO_LOAD_TYPE"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x8B0C2964BA471961)return native_invoker.get_return_value_int()end,
+	-- MulleDK19: This function is hard-coded to always return 0.
+	["GET_IS_LAUNCH_FROM_LIVE_AREA"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x88B588B41FF7868E)return native_invoker.get_return_value_int()end,
+	-- MulleDK19: This function is hard-coded to always return 0.
+	["GET_IS_LIVE_AREA_LAUNCH_WITH_CONTENT"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x67FC09BC554A75E5)return native_invoker.get_return_value_int()end,
+	-- This native does absolutely nothing, just a nullsub
+	["CLEAR_SERVICE_EVENT_ARGUMENTS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x966DD84FB6A46017)end,
+	["UGC_COPY_CONTENT"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0x152D90E4C1B4738A)return native_invoker.get_return_value_bool()end,
+	["UGC_IS_CREATING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9FEDF86898F100E9)return native_invoker.get_return_value_bool()end,
+	["UGC_HAS_CREATE_FINISHED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5E24341A7F92A74B)return native_invoker.get_return_value_bool()end,
+	["UGC_DID_CREATE_SUCCEED"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x24E4E51FC16305F9)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CREATE_RESULT"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFBC5E768C7A77A6A)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CREATE_CONTENT_ID"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC55A0B40FFB1ED23)return native_invoker.get_return_value_int()end,
+	["UGC_CLEAR_CREATE_RESULT"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x17440AA15D1D3739)end,
+	["UGC_QUERY_MY_CONTENT"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any* (pointer)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4,--[[Any (int)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_pointer(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.push_arg_int(p5)native_invoker.end_call_2(0x9BF438815F5D96EA)return native_invoker.get_return_value_bool()end,
+	["UGC_QUERY_BY_CATEGORY"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[string]] p3,--[[Any (int)]] p4,--[[BOOL (bool)]] p5)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_string(p3)native_invoker.push_arg_int(p4)native_invoker.push_arg_bool(p5)native_invoker.end_call_2(0x692D58DF40657E8C)return native_invoker.get_return_value_bool()end,
+	["UGC_QUERY_BY_CONTENT_ID"]=--[[BOOL (bool)]] function(--[[string]] contentId,--[[BOOL (bool)]] latestVersion,--[[string]] contentTypeName)native_invoker.begin_call()native_invoker.push_arg_string(contentId)native_invoker.push_arg_bool(latestVersion)native_invoker.push_arg_string(contentTypeName)native_invoker.end_call_2(0x158EC424F35EC469)return native_invoker.get_return_value_bool()end,
+	["UGC_QUERY_BY_CONTENT_IDS"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] data,--[[int]] count,--[[BOOL (bool)]] latestVersion,--[[string]] contentTypeName)native_invoker.begin_call()native_invoker.push_arg_pointer(data)native_invoker.push_arg_int(count)native_invoker.push_arg_bool(latestVersion)native_invoker.push_arg_string(contentTypeName)native_invoker.end_call_2(0xC7397A83F7A2A462)return native_invoker.get_return_value_bool()end,
+	["UGC_QUERY_MOST_RECENTLY_CREATED_CONTENT"]=--[[BOOL (bool)]] function(--[[int]] offset,--[[int]] count,--[[string]] contentTypeName,--[[int]] p3)native_invoker.begin_call()native_invoker.push_arg_int(offset)native_invoker.push_arg_int(count)native_invoker.push_arg_string(contentTypeName)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0x6D4CB481FAC835E8)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_BOOKMARKED_CONTENT"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[string]] p2,--[[Any* (pointer)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_string(p2)native_invoker.push_arg_pointer(p3)native_invoker.end_call_2(0xD5A4B59980401588)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_MY_CONTENT"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[string]] p2,--[[Any* (pointer)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_string(p2)native_invoker.push_arg_pointer(p3)native_invoker.end_call_2(0x3195F8DD0D531052)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_FRIEND_CONTENT"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[string]] p2,--[[Any* (pointer)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_string(p2)native_invoker.push_arg_pointer(p3)native_invoker.end_call_2(0xF9E1CCAE8BA4C281)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_CREW_CONTENT"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[string]] p3,--[[Any* (pointer)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_string(p3)native_invoker.push_arg_pointer(p4)native_invoker.end_call_2(0x9F6E2821885CAEE2)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_GET_BY_CATEGORY"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[string]] p3,--[[Any* (pointer)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_string(p3)native_invoker.push_arg_pointer(p4)native_invoker.end_call_2(0x678BB03C1A3BD51E)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_GET_BY_CONTENT_ID"]=--[[BOOL (bool)]] function(--[[string]] contentId,--[[string]] contentTypeName)native_invoker.begin_call()native_invoker.push_arg_string(contentId)native_invoker.push_arg_string(contentTypeName)native_invoker.end_call_2(0x815E5E3073DA1D67)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_GET_BY_CONTENT_IDS"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] data,--[[int]] dataCount,--[[string]] contentTypeName)native_invoker.begin_call()native_invoker.push_arg_pointer(data)native_invoker.push_arg_int(dataCount)native_invoker.push_arg_string(contentTypeName)native_invoker.end_call_2(0xB8322EEB38BE7C26)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_MOST_RECENTLY_CREATED_CONTENT"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any* (pointer)]] p2,--[[Any* (pointer)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_pointer(p2)native_invoker.push_arg_pointer(p3)native_invoker.end_call_2(0xA7862BC5ED1DFD7E)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_MOST_RECENTLY_PLAYED_CONTENT"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any* (pointer)]] p2,--[[Any* (pointer)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_pointer(p2)native_invoker.push_arg_pointer(p3)native_invoker.end_call_2(0x97A770BEEF227E2B)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_TOP_RATED_CONTENT"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any* (pointer)]] p2,--[[Any* (pointer)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_pointer(p2)native_invoker.push_arg_pointer(p3)native_invoker.end_call_2(0x5324A0E3E4CE3570)return native_invoker.get_return_value_bool()end,
+	["UGC_CANCEL_QUERY"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xE9B99B6853181409)end,
+	["UGC_IS_GETTING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xD53ACDBEF24A46E8)return native_invoker.get_return_value_bool()end,
+	["UGC_HAS_GET_FINISHED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x02ADA21EA2F6918F)return native_invoker.get_return_value_bool()end,
+	["UGC_DID_GET_SUCCEED"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x941E5306BCD7C2C7)return native_invoker.get_return_value_int()end,
+	["UGC_WAS_QUERY_FORCE_CANCELLED"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xC87E740D9F3872CC)return native_invoker.get_return_value_int()end,
+	["UGC_GET_QUERY_RESULT"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xEDF7F927136C224B)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CONTENT_NUM"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xE0A6138401BCB837)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CONTENT_TOTAL"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x769951E2455E2EB5)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CONTENT_HASH"]=--[[Hash (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x3A17A27D75C74887)return native_invoker.get_return_value_int()end,
+	["UGC_CLEAR_QUERY_RESULTS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xBA96394A0EECFA65)end,
+	["UGC_GET_CONTENT_USER_ID"]=--[[string]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xCD67AD041A394C9C)return native_invoker.get_return_value_string()end,
+	["UGC_GET_CONTENT_CREATOR_GAMER_HANDLE"]=--[[BOOL (bool)]] function(--[[int]] p0,--[[Any* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0x584770794D758C18)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_CONTENT_CREATED_BY_LOCAL_PLAYER"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x8C8D2739BA44AF0F)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_CONTENT_USER_NAME"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x703F12425ECA8BF5)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CONTENT_IS_USING_SC_NICKNAME"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xAEAB987727C5A8A4)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_CONTENT_CATEGORY"]=--[[int]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xA7BAB11E7C9C6C5A)return native_invoker.get_return_value_int()end,
+	-- Return the mission id of a job.
+	["UGC_GET_CONTENT_ID"]=--[[string]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x55AA95F481D694D2)return native_invoker.get_return_value_string()end,
+	-- Return the root content id of a job.
+	["UGC_GET_ROOT_CONTENT_ID"]=--[[string]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xC0173D6BFF4E0348)return native_invoker.get_return_value_string()end,
+	["UGC_GET_CONTENT_NAME"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xBF09786A7FCAB582)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CONTENT_DESCRIPTION_HASH"]=--[[int]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x7CF0448787B23758)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CONTENT_PATH"]=--[[string]] function(--[[int]] p0,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xBAF6BABF9E7CCC13)return native_invoker.get_return_value_string()end,
+	["UGC_GET_CONTENT_UPDATED_DATE"]=--[[void]] function(--[[Any (int)]] p0,--[[Any* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0xCFD115B373C0DF63)end,
+	["UGC_GET_CONTENT_FILE_VERSION"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x37025B27D9B658B1)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CONTENT_HAS_LO_RES_PHOTO"]=--[[BOOL (bool)]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x1D610EB0FEA716D9)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_CONTENT_HAS_HI_RES_PHOTO"]=--[[BOOL (bool)]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x7FCC39C46C3C03BD)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_CONTENT_LANGUAGE"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x32DD916F3F7C9672)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CONTENT_IS_PUBLISHED"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x3054F114121C21EA)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_CONTENT_IS_VERIFIED"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xA9240A96C74CCA13)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_CONTENT_RATING"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x1ACCFBA3D8DAB2EE)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CONTENT_RATING_COUNT"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x759299C5BB31D2A9)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CONTENT_RATING_POSITIVE_COUNT"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x87E5C46C187FE0AE)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CONTENT_RATING_NEGATIVE_COUNT"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x4E548C0D7AE39FF9)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CONTENT_HAS_PLAYER_RECORD"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x70EA8DA57840F9BE)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_CONTENT_HAS_PLAYER_BOOKMARKED"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x993CBE59D350D225)return native_invoker.get_return_value_bool()end,
+	["UGC_REQUEST_CONTENT_DATA_FROM_INDEX"]=--[[int]] function(--[[int]] p0,--[[int]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x171DF6A0C07FB3DC)return native_invoker.get_return_value_int()end,
+	["UGC_REQUEST_CONTENT_DATA_FROM_PARAMS"]=--[[int]] function(--[[string]] contentTypeName,--[[string]] contentId,--[[int]] p2,--[[int]] p3,--[[int]] p4)native_invoker.begin_call()native_invoker.push_arg_string(contentTypeName)native_invoker.push_arg_string(contentId)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.end_call_2(0x7FD2990AF016795E)return native_invoker.get_return_value_int()end,
+	["UGC_REQUEST_CACHED_DESCRIPTION"]=--[[int]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x5E0165278F6339EE)return native_invoker.get_return_value_int()end,
+	["UGC_IS_DESCRIPTION_REQUEST_IN_PROGRESS"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x2D5DC831176D0114)return native_invoker.get_return_value_bool()end,
+	["UGC_HAS_DESCRIPTION_REQUEST_FINISHED"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xEBFA8D50ADDC54C4)return native_invoker.get_return_value_bool()end,
+	["UGC_DID_DESCRIPTION_REQUEST_SUCCEED"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x162C23CA83ED0A62)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_CACHED_DESCRIPTION"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x40F7E66472DF3E5C)return native_invoker.get_return_value_int()end,
+	["UGC_RELEASE_CACHED_DESCRIPTION"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x5A34CD9C3C5BEC44)return native_invoker.get_return_value_bool()end,
+	["UGC_RELEASE_ALL_CACHED_DESCRIPTIONS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x68103E2247887242)end,
+	["UGC_PUBLISH"]=--[[BOOL (bool)]] function(--[[string]] contentId,--[[string]] baseContentId,--[[string]] contentTypeName)native_invoker.begin_call()native_invoker.push_arg_string(contentId)native_invoker.push_arg_string(baseContentId)native_invoker.push_arg_string(contentTypeName)native_invoker.end_call_2(0x1DE0F5F50D723CAA)return native_invoker.get_return_value_bool()end,
+	["UGC_SET_BOOKMARKED"]=--[[BOOL (bool)]] function(--[[string]] contentId,--[[BOOL (bool)]] bookmarked,--[[string]] contentTypeName)native_invoker.begin_call()native_invoker.push_arg_string(contentId)native_invoker.push_arg_bool(bookmarked)native_invoker.push_arg_string(contentTypeName)native_invoker.end_call_2(0x274A1519DFC1094F)return native_invoker.get_return_value_bool()end,
+	["UGC_SET_DELETED"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[BOOL (bool)]] p1,--[[string]] p2)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_bool(p1)native_invoker.push_arg_string(p2)native_invoker.end_call_2(0xD05D1A6C74DA3498)return native_invoker.get_return_value_bool()end,
+	["UGC_IS_MODIFYING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x45E816772E93A9DB)return native_invoker.get_return_value_bool()end,
+	["UGC_HAS_MODIFY_FINISHED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x299EF3C576773506)return native_invoker.get_return_value_bool()end,
+	["UGC_DID_MODIFY_SUCCEED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x793FF272D5B365F4)return native_invoker.get_return_value_bool()end,
+	["UGC_GET_MODIFY_RESULT"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5A0A3D1A186A5508)return native_invoker.get_return_value_int()end,
+	["UGC_CLEAR_MODIFY_RESULT"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA1E5E0204A6FCC70)end,
+	["UGC_GET_CREATORS_BY_USER_ID"]=--[[BOOL (bool)]] function(--[[Any* (pointer)]] p0,--[[Any* (pointer)]] p1)native_invoker.begin_call()native_invoker.push_arg_pointer(p0)native_invoker.push_arg_pointer(p1)native_invoker.end_call_2(0xB746D20B17F2A229)return native_invoker.get_return_value_bool()end,
+	["UGC_HAS_QUERY_CREATORS_FINISHED"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x63B406D7884BFA95)return native_invoker.get_return_value_int()end,
+	["UGC_DID_QUERY_CREATORS_SUCCEED"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x4D02279C83BE69FE)return native_invoker.get_return_value_int()end,
+	["UGC_GET_CREATOR_NUM"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x597F8DBA9B206FC7)return native_invoker.get_return_value_int()end,
+	["UGC_LOAD_OFFLINE_QUERY"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x5CAE833B0EE0C500)return native_invoker.get_return_value_bool()end,
+	["UGC_CLEAR_OFFLINE_QUERY"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x61A885D3F7CFEE9A)end,
+	["UGC_SET_QUERY_DATA_FROM_OFFLINE"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0xF98DDE0A8ED09323)end,
+	["UGC_SET_USING_OFFLINE_CONTENT"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0xFD75DABC0957BF33)end,
+	["UGC_IS_LANGUAGE_SUPPORTED"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xF53E48461B71EECB)return native_invoker.get_return_value_bool()end,
+	["FACEBOOK_POST_COMPLETED_HEIST"]=--[[BOOL (bool)]] function(--[[string]] heistName,--[[int]] cashEarned,--[[int]] xpEarned)native_invoker.begin_call()native_invoker.push_arg_string(heistName)native_invoker.push_arg_int(cashEarned)native_invoker.push_arg_int(xpEarned)native_invoker.end_call_2(0x098AB65B9ED9A9EC)return native_invoker.get_return_value_bool()end,
+	["FACEBOOK_POST_CREATE_CHARACTER"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xDC48473142545431)return native_invoker.get_return_value_bool()end,
+	["FACEBOOK_POST_COMPLETED_MILESTONE"]=--[[BOOL (bool)]] function(--[[int]] milestoneId)native_invoker.begin_call()native_invoker.push_arg_int(milestoneId)native_invoker.end_call_2(0x0AE1F1653B554AB9)return native_invoker.get_return_value_bool()end,
+	["FACEBOOK_HAS_POST_COMPLETED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x62B9FEC9A11F10EF)return native_invoker.get_return_value_bool()end,
+	["FACEBOOK_DID_POST_SUCCEED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA75E2B6733DA5142)return native_invoker.get_return_value_bool()end,
+	["FACEBOOK_CAN_POST_TO_FACEBOOK"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x43865688AE10F0D7)return native_invoker.get_return_value_bool()end,
+	["TEXTURE_DOWNLOAD_REQUEST"]=--[[int]] function(--[[Any* (pointer)]] gamerHandle,--[[string]] filePath,--[[string]] name,--[[BOOL (bool)]] p3)native_invoker.begin_call()native_invoker.push_arg_pointer(gamerHandle)native_invoker.push_arg_string(filePath)native_invoker.push_arg_string(name)native_invoker.push_arg_bool(p3)native_invoker.end_call_2(0x16160DA74A8E74A2)return native_invoker.get_return_value_int()end,
+	["TITLE_TEXTURE_DOWNLOAD_REQUEST"]=--[[int]] function(--[[string]] filePath,--[[string]] name,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_string(filePath)native_invoker.push_arg_string(name)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x0B203B4AFDE53A4F)return native_invoker.get_return_value_int()end,
+	["UGC_TEXTURE_DOWNLOAD_REQUEST"]=--[[Any (int)]] function(--[[string]] p0,--[[int]] p1,--[[int]] p2,--[[int]] p3,--[[string]] p4,--[[BOOL (bool)]] p5)native_invoker.begin_call()native_invoker.push_arg_string(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_string(p4)native_invoker.push_arg_bool(p5)native_invoker.end_call_2(0x308F96458B7087CC)return native_invoker.get_return_value_int()end,
+	["TEXTURE_DOWNLOAD_RELEASE"]=--[[void]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x487EB90B98E9FB19)end,
+	["TEXTURE_DOWNLOAD_HAS_FAILED"]=--[[BOOL (bool)]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x5776ED562C134687)return native_invoker.get_return_value_bool()end,
+	["TEXTURE_DOWNLOAD_GET_NAME"]=--[[string]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x3448505B6E35262D)return native_invoker.get_return_value_string()end,
+	-- 0 = succeeded
+	-- 1 = pending
+	-- 2 = failed
+	["GET_STATUS_OF_TEXTURE_DOWNLOAD"]=--[[int]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x8BD6C6DEA20E82C6)return native_invoker.get_return_value_int()end,
+	-- Returns true if profile setting 901 is set to true and sets it to false.
+	["NETWORK_CHECK_ROS_LINK_WENTDOWN_NOT_NET"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x60EDD13EB3AC1FF3)return native_invoker.get_return_value_bool()end,
+	-- Returns true if the NAT type is Strict (3) and a certain number of connections have failed.
+	["NETWORK_SHOULD_SHOW_STRICT_NAT_WARNING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x82A2B386716608F1)return native_invoker.get_return_value_bool()end,
+	["NETWORK_IS_CABLE_CONNECTED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xEFFB25453D8600F9)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAVE_SCS_PRIVATE_MSG_PRIV"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x66B59CFFD78467AF)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAVE_ROS_SOCIAL_CLUB_PRIV"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x606E4D3E3CCCF3EB)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAVE_ROS_BANNED_PRIV"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x8020A73847E0CA7D)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAVE_ROS_CREATE_TICKET_PRIV"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA0AD7E2AF5349F61)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAVE_ROS_MULTIPLAYER_PRIV"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5F91D5D0B36AA310)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAVE_ROS_LEADERBOARD_WRITE_PRIV"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x422D396F80A96547)return native_invoker.get_return_value_bool()end,
+	-- index is always 18 in scripts
+	["NETWORK_HAS_ROS_PRIVILEGE"]=--[[BOOL (bool)]] function(--[[int]] index)native_invoker.begin_call()native_invoker.push_arg_int(index)native_invoker.end_call_2(0xA699957E60D80214)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_ROS_PRIVILEGE_END_DATE"]=--[[BOOL (bool)]] function(--[[int]] privilege,--[[int* (pointer)]] banType,--[[Any* (pointer)]] timeData)native_invoker.begin_call()native_invoker.push_arg_int(privilege)native_invoker.push_arg_pointer(banType)native_invoker.push_arg_pointer(timeData)native_invoker.end_call_2(0xC22912B1D85F26B1)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_ROS_PRIVILEGE_PLAYED_LAST_GEN"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x593570C289A77688)return native_invoker.get_return_value_bool()end,
+	["NETWORK_HAS_ROS_PRIVILEGE_SPECIAL_EDITION_CONTENT"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x91B87C55093DE351)return native_invoker.get_return_value_bool()end,
+	["NETWORK_START_COMMUNICATION_PERMISSIONS_CHECK"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x36391F397731595D)return native_invoker.get_return_value_int()end,
+	-- Always returns -1. Seems to be XB1 specific.
+	["NETWORK_START_USER_CONTENT_PERMISSIONS_CHECK"]=--[[int]] function(--[[Any* (pointer)]] netHandle)native_invoker.begin_call()native_invoker.push_arg_pointer(netHandle)native_invoker.end_call_2(0xDEB2B99A1AF1A2A6)return native_invoker.get_return_value_int()end,
+	["NETWORK_SKIP_RADIO_RESET_NEXT_CLOSE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x9465E683B12D3F6B)end,
+	["NETWORK_SKIP_RADIO_RESET_NEXT_OPEN"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xCA59CCAE5D01E4CE)end,
+	-- Returns true if dinput8.dll is present in the game directory.
+	-- You will get following error message if that is true: "You are attempting to access GTA Online servers with an altered version of the game."
+	["NETWORK_SKIP_RADIO_WARNING"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x659CF2EF7F550C4F)return native_invoker.get_return_value_bool()end,
+	-- NETWORK_F[I-O]
+	["NETWORK_FORCE_LOCAL_PLAYER_SCAR_SYNC"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB7C7F6AD6424304B)end,
+	["NETWORK_DISABLE_LEAVE_REMOTE_PED_BEHIND"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xC505036A35AFD01B)end,
+	["NETWORK_ALLOW_REMOTE_ATTACHMENT_MODIFICATION"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x267C78C60E806B9A)end,
+	-- Does nothing (it's a nullsub).
+	["NETWORK_SHOW_CHAT_RESTRICTION_MSC"]=--[[void]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x6BFF5F84102DF80A)end,
+	-- This native does absolutely nothing, just a nullsub
+	["NETWORK_SHOW_PSN_UGC_RESTRICTION"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5C497525F803486B)end,
+	-- MulleDK19: This function is hard-coded to always return 0.
+	["NETWORK_IS_TITLE_UPDATE_REQUIRED"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x6FB7BB3607D27FA2)return native_invoker.get_return_value_int()end,
+	["NETWORK_QUIT_MP_TO_DESKTOP"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x45A83257ED02D9BC)end,
+	["NETWORK_IS_CONNECTED_VIA_RELAY"]=--[[BOOL (bool)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x16D3D49902F697BB)return native_invoker.get_return_value_bool()end,
+	["NETWORK_GET_AVERAGE_LATENCY"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xD414BE129BB81B32)return native_invoker.get_return_value_float()end,
+	-- Same as NETWORK_GET_AVERAGE_LATENCY
+	["NETWORK_GET_AVERAGE_PING"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x0E3A041ED6AC2B45)return native_invoker.get_return_value_float()end,
+	["NETWORK_GET_AVERAGE_PACKET_LOSS"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x350C23949E43686C)return native_invoker.get_return_value_float()end,
+	["NETWORK_GET_NUM_UNACKED_RELIABLES"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xFF8FCF9FFC458A1C)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_UNRELIABLE_RESEND_COUNT"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x3765C3A3E8192E10)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_HIGHEST_RELIABLE_RESEND_COUNT"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x52C1EADAF7B10302)return native_invoker.get_return_value_int()end,
+	["NETWORK_REPORT_CODE_TAMPER"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x5626D9D6810730D5)end,
+	["NETWORK_GET_LAST_ENTITY_POS_RECEIVED_OVER_NETWORK"]=--[[Vector3 (vector3)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x64D779659BC37B19)return native_invoker.get_return_value_vector3()end,
+	-- Returns the coordinates of another player.
+	-- Does not work if you enter your own player id as p0 (will return `(0.0, 0.0, 0.0)` in that case).
+	["NETWORK_GET_LAST_PLAYER_POS_RECEIVED_OVER_NETWORK"]=--[[Vector3 (vector3)]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0x125E6D638B8605D4)return native_invoker.get_return_value_vector3()end,
+	-- Used by NetBlender
+	["NETWORK_GET_LAST_VEL_RECEIVED_OVER_NETWORK"]=--[[Vector3 (vector3)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0x33DE49EDF4DDE77A)return native_invoker.get_return_value_vector3()end,
+	["NETWORK_GET_PREDICTED_VELOCITY"]=--[[Vector3 (vector3)]] function(--[[Entity (int)]] entity)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.end_call_2(0xAA5FAFCD2C5F5E47)return native_invoker.get_return_value_vector3()end,
+	-- Does nothing (it's a nullsub).
+	["NETWORK_DUMP_NET_IF_CONFIG"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xAEDF1BC1C133D6E3)return native_invoker.get_return_value_int()end,
+	-- Does nothing (it's a nullsub).
+	["NETWORK_GET_SIGNALLING_INFO"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x2555CF7DA5473794)return native_invoker.get_return_value_int()end,
+	-- Does nothing (it's a nullsub).
+	["NETWORK_GET_NET_STATISTICS_INFO"]=--[[Any (int)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x6FD992C4A1C1B986)return native_invoker.get_return_value_int()end,
+	["NETWORK_GET_PLAYER_ACCOUNT_ID"]=--[[int]] function(--[[Player (int)]] player)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.end_call_2(0xDB663CC9FF3407A9)return native_invoker.get_return_value_int()end,
+	["NETWORK_UGC_NAV"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xC1447451DDB512F0)end,
+}
+OBJECT={
+	-- List of object models that can be created without any additional effort like making sure ytyp is loaded etc: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/ObjectList.ini
+	["CREATE_OBJECT"]=--[[Object (int)]] function(--[[Hash (int)]] modelHash,--[[float]] x,--[[float]] y,--[[float]] z,--[[BOOL (bool)]] isNetwork,--[[BOOL (bool)]] bScriptHostObj,--[[BOOL (bool)]] dynamic)native_invoker.begin_call()native_invoker.push_arg_int(modelHash)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_bool(isNetwork)native_invoker.push_arg_bool(bScriptHostObj)native_invoker.push_arg_bool(dynamic)native_invoker.end_call_2(0x509D5878EB39E842)return native_invoker.get_return_value_int()end,
+	-- List of object models that can be created without any additional effort like making sure ytyp is loaded etc: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/ObjectList.ini
+	["CREATE_OBJECT_NO_OFFSET"]=--[[Object (int)]] function(--[[Hash (int)]] modelHash,--[[float]] x,--[[float]] y,--[[float]] z,--[[BOOL (bool)]] isNetwork,--[[BOOL (bool)]] bScriptHostObj,--[[BOOL (bool)]] dynamic)native_invoker.begin_call()native_invoker.push_arg_int(modelHash)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_bool(isNetwork)native_invoker.push_arg_bool(bScriptHostObj)native_invoker.push_arg_bool(dynamic)native_invoker.end_call_2(0x9A294B2138ABB884)return native_invoker.get_return_value_int()end,
+	-- Deletes the specified object, then sets the handle pointed to by the pointer to NULL.
+	["DELETE_OBJECT"]=--[[void]] function(--[[Object* (pointer)]] object)native_invoker.begin_call()native_invoker.push_arg_pointer(object)native_invoker.end_call_2(0x539E0AE3E6634B9F)end,
+	["PLACE_OBJECT_ON_GROUND_PROPERLY"]=--[[BOOL (bool)]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0x58A850EAEE20FAA3)return native_invoker.get_return_value_bool()end,
+	["PLACE_OBJECT_ON_GROUND_OR_OBJECT_PROPERLY"]=--[[BOOL (bool)]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0xD76EEEF746057FD6)return native_invoker.get_return_value_bool()end,
+	["ROTATE_OBJECT"]=--[[BOOL (bool)]] function(--[[Object (int)]] object,--[[float]] p1,--[[float]] p2,--[[BOOL (bool)]] p3)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_bool(p3)native_invoker.end_call_2(0xAFE24E4D29249E4A)return native_invoker.get_return_value_bool()end,
+	-- Returns true if the object has finished moving.
+	-- 
+	-- If false, moves the object towards the specified X, Y and Z coordinates with the specified X, Y and Z speed.
+	-- 
+	-- See also: https://gtagmodding.com/opcode-database/opcode/034E/
+	-- Has to be looped until it returns true.
+	["SLIDE_OBJECT"]=--[[BOOL (bool)]] function(--[[Object (int)]] object,--[[float]] toX,--[[float]] toY,--[[float]] toZ,--[[float]] speedX,--[[float]] speedY,--[[float]] speedZ,--[[BOOL (bool)]] collision)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_float(toX)native_invoker.push_arg_float(toY)native_invoker.push_arg_float(toZ)native_invoker.push_arg_float(speedX)native_invoker.push_arg_float(speedY)native_invoker.push_arg_float(speedZ)native_invoker.push_arg_bool(collision)native_invoker.end_call_2(0x2FDFF4107B8C1147)return native_invoker.get_return_value_bool()end,
+	["SET_OBJECT_TARGETTABLE"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] targettable)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(targettable)native_invoker.end_call_2(0x8A7391690F5AFD81)end,
+	-- Overrides a flag on the object which determines if the object should be avoided by a vehicle in task CTaskVehicleGoToPointWithAvoidanceAutomobile.
+	["SET_OBJECT_FORCE_VEHICLES_TO_AVOID"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x77F33F2CCF64B3AA)end,
+	-- Has 8 params in the latest patches.
+	-- 
+	-- isMission - if true doesn't return mission objects
+	["GET_CLOSEST_OBJECT_OF_TYPE"]=--[[Object (int)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[Hash (int)]] modelHash,--[[BOOL (bool)]] isMission,--[[BOOL (bool)]] p6,--[[BOOL (bool)]] p7)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.push_arg_int(modelHash)native_invoker.push_arg_bool(isMission)native_invoker.push_arg_bool(p6)native_invoker.push_arg_bool(p7)native_invoker.end_call_2(0xE143FA2249364369)return native_invoker.get_return_value_int()end,
+	["HAS_OBJECT_BEEN_BROKEN"]=--[[BOOL (bool)]] function(--[[Object (int)]] object,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x8ABFB70C49CC43E2)return native_invoker.get_return_value_bool()end,
+	["HAS_CLOSEST_OBJECT_OF_TYPE_BEEN_BROKEN"]=--[[BOOL (bool)]] function(--[[float]] p0,--[[float]] p1,--[[float]] p2,--[[float]] p3,--[[Hash (int)]] modelHash,--[[Any (int)]] p5)native_invoker.begin_call()native_invoker.push_arg_float(p0)native_invoker.push_arg_float(p1)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_int(modelHash)native_invoker.push_arg_int(p5)native_invoker.end_call_2(0x761B0E69AC4D007E)return native_invoker.get_return_value_bool()end,
+	["HAS_CLOSEST_OBJECT_OF_TYPE_BEEN_COMPLETELY_DESTROYED"]=--[[BOOL (bool)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[Hash (int)]] modelHash,--[[BOOL (bool)]] p5)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.push_arg_int(modelHash)native_invoker.push_arg_bool(p5)native_invoker.end_call_2(0x46494A2475701343)return native_invoker.get_return_value_bool()end,
+	["GET_HAS_OBJECT_BEEN_COMPLETELY_DESTROYED"]=--[[Any (int)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x2542269291C6AC84)return native_invoker.get_return_value_int()end,
+	["GET_OFFSET_FROM_COORD_AND_HEADING_IN_WORLD_COORDS"]=--[[Vector3 (vector3)]] function(--[[float]] xPos,--[[float]] yPos,--[[float]] zPos,--[[float]] heading,--[[float]] xOffset,--[[float]] yOffset,--[[float]] zOffset)native_invoker.begin_call()native_invoker.push_arg_float(xPos)native_invoker.push_arg_float(yPos)native_invoker.push_arg_float(zPos)native_invoker.push_arg_float(heading)native_invoker.push_arg_float(xOffset)native_invoker.push_arg_float(yOffset)native_invoker.push_arg_float(zOffset)native_invoker.end_call_2(0x163E252DE035A133)return native_invoker.get_return_value_vector3()end,
+	["GET_COORDS_AND_ROTATION_OF_CLOSEST_OBJECT_OF_TYPE"]=--[[Any (int)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[Hash (int)]] modelHash,--[[Vector3* (pointer)]] outPosition,--[[Vector3* (pointer)]] outRotation,--[[int]] rotationOrder)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.push_arg_int(modelHash)native_invoker.push_arg_pointer(outPosition)native_invoker.push_arg_pointer(outRotation)native_invoker.push_arg_int(rotationOrder)native_invoker.end_call_2(0x163F8B586BC95F2A)return native_invoker.get_return_value_int()end,
+	-- Hardcoded to not work in multiplayer.
+	-- 
+	-- 
+	-- Used to lock/unlock doors to interior areas of the game.
+	-- 
+	-- (Possible) Door Types:
+	-- 
+	-- pastebin.com/9S2m3qA4
+	-- 
+	-- Heading is either 1, 0 or -1 in the scripts. Means default closed(0) or opened either into(1) or out(-1) of the interior.
+	-- Locked means that the heading is locked.  
+	-- p6 is always 0. 
+	-- 
+	-- 225 door types, model names and coords found in stripclub.c4:
+	-- pastebin.com/gywnbzsH
+	-- 
+	-- get door info: pastebin.com/i14rbekD
+	["SET_STATE_OF_CLOSEST_DOOR_OF_TYPE"]=--[[void]] function(--[[Hash (int)]] type,--[[float]] x,--[[float]] y,--[[float]] z,--[[BOOL (bool)]] locked,--[[float]] heading,--[[BOOL (bool)]] p6)native_invoker.begin_call()native_invoker.push_arg_int(type)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_bool(locked)native_invoker.push_arg_float(heading)native_invoker.push_arg_bool(p6)native_invoker.end_call_2(0xF82D8F1926A02C3D)end,
+	-- locked is 0 if no door is found
+	-- locked is 0 if door is unlocked
+	-- locked is 1 if door is found and unlocked.
+	-- 
+	-- -------------
+	-- the locked bool is either 0(unlocked)(false) or 1(locked)(true)
+	["GET_STATE_OF_CLOSEST_DOOR_OF_TYPE"]=--[[void]] function(--[[Hash (int)]] type,--[[float]] x,--[[float]] y,--[[float]] z,--[[BOOL* (pointer)]] locked,--[[float* (pointer)]] heading)native_invoker.begin_call()native_invoker.push_arg_int(type)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_pointer(locked)native_invoker.push_arg_pointer(heading)native_invoker.end_call_2(0xEDC1A5B84AEF33FF)end,
+	-- Hardcoded not to work in multiplayer environments.
+	-- When you set locked to 0 the door open and to 1 the door close
+	-- OBJECT::_9B12F9A24FABEDB0(${prop_gate_prison_01}, 1845.0, 2605.0, 45.0, 0, 0.0, 50.0, 0);  //door open
+	-- 
+	-- OBJECT::_9B12F9A24FABEDB0(${prop_gate_prison_01}, 1845.0, 2605.0, 45.0, 1, 0.0, 50.0, 0);  //door close
+	["SET_LOCKED_UNSTREAMED_IN_DOOR_OF_TYPE"]=--[[void]] function(--[[Hash (int)]] modelHash,--[[float]] x,--[[float]] y,--[[float]] z,--[[BOOL (bool)]] locked,--[[float]] xRotMult,--[[float]] yRotMult,--[[float]] zRotMult)native_invoker.begin_call()native_invoker.push_arg_int(modelHash)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_bool(locked)native_invoker.push_arg_float(xRotMult)native_invoker.push_arg_float(yRotMult)native_invoker.push_arg_float(zRotMult)native_invoker.end_call_2(0x9B12F9A24FABEDB0)end,
+	["PLAY_OBJECT_AUTO_START_ANIM"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x006E4B040ED37EC3)end,
+	-- doorHash has to be unique. scriptDoor false; relies upon getNetworkGameScriptHandler. isLocal On true disables the creation CRequestDoorEvent's in DOOR_SYSTEM_SET_DOOR_STATE.
+	-- p5 only set to true in single player native scripts.
+	-- If scriptDoor is true, register the door on the script handler host (note: there's a hardcap on the number of script IDs that can be added to the system at a given time). If scriptDoor and isLocal are both false, the door is considered to be in a "Persists w/o netobj" state.
+	-- 
+	-- door hashes normally look like PROP_[int]_DOOR_[int] for interior doors and PROP_BUILDING_[int]_DOOR_[int] exterior doors but you can just make up your own hash if you want
+	-- All doors need to be registered with ADD_DOOR_TO_SYSTEM before they can be manipulated with the door natives and the easiest way to get door models is just find the door in codewalker.
+	-- 
+	-- Example: AddDoorToSystem("PROP_43_DOOR_0", "hei_v_ilev_fh_heistdoor2", -1456.818, -520.5037, 69.67043, 0, 0, 0)
+	["ADD_DOOR_TO_SYSTEM"]=--[[void]] function(--[[Hash (int)]] doorHash,--[[Hash (int)]] modelHash,--[[float]] x,--[[float]] y,--[[float]] z,--[[BOOL (bool)]] p5,--[[BOOL (bool)]] scriptDoor,--[[BOOL (bool)]] isLocal)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.push_arg_int(modelHash)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_bool(p5)native_invoker.push_arg_bool(scriptDoor)native_invoker.push_arg_bool(isLocal)native_invoker.end_call_2(0x6F8838D03D1DC226)end,
+	-- CDoor and CDoorSystemData still internally allocated (and their associations between doorHash, modelHash, and coordinates).
+	-- Only its NetObj removed and flag ``*(v2 + 192) |= 8u`` (1604 retail) toggled.
+	["REMOVE_DOOR_FROM_SYSTEM"]=--[[void]] function(--[[Hash (int)]] doorHash,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x464D8E1427156FE4)end,
+	-- Lockstates not applied and CNetObjDoor's not created until DOOR_SYSTEM_GET_IS_PHYSICS_LOADED returns true.
+	-- `requestDoor` on true, and when door system is configured to, i.e., "persists w/o netobj", generate a CRequestDoorEvent.
+	-- `forceUpdate` on true, forces an update on the door system (same path as netObjDoor_applyDoorStuff)
+	-- Door lock states:
+	-- 0: UNLOCKED
+	-- 1: LOCKED
+	-- 2: DOORSTATE_FORCE_LOCKED_UNTIL_OUT_OF_AREA
+	-- 3: DOORSTATE_FORCE_UNLOCKED_THIS_FRAME
+	-- 4: DOORSTATE_FORCE_LOCKED_THIS_FRAME
+	-- 5: DOORSTATE_FORCE_OPEN_THIS_FRAME
+	-- 6: DOORSTATE_FORCE_CLOSED_THIS_FRAME
+	["DOOR_SYSTEM_SET_DOOR_STATE"]=--[[void]] function(--[[Hash (int)]] doorHash,--[[int]] state,--[[BOOL (bool)]] requestDoor,--[[BOOL (bool)]] forceUpdate)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.push_arg_int(state)native_invoker.push_arg_bool(requestDoor)native_invoker.push_arg_bool(forceUpdate)native_invoker.end_call_2(0x6BAB9442830C7F53)end,
+	["DOOR_SYSTEM_GET_DOOR_STATE"]=--[[int]] function(--[[Hash (int)]] doorHash)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.end_call_2(0x160AA1B32F6139B8)return native_invoker.get_return_value_int()end,
+	["DOOR_SYSTEM_GET_DOOR_PENDING_STATE"]=--[[int]] function(--[[Hash (int)]] doorHash)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.end_call_2(0x4BC2854478F3A749)return native_invoker.get_return_value_int()end,
+	-- Includes networking check: ownership vs. or the door itself **isn't** networked.
+	-- `forceUpdate` on true invokes DOOR_SYSTEM_SET_DOOR_STATE otherwise requestDoor is unused.
+	["DOOR_SYSTEM_SET_AUTOMATIC_RATE"]=--[[void]] function(--[[Hash (int)]] doorHash,--[[float]] rate,--[[BOOL (bool)]] requestDoor,--[[BOOL (bool)]] forceUpdate)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.push_arg_float(rate)native_invoker.push_arg_bool(requestDoor)native_invoker.push_arg_bool(forceUpdate)native_invoker.end_call_2(0x03C27E13B42A0E82)end,
+	-- `forceUpdate` on true invokes DOOR_SYSTEM_SET_DOOR_STATE otherwise requestDoor is unused.
+	["DOOR_SYSTEM_SET_AUTOMATIC_DISTANCE"]=--[[void]] function(--[[Hash (int)]] doorHash,--[[float]] distance,--[[BOOL (bool)]] requestDoor,--[[BOOL (bool)]] forceUpdate)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.push_arg_float(distance)native_invoker.push_arg_bool(requestDoor)native_invoker.push_arg_bool(forceUpdate)native_invoker.end_call_2(0x9BA001CB45CBF627)end,
+	-- Sets the ajar angle of a door.
+	-- Ranges from -1.0 to 1.0, and 0.0 is closed / default.
+	-- `forceUpdate` on true invokes DOOR_SYSTEM_SET_DOOR_STATE otherwise requestDoor is unused.
+	["DOOR_SYSTEM_SET_OPEN_RATIO"]=--[[void]] function(--[[Hash (int)]] doorHash,--[[float]] ajar,--[[BOOL (bool)]] requestDoor,--[[BOOL (bool)]] forceUpdate)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.push_arg_float(ajar)native_invoker.push_arg_bool(requestDoor)native_invoker.push_arg_bool(forceUpdate)native_invoker.end_call_2(0xB6E6FBA95C7324AC)end,
+	["DOOR_SYSTEM_GET_AUTOMATIC_DISTANCE"]=--[[Any (int)]] function(--[[Hash (int)]] doorHash)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.end_call_2(0xE851471AEFC3374F)return native_invoker.get_return_value_int()end,
+	["DOOR_SYSTEM_GET_OPEN_RATIO"]=--[[float]] function(--[[Hash (int)]] doorHash)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.end_call_2(0x65499865FCA6E5EC)return native_invoker.get_return_value_float()end,
+	-- Includes networking check: ownership vs. or the door itself **isn't** networked.
+	-- `forceUpdate` on true invokes DOOR_SYSTEM_SET_DOOR_STATE otherwise requestDoor is unused.
+	["DOOR_SYSTEM_SET_SPRING_REMOVED"]=--[[void]] function(--[[Hash (int)]] doorHash,--[[BOOL (bool)]] removed,--[[BOOL (bool)]] requestDoor,--[[BOOL (bool)]] forceUpdate)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.push_arg_bool(removed)native_invoker.push_arg_bool(requestDoor)native_invoker.push_arg_bool(forceUpdate)native_invoker.end_call_2(0xC485E07E4F0B7958)end,
+	-- Includes networking check: ownership vs. or the door itself **isn't** networked.
+	["DOOR_SYSTEM_SET_HOLD_OPEN"]=--[[void]] function(--[[Hash (int)]] doorHash,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xD9B71952F78A2640)end,
+	-- Some property related to gates. Native name between ``DOOR_SYSTEM_SET_AUTOMATIC_RATE`` and ``DOOR_SYSTEM_SET_DOOR_STATE``.
+	["DOOR_SYSTEM_SET_DOOR_OPEN_FOR_RACES"]=--[[void]] function(--[[Hash (int)]] doorHash,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xA85A21582451E951)end,
+	-- if (OBJECT::IS_DOOR_REGISTERED_WITH_SYSTEM(doorHash)) 
+	-- {
+	--     OBJECT::REMOVE_DOOR_FROM_SYSTEM(doorHash);
+	-- }
+	["IS_DOOR_REGISTERED_WITH_SYSTEM"]=--[[BOOL (bool)]] function(--[[Hash (int)]] doorHash)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.end_call_2(0xC153C43EA202C8C1)return native_invoker.get_return_value_bool()end,
+	["IS_DOOR_CLOSED"]=--[[BOOL (bool)]] function(--[[Hash (int)]] doorHash)native_invoker.begin_call()native_invoker.push_arg_int(doorHash)native_invoker.end_call_2(0xC531EE8A1145A149)return native_invoker.get_return_value_bool()end,
+	["OPEN_ALL_BARRIERS_FOR_RACE"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0xC7F29CA00F46350E)end,
+	-- Clears the fields sets by 0xC7F29CA00F46350E (1604 retail: 0x1424A7A10, 0x1424A7A11) and iterates over the global CDoor's bucket-list.
+	-- Related to its "Pre-networked state"?
+	["CLOSE_ALL_BARRIERS_FOR_RACE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x701FDA1E82076BA4)end,
+	["DOOR_SYSTEM_GET_IS_PHYSICS_LOADED"]=--[[BOOL (bool)]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xDF97CDD4FC08FD34)return native_invoker.get_return_value_bool()end,
+	-- Search radius: 0.5
+	["DOOR_SYSTEM_FIND_EXISTING_DOOR"]=--[[BOOL (bool)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[Hash (int)]] modelHash,--[[Hash* (pointer)]] outDoorHash)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_int(modelHash)native_invoker.push_arg_pointer(outDoorHash)native_invoker.end_call_2(0x589F80B325CC82C5)return native_invoker.get_return_value_bool()end,
+	["IS_GARAGE_EMPTY"]=--[[BOOL (bool)]] function(--[[Hash (int)]] garageHash,--[[BOOL (bool)]] p1,--[[int]] p2)native_invoker.begin_call()native_invoker.push_arg_int(garageHash)native_invoker.push_arg_bool(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x90E47239EA1980B8)return native_invoker.get_return_value_bool()end,
+	["IS_PLAYER_ENTIRELY_INSIDE_GARAGE"]=--[[BOOL (bool)]] function(--[[Hash (int)]] garageHash,--[[Player (int)]] player,--[[float]] p2,--[[int]] p3)native_invoker.begin_call()native_invoker.push_arg_int(garageHash)native_invoker.push_arg_int(player)native_invoker.push_arg_float(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0x024A60DEB0EA69F0)return native_invoker.get_return_value_bool()end,
+	["IS_PLAYER_PARTIALLY_INSIDE_GARAGE"]=--[[BOOL (bool)]] function(--[[Hash (int)]] garageHash,--[[Player (int)]] player,--[[int]] p2)native_invoker.begin_call()native_invoker.push_arg_int(garageHash)native_invoker.push_arg_int(player)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x1761DC5D8471CBAA)return native_invoker.get_return_value_bool()end,
+	["ARE_ENTITIES_ENTIRELY_INSIDE_GARAGE"]=--[[BOOL (bool)]] function(--[[Hash (int)]] garageHash,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2,--[[BOOL (bool)]] p3,--[[Any (int)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(garageHash)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.push_arg_bool(p3)native_invoker.push_arg_int(p4)native_invoker.end_call_2(0x85B6C850546FDDE2)return native_invoker.get_return_value_bool()end,
+	["IS_ANY_ENTITY_ENTIRELY_INSIDE_GARAGE"]=--[[BOOL (bool)]] function(--[[Hash (int)]] garageHash,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2,--[[BOOL (bool)]] p3,--[[Any (int)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(garageHash)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.push_arg_bool(p3)native_invoker.push_arg_int(p4)native_invoker.end_call_2(0x673ED815D6E323B7)return native_invoker.get_return_value_bool()end,
+	-- Despite the name, it does work for any entity type.
+	["IS_OBJECT_ENTIRELY_INSIDE_GARAGE"]=--[[BOOL (bool)]] function(--[[Hash (int)]] garageHash,--[[Entity (int)]] entity,--[[float]] p2,--[[int]] p3)native_invoker.begin_call()native_invoker.push_arg_int(garageHash)native_invoker.push_arg_int(entity)native_invoker.push_arg_float(p2)native_invoker.push_arg_int(p3)native_invoker.end_call_2(0x372EF6699146A1E4)return native_invoker.get_return_value_bool()end,
+	-- Despite the name, it does work for any entity type.
+	["IS_OBJECT_PARTIALLY_INSIDE_GARAGE"]=--[[BOOL (bool)]] function(--[[Hash (int)]] garageHash,--[[Entity (int)]] entity,--[[int]] p2)native_invoker.begin_call()native_invoker.push_arg_int(garageHash)native_invoker.push_arg_int(entity)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0xF0EED5A6BC7B237A)return native_invoker.get_return_value_bool()end,
+	["CLEAR_GARAGE"]=--[[void]] function(--[[Hash (int)]] garageHash,--[[BOOL (bool)]] isNetwork)native_invoker.begin_call()native_invoker.push_arg_int(garageHash)native_invoker.push_arg_bool(isNetwork)native_invoker.end_call_2(0xDA05194260CDCDF9)end,
+	["CLEAR_OBJECTS_INSIDE_GARAGE"]=--[[void]] function(--[[Hash (int)]] garageHash,--[[BOOL (bool)]] vehicles,--[[BOOL (bool)]] peds,--[[BOOL (bool)]] objects,--[[BOOL (bool)]] isNetwork)native_invoker.begin_call()native_invoker.push_arg_int(garageHash)native_invoker.push_arg_bool(vehicles)native_invoker.push_arg_bool(peds)native_invoker.push_arg_bool(objects)native_invoker.push_arg_bool(isNetwork)native_invoker.end_call_2(0x190428512B240692)end,
+	-- Sets a flag. A valid id is 0x157DC10D
+	["DISABLE_TIDYING_UP_IN_GARAGE"]=--[[void]] function(--[[int]] id,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(id)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x659F9D71F52843F8)end,
+	["ENABLE_SAVING_IN_GARAGE"]=--[[void]] function(--[[Hash (int)]] garageHash,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(garageHash)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xF2E1A7133DD356A6)end,
+	["CLOSE_SAFEHOUSE_GARAGES"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x66A49D021870FE88)end,
+	-- p5 is usually 0.
+	["DOES_OBJECT_OF_TYPE_EXIST_AT_COORDS"]=--[[BOOL (bool)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[Hash (int)]] hash,--[[BOOL (bool)]] p5)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.push_arg_int(hash)native_invoker.push_arg_bool(p5)native_invoker.end_call_2(0xBFA48E2FF417213F)return native_invoker.get_return_value_bool()end,
+	-- An angled area is an X-Z oriented rectangle with three parameters:
+	-- 1. origin: the mid-point along a base edge of the rectangle;
+	-- 2. extent: the mid-point of opposite base edge on the other Z;
+	-- 3. width: the length of the base edge; (named derived from logging strings ``CNetworkRoadNodeWorldStateData``).
+	-- 
+	-- The oriented rectangle can then be derived from the direction of the two points (``norm(origin - extent)``), its orthonormal, and the width, e.g:
+	-- 1. golf_mp https://i.imgur.com/JhsQAK9.png
+	-- 2. am_taxi https://i.imgur.com/TJWCZaT.jpg
+	["IS_POINT_IN_ANGLED_AREA"]=--[[BOOL (bool)]] function(--[[float]] xPos,--[[float]] yPos,--[[float]] zPos,--[[float]] x1,--[[float]] y1,--[[float]] z1,--[[float]] x2,--[[float]] y2,--[[float]] z2,--[[float]] width,--[[BOOL (bool)]] debug,--[[BOOL (bool)]] includeZ)native_invoker.begin_call()native_invoker.push_arg_float(xPos)native_invoker.push_arg_float(yPos)native_invoker.push_arg_float(zPos)native_invoker.push_arg_float(x1)native_invoker.push_arg_float(y1)native_invoker.push_arg_float(z1)native_invoker.push_arg_float(x2)native_invoker.push_arg_float(y2)native_invoker.push_arg_float(z2)native_invoker.push_arg_float(width)native_invoker.push_arg_bool(debug)native_invoker.push_arg_bool(includeZ)native_invoker.end_call_2(0x2A70BAE8883E4C81)return native_invoker.get_return_value_bool()end,
+	-- Overrides the climbing/blocking flags of the object, used in the native scripts mostly for "prop_dock_bouy_*"
+	["SET_OBJECT_ALLOW_LOW_LOD_BUOYANCY"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x4D89D607CB3DD1D2)end,
+	-- Adjust the physics parameters of a prop, or otherwise known as "object". This is useful for simulated gravity.
+	-- 
+	-- Other parameters seem to be unknown.
+	-- 
+	-- p2: seems to be weight and gravity related. Higher value makes the obj fall faster. Very sensitive?
+	-- p3: seems similar to p2
+	-- p4: makes obj fall slower the higher the value
+	-- p5: similar to p4
+	["SET_OBJECT_PHYSICS_PARAMS"]=--[[void]] function(--[[Object (int)]] object,--[[float]] weight,--[[float]] p2,--[[float]] p3,--[[float]] p4,--[[float]] p5,--[[float]] gravity,--[[float]] p7,--[[float]] p8,--[[float]] p9,--[[float]] p10,--[[float]] buoyancy)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_float(weight)native_invoker.push_arg_float(p2)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.push_arg_float(p5)native_invoker.push_arg_float(gravity)native_invoker.push_arg_float(p7)native_invoker.push_arg_float(p8)native_invoker.push_arg_float(p9)native_invoker.push_arg_float(p10)native_invoker.push_arg_float(buoyancy)native_invoker.end_call_2(0xF6DF6E90DE7DF90F)end,
+	["GET_OBJECT_FRAGMENT_DAMAGE_HEALTH"]=--[[float]] function(--[[Any (int)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xB6FBFD079B8D0596)return native_invoker.get_return_value_float()end,
+	["SET_ACTIVATE_OBJECT_PHYSICS_AS_SOON_AS_IT_IS_UNFROZEN"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x406137F8EF90EAF5)end,
+	["IS_ANY_OBJECT_NEAR_POINT"]=--[[BOOL (bool)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] range,--[[BOOL (bool)]] p4)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(range)native_invoker.push_arg_bool(p4)native_invoker.end_call_2(0x397DC58FF00298D1)return native_invoker.get_return_value_bool()end,
+	["IS_OBJECT_NEAR_POINT"]=--[[BOOL (bool)]] function(--[[Hash (int)]] objectHash,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] range)native_invoker.begin_call()native_invoker.push_arg_int(objectHash)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(range)native_invoker.end_call_2(0x8C90FE4B381BA60A)return native_invoker.get_return_value_bool()end,
+	["REMOVE_OBJECT_HIGH_DETAIL_MODEL"]=--[[void]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0x4A39DB43E47CF3AA)end,
+	["BREAK_OBJECT_FRAGMENT_CHILD"]=--[[void]] function(--[[Object (int)]] p0,--[[Any (int)]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xE7E4C198B0185900)end,
+	["DAMAGE_OBJECT_FRAGMENT_CHILD"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0xE05F6AEEFEB0BB02)end,
+	["FIX_OBJECT_FRAGMENT"]=--[[void]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0xF9C1681347C8BD15)end,
+	["TRACK_OBJECT_VISIBILITY"]=--[[void]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0xB252BC036B525623)end,
+	["IS_OBJECT_VISIBLE"]=--[[BOOL (bool)]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0x8B32ACE6326A7546)return native_invoker.get_return_value_bool()end,
+	["SET_OBJECT_IS_SPECIAL_GOLFBALL"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xC6033D32241F6FB5)end,
+	["SET_OBJECT_TAKES_DAMAGE_FROM_COLLIDING_WITH_BUILDINGS"]=--[[void]] function(--[[Any (int)]] p0,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0xEB6F1A9B5510A5D2)end,
+	["ALLOW_DAMAGE_EVENTS_FOR_NON_NETWORKED_OBJECTS"]=--[[void]] function(--[[BOOL (bool)]] value)native_invoker.begin_call()native_invoker.push_arg_bool(value)native_invoker.end_call_2(0xABDABF4E1EDECBFA)end,
+	-- Requires a component_at_*_flsh to be attached to the weapon object
+	["SET_CUTSCENES_WEAPON_FLASHLIGHT_ON_THIS_FRAME"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xBCE595371A5FBAAF)end,
+	-- Example:
+	-- OBJECT::GET_RAYFIRE_MAP_OBJECT(-809.9619750976562, 170.919, 75.7406997680664, 3.0, "des_tvsmash");
+	["GET_RAYFIRE_MAP_OBJECT"]=--[[Object (int)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[string]] name)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.push_arg_string(name)native_invoker.end_call_2(0xB48FCED898292E52)return native_invoker.get_return_value_int()end,
+	-- Defines the state of a destructible object.
+	-- Use the GET_RAYFIRE_MAP_OBJECT native to find an object's handle with its name / coords.
+	-- State 2 == object just spawned
+	-- State 4 == Beginning of the animation
+	-- State 6 == Start animation
+	-- State 9 == End of the animation
+	["SET_STATE_OF_RAYFIRE_MAP_OBJECT"]=--[[void]] function(--[[Object (int)]] object,--[[int]] state)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_int(state)native_invoker.end_call_2(0x5C29F698D404C5E1)end,
+	-- Get a destructible object's state.
+	-- Substract 1 to get the real state.
+	-- See SET_STATE_OF_RAYFIRE_MAP_OBJECT to see the different states
+	-- For example, if the object just spawned (state 2), the native will return 3.
+	["GET_STATE_OF_RAYFIRE_MAP_OBJECT"]=--[[int]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0x899BA936634A322E)return native_invoker.get_return_value_int()end,
+	-- Returns true if a destructible object with this handle exists, false otherwise.  
+	["DOES_RAYFIRE_MAP_OBJECT_EXIST"]=--[[BOOL (bool)]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0x52AF537A0C5B8AAD)return native_invoker.get_return_value_bool()end,
+	-- `object`: The des-object handle to get the animation progress from.
+	-- Return value is a float between 0.0 and 1.0, 0.0 is the beginning of the animation, 1.0 is the end. Value resets to 0.0 instantly after reaching 1.0.
+	["GET_RAYFIRE_MAP_OBJECT_ANIM_PHASE"]=--[[float]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0x260EE4FDBDF4DB01)return native_invoker.get_return_value_float()end,
+	-- Pickup hashes: pastebin.com/8EuSv2r1
+	-- 
+	-- Full list of pickup types by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pickupTypes.json
+	["CREATE_PICKUP"]=--[[Pickup (int)]] function(--[[Hash (int)]] pickupHash,--[[float]] posX,--[[float]] posY,--[[float]] posZ,--[[int]] p4,--[[int]] value,--[[BOOL (bool)]] p6,--[[Hash (int)]] modelHash)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.push_arg_float(posX)native_invoker.push_arg_float(posY)native_invoker.push_arg_float(posZ)native_invoker.push_arg_int(p4)native_invoker.push_arg_int(value)native_invoker.push_arg_bool(p6)native_invoker.push_arg_int(modelHash)native_invoker.end_call_2(0xFBA08C503DD5FA58)return native_invoker.get_return_value_int()end,
+	-- Pickup hashes: pastebin.com/8EuSv2r1
+	-- 
+	-- flags:
+	-- 8 (1 << 3): place on ground
+	-- 512 (1 << 9): spin around
+	-- 
+	-- Full list of pickup types by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pickupTypes.json
+	["CREATE_PICKUP_ROTATE"]=--[[Pickup (int)]] function(--[[Hash (int)]] pickupHash,--[[float]] posX,--[[float]] posY,--[[float]] posZ,--[[float]] rotX,--[[float]] rotY,--[[float]] rotZ,--[[int]] flag,--[[int]] amount,--[[Any (int)]] p9,--[[BOOL (bool)]] p10,--[[Hash (int)]] modelHash)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.push_arg_float(posX)native_invoker.push_arg_float(posY)native_invoker.push_arg_float(posZ)native_invoker.push_arg_float(rotX)native_invoker.push_arg_float(rotY)native_invoker.push_arg_float(rotZ)native_invoker.push_arg_int(flag)native_invoker.push_arg_int(amount)native_invoker.push_arg_int(p9)native_invoker.push_arg_bool(p10)native_invoker.push_arg_int(modelHash)native_invoker.end_call_2(0x891804727E0A98B7)return native_invoker.get_return_value_int()end,
+	["FORCE_PICKUP_ROTATE_FACE_UP"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x394CD08E31313C28)end,
+	["SET_CUSTOM_PICKUP_WEAPON_HASH"]=--[[void]] function(--[[Hash (int)]] pickupHash,--[[Pickup (int)]] pickup)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.push_arg_int(pickup)native_invoker.end_call_2(0x826D1EE4D1CAFC78)end,
+	-- Used for doing money drop
+	-- Pickup hashes: pastebin.com/8EuSv2r1
+	-- 
+	-- Full list of pickup types by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pickupTypes.json
+	["CREATE_AMBIENT_PICKUP"]=--[[Pickup (int)]] function(--[[Hash (int)]] pickupHash,--[[float]] posX,--[[float]] posY,--[[float]] posZ,--[[int]] flags,--[[int]] value,--[[Hash (int)]] modelHash,--[[BOOL (bool)]] p7,--[[BOOL (bool)]] p8)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.push_arg_float(posX)native_invoker.push_arg_float(posY)native_invoker.push_arg_float(posZ)native_invoker.push_arg_int(flags)native_invoker.push_arg_int(value)native_invoker.push_arg_int(modelHash)native_invoker.push_arg_bool(p7)native_invoker.push_arg_bool(p8)native_invoker.end_call_2(0x673966A0C0FD7171)return native_invoker.get_return_value_int()end,
+	["CREATE_NON_NETWORKED_AMBIENT_PICKUP"]=--[[Pickup (int)]] function(--[[Hash (int)]] pickupHash,--[[float]] posX,--[[float]] posY,--[[float]] posZ,--[[int]] flags,--[[int]] value,--[[Hash (int)]] modelHash,--[[BOOL (bool)]] p7,--[[BOOL (bool)]] p8)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.push_arg_float(posX)native_invoker.push_arg_float(posY)native_invoker.push_arg_float(posZ)native_invoker.push_arg_int(flags)native_invoker.push_arg_int(value)native_invoker.push_arg_int(modelHash)native_invoker.push_arg_bool(p7)native_invoker.push_arg_bool(p8)native_invoker.end_call_2(0x9C93764223E29C50)return native_invoker.get_return_value_int()end,
+	["BLOCK_PLAYERS_FOR_AMBIENT_PICKUP"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x1E3F1B1B891A2AAA)end,
+	-- Pickup hashes: pastebin.com/8EuSv2r1
+	-- 
+	-- Full list of pickup types by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pickupTypes.json
+	["CREATE_PORTABLE_PICKUP"]=--[[Object (int)]] function(--[[Hash (int)]] pickupHash,--[[float]] x,--[[float]] y,--[[float]] z,--[[BOOL (bool)]] placeOnGround,--[[Hash (int)]] modelHash)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_bool(placeOnGround)native_invoker.push_arg_int(modelHash)native_invoker.end_call_2(0x2EAF1FDB2FB55698)return native_invoker.get_return_value_int()end,
+	-- Full list of pickup types by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pickupTypes.json
+	["CREATE_NON_NETWORKED_PORTABLE_PICKUP"]=--[[Object (int)]] function(--[[Hash (int)]] pickupHash,--[[float]] x,--[[float]] y,--[[float]] z,--[[BOOL (bool)]] placeOnGround,--[[Hash (int)]] modelHash)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_bool(placeOnGround)native_invoker.push_arg_int(modelHash)native_invoker.end_call_2(0x125494B98A21AAF7)return native_invoker.get_return_value_int()end,
+	["ATTACH_PORTABLE_PICKUP_TO_PED"]=--[[void]] function(--[[Object (int)]] pickupObject,--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(pickupObject)native_invoker.push_arg_int(ped)native_invoker.end_call_2(0x8DC39368BDD57755)end,
+	["DETACH_PORTABLE_PICKUP_FROM_PED"]=--[[void]] function(--[[Object (int)]] pickupObject)native_invoker.begin_call()native_invoker.push_arg_int(pickupObject)native_invoker.end_call_2(0xCF463D1E9A0AECB1)end,
+	["FORCE_PORTABLE_PICKUP_LAST_ACCESSIBLE_POSITION_SETTING"]=--[[void]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0x5CE2E45A5CE2E45A)end,
+	["HIDE_PORTABLE_PICKUP_WHEN_DETACHED"]=--[[void]] function(--[[Object (int)]] pickupObject,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickupObject)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x867458251D47CCB2)end,
+	["SET_MAX_NUM_PORTABLE_PICKUPS_CARRIED_BY_PLAYER"]=--[[void]] function(--[[Hash (int)]] modelHash,--[[int]] number)native_invoker.begin_call()native_invoker.push_arg_int(modelHash)native_invoker.push_arg_int(number)native_invoker.end_call_2(0x0BF3B3BD47D79C08)end,
+	["SET_LOCAL_PLAYER_CAN_COLLECT_PORTABLE_PICKUPS"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x78857FC65CADB909)end,
+	["GET_SAFE_PICKUP_COORDS"]=--[[Vector3 (vector3)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] p3,--[[float]] p4)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(p3)native_invoker.push_arg_float(p4)native_invoker.end_call_2(0x6E16BC2503FF1FF0)return native_invoker.get_return_value_vector3()end,
+	-- Adds an area that seems to be related to pickup physics behavior.
+	-- Max amount of areas is 10. Only works in multiplayer.
+	["ADD_EXTENDED_PICKUP_PROBE_AREA"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.end_call_2(0xD4A7A435B3710D05)end,
+	-- Clears all areas created by ADD_EXTENDED_PICKUP_PROBE_AREA
+	["CLEAR_EXTENDED_PICKUP_PROBE_AREAS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB7C6D80FB371659A)end,
+	["GET_PICKUP_COORDS"]=--[[Vector3 (vector3)]] function(--[[Pickup (int)]] pickup)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.end_call_2(0x225B8B35C88029B3)return native_invoker.get_return_value_vector3()end,
+	["SUPPRESS_PICKUP_SOUND_FOR_PICKUP"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x8DCA505A5C196F05)end,
+	-- Pickup hashes: pastebin.com/8EuSv2r1
+	-- 
+	-- Full list of pickup types by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pickupTypes.json
+	["REMOVE_ALL_PICKUPS_OF_TYPE"]=--[[void]] function(--[[Hash (int)]] pickupHash)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.end_call_2(0x27F9D613092159CF)end,
+	["HAS_PICKUP_BEEN_COLLECTED"]=--[[BOOL (bool)]] function(--[[Pickup (int)]] pickup)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.end_call_2(0x80EC48E6679313F9)return native_invoker.get_return_value_bool()end,
+	["REMOVE_PICKUP"]=--[[void]] function(--[[Pickup (int)]] pickup)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.end_call_2(0x3288D8ACAECD2AB2)end,
+	-- Spawns one or more money pickups.
+	-- 
+	-- x: The X-component of the world position to spawn the money pickups at.
+	-- y: The Y-component of the world position to spawn the money pickups at.
+	-- z: The Z-component of the world position to spawn the money pickups at.
+	-- value: The combined value of the pickups (in dollars).
+	-- amount: The number of pickups to spawn.
+	-- model: The model to use, or 0 for default money model.
+	-- 
+	-- Example:
+	-- CREATE_MONEY_PICKUPS(x, y, z, 1000, 3, 0x684a97ae);
+	-- 
+	-- Spawns 3 spray cans that'll collectively give $1000 when picked up. (Three spray cans, each giving $334, $334, $332 = $1000).
+	-- 
+	-- ==============================================
+	-- 
+	-- Max is 2000 in MP. So if you put the amount to 20, but the value to $400,000 eg. They will only be able to pickup 20 - $2,000 bags. So, $40,000
+	["CREATE_MONEY_PICKUPS"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[int]] value,--[[int]] amount,--[[Hash (int)]] model)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_int(value)native_invoker.push_arg_int(amount)native_invoker.push_arg_int(model)native_invoker.end_call_2(0x0589B5E791CE9B2B)end,
+	["DOES_PICKUP_EXIST"]=--[[BOOL (bool)]] function(--[[Pickup (int)]] pickup)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.end_call_2(0xAFC1CA75AD4074D1)return native_invoker.get_return_value_bool()end,
+	["DOES_PICKUP_OBJECT_EXIST"]=--[[BOOL (bool)]] function(--[[Object (int)]] pickupObject)native_invoker.begin_call()native_invoker.push_arg_int(pickupObject)native_invoker.end_call_2(0xD9EFB6DBF7DAAEA3)return native_invoker.get_return_value_bool()end,
+	["GET_PICKUP_OBJECT"]=--[[Object (int)]] function(--[[Pickup (int)]] pickup)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.end_call_2(0x5099BC55630B25AE)return native_invoker.get_return_value_int()end,
+	["IS_OBJECT_A_PICKUP"]=--[[BOOL (bool)]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0xFC481C641EBBD27D)return native_invoker.get_return_value_bool()end,
+	["IS_OBJECT_A_PORTABLE_PICKUP"]=--[[BOOL (bool)]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0x0378C08504160D0D)return native_invoker.get_return_value_bool()end,
+	-- Pickup hashes: pastebin.com/8EuSv2r1
+	-- 
+	-- Full list of pickup types by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pickupTypes.json
+	["DOES_PICKUP_OF_TYPE_EXIST_IN_AREA"]=--[[BOOL (bool)]] function(--[[Hash (int)]] pickupHash,--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.end_call_2(0xF9C36251F6E48E33)return native_invoker.get_return_value_bool()end,
+	["SET_PICKUP_REGENERATION_TIME"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[int]] duration)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_int(duration)native_invoker.end_call_2(0x78015C9B4B3ECC9D)end,
+	["FORCE_PICKUP_REGENERATE"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x758A5C1B3B1E1990)end,
+	-- Disabling/enabling a player from getting pickups. From the scripts:
+	-- 
+	-- OBJECT::_616093EC6B139DD9(PLAYER::PLAYER_ID(), ${pickup_portable_package}, 0);
+	-- OBJECT::_616093EC6B139DD9(PLAYER::PLAYER_ID(), ${pickup_portable_package}, 0);
+	-- OBJECT::_616093EC6B139DD9(PLAYER::PLAYER_ID(), ${pickup_portable_package}, 1);
+	-- OBJECT::_616093EC6B139DD9(PLAYER::PLAYER_ID(), ${pickup_portable_package}, 0);
+	-- OBJECT::_616093EC6B139DD9(PLAYER::PLAYER_ID(), ${pickup_armour_standard}, 0);
+	-- OBJECT::_616093EC6B139DD9(PLAYER::PLAYER_ID(), ${pickup_armour_standard}, 1);
+	-- 
+	-- Full list of pickup types by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pickupTypes.json
+	["SET_PLAYER_PERMITTED_TO_COLLECT_PICKUPS_OF_TYPE"]=--[[void]] function(--[[Player (int)]] player,--[[Hash (int)]] pickupHash,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(player)native_invoker.push_arg_int(pickupHash)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x616093EC6B139DD9)end,
+	-- Maximum amount of pickup models that can be disallowed is 30.
+	["SET_LOCAL_PLAYER_PERMITTED_TO_COLLECT_PICKUPS_WITH_MODEL"]=--[[void]] function(--[[Hash (int)]] modelHash,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(modelHash)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x88EAEC617CD26926)end,
+	-- Full list of pickup types by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pickupTypes.json
+	["ALLOW_ALL_PLAYERS_TO_COLLECT_PICKUPS_OF_TYPE"]=--[[void]] function(--[[Hash (int)]] pickupHash)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.end_call_2(0xFDC07C58E8AAB715)end,
+	["SET_TEAM_PICKUP_OBJECT"]=--[[void]] function(--[[Object (int)]] object,--[[Any (int)]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_int(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x53E0DF1A2A3CF0CA)end,
+	["PREVENT_COLLECTION_OF_PORTABLE_PICKUP"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x92AEFB5F6E294023)end,
+	["SET_PICKUP_OBJECT_GLOW_WHEN_UNCOLLECTABLE"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x27F248C3FEBFAAD3)end,
+	-- p1 is always 0.51. This native is called before SET_PICKUP_REGENERATION_TIME in all occurances.
+	["SET_PICKUP_GLOW_OFFSET"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[float]] p1)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_float(p1)native_invoker.end_call_2(0x0596843B34B95CE5)end,
+	-- p1 is always -0.2 in scripts and p2 is always true in scripts.
+	["SET_PICKUP_OBJECT_GLOW_OFFSET"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[float]] p1,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_float(p1)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0xA08FE5E49BDC39DD)end,
+	["SET_OBJECT_GLOW_IN_SAME_TEAM"]=--[[void]] function(--[[Pickup (int)]] pickup)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.end_call_2(0x62454A641B41F3C5)end,
+	["SET_PICKUP_OBJECT_ARROW_MARKER"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x39A5FB7EAF150840)end,
+	["ALLOW_PICKUP_ARROW_MARKER_WHEN_UNCOLLECTABLE"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x834344A414C7C85D)end,
+	["GET_DEFAULT_AMMO_FOR_WEAPON_PICKUP"]=--[[int]] function(--[[Hash (int)]] pickupHash)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.end_call_2(0xDB41D07A45A6D4B7)return native_invoker.get_return_value_int()end,
+	["SET_PICKUP_GENERATION_RANGE_MULTIPLIER"]=--[[void]] function(--[[float]] multiplier)native_invoker.begin_call()native_invoker.push_arg_float(multiplier)native_invoker.end_call_2(0x318516E02DE3ECE2)end,
+	["GET_PICKUP_GENERATION_RANGE_MULTIPLIER"]=--[[float]] function()native_invoker.begin_call()native_invoker.end_call_2(0xB3ECA65C7317F174)return native_invoker.get_return_value_float()end,
+	["SET_ONLY_ALLOW_AMMO_COLLECTION_WHEN_LOW"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x31F924B53EADDF65)end,
+	["SET_PICKUP_UNCOLLECTABLE"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x1C1B69FAE509BA97)end,
+	["SET_PICKUP_TRANSPARENT_WHEN_UNCOLLECTABLE"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x858EC9FD25DE04AA)end,
+	["SET_PICKUP_HIDDEN_WHEN_UNCOLLECTABLE"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x3ED2B83AB2E82799)end,
+	["SET_PICKUP_OBJECT_TRANSPARENT_WHEN_UNCOLLECTABLE"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x8881C98A31117998)end,
+	-- p0 is either 0 or 50 in scripts.
+	["SET_PICKUP_OBJECT_ALPHA_WHEN_TRANSPARENT"]=--[[void]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x8CFF648FBD7330F1)end,
+	["SET_PORTABLE_PICKUP_PERSIST"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x46F3ADD1E2D5BAF2)end,
+	["ALLOW_PORTABLE_PICKUP_TO_MIGRATE_TO_NON_PARTICIPANTS"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x641F272B52E2F0F8)end,
+	["FORCE_ACTIVATE_PHYSICS_ON_UNFIXED_PICKUP"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x4C134B4DF76025D0)end,
+	["ALLOW_PICKUP_BY_NONE_PARTICIPANT"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xAA059C615DE9DD03)end,
+	-- enum ePickupRewardType
+	-- {
+	--     PICKUP_REWARD_TYPE_AMMO = (1 << 0),
+	--     PICKUP_REWARD_TYPE_BULLET_MP = (1 << 1),
+	--     PICKUP_REWARD_TYPE_MISSILE_MP = (1 << 2),
+	--     PICKUP_REWARD_TYPE_GRENADE_LAUNCHER_MP = (1 << 3),
+	--     PICKUP_REWARD_TYPE_ARMOUR = (1 << 4),
+	--     PICKUP_REWARD_TYPE_HEALTH = (1 << 5),
+	--     PICKUP_REWARD_TYPE_HEALTH_VARIABLE = PICKUP_REWARD_TYPE_HEALTH,
+	--     PICKUP_REWARD_TYPE_MONEY_FIXED = (1 << 6),
+	--     PICKUP_REWARD_TYPE_MONEY_VARIABLE = PICKUP_REWARD_TYPE_MONEY_FIXED,
+	--     PICKUP_REWARD_TYPE_WEAPON = (1 << 7),
+	--     PICKUP_REWARD_TYPE_STAT = (1 << 8),
+	--     PICKUP_REWARD_TYPE_STAT_VARIABLE = PICKUP_REWARD_TYPE_STAT,
+	--     PICKUP_REWARD_TYPE_VEHICLE_FIX = (1 << 9),
+	--     PICKUP_REWARD_TYPE_FIREWORK_MP = (1 << 10),
+	-- };
+	["SUPPRESS_PICKUP_REWARD_TYPE"]=--[[void]] function(--[[int]] rewardType,--[[BOOL (bool)]] suppress)native_invoker.begin_call()native_invoker.push_arg_int(rewardType)native_invoker.push_arg_bool(suppress)native_invoker.end_call_2(0xF92099527DB8E2A7)end,
+	["CLEAR_ALL_PICKUP_REWARD_TYPE_SUPPRESSION"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0xA2C1F5E92AFE49ED)end,
+	["CLEAR_PICKUP_REWARD_TYPE_SUPPRESSION"]=--[[void]] function(--[[int]] rewardType)native_invoker.begin_call()native_invoker.push_arg_int(rewardType)native_invoker.end_call_2(0x762DB2D380B48D04)end,
+	-- draws circular marker at pos
+	-- -1 = none
+	-- 0 = red
+	-- 1 = green
+	-- 2 = blue
+	-- 3 = green larger
+	-- 4 = nothing
+	-- 5 = green small
+	["RENDER_FAKE_PICKUP_GLOW"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[int]] colorIndex)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_int(colorIndex)native_invoker.end_call_2(0x3430676B11CDF21D)end,
+	["SET_PICKUP_OBJECT_COLLECTABLE_IN_VEHICLE"]=--[[void]] function(--[[Pickup (int)]] pickup)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.end_call_2(0x7813E8B8C4AE4799)end,
+	["SET_PICKUP_TRACK_DAMAGE_EVENTS"]=--[[void]] function(--[[Pickup (int)]] pickup,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(pickup)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xBFFE53AE7E67FCDC)end,
+	-- Sets entity+38 to C (when false) or 0xFF3f (when true)
+	["SET_ENTITY_FLAG_SUPPRESS_SHADOW"]=--[[void]] function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(entity)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xD05A3241B9A86F19)end,
+	["SET_ENTITY_FLAG_RENDER_SMALL_SHADOW"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xB2D0BDE54F0E8E5A)end,
+	-- Full list of pickup types by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pickupTypes.json
+	["GET_WEAPON_TYPE_FROM_PICKUP_TYPE"]=--[[Hash (int)]] function(--[[Hash (int)]] pickupHash)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.end_call_2(0x08F96CA6C551AD51)return native_invoker.get_return_value_int()end,
+	-- Returns the pickup hash for the given weapon hash
+	["GET_PICKUP_TYPE_FROM_WEAPON_HASH"]=--[[Hash (int)]] function(--[[Hash (int)]] weaponHash)native_invoker.begin_call()native_invoker.push_arg_int(weaponHash)native_invoker.end_call_2(0xD6429A016084F1A5)return native_invoker.get_return_value_int()end,
+	["IS_PICKUP_WEAPON_OBJECT_VALID"]=--[[BOOL (bool)]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0x11D1E53A726891FE)return native_invoker.get_return_value_bool()end,
+	["GET_OBJECT_TINT_INDEX"]=--[[int]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0xE84EB93729C5F36A)return native_invoker.get_return_value_int()end,
+	-- enum ObjectPaintVariants
+	-- {
+	--  Pacific = 0,
+	--   Azure = 1,
+	--     Nautical = 2,
+	--  Continental = 3,
+	--   Battleship = 4,
+	--    Intrepid = 5,
+	--  Uniform = 6,
+	--   Classico = 7,
+	--  Mediterranean = 8,
+	--     Command = 9,
+	--   Mariner = 10,
+	--  Ruby = 11,
+	--     Vintage = 12,
+	--  Pristine = 13,
+	--     Merchant = 14,
+	--     Voyager = 15
+	-- };
+	["SET_OBJECT_TINT_INDEX"]=--[[void]] function(--[[Object (int)]] object,--[[int]] textureVariation)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_int(textureVariation)native_invoker.end_call_2(0x971DA0055324D033)end,
+	["SET_TINT_INDEX_CLOSEST_BUILDING_OF_TYPE"]=--[[BOOL (bool)]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] radius,--[[Hash (int)]] modelHash,--[[int]] textureVariation)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(radius)native_invoker.push_arg_int(modelHash)native_invoker.push_arg_int(textureVariation)native_invoker.end_call_2(0xF12E33034D887F66)return native_invoker.get_return_value_bool()end,
+	["SET_PROP_TINT_INDEX"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x31574B1B41268673)end,
+	["SET_PROP_LIGHT_COLOR"]=--[[Any (int)]] function(--[[Object (int)]] object,--[[BOOL (bool)]] p1,--[[int]] r,--[[int]] g,--[[int]] b)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(p1)native_invoker.push_arg_int(r)native_invoker.push_arg_int(g)native_invoker.push_arg_int(b)native_invoker.end_call_2(0x5F048334B4A4E774)return native_invoker.get_return_value_int()end,
+	["IS_PROP_LIGHT_OVERRIDEN"]=--[[BOOL (bool)]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0xADF084FB8F075D06)return native_invoker.get_return_value_bool()end,
+	["SET_OBJECT_IS_VISIBLE_IN_MIRRORS"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x3B2FD68DB5F8331C)end,
+	["SET_OBJECT_SPEED_BOOST_AMOUNT"]=--[[void]] function(--[[Object (int)]] object,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x96EE0EBA0163DF80)end,
+	["SET_OBJECT_SPEED_BOOST_DURATION"]=--[[void]] function(--[[Object (int)]] object,--[[float]] duration)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_float(duration)native_invoker.end_call_2(0xDF6CA0330F2E737B)end,
+	-- returns pickup hash.
+	-- 
+	-- Full list of pickup types by DurtyFree: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/pickupTypes.json
+	["CONVERT_OLD_PICKUP_TYPE_TO_NEW"]=--[[Hash (int)]] function(--[[Hash (int)]] pickupHash)native_invoker.begin_call()native_invoker.push_arg_int(pickupHash)native_invoker.end_call_2(0x5EAAD83F8CFB4575)return native_invoker.get_return_value_int()end,
+	["SET_FORCE_OBJECT_THIS_FRAME"]=--[[void]] function(--[[float]] x,--[[float]] y,--[[float]] z,--[[float]] p3)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.push_arg_float(z)native_invoker.push_arg_float(p3)native_invoker.end_call_2(0xF538081986E49E9D)end,
+	-- is this like setting is as no longer needed?
+	["ONLY_CLEAN_UP_OBJECT_WHEN_OUT_OF_RANGE"]=--[[void]] function(--[[Object (int)]] object)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.end_call_2(0xADBE4809F19F927A)end,
+	["SET_DISABLE_COLLISIONS_BETWEEN_CARS_AND_CAR_PARACHUTE"]=--[[void]] function(--[[Any (int)]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0x8CAAB2BD3EA58BD4)end,
+	["SET_PROJECTILES_SHOULD_EXPLODE_ON_CONTACT"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x63ECF581BC70E363)end,
+	-- Activate the physics to: "xs_prop_arena_{flipper,wall,bollard,turntable,pit}"
+	["SET_DRIVE_ARTICULATED_JOINT"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle,--[[int]] p2)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.push_arg_int(p2)native_invoker.end_call_2(0x911024442F4898F0)end,
+	["SET_DRIVE_ARTICULATED_JOINT_WITH_INFLICTOR"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle,--[[int]] p2,--[[Ped (int)]] ped)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(ped)native_invoker.end_call_2(0xB20834A7DD3D8896)end,
+	["SET_OBJECT_IS_A_PRESSURE_PLATE"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x734E1714D077DA9A)end,
+	["SET_WEAPON_IMPACTS_APPLY_GREATER_FORCE"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(p1)native_invoker.end_call_2(0x1A6CBB06E2D0D79D)end,
+	["GET_IS_ARTICULATED_JOINT_AT_MIN_ANGLE"]=--[[BOOL (bool)]] function(--[[Object (int)]] object,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x43C677F1E1158005)return native_invoker.get_return_value_bool()end,
+	["GET_IS_ARTICULATED_JOINT_AT_MAX_ANGLE"]=--[[Any (int)]] function(--[[Any (int)]] p0,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0x3BD770D281982DB5)return native_invoker.get_return_value_int()end,
+	["SET_IS_OBJECT_ARTICULATED"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x1C57C94A6446492A)end,
+	["SET_IS_OBJECT_BALL"]=--[[void]] function(--[[Object (int)]] object,--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_int(object)native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0xB5B7742424BD4445)end,
+}
+PAD={
+	["_SET_CONTROL_NORMAL"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control,--[[float]] amount)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.push_arg_int(control);native_invoker.push_arg_float(amount);native_invoker.end_call("E8A25867FBA3B05E");return native_invoker.get_return_value_bool();end,
+	["_IS_USING_KEYBOARD"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("A571D46727E2B718");return native_invoker.get_return_value_bool();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Used to be known as _IS_INPUT_JUST_DISABLED
+	["_IS_USING_KEYBOARD_2"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call();native_invoker.push_arg_int(padIndex);native_invoker.end_call("13337B38DB572509");return native_invoker.get_return_value_bool();end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_ENABLED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x1CEA6BFDF248E5D9)return native_invoker.get_return_value_bool()end,
+	-- Returns whether a control is currently pressed.
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_PRESSED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0xF3A21BCD95725A4A)return native_invoker.get_return_value_bool()end,
+	-- Returns whether a control is currently _not_ pressed.
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_RELEASED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x648EE3E7F38877DD)return native_invoker.get_return_value_bool()end,
+	-- Returns whether a control was newly pressed since the last check.
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_JUST_PRESSED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x580417101DDB492F)return native_invoker.get_return_value_bool()end,
+	-- Returns whether a control was newly released since the last check.
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_CONTROL_JUST_RELEASED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x50F940259D3841E6)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_VALUE"]=--[[int]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0xD95E79E8686D2C27)return native_invoker.get_return_value_int()end,
+	-- Returns the value of GET_CONTROL_VALUE normalized (i.e. a real number value between -1 and 1)
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_NORMAL"]=--[[float]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0xEC3C9B8D5327B563)return native_invoker.get_return_value_float()end,
+	["SET_USE_ADJUSTED_MOUSE_COORDS"]=--[[void]] function(--[[BOOL (bool)]] p0)native_invoker.begin_call()native_invoker.push_arg_bool(p0)native_invoker.end_call_2(0x5B73C77D9EB66E24)end,
+	-- Seems to return values between -1 and 1 for controls like gas and steering.
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_UNBOUND_NORMAL"]=--[[float]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x5B84D09CEC5209C5)return native_invoker.get_return_value_float()end,
+	-- This is for simulating player input.
+	-- amount is a float value from 0 - 1
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["SET_CONTROL_VALUE_NEXT_FRAME"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control,--[[float]] amount)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.push_arg_float(amount)native_invoker.end_call_2(0xE8A25867FBA3B05E)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_DISABLED_CONTROL_PRESSED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0xE2587F8CBBD87B1D)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_DISABLED_CONTROL_RELEASED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0xFB6C4072E9A32E92)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_DISABLED_CONTROL_JUST_PRESSED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x91AEF906BCA88877)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["IS_DISABLED_CONTROL_JUST_RELEASED"]=--[[BOOL (bool)]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x305C8DCD79DA8B0F)return native_invoker.get_return_value_bool()end,
+	-- control - c# works with (int)GTA.Control.CursorY / (int)GTA.Control.CursorX and returns the mouse movement (additive).
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_DISABLED_CONTROL_NORMAL"]=--[[float]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x11E65974A982637C)return native_invoker.get_return_value_float()end,
+	-- The "disabled" variant of _0x5B84D09CEC5209C5.
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_DISABLED_CONTROL_UNBOUND_NORMAL"]=--[[float]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0x4F8A26A890FD62FB)return native_invoker.get_return_value_float()end,
+	["GET_CONTROL_HOW_LONG_AGO"]=--[[int]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xD7D22F5592AED8BA)return native_invoker.get_return_value_int()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Used to be known as _GET_LAST_INPUT_METHOD & _IS_INPUT_DISABLED
+	["IS_USING_KEYBOARD_AND_MOUSE"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0xA571D46727E2B718)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Used to be known as _IS_INPUT_JUST_DISABLED
+	["IS_USING_CURSOR"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0x13337B38DB572509)return native_invoker.get_return_value_bool()end,
+	["SET_CURSOR_POSITION"]=--[[BOOL (bool)]] function(--[[float]] x,--[[float]] y)native_invoker.begin_call()native_invoker.push_arg_float(x)native_invoker.push_arg_float(y)native_invoker.end_call_2(0xFC695459D4D0E219)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Hardcoded to return false.
+	["IS_USING_REMOTE_PLAY"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0x23F09EADC01449D6)return native_invoker.get_return_value_bool()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["HAVE_CONTROLS_CHANGED"]=--[[BOOL (bool)]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0x6CD79468A1E595C6)return native_invoker.get_return_value_bool()end,
+	-- formerly called _GET_CONTROL_ACTION_NAME incorrectly
+	-- 
+	-- p2 appears to always be true.
+	-- p2 is unused variable in function.
+	-- 
+	-- EG:
+	-- GET_CONTROL_INSTRUCTIONAL_BUTTON (2, 201, 1) /*INPUT_FRONTEND_ACCEPT (e.g. Enter button)*/
+	-- GET_CONTROL_INSTRUCTIONAL_BUTTON (2, 202, 1) /*INPUT_FRONTEND_CANCEL (e.g. ESC button)*/
+	-- GET_CONTROL_INSTRUCTIONAL_BUTTON (2, 51, 1) /*INPUT_CONTEXT (e.g. E button)*/
+	-- 
+	-- gtaforums.com/topic/819070-c-draw-instructional-buttons-scaleform-movie/#entry1068197378
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_INSTRUCTIONAL_BUTTONS_STRING"]=--[[string]] function(--[[int]] padIndex,--[[int]] control,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x0499D7B09FC9B407)return native_invoker.get_return_value_string()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["GET_CONTROL_GROUP_INSTRUCTIONAL_BUTTONS_STRING"]=--[[string]] function(--[[int]] padIndex,--[[int]] controlGroup,--[[BOOL (bool)]] p2)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(controlGroup)native_invoker.push_arg_bool(p2)native_invoker.end_call_2(0x80C2FD58D720C801)return native_invoker.get_return_value_string()end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["SET_CONTROL_LIGHT_EFFECT_COLOR"]=--[[void]] function(--[[int]] padIndex,--[[int]] red,--[[int]] green,--[[int]] blue)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(red)native_invoker.push_arg_int(green)native_invoker.push_arg_int(blue)native_invoker.end_call_2(0x8290252FFF36ACB5)end,
+	["CLEAR_CONTROL_LIGHT_EFFECT"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0xCB0360EFEFB2580D)end,
+	-- padIndex always seems to be 0
+	-- duration in milliseconds 
+	-- frequency should range from about 10 (slow vibration) to 255 (very fast)
+	-- appears to be a hash collision, though it does do what it says
+	-- 
+	-- example:
+	-- SET_PAD_SHAKE(0, 100, 200);
+	["SET_CONTROL_SHAKE"]=--[[void]] function(--[[int]] padIndex,--[[int]] duration,--[[int]] frequency)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(duration)native_invoker.push_arg_int(frequency)native_invoker.end_call_2(0x48B3886C1358D0D5)end,
+	-- Does nothing (it's a nullsub).
+	["SET_CONTROL_TRIGGER_SHAKE"]=--[[void]] function(--[[Any (int)]] p0,--[[Any (int)]] p1,--[[Any (int)]] p2,--[[Any (int)]] p3,--[[Any (int)]] p4)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.push_arg_int(p1)native_invoker.push_arg_int(p2)native_invoker.push_arg_int(p3)native_invoker.push_arg_int(p4)native_invoker.end_call_2(0x14D29BB12D47F68C)end,
+	["STOP_CONTROL_SHAKE"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0x38C16A305E8CDC8D)end,
+	["SET_CONTROL_SHAKE_SUPPRESSED_ID"]=--[[void]] function(--[[int]] padIndex,--[[Any (int)]] p1)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(p1)native_invoker.end_call_2(0xF239400E16C23E08)end,
+	["CLEAR_CONTROL_SHAKE_SUPPRESSED_ID"]=--[[void]] function(--[[int]] p0)native_invoker.begin_call()native_invoker.push_arg_int(p0)native_invoker.end_call_2(0xA0CEFCEA390AAB9B)end,
+	["IS_LOOK_INVERTED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x77B612531280010D)return native_invoker.get_return_value_bool()end,
+	-- Used with IS_LOOK_INVERTED() and negates its affect.
+	-- 
+	-- --
+	-- 
+	-- Not sure how the person above got that description, but here's an actual example:
+	-- 
+	-- if (PAD::_GET_LAST_INPUT_METHOD(2)) {
+	--     if (a_5) {
+	--         if (PAD::IS_LOOK_INVERTED()) {
+	--             a_3 *= -1;
+	--         }
+	--         if (PAD::_E1615EC03B3BB4FD()) {
+	--             a_3 *= -1;
+	--         }
+	--     }
+	-- }
+	["IS_MOUSE_LOOK_INVERTED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xE1615EC03B3BB4FD)return native_invoker.get_return_value_bool()end,
+	-- Returns the local player's targeting mode. See PLAYER::SET_PLAYER_TARGETING_MODE.
+	["GET_LOCAL_PLAYER_AIM_STATE"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0xBB41AFBBBC0A0287)return native_invoker.get_return_value_int()end,
+	-- Same behavior as GET_LOCAL_PLAYER_AIM_STATE but only used on the PC version.
+	["GET_LOCAL_PLAYER_GAMEPAD_AIM_STATE"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x59B9A7AF4C95133C)return native_invoker.get_return_value_int()end,
+	["GET_IS_USING_ALTERNATE_HANDBRAKE"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x25AAA32BDC98F2A3)return native_invoker.get_return_value_bool()end,
+	-- Returns profile setting 225.
+	["GET_IS_USING_ALTERNATE_DRIVEBY"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x0F70731BACCFBB96)return native_invoker.get_return_value_bool()end,
+	-- Returns profile setting 17.
+	["GET_ALLOW_MOVEMENT_WHILE_ZOOMED"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFC859E2374407556)return native_invoker.get_return_value_bool()end,
+	["SET_PLAYERPAD_SHAKES_WHEN_CONTROLLER_DISABLED"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x798FDEB5B1575088)end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["SET_INPUT_EXCLUSIVE"]=--[[void]] function(--[[int]] padIndex,--[[int]] control)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.end_call_2(0xEDE476E5EE29EDB1)end,
+	-- control values and meaning: https://pastebin.com/JEkxhZ7R 
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Control values from the decompiled scripts: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,
+	-- 28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,53,5
+	-- 4,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,
+	-- 79,80,81,82,85,86,87,88,89,90,91,92,93,95,96,97,98,99,100,101,102,103,105,
+	-- 107,108,109,110,111,112,113,114,115,116,117,118,119,123,126,129,130,131,132,
+	-- 133,134,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,
+	-- 153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,171,172
+	-- ,177,187,188,189,190,195,196,199,200,201,202,203,205,207,208,209,211,212,213, 217,219,220,221,225,226,230,234,235,236,237,238,239,240,241,242,243,244,257,
+	-- 261,262,263,264,265,270,271,272,273,274,278,279,280,281,282,283,284,285,286,
+	-- 287,288,289,337.
+	-- 
+	-- Example: PAD::DISABLE_CONTROL_ACTION(2, 19, true) disables the switching UI from appearing both when using a keyboard and Xbox 360 controller. Needs to be executed each frame. 
+	--  
+	-- Control group 1 and 0 gives the same results as 2. Same results for all players. 
+	["DISABLE_CONTROL_ACTION"]=--[[void]] function(--[[int]] padIndex,--[[int]] control,--[[BOOL (bool)]] disable)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.push_arg_bool(disable)native_invoker.end_call_2(0xFE99B66D079CF6BC)end,
+	-- control values and meaning: https://pastebin.com/JEkxhZ7R 
+	-- 
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- Control values from the decompiled scripts: 
+	-- 0,1,2,3,4,5,6,8,9,10,11,14,15,16,17,19,21,22,24,25,26,30,31,32,33,34,35,36,
+	-- 37,44,46,47,59,60,65,68,69,70,71,72,73,74,75,76,79,80,81,82,86,95,98,99,100
+	-- ,101,114,140,141,143,172,173,174,175,176,177,178,179,180,181,187,188,189,19
+	-- 0,195,196,197,198,199,201,202,203,204,205,206,207,208,209,210,217,218,219,2
+	-- 20,221,225,228,229,230,231,234,235,236,237,238,239,240,241,242,245,246,257,
+	-- 261,262,263,264,286,287,288,289,337,338,339,340,341,342,343
+	-- 
+	-- INPUTGROUP_MOVE
+	-- INPUTGROUP_LOOK
+	-- INPUTGROUP_WHEEL
+	-- INPUTGROUP_CELLPHONE_NAVIGATE
+	-- INPUTGROUP_CELLPHONE_NAVIGATE_UD
+	-- INPUTGROUP_CELLPHONE_NAVIGATE_LR
+	-- INPUTGROUP_FRONTEND_DPAD_ALL
+	-- INPUTGROUP_FRONTEND_DPAD_UD
+	-- INPUTGROUP_FRONTEND_DPAD_LR
+	-- INPUTGROUP_FRONTEND_LSTICK_ALL
+	-- INPUTGROUP_FRONTEND_RSTICK_ALL
+	-- INPUTGROUP_FRONTEND_GENERIC_UD
+	-- INPUTGROUP_FRONTEND_GENERIC_LR
+	-- INPUTGROUP_FRONTEND_GENERIC_ALL
+	-- INPUTGROUP_FRONTEND_BUMPERS
+	-- INPUTGROUP_FRONTEND_TRIGGERS
+	-- INPUTGROUP_FRONTEND_STICKS
+	-- INPUTGROUP_SCRIPT_DPAD_ALL
+	-- INPUTGROUP_SCRIPT_DPAD_UD
+	-- INPUTGROUP_SCRIPT_DPAD_LR
+	-- INPUTGROUP_SCRIPT_LSTICK_ALL
+	-- INPUTGROUP_SCRIPT_RSTICK_ALL
+	-- INPUTGROUP_SCRIPT_BUMPERS
+	-- INPUTGROUP_SCRIPT_TRIGGERS
+	-- INPUTGROUP_WEAPON_WHEEL_CYCLE
+	-- INPUTGROUP_FLY
+	-- INPUTGROUP_SUB
+	-- INPUTGROUP_VEH_MOVE_ALL
+	-- INPUTGROUP_CURSOR
+	-- INPUTGROUP_CURSOR_SCROLL
+	-- INPUTGROUP_SNIPER_ZOOM_SECONDARY
+	-- INPUTGROUP_VEH_HYDRAULICS_CONTROL
+	-- 
+	-- 
+	-- Took those in IDA Pro.Not sure in which order they go
+	["ENABLE_CONTROL_ACTION"]=--[[void]] function(--[[int]] padIndex,--[[int]] control,--[[BOOL (bool)]] enable)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.push_arg_int(control)native_invoker.push_arg_bool(enable)native_invoker.end_call_2(0x351220255D64C155)end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["DISABLE_ALL_CONTROL_ACTIONS"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0x5F4B6931816E599B)end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	["ENABLE_ALL_CONTROL_ACTIONS"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0xA5FFE9B05F199DE7)end,
+	-- Used in carsteal3 script with p0 = "Carsteal4_spycar".
+	["INIT_PC_SCRIPTED_CONTROLS"]=--[[BOOL (bool)]] function(--[[string]] name)native_invoker.begin_call()native_invoker.push_arg_string(name)native_invoker.end_call_2(0x3D42B92563939375)return native_invoker.get_return_value_bool()end,
+	-- Same as INIT_PC_SCRIPTED_CONTROLS
+	["SWITCH_PC_SCRIPTED_CONTROLS"]=--[[BOOL (bool)]] function(--[[string]] name)native_invoker.begin_call()native_invoker.push_arg_string(name)native_invoker.end_call_2(0x4683149ED1DDE7A1)return native_invoker.get_return_value_bool()end,
+	["SHUTDOWN_PC_SCRIPTED_CONTROLS"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x643ED62D5EA3BEBD)end,
+	-- padIndex: 0 (PLAYER_CONTROL), 1 (unk) and 2 (unk) used in the scripts.
+	-- 
+	-- A*
+	["ALLOW_ALTERNATIVE_SCRIPT_CONTROLS_LAYOUT"]=--[[void]] function(--[[int]] padIndex)native_invoker.begin_call()native_invoker.push_arg_int(padIndex)native_invoker.end_call_2(0x7F4724035FDCA1DD)end,
 }
 
 GRAPHICS1={

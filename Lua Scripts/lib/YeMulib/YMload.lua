@@ -1,6 +1,6 @@
 ------------------------------------夜幕LUA------------------------------
 require "lib.YeMulib.YeMulib"
-Version5 = 6.4
+Version5 = 6.5
 local net = "夜幕LUA暂时无法连接到服务器！"
 ----播放音频
 --来自https://github.com/calamity-inc/Soup-Lua-Bindings/blob/main/LUA_API.md
@@ -102,7 +102,7 @@ if not SCRIPT_SILENT_START then
     end)
 end
 YMscript_logo = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'startpic.png')
-if SCRIPT_MANUAL_START then
+if SCRIPT_MANUAL_START and randomizer(array1) == "1" then
     AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
     logo_alpha = 0
     logo_alpha_incr = 0.01
@@ -134,7 +134,42 @@ if SCRIPT_MANUAL_START then
             util.yield()
         end
     end)
+    else
+YMscript_logo2 = directx.create_texture(filesystem.scripts_dir() .. '/YMS/'..'startpic2.png')
+    AUDIO.PLAY_SOUND(-1, "Virus_Eradicated", "LESTER1A_SOUNDS", 0, 0, 1)
+    logo_alpha = 0
+    logo_alpha_incr = 0.01
+    logo_alpha_thread = util.create_thread(function (thr)
+        while true do
+            logo_alpha = logo_alpha + logo_alpha_incr
+            if logo_alpha > 1 then
+                logo_alpha = 1
+            elseif logo_alpha < 0 then
+                logo_alpha = 0
+                util.stop_thread()
+            end
+            util.yield()
+        end
+    end)
+
+    logo_thread = util.create_thread(function (thr)
+        starttime = os.clock()
+        local alpha = 0
+        while true do
+            directx.draw_texture(YMscript_logo2,  0.1, 0.1, 0.1, 0.6, 0.35, 0.5,0, 1, 1, 1, logo_alpha)
+            timepassed = os.clock() - starttime
+            if timepassed > 2.5 then
+                logo_alpha_incr = -0.01
+            end
+            if logo_alpha == 0 then
+                util.stop_thread()
+            end
+            util.yield()
+        end
+    end)
 end
+
+
 local mcxh=1
 
 local mcr=255
@@ -348,4 +383,4 @@ end
 end
 YMplanid = {{playerrid = "Hilovewould"}}
 YMth = {{playerid = "muyusd"},{playerid = "Dust-wine"},{playerid = "Maple_1999"},{playerid = "Xzzz_polar"},{playerid = "Hf19172798591"},{playerid = "dabaixiong0415"},{playerid = "sshiwga"},{playerid = "jasmine7294"},{playerid = "Admin-Stand"},{playerid = "hujkilsr"},{playerid = "Lyccchi"},{playerid = "dandanshinimenba"},{playerid = "Bronya_15644"},{playerid = "Royston7294"},{playerid = "liangzihui0522"},{playerid = "xx-bai"},{playerid = "--KZboy-SSR--"},{playerid = "RESERVEDBOSS"},{playerid = "Moldoveanuu07"},{playerid = "tiantian_qwq"},{playerid = "PowerByAndroid"},{playerid = "HeezyLua"},{playerid = "smithnsksmsmzk"},{playerid = "JiYanaa"},{playerid = "daxingxingrule"},{playerid = "sfasafafasfa"}}
-YMblacklist = {{playerrrid = "Angel00512"}}
+YMblacklist = {{playerrrid = "Angel00512"},{playerid = "naixieQAQ"},{playerid = "_Yuyuko_1314"}}

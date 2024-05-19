@@ -18,7 +18,7 @@ GTluaScript = menu GT = GTluaScript.list GTAC = GTluaScript.action GTD = GTluaSc
 GTLP = GTluaScript.toggle_loop GTTG = GTluaScript.toggle GTH = GTluaScript.hyperlink GTS = menu.textslider gtlog = util.log
 new = {} Ini = {}
 --
-GT_version = '30R4'
+GT_version = '5.17'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -26,7 +26,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    drawnotify("修复在Stand 114.7中出现Package not found错误\n修复GTLua在Stand 114.7中大部分选项无法使用\n更新世界选项生成球体\n更新特效奥义秘术\n恶搞选项>近期更新>球形笼子(花园银行的球)\n载具选项>载具玩乐>载具升级最大化\n载具选项>载具玩乐>DJ载具\n载具选项>载具玩乐>快速跳出载具\n武器选项>新武器玩法>绳索载具枪[新]\n自我选项>自我娱乐>新型娱乐>操控能力\n错误改进和皇榜添加")
+    drawnotify("线上选项>增加任务生命数\n(再也不会因为猪队友任务失败了)\n线上选项>禁止调度警察\n武器选项>武器特殊子弹>穿甲子弹\n武器选项>武器特殊子弹>爆炸子弹\n武器选项>武器特殊子弹>全金属外壳子弹\n武器选项>武器特殊子弹>中空子弹\n武器选项>武器特殊子弹>燃烧子弹\n武器选项>武器特殊子弹>曳光子弹\n世界选项>弱化NPC选项>NPC类型/弱化\n世界选项>弱化NPC选项>弱化血量\n世界选项>弱化NPC选项>弱化武器伤害\n世界选项>弱化NPC选项>禁用载具武器\n世界选项>弱化NPC选项>执行间隔\n错误修复与皇榜添加")
 end
 --
 hasShownToast = false
@@ -37,12 +37,12 @@ currentMonth = tonumber(os.date("%m"))
 currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
-notifyMonth = 4
-notifyDay = 30
+notifyMonth = 5
+notifyDay = 17
 
 _G.daysSince = _G.daysSince or 0
 
-util.create_tick_handler(function ()
+util.create_thread(function ()
     wait()
 
     local daysSince = (currentYear - notifyYear) * 365 + (currentMonth - notifyMonth) * 30 + (currentDay - notifyDay)
@@ -73,6 +73,10 @@ util.create_tick_handler(function ()
             HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.0655, 0.29)
         end
     end
+
+    if daysSince >= 3 then 
+        menu.delete(sale)
+    end
 end)
 --
 
@@ -80,7 +84,8 @@ function bannotiy()
     local cs = players.get_name(players.user()) 
     for _,id in ipairs(chusheng) do 
         if cs == id.cs then
-            util.toast(">这个账户下的使用权限被撤销<\n你已被永久禁止使用GTLua 除此之外如果你拥有特殊权利也已被一并撤销")
+            wait(1000)
+            util.toast("GRANDTOURINGVIP\n你已被永久禁止使用GTLua 除此之外如果你拥有特殊权利也已被一并撤销")
             util.stop_script()
         end
     end
@@ -6360,9 +6365,94 @@ function do_vehicle_fly()
     end
 end
 
+function get_ped_weapon(ped)
+    local weaponHash = 0
+    if ENTITY.DOES_ENTITY_EXIST(ped) and ENTITY.IS_ENTITY_A_PED(ped) then
+        local ptr = memory.alloc_int()
+        if WEAPON.GET_CURRENT_PED_WEAPON(ped, ptr, true) then
+            weaponHash = memory.read_int(ptr)
+        end
+    end
+    return weaponHash
+end
+
+function get_weapon_name_by_hash(weaponHash)
+    if WEAPON.IS_WEAPON_VALID(weaponHash) then
+        for _, item in pairs(util.get_weapons()) do
+            if item.hash == weaponHash then
+                return util.get_label_text(item.label_key)
+            end
+        end
+    end
+    return ""
+end
+
+function is_player_ped_return(ped)
+    return entities.is_player_ped(ped)
+end
+
+function is_friendly_ped_return(ped)
+    if not ENTITY.IS_ENTITY_A_PED(ped) then
+        return false
+    end
+
+    local rel = PED.GET_RELATIONSHIP_BETWEEN_PEDS(ped, players.user_ped())
+    if rel == 0 or rel == 1 then 
+        return true
+    end
+
+    return false
+end
+
+function is_hostile_ped_return(ped)
+    if not ENTITY.IS_ENTITY_A_PED(ped) then
+        return false
+    end
+
+    if PED.IS_PED_IN_COMBAT(ped, players.user_ped()) then
+        return true
+    end
+
+    local rel = PED.GET_RELATIONSHIP_BETWEEN_PEDS(ped, players.user_ped())
+    if rel == 3 or rel == 4 or rel == 5 then 
+        return true
+    end
+
+    return false
+end
+
+function checkPed(ped, pedTypeSelect)
+    if is_player_ped_return(ped) then
+        return false
+    end
+
+    if pedTypeSelect == 1 and not is_friendly_ped_return(ped) then
+        return true
+    end
+
+    if pedTypeSelect == 2 and is_hostile_ped_return(ped) then
+        return true
+    end
+
+    if pedTypeSelect == 3 then
+        return true
+    end
+
+    return false
+end
+
+function IS_SCRIPT_RUNNING(script)
+    return SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(util.joaat(script)) > 0
+end
+
+function LOCAL_SET_INT(script, script_local, value)
+    if memory.script_local(script, script_local) ~= 0 then
+        memory.write_int(memory.script_local(script, script_local), value)
+    end
+end
+
 --杂项
 -- 原创功能 缝合死妈
-
 function getMaxMods(veh, modSlot) -- 获取最大修改槽位
     if (VEHICLE.GET_NUM_VEHICLE_MODS(veh, modSlot) > 1) then
     return VEHICLE.GET_NUM_VEHICLE_MODS(veh, modSlot)-1 end

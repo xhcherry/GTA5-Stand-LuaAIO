@@ -1,9 +1,10 @@
 -------夜幕初降 繁星满天 幽幽长夜 星光灿烂------
-
+----------------愿世界和平-------------------
 
 require "lib.natives-1663599433"
 require "lib.natives-1660775568"
 util.require_natives("3095a", "g")
+util.require_natives("natives-1681379138", "g-uno")
 
 require "lib.YeMulib.YMload"
 require "lib.YeMulib.YMnatives"
@@ -29,17 +30,18 @@ ocoded_for = 1.68
 verbose = false
 online_v = tonumber(NETWORK._GET_ONLINE_VERSION())
 if online_v > ocoded_for then
-    util.toast("此GTA夜幕版本已过期 (" .. online_v .. ", 该脚本开发于 " .. ocoded_for .. ").请加入夜幕官方群更新！")
+    util.toast("此GTA夜幕版本已过期 [目前游戏版本为".. online_v .. ", 该脚本开发版本为 " .. ocoded_for .. "]")
 util.stop_script()
 end
 YMdet()
 YMth1()
+YMb1()
 ----------------------------------
-Version = 6.4
+Version = 6.5
 local TIANXIA = "欢迎使用夜幕-V" .. Version ..  ""
 local JIAOBEN = "夜幕LUA"
 local introduce = "欢迎使用夜幕LUA"
-date = "2024.4.11"
+date = "2024.5.17"
 wait = util.yield
 joaat = util.joaat
 alloc = memory.alloc
@@ -301,7 +303,7 @@ menu.action(menu.my_root(),"重启夜幕脚本",{},"",function ()
     local scaleform = GRAPHICS.REQUEST_SCALEFORM_MOVIE("mp_big_message_freemode")
 	GRAPHICS.BEGIN_SCALEFORM_MOVIE_METHOD(scaleForm, "SHOW_SHARD_WASTED_MP_MESSAGE")
     GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("&#8721; ~bold~夜幕 LUA &#8721;")
-    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("&#8721;欢迎回来！尊贵的夜幕LUA用户&#8721;\n\n""~bold~~b~版本号:" .. Version ..  "~bold~~b~更新于" .. date ..  "")
+    GRAPHICS.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING("&#8721;欢迎回来！尊贵的夜幕用户&#8721;\n\n""~bold~~b~版本号:" .. Version ..  "~bold~~b~更新于" .. date ..  "")
 	GRAPHICS.END_SCALEFORM_MOVIE_METHOD()
     AUDIO.PLAY_SOUND_FRONTEND(55, "FocusIn", "HintCamSounds", true)
 	starttime = os.time()
@@ -323,8 +325,8 @@ end)
     menu.action(menu.my_root(), "夜幕第二制作:呆呆", {}, "大美女一枚~~~", function()
 end)
 menu.divider(menu.my_root(), "版本号:" .. Version ..  "更新于" .. date ..  "")
-local YM_root = menu.attach_before(menu.ref_by_path('Stand>Settings'),menu.list(menu.shadow_root(), "夜幕LUA-V" .. Version ..  "" , {"YMscript"}, "" .. introduce .. "" , 
-function()end))
+menu.attach_before(menu.ref_by_path('Stand>Settings'),menu.divider(menu.shadow_root(), "夜幕LUA" , function()end))
+local YM_root = menu.attach_before(menu.ref_by_path('Stand>Settings'),menu.list(menu.shadow_root(), "夜幕LUA-V" .. Version ..  "" , {"YMscript"}, "" .. introduce .. "" , function()end))
 menu.trigger_commands("YMscript")
 menu.action(YM_root,"关闭夜幕脚本",{},"",function ()
     util.stop_script()
@@ -353,6 +355,8 @@ function player(PlayerID)
 end
 menu.player_root(PlayerID):getChildren()[1]:attachBefore(menu.shadow_root():divider('夜幕LUA'))
     bozo = menu.player_root(PlayerID):getChildren()[2]:attachBefore(menu.shadow_root():list('夜幕脚本'))
+    bozo1 = menu.list(menu.player_root(PlayerID), "夜幕脚本", {"YMScript"}, "")
+    menu.set_visible(bozo1, false)
     friendly = menu.list(bozo, "友好选项", {}, "")
     player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
     armsfriendly = menu.list(friendly, "武器友好", {}, "")
@@ -1559,7 +1563,7 @@ local chattrolls_root = menu.list(online_player, "西普肉的虚假检测", {},
     local IP1 = intToIp(players.get_connect_ip(PlayerID))
     menu.action(Pifn, "本地查询玩家信息", {}, "本地查询玩家信息", function(IP1)
     notification("[夜幕提示]查询中...不要着急啦", colors.black)
-    async_http.init("http://ip-api.com","/json/"..IP1 .. "?lang=zh-CN",function(info,header,response)
+    async_http.init("http://ip-api.com","docs/api:json/"..IP1 .. "?lang=zh-CN",function(info,header,response)
         if response == 200  then
             local IPtable = StrToTable(info)
             if IPtable.status == "success" then
@@ -1579,6 +1583,13 @@ local chattrolls_root = menu.list(online_player, "西普肉的虚假检测", {},
         end
     end)
     async_http.dispatch()
+    end)
+    menu.action(Pifn, "本地查询玩家信息", {}, "本地查询玩家信息", function(IP1)
+    notification("[夜幕提示]查询中...不要着急啦", colors.black)
+       notification("玩家"..PLAYER.GET_PLAYER_NAME(PlayerID)..": "..
+       "\nRID: "..players.get_rockstar_id(PlayerID)..
+       "\nIP:"..intToIp(players.get_ip(PlayerID))..
+       "\n端口:"..(players.get_port(PlayerID)), colors.black)
     end)
     menu.action(Pifn, "公开此玩家信息", {}, "发布到公屏", function()
        chat.send_message("玩家"..PLAYER.GET_PLAYER_NAME(PlayerID)..": "..
@@ -1604,6 +1615,7 @@ local chattrolls_root = menu.list(online_player, "西普肉的虚假检测", {},
         [149] = "改装铺", -- 149 到 153 都是改装铺
         [155] = "事务所",
     }
+    local tp_timer = 0
     menu.action(tp_player,"佩里科岛", {}, "", function()
         menu.trigger_commands("ceojoin" .. players.get_name(PlayerID) .. " on") 
         repeat
@@ -1626,8 +1638,6 @@ local chattrolls_root = menu.list(online_player, "西普肉的虚假检测", {},
         SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), pos, false, false, false)
         menu.trigger_commands("ceojoin" .. players.get_name(PlayerID) .. " off")
     end)
-
-    local tp_timer = 0
     menu.action(tp_player,"韦斯普奇海滩", {}, "", function()
         menu.trigger_commands("ceojoin" .. players.get_name(PlayerID) .. " on") 
         repeat
@@ -2136,7 +2146,7 @@ end
     entities.create_object(0x9cf21e0f , ped_task, true, false) 
     local Rui_task = CreateVehicle(util.joaat("Ruiner2"), ped_task, ENTITY.GET_ENTITY_HEADING(TTPed), true)
     local ped_task2 = CreatePed(26 , util.joaat("ig_kaylee"), ped_task, 0)
-    for i1=0, 10 do
+    for i=0, 10 do
     local pedps = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID))
     local allpeds = entities.get_all_peds_as_handles()
     local allvehicles = entities.get_all_vehicles_as_handles()
@@ -2618,6 +2628,212 @@ menu.action(collapse5, "夜幕降临", {"yemujianglin"}, "", function()
            menu.trigger_commands("ye2 " .. players.get_name(PlayerID))
            menu.trigger_commands("ye3 " .. players.get_name(PlayerID))
 end)
+
+---参考Rocket_Hashes = {{"rpg", util.joaat("w_lr_rpg_rocket")},
+--{"homingrpg", util.joaat("w_lr_homing_rocket")},
+    --{"oppressor2", util.joaat("w_ex_vehiclemissile_3")},
+   -- {"b11barrage", util.joaat("w_smug_airmissile_01b")},
+   -- {"b11regular", util.joaat("w_battle_airmissile_01")},
+  --  {"chernobog", util.joaat("w_ex_vehiclemissile_4")},
+   -- {"akula", util.joaat("w_smug_airmissile_02")},
+--{"grenadelauncher", util.joaat("w_lr_40mm")}, --grenade launcher lmfao
+   -- {"compactemplauncher", util.joaat("w_lr_ml_40mm")}, --compact emp launhcer lmao
+  --  {"teargas", util.joaat("w_ex_grenadesmoke")} --tear gas grenade lmfao}
+
+collapse6 = menu.list(player_removals, "组合崩溃(6)", {}, "夜幕LUA-2024组合崩溃[新]\n配置较差者慎用")
+        zuhebengkui611 = menu.action(collapse6, "6-1", {"zuhebengkui61"}, "", function ()
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+                local user = PLAYER.GET_PLAYER_PED(players.user())
+                local pos = ENTITY.GET_ENTITY_COORDS(ped)
+                local my_pos = ENTITY.GET_ENTITY_COORDS(user)
+                local anim_dict = ("anim@mp_player_intupperstinker")
+                local c3 = {}
+                  c3.x = 74
+                  c3.y = -819
+                  c3.z = 327
+                request_animation(anim_dict)
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(user, pos.x, pos.y, pos.z, false, false, false)
+                    util.yield(100)
+                    TASK.TASK_SWEEP_AIM_POSITION(user, anim_dict, "get", "fucked", "retard", 50, 0.0, 0.0, 0.0, 0.0, 0.0)
+                    util.yield(750)
+                TASK.CLEAR_PED_TASKS_IMMEDIATELY(user)
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+                local pos = players.get_position(user)
+                local mdl = util.joaat("mp_m_freemode_01")
+                local veh_mdl = util.joaat("powersurge")
+                util.request_model(veh_mdl)
+                util.request_model(mdl)
+
+                for i = 1, 5 do
+                    local veh = entities.create_vehicle(veh_mdl, pos, 0)
+                       local jesus = entities.create_ped(2, mdl, pos, 0)
+                    ENTITY.SET_ENTITY_VISIBLE(veh, false)
+                    ENTITY.SET_ENTITY_VISIBLE(jesus, false)
+                    PED.SET_PED_INTO_VEHICLE(jesus, veh, 50)
+                    util.yield(100)
+                    TASK.TASK_SUBMARINE_GOTO_AND_STOP(1, veh, pos.x, pos.y, pos.z, 1)
+                    util.yield(1000)
+                    entities.delete_by_handle(jesus)
+                    entities.delete_by_handle(veh)
+                end
+            for i = 0, 10 do
+            local allpeds = entities.get_all_peds_as_handles()
+            local allvehicles = entities.get_all_vehicles_as_handles()
+            local allobjects = entities.get_all_objects_as_handles()
+            local ownped = players.user_ped(players.user())
+                STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(mdl)
+                STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl)
+                STREAMING.REQUEST_MODEL(0x1E5E54EA)
+                STREAMING.REQUEST_MODEL(0xFCFCB68B)
+                STREAMING.REQUEST_MODEL(0x432EA949)
+                STREAMING.REQUEST_MODEL(0x6FACDF31)
+                STREAMING.REQUEST_MODEL(0X187D938D)
+                STREAMING.REQUEST_MODEL(0x78BC1A3C)
+            for i = 0, 5 do
+            local vehicle_1=CreateVehicle(0x1E5E54EA, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
+            local vehicle_2=CreateVehicle(0xFCFCB68B, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
+            local vehicle_3=CreateVehicle(0x432EA949, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
+            local vehicle_4=CreateVehicle(0x6FACDF31, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
+            local vehicle_6=CreateVehicle(0X187D938D, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
+            local vehicle_7=CreateVehicle(0x78BC1A3C, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)), ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z, true, false)
+            local pedps = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID))
+    request_model(0x78BC1A3C)
+    request_model(0xD6BC7523)
+    request_model(0x1F3D44B5)
+    request_model(0x2A72BEAB)
+    request_model(0x174CB172)
+    CreateVehicle(0xD6BC7523,pedps,0)
+    CreateVehicle(0x1F3D44B5,pedps,0)
+    CreateVehicle(0x2A72BEAB,pedps,0)
+    CreateVehicle(0x174CB172,pedps,0)
+    CreateVehicle(0x78BC1A3C,pedps,0)
+            end
+            for i = 0, 20 do
+                local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_1, i) - 1
+                VEHICLE.SET_VEHICLE_MOD(vehicle_1, i, mod, true)
+                VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_1, mod, true)
+                local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_2, i) - 1
+                VEHICLE.SET_VEHICLE_MOD(vehicle_2, i, mod, true)
+                VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_2, mod, true)
+                local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_3, i) - 1
+                VEHICLE.SET_VEHICLE_MOD(vehicle_3, i, mod, true)
+                VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_3, mod, true)
+                local mod = VEHICLE.GET_NUM_VEHICLE_MODS(vehicle_4, i) - 1
+                VEHICLE.SET_VEHICLE_MOD(vehicle_4, i, mod, true)
+                VEHICLE.TOGGLE_VEHICLE_MOD(vehicle_4, mod, true)
+            end
+            for i = 1, #allpeds do
+                if allpeds[i] ~= ownped then
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allpeds[i], ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).x,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).y,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z)
+                end
+            end
+            for i = 1, #allvehicles do
+                if allvehicles[i] ~= ownvehicle then
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allvehicles[i], ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).x,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).y,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z)
+                    VEHICLE.SET_VEHICLE_ON_GROUND_PROPERLY(allvehicles[i],1)
+                    VEHICLE.SET_TAXI_LIGHTS(allvehicles[i])
+                end
+            end
+            for i = 1, #allobjects do
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(allobjects[i], ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).x,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).y,ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID)).z)
+            end
+                PED.SET_PED_COORDS_KEEP_VEHICLE(players.user_ped(), c3.x, c3.y, c3.z+5)
+            wait(400)
+            end
+            PED.SET_PED_COORDS_KEEP_VEHICLE(players.user_ped(), c3.x, c3.y, c3.z+5)
+            PED.RESURRECT_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
+            wait(3000)
+            end)
+menu.set_visible(zuhebengkui611, false)
+
+   zuhebengkui612 = menu.action(collapse6, "6-2", {"zuhebengkui62"}, "", function()
+            local model_array = {util.joaat("boattrailer"),util.joaat("trailersmall"),util.joaat("raketrailer"),}
+            local BAD_attach = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(PlayerID))
+            local fuck_ped = CreatePed(26 , util.joaat("ig_kaylee"), BAD_attach, 0)
+            local ped = GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+            local user = GET_PLAYER_PED(players.user())
+            local pos = GET_ENTITY_COORDS(ped)
+            local my_pos = GET_ENTITY_COORDS(user)
+            local anim_dict = ("anim@mp_ferris_wheel")
+                request_animation(anim_dict)
+                    ENTITY.SET_ENTITY_VISIBLE(fuck_ped, false)
+                    for i = 1, 3, 1 do
+                        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(fuck_ped, BAD_attach.x, BAD_attach.y, BAD_attach.z)
+                        for spawn, value in pairs(model_array) do
+                            local vels = {}
+                            vels[spawn] = CreateVehicle(value, BAD_attach, 0)
+                            for attach, value in pairs(vels) do
+                                ENTITY.ATTACH_ENTITY_BONE_TO_ENTITY_BONE_Y_FORWARD(value, fuck_ped, 0, 0, true, true)
+                            end
+                        end
+                        util.yield(500)
+                                 SET_ENTITY_COORDS_NO_OFFSET(user, pos, false, false, false)
+            util.yield(100)
+            TASK.TASK_SWEEP_AIM_POSITION(user, anim_dict, "get", "crashed", "retard", -1, 30.0, 30.0, 30.0, 30.0, 30.0)
+            TASK_SWEEP_AIM_ENTITY(user, anim_dict, "get", "fucked", "retard", -1, ped, 30.0, 30.0)
+            util.yield(100)
+            end
+            util.yield(3000)
+            YeMuprotections5()
+	end)
+menu.set_visible(zuhebengkui612, false)
+
+       zuhebengkui613 = menu.action(collapse6, "6-3", {"zuhebengkui63"}, "", function()
+        local ped = GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+        local pos = players.get_position(PlayerID)
+        local mdl = util.joaat("u_m_o_filmnoir")
+        local veh_mdl = util.joaat("sanctus")
+        local mdl2 = util.joaat("mp_m_freemode_01")
+        local veh_mdl2 = util.joaat("taxi")
+        local mdl3 = util.joaat("v_serv_bs_clutter")
+        local veh_mdl3 = util.joaat("metrotrain")
+        util.request_model(veh_mdl)
+        util.request_model(mdl)
+        util.request_model(veh_mdl2)
+        util.request_model(mdl2)
+        util.request_model(veh_mdl3)
+        util.request_model(mdl3)
+            for i = 1, 10 do
+                if not players.exists(PlayerID) then
+                    return
+                end
+                local veh = entities.create_vehicle(veh_mdl, pos, 0)
+                local jesus = entities.create_ped(2, mdl, pos, 0)
+                local veh1 = entities.create_vehicle(veh_mdl2, pos, 0)
+                local jesus1 = entities.create_ped(2, mdl2, pos, 0)
+                local veh2 = entities.create_vehicle(veh_mdl3, pos, 0)
+                local jesus2 = entities.create_ped(2, mdl3, pos, 0)
+                SET_PED_INTO_VEHICLE(jesus, veh, -1)
+                SET_PED_INTO_VEHICLE(jesus1, veh1, -1)
+                SET_PED_INTO_VEHICLE(jesus2, veh, -1)
+                util.yield(100)
+                TASK_PLANE_LAND(jesus, veh, ped, 10.0, 0, 10, 0, 0)
+                TASK_VEHICLE_HELI_PROTECT(jesus1, veh1, ped, 10.0, 0, 10, 0, 0)
+                TASK_VEHICLE_HELI_PROTECT(jesus2, veh2, ped, -10.0, 0, 10, 0, 0)
+                util.yield(1000)
+                entities.delete_by_handle(jesus)
+                entities.delete_by_handle(veh)
+                entities.delete_by_handle(jesus1)
+                entities.delete_by_handle(veh1)
+                entities.delete_by_handle(jesus2)
+                entities.delete_by_handle(veh2)
+            end  
+        SET_MODEL_AS_NO_LONGER_NEEDED(mdl)
+        SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl)
+        SET_MODEL_AS_NO_LONGER_NEEDED(mdl2)
+        SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl2)
+        SET_MODEL_AS_NO_LONGER_NEEDED(mdl3)
+        SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl3)
+    end)
+menu.set_visible(zuhebengkui613, false)
+
+    menu.action(collapse6, "雷霆嘎巴", {"leitinggaba"}, "", function()
+        notification( "请等待7-15秒崩溃进程", colors.black)
+           menu.trigger_commands("zuhebengkui61 " .. players.get_name(PlayerID))
+           menu.trigger_commands("zuhebengkui62 " .. players.get_name(PlayerID))
+           menu.trigger_commands("zuhebengkui63 " .. players.get_name(PlayerID))
+        notification( "雷霆嘎巴---崩溃结束", colors.black)
+    end)
 
 end
 -------------------脚本单体选项------------------------
@@ -3215,11 +3431,6 @@ explodeLoopAll = menu.toggle_loop(quanjuegao, '循环爆炸所有人', {}, '不�
         explodePlayer(playerPed, true, expSettings)
     end
 end)
-menu.action(quanjuegao, "全局骚扰", {"bedsound", "earrape"}, "在战局中播放大量的噪音，声音记得提前调整！", function()
-       zaoyin()
-       util.yield(500)
-       notification("开始全局骚扰！",colors.black)
-end)
 menu.action(quanjuegao, "全局传送DC", {}, "", function () 
     for k,v in pairs(players.list(false, true, true)) do
 		util.trigger_script_event(1 << v, {2139870214, 2, 0, 0, 4, 0,PLAYER.GET_PLAYER_INDEX(), v})
@@ -3296,11 +3507,7 @@ local _LR = menu.list(exterior, '火焰之翼选项', {}, '')
         menu.slider(_LR, '火焰之翼比例', {'fireWingsScale'}, '', 1, 100, 3, 1, function(value)
             firewingscale(value)
         end)
-
-        menu.rainbow(menu.colour(_LR, '火焰之翼颜色', {'JSfireWingsColour'}, '', fireWingsSettings.colour, false, function(colour)
-            firewingcolour(colour)
-        end))
-        menu.list_action(exterior, "寄吧选项", {}, "你好瑟瑟", opt_pp, function(index, value, click_type)
+        menu.list_action(exterior, "寄吧选项", {}, "", opt_pp, function(index, value, click_type)
             getbigjb(index, value, click_type)
         end)
 menu.toggle(exterior, "雪人先生",{""}, "",function(on)
@@ -3455,7 +3662,6 @@ menu.toggle_loop(jiashi, '引擎永不熄火', {'alwayson'}, '', function()
 	if ENTITY.DOES_ENTITY_EXIST(vehicle) then
 		VEHICLE.SET_VEHICLE_ENGINE_ON(vehicle, true, true, true)
 		VEHICLE.SET_VEHICLE_LIGHTS(vehicle, 0)
-		VEHICLE._SET_VEHICLE_LIGHTS_MODE(vehicle, 2)
 	end
 end)
 menu.toggle_loop(jiashi, "随机升级", {}, "仅适用于您出于某种原因生成的车辆", function()
@@ -3511,18 +3717,6 @@ end)
 util.on_stop(function() 
     VEHICLE.SET_VEHICLE_GRAVITY(PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false), true)
 	ENTITY.SET_ENTITY_COLLISION(PED.GET_VEHICLE_PED_IS_IN(PLAYER.PLAYER_PED_ID(), false), true, TRUE);
-end)
-Tire = menu.list(jiashi,"载具驾驶特效")
-menu.toggle_loop(Tire, "载具轮胎效果", {"luntaixiaoguo"}, "", function ()
-    cargoodeffect()
-end)
-menu.toggle_loop(Tire, "粒子拖尾", {}, "", function()
-                particle_tail()
-            end, function()
-                STREAMING.REMOVE_NAMED_PTFX_ASSET("scr_rcpaparazzo1")
-        end)
-        menu.list_select(Tire,"设置拖尾效果", {}, "", vehparticle_name, 1, function (index)
-            selectparticle(index)
 end)
 local jesus_main = menu.list(jiashi, "自动驾驶", {}, "")
     menu.textslider_stateful(jesus_main, "驾驶风格", {}, "单击以选择样式", style_names, function(index, value)
@@ -3588,19 +3782,6 @@ local jesus_main = menu.list(jiashi, "自动驾驶", {}, "")
             end
         end
     end)
-local rgbvm = menu.list(jiashi, '变色载具', {}, '')
-menu.toggle_loop(rgbvm, '彩虹变色', {}, '将载具颜色和霓虹灯更改为彩色', function ()
-    rainbow_car()
-end)
-menu.slider(rgbvm, '速度', {''}, '调整车漆颜色变换的速度', 1, 1000, 100, 10, function (c)
-    set_speed_rainbowcar(c)
-end)
-menu.toggle_loop(rgbvm, '彩虹大灯', {}, '将霓虹灯/大灯/内饰更改为相同颜色', function ()
-    rainbow_car_light()
-end)
-menu.slider(rgbvm, '速度', {''}, '调整灯光颜色变换的速度', 1, 1000, 100, 10, function (c)
-    set_speed_light(c)
-end)
 menu.toggle_loop(jiashi, "喇叭加速", {}, "", function()
     remote_horn_boost(players.user())
 end)
@@ -3626,14 +3807,6 @@ set_self_license = menu.list(jiashi, "自定义车牌", {}, "")
         end
         notification( "已将车牌改为"..default_license.."", colors.black)
     end)
-menu.toggle_loop(jiashi, "循环鸣笛", {}, "来自路怒症的愤怒！", function()
-    if player_cur_car ~= 1 and  PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), true) then
-        VEHICLE.SET_VEHICLE_MOD(player_cur_car, 14, math.random(1, 50), false)
-        PAD._SET_CONTROL_NORMAL(1, 86, 1.0)
-        util.yield()
-        PAD._SET_CONTROL_NORMAL(1, 86, 0.0)
-    end
-end)
 menu.toggle(jiashi, "叛逆车辆", {}, "主打一个叛逆", function(state)
     car_crash(state)
 end)
@@ -3650,9 +3823,6 @@ ls_driveonwater = menu.toggle(watercar, "水上驾驶", {"driveonwater"}, "", fu
             ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, 0, 0, 0, false, false, false)
         end
     end
-end)
-menu.toggle_loop(watercar, "水下驾驶", {}, "", function ()
-    menu.trigger_commands("waterwheels")
 end)
 doa_ht = 0
 driveonair = false
@@ -3707,268 +3877,7 @@ menu.action(jiashi, "消逝的交通", {}, "删除交通工具", function(on)
 end)
 gridspawn = menu.list(jiashi, "网格载具生成", {}, "方便，快捷")--oppressor2
     dofile(filesystem.scripts_dir() .."lib/YeMulib/YMgs.lua")
-util.ensure_package_is_installed("lua/YeMulib/YMScaleformLib")
-local sfchat = require("lib.YeMulib.YMScaleformLib")("multiplayer_chat")
-sfchat:draw_fullscreen()
-focusref = {}
-isfocused = false
-selectedcolormenu = 0
-colorselec = 1
-allchatlabel = util.get_label_text("MP_CHAT_ALL")
-teamchatlabel = util.get_label_text("MP_CHAT_TEAM")
-local Languages = {
-	{ Name = "Afrikaans", Key = "af" },
-	{ Name = "Albanian", Key = "sq" },
-	{ Name = "Arabic", Key = "ar" },
-	{ Name = "Azerbaijani", Key = "az" },
-	{ Name = "Basque", Key = "eu" },
-	{ Name = "Belarusian", Key = "be" },
-	{ Name = "Bengali", Key = "bn" },
-	{ Name = "Bulgarian", Key = "bg" },
-	{ Name = "Catalan", Key = "ca" },
-	{ Name = "Chinese Simplified", Key = "zh-cn" },
-	{ Name = "Chinese Traditional", Key = "zh-tw" },
-	{ Name = "Croatian", Key = "hr" },
-	{ Name = "Czech", Key = "cs" },
-	{ Name = "Danish", Key = "da" },
-	{ Name = "Dutch", Key = "nl" },
-	{ Name = "English", Key = "en" },
-	{ Name = "Esperanto", Key = "eo" },
-	{ Name = "Estonian", Key = "et" },
-	{ Name = "Filipino", Key = "tl" },
-	{ Name = "Finnish", Key = "fi" },
-	{ Name = "French", Key = "fr" },
-	{ Name = "Galician", Key = "gl" },
-	{ Name = "Georgian", Key = "ka" },
-	{ Name = "German", Key = "de" },
-	{ Name = "Greek", Key = "el" },
-	{ Name = "Gujarati", Key = "gu" },
-	{ Name = "Haitian Creole", Key = "ht" },
-	{ Name = "Hebrew", Key = "iw" },
-	{ Name = "Hindi", Key = "hi" },
-	{ Name = "Hungarian", Key = "hu" },
-	{ Name = "Icelandic", Key = "is" },
-	{ Name = "Indonesian", Key = "id" },
-	{ Name = "Irish", Key = "ga" },
-	{ Name = "Italian", Key = "it" },
-	{ Name = "Japanese", Key = "ja" },
-	{ Name = "Kannada", Key = "kn" },
-	{ Name = "Korean", Key = "ko" },
-	{ Name = "Latin", Key = "la" },
-	{ Name = "Latvian", Key = "lv" },
-	{ Name = "Lithuanian", Key = "lt" },
-	{ Name = "Macedonian", Key = "mk" },
-	{ Name = "Malay", Key = "ms" },
-	{ Name = "Maltese", Key = "mt" },
-	{ Name = "Norwegian", Key = "no" },
-	{ Name = "Persian", Key = "fa" },
-	{ Name = "Polish", Key = "pl" },
-	{ Name = "Portuguese", Key = "pt" },
-	{ Name = "Romanian", Key = "ro" },
-	{ Name = "Russian", Key = "ru" },
-	{ Name = "Serbian", Key = "sr" },
-	{ Name = "Slovak", Key = "sk" },
-	{ Name = "Slovenian", Key = "sl" },
-	{ Name = "Spanish", Key = "es" },
-	{ Name = "Swahili", Key = "sw" },
-	{ Name = "Swedish", Key = "sv" },
-	{ Name = "Tamil", Key = "ta" },
-	{ Name = "Telugu", Key = "te" },
-	{ Name = "Thai", Key = "th" },
-	{ Name = "Turkish", Key = "tr" },
-	{ Name = "Ukrainian", Key = "uk" },
-	{ Name = "Urdu", Key = "ur" },
-	{ Name = "Vietnamese", Key = "vi" },
-	{ Name = "Welsh", Key = "cy" },
-	{ Name = "Yiddish", Key = "yi" },
-}
-LangKeys = {}
-LangName = {}
-LangIndexes = {}
-LangLookupByName = {}
-LangLookupByKey = {}
-PlayerSpooflist = {}
-PlayerSpoof = {}
-
-for i=1,#Languages do
-	local Language = Languages[i]
-	LangKeys[i] = Language.Name
-	LangName[i] = Language.Name
-	LangIndexes[Language.Key] = i
-	LangLookupByName[Language.Name] = Language.Key
-	LangLookupByKey[Language.Key] = Language.Name
-end
-table.sort(LangKeys)
-function encode(text)
-	return string.gsub(text, "%s", "+")
-end
-function decode(text)
-	return string.gsub(text, "%+", " ")
-end
-local zidongfanyi = menu.list(fanyiyuyan, '聊天翻译V1', {}, '')
-settingtrad = menu.list(zidongfanyi, "翻译设置")
-colortradtrad = menu.list(settingtrad, "玩家名称颜色")
-menu.on_focus(colortradtrad, function()
-	util.yield(50)
-	isfocused = false
-end)
-selectmenu = menu.action(colortradtrad, "已选择 : ".."Color : "..colorselec, {}, "这将保存到配置文件中", function()
-	menu.focus(focusref[tonumber(colorselec)])
-end)
-menu.on_focus(selectmenu, function()
-	util.yield(50)
-	isfocused = false
-end)
-for i = 1, 234 do
-	focusref[i] = menu.action(colortradtrad, "Color : "..i, {}, "这将保存到配置文件中", function() 
-		menu.set_menu_name(selectmenu, "已选择 : ".."Color : "..i)
-		colorselec = i
-	end)
-	menu.on_focus(focusref[i], function()
-		isfocused = false
-		util.yield(50)
-		isfocused = true
-		while isfocused do
-			if not menu.is_open() then
-				isfocused = false
-			end
-			ptr1 = memory.alloc()
-			ptr2 = memory.alloc()
-			ptr3 = memory.alloc()
-			ptr4 = memory.alloc()
-			HUD.GET_HUD_COLOUR(i, ptr1, ptr2, ptr3, ptr4)
-			directx.draw_text(0.5, 0.5, "exemple", 5, 0.75, {r = memory.read_int(ptr1)/255, g = memory.read_int(ptr2)/255, b =memory.read_int(ptr3)/255, a= memory.read_int(ptr4)/255}, true)
-			util.yield()
-		end
-	end)
-end
-
-menu.text_input(settingtrad, "自定义标签 ["..string.upper(util.get_label_text("MP_CHAT_TEAM")).."] 翻译消息", {"labelteam"}, "将其留空将恢复为原始标签", function(s, click_type)
-	if (s == "") then
-		teamchatlabel = util.get_label_text("MP_CHAT_TEAM")
-	else
-		teamchatlabel = s 
-	end
-	if not (click_type == 4) then
-	end
-end)
-if not (teamchatlabel == util.get_label_text("MP_CHAT_TEAM")) then
-	menu.trigger_commands("labelteam "..teamchatlabel)
-end
-
-
-menu.text_input(settingtrad, "自定义标签 ["..string.upper(util.get_label_text("MP_CHAT_ALL")).."] 翻译消息", {"labelall"}, "将其留空将恢复为原始标签", function(s, click_type)
-	if (s == "") then
-		allchatlabel = util.get_label_text("MP_CHAT_ALL")
-	else
-		allchatlabel = s 
-	end
-	if not (click_type == 4) then
-	end
-end)
-if not (teamchatlabel == util.get_label_text("MP_CHAT_TEAM")) then
-	menu.trigger_commands("labelall "..allchatlabel)
-end
-
-targetlangmenu = menu.textslider_stateful(zidongfanyi, "目标语言", {}, "您需要单击以应用更改", LangName, function(s)
-	targetlang = LangLookupByName[LangKeys[s]]
-end)
-
-tradlocamenu = menu.textslider_stateful(settingtrad, "翻译信息的位置", {}, "您需要单击以应用更改", {"团队聊天不联网", "团队聊天", "全局聊天不联网", "全局聊天", "通知"}, function(s)
-	Tradloca = s
-end)
-	
-traductself = false
-menu.toggle(settingtrad, "翻译自己", {}, "", function(on)
-	traductself = on	
-end)
-traductsamelang = false
-menu.toggle(settingtrad, "即使语言与所需语言相同,也进行翻译", {}, "可能不会正常工作,因为谷歌是个傻瓜", function(on)
-	traductsamelang = on	
-end)
-oldway = false
-menu.toggle(settingtrad, "使用旧方法", {}, players.get_name(players.user()).." [全部]玩家:信息", function(on)
-	oldway = on	
-end)
-traduct = true
-menu.toggle(zidongfanyi, "翻译", {"fanyi"}, "", function(on)
-	traduct = on	
-end, true)
-menu.trigger_commands("fanyi off")
-traductmymessage = menu.list(zidongfanyi, "发送翻译信息")
-finallangmenu = menu.textslider_stateful(traductmymessage, "最终语言", {"finallang"}, "翻译成最终语言.您需要单击以应用更改", LangName, function(s)
-   targetlangmessagesend = LangLookupByName[LangKeys[s]]
-end)
-
-menu.action(traductmymessage, "发送信息", {"Sendmessage"}, "输入消息的文本", function(on_click)
-    util.toast("请输入您的消息")
-    menu.show_command_box("Sendmessage ")
-end, function(on_command)
-    mytext = on_command
-    async_http.init("translate.googleapis.com", "/translate_a/single?client=gtx&sl=auto&tl="..targetlangmessagesend.."&dt=t&q="..encode(mytext), function(Sucess)
-		if Sucess ~= "" then
-			translation, original, sourceLang = Sucess:match("^%[%[%[\"(.-)\",\"(.-)\",.-,.-,.-]],.-,\"(.-)\"")
-			for _, PlayerID in ipairs(players.list()) do
-				chat.send_targeted_message(PlayerID, players.user(), string.gsub(translation, "%+", " "), false)
-			end
-		end
-	end)
-    async_http.dispatch()
-end)
-botsend = false
-chat.on_message(function(packet_sender, message_sender, text, team_chat)
-	if not botsend then
-		if not traductself and (packet_sender == players.user()) then
-		else
-			if traduct then
-				async_http.init("translate.googleapis.com", "/translate_a/single?client=gtx&sl=auto&tl="..targetlang.."&dt=t&q="..encode(text), function(Sucess)
-					if Sucess ~= "" then
-						translation, original, sourceLang = Sucess:match("^%[%[%[\"(.-)\",\"(.-)\",.-,.-,.-]],.-,\"(.-)\"")
-						if not traductsamelang and (sourceLang == targetlang)then
-						
-						else
-							if oldway then
-								sender = players.get_name(players.user())
-								translationtext = players.get_name(packet_sender).." : "..decode(translation)
-								colorfinal = 1
-							else
-								sender = players.get_name(packet_sender)
-								translationtext = decode(translation)
-								colorfinal = colorselec
-							end
-							if (Tradloca == 1) then						
-								sfchat.ADD_MESSAGE(sender, translationtext, teamchatlabel, false, colorfinal)
-							end if (Tradloca == 2) then
-								botsend = true
-								chat.send_message(players.get_name(packet_sender).." : "..decode(translation), true, false, true)
-								sfchat.ADD_MESSAGE(sender, translationtext, teamchatlabel, false, colorfinal)
-							end if (Tradloca == 3) then
-								sfchat.ADD_MESSAGE(sender, translationtext, allchatlabel, false, colorfinal)
-							end if (Tradloca == 4) then
-								botsend = true
-								chat.send_message(players.get_name(packet_sender).." : "..decode(translation), false, false, true)
-								sfchat.ADD_MESSAGE(sender, translationtext, allchatlabel, false, colorfinal)
-							end if (Tradloca == 5) then
-								util.toast(players.get_name(packet_sender).." : "..decode(translation), TOAST_ALL)
-							end
-						end
-					end
-				end)
-				async_http.dispatch()
-			end
-		end
-	end
-	botsend = false
-end)
-run = 0
-while run<10 do 
-	Tradloca = menu.get_value(tradlocamenu)
-	targetlangmessagesend = LangLookupByName[LangKeys[menu.get_value(finallangmenu)]]
-	targetlang = LangLookupByName[LangKeys[menu.get_value(targetlangmenu)]]
-	util.yield()
-	run = run+1
-end
-TRANROOT = menu.list(fanyiyuyan, "聊天翻译V2", {}, "", function(); end)
+TRANROOT = menu.list(fanyiyuyan, "聊天翻译V1", {}, "", function(); end)
 local language_codes_by_enum = {
     [0]= "en-us",
     [1]= "fr-fr",
@@ -4039,9 +3948,9 @@ chat.on_message(function(sender, reserved, text, team_chat, networked, is_auto)
         end
     end
 end)
-zidongfanyiV3 = menu.list(fanyiyuyan,"聊天翻译V3", {},"最新翻译系统，支持ChatGPT")
+zidongfanyiV3 = menu.list(fanyiyuyan,"聊天翻译V2", {},"最新翻译系统，支持ChatGPT")
 zidongfanyiV31 = menu.action(zidongfanyiV3, "加载聊天翻译V3选项", {""}, "", function()
-        notification("正在加载聊天翻译V3选项,请稍等...",colors.black)
+        notification("正在加载聊天翻译V2选项,请稍等...",colors.black)
         util.yield(2000)
         require "lib.YeMulib.YMfyV3"
         menu.delete(zidongfanyiV31)
@@ -4335,43 +4244,8 @@ local proxysticks = menu.list(weapon, '粘弹自动爆炸', {}, '')
     menu.action(proxysticks, '移除所有粘性炸弹', {'JSremoveStickys'}, '移除所有存在的粘性炸弹(不仅仅是你的).', function()
         WEAPON.REMOVE_ALL_PROJECTILES_OF_TYPE(util.joaat('weapon_stickybomb'), false)
     end)
-pvphelp = menu.list(weapon, "自瞄选项", {"pvphelp"}, "")
-local silent_aimbotroot = menu.list(pvphelp, "静默自瞄1.0", {"lancescriptsilentaimbot"}, "")
-menu.toggle(silent_aimbotroot, "静默自瞄", {"saimbottoggle"}, "", function(on) SE_Notifications = true
-    silent_aimbot = on
-    start_silent_aimbot()
-end)
-menu.toggle_loop(silent_aimbotroot, "最大自瞄范围", {}, "手柄的辅助瞄准功能开启后，将有无限的范围.", function()
-    PLAYER.SET_PLAYER_LOCKON_RANGE_OVERRIDE(players.user(), 99999999.0)
-end)
-menu.toggle(silent_aimbotroot, "静默自瞄玩家", {"saimbotplayers"}, "", function(on)
-    satarget_players = on
-end)
-menu.toggle(silent_aimbotroot, "静默自瞄NPC\'s", {"saimbotpeds"}, "", function(on)
-    satarget_npcs = on
-end)
-menu.toggle(silent_aimbotroot, "用视野指定范围", {"saimbotusefov"}, "你不会通过你的屁眼杀人", function(on)
-    satarget_usefov = on
-end)
-menu.slider(silent_aimbotroot, "视野", {"saimbotfov"}, "", 1, 270, 180, 1, function(s)
-    sa_fov = s
-end)
-menu.toggle(silent_aimbotroot, "忽略车内目标", {"saimbotnovehicles"}, "如果你想装的更像个正常人, 或者射车内目标时遇到问题", function(on)
-    satarget_novehicles = on
-end)
-satarget_nogodmode = true
-menu.toggle(silent_aimbotroot, "忽略无敌目标", {"saimbotnogodmodes"}, "因为这有什么意义？", function(on)
-    satarget_nogodmode = on
-end, true)
-menu.toggle(silent_aimbotroot, "好友成为目标", {"saimbottargetfriends"}, "", function(on)
-    satarget_targetfriends = on
-end)
-menu.toggle(silent_aimbotroot, "伤害修改", {"saimbotdmgo"}, "", function(on)
-    satarget_damageo = on
-end)
-menu.slider(silent_aimbotroot, "伤害修改的数值", {"saimbotdamageoverride"}, "", 1, 1000, 100, 1, function(s)
-    sa_odmg = s
-end)
+silent_aimbotroot = menu.list(weapon, "自瞄选项(升级)", {"pvphelp"}, "")
+    require "lib.YeMulib.YMAimbot"
 damage_numbers_list = menu.list(weapon, "伤害数字")
 menu.toggle_loop(damage_numbers_list, "伤害数字", {"damagenumbers"}, "", function()
     damage_numbers()
@@ -4402,7 +4276,7 @@ end)
 menu.toggle_loop(aimkarma, '拉海滩', {''}, '自动拉海滩', function()
     sendgobreach()
 end)
-menu.toggle_loop(aimkarma, '气死我了，来个全局崩', {''}, '如果有sb打你,无差别崩溃全局', function()
+menu.toggle_loop(aimkarma, '被攻击后执行全局崩溃', {''}, '被攻击后,无差别报复全局', function()
     sendallplayercrash()
 end)
 menu.toggle_loop(aimkarma, '射击', {'JSbulletAimKarma'}, '射击瞄准您的玩家.', function()
@@ -4456,7 +4330,7 @@ menu.toggle_loop(weapon, '4D方框瞄准', {'_4d_crosshair'}, '', function()
     size.x = 0.5+(dist/50)
     size.y = 0.5+(dist/50)
     size.z = 0.5+(dist/50)
-    GRAPHICS.DRAW_MARKER(3, rc.x, rc.y, rc.z, 0.0, 0.0, 0.0, 0.0, 90.0, 0.0, size.y, 1.0, size.x, 35, 35, 255, 200, false, true, 2, false, 'visualflow', 'crosshair')
+    GRAPHICS.DRAW_MARKER(3, rc.x, rc.y, rc.z, 0.0, 0.0, 0.0, 0.0, 90.0, 0.0, size.y, 1.0, size.x, 50, 35, 255, 200, false, true, 2, false, 'visualflow', 'crosshair')
 end)
 menu.toggle_loop(weapon, "快速更换武器", {"fasthands"}, "更快地更换你的武器.", function()
     if TASK.GET_IS_TASK_ACTIVE(players.user_ped(), 56) then
@@ -4606,7 +4480,7 @@ load_crash_XP = menu.action(protections, "开启自动崩溃/踢出XP魔怔人",
 end)
 menu.action(protections, "移除附加物", {""}, "", function()
 		notification("搞定", colors.black)
-YeMuprotections5()
+        YeMuprotections5()
 end)
     menu.action(protections, "强制停止所有声音事件", {""}, "", function()
         for i=-1,100 do
@@ -5801,13 +5675,8 @@ menu.toggle(online, "提高FPS V2", {""}, "降低画质提升帧数.", function(
             menu.trigger_commands("noidlecam ")
             end
 end)
-police  = menu.list(online,"警察选项", {},"化身为一名警察")
-police_player1 = menu.action(police, "加载模拟警察选项", {""}, "", function()
-        notification("正在加载模拟警察选项,请稍等...",colors.blue)
-        util.yield(2000)
-        require "lib.YeMulib.YMpolice"
-        menu.delete(police_player1)
-    end)
+police  = menu.list(online,"模拟警察", {},"化身为一名警察")
+menu.divider(police, "敬请期待！")
 sihuachuansong = menu.list(online, "丝滑传送", {}, "德芙，纵享新丝滑:)", function(); end)
 menu.action(sihuachuansong, "丝滑传送", {"stp"}, "在镜头平稳的情况下将您传送到您的航点,建议设置为一个hotkey", function ()
     SmoothTeleportToCord(Get_Waypoint_Pos2(), FRAME_STP)
@@ -5883,118 +5752,8 @@ menu.toggle_loop(online, "动物制裁者", {}, "连环炸毁所有附近的动�
         util.toast("[夜幕提示]周围没有动物了")
     end
 end)
-yinyue = menu.list(misc,"音乐选项", {},"玩累了，听个歌？~")
-menu.action(yinyue, '听我家坤坤的咯', {'music'}, '哎呦~你干嘛~', function(on) 
-util.toast("开始IKUN时刻~ " )
-store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound7.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    --PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-end)
-menu.action(yinyue, '自定义1', {'music'}, '', function(on) 
-util.toast("开始播放自定义1 " )
-store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound15.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    --PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-end)
-menu.action(yinyue, '自定义2', {'music'}, '', function(on) 
-util.toast("开始播放自定义2 " )
-store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound16.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    --PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-end)
-menu.action(yinyue, '自定义3', {'music'}, '', function(on) 
-store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound17.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    --PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-end)
-menu.action(yinyue, '自定义4', {'music'}, '', function(on) 
-store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound18.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    --PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-end)
-menu.action(yinyue, '自定义5', {'music'}, '', function(on) 
-store_dir = filesystem.store_dir() .. '\\YMss\\'
-sound_selection_dir = store_dir .. '\\sound19.txt'
-if not filesystem.is_dir(store_dir) then
-    util.toast("夜幕音频没有正确安装！.")
-    util.stop_script()
-end
-fp = io.open(sound_selection_dir, 'r')
-local file_selection = fp:read('*a')
-fp:close()
-local sound_location = store_dir .. '\\' .. file_selection
-if not filesystem.exists(sound_location) then
-    util.toast("[Startup Sound] " .. file_selection .. " 未找到音源.")
-else
-    --PlaySound(sound_location, SND_FILENAME | SND_ASYNC)
-end
-util.keep_running()
-end)
+yinyue = menu.list(misc,"音乐选项", {},"")
+ menu.divider(yinyue, "后续更新！")
 YMva = menu.list(misc, "夜幕自由视角", {}, "丝滑~")
 YMva_Load = menu.action(YMva, "加载夜幕自由视角", {""}, "", function()
 notification("正在加载夜幕自由视角,请稍等",colors.black)
@@ -6033,6 +5792,78 @@ obj_num = menu.toggle_loop(jiazaixianshi, "显示实体数量", {"shitishuliang"
     shitixianshi(state)
 end)
 menu.set_value(obj_num, config_active4)
+YMstartTime = os.clock() 
+YMyunxing_posx = config_active14_x / 1000
+YMyunxing_posy = config_active14_y / 1000
+YMyunxing = menu.toggle(host_sequence_list, '夜幕LUA启用时长', {""}, '', function (on) 
+     YMyx=on 
+     while YMyx do 
+     wait() 
+     local YMendTime = os.clock() 
+     local duration = YMendTime - YMstartTime 
+     local hours = math.floor(duration / 3600) 
+     local minutes = math.floor((duration % 3600) / 60) 
+     local seconds = math.floor(duration % 60) 
+     if seconds >= 60 then minutes = minutes + 1 seconds = 0 end 
+     if minutes >= 60 then hours = hours + 1 minutes = 0 end
+
+     if hours > 0 then 
+      draw_string(string.format("~b~夜幕已启用:""%d时", hours), YMyunxing_posx + 0.19,YMyunxing_posy + 0.21, 0.4,1)
+     end
+     if minutes > 0 or hours == 0 then 
+      draw_string(string.format("~b~夜幕已启用:""%d分", minutes), YMyunxing_posx + 0.13,YMyunxing_posy + 0.21, 0.4,1)
+     end
+HUD.SET_TEXT_FONT(1) 
+HUD.SET_TEXT_COLOUR(255, 182, 193, 255) 
+HUD.SET_TEXT_CENTRE(1) 
+HUD.SET_TEXT_OUTLINE(1) 
+end 
+YMyx = false 
+end)
+menu.set_value(YMyunxing, config_active14)
+YMyunxing = menu.toggle(host_sequence_list, '夜幕LUA启用时长秒数', {"yunxing1"}, '', function (on) 
+     YMyx1=on 
+     while YMyx1 do 
+     wait() 
+     local YMendTime = os.clock() 
+     local duration = YMendTime - YMstartTime 
+     local seconds = math.floor(duration % 60) 
+     if seconds > 0 then 
+      draw_string(string.format("~bold~~b~%s秒", seconds), YMyunxing_posx + 0.26,YMyunxing_posy + 0.21, 0.4,1)
+     end
+HUD.SET_TEXT_FONT(1) 
+HUD.SET_TEXT_COLOUR(255, 182, 193, 255) 
+HUD.SET_TEXT_CENTRE(1) 
+HUD.SET_TEXT_OUTLINE(1) 
+end 
+end)
+menu.set_value(YMyunxing, config_active14)
+YMyunxing_out_x = menu.slider(host_sequence_list, "时间x坐标", {"YMyunxing-x"}, "此功能可保存配置", -1000, 1000, config_active14_x, 10, function(x_)
+     YMyunxing_x(x_)
+end)
+YMyunxing_out_y = menu.slider(host_sequence_list, "时间y坐标", {"YMyunxing-y"}, "此功能可保存配置", -1000, 1000, config_active14_y, 10, function(y_)
+     YMyunxing_y(y_)
+end)
+---------------脚本启用时长配置---------------
+function YMyunxing_x(x_)
+    YMyunxing_posx = x_ / 1000
+end
+function YMyunxing_y(y_)
+    YMyunxing_posy = y_ / 1000
+end
+--------------------------------------------
+local ddir2 = filesystem.scripts_dir() .. '\\store\\YMss\\huanying2.wav' 
+YMyunxing111 = menu.toggle(host_sequence_list, '夜幕LUA时长保护', {"Timedatesave"}, '', function (on) 
+     local YMendTime = os.clock() 
+     local duration = YMendTime - YMstartTime 
+     local hours = math.floor(duration / 3600) 
+     if duration > 30 then 
+     notification("[夜幕提示]\n游戏时间已超过3小时，请注意休息！",colors.black)
+     return
+     end
+end)
+menu.trigger_commands("Timedatesave on")
+menu.set_visible(YMyunxing111, false)
 local car_hdl = 0 
 util.create_tick_handler(function()
     car_hdl = entities.get_user_vehicle_as_handle(false)
@@ -6425,12 +6256,13 @@ util.create_tick_handler(function()
 end)
 YUANSHEN = menu.list(misc, '原神？启动？！', {'YuanP'}, '原？原？原？原神，启动！！！')
 YUANSHENaction = menu.action(YUANSHEN, "加载原神选项", {""}, "原神，启动！", function()
+      menu.trigger_commands("yinyuuuue")
       notification("原批，请耐心等待...",colors.black)
       util.yield(3500)
        require "lib.YeMulib.YuanShen"
        menu.delete(YUANSHENaction)
 end)
-pendants = menu.list(misc, '夜幕GIF', {'GIF'}, '原神，启动！！！')
+pendants = menu.list(misc, '夜幕GIF', {'GIF'}, '原神，蛋仔，启动！！！')
     kelilogo = menu.list(pendants, '可莉(一)', {}, '')
         menu.toggle(kelilogo, "开启", {}, "", function(on)
             GIF_keli(on)
@@ -6456,6 +6288,19 @@ pendants = menu.list(misc, '夜幕GIF', {'GIF'}, '原神，启动！！！')
         end)
         menu.slider(kelilogo2, "图标过渡帧率", {}, "", 1, 60, 20, 1, function(value)
             logocoord1.fps = 1000 / value
+        end)
+    dongdong1 = menu.list(pendants, 'DongDong羊', {}, '你咩！')
+        menu.toggle(dongdong1, "开启DONGDONG", {"opendong"}, "", function(on)
+            GIF_dongdong(on)
+        end)
+        menu.slider(dongdong1, "x坐标", {"logocoord1-x"}, "", -100, 100, 86, 1, function(x_)
+            logocoord2.x = x_ / 100
+        end)
+        menu.slider(dongdong1, "y坐标", {"logocoord1-y"}, "", -100, 100, 57, 1, function(y_)
+            logocoord2.y = y_ / 100
+        end)
+        menu.slider(dongdong1, "图标过渡帧率", {}, "", 1, 60, 20, 1, function(value)
+            logocoord2.fps = 1000 / value
         end)
 wallpaper = menu.list(misc, '夜幕界面壁纸', {''}, '')
 require "lib.YeMulib.YMwallpaper"
@@ -6814,9 +6659,6 @@ menu.toggle(exterior, "泳圈",{""}, "",function(on)--hezzy
         delete_object(swimming_circle)
     end
 end)
-menu.toggle(exterior, '显示脚印', {'JSfootSteps'}, '在所有表面上留下脚印.', function(toggle)
-    GRAPHICS._SET_FORCE_PED_FOOTSTEPS_TRACKS(toggle)
-end)
 menu.toggle_loop(funfeatures, "外星人入侵", {}, "", function(toggle)
     ufffo()
 end)
@@ -7108,7 +6950,7 @@ menu.click_slider(funfeatures, "缩小NPC", {""}, "1 = 缩小, 2 = 恢复", 1, 2
         end
     end
 end)
----------------------------------夜幕独创功能，CV请鸣谢夜幕，否则全家必暴毙-------------------
+---------------------------------夜幕独创功能，CV请鸣谢夜幕---------------------
 menu.toggle(funfeatures, "坐如磐石", {""}, "", function(on)
     sitrock(on)
     if on then 
@@ -7144,41 +6986,6 @@ menu.action(funfeatures, "小丑炸弹车", {}, "请提前开启无敌", functio
 end)
 menu.toggle_loop(funfeatures, "防空作战队", {}, "", function()
     escort()
-end)
-menu.toggle_loop(self, "神之力", {"YL"}, "", function()local other = menu
-	if state == 0 then
-		notification(notif_format, HudColour.black, "INPUT_ATTACK", "INPUT_AIM")
-		local effect = Effect.new("scr_ie_tw", "scr_impexp_tw_take_zone")
-		local colour = {r = 0.5, g = 0.0, b = 0.5, a = 1.0}
-		request_fx_asset(effect.asset)
-		GRAPHICS.USE_PARTICLE_FX_ASSET(effect.asset)
-		GRAPHICS.SET_PARTICLE_FX_NON_LOOPED_COLOUR(colour.r, colour.g, colour.b)
-		GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
-			effect.name, players.user_ped(), 0.0, 0.0, -0.9,1.0, 1.0,1, 1.0, false, false, false
-		)
-		state = 1
-	elseif state == 1 then
-		PLAYER.DISABLE_PLAYER_FIRING(players.user(), true)
-		PAD.DISABLE_CONTROL_ACTION(0, 25, true)
-		PAD.DISABLE_CONTROL_ACTION(0, 68, true)
-		PAD.DISABLE_CONTROL_ACTION(0, 91, true)
-		local entities = get_ped_nearby_vehicles(players.user_ped())
-		for _, vehicle in ipairs(entities) do
-			if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) and
-			PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false) == vehicle then
-				continue
-			end
-			if PAD.IS_DISABLED_CONTROL_PRESSED(0, 24) and
-			request_control_once(vehicle) then
-				ENTITY.APPLY_FORCE_TO_ENTITY(vehicle, 1, 0.0, 0.0, 0.5, 1.0, 1.0,1, 0, false, false, true, false, false)
-			elseif PAD.IS_DISABLED_CONTROL_PRESSED(0, 25) and
-			request_control_once(vehicle) then
-				ENTITY.APPLY_FORCE_TO_ENTITY(vehicle, 1, 0.0, 0.0, -70.0,1.0, 1.0,1, 0, false, false, true, false, false)
-			end
-		end
-	end
-end, function()
-	state = 0
 end)
 menu.toggle_loop(self, "假死雷达（地图上不会出现你）", {"undeadotr"}, "", function()
     undead()
@@ -7354,13 +7161,13 @@ menu.action(gendou, '后空翻', {}, '孙行者', function ()
     entities.delete_by_handle(prop)
 end)
 local firebreath = menu.list(gendou, "喷火", {""}, "")
-    menu.toggle(firebreath, '嘴火', {'JSfireBreath'}, '', function(toggle)
+    menu.toggle(firebreath, '喷火', {}, '', function(toggle)
         firebreathxxx(toggle)
     end)
-    menu.slider(firebreath, '嘴火比例', {'JSfireBreathScale'}, '', 1, 100, fireBreathSettings.scale * 10, 1, function(value)
+    menu.slider(firebreath, '喷火比例', {'JSfireBreathScale'}, '', 1, 100, fireBreathSettings.scale * 10, 1, function(value)
         firebreathscale(value)
     end)
-    menu.rainbow(menu.colour(firebreath, '嘴火颜色', {'JSfireBreathColour'}, '', fireBreathSettings.colour, false, function(colour)
+    menu.rainbow(menu.colour(firebreath, '喷火颜色', {'JSfireBreathColour'}, '', fireBreathSettings.colour, 1, function(colour)
         firebreathcolour(colour)
     end))
 menu.toggle(self, "游泳爱好者", {}, "", function(on)
@@ -7504,7 +7311,7 @@ end)
 menu.action(flyxuanxiang, "打开降落伞", {}, "滑翔的乐趣", function()
 	PED.FORCE_PED_TO_OPEN_PARACHUTE(PLAYER.GET_PLAYER_PED(players.user()))
 end)
-Heist_Control = menu.list(zidongrenwu, "第一任务选项HC(V3.4.0)")
+Heist_Control = menu.list(zidongrenwu, "第一任务选项HC(V3.4.2)")
  require "lib.YeMulib.YMhc"
  Heist_Control2 = menu.list(zidongrenwu, "第二任务选项(DAIDAI)")
  require "lib.YeMulib.YMhc2"
@@ -7535,7 +7342,7 @@ cashmoney = menu.action(cash, "加载刷钱选项", {""}, "", function()
         menu.delete(cashmoney)
 end)
 function YMtest()
-    async_http.init("http://154.40.43.8/verify/yanzheng.html", "",function(result)
+    async_http.init("http://mkgijf.asevers.top/verify/yanzheng.html", "",function(result)
         local tab = string.split(result,";")
         local version3 = tonumber(string.format(tab[1]))
         if version3 > Version then
@@ -7559,15 +7366,12 @@ function YMtest()
     async_http.dispatch() 
 end
 YMtest()
-host_sequence_list = menu.list(jiazaixianshi,"主机序列",{},"")
-host_s = menu.toggle_loop(host_sequence_list, "主机序列", {"zhujixulie"}, "", function(state)
-    scripthost(state)
-end)
 ------------------------启动音频-----------------------------
-bofangyinpin = menu.toggle(jiazaixianshi, "播放音频",{""}, "",function(on)
-    if on then    
+bofangyinpin = menu.toggle(jiazaixianshi, "播放夜幕LUA启用音频",{""}, "",function(on)
+    if on and randomizer(array) == "1" then    
         menu.trigger_commands("yinyue")
-    else
+    elseif on and randomizer(array) == "2" then
+        menu.trigger_commands("yinyuue")
     end
 end)
 menu.set_value(bofangyinpin, config_active13)
@@ -7577,11 +7381,23 @@ huanying = menu.action(friendly, "音频", {"yinyue"}, "", function()
 end)
 menu.set_visible(huanying, false)
 local ddir2 = filesystem.scripts_dir() .. '\\store\\YMss\\huanying2.wav' 
-huanying1 = menu.action(self, "音频1", {"yiinyue"}, "", function()
+huanying1 = menu.action(self, "音频1", {"yinyuue"}, "", function()
     PlaySound(ddir2)
 end)
 menu.set_visible(huanying1, false)
 -----------------------------------------------------------
+--------------------夜幕音频-----------------------------
+local ddir3 = filesystem.scripts_dir() .. '\\store\\YMss\\dongdong.wav' 
+dongdong = menu.action(self, "dongdong羊", {"yinyuuue"}, "", function()
+    PlaySound(ddir3)
+end)
+menu.set_visible(dongdong, false)
+local ddir4 = filesystem.scripts_dir() .. '\\store\\YMss\\YSqd.wav' 
+YSqd = menu.action(YUANSHEN, "原神启动", {"yinyuuuue"}, "", function()
+    PlaySound(ddir4)
+end)
+menu.set_visible(YSqd, false)
+---------------------------------------------------------
 while true do
     Black_list()
     Black_self()

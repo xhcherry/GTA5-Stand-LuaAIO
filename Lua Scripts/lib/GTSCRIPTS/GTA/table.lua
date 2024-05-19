@@ -1,3 +1,74 @@
+FM = {
+    fm_mission_controller = {
+        team_lives = 26154 + 1325 + 1,
+    },
+
+    fm_mission_controller_2020 = {
+        team_lives = 55004 + 868 + 1,
+    },
+
+    -- 名钻赌场
+    gb_casino_heist = {
+        phone_hack_progress = 2330,
+        camera_hack_position = 4280 + 1654,
+        target_package_number = 4280 + 1724,
+    },
+
+    -- Security Contract
+    fm_content_security_contract = {
+        mission_time = 254 + 1550,
+        mission_type = 7095 + 1339 + 1,
+        realize_assets_destination = 117 + 34,
+    },
+
+    -- Vehicle Cargo Import & Export
+    gb_vehicle_export = {
+        vehicle_net_id = 834 + 29 + 1,
+        mission_start_time = 834 + 457,
+    },
+
+    -- 佩里克岛
+    fm_content_island_heist = {
+        mission_start_time = 13262 + 1460,
+    },
+
+    -- Air Freight
+    gb_smuggler = {
+        mission_start_time = 1932 + 768,
+    },
+    fm_content_smuggler_resupply = {
+        mission_start_time = 6006 + 1319,
+    },
+}
+
+specialTypeList = {
+    { 0, "无", { "none" }, "No Special Ammo" },
+    { 1, "穿甲子弹", { "ap" }, "Armor Piercing Ammo" },
+    { 2, "爆炸子弹", { "explosive" }, "Explosive Ammo" },
+    { 3, "全金属外壳子弹", { "fmj" }, "Full Metal Jacket Ammo" },
+    { 4, "中空子弹", { "hp" }, "Hollow Point Ammo" },
+    { 5, "燃烧子弹", { "fire" }, "Incendiary Ammo" },
+    { 6, "曳光子弹", { "tracer" }, "Tracer Ammo" }
+}
+
+NPCItem = {
+    PedType = {
+        { 1, "排除友好", {}, "" },
+        { 2, "敌对NPC", {}, "" },
+        { 3, "全部NPC", {}, "" }
+    },
+}
+
+NPCWeak = {
+    ped_select = 1,
+    time_delay = 2000,
+    toggle = {
+        health = false,
+        weapon_damage = true,
+        vehicle_weapon = false,
+    },
+}
+
 colors = {
     green = 184,
     red = 6,

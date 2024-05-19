@@ -793,12 +793,31 @@ num = {
 }
 whitelistGroups = {user = true, friends = true, strangers  = true}
 expSettings = {camShake = 0, invisible = false, audible = true, noDamage = false, owned = false, blamed = false, blamedPlayer = false, expType = 0}
+----神指
+TraceFlag ={
+	everything = 4294967295,
+	none = 0,
+	world = 1,
+	vehicles = 2,
+	pedsSimpleCollision = 4,
+	peds = 8,
+	objects = 16,
+	water = 32,
+	foliage = 256,
+}
+
 
 function acknowledgement()
 
     menu.divider(script_meta_menu, "快速加群")
-    menu.action(script_meta_menu, "快进来！", {}, "欢迎加入GTA夜幕用户群！", function()
-    util.toast("快进来,劝你耗子尾汁！~")
+    menu.action(script_meta_menu, "不想进群？", {}, "欢迎加入GTA夜幕用户群！", function(on)
+    menu.trigger_commands("yinyuuue")
+    util.toast("[夜幕提示]\n你咩！")
+    if on then    
+        menu.trigger_commands("opendong on")
+        wait(10000)
+        menu.trigger_commands("opendong off")
+    end
     end)
     menu.hyperlink(script_meta_menu, "加入新夜幕官方用户群", "https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=VzopCmy2xBEAkYmSU8ya4xQbllzQFQHv&authKey=NHDDDI56aESkD3ZS9E2W51WBf7MyvDkVkd5J5bGODrKpEL%2B0khMEESePgDemnlSV&noverify=0&group_code=859074951")
     menu.hyperlink(script_meta_menu, "夜幕官方网站", "http://www.nightfalls.xyz")
@@ -808,6 +827,13 @@ function acknowledgement()
     menu.divider(script_meta_menu, "夜幕制作支持")
     menu.readonly(script_meta_menu, "夜幕策划管理：", "思庸")
     menu.readonly(script_meta_menu, "夜幕副制作策划：", "呆呆")
+    menu.divider(script_meta_menu, "赞助商")
+    menu.action(script_meta_menu, "加入赞助商？", {}, "", function() 
+     util.toast("有意向加入夜幕官方赞助商者可加主策划QQ\nQQ号已复制")
+     util.copy_to_clipboard("1759655185", false)
+    end)
+zanzhushang = menu.list(script_meta_menu,"夜幕官方赞助商", {},"购买请认准赞助商")
+    menu.divider(zanzhushang, "期待你的加入")
     menu.divider(script_meta_menu, "夜幕赞助人员")
 zanzhu = menu.list(script_meta_menu,"夜幕赞助人员", {},"Thanks")
     menu.readonly(zanzhu, "Thanks", "白山茶") 

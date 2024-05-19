@@ -2,8 +2,8 @@ local resx, resy = directx.get_client_size()
 local aspectratio <const> = resx/resy
 
 --set position
-local guix = 0
-local guiy = 0
+local guix = 0.41
+local guiy = 0.5
 
 --set colours
 local colour =
@@ -198,7 +198,7 @@ end
 
 --boolean function
 local function boolean(bool)
-    if bool then return 'Yes' else return 'No' end
+    if bool then return '是' else return '不' end
 end
 
 --check function
@@ -366,9 +366,12 @@ function infoverplaytoggle()
 
             draw_border(mapx, guiy, totalmapwidth, nameh)
 
+
             directx.blurrect_draw(blur[7], mapx, guiy, totalmapwidth, nameh, blurstrength)
 
             draw_rect(mapx, guiy, totalmapwidth, nameh, colour.titlebar)
+
+            directx.draw_text(mapx, guiy + nameh/2, "夜幕LUA", ALIGN_CENTRE, namesize, colour.name)
 
             ---------
             -- MAP --

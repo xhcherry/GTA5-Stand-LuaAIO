@@ -96,3 +96,29 @@ function GIF_keli2(on)
         showlogo1 = 0
     end
 end
+--------------dongdong
+logocoord2 = {x = 0.39,y = 0.35, fps = 150}
+function GIF_dongdong(on)
+    if on then
+        showlogo1 = 1
+        util.create_thread(function()
+            while showlogo1 == 1 do
+                local logo = directx.create_texture(filesystem.resources_dir() .. '/YMIMG/YMGIF/dongdong/'..photovalue1..'.png')
+                directx.draw_texture(logo, 0.06, 0.1, 0.0, 0.0, logocoord2.x, logocoord2.y, 0, 1, 1, 1, 1)
+                util.yield()
+            end
+        end)
+        util.create_thread(function()
+            while showlogo1 == 1 do
+                if photovalue1 < 8 then
+                    photovalue1 = photovalue1 + 1
+                else
+                    photovalue1 = 1
+                end
+                util.yield(logocoord2.fps)
+            end
+        end)
+    else
+        showlogo1 = 0
+    end
+end
