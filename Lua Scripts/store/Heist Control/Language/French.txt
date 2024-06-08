@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 04/11/2024 10:13:06 PM
-# Heist Control Version: V 3.4.0
+# Generated Date: 04/17/2024 02:30:49 PM
+# Heist Control Version: V 3.4.1
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -136,7 +136,6 @@ Unlock DJ Pooh Shirts = Débloquer les T-shirts DJ Pooh
 Buildings = Bâtiments 
 Casino Store Ace Masks = Magasin Casino Masques Ace 
 Missions = Missions 
-Unlock Yacht Missions = Déverrouillez les missions des yachts 
 Special Anniversaries = Anniversaires spéciaux 
 Christmas = Noël 
 Bypass Christmas Clothing = Contourner les vêtements de Noël 
@@ -354,7 +353,6 @@ Add Cosmetic Decorations To The Office/MC = Ajouter des décorations au Bureau/M
 To apply, sell special crate or vehicle cargo and change your session! = Pour en faire la demande, vendez une caisse spéciale ou une cargaison de véhicule et changez de session !
 Unlock Taxi Missions = Débloquer Missions de Taxi
 Unlock All Contacts = Débloquer tous les contacts
-Skip Lamar Missions To The Last One = Passer les missions de Lamar jusqu'à la dernière
 You must keep this feature enabled in order to wear it! = Vous devez garder cette fonction activée pour pouvoir le porter !
 Valentine's Day = Saint-Valentin
 Unlock Sasquatch Outfit = Déverrouiller la tenue de Sasquatch
@@ -529,7 +527,6 @@ Entrance Of Your Facility = Entrée de votre Complexe
 Make sure you are in your facility. = Assurez-vous d'être dans votre Complexe.
 Refresh Heist Screen On Facility = Actualiser l'écran du braquage dans le Complexe
 You can update changed doomsday heist stats in the Facility by refreshing it. = Vous pouvez mettre à jour les stats moddées du braquage de la Fin du Monde dans le Complexe en le rafraîchissant.
-Works on all of the classic heists. You need to activate this until first setup mission is ended. = Fonctionne sur tous les braquages classiques. Laisser activé jusqu'à la fin de la première mission de préparation.
 Open = Ouvrir
 Close = Fermer
 Forces the amount of MC Business' sale vehicles to one. Please click once before starting selling mission. Only works when you're the leader. = Force le nombre de véhicules de vente du Club de Motards à 1. Veuillez cliquer une fois avant de commencer la mission de vente. Ne fonctionne que lorsque vous êtes le Président.
@@ -750,3 +747,8 @@ Biker Bar Mission = Mission du bar des bikers
 San Andreas Mercenaries Terminal = Terminal des mercenaires de San Andreas
 Agency = Agence
 Motorbike = Moto
+Press this feature once before launching the heist. = Cliquez une fois sur cette option avant de lancer le braquage.
+If you use 'Mouse Support' feature, please before using this feature, click 'Game > Disables > Disable Game Inputs > Presets > Numpad' after using it, click 'Mouse' = Si vous utilisez la fonction 'Support de la souris', veuillez cliquer sur 'Jeu > Désactiver > Désactiver Touche en Jeu > Prédéfinis > Pavé Numérique', ensuite, cliquez sur 'Souris'.
+Remove The Cooldown = Supprimer la Temporisation
+This doesn't bypass server-sided cooldown time, 20 mins. This just bypasses unable to launch heist in heist board. = Cela ne contourne pas la temporisation côté serveur, qui est de 20 minutes. Cela permet juste de contourner l'impossibilité de lancer un braquage dans le tableau de braquage.
+Instant finishing Pacific Standard heist won't work. = Le braquage instantané de la Pacific Standard ne fonctionne pas

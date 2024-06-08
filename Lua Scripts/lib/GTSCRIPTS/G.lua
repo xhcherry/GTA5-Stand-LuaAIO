@@ -134,9 +134,8 @@ end
 GTAC(menu.my_root(), ">>点击进入GTLua", {}, "",function () menu.trigger_command(G) end) 
 GTAC(menu.my_root(), ">>重新启动GTLua", {}, "", function () restartscript() end) 
 
-sale = GTH(G, ">>GTLua Ultra VIP 直降优惠", "http://vip.gtlua.cn", "5月17日至5月20日 加入GTLua至臻皇榜(Ultra VIP)可立刻享受85折优惠\nGTLua至臻皇榜仅336元\n皇榜升级至至臻仅286元\n了解至臻皇榜带来的特权请点击访问")
-
 Web_Http = GTH(G, ">>GTLua 官方网站", "http://gtlua.cn", "欢迎前来访问GTLua官方网站\n您需要了解的一切内容都在这里")
+
 mastervip = GT(G, ">>Ultra级会员功能")
 func388()
 
@@ -217,8 +216,8 @@ if SCRIPT_MANUAL_START then
     menu.trigger_commands("gtluascript")
 end
 
-gtoast("GTLua 为开源代码 不要相信任何“破解版”\n以及包括所有Stand脚本,全部为开源代码\n不要相信一些大雅之堂的小丑,比如尊*")
-gtoast("有你在的地方，我与你同在")
+--gtoast("GTLua 为开源代码 不要相信任何“破解版”\n以及包括所有Stand脚本,全部为开源代码\n不要相信一些大雅之堂的小丑,比如尊*")
+gtoast("幸福了 然后呢")
 
 if players.get_name(players.user()) == "SmallGodGirlo3o" then
     gtoast("欢迎回来，美丽的丢丢~")
@@ -18345,6 +18344,25 @@ GTTG(allcrash, "魔怔之力", {"evilpower"}, "当播放完聊天框内容后自
     end
 end)
 
+GTLP(onlinemode, "自动成为CEO/摩托帮老大", {""}, "检测到进入线上模式自动注册CEO/摩托帮老大", function()
+    if not inSession() then return end
+
+    for CEOLabels as label do
+        if IS_HELP_MSG_DISPLAYED(label) then
+            if players.get_boss(players.user()) == -1 then menu.trigger_commands("ceostart") end
+            if players.get_org_type(players.user()) == 1 then menu.trigger_commands("ceotomc") end
+            wait(100)
+        end
+    end
+    for MCLabels as label do
+        if IS_HELP_MSG_DISPLAYED(label) then
+            if players.get_boss(players.user()) == -1 then menu.trigger_commands("mcstart") end
+            if players.get_org_type(players.user()) == 0 then menu.trigger_commands("ceotomc") end
+            wait(100)
+        end
+    end
+end)
+
 menu.click_slider(onlinemode, "设置任务生命数", {"addreadhealth"}, "拯救猪队友",
     0, 100000, 0, 1, function(value)
         local script = 0
@@ -20810,61 +20828,7 @@ GTLP(headlamp, "开启", {"headlamp"}, "", function()
     local cam_rot = players.get_cam_rot(players.user())
     GRAPHICS.DRAW_SPOT_LIGHT(head_pos, cam_rot:toDir(), math.floor(yanse.r * 255), math.floor(yanse.g * 255), math.floor(yanse.b * 255), distance * 1.5, brightness, 0.0, radius, distance)
 end)
-    
-local jinx_pet
-jinx_toggle = GTLP(funfeatures, "宠物猫Jinx", {}, "招换一只可爱的小猫咪", function()
-    if not jinx_pet or not ENTITY.DOES_ENTITY_EXIST(jinx_pet) then
-        local jinx = util.joaat("a_c_cat_01")
-        request_model(jinx)
-        local pos = players.get_position(players.user())
-        jinx_pet = entities.create_ped(28, jinx, pos, 0)
-        PED.SET_PED_COMPONENT_VARIATION(jinx_pet, 0, 0, 1, 0)
-        ENTITY.SET_ENTITY_INVINCIBLE(jinx_pet, true)
-    end
-    NETWORK.NETWORK_REQUEST_CONTROL_OF_ENTITY(jinx_pet)
-    TASK.TASK_FOLLOW_TO_OFFSET_OF_ENTITY(jinx_pet, players.user_ped(), 0, -0.3, 0, 7.0, -1, 1.5, true)
-    wait(2500)
-end, function()
-    entities.delete_by_handle(jinx_pet)
-    jinx_pet = nil
-end)
-    
-local jinx_army = {}
-local army = GT(funfeatures, "宠物猫Jinx军队", {}, "招换一堆可爱又愚蠢的小猫咪")
-GTluaScript.click_slider(army, "生成数量", {}, "最多256只小猫咪", 1, 256, 30, 1, function(val)
-    local ped = players.user_ped()
-    local pos = ENTITY.GET_ENTITY_COORDS(ped, false)
-    pos.y = pos.y - 5
-    pos.z = pos.z + 1
-    local jinx = util.joaat("a_c_cat_01")
-    request_model(jinx)
-     for i = 1, val do
-        jinx_army[i] = entities.create_ped(28, jinx, pos, 0)
-        ENTITY.SET_ENTITY_INVINCIBLE(jinx_army[i], true)
-        PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(jinx_army[i], true)
-        PED.SET_PED_COMPONENT_VARIATION(jinx_army[i], 0, 0, 1, 0)
-        TASK.TASK_FOLLOW_TO_OFFSET_OF_ENTITY(jinx_army[i], ped, 0, -0.3, 0, 7.0, -1, 10, true)
-        wait()
-     end 
-end)
 
-GTAC(army, "清除宠物猫Jinx", {}, "清除愚蠢的小猫咪", function()
-    for i, ped in ipairs(entities.get_all_peds_as_handles()) do
-        if PED.IS_PED_MODEL(ped, util.joaat("a_c_cat_01")) then
-            entities.delete_by_handle(ped)
-        end
-    end
-end)
-    
-GTAC(funfeatures, "唤回Jinx猫咪", {}, "将小猫咪传送到您身边", function()
-    local ped = players.user_ped()
-    local pos = ENTITY.GET_ENTITY_COORDS(ped, false)
-    if jinx_pet ~= nil then 
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(jinx_pet, pos, false, false, false)
-    else
-        gtoast("找不到你那只傻猫了. :/")
-    end
-end)
 local hen_army = {}
 GTluaScript.click_slider(funfeatures, "生成ikun军队", {}, "", 1, 256, 30, 1, function(val)
     local player = players.user_ped()
@@ -21282,6 +21246,15 @@ end)
 
 chatspamtrash = GT(FY, "公屏内容")
 
+GTLP(chatspamtrash, "R星聊天(聊天框)", {""}, "", function()
+    if not inSession() then return end
+
+    if IS_CONTROL_JUST_PRESSED(1, 245) then
+        chat.ensure_open_with_empty_draft(false)
+        chat.add_to_draft("¦ ")
+    end
+end)
+
 GTLuaScript.list_action(chatspamtrash, "R星聊天", {""}, "", {"R星认证","R星标志","R星锁定"}, function(index)
     if index == 1 then
             local k = inputC("输入要说的话", 99, "¦")
@@ -21552,32 +21525,122 @@ if a then
     a = false
 end)
 
-GTAC(fireworks_root, "放烟花盒", {"placefireworks"}, "模仿已删除的线上功能-放置烟花盒", function(click_type)
+--[[GTAC(fireworks_root, "放烟花盒", {"placefireworks"}, "模仿已删除的线上功能-放置烟花盒", function(click_type)
     placefirework()
 end)
 
 GTAC(fireworks_root, "放烟花", {"kaboom"}, "点燃所有放好的烟花", function(click_type)
     fireworkshow()
+end)]]
+
+fireworksMenu = menu.list(fireworks_root, "放烟花")
+
+local firework_names = {"1", "2", "3",}
+local firework_type = "ind_prop_firework_04"
+local effect_name = "scr_indep_firework_fountain"
+local is_christmas = false
+local is_rwb = false
+
+menu.list_select(fireworksMenu, "烟花类型", {}, "", firework_names, 1, function(index)
+    if index == 1 then
+        firework_type = "ind_prop_firework_04"
+        effect_name = "scr_indep_firework_fountain"
+        is_christmas = false
+        is_rwb = false
+    elseif index == 2 then
+        firework_type = "ind_prop_firework_02"
+        effect_name = "scr_indep_firework_shotburst"
+        is_christmas = false
+        is_rwb = false
+    elseif index == 3 then
+        firework_type = "ind_prop_firework_03"
+        effect_name = "scr_indep_firework_trailburst"
+        is_christmas = false
+        is_rwb = false
+    elseif index == 4 then
+        firework_type = "ind_prop_firework_03"
+        effect_name = "scr_firework_indep_burst_rwb"
+        is_christmas = false
+        is_rwb = true
+    elseif index == 5 then
+        firework_type = "ind_prop_firework_03"
+        effect_name = "scr_firework_xmas_ring_burst_rgw"
+        is_christmas = true
+        is_rwb = false
+    end
 end)
 
-    local firw = {speed = 1000}
-    GTLP(fireworks_root, '看烟花', {''}, '', function ()
-          local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-          local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
-          local weap = util.joaat('weapon_firework')
-          WEAPON.REQUEST_WEAPON_ASSET(weap)
-          for y = 0, 1 do
-            MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(tar1.x, tar1.y, tar1.z + 4.0, tar1.x - math.random(-100, 100), tar1.y - math.random(-100, 100), tar1.z + math.random(0, 0), 200, 0, weap, 0, false, false, firw.speed)
-            MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(tar1.x, tar1.y, tar1.z + 4.0, tar1.x + math.random(-100, 100), tar1.y + math.random(-100, 100), tar1.z + math.random(0, 0), 200, 0, weap, 0, false, false, firw.speed)
-            FIRE.ADD_EXPLOSION(tar1.x + math.random(-100, 100), tar1.y + math.random(-100, 100), tar1.z + math.random(0, 100), 38, 1, false, false, 0, false)
-            FIRE.ADD_EXPLOSION(tar1.x - math.random(-100, 100), tar1.y - math.random(-100, 100), tar1.z + math.random(0, 100), 38, 1, false, false, 0, false) 
+local firework_timer = 10
+menu.slider(fireworksMenu, "烟花时长", {"timeoffireworks"}, "", 1, 120, 15, 1, function(count)
+    firework_timer = count
+end)
+
+local placed_fireworks = {}
+
+GTAC(fireworksMenu, "放置烟花", {}, "", function()
+    local anim_dict = 'anim@mp_fireworks'
+    local anim_name = 'place_firework_3_box'
+    STREAMING.REQUEST_ANIM_DICT(anim_dict)
+    while not STREAMING.HAS_ANIM_DICT_LOADED(anim_dict) do
+        wait()
+    end
+    local position = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0.0, 0.52, 0.0)
+    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), true)
+    TASK.TASK_PLAY_ANIM(players.user_ped(), anim_dict, anim_name, 8.0, 8.0, -1, 0, 0.0, false, false, false)
+    wait(1500)
+    local firework = entities.create_object(util.joaat(firework_type), position)
+    OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(firework)
+    ENTITY.FREEZE_ENTITY_POSITION(players.user_ped(), false)
+    wait(1000)
+    ENTITY.FREEZE_ENTITY_POSITION(firework, true)
+    table.insert(placed_fireworks, {object = firework, effect = effect_name, is_christmas = is_christmas, is_rwb = is_rwb})
+end)
+
+GTAC(fireworksMenu, "点燃烟花", {}, "", function()
+    local ptfx_asset = "scr_indep_fireworks"
+    STREAMING.REQUEST_NAMED_PTFX_ASSET(ptfx_asset)
+    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(ptfx_asset) do
+        wait()
+    end
+    local time = util.current_time_millis() + (firework_timer * 1000)
+    while time >= util.current_time_millis() do
+        for _, firework in ipairs(placed_fireworks) do
+            GRAPHICS.USE_PARTICLE_FX_ASSET(ptfx_asset)
+            if firework.is_christmas then
+                GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(firework.effect, firework.object, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, false, false, false)
+            elseif firework.is_rwb then
+                GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(firework.effect, firework.object, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, false, false, false)
+            else
+                GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(firework.effect, firework.object, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, false, false, false)
+            end
         end
+        wait(150)
+    end
+    for i = #placed_fireworks, 1, -1 do
+        entities.delete_by_handle(placed_fireworks[i].object)
+        table.remove(placed_fireworks, i)
+    end
+end)
+
+--
+local firw = {speed = 1000}
+GTLP(fireworks_root, '看烟花', {''}, '', function ()
+        local targets = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+        local tar1 = ENTITY.GET_ENTITY_COORDS(targets, true)
+        local weap = util.joaat('weapon_firework')
+        WEAPON.REQUEST_WEAPON_ASSET(weap)
+        for y = 0, 1 do
+        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(tar1.x, tar1.y, tar1.z + 4.0, tar1.x - math.random(-100, 100), tar1.y - math.random(-100, 100), tar1.z + math.random(0, 0), 200, 0, weap, 0, false, false, firw.speed)
+        MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(tar1.x, tar1.y, tar1.z + 4.0, tar1.x + math.random(-100, 100), tar1.y + math.random(-100, 100), tar1.z + math.random(0, 0), 200, 0, weap, 0, false, false, firw.speed)
+        FIRE.ADD_EXPLOSION(tar1.x + math.random(-100, 100), tar1.y + math.random(-100, 100), tar1.z + math.random(0, 100), 38, 1, false, false, 0, false)
+        FIRE.ADD_EXPLOSION(tar1.x - math.random(-100, 100), tar1.y - math.random(-100, 100), tar1.z + math.random(0, 100), 38, 1, false, false, 0, false) 
+    end
 
 
-          if not PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID) then
-              util.stop_thread()
-          end
-      end)
+        if not PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID) then
+            util.stop_thread()
+        end
+    end)
 
 GTLP(fireworks_root, "循环放烟花", {}, "在您头上循环放烟花", function()
     local coords = players.get_position(players.user())
@@ -22580,6 +22643,25 @@ baocunanjain = GTTG(zhujixianshi, "[按F8保存设置]", {""}, "", function(f)
     gt = false
 end)
 menu.set_value(baocunanjain, true)
+
+GTLP(zhujixianshi, "显示详细时间", {""}, "可显示日期以及时间", function()
+    menu.trigger_commands("infotime off")
+    if os.date("%a") == "Mon" then
+        util.draw_debug_text("星期一 "..os.date("%m" .. "月" .. "%d" .. "日 " .. "%X"))
+    elseif os.date("%a") == "Tue" then
+        util.draw_debug_text("星期二 "..os.date("%m" .. "月" .. "%d" .. "日 " .. "%X"))
+    elseif os.date("%a") == "Wed" then
+        util.draw_debug_text("星期三 "..os.date("%m" .. "月" .. "%d" .. "日 " .. "%X"))
+    elseif os.date("%a") == "Thu" then 
+        util.draw_debug_text("疯狂星期四 "..os.date("%m" .. "月" .. "%d" .. "日 " .. "%X"))
+    elseif os.date("%a") == "Fri" then 
+        util.draw_debug_text("星期五 "..os.date("%m" .. "月" .. "%d" .. "日 " .. "%X"))
+    elseif os.date("%a") == "Sat" then 
+        util.draw_debug_text("星期六 "..os.date("%m" .. "月" .. "%d" .. "日 " .. "%X"))
+    elseif os.date("%a") == "Sun" then
+        util.draw_debug_text("星期日 "..os.date("%m" .. "月" .. "%d" .. "日 " .. "%X"))
+    end
+end)
 
 stcxs = GTTG(zhujixianshi, "实体池显示", {}, "", function(ft)
     local shiti_x = 0.80

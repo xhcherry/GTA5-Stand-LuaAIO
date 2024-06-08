@@ -38,7 +38,7 @@
 
     --- Important
 
-        HC_VERSION = "V 3.4.2"
+        HC_VERSION = "V 3.4.3"
         CODED_GTAO_VERSION = 1.68
 
     ---
@@ -106,20 +106,6 @@
         function STAT_SET_BOOL(stat, value)
             STATS.STAT_SET_BOOL(util.joaat(ADD_MP_INDEX(stat)), value, true)
         end
-        function STAT_SET_STRING(stat, value)
-            STATS.STAT_SET_STRING(util.joaat(ADD_MP_INDEX(stat)), value, true)
-        end
-        function STAT_SET_DATE(stat, year, month, day, hour, min)
-            local DatePTR = memory.alloc(8*7) -- Thanks for helping memory stuffs, aaronlink127#0127
-            memory.write_int(DatePTR, year)
-            memory.write_int(DatePTR+8, month)
-            memory.write_int(DatePTR+16, day)
-            memory.write_int(DatePTR+24, hour)
-            memory.write_int(DatePTR+32, min)
-            memory.write_int(DatePTR+40, 0) -- Seconds
-            memory.write_int(DatePTR+48, 0) -- Milliseconds
-            STATS.STAT_SET_DATE(util.joaat(ADD_MP_INDEX(stat)), DatePTR, 7, true)
-        end
 
         function STAT_SET_MASKED_INT(stat, value1, value2)
             STATS.STAT_SET_MASKED_INT(util.joaat(ADD_MP_INDEX(stat)), value1, value2, 8, true)
@@ -136,38 +122,8 @@
             STATS.STAT_GET_INT(util.joaat(ADD_MP_INDEX(stat)), IntPTR, -1)
             return memory.read_int(IntPTR)
         end
-        function STAT_GET_FLOAT(stat)
-            local FloatPTR = memory.alloc_int()
-            STATS.STAT_GET_FLOAT(util.joaat(ADD_MP_INDEX(stat)), FloatPTR, -1)
-            return tonumber(string.format("%.3f", memory.read_float(FloatPTR)))
-        end
-        function STAT_GET_BOOL(stat)
-            if STAT_GET_INT(stat) ~= 0 then
-                return "true"
-            else
-                return "false"
-            end
-        end
         function STAT_GET_STRING(stat)
             return STATS.STAT_GET_STRING(util.joaat(ADD_MP_INDEX(stat)), -1)
-        end
-        function STAT_GET_DATE(stat, type)
-            local DatePTR = memory.alloc(8*7)
-            STATS.STAT_GET_DATE(util.joaat(ADD_MP_INDEX(stat)), DatePTR, 7, true)
-            local DateTypes = {
-                "Years",
-                "Months",
-                "Days",
-                "Hours",
-                "Mins",
-                -- Seconds,
-                -- Milliseconds,
-            }
-            for i = 1, #DateTypes do
-                if type == DateTypes[i] then
-                    return memory.read_int(DatePTR + 8 * (i - 1))
-                end
-            end
         end
 
         function SET_INT_GLOBAL(global, value)
@@ -564,7 +520,7 @@
             return tonumber(string.sub(Text, 0, i - 1)) -- Returns '2'
         end
 
-        function IS_HELP_MSG_DISPLAYED(label) -- Credit goes to jerry123#4508
+        function IS_HELP_MSG_DISPLAYED(label) -- Credit goes to @jerry1234508 on Discord
             HUD.BEGIN_TEXT_COMMAND_IS_THIS_HELP_MESSAGE_BEING_DISPLAYED(label)
             return HUD.END_TEXT_COMMAND_IS_THIS_HELP_MESSAGE_BEING_DISPLAYED(0)
         end
@@ -613,26 +569,6 @@
             repeat util.yield_once() until SCRIPT.HAS_SCRIPT_LOADED(name)
             SYSTEM.START_NEW_SCRIPT(name, 5000)
             SCRIPT.SET_SCRIPT_AS_NO_LONGER_NEEDED(name)
-        end
-
-        function CLICK_KEYBOARD(key, num) -- https://docs.fivem.net/docs/game-references/controls/
-            for i = 1, num do
-                PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, key, 1)
-                util.yield(200)
-            end
-        end
-
-        function IA_MENU_OPEN_OR_CLOSE()
-            CLICK_KEYBOARD(244, 1)
-        end
-        function IA_MENU_UP(num)
-            CLICK_KEYBOARD(172, num)
-        end
-        function IA_MENU_DOWN(num)
-            CLICK_KEYBOARD(173, num)
-        end
-        function IA_MENU_ENTER(num)
-            CLICK_KEYBOARD(176, num)
         end
 
     ---
@@ -1811,8 +1747,13 @@
             SET_INT_LOCAL("fm_mission_controller_2020", 30357, 3) -- BitCheck
         end)
 
+        menu.action(PERICO_ADV, TRANSLATE("Increase Team Lives"), {"hccpincteamlives"}, IS_WORKING(true) .. TRANSLATE("Increases the amount of team lives. Make sure to have script host if it doesn't seem to work."), function()
+            menu.trigger_commands("scripthost")
+            SET_INT_LOCAL("fm_mission_controller_2020", 55004 + 868 + 1, 10000000) -- Thanks to @vithiam on Discord
+        end)
+
         menu.action(PERICO_ADV, TRANSLATE("Remove The Drainage Pipe"), {"hccprempipe"}, "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Island") .. " > " .. TRANSLATE("Drainage Pipe") .. ")", function()
-            local Object = util.joaat("prop_chem_grill_bit") -- Thanks for letting me know the object, Sapphire#6031
+            local Object = util.joaat("prop_chem_grill_bit") -- Thanks for letting me know the object, @stand.gg on Discord
             DELETE_OBJECT_BY_HASH(Object)
         end)
 
@@ -2689,6 +2630,11 @@
             SET_INT_LOCAL("fm_mission_controller", 10107 + 7, GET_INT_LOCAL("fm_mission_controller", 10107 + 37))
         end)
 
+        menu.action(CAH_ADVCED, TRANSLATE("Increase Team Lives"), {"hccahincteamlives"}, IS_WORKING(true) .. TRANSLATE("Increases the amount of team lives. Make sure to have script host if it doesn't seem to work."), function()
+            menu.trigger_commands("scripthost")
+            SET_INT_LOCAL("fm_mission_controller", 19728 + 1765 + 1, 10000000) -- Thanks to @vithiam on Discord
+        end)
+
         menu.action(CAH_ADVCED, TRANSLATE("Refresh Arcade Boards"), {"hccahrefreshboards"}, TRANSLATE("You can update casino heist stats while even you in the arcade."), function()
             local Bitset0 = STAT_GET_INT("H3OPT_BITSET0")
             local Bitset1 = STAT_GET_INT("H3OPT_BITSET1")
@@ -3418,6 +3364,11 @@
         SET_INT_GLOBAL(1882422 + 1 + (3 * 142) + 39 + 3 + 4 + 8, 1)
     end)
 
+    menu.action(DOOMS_HEIST, TRANSLATE("Increase Team Lives"), {"hcdoomsincteamlives"}, IS_WORKING(true) .. TRANSLATE("Increases the amount of team lives. Make sure to have script host if it doesn't seem to work."), function()
+        menu.trigger_commands("scripthost")
+        SET_INT_LOCAL("fm_mission_controller", 19728 + 1765 + 1, 10000000) -- Thanks to @vithiam on Discord
+    end)
+
     menu.action(DOOMS_HEIST, TRANSLATE("Refresh Heist Screen On Facility"), {"hcdoomsrefreshscreen"}, IS_WORKING(true) .. TRANSLATE("You can update changed doomsday heist stats in the Facility by refreshing it."), function()
         SET_INT_LOCAL("gb_gang_ops_planning", 182, 6) -- https://www.unknowncheats.me/forum/3682032-post104.html
     end)
@@ -3450,46 +3401,124 @@
 
 --- Classic Heist
 
-    menu.list_action(CLASSIC_HEISTS, TRANSLATE("Automated Presets"), {"hcclassicpreset"}, IS_WORKING(true) .. TRANSLATE("If you use 'Mouse Support' feature, please before using this feature, click 'Game > Disables > Disable Game Inputs > Presets > Numpad' after using it, click 'Mouse'"), {
-        { 1, TRANSLATE("The Fleeca Job"), {"fleeca"}, IS_WORKING(true) .. TRANSLATE("Let you and other players will get $15M when you are host and in finale.") .. "\n\n" .. TRANSLATE("Make sure DIFFICULTY is NORMAL!") },
-        { 2, TRANSLATE("Prison Break"), {"prison"}, IS_WORKING(true) .. TRANSLATE("Let you and other players will get $15M when you are host and in finale.") .. "\n\n" .. TRANSLATE("Make sure DIFFICULTY is NORMAL!") },
-        { 3, TRANSLATE("Humane Labs"), {"humane"}, IS_WORKING(true) .. TRANSLATE("Let you and other players will get $15M when you are host and in finale.") .. "\n\n" .. TRANSLATE("Make sure DIFFICULTY is NORMAL!") },
-        { 4, TRANSLATE("Series A Funding"), {"seriesa"}, IS_WORKING(true) .. TRANSLATE("Let you and other players will get $15M when you are host and in finale.") .. "\n\n" .. TRANSLATE("Make sure DIFFICULTY is NORMAL!") },
-        { 5, TRANSLATE("Pacific Standard Heist"), {"pacific"}, IS_WORKING(true) .. TRANSLATE("Let you and other players will get $15M when you are host and in finale.") .. "\n\n" .. TRANSLATE("Make sure DIFFICULTY is NORMAL!") },
-    }, function(index)
-        if index == 1 then
-            SET_INT_GLOBAL(1928233 + 1 + 1, -14806)
-            SET_INT_GLOBAL(1928233 + 1 + 2, 7453)
-            SET_INT_GLOBAL(1928233 + 1 + 3, 7453)
-        elseif index == 2 then
-            SET_INT_GLOBAL(1928233 + 1 + 1, -8468)
-            SET_INT_GLOBAL(1928233 + 1 + 2, 2142)
-            SET_INT_GLOBAL(1928233 + 1 + 3, 2142)
-            SET_INT_GLOBAL(1928233 + 1 + 4, 2142)
-        elseif index == 3 then
-            SET_INT_GLOBAL(1928233 + 1 + 1, -6248)
-            SET_INT_GLOBAL(1928233 + 1 + 2, 1587)
-            SET_INT_GLOBAL(1928233 + 1 + 3, 1587)
-            SET_INT_GLOBAL(1928233 + 1 + 4, 1587)
-        elseif index == 4 then
-            SET_INT_GLOBAL(1928233 + 1 + 1, -8384)
-            SET_INT_GLOBAL(1928233 + 1 + 2, 2121)
-            SET_INT_GLOBAL(1928233 + 1 + 3, 2121)
-            SET_INT_GLOBAL(1928233 + 1 + 4, 2121)
-        elseif index == 5 then
-            SET_INT_GLOBAL(1928233 + 1 + 1, -3900)
-            SET_INT_GLOBAL(1928233 + 1 + 2, 1000)
-            SET_INT_GLOBAL(1928233 + 1 + 3, 1000)
-            SET_INT_GLOBAL(1928233 + 1 + 4, 1000)
-        end
+    CLASSIC_PRESETS = menu.list(CLASSIC_HEISTS, TRANSLATE("Automated Presets"), {}, TRANSLATE("Let you and other players will get $15M when you are host and in finale.") .. "\n\n" .. TRANSLATE("There are video tutorials in Heist Control Discord server. If you have no idea how to use this feature, see them!"), function(); end)
 
-        PAD.SET_CURSOR_POSITION(0.775, 0.175) -- Moves Cursor
-        PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 237, 1) -- Presses Left Mouse Button
-        PAD.SET_CONTROL_VALUE_NEXT_FRAME(2, 202, 1) -- Presses ESC
-        util.yield(500)
-        SET_INT_GLOBAL(1930201 + 3008 + 1, GET_INT_GLOBAL(1928233 + 1 + 2))
-        PAD.SET_CURSOR_POSITION(0.5, 0.5)
-    end)
+        menu.divider(CLASSIC_PRESETS, TRANSLATE("Settings"))
+
+            I_WANNA_RECEIVE_PAYOUT = menu.toggle(CLASSIC_PRESETS, TRANSLATE("I Wanna Receive The Heist Payout"), {}, TRANSLATE("Enabled: Each player will receive $15M") .. "\n\n" .. TRANSLATE("Disabled: For except me, only other players will receive $15M") .. "\n\n" .. TRANSLATE("Note: To apply this state, you should click 'Automated Presets'"), function(); end, true)
+        
+        ---
+
+        menu.divider(CLASSIC_PRESETS, TRANSLATE("Automated Presets"))
+
+            menu.action(CLASSIC_PRESETS, TRANSLATE("Automated Presets"), {}, IS_WORKING(true) .. TRANSLATE("Compatible with any classic heist and any difficulty level.") .. "\n\n" .. TRANSLATE("But, recommeded setting DIFFICULTY to NORMAL to prevent game bugs like not getting money, etc.") .. "\n\n" .. TRANSLATE("To prevent game bugs, please press once."), function() -- Big thanks to @negotium.6045 on Discord
+                NOTIFY(TRANSLATE("Setting the payout is in progress...")  .. "\n\n" .. TRANSLATE("Please don't move the mouse until notify to you."))
+                
+                local NumpadPath = menu.ref_by_path("Game>Disables>Disable Game Inputs>Presets>Numpad")
+                menu.trigger_command(NumpadPath)
+                util.yield(500)
+
+                local Difficulty = GET_INT_GLOBAL(4718592 + 3251)
+                local HeistType = STAT_GET_STRING("HEIST_MISSION_RCONT_ID_1")
+                if Difficulty == 0 and HeistType == "hK5OgJk1BkinXGGXghhTMg" then -- Difficulty Level: Easy; Heist: Fleeca Job
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -29720)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 14910)
+                elseif Difficulty == 1 and HeistType == "hK5OgJk1BkinXGGXghhTMg" then -- Difficulty Level: Normal; Heist: Fleeca Job
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -14806)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 7453)
+                elseif Difficulty == 2 and HeistType == "hK5OgJk1BkinXGGXghhTMg" then -- Difficulty Level: Hard; Heist: Fleeca Job
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -11824)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 5962)
+                elseif Difficulty == 0 and HeistType == "7-w96-PU4kSevhtG5YwUHQ" then -- Difficulty Level: Easy; Heist: Prison Break
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -17040)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 4285)
+                    SET_INT_GLOBAL(1928233 + 1 + 3, 4285)
+                    SET_INT_GLOBAL(1928233 + 1 + 4, 4285)
+                elseif Difficulty == 1 and HeistType == "7-w96-PU4kSevhtG5YwUHQ" then -- Difficulty Level: Normal; Heist: Prison Break
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -8468)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 2142)
+                    SET_INT_GLOBAL(1928233 + 1 + 3, 2142)
+                    SET_INT_GLOBAL(1928233 + 1 + 4, 2142)
+                elseif Difficulty == 2 and HeistType == "7-w96-PU4kSevhtG5YwUHQ" then --Difficulty Level: Hard; Heist: Prison Break
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -6756)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 1714)
+                    SET_INT_GLOBAL(1928233 + 1 + 3, 1714)
+                    SET_INT_GLOBAL(1928233 + 1 + 4, 1714)
+                elseif Difficulty == 0 and HeistType == "BWsCWtmnvEWXBrprK9hDHA" then -- Difficulty Level: Easy; Heist: Humane Labs Raid
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -12596)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 3174)
+                    SET_INT_GLOBAL(1928233 + 1 + 3, 3174)
+                    SET_INT_GLOBAL(1928233 + 1 + 4, 3174)
+                elseif Difficulty == 1 and HeistType == "BWsCWtmnvEWXBrprK9hDHA" then -- Difficulty Level: Normal; Heist: Humane Labs Raid
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -6248)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 1587)
+                    SET_INT_GLOBAL(1928233 + 1 + 3, 1587)
+                    SET_INT_GLOBAL(1928233 + 1 + 4, 1587)
+                elseif Difficulty == 2 and HeistType == "BWsCWtmnvEWXBrprK9hDHA" then -- Difficulty Level: Hard; Heist: Humane Labs Raid
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -4976)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 1269)
+                    SET_INT_GLOBAL(1928233 + 1 + 3, 1269)
+                    SET_INT_GLOBAL(1928233 + 1 + 4, 1269)
+                elseif Difficulty == 0 and HeistType == "20Lu41Px20OJMPdZ6wXG3g" then -- Difficulty Level: Easy; Heist: Series A Funding
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -16872)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 4243)
+                    SET_INT_GLOBAL(1928233 + 1 + 3, 4243)
+                    SET_INT_GLOBAL(1928233 + 1 + 4, 4243)
+                elseif Difficulty == 1 and HeistType == "20Lu41Px20OJMPdZ6wXG3g" then -- Difficulty Level: Normal; Heist: Series A Funding
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -8384)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 2121)
+                    SET_INT_GLOBAL(1928233 + 1 + 3, 2121)
+                    SET_INT_GLOBAL(1928233 + 1 + 4, 2121)
+                elseif Difficulty == 2 and HeistType == "20Lu41Px20OJMPdZ6wXG3g" then -- Difficulty Level: Hard; Heist: Series A Funding
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -6688)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 1697)
+                    SET_INT_GLOBAL(1928233 + 1 + 3, 1697)
+                    SET_INT_GLOBAL(1928233 + 1 + 4, 1697)
+                elseif Difficulty == 0 and HeistType == "zCxFg29teE2ReKGnr0L4Bg" then -- Difficulty Level: Easy; Heist: Pacific Standard Job
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -7900)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 2000)
+                    SET_INT_GLOBAL(1928233 + 1 + 3, 2000)
+                    SET_INT_GLOBAL(1928233 + 1 + 4, 2000)
+                elseif Difficulty == 1 and HeistType == "zCxFg29teE2ReKGnr0L4Bg" then -- Difficulty Level: Normal; Heist: Pacific Standard Job
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -3900)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 1000)
+                    SET_INT_GLOBAL(1928233 + 1 + 3, 1000)
+                    SET_INT_GLOBAL(1928233 + 1 + 4, 1000)
+                elseif Difficulty == 2 and HeistType == "zCxFg29teE2ReKGnr0L4Bg" then -- Difficulty Level: Hard; Heist: Pacific Standard Job
+                    SET_INT_GLOBAL(1928233 + 1 + 1, -3096)
+                    SET_INT_GLOBAL(1928233 + 1 + 2, 799)
+                    SET_INT_GLOBAL(1928233 + 1 + 3, 799)
+                    SET_INT_GLOBAL(1928233 + 1 + 4, 799)
+                end
+
+                PAD.SET_CURSOR_POSITION(0.775, 0.175) -- Moves Cursor
+                util.yield(500)
+                PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 237, 1) -- Presses Left Mouse Button
+                util.yield(500)
+                PAD.SET_CONTROL_VALUE_NEXT_FRAME(2, 202, 1) -- Presses ESC
+                util.yield(500)
+
+                if menu.get_value(I_WANNA_RECEIVE_PAYOUT) then
+                    SET_INT_GLOBAL(1930201 + 3008 + 1, GET_INT_GLOBAL(1928233 + 1 + 2))
+                else
+                    SET_INT_GLOBAL(1930201 + 3008 + 1, 0)
+                end
+                
+                PAD.SET_CURSOR_POSITION(0.5, 0.5) -- Moves Cursor To Center
+                util.yield(500)
+
+                local MouseSupportPath = menu.ref_by_path("Stand>Settings>Input>Mouse Support>Mouse Support")
+                local MousePath = menu.ref_by_path("Game>Disables>Disable Game Inputs>Presets>Mouse")
+                if menu.get_value(MouseSupportPath) then
+                    menu.trigger_command(MousePath)
+                end
+
+                NOTIFY(TRANSLATE("Setting the payout is done!") .. "\n\n" .. TRANSLATE("You can move the mouse since now."))
+            end)
+
+        ---
+
+    ---
 
     menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Complete All Setup"), {}, TRANSLATE("There are video tutorials in Heist Control Discord server. If you have no idea how to use this feature, see them!"), function()
         STAT_SET_INT("HEIST_PLANNING_STAGE", -1)
@@ -3545,6 +3574,11 @@
         SET_INT_GLOBAL(2657921 + 1 + (3 * 463) + 266, 6)
     end)
 
+    menu.action(CLASSIC_HEISTS, TRANSLATE("Increase Team Lives"), {"hcclassicincteamlives"}, IS_WORKING(true) .. TRANSLATE("Increases the amount of team lives. Make sure to have script host if it doesn't seem to work."), function()
+        menu.trigger_commands("scripthost")
+        SET_INT_LOCAL("fm_mission_controller", 19728 + 1765 + 1, 10000000) -- Thanks to @vithiam on Discord
+    end)
+
 ---
 
 
@@ -3583,7 +3617,7 @@
             memory.tunable_offset("TUNER_ROBBERY_LEADER_CASH_REWARD7"),
             memory.tunable_offset("TUNER_ROBBERY_CONTACT_FEE"),
         }
-        menu.toggle_loop(LS_ROBBERY, TRANSLATE("Modify Contracts payout - $1 Million"), {"1m"}, IS_WORKING(true) .. TRANSLATE("(Local)") .. "\n\n" .. TRANSLATE("Always keep this option enabled before starting a contract"), function()
+        menu.toggle_loop(LS_ROBBERY, TRANSLATE("Modify Contracts payout - $1 Million"), {"hcls1m"}, IS_WORKING(true) .. TRANSLATE("(Local)") .. "\n\n" .. TRANSLATE("Always keep this option enabled before starting a contract"), function()
             SET_INT_GLOBAL(262145 + LSRob1MTunables[1], 1000000) -- TUNER_ROBBERY_GOON_CASH_REWARD
             SET_INT_GLOBAL(262145 + LSRob1MTunables[2] + 0, 1000000) -- TUNER_ROBBERY_LEADER_CASH_REWARD0
             SET_INT_GLOBAL(262145 + LSRob1MTunables[3] + 1, 1000000) -- TUNER_ROBBERY_LEADER_CASH_REWARD1
@@ -3607,17 +3641,17 @@
             SET_FLOAT_GLOBAL(262145 + LSRob1MTunables[10], 0.1)
         end)
 
-        menu.action(LS_ROBBERY, TRANSLATE("Complete The Preps"), {"complete"}, "", function()
+        menu.action(LS_ROBBERY, TRANSLATE("Complete The Preps"), {"hclscomplete"}, "", function()
             STAT_SET_INT("TUNER_GEN_BS", -1)
         end)
-        menu.action(LS_ROBBERY, TRANSLATE("Reset The Preps"), {"resetmisson"}, "", function()
+        menu.action(LS_ROBBERY, TRANSLATE("Reset The Preps"), {"hclsresetmisson"}, "", function()
             STAT_SET_INT("TUNER_GEN_BS", 12467)
         end)
-        menu.action(LS_ROBBERY, TRANSLATE("Reset The Contracts"), {"resetcontract"}, "", function()
+        menu.action(LS_ROBBERY, TRANSLATE("Reset The Contracts"), {"hclsresetcontract"}, "", function()
             STAT_SET_INT("TUNER_GEN_BS", 8371)
             STAT_SET_INT("TUNER_CURRENT", -1)
         end)
-        menu.action(LS_ROBBERY, TRANSLATE("Reset Total Gains And Completed Contracts"), {"resetgain"}, "", function()
+        menu.action(LS_ROBBERY, TRANSLATE("Reset Total Gains And Completed Contracts"), {"hclsresetgain"}, "", function()
             STAT_SET_INT("TUNER_COUNT", 0)
             STAT_SET_INT("TUNER_EARNINGS", 0)
         end)
@@ -3709,7 +3743,7 @@
             memory.tunable_offset("FIXER_SECURITY_CONTRACT_COOLDOWN_TIME"),
             memory.tunable_offset(-2036534141),
         }
-        menu.toggle_loop(TH_CONTRACT, TRANSLATE("Remove Contracts & Payphone Hits Cooldown"), {"hccontractremcool"}, IS_WORKING(true) .. TRANSLATE("Make sure it's enabled before starting any contracts or hits."), function() -- Credit goes to Da Chaos#9262
+        menu.toggle_loop(TH_CONTRACT, TRANSLATE("Remove Contracts & Payphone Hits Cooldown"), {"hccontractremcool"}, IS_WORKING(true) .. TRANSLATE("Make sure it's enabled before starting any contracts or hits."), function() -- Credit goes to @dachaos9262 on Discord
             SET_INT_GLOBAL(262145 + THContractRemCooldownTunables[1], 0) 
             SET_INT_GLOBAL(262145 + THContractRemCooldownTunables[2], 0)
         end, function()
@@ -3820,7 +3854,7 @@
             STAT_SET_INT("ULP_MISSION_PROGRESS", 127)
         end)
 
-        menu.toggle_loop(OPT_MISSIONS, TRANSLATE("Skip The Hacking Process"), {}, IS_WORKING(true) .. "(" .. TRANSLATE("Operation Paper Trail") .. " - " .. TRANSLATE("Counterintelligence") .. ")", function() -- Thanks for coding this, Pedro9558#3559
+        menu.toggle_loop(OPT_MISSIONS, TRANSLATE("Skip The Hacking Process"), {}, IS_WORKING(true) .. "(" .. TRANSLATE("Operation Paper Trail") .. " - " .. TRANSLATE("Counterintelligence") .. ")", function() -- Thanks for coding this, @pedro9558 on Discord
             SET_INT_LOCAL("fm_mission_controller_2020", 978 + 135, 3)
         end)
 
@@ -5238,10 +5272,10 @@
                 SET_PACKED_STAT_BOOL_CODE(9461, true) -- Makes you have the Ballistic Armor
 
                 menu.trigger_commands("nopimenugrey on")
-                if util.is_interaction_menu_open() then IA_MENU_OPEN_OR_CLOSE() end
+                if util.is_interaction_menu_open() then PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 244, 1) end
                 SET_INT_GLOBAL(2710114, 85) -- Renders Ballistic Equipment Services screen of the Interaction Menu
-                IA_MENU_OPEN_OR_CLOSE()
-                IA_MENU_ENTER(1)
+                PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 244, 1) -- Presses M
+                PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 176, 1) -- Presses Enter
                 NOTIFY(TRANSLATE("Because this feature works via requesting the Ballistic Armor, it'll be dropped nearby soon."))
             end, function()
                 menu.focus(CUSTOM_MONEY_REMOVER)
@@ -5299,7 +5333,7 @@
                 SET_INT_LOCAL("fm_content_acid_lab_sell", 5450 + 1293, 2)
             end)
 
-            menu.action(INSTANT_FINISH, TRANSLATE("Headhunter"), {"hcinsfinhh"}, "", function() -- Thanks to Sapphire#6031 helping me code this
+            menu.action(INSTANT_FINISH, TRANSLATE("Headhunter"), {"hcinsfinhh"}, "", function() -- Thanks to @stand.gg on Discord helping me code this
                 local Blip = HUD.GET_FIRST_BLIP_INFO_ID(432) -- Headhunter Target Blip
                 while HUD.DOES_BLIP_EXIST(Blip) do
                     local Ped = HUD.GET_BLIP_INFO_ID_ENTITY_INDEX(Blip)
@@ -5675,7 +5709,7 @@
                 end
             end)
 
-            menu.action(NEAR_PED_CAM, TRANSLATE("Shoot"), {"hcshootped"}, "", function() -- Thanks for coding this, Pedro9558#3559
+            menu.action(NEAR_PED_CAM, TRANSLATE("Shoot"), {"hcshootped"}, "", function() -- Thanks for coding this, @pedro9558 on Discord
                 for _, ped in pairs(entities.get_all_peds_as_handles()) do
                     if IS_PLAYER_PED(ped) or ENTITY.IS_ENTITY_DEAD(ped) then goto out end
                     if PED.GET_VEHICLE_PED_IS_USING(ped) ~= 0 then TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped) end
@@ -6291,7 +6325,7 @@
             { 4, "French - français", {"french"}, "" },
             { 5, "German - Deutsch", {"german"}, "" },
             { 6, "Italian - Italiano", {"italian"}, "" },
-            { 7, "Japanese - 日本語", {"japanese"}, "Using this language without the customized font for Japanese will cause the situation that almost of characters are broken." .. "\n\n" .. "Please download it in Heist Control Discord!" },
+            { 7, "Japanese - 日本語", {"japanese"}, "" },
             { 8, "Korean - 한국어", {"korean"}, "Using this language without the preset font will cause the situation that almost of characters are broken." .. "\n\n" .. "Please enter this command on Command Box: 'presetfont nanumgothic'" },
             { 9, "Polish - Polski", {"polish"}, "" },
             { 10, "Portuguese - Português", {"portuguese"}, "" },

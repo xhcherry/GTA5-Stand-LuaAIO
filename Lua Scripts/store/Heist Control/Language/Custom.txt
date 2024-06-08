@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 04/17/2024 04:05:23 PM
-# Heist Control Version: V 3.4.2
+# Generated Date: 05/21/2024 07:47:49 PM
+# Heist Control Version: V 3.4.3 Dev
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -640,12 +640,10 @@ Robberies = Robberies
 Please don't forget that BUYER should be selected LOW! Otherwise, won't get money. = Please don't forget that BUYER should be selected LOW! Otherwise, won't get money.
 Allow You Play Alone = Allow You Play Alone
 Allow you play alone this heist without another player. = Allow you play alone this heist without another player.
+Press this feature once before launching the heist. = Press this feature once before launching the heist.
 Let you and other players will get $15M when you are host and in finale. = Let you and other players will get $15M when you are host and in finale.
-Make sure DIFFICULTY is NORMAL! = Make sure DIFFICULTY is NORMAL!
-The Fleeca Job = The Fleeca Job
-Prison Break = Prison Break
-Humane Labs = Humane Labs
-Series A Funding = Series A Funding
+Remove The Cooldown = Remove The Cooldown
+This doesn't bypass server-sided cooldown time, 20 mins. This just bypasses unable to launch heist in heist board. = This doesn't bypass server-sided cooldown time, 20 mins. This just bypasses unable to launch heist in heist board.
 Force Ready = Force Ready
 Make all of players forced ready in planning board. = Make all of players forced ready in planning board.
 The Los Santos Tuners Robbery = The Los Santos Tuners Robbery
@@ -718,16 +716,25 @@ Ms Baker Job = Ms Baker Job
 Export Mixed Goods Mission = Export Mixed Goods Mission
 Yohan Nightclub Mission = Yohan Nightclub Mission
 Biker Bar Mission = Biker Bar Mission
+Instant finishing Pacific Standard heist won't work. = Instant finishing Pacific Standard heist won't work.
 San Andreas Mercenaries Terminal = San Andreas Mercenaries Terminal
 Agency = Agency
 Motorbike = Motorbike
-Press this feature once before launching the heist. = Press this feature once before launching the heist.
-If you use 'Mouse Support' feature, please before using this feature, click 'Game > Disables > Disable Game Inputs > Presets > Numpad' after using it, click 'Mouse' = If you use 'Mouse Support' feature, please before using this feature, click 'Game > Disables > Disable Game Inputs > Presets > Numpad' after using it, click 'Mouse'
-Remove The Cooldown = Remove The Cooldown
-This doesn't bypass server-sided cooldown time, 20 mins. This just bypasses unable to launch heist in heist board. = This doesn't bypass server-sided cooldown time, 20 mins. This just bypasses unable to launch heist in heist board.
-Instant finishing Pacific Standard heist won't work. = Instant finishing Pacific Standard heist won't work.
 - Fleeca Heist ~ Pacific Standard Heist: Under $15.000.000 per run = - Fleeca Heist ~ Pacific Standard Heist: Under $15.000.000 per run
 Forces the players on board to ready. = Forces the players on board to ready.
 Load All Boards = Load All Boards
 Unload All Boards = Unload All Boards
 There are video tutorials in Heist Control Discord server. If you have no idea how to use this feature, see them! = There are video tutorials in Heist Control Discord server. If you have no idea how to use this feature, see them!
+Increase Team Lives = Increase Team Lives
+Increases the amount of team lives. Make sure to have script host if it doesn't seem to work. = Increases the amount of team lives. Make sure to have script host if it doesn't seem to work.
+I Wanna Receive The Heist Payout = I Wanna Receive The Heist Payout
+Enabled: Each player will receive $15M = Enabled: Each player will receive $15M
+Disabled: For except me, only other players will receive $15M = Disabled: For except me, only other players will receive $15M
+Note: To apply this state, you should click 'Automated Presets' = Note: To apply this state, you should click 'Automated Presets'
+Compatible with any classic heist and any difficulty level. = Compatible with any classic heist and any difficulty level.
+But, recommeded setting DIFFICULTY to NORMAL to prevent game bugs like not getting money, etc. = But, recommeded setting DIFFICULTY to NORMAL to prevent game bugs like not getting money, etc.
+To prevent game bugs, please press once. = To prevent game bugs, please press once.
+Setting the payout is in progress... = Setting the payout is in progress...
+Please don't move the mouse until notify to you. = Please don't move the mouse until notify to you.
+Setting the payout is done! = Setting the payout is done!
+You can move the mouse since now. = You can move the mouse since now.

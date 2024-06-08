@@ -18,7 +18,7 @@ GTluaScript = menu GT = GTluaScript.list GTAC = GTluaScript.action GTD = GTluaSc
 GTLP = GTluaScript.toggle_loop GTTG = GTluaScript.toggle GTH = GTluaScript.hyperlink GTS = menu.textslider gtlog = util.log
 new = {} Ini = {}
 --
-GT_version = '5.17'
+GT_version = '6.08'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -26,7 +26,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    drawnotify("线上选项>增加任务生命数\n(再也不会因为猪队友任务失败了)\n线上选项>禁止调度警察\n武器选项>武器特殊子弹>穿甲子弹\n武器选项>武器特殊子弹>爆炸子弹\n武器选项>武器特殊子弹>全金属外壳子弹\n武器选项>武器特殊子弹>中空子弹\n武器选项>武器特殊子弹>燃烧子弹\n武器选项>武器特殊子弹>曳光子弹\n世界选项>弱化NPC选项>NPC类型/弱化\n世界选项>弱化NPC选项>弱化血量\n世界选项>弱化NPC选项>弱化武器伤害\n世界选项>弱化NPC选项>禁用载具武器\n世界选项>弱化NPC选项>执行间隔\n错误修复与皇榜添加")
+    drawnotify("修复放烟花(改)概率放不出来\n错误修复与皇榜添加")
 end
 --
 hasShownToast = false
@@ -37,8 +37,8 @@ currentMonth = tonumber(os.date("%m"))
 currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
-notifyMonth = 5
-notifyDay = 17
+notifyMonth = 6
+notifyDay = 8
 
 _G.daysSince = _G.daysSince or 0
 
@@ -74,9 +74,6 @@ util.create_thread(function ()
         end
     end
 
-    if daysSince >= 3 then 
-        menu.delete(sale)
-    end
 end)
 --
 
@@ -6451,8 +6448,22 @@ function LOCAL_SET_INT(script, script_local, value)
     end
 end
 
+function inSession()
+    if util.is_session_started() and not util.is_session_transition_active() then
+        return true
+    else
+        return false
+    end
+end
+
+function IS_HELP_MSG_DISPLAYED(label)
+    BEGIN_TEXT_COMMAND_IS_THIS_HELP_MESSAGE_BEING_DISPLAYED(label)
+    return END_TEXT_COMMAND_IS_THIS_HELP_MESSAGE_BEING_DISPLAYED(0)
+end
+
 --杂项
 -- 原创功能 缝合死妈
+
 function getMaxMods(veh, modSlot) -- 获取最大修改槽位
     if (VEHICLE.GET_NUM_VEHICLE_MODS(veh, modSlot) > 1) then
     return VEHICLE.GET_NUM_VEHICLE_MODS(veh, modSlot)-1 end
