@@ -1,4 +1,6 @@
-Tree Compatibility Version: 51
+Finished Tutorial: Yes
+Understands Commands: Yes
+Tree Compatibility Version: 53
 Self
 	Weapons
 		Infinite Ammo: On
@@ -9,6 +11,9 @@ Vehicle
 		Tune Spawned Vehicles: Fully
 	Indestructible: On
 Online
+	Session
+		Stand User Identification
+			Stand User Identification (SUI): Off
 	Enhancements
 		Disable Idle/AFK Kick: On
 	Protections
@@ -112,7 +117,6 @@ Online
 					Notification: Disabled
 					Write To Log File: Disabled
 					Write To Console: Disabled
-			Stand User Identification: Off
 			Modded Health
 				Notification: Disabled
 				Write To Console: Disabled
@@ -235,8 +239,6 @@ Online
 			Voting To Kick Me
 				Notification: Disabled
 				Write To Console: Disabled
-		Report Reactions
-			Write To Console: Disabled
 		Bounty Reactions
 			Write To Console: Disabled
 		Particle Spam Reactions

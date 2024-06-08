@@ -1,4 +1,4 @@
-Tree Compatibility Version: 51
+Tree Compatibility Version: 53
 Self
 	Immortality: On
 Vehicle
@@ -7,6 +7,9 @@ Vehicle
 		Tune Spawned Vehicles: Fully
 	Indestructible: On
 Online
+	Session
+		Stand User Identification
+			Stand User Identification (SUI): Off
 	Protections
 		Events
 			Unusual Event
@@ -28,8 +31,6 @@ Online
 			Ragdoll Event
 				Block: Enabled
 			Raw Network Events: Warning Acknowledged
-		Detections
-			Stand User Identification: Off
 		Host-Controlled Kicks
 			Notification When Love Letter Kicked: On
 			Desync Kick Karma: On
