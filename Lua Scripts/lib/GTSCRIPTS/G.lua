@@ -1923,9 +1923,13 @@ function boost_player_vehicle_forward()
     end
 end
 
+Entity_Control_Options = GT(selflist, "通用实体控制", {}, "")
+util.require_no_lag "lib.GTSCRIPTS.GTA.entityctrl"
+
 local Mount_hashes = {util.joaat("a_c_deer"), util.joaat("a_c_boar"), util.joaat("a_c_cow"), util.joaat("A_C_Coyote"),
                       util.joaat("A_C_Hen"), util.joaat("A_C_MtLion"), util.joaat("A_C_Retriever"),
                       util.joaat("A_C_Seagull")}
+
 selflist:list_action("骑乘动物2.0", {}, "回车键上动物,F下动物,空格跳跃,W移动鼠标控制方向",
     {"鹿", "公猪", "牛", "狼", "小鸡", "豹子", "猎犬", "海鸥"}, function(index)
     local Mou = Mount_hashes[index]

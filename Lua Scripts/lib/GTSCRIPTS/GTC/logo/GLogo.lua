@@ -18,7 +18,7 @@ GTluaScript = menu GT = GTluaScript.list GTAC = GTluaScript.action GTD = GTluaSc
 GTLP = GTluaScript.toggle_loop GTTG = GTluaScript.toggle GTH = GTluaScript.hyperlink GTS = menu.textslider gtlog = util.log
 new = {} Ini = {}
 --
-GT_version = '6.08'
+GT_version = '6.13'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -26,7 +26,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    drawnotify("修复放烟花(改)概率放不出来\n错误修复与皇榜添加")
+    drawnotify("自我选项>通用实体控制\n有众多控制选项，且可控制载具/人物/实体\n众多功能采用模块化加载，最大程度减轻脚本负载\n错误修复与皇榜添加")
 end
 --
 hasShownToast = false
@@ -38,7 +38,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 6
-notifyDay = 8
+notifyDay = 13
 
 _G.daysSince = _G.daysSince or 0
 
@@ -24190,6 +24190,10 @@ PlayerMainMenu = GT(GTROOT, "崩溃选项", {"GTCrash"}, "", function()
     end
 end)
 
+asap = GTAC(PlayerMainMenu, "ASAP", {}, "", function ()
+    
+end)
+asap.visible = false
 
 updates = GT(PlayerMainMenu, "推荐选项", {}, "#此选项的崩溃为中等强度及以上\n#请您不要观看并且远离崩溃对象\n#切记:请不要无脑使用,否则玩火自焚\n#注意:崩溃需要您自行研究,切莫魔怔\n\n<建议1> #偷偷告诉您,附加黑洞效果更佳喔~\n<建议2> #针对主流菜单的情况下,其实踢出是最优选择喔~")
 
@@ -25000,7 +25004,7 @@ GTAC(updates,"ID3", {""}, "", function(selectedOption)
     spawned_crash_peds = {}
 end)
 
-t3g = GTAC(updates, "T3G Magic", {"t3g"}, "请勿在双开时使用", function ()
+t3g = GTAC(updates, "T3G Magic", {"t3g"}, "请不要在双开时使用", function ()
     util.create_thread(function()
         local obj = util.joaat("prop_tall_grass_ba")
         request_model(obj)

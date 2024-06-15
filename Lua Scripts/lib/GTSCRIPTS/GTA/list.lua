@@ -290,6 +290,12 @@ sxid = {{
 }, {
     playeridx = "weige66698"
 }, {
+    playeridx = "wuheng857"
+}, {
+    playeridx = "XC001120"
+}, {
+    playeridx = "gqkdinsr"
+}, {
     playeridx = ""
 },
 }
@@ -2605,7 +2611,7 @@ spid = {{
 }, {
     playerid = "HUANGDI86852"
 }, {
-    playerid = "M_reimu_X"
+    playerid = "G_tenko"
 }, {
     playerid = "2TAND1337"
 }, {
@@ -2818,6 +2824,22 @@ spid = {{
     playerid = "Babystoyy"
 }, {
     playerid = "MrWuYanzu945"
+}, {
+    playerid = "wuheng857"
+}, {
+    playerid = "XC001120"
+}, {
+    playerid = "avfaadada"
+}, {
+    playerid = "Aeraro_"
+}, {
+    playerid = "ranshaodFZ"
+}, {
+    playerid = "gqkdinsr"
+}, {
+    playerid = "OidJedSix"
+}, {
+    playerid = "0idJedSix"
 }, {
     playerid = ""
 },
