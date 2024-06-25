@@ -18,7 +18,7 @@ GTluaScript = menu GT = GTluaScript.list GTAC = GTluaScript.action GTD = GTluaSc
 GTLP = GTluaScript.toggle_loop GTTG = GTluaScript.toggle GTH = GTluaScript.hyperlink GTS = menu.textslider gtlog = util.log
 new = {} Ini = {}
 --
-GT_version = '6.13'
+GT_version = '6.21'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
@@ -26,7 +26,7 @@ setmetatable(translations, {
     end
 })
 function updatelogs()
-    drawnotify("自我选项>通用实体控制\n有众多控制选项，且可控制载具/人物/实体\n众多功能采用模块化加载，最大程度减轻脚本负载\n错误修复与皇榜添加")
+    drawnotify("修复在Stand 116中控制台日志经常出现'此错误来自于Lua Script'\n修复控制附近载具行为无法使用\n优化待机掉帧和帧速率降低问题\n错误修复与皇榜添加")
 end
 --
 hasShownToast = false
@@ -38,7 +38,7 @@ currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
 notifyMonth = 6
-notifyDay = 13
+notifyDay = 21
 
 _G.daysSince = _G.daysSince or 0
 
@@ -18076,23 +18076,6 @@ function incr(ptr, fvalue, delta)
     memory.write_float(ptr, cvalue)
 end
 
---扳机机器人
-triggerbot_delay = 100
-local ent_alloc = memory.alloc_int()
-function trigger(on)
-    PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(players.user(), ent_alloc)
-    if memory.read_int(ent_alloc) ~= 0 then 
-        local ent = memory.read_int(ent_alloc)
-        if ENTITY.GET_ENTITY_TYPE(ent) == 1 and PLAYER.IS_PLAYER_FREE_AIMING_AT_ENTITY(players.user(), ent) then
-            if PED.GET_PED_CONFIG_FLAG(players.user_ped(), 78, true) then  
-                PAD._SET_CONTROL_NORMAL(2, 24, 1.0)
-                wait(triggerbot_delay)
-                PAD._SET_CONTROL_NORMAL(2, 24, 0.0)
-            end
-        end
-    end
-end
-
 function aa_thread()
     aa_threadv = util.create_thread(function()
         while true do
@@ -19948,7 +19931,7 @@ local fps = 0
 util.create_thread(function()
     while true do
         fps = math.ceil(1/SYSTEM.TIMESTEP())
-        wait(500)
+        wait(1000)
     end
 end)
 

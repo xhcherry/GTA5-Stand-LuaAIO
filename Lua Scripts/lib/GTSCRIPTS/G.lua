@@ -387,7 +387,11 @@ GTLuaScript.slider(click_bot, "自动点击延迟", {"delay_left_click"}, "单�
 end)
 
 kdr = GT(players_root, "设置KD值", {}, "请注意，这不是虚假KD")
-require "lib.GTSCRIPTS.GTA.kd"
+loadkdr = GTAC(kdr, "读取KD数据", {}, "", function ()
+    require "lib.GTSCRIPTS.GTA.kd"
+    wait()
+    menu.delete(loadkdr)
+end)
 
 --开发
 require "lib.GTSCRIPTS.GTA.list"
@@ -448,7 +452,7 @@ speed = 0.0075
 idle_sp = false
 
 --皇榜
-require "lib.GTSCRIPTS.GTA.list"
+--require "lib.GTSCRIPTS.GTA.list"
 notified_sp = {}
 spo = GTTG(players_root, "SPO", {""}, "", function(f)
     spgt = f
@@ -525,7 +529,7 @@ resetsp.value = true
 resetsp.visible = false
 
 --至臻
-require "lib.GTSCRIPTS.GTA.list"
+--require "lib.GTSCRIPTS.GTA.list"
 notified_sx = {}
 sxo = GTTG(players_root, "SXO", {""}, "", function(f)
     spgt = f
@@ -1924,7 +1928,12 @@ function boost_player_vehicle_forward()
 end
 
 Entity_Control_Options = GT(selflist, "通用实体控制", {}, "")
-util.require_no_lag "lib.GTSCRIPTS.GTA.entityctrl"
+
+loadtyst = GTAC(Entity_Control_Options, "加载通用实体控制", {}, "", function ()
+    dofile(filesystem.scripts_dir().."lib\\GTSCRIPTS\\GTA\\entityctrl.lua")
+    wait()
+    menu.delete(loadtyst)
+end)
 
 local Mount_hashes = {util.joaat("a_c_deer"), util.joaat("a_c_boar"), util.joaat("a_c_cow"), util.joaat("A_C_Coyote"),
                       util.joaat("A_C_Hen"), util.joaat("A_C_MtLion"), util.joaat("A_C_Retriever"),
@@ -2153,10 +2162,19 @@ hdfj = false
 end)
 
 fb = GT(selflist,"恶搞玩乐", {}, "非常有趣喔~")
-require "lib.GTSCRIPTS.GTA.blackhold"
+
+loadfb = GTAC(fb, "加载恶搞玩乐", {}, "", function ()
+    require "lib.GTSCRIPTS.GTA.blackhold"
+    wait()
+    menu.delete(loadfb)
+end)
 
 watch_dog = GT(selflist, "看门狗[New]", {}, "", function(); end)
-dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\D.lua")
+loaddog =  GTAC(watch_dog, "加载看门狗", {}, "", function ()
+    dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\D.lua")
+    wait()
+    menu.delete(loaddog)
+end)
 
 local healthandprotex = GT(selflist, "生命选项", {}, "", function(); end)
 local helperingame = GT(selflist, "增强选项", {}, "", function(); end)
@@ -6088,7 +6106,12 @@ Camera_value = (jlx * 1)
 end)
 
 entitymanagerlist = GT(lobbyFeats, "天眼黑客面板", {}, "管理玩家附近的NPC/载具/物体")
-require "lib.GTSCRIPTS.GTA.hack"
+
+loadtanyan = GTAC(entitymanagerlist, "加载天眼黑客面板", {}, "", function ()
+    dofile(filesystem.scripts_dir().."lib\\GTSCRIPTS\\GTA\\hack.lua")
+    wait()
+    menu.delete(loadtanyan)
+end)
 
 adminworld = GT(lobbyFeats, "控制任务实体", {}, "")
 require "lib.GTSCRIPTS.GTA.admin"
@@ -12220,43 +12243,11 @@ finger_thing = GT(weapon_options, "手指枪", {}, "")
 fingergun()
 entityManipulation = GT(weapon_options, "实体操纵枪", {"emanipulation"}, "对玩家无效")
 Gun_Effect_Shooting_Hit = GT(weapon_options, "子弹特效", {}, "")
-anti_aim_root = GT(weapon_options, "反瞄准", {"antiaim"}, "防止玩家瞄准射击您")
 damage_numbers_list = GT(weapon_options, "伤害数字")
 minecraftgun = GT(weapon_options, '我的世界枪', {}, '')
 custom_weapon_save = GT(weapon_options, '武器保存', {}, '')
 weaponsetting = GT(weapon_options, '武器设置', {}, '')
 proxysticks = GT(weapon_options, '粘弹自动爆炸', {}, '')
-
-anti_aim = false
-GTTG(anti_aim_root, "反瞄准", {"antiaim"}, "防止玩家瞄准您,对大多数菜单无效", function(on)
-    anti_aim = on
-    mod_uses("player", if on then 1 else -1)
-end)
-
-anti_aim_notify = false
-GTTG(anti_aim_root, "当我被瞄准时通知我", {""},  "", function(on)
-    anti_aim_notify = on
-end)
-
-anti_aim_angle = 2
-GTLuaScript.click_slider(anti_aim_root, "反瞄准角度", {"antiaimangle"}, "基本上是你周围的半径\n玩家必须瞄准这个半径", 0, 180, 2, 1, function(s)
-    anti_aim_angle = s
-end)
-
-local anti_aim_type = 1
-GTLuaScript.list_select(anti_aim_root, "反瞄准方法", {"antiaimmethod"}, "如何使用反瞄准",  anti_aim_types, 1, function(index)
-    anti_aim_type = index
-end)
-
-triggerbot_root = GT(weapon_options, "扳机机器人", {}, "当您使用武器正在瞄准到某个目标时\n扳机机器人会帮助您的武器自动开火\n这允许您非常准确且快速地瞄准敌人")
-
-GTLP(triggerbot_root, "扳机机器人", {"triggerbot"},  "当您使用武器正在瞄准到某个目标时\n扳机机器人会帮助您的武器自动开火\n这允许您非常准确且快速地瞄准敌人", function(on)
-    trigger(on)
-end)
-
-GTLuaScript.click_slider(triggerbot_root, "射击镜头之间的延迟", {}, "每次 \"射击\" 之间的延迟", 10, 5000, 100, 1, function(s)
-    triggerbot_delay = s
-end)
     
 save_loadout = custom_weapon_save:action("保存武器", {}, "保存所有当前装备的武器及其附件，以便将来装载", function()
     Save_Weapon_Profile()
@@ -12277,7 +12268,6 @@ end)
 custom_weapon_save:divider("编辑武器")
 
 Weapon_Check_Save()
-
 
 GTLP(weaponsetting, '无后坐力', {'JSnoRecoil'}, '使用武器射击时不会抖动游戏画面.', function()
     gunpro()
@@ -12375,7 +12365,11 @@ GTD(entity_control, "实体控制")
 
 Weapon_Cam_Gun = GT(weapon_options, "视野范围枪")
 
-require "lib.GTSCRIPTS.GTA.eg"
+loadsyq = GTAC(Weapon_Cam_Gun, "加载视野范围枪", {}, "", function ()
+    require "lib.GTSCRIPTS.GTA.eg"
+    wait()
+    menu.delete(loadsyq)
+end)
 
 GTAC(nuke, '核弹标记点', {'JSnukeWP'}, '掉落一颗核弹在您标记的位置.', function ()
     nukepoint()
@@ -13647,61 +13641,6 @@ GTTG(pvphelp, "隐秘的载具自毁", {"carexplodesneaky"}, "匿名击杀\n汽�
     CAR_S_sneaky = on
 end)
 
-GTD(pvphelp,"杀死光环")
-
-local kill_auraroot = GT(pvphelp, "杀死光环", {}, "杀死任何以您为中心范围内的玩家\n就像被黑客入侵的Minecraft一样儿")
-
-kill_aura = false
-GTTG(kill_auraroot, "杀死光环", {},  "杀死任何以您为中心范围内的玩家\n就像被黑客入侵的Minecraft一样儿", function(on)
-    kill_aura = on
-    mod_uses("ped", if on then 1 else -1)
-end)
-
-kill_aura_peds = false
-GTTG(kill_auraroot, "杀死peds", {}, "", function(on)
-    kill_aura_peds = on
-end)
-
-kill_aura_players = false
-GTTG(kill_auraroot, "杀死玩家", {}, "", function(on)
-    kill_aura_players = on
-end)
-
-kill_aura_friends = false
-GTTG(kill_auraroot, "目标好友", {}, "", function(on)
-    kill_aura_friends= on
-end)
-
-
-kill_aura_dist = 20
-GTluaScript.slider(kill_auraroot, "杀死光环范围", {}, "", 1, 100, 20, 1, function(s)
-    kill_aura_dist = s
-end)
-
-peds_thread = util.create_thread(function (thr)
-    while true do
-        if ped_uses > 0 then
-            all_peds = entities.get_all_peds_as_handles()
-            for k,ped in pairs(all_peds) do
-                if kill_aura then
-                    if (kill_aura_peds and not PED.IS_PED_A_PLAYER(ped)) or (kill_aura_players and PED.IS_PED_A_PLAYER(ped)) then
-                        local pid = NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(v)
-                        local hdl = pid_to_handle(pid)
-                        if (kill_aura_friends and not NETWORK.NETWORK_IS_FRIEND(hdl)) or not kill_aura_friends then
-                            target = ENTITY.GET_ENTITY_COORDS(ped, false)
-                            m_coords = ENTITY.GET_ENTITY_COORDS(players.user_ped(), false)
-                            if MISC.GET_DISTANCE_BETWEEN_COORDS(m_coords.x, m_coords.y, m_coords.z, target.x, target.y, target.z, true) < kill_aura_dist and ENTITY.GET_ENTITY_HEALTH(ped) > 0 then
-                                MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(target['x'], target['y'], target['z'], target['x'], target['y'], target['z']+0.1, 300.0, true, 100416529, players.user_ped(), true, false, 100.0)
-                            end
-                        end
-                    end
-                end
-            end
-        end
-        wait()
-    end
-end)
-
 GTD(pvphelp,"车辆瞄准器")
 
 GTLP(pvphelp, "直升飞机自动瞄准器", {}, "令直升机瞄准最近的玩家\n将其与[静默自瞄]结合使用,让您看起来超级棒~", function ()
@@ -14260,7 +14199,11 @@ end)
 nfs_cs = GT(carfly, '车速表', {''}, '')
 
 Vehicle_Collision_Reaction = GT(carfly, "载具碰撞反应")
-require "lib.GTSCRIPTS.GTA.vehpop"
+loadvehpz = GTAC(Vehicle_Collision_Reaction, "加载载具碰撞反应", {}, "", function ()
+    require "lib.GTSCRIPTS.GTA.vehpop"
+    wait()
+    menu.delete(loadvehpz)
+end)
 
 mission_car = GT(carfly, "任务专用载具", {}, "")
 GTAC(mission_car, "生成骷髅马", {""}, "", function()
@@ -18829,27 +18772,6 @@ GTAC(TeleRoot, '传送到出口码头', {'tpEED'}, '传送到出口码头', func
     tp_eed()
 end)
 
-GTLuaScript.list_action(onlinemode, "宣布", {""}, "在聊天框中公开宣布玩家信息", { "最佳抢劫目标", "最穷的玩家", "最富的玩家", "最性奋的玩家"}, function(index, value, click_type)
-    local ret = nil
-    pluto_switch index do 
-        case 1: 
-            ret = get_best_mug_target()
-            break
-        case 2: 
-            ret = get_poorest_player()
-            break
-        case 3:
-            ret = get_richest_player()
-            break
-        case 4:
-            ret = get_horniest_player()
-            break
-    end
-    if ret ~= nil then
-        chat.send_message(ret, false, true, true)
-    end
-end)
-
     onlineuse = GT(onlinemode, '其他', {}, '')
 
     GTD(onlineuse, "无视犯罪")
@@ -19753,7 +19675,11 @@ end)
 
     throttler = GT(protex, "自动节流器", {}, "")
 
-    require "lib.GTSCRIPTS.E"
+    loadthrottler = GTAC(throttler, "加载自动节流器", {}, "", function ()
+        require "lib.GTSCRIPTS.E"
+        wait()
+        menu.delete(loadthrottler)
+    end)
 
     local pool_limiter = GT(protex, "实体池限制", {}, "")
 
@@ -19761,8 +19687,9 @@ end)
 
     local block_effect = GT(protex, "拦截选项", {}, "", function() end)
     
-
+    --管理选项
 	require("lib.GTSCRIPTS.N")
+    --
 
     adbotblock = GT(protex, "广告拦截", {"blockidiotbot"}, "自动踢出聊天频道里发送广告的混蛋", function(on)
     end)
@@ -20355,8 +20282,12 @@ GTTG(protex,"取消战局同步",{},"", function(tb)
     action_lua = GT(funfeatures, "动作选项", {}, "", function(); end)
     require "lib.GTSCRIPTS.A"
 
-    jingche = GT(funfeatures, "警车选项", {}, "警车延伸功能", function(); end)
-    require "lib.GTSCRIPTS.J"
+    jingche = GT(funfeatures, "警车选项")
+    loadjingche = GTAC(jingche, "加载警车选项", {}, "", function()
+        require "lib.GTSCRIPTS.J"
+        wait()
+        menu.delete(loadjingche)
+    end)
 
     heidong = GT(funfeatures, "黑洞选项")
     dont_stop = false
@@ -20452,43 +20383,7 @@ GTTG(protex,"取消战局同步",{},"", function(tb)
     require "lib.GTSCRIPTS.B"
     GTluaScript.delete(Load_Blackhole)
     end)
-    local num = {
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-    "21",
-    "22",
-    "23",
-    "24",
-    "25",
-    "26",
-    "27",
-    "28",
-    "29",
-    "30",
-    "31",
-    "32",
-    "33",
-    "34",
-    "35"
-}    
+    
     GTTG(funfeatures, "特斯拉自动驾驶", {}, "", function(toggled)
             local player = players.user_ped()
             local playerpos = ENTITY.GET_ENTITY_COORDS(player, false)
@@ -22142,142 +22037,155 @@ Heist_Control_Load = GTAC(Heist_Control, "加载任务选项", {""}, "", functio
     GTLuaScript.delete(Heist_Control_Load)
 end)
 
-Constructor_Lua_Load = GT(Constructor_Lua, "模组选项1", {""}, "", function(); end)
-dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\GTC\\Constructor.lua")
+function loadmodues()
 
-sc = GT(Constructor_Lua, "模组选项2")
+    Constructor_Lua_Load = GT(Constructor_Lua, "生成构造体")
+    dofile(filesystem.scripts_dir() .. "\\lib\\GTSCRIPTS\\GTC\\Constructor.lua")
 
-GTD(sc, "载具")
+    sc = GT(Constructor_Lua, "载具与地图")
 
-GTAC(sc, "搜索载具模组", {"lssearchv"}, "", function(click_type)
-    menu.show_command_box("lssearchv" .. " ")
+    GTD(sc, "载具")
+
+    GTAC(sc, "搜索载具模组", {"lssearchv"}, "", function(click_type)
+        menu.show_command_box("lssearchv" .. " ")
     end, function(on_command)
-    local results = search_vehicle(on_command)
-    if #results == 0 then 
-        gtoast("无搜索结果 :(")
-    else
-        menu.set_list_action_options(v_search_results_action, results)
-        menu.trigger_commands("lsvsearchresults")
-    end
-end)
+        local results = search_vehicle(on_command)
+        if #results == 0 then
+            gtoast("无搜索结果 :(")
+        else
+            menu.set_list_action_options(v_search_results_action, results)
+            menu.trigger_commands("lsvsearchresults")
+        end
+    end)
 
-load_vehicle_action = GTLuaScript.list_action(sc, "加载模组载具", {}, "加载载具. " .. instruction_text, all_vehicles, function(index, value)
-    local path = vehicles_dir .. '\\' .. value
-    if util.is_key_down(0x10) and util.is_key_down(0x11) then
-        os.remove(path)
-        gtoast(value .. " 已删除! :)")
-        get_all_vehicles_in_dir()
-    elseif util.is_key_down(0x20) then 
-        favorite_vehicle(value)
-    else
-        load_vehicle(vehicles_dir .. '\\' .. value)
-    end
-end)
+    load_vehicle_action = GTLuaScript.list_action(sc, "加载模组载具", {}, "加载载具. " .. instruction_text,
+        all_vehicles, function(index, value)
+            local path = vehicles_dir .. '\\' .. value
+            if util.is_key_down(0x10) and util.is_key_down(0x11) then
+                os.remove(path)
+                gtoast(value .. " 已删除! :)")
+                get_all_vehicles_in_dir()
+            elseif util.is_key_down(0x20) then
+                favorite_vehicle(value)
+            else
+                load_vehicle(vehicles_dir .. '\\' .. value)
+            end
+        end)
 
-loaded_vehicles_root = GT(sc, "已加载的载具", {"lancespoonerloadedvehicles"}, "你已经加载的载具")
+    loaded_vehicles_root = GT(sc, "已加载的载具", {"lancespoonerloadedvehicles"}, "你已经加载的载具")
 
-GTD(sc, "地图")
-GTAC(sc, "搜索地图模组", {"lssearchmap"}, "", function(click_type)
-    menu.show_command_box("lssearchmap" .. " ")
+    GTD(sc, "地图")
+    GTAC(sc, "搜索地图模组", {"lssearchmap"}, "", function(click_type)
+        menu.show_command_box("lssearchmap" .. " ")
     end, function(on_command)
         local results = search_map(on_command)
-        if #results == 0 then 
+        if #results == 0 then
             gtoast("无搜索结果 :(")
         else
             menu.set_list_action_options(m_search_results_action, results)
             menu.trigger_commands("lsmsearchresults")
         end
-end)
+    end)
 
-load_map_action = GTLuaScript.list_action(sc, "加载XML地图", {}, "加载地图. " .. instruction_text, all_maps, function(index, value)
-    local path = maps_dir .. '\\' .. value
-    if util.is_key_down(0x10) and util.is_key_down(0x11) then
-        os.remove(path)
-        gtoast(value .. " 已删除! :)")
-        get_all_maps_in_dir()
-    elseif util.is_key_down(0x20) then 
-        favorite_map(value)
-    else
-        load_map(path)
-    end
-end)
-loaded_maps_root = GT(sc, "已加载的地图", {"lancespoonerloadedmaps"}, "你已经加载的地图")
-
-
-GTD(sc, "收藏夹")
-
-local load_favorite_vehicle_action = GTLuaScript.list_action(sc, "最爱的载具", {}, "加载载具.", favorite_vehicles, function(index, value)
-    load_vehicle(vehicles_dir .. '\\' .. value)
-end)
-
-local load_favorite_map_action = GTLuaScript.list_action(sc, "最爱的地图", {}, "加载地图.", favorite_maps, function(index, value)
-    load_map(maps_dir .. '\\' .. value)
-end)
-
-
-GTD(sc, "杂项")
-v_search_results = {}
-v_search_results_action = GTLuaScript.list_action(sc, "载具搜索结果", {"lsvsearchresults"}, "", v_search_results, function(index, value)
-    local path = vehicles_dir .. '\\' .. value
-    load_vehicle(path)
-end)
-
-m_search_results = {}
-m_search_results_action = GTLuaScript.list_action(sc, "地图搜索结果", {"lsmsearchresults"}, "", m_search_results, function(index, value)
-    local path = maps_dir .. '\\' .. value
-    menyoo_load_map(path)
-end)
-
-function get_all_maps_in_dir()
-    local temp_maps = {}
-    local temp_favorite_maps = {}
-    for i, path in ipairs(filesystem.list_files(maps_dir)) do
-        if string.match(path:gsub(maps_dir, ''), '.xml') then
-            temp_maps[#temp_maps + 1] = path:gsub(maps_dir, '')
-            if string.startswith(path:gsub(maps_dir, ''), '[F]') then 
-                temp_favorite_maps[#temp_favorite_maps+1] = path:gsub(maps_dir, '')
+    load_map_action = GTLuaScript.list_action(sc, "加载XML地图", {}, "加载地图. " .. instruction_text, all_maps,
+        function(index, value)
+            local path = maps_dir .. '\\' .. value
+            if util.is_key_down(0x10) and util.is_key_down(0x11) then
+                os.remove(path)
+                gtoast(value .. " 已删除! :)")
+                get_all_maps_in_dir()
+            elseif util.is_key_down(0x20) then
+                favorite_map(value)
+            else
+                load_map(path)
             end
-        end
-    end
+        end)
+    loaded_maps_root = GT(sc, "已加载的地图", {"lancespoonerloadedmaps"}, "你已经加载的地图")
 
+    GTD(sc, "收藏夹")
 
-    all_maps = temp_maps
-    favorite_maps = temp_favorite_maps
-    menu.set_list_action_options(load_map_action, all_maps)
-    menu.set_list_action_options(load_favorite_map_action, favorite_maps)
-end
+    local load_favorite_vehicle_action = GTLuaScript.list_action(sc, "最爱的载具", {}, "加载载具.",
+        favorite_vehicles, function(index, value)
+            load_vehicle(vehicles_dir .. '\\' .. value)
+        end)
 
-function get_all_vehicles_in_dir()
-    local temp_vehicles = {}
-    local temp_favorite_vehicles = {}
-    local temp_favorite_maps = {}
-    local supported_formats = {'.xml', '.ini', '.json'}
-    for i, path in ipairs(filesystem.list_files(vehicles_dir)) do
-        for _, fmt in pairs(supported_formats) do 
-            if string.match(path:gsub(vehicles_dir, ''), fmt) then
-                temp_vehicles[#temp_vehicles + 1] = path:gsub(vehicles_dir, '')
-                if string.startswith(path:gsub(vehicles_dir, ''), '[F]') then 
-                    temp_favorite_vehicles[#temp_favorite_vehicles+1] = path:gsub(vehicles_dir, '')
+    local load_favorite_map_action = GTLuaScript.list_action(sc, "最爱的地图", {}, "加载地图.", favorite_maps,
+        function(index, value)
+            load_map(maps_dir .. '\\' .. value)
+        end)
+
+    GTD(sc, "杂项")
+    v_search_results = {}
+    v_search_results_action = GTLuaScript.list_action(sc, "载具搜索结果", {"lsvsearchresults"}, "",
+        v_search_results, function(index, value)
+            local path = vehicles_dir .. '\\' .. value
+            load_vehicle(path)
+        end)
+
+    m_search_results = {}
+    m_search_results_action = GTLuaScript.list_action(sc, "地图搜索结果", {"lsmsearchresults"}, "",
+        m_search_results, function(index, value)
+            local path = maps_dir .. '\\' .. value
+            menyoo_load_map(path)
+        end)
+
+    function get_all_maps_in_dir()
+        local temp_maps = {}
+        local temp_favorite_maps = {}
+        for i, path in ipairs(filesystem.list_files(maps_dir)) do
+            if string.match(path:gsub(maps_dir, ''), '.xml') then
+                temp_maps[#temp_maps + 1] = path:gsub(maps_dir, '')
+                if string.startswith(path:gsub(maps_dir, ''), '[F]') then
+                    temp_favorite_maps[#temp_favorite_maps + 1] = path:gsub(maps_dir, '')
                 end
             end
         end
+
+        all_maps = temp_maps
+        favorite_maps = temp_favorite_maps
+        menu.set_list_action_options(load_map_action, all_maps)
+        menu.set_list_action_options(load_favorite_map_action, favorite_maps)
     end
 
-    all_vehicles = temp_vehicles
-    favorite_vehicles = temp_favorite_vehicles
-    menu.set_list_action_options(load_vehicle_action, all_vehicles)
-    menu.set_list_action_options(load_favorite_vehicle_action, favorite_vehicles)
+    function get_all_vehicles_in_dir()
+        local temp_vehicles = {}
+        local temp_favorite_vehicles = {}
+        local temp_favorite_maps = {}
+        local supported_formats = {'.xml', '.ini', '.json'}
+        for i, path in ipairs(filesystem.list_files(vehicles_dir)) do
+            for _, fmt in pairs(supported_formats) do
+                if string.match(path:gsub(vehicles_dir, ''), fmt) then
+                    temp_vehicles[#temp_vehicles + 1] = path:gsub(vehicles_dir, '')
+                    if string.startswith(path:gsub(vehicles_dir, ''), '[F]') then
+                        temp_favorite_vehicles[#temp_favorite_vehicles + 1] = path:gsub(vehicles_dir, '')
+                    end
+                end
+            end
+        end
+
+        all_vehicles = temp_vehicles
+        favorite_vehicles = temp_favorite_vehicles
+        menu.set_list_action_options(load_vehicle_action, all_vehicles)
+        menu.set_list_action_options(load_favorite_vehicle_action, favorite_vehicles)
+    end
+
+    get_all_vehicles_in_dir()
+    get_all_maps_in_dir()
+
+    util.create_thread(function()
+        while true do
+            get_all_vehicles_in_dir()
+            get_all_maps_in_dir()
+            wait(5000)
+        end
+    end)
+
 end
 
-get_all_vehicles_in_dir()
-get_all_maps_in_dir()
-
-util.create_thread(function()
-    while true do
-        get_all_vehicles_in_dir()
-        get_all_maps_in_dir()
-        wait(5000)
-    end
+loadmozu = GTAC(Constructor_Lua, "加载模组选项", {}, "", function ()
+    loadmodues()
+    wait()
+    menu.delete(loadmozu)
 end)
 
 GTAC(toolFeats, "平滑瞬移", {"stp"}, "在相机平稳的情况下将您传送到您的航点。", function ()
@@ -23199,17 +23107,19 @@ menu.slider(mz,"渐变速度", {}, "",0,10,5,1,function(value,prev_value)
 end)
 
 util.create_thread(function()
-while true do
-	for pid = 0,30 do 
-		if players.exists(pid) then
-			if hat_enable and players.user() == pid or hat_friend and players.user() ~= pid and friend(pid) or hat_everyone and players.user() ~= pid then			
-				run(pid)
-			end
-		end
-	end
-	util.yield()
-end
+    while true do
+        for pid = 0, 30 do
+            if players.exists(pid) then
+                if hat_enable and players.user() == pid or hat_friend and players.user() ~= pid and friend(pid) or
+                    hat_everyone and players.user() ~= pid then
+                    run(pid)
+                end
+            end
+        end
+        util.yield()
+    end
 end)
+
 
 GTLP(espinfo,"玩家头部全局显示", {},"", function(f)
 gt = f
@@ -23783,8 +23693,8 @@ end)
 
 zaxiang = GT(other_options, "其他杂项功能")
 
-ZT = GT(zaxiang, "动态主题", {"sszt"}, "")
-require "lib.GTSCRIPTS.GTW.ZT"
+--[[ZT = GT(zaxiang, "动态主题", {"sszt"}, "")
+require "lib.GTSCRIPTS.GTW.ZT"]]
 
 times_button_pressed = 0
 GTAC(zaxiang,"试试点击", {}, "一个友好的功能哟~\n连点有彩蛋喔~", function(f)
@@ -24102,7 +24012,7 @@ GTTG(zhujixianshi, "显示Stand版本", {"standedition"}, "", function(toggle)
 end)
 
 GTAC(other_options, "幸运人员", {}, "", function ()
-    require "lib.GTSCRIPTS.GTA.list"
+    --require "lib.GTSCRIPTS.GTA.list"
     local name = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
     local hasPermission = false 
 
@@ -24238,18 +24148,8 @@ shitdo = GTAC(hidetext, "看看今天干点啥", {"lookshitwhat"}, "", function(
     wait(1000)
 end)
 
-menu.trigger_commands("lookshitwhat")
+--menu.trigger_commands("lookshitwhat")
 menu.set_visible(hidetext, false)
-
-GTTG(zaxiang, "隐藏Stand用户", {}, "对其他用户来说，你是隐形的，但也不是检测器",
-    function(on_toggle)
-        local standid = menu.ref_by_path("Online>Protections>Detections>Stand User Identification")
-        if on_toggle then
-            GTluaScript.trigger_command(standid, "on")
-        else
-            GTluaScript.trigger_command(standid, "off")
-        end
-    end)
 
 rlight = 255
 GTluaScript.slider(misclightmenu, "R", {"lightred"}, "", 0, 255, 28, 1, function(s)
@@ -24715,7 +24615,7 @@ while true do
     wait()
 end
 
-players_thread = util.create_thread(function (thr)
+--[[players_thread = util.create_thread(function (thr)
 while true do
 if player_uses > 0 then
 if show_updates then
@@ -24780,7 +24680,7 @@ end
 end
 wait()
 end
-end)
+end)]]
 
 util.on_stop(function()
     if ENTITY.DOES_ENTITY_EXIST(selfSpeechPed.entity) then
