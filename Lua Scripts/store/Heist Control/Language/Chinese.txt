@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 04/18/2024 06:22:35 AM
-# Heist Control Version: V 3.4.2
+# Generated Date: 05/23/2024 03:35:41 AM
+# Heist Control Version: V 3.4.3
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -637,13 +637,6 @@ Crew ID = 帮会 ID
 Current Crew Level = 当前帮会等级
 Choose Crew Level = 选择帮会等级
 Set Crew Level = 设置帮会等级
-
-
-
-# Start of newly updated translations.
-# Translate them!
-
-
 - Fleeca Heist ~ Pacific Standard Heist: Under $15.000.000 per run = - 全福银行差事 ~ 太平洋银行差事: 每次要低于 $1500万
 Robberies = 抢劫
 Please don't forget that BUYER should be selected LOW! Otherwise, won't get money. = 注意: 请不要忘了选择低级买家,否则不能到账.
@@ -652,18 +645,11 @@ Allow you play alone this heist without another player. = 允许你自己一个�
 Press this feature once before launching the heist. = 在开始抢劫之前按一次此功能.
 Load All Boards = 加载所有面板
 Unload All Boards = 取消加载所有面板
-If you use 'Mouse Support' feature, please before using this feature, click 'Game > Disables > Disable Game Inputs > Presets > Numpad' after using it, click 'Mouse' = 如果你启用了Stand的"鼠标控制"功能,请在使用此功能之前手动点击 "游戏 > 禁用 > 禁用游戏输入 > 预设 > 数字键盘",使用功能后再点击回"鼠标".
 Let you and other players will get $15M when you are host and in finale. = 当你为终章的主持人时,让你和队友们各获得1500万的收入.
-Make sure DIFFICULTY is NORMAL! = 确保难度为正常!
-The Fleeca Job = 全福银行差事
-Prison Break = 越狱
-Humane Labs = 突袭人道实验室
-Series A Funding = 首轮募资
 There are video tutorials in Heist Control Discord server. If you have no idea how to use this feature, see them! = Heist Control Discord服务器中有视频教程. 如果你不知道如何使用此功能,看看它们!
 Remove The Cooldown = 移除冷却
 This doesn't bypass server-sided cooldown time, 20 mins. This just bypasses unable to launch heist in heist board. = 这不会绕过服务器端的冷却时间,即 20分钟. 这只是绕过无法在抢劫面板上发起抢劫.
 Make all of players forced ready in planning board. = 强制让所有玩家在计划板上准备.
-Note that you shouldn't enable this feature while playing the Casino Heist: due to synced with payout for it = 注意: 你不应该在玩赌场抢劫时启用此功能,因为它与赌场的收入同步.
 Force Ready = 强制准备
 Forces the players on board to ready. = 强制所有玩家在面板上准备.
 The Los Santos Tuners Robbery = 改装铺抢劫
@@ -741,3 +727,22 @@ Instant finishing Pacific Standard heist won't work. = 在太平洋银行抢劫�
 San Andreas Mercenaries Terminal = 圣安地列斯雇佣兵终端
 Agency = 事务所
 Motorbike = 送货摩托车
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+Increase Team Lives = 增加团队生命数
+Increases the amount of team lives. Make sure to have script host if it doesn't seem to work. = 增加团队的生命数. 如果没有效果,请确保你是任务脚本的脚本主机.
+I Wanna Receive The Heist Payout = 我想得到抢劫收入
+Enabled: Each player will receive $15M = 开启: 每位玩家将获得 $1500万
+Disabled: For except me, only other players will receive $15M = 关闭: 除了我之外, 其他人都可以获得 $1500万
+Note: To apply this state, you should click 'Automated Presets' = 注意: 要应用此状态，你需要单击下面的 "自动预设"
+Compatible with any classic heist and any difficulty level. = 与任何公寓抢劫和任何难度级别兼容.
+But, recommeded setting DIFFICULTY to NORMAL to prevent game bugs like not getting money, etc. = 但是, 建议将抢劫难度设置为正常, 以避免不到账等等问题.
+To prevent game bugs, please press once. = 为防止游戏出现bug, 请按一次.
+Setting the payout is in progress... = 分红设置正在进行中...
+Please don't move the mouse until notify to you. = 在通知你之前请不要移动鼠标.
+Setting the payout is done! = 分红设置已完成!
+You can move the mouse since now. = 从现在开始你可以移动鼠标了.

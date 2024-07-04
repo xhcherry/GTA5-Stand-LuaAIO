@@ -214,6 +214,26 @@ menu.toggle_loop(silent_aimbotroot, "瞄准时的透视", {}, "", function()
     end, function()
         menu.trigger_command(menu.ref_by_path("World>Inhabitants>Player ESP>Name ESP>Name ESP>Disabled"))
 end)
+menu.toggle_loop(silent_aimbotroot, "名字透视", {}, "", function()
+    for _, pid in pairs(players.list(false, true, true)) do
+        local head_pos = PED.GET_PED_BONE_COORDS(PLAYER.GET_PLAYER_PED(pid), 0x322c, 0, 0, 0)
+        -- offsetX: up/down, offsetY: forward/backward, offsetZ: left/right
+        local name = PLAYER.GET_PLAYER_NAME(pid)
+        local dis = math.floor(v3.distance(head_pos, ENTITY.GET_ENTITY_COORDS(players.user_ped())))
+        if not players.is_in_interior(pid) then
+            local sc = world_to_screen_coords(head_pos.x, head_pos.y, head_pos.z)
+            directx.draw_text(sc.x, sc.y, name.."["..dis.."]", ALIGN_TOP_CENTRE, 0.5, {r = 0.28, g = 1, b = 1, a = 1}, false)
+        end
+
+        --头部盒子
+        --[[ if v3.distance(head_pos, ENTITY.GET_ENTITY_COORDS(players.user_ped())) <= 1000 then
+            local rot = ENTITY.GET_ENTITY_ROTATION(PLAYER.GET_PLAYER_PED(pid), 2)
+            local dimensions = v3(0.22, 0.28, 0.25)
+            util.draw_box(head_pos, rot, dimensions, 255, 0, 255,220)
+        end ]]
+
+    end
+end)
 menu.toggle_loop(silent_aimbotroot, "3D准线框", {}, "", function(on)
     request_texture_dict_load('visualflow')
     local rc = raycast_gameplay_cam(-1, 10000.0)[2]
@@ -226,10 +246,3 @@ menu.toggle_loop(silent_aimbotroot, "3D准线框", {}, "", function(on)
     size.z = 0.5+(dist/50)
     GRAPHICS.DRAW_MARKER(3, rc.x, rc.y, rc.z, 0.0, 0.0, 0.0, 0.0, 90.0, 0.0, size.y, 1.0, size.x, 255, 255, 255, 50, false, true, 2, false, 'visualflow', 'crosshair')
 end)
---[[ menu.toggle_loop(silent_aimbotroot, "绘制玩家名字", {}, "", function(on)
-    for pid = 0, 32 do
-        if PLAYER.GET_PLAYER_PED(pid) ~= 0 then
-            draw_string(PLAYER.GET_PLAYER_NAME(pid), 0.02, 0.05, 0.4, 1)
-        end
-    end
-end) ]]

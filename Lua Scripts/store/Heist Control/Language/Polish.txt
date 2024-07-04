@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 04/18/2024 11:15:15 PM
-# Heist Control Version: V 3.4.2
+# Generated Date: 06/25/2024 11:30:10 AM
+# Heist Control Version: V 3.4.3
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -632,12 +632,6 @@ Crew ID = ID Ekipy
 Current Crew Level = Aktualny Poziom Ekipy
 Choose Crew Level = Nowy Poziom Ekipy
 Set Crew Level = Zastosuj
-
-
-# Start of newly updated translations.
-# Translate them!
-
-
 But, all features of HC should work without any patches! = Jednak wszystkie funkcje Heist Control powinny działać bez żadnych aktualizacji!
 HC is needed to be patched by the developer. Please be patient. = Konieczna jest aktualizacja Heist Control przez dewelopera. Prosimy o cierpliwość.
 You won't get money if you don't keep money limitation! = Nie otrzymasz wynagrodzenia, jeśli nie zastosujesz się do limitów!
@@ -647,17 +641,11 @@ Force Ready = Ustaw Status Gotowości
 Forces the players on board to ready. = Umożliwia rozpoczęcie napadu poprzez zmianę statusu wszystkich graczy na 'Gotowy'.
 Please don't forget that BUYER should be selected LOW! Otherwise, won't get money. = Pamiętaj, że należy wybrać NISKI poziom nabywcy! W innym przypadku nie otrzymasz wynagrodzenia.
 Allow You Play Alone = Ustaw Rozpoczęcie w Pojedynkę
-Allow you play alone this heist without another player. = Pozwala rozpocząć napad w pojedynkę, bez konieczności udziału innych graczy.
-Press this feature once before launching the heist. = Pamiętaj, że należy użyć tej funkcji jednokrotnie przed rozpoczęciem napadu.
+Allow you play alone this heist without another player. = Pozwala rozpocząć napad solo, bez konieczności udziału innych graczy.
+Press this feature once before launching the heist. = Pamiętaj, że należy użyć tej funkcji jednorazowo przed rozpoczęciem każdego napadu.
 Load All Boards = Załaduj Wszystkie Tablice
 Unload All Boards = Rozładuj Wszystkie Tablice
-If you use 'Mouse Support' feature, please before using this feature, click 'Game > Disables > Disable Game Inputs > Presets > Numpad' after using it, click 'Mouse' = W przypadku używania myszy do poruszania się po menu przed skorzystaniem z tej funkcji należy wybrać 'Gra > Wyłączanie > Wyłącz Przyciski > Gotowe > Numpad'. Po użyciu automatycznego ustawienia możesz ponownie wybrać opcję 'Myszka'.
-The Fleeca Job = Akcja we Fleeca
 Let you and other players will get $15M when you are host and in finale. = Ta funkcja umożliwia ustawienie wynagrodzenia każdego uczestnika finału napadu na 15,000,000$. Zwróć uwagę, że ma zastosowanie wyłącznie do napadów hostowanych przez Ciebie.
-Make sure DIFFICULTY is NORMAL! = Pamiętaj, że należy wybrać NORMALNY poziom trudności! W innym przypadku nie otrzymasz wynagrodzenia.
-Prison Break = Ucieczka z Więzienia
-Humane Labs = Skok na Humane Labs
-Series A Funding = Seria A: Fundusze
 There are video tutorials in Heist Control Discord server. If you have no idea how to use this feature, see them! = Na serwerze discord Heist Control dostępne są poradniki wideo. Jeśli nie wiesz, jak korzystać z tej funkcji, zajrzyj!
 Remove The Cooldown = Usuń Czas Odnowienia
 This doesn't bypass server-sided cooldown time, 20 mins. This just bypasses unable to launch heist in heist board. = Zwróć uwagę, że ta funkcja pozwala na rozpoczęcie tego samego napadu, jednak nie wpływa na 20-minutowy czas odnowienia po stronie serwera.
@@ -737,3 +725,22 @@ San Andreas Mercenaries Terminal = Panel Operacyjny
 Agency = Agencja
 There is cooldown time when after you do play any heists once. The cooldown time is 20 mins, so this let you know the time passed or not. = Po wykonaniu każdego napadu występuje 20-minutowy czas odnowienia. Ta funkcja pozwala sprawdzić, czy minęło już wystarczająco dużo czasu.
 Motorbike = Motocykl Dostawczy
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+Increase Team Lives = Zwiększ Życia Drużyny
+Increases the amount of team lives. Make sure to have script host if it doesn't seem to work. = Zwiększa liczbę żyć drużyny. Upewnij się, że jesteś hostem skryptu, jeśli ta funkcja wydaje się nie działać.
+I Wanna Receive The Heist Payout = Otrzymaj Wynagrodzenie za Napad
+Enabled: Each player will receive $15M = Włączone: Każdy gracz otrzyma 15,000,000$.
+Disabled: For except me, only other players will receive $15M = Wyłączone: Tylko pozostali gracze otrzymają 15,000,000$.
+Note: To apply this state, you should click 'Automated Presets' = Zwróć uwagę, że aby zastosować zmiany, należy użyć funkcji 'Automatyczne Ustawienia'.
+Compatible with any classic heist and any difficulty level. = Ta funkcja jest kompatybilna z każdym klasycznym napadem i każdym poziomem trudności.
+But, recommeded setting DIFFICULTY to NORMAL to prevent game bugs like not getting money, etc. = Zaleca się jednak wybranie NORMALNEGO poziomu trudności w celu uniknięcia błędów w grze, takich jak brak otrzymania wynagrodzenia itp.
+To prevent game bugs, please press once. = Zwróć uwagę, że należy kliknąć tylko raz.
+Setting the payout is in progress... = Trwa ustawianie wynagrodzenia...
+Please don't move the mouse until notify to you. = Nie należy poruszać myszką, dopóki nie otrzymasz powiadomienia.
+Setting the payout is done! = Wynagrodzenie zostało ustawione!
+You can move the mouse since now. = Możesz teraz poruszać myszką.

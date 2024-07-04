@@ -961,22 +961,21 @@ BodyguardMenu =
 	group = {},
 }
 BodyguardMenu.__index = BodyguardMenu
---- Relationship Functions ---
-local function addRelationshipGroup(name)
-local ptr = memory.alloc_int()
-PED.ADD_RELATIONSHIP_GROUP(name, ptr)
-local rel = memory.read_int(ptr)
-memory.free(ptr)
-return rel
+--- Relationship Functions ----加入组
+function addRelationshipGroup(name)
+	local ptr = memory.alloc_int()
+	PED.ADD_RELATIONSHIP_GROUP(name, ptr)
+	local rel = memory.read_int(ptr)
+	return rel
 end
 
-local relationship = {}
+relationship = {}
 function relationship:friendly(ped)
-if not PED.DOES_RELATIONSHIP_GROUP_EXIST(self.friendly_group) then
-	self.friendly_group = addRelationshipGroup("friendly_group")
-	PED.SET_RELATIONSHIP_BETWEEN_GROUPS(0, self.friendly_group, self.friendly_group)
-end
-PED.SET_PED_RELATIONSHIP_GROUP_HASH(ped, self.friendly_group)
+	if not PED.DOES_RELATIONSHIP_GROUP_EXIST(self.friendly_group) then
+		self.friendly_group = addRelationshipGroup("friendly_group")
+		PED.SET_RELATIONSHIP_BETWEEN_GROUPS(0, self.friendly_group, self.friendly_group)
+	end
+	PED.SET_PED_RELATIONSHIP_GROUP_HASH(ped, self.friendly_group)
 end
 
 

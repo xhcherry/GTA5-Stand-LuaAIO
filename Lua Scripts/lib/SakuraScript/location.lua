@@ -57,8 +57,37 @@ revolver = {
     {2919.049, 3673.325, 45.497673},
 }
 
+----资产传送
+ownedprops = {
+    {name = '办公室', blid = 475},
+    {name = '事务所', blid = 826},
+    {name = '回收站', blid = 867},
+    {name = '游戏厅', blid = 740},
+    {name = '设施', blid = 590},
+    {name = '机库', blid = 569},
+    {name = '改车铺', blid = 779},
+    {name = '地堡', blid = 557},
+    {name = '货物仓库', blid = 473},
+    {name = '摩托帮会所', blid = 92},
+    {name = '可卡因制造厂', blid = 497 },
+    {name = '假钞伪造厂', blid = 500 },
+    {name = '证件伪造厂', blid = 498 },
+    {name = '冰毒实验室', blid = 499 },
+    {name = '大麻种植场', blid = 496 },
+    {name = '夜总会', blid = 614},
+    {name = '载具仓库', blid = 524},
+    {name = "致幻剂实验室", blid=840 },
+    {name = "竞技场工作室", blid=643 },
+}
+
 ----线上活动地点
 tp_online_pos = {
+    {Name = "游艇", value=455 },
+    {Name = "街头毒贩", value=47 },
+    {Name = "顶级豪华车业", value=832},
+    {Name = "豪华汽车", value=830 },
+    {Name = "好麦坞车友俱乐部", value=857 },
+    {Name = "怪胎店", value=847 },
 	{Name = "藏匿屋", value = 845},
     {Name = "时间挑战赛", value = 430},
 	{Name = "RC匪徒时间挑战赛", value = 673},

@@ -53,7 +53,6 @@ PED1={
 }
 NETWORK1={
     ["_NETWORK_SET_ENTITY_INVISIBLE_TO_NETWORK"]=function(--[[Entity (int)]] entity,--[[BOOL (bool)]] toggle)native_invoker.begin_call();native_invoker.push_arg_int(entity);native_invoker.push_arg_bool(toggle);native_invoker.end_call("F1CA12B18AEF5298");end,
-    ["_GET_ONLINE_VERSION"]=function()native_invoker.begin_call();native_invoker.end_call("FCA9373EF340AC0A");return native_invoker.get_return_value_string();end,
     ["_NETWORK_GET_AVERAGE_LATENCY_FOR_PLAYER"]=--[[float]] function(--[[Player (int)]] player)native_invoker.begin_call();native_invoker.push_arg_int(player);native_invoker.end_call("D414BE129BB81B32");return native_invoker.get_return_value_float();end,
     ["_SHUTDOWN_AND_LOAD_MOST_RECENT_SAVE"]=--[[BOOL (bool)]] function()native_invoker.begin_call();native_invoker.end_call("9ECA15ADFE141431");return native_invoker.get_return_value_bool();end,
     ["NETWORK_GET_AVERAGE_LATENCY"]=function(...)return native_invoker.uno_float(0xD414BE129BB81B32,...)end,
@@ -67,8 +66,7 @@ GRAPHICS1={
     ["DRAW_SPOT_LIGHT"]=function(...)return native_invoker.uno_void(0xD0F64B265C8C8B33,...)end,
 }
 CAM1={
-    ["_GET_CAM_ACTIVE_VIEW_MODE_CONTEXT"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("19CAFA3C87F7C2FF");return native_invoker.get_return_value_int();end,
-    ["HARD_ATTACH_CAM_TO_ENTITY"]=--[[void]] function(--[[Cam (int)]] cam,--[[Entity (int)]] entity,--[[float]] xRot,--[[float]] yRot,--[[float]] zRot,--[[float]] xOffset,--[[float]] yOffset,--[[float]] zOffset,--[[BOOL (bool)]] isRelative)native_invoker.begin_call()native_invoker.push_arg_int(cam)native_invoker.push_arg_int(entity)native_invoker.push_arg_float(xRot)native_invoker.push_arg_float(yRot)native_invoker.push_arg_float(zRot)native_invoker.push_arg_float(xOffset)native_invoker.push_arg_float(yOffset)native_invoker.push_arg_float(zOffset)native_invoker.push_arg_bool(isRelative)native_invoker.end_call_2(0x202A5ED9CE01D6E7)end,
+ 	["HARD_ATTACH_CAM_TO_ENTITY"]=--[[void]] function(--[[Cam (int)]] cam,--[[Entity (int)]] entity,--[[float]] xRot,--[[float]] yRot,--[[float]] zRot,--[[float]] xOffset,--[[float]] yOffset,--[[float]] zOffset,--[[BOOL (bool)]] isRelative)native_invoker.begin_call()native_invoker.push_arg_int(cam)native_invoker.push_arg_int(entity)native_invoker.push_arg_float(xRot)native_invoker.push_arg_float(yRot)native_invoker.push_arg_float(zRot)native_invoker.push_arg_float(xOffset)native_invoker.push_arg_float(yOffset)native_invoker.push_arg_float(zOffset)native_invoker.push_arg_bool(isRelative)native_invoker.end_call_2(0x202A5ED9CE01D6E7)end,
 }
 HUD1={
 	["_SET_TOGGLE_MINIMAP_HEIST_ISLAND"]=--[[void]] function(--[[BOOL (bool)]] toggle)native_invoker.begin_call()native_invoker.push_arg_bool(toggle)native_invoker.end_call_2(0x5E1460624D194A38)end,
@@ -1493,7 +1491,7 @@ CAM={
 	-- 	IN_HELI,
 	-- 	IN_TURRET
 	-- };
-	["GET_CAM_ACTIVE_VIEW_MODE_CONTEXT"]=--[[int]] function()native_invoker.begin_call()native_invoker.end_call_2(0x19CAFA3C87F7C2FF)return native_invoker.get_return_value_int()end,
+	["GET_CAM_ACTIVE_VIEW_MODE_CONTEXT"]=--[[int]] function()native_invoker.begin_call();native_invoker.end_call("19CAFA3C87F7C2FF");return native_invoker.get_return_value_int();end,
 	["USE_VEHICLE_CAM_STUNT_SETTINGS_THIS_UPDATE"]=--[[void]] function()native_invoker.begin_call()native_invoker.end_call_2(0x6493CF69859B116A)end,
 	-- Sets gameplay camera to hash
 	["USE_DEDICATED_STUNT_CAMERA_THIS_UPDATE"]=--[[void]] function(--[[string]] camName)native_invoker.begin_call()native_invoker.push_arg_string(camName)native_invoker.end_call_2(0x425A920FDB9A0DDA)end,
@@ -6922,7 +6920,7 @@ NETWORK={
 	-- 1.33
 	-- 
 	-- _GET_ONLINE_VERSION() will return "1.33"
-	["GET_ONLINE_VERSION"]=--[[string]] function()native_invoker.begin_call()native_invoker.end_call_2(0xFCA9373EF340AC0A)return native_invoker.get_return_value_string()end,
+	["GET_ONLINE_VERSION"]=--[[string]] function()native_invoker.begin_call();native_invoker.end_call("FCA9373EF340AC0A");return native_invoker.get_return_value_string();end,
 	-- Returns whether the player is signed into Social Club.
 	["NETWORK_IS_SIGNED_IN"]=--[[BOOL (bool)]] function()native_invoker.begin_call()native_invoker.end_call_2(0x054354A99211EB96)return native_invoker.get_return_value_bool()end,
 	-- Returns whether the game is not in offline mode.

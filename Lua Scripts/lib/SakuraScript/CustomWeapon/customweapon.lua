@@ -1,6 +1,6 @@
 --Adapted version 110.6[stand]
 local STOREDIR = filesystem.store_dir()
-local LOADOUTDIR = STOREDIR .. "SakuraConfig\\loadouts\\"
+local LOADOUTDIR = STOREDIR .. "SakuraScript\\SakuraConfig\\loadouts\\"
 local LIBDIR = filesystem.scripts_dir() .. "lib\\SakuraScript\\CustomWeapon\\"
 local do_autoload = false
 local wpcmpTable = {}
@@ -159,7 +159,7 @@ function load_weapon()
         local player = players.user_ped()
         WEAPON.REMOVE_ALL_PED_WEAPONS(player, false)
         WEAPON.SET_CAN_PED_SELECT_ALL_WEAPONS(player, true)
-        local loadout = dofile(filesystem.store_dir() .."SakuraConfig/loadouts/" .. selected_loadout .. ".lua")
+        local loadout = dofile(filesystem.store_dir() .."SakuraScript/SakuraConfig/loadouts/" .. selected_loadout .. ".lua")
         --require("store.SakuraConfig.loadouts." .. selected_loadout)
         for w_hash, attach_dict in loadout do
             WEAPON.GIVE_WEAPON_TO_PED(player, w_hash, 9999, false, false)
@@ -189,7 +189,7 @@ end
         load_weapon()
     end)
     menu.action(weapon_save,"打开配置文件夹", {}, "",function()
-        local path = filesystem.store_dir() .."SakuraConfig/loadouts/"
+        local path = filesystem.store_dir() .."SakuraScript/SakuraConfig/loadouts/"
         util.open_folder(path)
     end)
 

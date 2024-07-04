@@ -1,5 +1,5 @@
 local weapon_images = {}
-local resources_dir = filesystem.resources_dir() .. '\\SakuraImg\\weaponhud\\'
+local resources_dir = filesystem.resources_dir() .. '\\SakuraScript\\weaponhud\\'
 
 --读取图片
 for _, path in pairs(filesystem.list_files(resources_dir)) do 

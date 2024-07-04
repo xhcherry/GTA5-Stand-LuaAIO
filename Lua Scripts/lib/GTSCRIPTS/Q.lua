@@ -19,7 +19,6 @@ local og_log = util.log
 local nullsub = function() --[[util.toast("nullsub")]] end
 
 --util.toast = function(str, flag) assert(str != nil, "No string given") if flag ~= nil then og_toast(MBPrefix .. tostring(str), flag) else og_toast(MBPrefix .. tostring(str)) end end
-
 --util.log = function(str) assert(str != nil, "No string given") og_log(MBPrefix .. tostring(str)) end
 util.yield_x = function(int) for i = 1, int do util.yield_once() end end -- yields x amount of ticks
 local menu, players, entities, directx, util, v3, lang, filesystem, async_http, memory = menu, players, entities, directx, util, v3, lang, filesystem, async_http, memory
@@ -400,7 +399,7 @@ local globals = {
     Hub = {
         MaxSellPrice = 4000000 - 2100000,
         ProSpd = 1000,
-        SellCooldownActive = 1955973+28+1, -- appbusinesshub
+        SellCooldownActive = 1956863+28+1, -- appbusinesshub
 
         Cargo = {
             SellDefaultValue    = 10000,
@@ -511,17 +510,17 @@ local globals = {
     },
 
     SafeLimit         = 300000,
-    SafeStatus1       = 1663006, -- freemode, bitset below "CLUB_PAY"
-    SafeStatus2       = 2707197, -- freemode
+    SafeStatus1       = 1663308, -- freemode, bitset below "CLUB_PAY"
+    SafeStatus2       = 2707517, -- freemode
 
-    MCSupplyTime    = 1662873+1, -- freemode, above "BPLJT_LOWW", if (!func_XXXXX(bVar1)), +1 because array
+    MCSupplyTime    = 1663174+1, -- freemode, above "BPLJT_LOWW", if (!func_XXXXX(bVar1)), +1 because array
 
     SpecialCargoMaxSellPriceValue   = 6000000,
 
-    SpecialCargoSellFuncSomething   = 1942627, -- gb_contraband_sell, PED::SET_PED_SHOOT_RATE(iParam0, == 1
-    SpecialCargoDeliveryCrates      = 1882389+12, -- freemode, "SRC_CRG_TICKER_1", == 1
+    SpecialCargoSellFuncSomething   = 1943366, -- gb_contraband_sell, PED::SET_PED_SHOOT_RATE(iParam0, == 1
+    SpecialCargoDeliveryCrates      = 1882599+12, -- freemode, "SRC_CRG_TICKER_1", == 1
 
-    IsUsingComputerScreen = 76369, -- freemode
+    IsUsingComputerScreen = 76498, -- freemode
 }
 
 local locals = {
@@ -531,27 +530,27 @@ local locals = {
     --appsecuroserv
     SpecialCargoSecuroString = "appsecuroserv",
     SpecialCargoSecuroArgs = 4592, -- arg count needed to properly start the script, possibly outdated
-    SpecialCargoCurrentProperty = 735, -- warehouse property id (non-global-index based))
-    SpecialCargoScreenStatus = 558, -- status: 3011 = sold? 1 = error, 3012 = confirm?
-    SpecialCargoCratesToSell = 739, -- "MP_WH_SELL", "WH
-    SpecialCargoSellFromOption = 740, -- ^^^^^^^ (not current property id, but buttons [1-3])
-    SpecialCargoCurrentBitset = 559, -- ^^^^^^^ bit 13 controls if it is warehouse or securoserv
-    SpecialCargoStartingPosX = 756, -- struct<3> Local_ -- float  (if distance to this from self is greater than 5f to this local, kill script)
-    SpecialCargoStartingPosY = 756+1, -- ^^^^^^^
-    SpecialCargoStartingPosZ = 756+2, -- ^^^^^^^
+    SpecialCargoCurrentProperty = 737, -- warehouse property id (non-global-index based))
+    SpecialCargoScreenStatus = 560, -- status: 3011 = sold? 1 = error, 3012 = confirm?
+    SpecialCargoCratesToSell = 741, -- "MP_WH_SELL", "WH
+    SpecialCargoSellFromOption = 742, -- ^^^^^^^ (not current property id, but buttons [1-3])
+    SpecialCargoCurrentBitset = 561, -- ^^^^^^^ bit 13 controls if it is warehouse or securoserv
+    SpecialCargoStartingPosX = 758, -- struct<3> Local_ -- float  (if distance to this from self is greater than 5f to this local, kill script)
+    SpecialCargoStartingPosY = 758+1, -- ^^^^^^^
+    SpecialCargoStartingPosZ = 758+2, -- ^^^^^^^
 
     --gb_contraband_sell
     SpecialCargoSellString = "gb_contraband_sell",
-    SpecialCargoSellType = 543+584,
-    SpecialCargoSellSubType = 543+7, -- return 5000;
-    SpecialCargoSellAmount = 543+57, -- ^ in function below
-    SpecialCargoSellStatus = 543+583,
+    SpecialCargoSellType = 545+584,
+    SpecialCargoSellSubType = 545+7, -- return 5000;
+    SpecialCargoSellAmount = 545+57, -- ^ in function below
+    SpecialCargoSellStatus = 545+583,
 
     --gb_contraband_buy
     SpecialCargoBuyString = "gb_contraband_buy",
-    SpecialCargoBuyComplete = 601+192,
-    SpecialCargoBuyCollected = 601+186,
-    SpecialCargoBuyCollected2 = 476,
+    SpecialCargoBuyComplete = 603+192,
+    SpecialCargoBuyCollected = 603+186,
+    SpecialCargoBuyCollected2 = 478,
 
     --appHackerTruck
     SpecialCargoBuyScreenString = "appHackerTruck",
@@ -561,11 +560,11 @@ local locals = {
     -- NightClub
     ----------------
     NCSafeScriptString = "freemode",
-    NCSafeTransactionStatus = 19754+1, -- , 39, 0);
-    NCSafeAddMoneyAmount = 19754+2, -- same as above
+    NCSafeTransactionStatus = 19938+1, -- , 39, 0);
+    NCSafeAddMoneyAmount = 19938+2, -- same as above
 
     NCHubScriptString = "appbusinesshub",
-    NCHubSellCooldown = 119, -- a local
+    NCHubSellCooldown = 121, -- a local
     NCHubSellCooldownBit = 27, -- a bitset bit
 
     ----EZNCMission = ,
@@ -574,88 +573,88 @@ local locals = {
     -- MC
     ----------------
     MCSellScriptString = "gb_biker_contraband_sell",
-    MCEZMissionStarted = 702+122, -- == 3 && (Local
-    MCEZMission = 702+17, -- ^ function below
+    MCEZMissionStarted = 704+122, -- == 3 && (Local
+    MCEZMission = 704+17, -- ^ function below
 
     MCLaptopString = "appbikerbusiness",
-    MCLaptopCurrentProperty = 524, -- (iVar2 > -1 && iVar2 < 7) &&
+    MCLaptopCurrentProperty = 526, -- (iVar2 > -1 && iVar2 < 7) &&
 }
 
 -- Also search for [[update]]
 
 --#region Generated by internal tooling
-globals.Hub.Cargo.Sell = tunables_global+24599
-globals.Hub.Cargo.ProSpd = tunables_global+24584
-globals.Hub.Cargo.Cap = tunables_global+24606
-globals.Hub.Weapons.Sell = tunables_global+24593
-globals.Hub.Weapons.ProSpd = tunables_global+24578
-globals.Hub.Weapons.Cap = tunables_global+24600
-globals.Hub.Cocaine.Sell = tunables_global+24594
-globals.Hub.Cocaine.ProSpd = tunables_global+24579
-globals.Hub.Cocaine.Cap = tunables_global+24601
-globals.Hub.Meth.Sell = tunables_global+24595
-globals.Hub.Meth.ProSpd = tunables_global+24580
-globals.Hub.Meth.Cap = tunables_global+24602
-globals.Hub.Weed.Sell = tunables_global+24596
-globals.Hub.Weed.ProSpd = tunables_global+24581
-globals.Hub.Weed.Cap = tunables_global+24603
-globals.Hub.Forgery.Sell = tunables_global+24597
-globals.Hub.Forgery.ProSpd = tunables_global+24582
-globals.Hub.Forgery.Cap = tunables_global+24604
-globals.Hub.Cash.Sell = tunables_global+24598
-globals.Hub.Cash.ProSpd = tunables_global+24583
-globals.Hub.Cash.Cap = tunables_global+24605
-globals.MC.Forgery.Sell1 = tunables_global+17628
-globals.MC.Forgery.Sell2 = tunables_global+19277
-globals.MC.Forgery.ProSpd1 = tunables_global+17602
-globals.MC.Forgery.Ratio1 = tunables_global+17616
-globals.MC.Forgery.Ratio2 = tunables_global+17622
-globals.MC.Forgery.Cap = tunables_global+19143
-globals.MC.Cash.Sell1 = tunables_global+17629
-globals.MC.Cash.Sell2 = tunables_global+19277
-globals.MC.Cash.ProSpd1 = tunables_global+17603
-globals.MC.Cash.Ratio1 = tunables_global+17617
-globals.MC.Cash.Ratio2 = tunables_global+17623
-globals.MC.Cash.Cap = tunables_global+19151
-globals.MC.Cocaine.Sell1 = tunables_global+17630
-globals.MC.Cocaine.Sell2 = tunables_global+19277
-globals.MC.Cocaine.ProSpd1 = tunables_global+17601
-globals.MC.Cocaine.Ratio1 = tunables_global+17618
-globals.MC.Cocaine.Ratio2 = tunables_global+17624
-globals.MC.Cocaine.Cap = tunables_global+19135
-globals.MC.Meth.Sell1 = tunables_global+17631
-globals.MC.Meth.Sell2 = tunables_global+19277
-globals.MC.Meth.ProSpd1 = tunables_global+17600
-globals.MC.Meth.Ratio1 = tunables_global+17619
-globals.MC.Meth.Ratio2 = tunables_global+17625
-globals.MC.Meth.Cap = tunables_global+19127
-globals.MC.Weed.Sell1 = tunables_global+17632
-globals.MC.Weed.Sell2 = tunables_global+19277
-globals.MC.Weed.ProSpd1 = tunables_global+17599
-globals.MC.Weed.Ratio1 = tunables_global+17620
-globals.MC.Weed.Ratio2 = tunables_global+17626
-globals.MC.Weed.Cap = tunables_global+19119
-globals.MC.Bunker.Sell1 = tunables_global+21747
-globals.MC.Bunker.Sell2 = tunables_global+21720
-globals.MC.Bunker.ProSpd1 = tunables_global+21742
-globals.MC.Bunker.ProSpd2 = tunables_global+21743
-globals.MC.Bunker.ProSpd3 = tunables_global+21744
-globals.MC.Bunker.Ratio1 = tunables_global+21493
-globals.MC.Bunker.Ratio2 = tunables_global+21494
-globals.MC.Bunker.Cap = tunables_global+21741
-globals.SafeCap = tunables_global+24257
-globals.SafeRevenue = tunables_global+24234
-globals.MCSupplyDelay = tunables_global+19164
-globals.BunkSupplyDelay = tunables_global+21767
-globals.SpecialCargoBypassBuyCooldown = tunables_global+15756
-globals.SpecialCargoBypassSellCooldown = tunables_global+15757
-globals.SpecialCargoCrateMaxThreshold = tunables_global+15990
-globals.SpecialCargoRewardPerCrate = tunables_global+16011
-globals.SpecialCargoCrateMultiplier3 = tunables_global+16861
-globals.SpecialCargoCrateMultiplier2 = tunables_global+16862
-globals.SpecialCargoCrateMultiplier1 = tunables_global+16863
-globals.SpecialCargoBonus = tunables_global+15783
-globals.SpecialCargoDeliveryTime = tunables_global+32887
+globals.Hub.Cargo.Sell = tunables_global+23969
+globals.Hub.Cargo.ProSpd = tunables_global+23954
+globals.Hub.Cargo.Cap = tunables_global+23976
+globals.Hub.Weapons.Sell = tunables_global+23963
+globals.Hub.Weapons.ProSpd = tunables_global+23948
+globals.Hub.Weapons.Cap = tunables_global+23970
+globals.Hub.Cocaine.Sell = tunables_global+23964
+globals.Hub.Cocaine.ProSpd = tunables_global+23949
+globals.Hub.Cocaine.Cap = tunables_global+23971
+globals.Hub.Meth.Sell = tunables_global+23965
+globals.Hub.Meth.ProSpd = tunables_global+23950
+globals.Hub.Meth.Cap = tunables_global+23972
+globals.Hub.Weed.Sell = tunables_global+23966
+globals.Hub.Weed.ProSpd = tunables_global+23951
+globals.Hub.Weed.Cap = tunables_global+23973
+globals.Hub.Forgery.Sell = tunables_global+23967
+globals.Hub.Forgery.ProSpd = tunables_global+23952
+globals.Hub.Forgery.Cap = tunables_global+23974
+globals.Hub.Cash.Sell = tunables_global+23968
+globals.Hub.Cash.ProSpd = tunables_global+23953
+globals.Hub.Cash.Cap = tunables_global+23975
+globals.MC.Forgery.Sell1 = tunables_global+17319
+globals.MC.Forgery.Sell2 = tunables_global+18875
+globals.MC.Forgery.ProSpd1 = tunables_global+17293
+globals.MC.Forgery.Ratio1 = tunables_global+17307
+globals.MC.Forgery.Ratio2 = tunables_global+17313
+globals.MC.Forgery.Cap = tunables_global+18744
+globals.MC.Cash.Sell1 = tunables_global+17320
+globals.MC.Cash.Sell2 = tunables_global+18875
+globals.MC.Cash.ProSpd1 = tunables_global+17294
+globals.MC.Cash.Ratio1 = tunables_global+17308
+globals.MC.Cash.Ratio2 = tunables_global+17314
+globals.MC.Cash.Cap = tunables_global+18752
+globals.MC.Cocaine.Sell1 = tunables_global+17321
+globals.MC.Cocaine.Sell2 = tunables_global+18875
+globals.MC.Cocaine.ProSpd1 = tunables_global+17292
+globals.MC.Cocaine.Ratio1 = tunables_global+17309
+globals.MC.Cocaine.Ratio2 = tunables_global+17315
+globals.MC.Cocaine.Cap = tunables_global+18736
+globals.MC.Meth.Sell1 = tunables_global+17322
+globals.MC.Meth.Sell2 = tunables_global+18875
+globals.MC.Meth.ProSpd1 = tunables_global+17291
+globals.MC.Meth.Ratio1 = tunables_global+17310
+globals.MC.Meth.Ratio2 = tunables_global+17316
+globals.MC.Meth.Cap = tunables_global+18728
+globals.MC.Weed.Sell1 = tunables_global+17323
+globals.MC.Weed.Sell2 = tunables_global+18875
+globals.MC.Weed.ProSpd1 = tunables_global+17290
+globals.MC.Weed.Ratio1 = tunables_global+17311
+globals.MC.Weed.Ratio2 = tunables_global+17317
+globals.MC.Weed.Cap = tunables_global+18720
+globals.MC.Bunker.Sell1 = tunables_global+21254
+globals.MC.Bunker.Sell2 = tunables_global+21227
+globals.MC.Bunker.ProSpd1 = tunables_global+21249
+globals.MC.Bunker.ProSpd2 = tunables_global+21250
+globals.MC.Bunker.ProSpd3 = tunables_global+21251
+globals.MC.Bunker.Ratio1 = tunables_global+21006
+globals.MC.Bunker.Ratio2 = tunables_global+21007
+globals.MC.Bunker.Cap = tunables_global+21248
+globals.SafeCap = tunables_global+23680
+globals.SafeRevenue = tunables_global+23657
+globals.MCSupplyDelay = tunables_global+18764
+globals.BunkSupplyDelay = tunables_global+21274
+globals.SpecialCargoBypassBuyCooldown = tunables_global+15499
+globals.SpecialCargoBypassSellCooldown = tunables_global+15500
+globals.SpecialCargoCrateMaxThreshold = tunables_global+15731
+globals.SpecialCargoRewardPerCrate = tunables_global+15752
+globals.SpecialCargoCrateMultiplier3 = tunables_global+16593
+globals.SpecialCargoCrateMultiplier2 = tunables_global+16594
+globals.SpecialCargoCrateMultiplier1 = tunables_global+16595
+globals.SpecialCargoBonus = tunables_global+15524
+globals.SpecialCargoDeliveryTime = tunables_global+31874
 --#endregion Generated by internal tooling
 
 local TotalEarnedTypes = {
@@ -825,7 +824,7 @@ do
 end
 --#endregion Translation Functions
 
---local menu_findsaferways = menu.hyperlink(Musiness_Banager, MenuLabels.FINDSAFERWAYS, "https://stand.gg/help/money", MenuLabels.FINDSAFERWAYS_DESC)
+
 
 -----------------------------------
 -- HTTP Functions
@@ -1250,7 +1249,7 @@ end
 -- [[update]]
 local function GetOrgOffset()
     -- GPBD_FM_3
-    return (1886967 + 1 + (players.user() * 609) + 10)
+    return (1887305 + 1 + (players.user() * 610) + 10)
 end
 
 local function IsInOrg()
@@ -1259,36 +1258,36 @@ end
 
 local function GetOrgType()
     -- Returns -1, 0, 1. None, CEO, MC. This will only work if you are the boss of the org
-    return GetGlobalInt(GetOrgOffset() + 429)
+    return GetGlobalInt(GetOrgOffset() + 430)
 end
 
 local function RegisterAsCEO()
     if IsInSession() and not IsInOrg() then
         SetGlobalInt(GetOrgOffset(), players.user()) -- Set self as boss
-        SetGlobalInt(GetOrgOffset() + 429, 0) -- Set type to CEO
+        SetGlobalInt(GetOrgOffset() + 430, 0) -- Set type to CEO
     end
 end
 
 -- Business / Other Online Work Stuff [[update]]
 local function GetOnlineWorkOffset()
     -- GLOBAL_PLAYER_STAT
-    return (1845263 + 1 + (players.user() * 877) + 267)
+    return (1845281 + 1 + (players.user() * 883) + 268)
 end
 
 local function GetNightClubHubOffset()
-    return (GetOnlineWorkOffset() + 312)
+    return (GetOnlineWorkOffset() + 314)
 end
 
 local function GetNightClubOffset()
-    return (GetOnlineWorkOffset() + 356) -- CLUB_OWNER_X
+    return (GetOnlineWorkOffset() + 358) -- CLUB_OWNER_X
 end
 
 local function GetWarehouseOffset()
-    return (GetOnlineWorkOffset() + 118) + 1
+    return (GetOnlineWorkOffset() + 120) + 1
 end
 
 local function GetMCBusinessOffset()
-    return (GetOnlineWorkOffset() + 195) + 1
+    return (GetOnlineWorkOffset() + 197) + 1
 end
 
 -- Nightclub
@@ -1409,7 +1408,7 @@ end
 -- [[update]]
 local function GetPlayerPropertyOffset()
     -- GlobalplayerBD
-    return (2657921 + 1 + (players.user() * 463) + 321 + 7)
+    return (2657971 + 1 + (players.user() * 465) + 322 + 8)
 end
 
 local function GetPlayerPropertyID()
@@ -1617,7 +1616,7 @@ SCRefs[#SCRefs+1] = menu.toggle_loop(SCMan, MenuLabels.MAXSELLPRICE, {"maxsellca
     end
 
     if IsInSession() then
-        --CheckIfAlone()
+        CheckIfAlone()
         SetSpecialCargoValues(true)
     end
 end, function()
@@ -2003,7 +2002,7 @@ local NCMan = menu.list(Musiness_Banager, MenuLabels.NIGHTCLUB, {}, MenuLabels.N
     
             if IsInSession() then
                 if MyBusinesses.Hub[name] ~= 0 then
-                    --CheckIfAlone()
+                    CheckIfAlone()
                     SetGlobalInt(globals.Hub[name].Sell, globals.Hub.MaxSellPrice // MyBusinesses.Hub[name])
                 end
             end
@@ -2301,7 +2300,7 @@ local MCMan = menu.list(Musiness_Banager, GetLabelText(MenuLabels.MCBUSINESS), {
 
             if IsInSession() then
                 if MyBusinesses[name].property ~= 0 then
-                    --CheckIfAlone()
+                    CheckIfAlone()
                     if MyBusinesses[name].product > 0 then
                         SetGlobalInt(globals.MC[name].Sell1, globals.MC.MaxSellPrice // MyBusinesses[name].product)
                         SetGlobalFloat(globals.MC[name].Sell2, 1)
@@ -2384,7 +2383,7 @@ local BunkMan = menu.list(Musiness_Banager, MenuLabels.BUNKER, {}, MenuLabels.BU
 
         if IsInSession() then
             if MyBusinesses.Bunker.product ~= 0 then
-                --CheckIfAlone()
+                CheckIfAlone()
                 SetGlobalInt(globals.MC.Bunker.Sell1, 2500000 // MyBusinesses.Bunker.product)
                 SetGlobalFloat(globals.MC.Bunker.Sell2, 1)
             end
@@ -2435,75 +2434,7 @@ local BunkMan = menu.list(Musiness_Banager, MenuLabels.BUNKER, {}, MenuLabels.BU
     end)
 --#endregion Bunker Shit
 
---------------------------
--- Debug Shit
---------------------------
-if not IS_RELEASE_VERSION then
-    local MBDebug = menu.list(Musiness_Banager, "Debug Shit", {"mbdebug"})
-    local MBDebug_MC = menu.list(MBDebug, "MC Shit", {"mbdebugmc"})
-    for i = 0, 5 do
-        --local type = MCBusinessTypesInOrder[i]
-        local type = MCBusinessTypesOrderedWithLabels[i].name
-        local label = MCBusinessTypesOrderedWithLabels[i].label
-
-        local thislist = menu.list(MBDebug_MC, label, {"mbdebugmc"..type})
-        RegisterUpdatingReadOnlyCommand(thislist, "Slot"        , function() return MyBusinesses[type].slot end)
-        RegisterUpdatingReadOnlyCommand(thislist, "Property"    , function() return MyBusinesses[type].property end)
-        RegisterUpdatingReadOnlyCommand(thislist, "Product"     , function()
-            return MyBusinesses[type].product
-        end)
-        RegisterUpdatingReadOnlyCommand(thislist, "Supplies "    , function() return MyBusinesses[type].supplies end)
-        menu.action(thislist, GetLabelText(MenuLabels.TELEPORTTO, MenuLabels.BUSINESS), {}, GetLabelText(MenuLabels.TELEPORTTO_DESC, MenuLabels.BUSINESS), function()
-            local coords = MCBusinessPropertyInfo[MyBusinesses[type].property].coords
-            if coords then
-                if LoadArea(coords) then
-                    TeleportTo(coords)
-                end
-            else
-                util.toast("You do not have a "..type)
-            end
-        end)
-    end
-
-    local MBDebug_NC = menu.list(MBDebug, "NC Shit", {"mbdebugnc"})
-    for i = 0, #HubTypesOrderedWithLabels do
-        local name = HubTypesOrderedWithLabels[i].name
-        local label = HubTypesOrderedWithLabels[i].label
-        local thislist = menu.list(MBDebug_NC, label, {"mbdebugnc"..name})
-        RegisterUpdatingReadOnlyCommand(thislist, "Product"     ,  function() return MyBusinesses.Hub[name] end)
-        RegisterUpdatingReadOnlyCommand(thislist, "Capacity"     , function() return GetGlobalInt(globals.Hub[name].Cap) end)
-    end
-    menu.click_slider(MBDebug_NC, "Set Product All", {}, "Will not put it over your cap", 0, 100, 0, 1, function(value)
-        for i = 0, #HubTypesOrderedWithLabels do
-            local cap = GetGlobalInt(globals.Hub[HubTypesOrderedWithLabels[i].name].Cap)
-            SetGlobalInt(GetHubValueOffsetFromSlot(i), value > cap and cap or value)
-        end
-    end)
-
-    local MBDebug_CEO = menu.list(MBDebug, "CEO Shit", {"mbdebugceo"})
-    for slot = 0, 4 do
-        local property_id = GetWarehousePropertyFromSlot(slot)
-        if property_id ~= 0 then
-            local property_name = WarehousePropertyInfo[property_id].name
-            MenuCurrentWarehouses[slot] = {property_name, {"warehouse"..property_name}, ""}
-        else
-            MenuCurrentWarehouses[slot] = {MenuLabels.SPECIALCARGONOWAREHOUSE, {"warehouse".."invalid"}, MenuLabels.SPECIALCARGONOWAREHOUSE_DESC}
-        end
-    end
-
-    for slot = 0, 4 do
-        local warehouse_list = menu.list(MBDebug_CEO, "Slot "..slot)
-        RegisterUpdatingReadOnlyCommand(warehouse_list, "Property",        function() return MenuCurrentWarehouses[slot][4] or "" end)
-        RegisterUpdatingReadOnlyCommand(warehouse_list, "Property Name",   function() return MenuCurrentWarehouses[slot][1] end)
-        RegisterUpdatingReadOnlyCommand(warehouse_list, "Crates Global",   function() return GetGlobalInt(GetSpecialCargoCrateAmountOffset(slot)) end)
-        RegisterUpdatingReadOnlyCommand(warehouse_list, "Crates Stat",     function() return GetSpecialCargoCrateAmountFromStat(slot) end)
-    end
-
-    --menu.action(MBDebug_CEO, "Sync Globals With Stats")
-end
---------------------------
--- End Debug Shit
---------------------------
+--
 
 util.create_tick_handler(function()
     prefix = "MP" .. util.get_char_slot() .. "_" -- update our prefix live incase the user switches characters while script is running

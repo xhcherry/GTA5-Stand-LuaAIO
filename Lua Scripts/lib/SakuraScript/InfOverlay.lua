@@ -47,8 +47,8 @@ end
 
 --map textures
 local textures = {
-    map = directx.create_texture(filesystem.resources_dir() .. "SakuraImg/playerinfo/Map.png"),
-    blip = directx.create_texture(filesystem.resources_dir() .. "SakuraImg/playerinfo/Blip.png")
+    map = directx.create_texture(filesystem.resources_dir() .. "SakuraScript/playerinfo/Map.png"),
+    blip = directx.create_texture(filesystem.resources_dir() .. "SakuraScript/playerinfo/Blip.png")
 }
 
 

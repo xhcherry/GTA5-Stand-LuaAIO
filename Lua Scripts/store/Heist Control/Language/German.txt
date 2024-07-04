@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 04/27/2024 05:03:01 PM
-# Heist Control Version: V 3.4.2
+# Generated Date: 05/24/2024 11:33:07 PM
+# Heist Control Version: V 3.4.3
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -422,7 +422,7 @@ Refresh the list via restarting Heist Control. = Lade die Liste neu, indem du HC
 This action will take a few seconds. Please wait for it patiently, don't press multiple times. = Dieser Vorgang wird ein paar Sekunden dauern. Bitte klicke NICHT 50x hier drauf.
 - Total number of translations: = - Anzahl an Übersetzungen insgesamt:
 - Number of not modified translations: = - Anzahl der modifizierten Übersetzungen:
-- Number of modified (updated) translations: = - Anzahl der modifizierten (geupdateten) Übersetzungen:
+- Number of modified (updated) translations: = - Anzahl der geupdateten Übersetzungen:
 Notification's Style = Notification's Style
 Type = Type
 If you want to know what was changed in the latest version, click me! = Wenn du wissen willst, was sich alles  in der neuesten Version geändert hat, klicke hier!
@@ -629,12 +629,6 @@ Taze = Taze
 If you have any questions regarding Heist Control? Joining it will help you so much! = Wenn du Fragen bzgl. HC hast, kannst du gerne joinen!
 - Download sharable customized translations and GTAHaXUI stat files. = - Downloade oder teile Übersetzungen und GTAHaXUI stat files.
 - Post a suggestion or an issue to improve Heist Control. = - Poste einen Vorschlag oder melde einen Fehler, um HC noch besser zu machen.
-
-
-# Start of newly updated translations.
-# Translate them!
-
-
 But, all features of HC should work without any patches! = Alle Features von HC sollten aber funktionieren.
 HC is needed to be patched by the developer. Please be patient. = HC funktioniert grade nicht und braucht ein Update des Entwicklers. Bitte warte auf das Update.
 You won't get money if you don't keep money limitation! = Du kriegst gar kein Geld, wenn du dich nicht an die Geld-Limits hältst!
@@ -650,13 +644,7 @@ Allow you play alone this heist without another player. = Damit kannst du den He
 Press this feature once before launching the heist. = Einmal auswählen, bevor du den Heist startest.
 Load All Boards = Alle Planungstafeln laden
 Unload All Boards = Alle Planungstafeln entladen
-If you use 'Mouse Support' feature, please before using this feature, click 'Game > Disables > Disable Game Inputs > Presets > Numpad' after using it, click 'Mouse' = Wenn du in Stand 'Maus Support' an hast, wähle zuerst 'Game > Disables > Disable Game Inputs > Presets > Numpad' aus und danach wieder 'Maus'.
-The Fleeca Job = The Fleeca Job
 Let you and other players will get $15M when you are host and in finale. = Erlaubt es dir und anderen Spielern im Finale, 15 Millionen zu bekommen, wenn du Host bist.
-Make sure DIFFICULTY is NORMAL! = Achte darauf, dass der SCHWIERIGKEITSGRAD auf NORMAL gestellt ist!
-Prison Break = Gefängnisausbruch
-Humane Labs = Humane Labs
-Series A Funding = Series A Funding
 There are video tutorials in Heist Control Discord server. If you have no idea how to use this feature, see them! = Es gibt auf dem HC-Discord Video-Tutorials. Guck sie dir an, wenn du keine Ahnung hast, was du machen sollst.
 Remove The Cooldown = Cooldown entfernen
 This doesn't bypass server-sided cooldown time, 20 mins. This just bypasses unable to launch heist in heist board. = Dies kann nicht den server-seitigen Cooldown von 20 Minuten entfernen. Dies erlaubt es dir nur, auf der Heist-Planungstafel den Heist trotzdem zu starten.
@@ -737,3 +725,22 @@ Crew ID = Crew ID
 Current Crew Level = Aktuelles Crewlevel
 Choose Crew Level = Crewlevel auswählen
 Set Crew Level = Crewlevel setzen
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+Increase Team Lives = Team-Leben erhöhen
+Increases the amount of team lives. Make sure to have script host if it doesn't seem to work. = Erhöht die Anzahl der Leben, die dein Team zur Verfügung hat. Wenn etwas nicht richtig funktioniert, nimm dir Script Host.
+I Wanna Receive The Heist Payout = Ich möchte den Heist-Payout bekommen
+Enabled: Each player will receive $15M = Aktiviert: Jeder Spieler wird 15 Mio $ erhalten.
+Disabled: For except me, only other players will receive $15M = Deaktiviert: Nur andere Spieler werden die 15 Mio $ erhalten, nicht du
+Note: To apply this state, you should click 'Automated Presets' = Beachte: Du solltest die 'Automatischen Voreinstellungen' nutzen, um es anzuwenden.
+Compatible with any classic heist and any difficulty level. = Kompatibel mit jedem klassischen Heist und jedem Schwierigkeitsgrad.
+But, recommeded setting DIFFICULTY to NORMAL to prevent game bugs like not getting money, etc. = Es wird aber empfohlen, den Schwierigkeitsgrad auf NORMAL zu setzen, um Bugs zu vermeiden wie z.B. keine Auszahlung etc.
+To prevent game bugs, please press once. = Um Bugs zu verhindern, bitte einmal drücken.
+Setting the payout is in progress... = Auszahlung wird geändert...
+Please don't move the mouse until notify to you. = Bitte bewege die Maus nicht, bis du eine Benachrichtigung bekommst.
+Setting the payout is done! = Auszahlung erfoglreich geändert!
+You can move the mouse since now. = Du kannst die Maus jetzt wieder bewegen. Vielen Dank für deine Kooperation :)

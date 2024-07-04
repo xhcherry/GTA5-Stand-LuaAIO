@@ -292,7 +292,7 @@ sxid = {{
 }, {
     playeridx = "wuheng857"
 }, {
-    playeridx = "XC001120"
+    playeridx = "wxc1120"
 }, {
     playeridx = "gqkdinsr"
 }, {
@@ -301,6 +301,38 @@ sxid = {{
     playeridx = "YZLDDL"
 }, {
     playeridx = "LGD-long"
+}, {
+    playeridx = "LuAn.ShuCheng"
+}, {
+    playeridx = "MaDouMedia1"
+}, {
+    playeridx = "shenqingyige66"
+}, {
+    playeridx = "zhoubokai123"
+}, {
+    playeridx = "jasmine7294"
+}, {
+    playeridx = "HaOooo25"
+}, {
+    playeridx = "Steak3321"
+}, {
+    playeridx = "baixiao66"
+}, {
+    playeridx = "jk000005"
+}, {
+    playeridx = "Aestheticismy1"
+}, {
+    playeridx = "Sorryone1"
+}, {
+    playeridx = "Jazz_168"
+}, {
+    playeridx = "Yzichen2019"
+}, {
+    playeridx = "HZASDSG"
+}, {
+    playeridx = "911trauma"
+}, {
+    playeridx = "sharklol"
 }, {
     playeridx = ""
 },
@@ -2287,7 +2319,7 @@ spid = {{
 }, {
     playerid = "ovo114514ovo"
 }, {
-    playerid = "sf112d4w"
+    playerid = "AiLixiya50"
 }, {
     playerid = "yaowangxingkong"
 }, {
@@ -2673,7 +2705,7 @@ spid = {{
 }, {
     playerid = "MoNing-Yan458"
 }, {
-    playerid = "pcz874"
+    playerid = "ovo874"
 }, {
     playerid = "xiaohui1124ooo"
 }, {
@@ -2765,7 +2797,7 @@ spid = {{
 }, {
     playerid = "xiaoyuer09"
 }, {
-    playerid = "YiYuSM7"
+    playerid = "Fuyaodanmmm"
 }, {
     playerid = "ChaoHav"
 }, {
@@ -2825,13 +2857,13 @@ spid = {{
 }, {
     playerid = "GT165GHG"
 }, {
-    playerid = "XiProNB--"
+    playerid = "linzichen2003"
 }, {
     playerid = "Babystoyy"
 }, {
     playerid = "wuheng857"
 }, {
-    playerid = "XC001120"
+    playerid = "wxc1120"
 }, {
     playerid = "avfaadada"
 }, {
@@ -2867,9 +2899,73 @@ spid = {{
 }, {
     playerid = "Anyzer"
 }, {
-    playerid = "Angsar-"
-}, {
     playerid = "gd231fd233"
+}, {
+    playerid = "Luckyyy-"
+}, {
+    playerid = "TTXShhxx"
+}, {
+    playerid = "bupapo"
+}, {
+    playerid = "an-eager-beaver"
+}, {
+    playerid = "LuAn.ShuCheng"
+}, {
+    playerid = "MaDouMedia1"
+}, {
+    playerid = "shenqingyige66"
+}, {
+    playerid = "zhoubokai123"
+}, {
+    playerid = "zzshiyi2003"
+}, {
+    playerid = "liminghao1553"
+}, {
+    playerid = "Darlingawa"
+}, {
+    playerid = "Mason_Tk"
+}, {
+    playerid = "RTX1145141919810"
+}, {
+    playerid = "HaOooo25"
+}, {
+    playerid = "Steak3321"
+}, {
+    playerid = "baixiao66"
+}, {
+    playerid = "jk000005"
+}, {
+    playerid = "Aestheticismy1"
+}, {
+    playerid = "Sorryone1"
+}, {
+    playerid = "Jazz_168"
+}, {
+    playerid = "Yzichen2019"
+}, {
+    playerid = "nnbtklmdy"
+}, {
+    playerid = "You1shuouid1die"
+}, {
+    playerid = "renwudahunzi"
+}, {
+    playerid = "yileina666"
+}, {
+    playerid = "WANGNINGdjb123"
+}, {
+    playerid = "00Roxie00"
+}, {
+    playerid = "Chin110"
+}, {
+    playerid = "HZASDSG"
+}, {
+    playerid = "mubai2077"
+}, {
+    playerid = "DrKunKun"
+}, {
+    playerid = "llikk0407"
+}, {
+    playerid = "sharklol"
 }, {
     playerid = ""
 },

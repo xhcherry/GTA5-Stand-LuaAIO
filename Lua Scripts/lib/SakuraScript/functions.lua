@@ -1090,25 +1090,6 @@ function get_input_from_screen_keyboard(windowName, maxInput, defaultText)
 end
 
 
----@param s string
----@param x number
----@param y number
----@param scale number
----@param font integer
-function draw_string(s, x, y, scale, font)
-	HUD.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING")
-	HUD.SET_TEXT_FONT(font or 0)
-	HUD.SET_TEXT_SCALE(scale, scale)
-	HUD.SET_TEXT_DROP_SHADOW()
-	HUD.SET_TEXT_WRAP(0.0, 1.0)
-	HUD.SET_TEXT_DROPSHADOW(1, 0, 0, 0, 0)
-	HUD.SET_TEXT_OUTLINE()
-	HUD.SET_TEXT_EDGE(1, 0, 0, 0, 0)
-	HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(s)
-	HUD.END_TEXT_COMMAND_DISPLAY_TEXT(x, y, 0)
-end
-
-
 function capitalize(txt)
 	return tostring(txt):gsub('^%l', string.upper)
 end

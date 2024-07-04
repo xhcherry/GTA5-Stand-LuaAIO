@@ -1,4 +1,4 @@
-local resource_path = filesystem.scripts_dir() .. "\\resources\\SakuraImg\\WatchDogs\\"
+local resource_path = filesystem.scripts_dir() .. "\\resources\\SakuraScript\\WatchDogs\\"
 local cursor_texture = directx.create_texture(resource_path .. "cursor.png")
 local point_texture = directx.create_texture(resource_path .. "point.png")
 
