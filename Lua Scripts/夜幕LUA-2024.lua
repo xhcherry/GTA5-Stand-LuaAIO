@@ -26,22 +26,17 @@ if not filesystem.is_dir(resources_dir) then
     util.toast("资源目录丢失,请确保已正确安装YeMulib")
     util.stop_script()
 end
-ocoded_for = 1.68
-verbose = false
-online_v = tonumber(NETWORK._GET_ONLINE_VERSION())
-if online_v > ocoded_for then
-    util.toast("此GTA夜幕版本已过期 [目前游戏版本为".. online_v .. ", 该脚本开发版本为 " .. ocoded_for .. "]")
-util.stop_script()
-end
+ocoded_for = 1.69
+verbose = true
 YMdet()
 YMth1()
 YMb1()
 ----------------------------------
-Version = 6.5
+Version = 6.7
 local TIANXIA = "欢迎使用夜幕-V" .. Version ..  ""
 local JIAOBEN = "夜幕LUA"
 local introduce = "欢迎使用夜幕LUA"
-date = "2024.5.17"
+date = "2024.7.16"
 wait = util.yield
 joaat = util.joaat
 alloc = memory.alloc
@@ -320,7 +315,7 @@ menu.action(menu.my_root(),"重启夜幕脚本",{},"",function ()
     end)
 end)
 menu.divider(menu.my_root(), "夜幕脚本信息")
-    menu.action(menu.my_root(), "夜幕第一制作:Ping", {}, "大帅逼一枚~~~", function()
+    menu.action(menu.my_root(), "夜幕第一制作:子辰", {}, "大帅逼一枚~~~", function()
 end)
     menu.action(menu.my_root(), "夜幕第二制作:呆呆", {}, "大美女一枚~~~", function()
 end)
@@ -341,7 +336,21 @@ local festive_div = menu.divider(YM_root, "运行夜幕LUA", {}, "")
 end)
 self = menu.list(YM_root, "自我选项", {}, "")
 jiashi = menu.list(YM_root, "载具选项", {}, "")
-zidongrenwu = menu.list(YM_root, "任务选项（含恢复选项）", {}, "")
+online_v = tonumber(NETWORK._GET_ONLINE_VERSION())
+zidongrenwu = menu.list(YM_root, "任务选项（含恢复选项）", {"renwuxx"}, "", function();end)
+    menu.set_visible(zidongrenwu, false)
+
+    renwuxx1 = menu.action(YM_root, "任务选项（含恢复选项）", {""}, "", function()
+       if online_v > ocoded_for then
+            util.toast("此GTA夜幕版本已过期 [目前游戏版本为".. online_v .. ", 该脚本开发版本为 " .. ocoded_for .. "]")
+                menu.trigger_commands("YMScript")
+                
+            else
+                menu.trigger_commands("renwuxx")
+            end
+end)
+
+
 funfeatures = menu.list(YM_root, "娱乐选项", {}, "")
 weapon = menu.list(YM_root, "武器选项", {}, "")
 fanyiyuyan = menu.list(YM_root, "聊天选项", {}, "")
@@ -889,7 +898,7 @@ end)
        util.yield(800)
        menu.trigger_commands("anticrashcam off")
    end)
-   menu.action(trolling, "小行星攻击", {}, "用小行星来攻击他", function() 
+   menu.action(trolling, "小行星攻击", {"saorao7"}, "用小行星来攻击他", function() 
         local coords = players.get_position(PlayerID)
         coords.z = coords['z'] + 15.0
         local asteroid = entities.create_object(3751297495, coords)
@@ -918,7 +927,7 @@ local ramp = OBJECT.CREATE_OBJECT(ramp_hash, pos.x, pos.y, pos.z, true, false, t
     wait(2000)
     entities.delete_by_handle(ramp)
 end)
-    menu.toggle(trolling, "假掉钱袋", {""}, "", function()
+    menu.toggle(trolling, "假掉钱袋", {"saorao6"}, "", function()
            menu.trigger_commands("fakemoneydrop " .. players.get_name(PlayerID))
     end)
     menu.toggle(trolling, "阻止玩家被动模式", {""}, "", function()
@@ -984,7 +993,7 @@ end)
         AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Air_Defences_Activated", PLAYER.GET_PLAYER_PED(PlayerID), "DLC_sum20_Business_Battle_AC_Sounds", true, true)
         util.yield(8000)
     end)
-    menu.toggle_loop(trolling2, "超级骚扰", {""}, "欠钱不换，必须骚扰", function()
+    menu.toggle_loop(trolling2, "超级骚扰", {"saorao5"}, "欠钱不换，必须骚扰", function()
         stcnm(PlayerID)
         phonesoundcnm(PlayerID)
         AUDIO.PLAY_SOUND_FROM_ENTITY(-1, "Air_Defences_Activated", PLAYER.GET_PLAYER_PED(PlayerID), "DLC_sum20_Business_Battle_AC_Sounds", true, true)
@@ -1059,11 +1068,14 @@ end)
         end
     end)
 menu.toggle(trolling2, "闪他(会使他掉帧)", {"shanta"}, "远离!!!", function(state)
+        local explosion <const> = Effect.new("scr_rcbarry2", "scr_exp_clown")
+        local appears <const> = Effect.new("scr_rcbarry2",  "scr_clown_appears")
         if players.exists(PlayerID) then
         huaping = state
         if state then
             menu.trigger_commands("freeze "..players.get_name(PlayerID).." on")
             menu.trigger_commands("confuse "..players.get_name(PlayerID).." on")
+            menu.trigger_commands("boomOK "..players.get_name(PlayerID).." on")
             while huaping do
         local player_pos = players.get_position(PlayerID)
         request_ptfx_asset("core")
@@ -1083,17 +1095,39 @@ menu.toggle(trolling2, "闪他(会使他掉帧)", {"shanta"}, "远离!!!", funct
         GRAPHICS.USE_PARTICLE_FX_ASSET("core")
         GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
             "ent_sht_oil", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
+                request_ptfx_asset(explosion.asset)
+                GRAPHICS.USE_PARTICLE_FX_ASSET(explosion.asset)
+                GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
+                    explosion.name,
+                    player_pos.x, player_pos.y, player_pos.z,
+                    0.0, 0.0, 0.0,
+                    1.0,
+                    false, false, false, false
+                )
+        request_ptfx_asset(appears.asset)
+        GRAPHICS.USE_PARTICLE_FX_ASSET(appears.asset)
+        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+            appears.name,
+            player_pos.x, player_pos.y, player_pos.z,
+            0.0, 0.0, -1.0,
+            0.0, 0.0, 0.0,
+            0.5, false, false, false
+        )
                 util.yield()
         end
         else
             menu.trigger_commands("freeze "..players.get_name(PlayerID).." off")
             menu.trigger_commands("confuse "..players.get_name(PlayerID).." off")
+            menu.trigger_commands("boomOK "..players.get_name(PlayerID).." off")
         end
     end
 end)
 	menu.action(trolling2, "苦力怕小丑", {"creeper"}, "生成一个自曝小丑跑向玩家并自爆!", function()
 		creep(PlayerID)
-	end, nil, nil, COMMANDPERM_RUDE)
+	end)
+	menu.toggle_loop(trolling2, "敌意NPC", {"diyiNPC"}, "使玩家周围的NPC对你充满敌意!", function(on)
+            menu.trigger_commands("aggressivenpcs "..players.get_name(PlayerID))
+	end)
 Aes = menu.list(trolling2, "动物娱乐", {}, "")
     menu.action(Aes, "汪汪队", {"wowo"}, "汪汪~", function(on_click)
         meowbmob(PlayerID)
@@ -1772,17 +1806,21 @@ diaozhenxuanxiang = menu.list(player_removals, "掉帧选项", {}, "")
     end
 end)
 local targets1 = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-local tar12 = ENTITY.GET_ENTITY_COORDS(targets1, true)
+local tar1 = ENTITY.GET_ENTITY_COORDS(targets1, true)
 local weap = util.joaat('weapon_firework')
 local targets1 = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
-    menu.toggle_loop(diaozhenxuanxiang, "掉帧Pro Max", {"Pro Max"}, "", function(on_toggle)
+    menu.toggle_loop(diaozhenxuanxiang, "掉帧Pro Max", {"ProMax"}, "", function(on_toggle)
         if players.exists(PlayerID) then
             local freeze_toggle = menu.ref_by_rel_path(menu.player_root(PlayerID), "Trolling>Freeze")
             local player_pos = players.get_position(PlayerID)  
             local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
             local pos = ENTITY.GET_ENTITY_COORDS(ped)      
             menu.trigger_commands("shanta " .. players.get_name(PlayerID))
-            menu.trigger_commands("xiaofangshuan " .. players.get_name(PlayerID))     
+            menu.trigger_commands("saorao5 " .. players.get_name(PlayerID))     
+            menu.trigger_commands("saorao6 " .. players.get_name(PlayerID))
+            menu.trigger_commands("toggletppeds " .. players.get_name(PlayerID))
+            menu.trigger_commands("toggletppedstpvehs " .. players.get_name(PlayerID))
+            menu.trigger_commands("saorao7 " .. players.get_name(PlayerID))
             if not PED.IS_PED_DEAD_OR_DYING(ped) and not NETWORK.NETWORK_IS_PLAYER_FADING(PlayerID) then
               util.trigger_script_event(1 << PlayerID, {0xAD36AA57, PlayerID, 0x96EDB12F, math.random(0, 0x270F)})
               FIRE.ADD_OWNED_EXPLOSION(players.user_ped(), pos.x, pos.y, pos.z, 2, 50, true, false, 0.0)
@@ -1828,7 +1866,6 @@ local targets1 = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
             end
             Streamptfx('core')
             GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD( 'ent_brk_banknotes', tar1.x, tar1.y, tar1.z + 1, 0, 0, 0, 3.0, true, true, true)
-            menu.set_value(freeze_toggle, true)
             request_ptfx_asset("core")
             GRAPHICS.USE_PARTICLE_FX_ASSET("core")
             GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
@@ -1858,8 +1895,8 @@ local targets1 = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
             GRAPHICS.USE_PARTICLE_FX_ASSET("core")
             GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
                "ent_sht_oil", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
-            menu.set_value(freeze_toggle, false)
-            wait(1000)
+            wait(3000)
+  
         end
     end)
     menu.divider(player_removals, "崩溃")
@@ -2640,7 +2677,7 @@ end)
    -- {"compactemplauncher", util.joaat("w_lr_ml_40mm")}, --compact emp launhcer lmao
   --  {"teargas", util.joaat("w_ex_grenadesmoke")} --tear gas grenade lmfao}
 
-collapse6 = menu.list(player_removals, "组合崩溃(6)", {}, "夜幕LUA-2024组合崩溃[新]\n配置较差者慎用")
+collapse6 = menu.list(player_removals, "子辰")
         zuhebengkui611 = menu.action(collapse6, "6-1", {"zuhebengkui61"}, "", function ()
                 local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
                 local user = PLAYER.GET_PLAYER_PED(players.user())
@@ -2827,12 +2864,105 @@ menu.set_visible(zuhebengkui612, false)
     end)
 menu.set_visible(zuhebengkui613, false)
 
-    menu.action(collapse6, "雷霆嘎巴", {"leitinggaba"}, "", function()
-        notification( "请等待7-15秒崩溃进程", colors.black)
+zuhebengkui614 = menu.action(collapse6,"6-4",{"zuhebengkui64"},'',function()
+           for i = 1, 5 do
+                local weapon_ped <const> = entityspawn_entity(joaat("v_serv_ct_monitor04"), players.get_position(PlayerID), 0, false, false, false, false, true)
+                WEAPON.GIVE_WEAPON_TO_PED(weapon_ped, joaat("w_lr_rpg_rocket"), 1, true, true)
+                local pos <const> = players.get_position(PlayerID)
+                TASK.TASK_THROW_PROJECTILE(weapon_ped, pos.x, pos.y, pos.z, 0, false)
+                wait(1000)
+                entitydelete_entity(weapon_ped)
+            local TargetPlayerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID)
+            local plauuepos = ENTITY.GET_ENTITY_COORDS(TargetPlayerPed, true)
+            plauuepos.x = plauuepos.x + 5
+            plauuepos.z = plauuepos.z + 5
+            local hunter = {}
+                local pos <const> = players.get_position(PlayerID)
+                pos.z = pos.z + 10
+                local metrotrain <const> = entityspawn_entity(joaat("metrotrain"), pos, 0, false, true, true, false, true)
+                local feltzer3 <const> = entityspawn_entity(joaat("feltzer3"), pos, 0, false, true, true, true, true)
+                local time <const> = util.current_time_millis() + 2500
+                while time > util.current_time_millis() do
+                    PED.SET_PED_INTO_VEHICLE(metrotrain, feltzer3, -1)
+                    ENTITY.SET_ENTITY_HEALTH(metrotrain, 0, 0)
+                    TASK.TASK_LEAVE_VEHICLE(metrotrain, feltzer3, 0)
+                    wait(100)
+                    ENTITY.SET_ENTITY_HEALTH(metrotrain, 0, 100.0)
+                end
+                entitydelete_entity(metrotrain)
+                entitydelete_entity(feltzer3)
+                local pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
+                pos.z += 10
+                local ranger <const> = entityspawn_entity(joaat("windsor"), pos, 0, true, true, true, true, true)
+                local time <const> = util.current_time_millis() + 5000
+                while time > util.current_time_millis() do
+                    local pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PlayerID))
+                    pos.z += 10
+                    TASK.TASK_SWEEP_AIM_POSITION(ranger, "anim@mp_player_intupperstinker", "", "", "", -1, 0.0, 0.0, 0.0, 0.0, 0.0)
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ranger, pos.x,pos.y,pos.z + 10)
+                    entities.request_control(ranger)
+                    if entities.get_owner(ranger) == PlayerID then
+                        wait(1000)
+                        entitydelete_entity(ranger)
+                        return
+                    end
+                    wait()
+                end
+                entitydelete_entity(ranger)
+                local pos <const> = players.get_position(PlayerID)
+                pos.z = pos.z + 10
+                local ranger <const> = entityspawn_entity(joaat("u_m_y_rsranger_01"), pos, 0, true, true, true, true, false)
+                local time <const> = util.current_time_millis() + 5000
+                while time > util.current_time_millis() do
+                    local pos <const> = players.get_position(PlayerID)
+                    pos.z = pos.z + 10
+                    TASK.TASK_SWEEP_AIM_ENTITY(ranger, "anim@mp_player_intupperstinker", "", "", "", -1, ranger, 0.0, 0.0)
+                    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ranger, pos.x, pos.y, pos.z)
+                    entities.request_control(ranger)
+                    if entities.get_owner(ranger) == PlayerID then
+                        wait(1000)
+                        entitydelete_entity(ranger)
+                        return
+                    end
+                    wait(1)
+                end
+                for n = 0, 150 do
+                    hunter[n] = CreateVehicle(0xFCFCB68B, plauuepos, 0)
+                    util.yield(0)
+                    ENTITY.FREEZE_ENTITY_POSITION(hunter[n], true)
+                    util.yield(0)
+                    VEHICLE.EXPLODE_VEHICLE(hunter[n], true, true)
+                end
+                util.yield(200)
+                for i = 1, #hunter do
+                    if hunter[i] ~= nil then
+                        entities.delete_by_handle(hunter[i])
+                    end
+                end
+            end
+            hunter = nil
+            plauuepos = nil
+                local weapon_ped <const> = entityspawn_entity(joaat("cs_taostranslator2"), players.get_position(PlayerID), 0, false, false, false, false, true)
+                WEAPON.GIVE_DELAYED_WEAPON_TO_PED(weapon_ped, joaat("w_lr_rpg_rocket"), 0, true)
+                WEAPON.SET_PED_GADGET(weapon_ped, joaat("w_lr_rpg_rocket"), true)
+                ENTITY.SET_ENTITY_HEALTH(weapon_ped, 0)
+                wait(1000)
+                entitydelete_entity(weapon_ped)
+           end)
+menu.set_visible(zuhebengkui614, false)
+
+
+
+
+    menu.action(collapse6, "子辰崩溃", {"zichen"}, "", function()
+        chat.send_message("大傻逼哈哈哈", false, true, true)
+        wait(1000)
+        notification( "开始崩溃喽", colors.black)
            menu.trigger_commands("zuhebengkui61 " .. players.get_name(PlayerID))
            menu.trigger_commands("zuhebengkui62 " .. players.get_name(PlayerID))
            menu.trigger_commands("zuhebengkui63 " .. players.get_name(PlayerID))
-        notification( "雷霆嘎巴---崩溃结束", colors.black)
+           menu.trigger_commands("zuhebengkui64 " .. players.get_name(PlayerID))
+        notification( "OVER", colors.black)
     end)
 
 end
@@ -6158,8 +6288,8 @@ end
 menu.toggle(misc, "Stand版本", {}, "", function(toggle)
     set_menu_open(toggle)
 end)
-menu.toggle_loop(misc, "全民制作人", {"gtzz"}, "", function()
-    draw_string(string.format("~italic~~bold~~p~Ping~q~制~p~作"), 0.350,0.150, 2,5)
+menu.toggle_loop(misc, "全民制作人", {"YM12"}, "", function()
+    draw_string(string.format("~italic~~bold~~p~子辰~q~制~p~作"), 0.350,0.150, 2,5)
 end)
 menu.toggle_loop(misc, "最帅的人", {""}, "关不了请关闭脚本", function()
 xinwen = GRAPHICS.REQUEST_SCALEFORM_MOVIE('BREAKING_NEWS')
@@ -7315,6 +7445,13 @@ Heist_Control = menu.list(zidongrenwu, "第一任务选项HC(V3.4.2)")
  require "lib.YeMulib.YMhc"
  Heist_Control2 = menu.list(zidongrenwu, "第二任务选项(DAIDAI)")
  require "lib.YeMulib.YMhc2"
+YMRS = menu.list(zidongrenwu,"全自动公寓抢劫RS")
+YMRS1 = menu.action(YMRS, "加载全自动公寓抢劫", {""}, "", function()
+        notification("正在加载全自动公寓抢劫RS,请稍等...",colors.blue)
+        util.yield(1000)
+        require "lib.YeMulib.YMRS"
+        menu.delete(YMRS1)
+    end)
 baoguo = menu.list(zidongrenwu,"武器厢型车传送", {},"一键传送到对应位置！~")
 zhaobaoguo = menu.action(baoguo, "加载厢型车地点传送选项", {""}, "寻找厢型车！", function()
         notification("正在加载武器厢型车地点传送,请稍等...",colors.blue)

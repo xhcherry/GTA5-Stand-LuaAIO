@@ -306,6 +306,110 @@ function juqishoulai()
                     PED.SET_ENABLE_HANDCUFFS(PLAYER.PLAYER_PED_ID(), false)
                 end
 end
+function is_loading()
+    return memory.read_int(memory.script_global(1575008)) ~= 66
+end
+local delete_entity_count = 0
+function entitydelete_entity(Entity)
+    if not PED.IS_PED_A_PLAYER(Entity) and not is_loading() then
+        if ENTITY.IS_ENTITY_A_VEHICLE(Entity) then
+            for pid in players.list(true, true, true) do
+                if is_ped_using_vehicle(PLAYER.PLAYER_PED_ID(pid), Entity) then
+                    return
+                end
+            end
+        end
+        delete_entity_count = delete_entity_count + 1
+        if entities.request_control(Entity, 2000) then
+            if ENTITY.IS_ENTITY_ATTACHED(Entity) then
+                ENTITY.DETACH_ENTITY(Entity)
+            end
+            if not ENTITY.IS_ENTITY_ATTACHED(Entity) then
+                if ENTITY.IS_ENTITY_A_VEHICLE(Entity) then
+                    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(Entity, true, true)
+                elseif ENTITY.IS_ENTITY_AN_OBJECT(Entity) then
+                    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(Entity, false, true)
+                elseif ENTITY.IS_ENTITY_A_PED(Entity) then
+                    ENTITY.SET_ENTITY_AS_MISSION_ENTITY(Entity, false, false)
+                end
+                util.remove_blip(HUD.GET_BLIP_FROM_ENTITY(Entity))
+                entities.delete_by_handle(Entity)
+                STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(ENTITY.GET_ENTITY_MODEL(Entity))
+                table_remove(try_spawned_entity, Entity)
+            end
+        end
+    end
+    if delete_entity_count - 10 == 0 then
+        delete_entity_count = 0
+        wait()
+    end
+end
+function entity_owner_can_migrate(Entity, Toggle)
+    NETWORK.SET_NETWORK_ID_CAN_MIGRATE(NETWORK.NETWORK_GET_NETWORK_ID_FROM_ENTITY(Entity), Toggle)
+end
+function fix_vehicle(Vehicle)
+    FIRE.STOP_ENTITY_FIRE(Vehicle)
+    GRAPHICS.REMOVE_DECALS_FROM_VEHICLE(Vehicle)
+    ENTITY.SET_ENTITY_RENDER_SCORCHED(Vehicle, false)
+    VEHICLE.SET_VEHICLE_BODY_HEALTH(Vehicle, 1000)
+    VEHICLE.SET_VEHICLE_DIRT_LEVEL(Vehicle, 0)
+    VEHICLE.SET_VEHICLE_PETROL_TANK_HEALTH(Vehicle, 1000)
+    VEHICLE.SET_VEHICLE_DEFORMATION_FIXED(Vehicle)
+    VEHICLE.SET_VEHICLE_ENGINE_HEALTH(Vehicle, 1000)
+    VEHICLE.SET_VEHICLE_FIXED(Vehicle)
+    VEHICLE.SET_VEHICLE_UNDRIVEABLE(Vehicle, false)
+end
+
+try_spawned_entity = {}
+function entityspawn_entity(hash, pos, dir, can_migrate, invincible, visible, freeze, collision)
+    local spawn_entity, entity_type
+    request_model(hash)
+    local create_ped <const> = entities.create_ped(-1, hash, pos, dir)
+    if ENTITY.DOES_ENTITY_EXIST(create_ped) then
+        TASK.CLEAR_PED_TASKS_IMMEDIATELY(create_ped)
+        spawn_entity = create_ped
+        entity_type = 1
+    else
+        local create_vehicle <const> = entities.create_vehicle(hash, pos, dir)
+        if ENTITY.DOES_ENTITY_EXIST(create_vehicle) then
+            fix_vehicle(create_vehicle)
+            spawn_entity = create_vehicle
+            entity_type = 2
+        else
+            local create_object <const> = entities.create_object(hash, pos)
+            if ENTITY.DOES_ENTITY_EXIST(create_object) then
+                spawn_entity = create_object
+                entity_type = 3
+            else
+                local create_world_object <const> = entities.create_object(hash, pos)
+                if ENTITY.DOES_ENTITY_EXIST(create_world_object) then
+                    spawn_entity = create_world_object
+                    entity_type = 4
+                end
+            end
+        end
+    end
+    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(spawn_entity, pos.x,pos.y,pos.z)
+    ENTITY.SET_ENTITY_ROTATION(spawn_entity, 0, 0, dir)
+    entity_owner_can_migrate(spawn_entity, can_migrate)
+    ENTITY.SET_ENTITY_INVINCIBLE(spawn_entity, invincible)
+    ENTITY.SET_ENTITY_VISIBLE(spawn_entity, visible)
+    if not visible then
+		entities.set_can_migrate(spawn_entity, 0)
+    end
+    if freeze then
+        ENTITY.FREEZE_ENTITY_POSITION(spawn_entity, true)
+    else
+        OBJECT.BREAK_OBJECT_FRAGMENT_CHILD(spawn_entity, 0, false)
+        PHYSICS.ACTIVATE_PHYSICS(spawn_entity)
+    end
+    ENTITY.SET_ENTITY_COLLISION(spawn_entity, collision, true)
+    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(hash)
+    try_spawned_entity[#try_spawned_entity + 1] = spawn_entity
+    return spawn_entity, entity_type
+end
+
+------------------------------
 local mcxh=1
 
 local mcr=255
@@ -4115,16 +4219,16 @@ function meowbmob(pid)
     end
 end
 function get_random_offset_from_entity(entity, minDistance, maxDistance)
-	local pos = ENTITY.GET_ENTITY_COORDS(entity, false)
-	return get_random_offset_in_range(pos, minDistance, maxDistance)
+    local pos = ENTITY.GET_ENTITY_COORDS(entity, false)
+    return get_random_offset_in_range(pos, minDistance, maxDistance)
 end
 function get_random_offset_in_range(coords, minDistance, maxDistance)
-	local radius = random_float(minDistance, maxDistance)
-	local angle = random_float(0, 2 * math.pi)
-	local delta = v3.new(math.cos(angle), math.sin(angle), 0.0)
-	delta:mul(radius)
-	coords:add(delta)
-	return coords
+    local radius = random_float(minDistance, maxDistance)
+    local angle = random_float(0, 2 * math.pi)
+    local delta = v3.new(math.cos(angle), math.sin(angle), 0.0)
+    delta:mul(radius)
+    coords:add(delta)
+    return coords
 end
 function random_float(min, max)
 	return min + math.random() * (max - min)
@@ -4143,59 +4247,58 @@ function set_entity_face_entity(entity, target, usePitch)
 end
 function creep(pid)
     local hash <const> = util.joaat("s_m_y_clown_01")
-		local explosion <const> = Effect.new("scr_rcbarry2", "scr_exp_clown")
-		local appears <const> = Effect.new("scr_rcbarry2",  "scr_clown_appears")
-		request_model(hash)
-		local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-		local pos = ENTITY.GET_ENTITY_COORDS(player, false)
-		local coord = get_random_offset_from_entity(player, 5.0, 8.0)
-		coord.z = coord.z - 1.0
-		local ped = entities.create_ped(0, hash, coord, 0.0)
-
-		request_fx_asset(appears.asset)
-		GRAPHICS.USE_PARTICLE_FX_ASSET(appears.asset)
-		WIRI_GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
-			appears.name,
-			ped,
-			0.0, 0.0, -1.0,
-			0.0, 0.0, 0.0,
-			0.5, false, false, false
-		)
-		set_entity_face_entity(ped, player, false)
-		PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, true)
-		TASK.TASK_GO_TO_COORD_ANY_MEANS(ped, pos.x, pos.y, pos.z, 5.0, 0, false, 0, 0.0)
-		local dest = pos
-		PED.SET_PED_KEEP_TASK(ped, true)
-		AUDIO.STOP_PED_SPEAKING(ped, true)
-		util.create_tick_handler(function()
-			local pos = ENTITY.GET_ENTITY_COORDS(ped, true)
-			local targetPos = players.get_position(pid)
-			if not ENTITY.DOES_ENTITY_EXIST(ped) or PED.IS_PED_FATALLY_INJURED(ped) then
-				return false
-			elseif pos:distance(targetPos) > 150 and
-			request_control(ped) then
-				entities.delete_by_handle(ped)
-				return false
-			elseif pos:distance(targetPos) < 3.0 and request_control(ped) then
-				request_fx_asset(explosion.asset)
-				GRAPHICS.USE_PARTICLE_FX_ASSET(explosion.asset)
-				WIRI_GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
-					explosion.name,
-					pos.x, pos.y, pos.z,
-					0.0, 0.0, 0.0,
-					1.0,
-					false, false, false, false
-				)
-				FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 0, 1.0, true, true, 1.0, false)
-				ENTITY.SET_ENTITY_VISIBLE(ped, false, false)
-				entities.delete_by_handle(ped)
-				return false
-			elseif targetPos:distance(dest) > 3.0 and request_control_once(ped) then
-				dest = targetPos
-				TASK.TASK_GO_TO_COORD_ANY_MEANS(ped, targetPos.x, targetPos.y, targetPos.z, 5.0, 0, false, 0, 0.0)
-			end
-		end)
-    end
+        local explosion <const> = Effect.new("scr_rcbarry2", "scr_exp_clown")
+        local appears <const> = Effect.new("scr_rcbarry2",  "scr_clown_appears")
+        request_model(hash)
+        local player = PLAYER.GET_PLAYER_PED(pid)
+        local pos = ENTITY.GET_ENTITY_COORDS(player, false)
+        local coord = get_random_offset_from_entity(player, 5.0, 8.0)
+        coord.z = coord.z - 1.0
+        local ped = entities.create_ped(0, hash, coord, 0.0)
+        request_ptfx_asset(appears.asset)
+        GRAPHICS.USE_PARTICLE_FX_ASSET(appears.asset)
+        GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(
+            appears.name,
+            ped,
+            0.0, 0.0, -1.0,
+            0.0, 0.0, 0.0,
+            0.5, false, false, false
+        )
+        set_entity_face_entity(ped, player, false)
+        PED.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, true)
+        TASK.TASK_GO_TO_COORD_ANY_MEANS(ped, pos.x, pos.y, pos.z, 5.0, 0, false, 0, 0.0)
+        local dest = pos
+        PED.SET_PED_KEEP_TASK(ped, true)
+        AUDIO.STOP_PED_SPEAKING(ped, true)
+        util.create_tick_handler(function()
+            pos = ENTITY.GET_ENTITY_COORDS(ped, true)
+            local targetPos = players.get_position(pid)
+            if not ENTITY.DOES_ENTITY_EXIST(ped) or PED.IS_PED_FATALLY_INJURED(ped) then
+                return false
+            elseif pos:distance(targetPos) > 150 and
+            request_control(ped) then
+                delete_entity(ped)
+                return false
+            elseif pos:distance(targetPos) < 3.0 and request_control(ped) then
+                request_ptfx_asset(explosion.asset)
+                GRAPHICS.USE_PARTICLE_FX_ASSET(explosion.asset)
+                GRAPHICS.START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(
+                    explosion.name,
+                    pos.x, pos.y, pos.z,
+                    0.0, 0.0, 0.0,
+                    1.0,
+                    false, false, false, false
+                )
+                FIRE.ADD_EXPLOSION(pos.x, pos.y, pos.z, 0, 1.0, true, true, 1.0, false)
+                ENTITY.SET_ENTITY_VISIBLE(ped, false, false)
+                delete_entity(ped)
+                return false
+            elseif targetPos:distance(dest) > 3.0 and request_control(ped) then
+                dest = targetPos
+                TASK.TASK_GO_TO_COORD_ANY_MEANS(ped, targetPos.x, targetPos.y, targetPos.z, 5.0, 0, false, 0, 0.0)
+            end
+        end)
+end
 --intToIp
 function intToIp(num)
     ip = ""

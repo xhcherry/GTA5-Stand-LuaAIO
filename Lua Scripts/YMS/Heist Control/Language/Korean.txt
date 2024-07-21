@@ -1,7 +1,7 @@
 # DON'T REMOVE '#', OTHERWISE WILL CAUSE ERRORS!
 
-# Generated Date: 04/10/2024 07:03:27 PM
-# Heist Control Version: V 3.4.0
+# Generated Date: 05/21/2024 06:10:22 PM
+# Heist Control Version: V 3.4.3 Dev
 
 # Thank you for translating Heist Control!
 # You should translate right-side of '=' character.
@@ -136,7 +136,6 @@ Unlock DJ Pooh Shirts = DJ 푸 티셔츠
 Buildings = 건물
 Casino Store Ace Masks = 카지노 상점의 에이스 마스크
 Missions = 미션
-Unlock Yacht Missions = 요트 미션
 Special Anniversaries = 특별 기념일
 Christmas = 크리스마스
 Bypass Christmas Clothing = 크리스마스 의상 우회
@@ -210,14 +209,6 @@ Betting = 베팅
 Shared = 공유
 Car Sales = 차량 판매
 Picked Up = 주움
-Stat Name = Stat 이름
-Stat Value = Stat 값
-Example Stat = 예시 Stat
-Custom Stat Editor = 커스텀 Stat 에디터
-Note: MP0_ or MP1_ will be selected by HC automatically, therefore don't write it. = 참고로 MP0_ 이나 MP1_ 은 헤이스트 컨트롤에 의해 자동으로 선택되니, 그러므로 적지 마세요.
-Custom Stat Reader = 커스텀 Stat 읽기
-Copy Stat Value = Stat 값 복사
-Read Stat = Stat 읽기
 Language = 언어
 Settings = 설정
 In-Game = 인 게임
@@ -354,7 +345,6 @@ Add Cosmetic Decorations To The Office/MC = 오피스 및 MC에 돈다발 추가
 To apply, sell special crate or vehicle cargo and change your session! = 적용하기 위해서는, 스패셜 패키지나 반입 반출 차량을 판매하고 세션을 변경하세요!
 Unlock Taxi Missions = 택시 미션 잠금 해제
 Unlock All Contacts = 모든 계약 잠금 해제
-Skip Lamar Missions To The Last One = 마지막 라마 미션으로 건너뛰기
 You must keep this feature enabled in order to wear it! = 의상을 입기 위해서는 이 기능을 활성화하고 있어야만 합니다!
 Valentine's Day = 발렌타인 데이
 Unlock Sasquatch Outfit = 원숭이 의상 잠금 해제
@@ -374,7 +364,6 @@ Dax Job = Dax 임무
 Note that Dax Job means from cellphone = 휴대 전화에서의 Dax 임무를 뜻하는 것입니다.
 CEO Vehicles = CEO 차량
 LS Car Meet's Track = LS 차량 모임 트랙
-(Risky) = (위험)
 Disable Transaction Errors = 거래 오류 화면 비활성화
 Infinite Stone Hatchet's Power = 무한 돌 도끼 파워
 7 Years GTA Online Playtime = GTA 온라인 플레이 시간 7년 
@@ -397,7 +386,6 @@ Manage Nearby Peds And Cams = 근처 NPC 및 카메라 관리
 Shoot = 총 발사
 Cameras = 카메라
 Stat Spoofing = Stat 스푸핑
-Stat Editor And Reader = Stat 수정 및 읽기
 Preset Stat Editor = 설정된 Stat 수정
 Add Additional Playtime = 추가적인 플레이 시간 추가
 Enabled: Add Method = 활성화: 추가 방식
@@ -410,8 +398,6 @@ Hours = 시
 Minutes = 분
 Successfully set! = 성공적으로 설정되었습니다!
 GTA Online Playtime = GTA 온라인 플레이 시간
-You didn't specify the value. Please specify it! = 구체적인 값을 입력하지 않았습니다. 입력해주세요!
-Successfully read! = 성공적으로 읽었습니다!
 Auto Collect Targets = 자동으로 목표물 얻기
 Collects targets via clicking left mouse button. Note that there are some delays before disabling completely. = 왼쪽 마우스 버튼을 눌러 목표물을 얻습니다. 참고로 비활성화한 후에도 조금의 비활성화에 필요한 지연 시간이 있을 수 있습니다.
 Motion Skip = 모션 스킵
@@ -445,9 +431,6 @@ Ceramic Pistol = 세라믹 피스톨
 Cooldown time has passed, you can play the heist again! = 쿨타임이 지나갔습니다, 다시 해당 습격을 플레이할 수 있습니다!
 Wallet Money = 예금
 Mins = 분
-Use at your own risk! Setting certain stats may cause a ban like casino-related stats. = 조심해서 사용하세요! 카지노 관련 Stat은 밴을 유발할 지도 모릅니다.
-Years = 년
-Months = 개월
 All = 모두
 One Line = 한 줄
 HC Logo image file doesn't exist. = HC 로고 이미지 파일이 존재하지 않습니다.
@@ -493,8 +476,6 @@ High = 상
 Bypass Minimum And Maximum Percentage = 최소, 최대 % 우회
 Only works if you are host of the heist. = 자신이 호스트여야만 작동합니다.
 Terrorbyte = 테러바이트
-Auto Paste To Stat Name = Stat 이름에 자동 붙여넣기
-If your clipboard contains stat name, the strings will be pasted into 'Stat Name' automatically. = 만약 클립보드에 Stat 이름이 있다면, 해당 클립보드 내용이 'Stat 이름' 기능에 자동으로 붙여 넣어질 것입니다.
 Please close your opened pause menu to open any apps remotely. = 열려 있는 일시 중지 메뉴를 닫아주셔야 원격으로 앱을 사용할 수 있게 됩니다.
 Seems like you need to be a MC President. So, Heist Control made you become MC President. = MC 두목이 될 필요가 있어 보입니다. 그래서, 헤이스트 컨트롤이 MC 두목이 되도록 만들어주었습니다.
 Seems like you need to be a CEO. So, Heist Control made you become CEO. = CEO가 될 필요가 있어 보입니다. 그래서, 헤이스트 컨트롤이 CEO가 되도록 만들어주었습니다.
@@ -502,7 +483,6 @@ Max payout for this heist = 이 습격의 최대 돈 양
 - Under $2.550.000 per run = - 1회 당 $255만 이하
 - Under $4.100.000 per hour = - 1시간 당 $410만 이하
 - Under $3.650.000 per run = - 1회 당 $365만 이하
-- Fleeca Heist: Under $15.000.000 per run = - 플리카 습격: 1회 당 $1500만 이하
 Enabling one of these presets will complete all of setups, and set as max payout, $2.55 Millions. It will be affected to all of heist players. = 이 설정된 습격 중 하나를 활성화 시키면 모든 준비 작업을 끝내고, 최대 돈 액수인 $255만을 얻을 수 있도록 설정해줍니다.
 Recommended = 권장
 This feature has been controlled by another feature. = 이 기능은 다른 기능에 의해 컨트롤 되어 왔습니다.
@@ -535,9 +515,6 @@ Make sure you are in your facility. = 시설 안에 있어야만 합니다.
 Refresh Heist Screen On Facility = 시설에 있는 습격 화면 새로 고침
 You can update changed doomsday heist stats in the Facility by refreshing it. = 변경된 심판의 날 습격 Stat을 시설 안에서도 습격 화면을 새로 고쳐 업데이트할 수 있도록 해줍니다.
 Pacific Standard Heist = 퍼시픽 스탠다드 습격
-Keep Cash $1.85M Take = 현금 수입 $185만 유지
-This makes you won't lose money by getting shot to the cash bags from polices = 이 기능은 경찰이 발사한 총에 현금 가방이 맞아 돈을 잃지 않도록 해줄 것입니다.
-Works on all of the classic heists. You need to activate this until first setup mission is ended. = 모든 아파트 습격에서 작동합니다. 이 기능을 첫 번째 준비 작업이 끝날 때까지 활성화시켜야 합니다.
 Note that you don't have the app, some of functions won't work. = 참고로 이 앱을 가지고 있지 않다면, 몇몇 기능들이 작동하지 않을 것입니다.
 Open = 열기
 Close = 닫기
@@ -584,8 +561,6 @@ Number of 'MPPLY' Stats = 'MPPLY' Stat 수
 It means the number of 'MPPLY_ABCDE_FGHIJ' format stats. = 'MPPLY_ABCDE_FGHIJ' 형식 Stat의 수를 뜻합니다.
 Open Folder for Custom Stat Files = 커스텀 Stat 파일을 위한 폴더 열기
 Visit GTAHaXUI = GTAHaXUI 방문하기
-All Stats List = 모든 Stat 목록
-Some Useful Stats List = 몇몇 유용한 Stat 목록
 Open Folder for Translations = 번역을 위한 폴더 열기
 Don't enable both of automated presets at once = 두 개의 자동화된 습격을 한 번에 활성화하지 마세요
 Waiting for requesting Kosatka... = 코사트카를 요청하는 것을 기다리는 중입니다.
@@ -603,9 +578,6 @@ Remove All = 모두 지우기
 Equipment Spawn Location = 장비 소환 위치
 Undetected Time: = 감지되지 않은 시간:
 Detected Time: = 감지된 시간:
-Load & Unload - All Boards = 불러오기 및 언로드 - 모든 보드
-Load = 불러오기
-Unload = 언로드
 Meaning of the cooldown: Requesting new Diamond Casino Heist in calling to Lester = 쿨타임의 의미: 레스터에게 전화하는 곳에서 새로운 다이아몬드 습격을 요청하는 것
 Makes able to play all of Doomsday heists, ACT I, II, III. = 모든 심판의 날 습격을 플레이할 수 있도록 만듭니다. 정보 약탈, 보그단 문제, 심판의 날 습격. 
 The Nightclub = 나이트클럽
@@ -662,23 +634,11 @@ Crew ID = 조직 ID
 Current Crew Level = 현재 조직 레벨
 Choose Crew Level = 조직 레벨 선택
 Set Crew Level = 조직 레벨 선택
-
-
-# Start of newly updated translations.
-# Translate them!
-
-
 Robberies = Robberies
 Please don't forget that BUYER should be selected LOW! Otherwise, won't get money. = 바이어는 낮음이 선택되어야 한다는 점을 잊지 마세요!
 Allow You Play Alone = 혼자서 플레이 가능하게 하기
 Allow you play alone this heist without another player. = 이 습격을 다른 플레이어 없이 플레이할 수 있도록 해줍니다.
 Let you and other players will get $15M when you are host and in finale. = 자신이 호스트이며 피날레에서 자신과 다른 플레이어들이 $1500만을 얻을 수 있도록 해줍니다.
-Make sure DIFFICULTY is NORMAL! = 난이도는 무조건 보통으로 해주세요!
-The Fleeca Job = 플리카 습격
-Prison Break = 탈옥
-Humane Labs = 휴메인 연구소
-Series A Funding = 시리즈 A
-Note that you shouldn't enable this feature while playing the Casino Heist: due to synced with payout for it = 카지노 습격을 할 때에는 이 기능을 활성화 시키면 안됩니다.
 Force Ready = 강제 준비
 Make all of players forced ready in planning board. = 준비 보드에서 모든 플레이어들이 강제로 준비되도록 만듭니다.
 The Los Santos Tuners Robbery = The Los Santos Tuners Robbery
@@ -756,3 +716,31 @@ Biker Bar Mission = Biker Bar Mission
 San Andreas Mercenaries Terminal = San Andreas Mercenaries Terminal
 Agency = Agency
 Motorbike = 바이크
+- Fleeca Heist ~ Pacific Standard Heist: Under $15.000.000 per run = - 플리카 습격 ~ 퍼시픽 스탠다드 습격: 1회 당 $1500만 이하
+Forces the players on board to ready. = 강제로 습격 보드에 있는 플레이어들을 준비시킵니다.
+Press this feature once before launching the heist. = 습격을 시작하기 전에 한 번 누르세요.
+Load All Boards = 모든 습격 보드 불러오기
+Unload All Boards = 모든 습격 보드 언로드
+There are video tutorials in Heist Control Discord server. If you have no idea how to use this feature, see them! = 헤이스트 컨트롤 디스코드 서버에 동영상 튜토리얼이 있습니다. 만약 어떻게 이 기능을 쓸 지 모르겠다면, 동영상을 보세요!
+Remove The Cooldown = 쿨타임 제거
+This doesn't bypass server-sided cooldown time, 20 mins. This just bypasses unable to launch heist in heist board. = 이 기능은 서버 단의 쿨타임인 20분을 우회하지 않습니다. 이 기능은 습격 보드에서 습격 시작을 못하는 것을 우회합니다.
+Instant finishing Pacific Standard heist won't work. = 퍼시픽 스탠다드 습격을 즉시 끝내는 것은 작동하지 않을 것입니다.
+
+
+# Start of newly updated translations.
+# Translate them!
+
+
+Increase Team Lives = 팀 생명 증가
+Increases the amount of team lives. Make sure to have script host if it doesn't seem to work. = 팀 생명의 수를 늘립니다. 작동하지 않는 것 같다면 스크립트 호스트를 가지고 있는지 확인하세요.
+I Wanna Receive The Heist Payout = 습격 돈을 받고 싶습니다
+Enabled: Each player will receive $15M = 활성화됨: 각각의 플레이어는 $1500만을 받을 것입니다.
+Disabled: For except me, only other players will receive $15M = 비활성화됨: 자신을 제외하고, 다른 플레이어만 $1500만을 받을 것입니다.
+Note: To apply this state, you should click 'Automated Presets' = 참고: 이 상태를 적용하기 위해서는, '자동화된 설정된 습격' 를 클릭해야만 합니다.
+Compatible with any classic heist and any difficulty level. = 어떤 아파트 습격과 어떤 난이도도 호환됩니다.
+But, recommeded setting DIFFICULTY to NORMAL to prevent game bugs like not getting money, etc. = 그렇지만, 돈을 못 얻는 것과 같은 게임 버그를 방지하기 위해 난이도를 보통으로 하는 것을 추천합니다.
+To prevent game bugs, please press once. = 게임 버그를 방지하기 위해, 한 번만 누르세요.
+Setting the payout is in progress... = 돈 설정을 하는 중입니다...
+Please don't move the mouse until notify to you. = 알려주기 전까지 마우스를 움직이지 마세요.
+Setting the payout is done! = 돈 설정이 끝났습니다!
+You can move the mouse since now. = 지금부터 마우스를 움직일 수 있습니다.

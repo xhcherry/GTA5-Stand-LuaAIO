@@ -1,6 +1,6 @@
 ------------------------------------夜幕LUA------------------------------
 require "lib.YeMulib.YeMulib"
-Version5 = 6.5
+Version5 = 6.7
 local net = "夜幕LUA暂时无法连接到服务器！"
 ----播放音频
 --来自https://github.com/calamity-inc/Soup-Lua-Bindings/blob/main/LUA_API.md
