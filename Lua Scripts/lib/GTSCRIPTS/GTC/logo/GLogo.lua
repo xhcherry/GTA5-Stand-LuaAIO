@@ -18,16 +18,14 @@ GTluaScript = menu GT = GTluaScript.list GTAC = GTluaScript.action GTD = GTluaSc
 GTLP = GTluaScript.toggle_loop GTTG = GTluaScript.toggle GTH = GTluaScript.hyperlink GTS = menu.textslider gtlog = util.log
 new = {} Ini = {}
 --
-GT_version = '30R4'
+GT_version = '6.21'
 translations = {}
 setmetatable(translations, {
     __index = function (self, key)
         return key
     end
 })
-function updatelogs()
-    drawnotify("修复在Stand 114.7中出现Package not found错误\n修复GTLua在Stand 114.7中大部分选项无法使用\n更新世界选项生成球体\n更新特效奥义秘术\n恶搞选项>近期更新>球形笼子(花园银行的球)\n载具选项>载具玩乐>载具升级最大化\n载具选项>载具玩乐>DJ载具\n载具选项>载具玩乐>快速跳出载具\n武器选项>新武器玩法>绳索载具枪[新]\n自我选项>自我娱乐>新型娱乐>操控能力\n错误改进和皇榜添加")
-end
+
 --
 hasShownToast = false
 outdatanow = false
@@ -37,42 +35,18 @@ currentMonth = tonumber(os.date("%m"))
 currentDay = tonumber(os.date("%d"))
 
 notifyYear = 2024
-notifyMonth = 4
-notifyDay = 30
+notifyMonth = 6
+notifyDay = 21
 
 _G.daysSince = _G.daysSince or 0
 
-util.create_tick_handler(function ()
+util.create_thread(function ()
     wait()
 
     local daysSince = (currentYear - notifyYear) * 365 + (currentMonth - notifyMonth) * 30 + (currentDay - notifyDay)
 
-    if daysSince >= 33 and not hasShownToast then
-        gtoast("无法使用此版本，因为过于老旧\n请更新脚本，下载群号已复制")
-        hasShownToast = true
-        util.copy_to_clipboard("933822463", false)
-        return
-        util.stop_script()
-    end
 
-    if daysSince >= 30 and not hasShownToast then
-        gtoast("当前版本 "..GT_version.." 过于老旧，不受支持\n请更新到最新版本,下载群号已复制\n你有三天的更新时间，否则将无法使用该版本")
-        util.copy_to_clipboard("933822463", false)
-        outdatanow = true
-        hasShownToast = true
-        days30 = true
-        GTD(G, "当前版本已过时,请及时更新")
-        while true do
-            wait()
-            HUD.SET_TEXT_SCALE(0.50, 0.50)
-            HUD.SET_TEXT_FONT(4)
-            HUD.SET_TEXT_CENTRE(1)
-            HUD.SET_TEXT_OUTLINE(0)
-            HUD.SET_TEXT_COLOUR(255, 255, 255, 255)
-            util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~h~~r~~italic~!Outdated Version!")
-            HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.0655, 0.29)
-        end
-    end
+
 end)
 --
 
@@ -80,7 +54,8 @@ function bannotiy()
     local cs = players.get_name(players.user()) 
     for _,id in ipairs(chusheng) do 
         if cs == id.cs then
-            util.toast(">这个账户下的使用权限被撤销<\n你已被永久禁止使用GTLua 除此之外如果你拥有特殊权利也已被一并撤销")
+            wait(1000)
+            util.toast("GRANDTOURINGVIP\n你已被永久禁止使用GTLua 除此之外如果你拥有特殊权利也已被一并撤销")
             util.stop_script()
         end
     end
@@ -344,20 +319,20 @@ function do_label_preset(label, text)
 end
 function GTNB()
     do_label_preset("PM_WAIT", "正在引导")
-    do_label_preset("HUD_JOINING", "GTVIP YYDS")
-    do_label_preset("MP_SPINLOADING", "GTVIP YYDS")
-    do_label_preset("HUD_LBD_FMP", "GTVIP 在线模式（公开，~1~）")
-    do_label_preset("HUD_LBD_FMI", "GTVIP 在线模式（邀请，~1~）")
-    do_label_preset("HUD_LBD_FMC", "GTVIP 在线模式（帮会，~1~）")
-    do_label_preset("HUD_LBD_FMF", "GTVIP 在线模式（好友，~1~）")
-    do_label_preset("HUD_LBD_FMS", "GTVIP 在线模式（单人，~1~）")
-    do_label_preset("0X56F3BD49", "GTVIP 在线模式")
+    do_label_preset("HUD_JOINING", "YYDS")
+    do_label_preset("MP_SPINLOADING", "YYDS")
+    do_label_preset("HUD_LBD_FMP", "在线模式（公开，~1~）")
+    do_label_preset("HUD_LBD_FMI", "在线模式（邀请，~1~）")
+    do_label_preset("HUD_LBD_FMC", "在线模式（帮会，~1~）")
+    do_label_preset("HUD_LBD_FMF", "在线模式（好友，~1~）")
+    do_label_preset("HUD_LBD_FMS", "在线模式（单人，~1~）")
+    do_label_preset("0X56F3BD49", "在线模式")
     do_label_preset("HUD_MAINTIT", "GRANDTOURINGVIP")
     do_label_preset("LOADING_SPLAYER_L", "请稍后 " .. PLAYER.GET_PLAYER_NAME(players.user()))
-    do_label_preset("PM_QUIT_MP", "离开 GTVIP 在线模式")
-    do_label_preset("PM_INF_LEAT", "离开 GTVIP 在线模式")
-    do_label_preset("PM_INF_LEAB", "立刻前往GTVIP故事模式，您的所有游戏进度都将自动保存")
-    do_label_preset("CMRC_STORE_OPEN", "GTVIP 商店\n现已开放!")
+    do_label_preset("PM_QUIT_MP", "离开在线模式")
+    do_label_preset("PM_INF_LEAT", "离开在线模式")
+    do_label_preset("PM_INF_LEAB", "立刻前往故事模式，您的所有游戏进度都将自动保存")
+    do_label_preset("CMRC_STORE_OPEN", "商店\n现已开放!")
     do_label_preset("UI_FLOW_OP_CL_M", "关于 GRANDTOURINGVIP")
     do_label_preset("UI_FLOW_OP_CL", "关于 GRANDTOURINGVIP")
 end
@@ -6358,6 +6333,105 @@ function do_vehicle_fly()
     if not dont_stop and not PAD.IS_CONTROL_PRESSED(2, 71) and not PAD.IS_CONTROL_PRESSED(2, 72) then
         VEHICLE.SET_VEHICLE_FORWARD_SPEED(veh, 0.0);
     end
+end
+
+function get_ped_weapon(ped)
+    local weaponHash = 0
+    if ENTITY.DOES_ENTITY_EXIST(ped) and ENTITY.IS_ENTITY_A_PED(ped) then
+        local ptr = memory.alloc_int()
+        if WEAPON.GET_CURRENT_PED_WEAPON(ped, ptr, true) then
+            weaponHash = memory.read_int(ptr)
+        end
+    end
+    return weaponHash
+end
+
+function get_weapon_name_by_hash(weaponHash)
+    if WEAPON.IS_WEAPON_VALID(weaponHash) then
+        for _, item in pairs(util.get_weapons()) do
+            if item.hash == weaponHash then
+                return util.get_label_text(item.label_key)
+            end
+        end
+    end
+    return ""
+end
+
+function is_player_ped_return(ped)
+    return entities.is_player_ped(ped)
+end
+
+function is_friendly_ped_return(ped)
+    if not ENTITY.IS_ENTITY_A_PED(ped) then
+        return false
+    end
+
+    local rel = PED.GET_RELATIONSHIP_BETWEEN_PEDS(ped, players.user_ped())
+    if rel == 0 or rel == 1 then 
+        return true
+    end
+
+    return false
+end
+
+function is_hostile_ped_return(ped)
+    if not ENTITY.IS_ENTITY_A_PED(ped) then
+        return false
+    end
+
+    if PED.IS_PED_IN_COMBAT(ped, players.user_ped()) then
+        return true
+    end
+
+    local rel = PED.GET_RELATIONSHIP_BETWEEN_PEDS(ped, players.user_ped())
+    if rel == 3 or rel == 4 or rel == 5 then 
+        return true
+    end
+
+    return false
+end
+
+function checkPed(ped, pedTypeSelect)
+    if is_player_ped_return(ped) then
+        return false
+    end
+
+    if pedTypeSelect == 1 and not is_friendly_ped_return(ped) then
+        return true
+    end
+
+    if pedTypeSelect == 2 and is_hostile_ped_return(ped) then
+        return true
+    end
+
+    if pedTypeSelect == 3 then
+        return true
+    end
+
+    return false
+end
+
+function IS_SCRIPT_RUNNING(script)
+    return SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(util.joaat(script)) > 0
+end
+
+function LOCAL_SET_INT(script, script_local, value)
+    if memory.script_local(script, script_local) ~= 0 then
+        memory.write_int(memory.script_local(script, script_local), value)
+    end
+end
+
+function inSession()
+    if util.is_session_started() and not util.is_session_transition_active() then
+        return true
+    else
+        return false
+    end
+end
+
+function IS_HELP_MSG_DISPLAYED(label)
+    BEGIN_TEXT_COMMAND_IS_THIS_HELP_MESSAGE_BEING_DISPLAYED(label)
+    return END_TEXT_COMMAND_IS_THIS_HELP_MESSAGE_BEING_DISPLAYED(0)
 end
 
 --杂项
@@ -17975,23 +18049,6 @@ function incr(ptr, fvalue, delta)
     memory.write_float(ptr, cvalue)
 end
 
---扳机机器人
-triggerbot_delay = 100
-local ent_alloc = memory.alloc_int()
-function trigger(on)
-    PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(players.user(), ent_alloc)
-    if memory.read_int(ent_alloc) ~= 0 then 
-        local ent = memory.read_int(ent_alloc)
-        if ENTITY.GET_ENTITY_TYPE(ent) == 1 and PLAYER.IS_PLAYER_FREE_AIMING_AT_ENTITY(players.user(), ent) then
-            if PED.GET_PED_CONFIG_FLAG(players.user_ped(), 78, true) then  
-                PAD._SET_CONTROL_NORMAL(2, 24, 1.0)
-                wait(triggerbot_delay)
-                PAD._SET_CONTROL_NORMAL(2, 24, 0.0)
-            end
-        end
-    end
-end
-
 function aa_thread()
     aa_threadv = util.create_thread(function()
         while true do
@@ -19847,7 +19904,7 @@ local fps = 0
 util.create_thread(function()
     while true do
         fps = math.ceil(1/SYSTEM.TIMESTEP())
-        wait(500)
+        wait(1000)
     end
 end)
 
@@ -23411,7 +23468,7 @@ GT = GTluaScript.list
 local name = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
 
 for _, idx in ipairs(sxid) do
-    if name == idx.playeridx then
+    if name then
         
         SxMainMenu = GT(GTROOT, "GTVIP Ultra VIP 無你有我  ~>'.'<~")
         GTD(SxMainMenu, "随时关注这里")
@@ -23739,7 +23796,7 @@ for _, idx in ipairs(sxid) do
 end
 
 for _,id in ipairs(spid) do
-    if name == id.playerid then
+    if name then
         HbMainMenu = GT(GTROOT, "GTVIP Pro Features ~(>.<)~", {}, "此选项允许两个相同的皇榜用户互相攻击")
         tobe = GTD(HbMainMenu, "请尽情享用")
 
@@ -24089,6 +24146,10 @@ PlayerMainMenu = GT(GTROOT, "崩溃选项", {"GTCrash"}, "", function()
     end
 end)
 
+asap = GTAC(PlayerMainMenu, "ASAP", {}, "", function ()
+    
+end)
+asap.visible = false
 
 updates = GT(PlayerMainMenu, "推荐选项", {}, "#此选项的崩溃为中等强度及以上\n#请您不要观看并且远离崩溃对象\n#切记:请不要无脑使用,否则玩火自焚\n#注意:崩溃需要您自行研究,切莫魔怔\n\n<建议1> #偷偷告诉您,附加黑洞效果更佳喔~\n<建议2> #针对主流菜单的情况下,其实踢出是最优选择喔~")
 
@@ -24899,7 +24960,7 @@ GTAC(updates,"ID3", {""}, "", function(selectedOption)
     spawned_crash_peds = {}
 end)
 
-t3g = GTAC(updates, "T3G Magic", {"t3g"}, "请勿在双开时使用", function ()
+t3g = GTAC(updates, "T3G Magic", {"t3g"}, "请不要在双开时使用", function ()
     util.create_thread(function()
         local obj = util.joaat("prop_tall_grass_ba")
         request_model(obj)

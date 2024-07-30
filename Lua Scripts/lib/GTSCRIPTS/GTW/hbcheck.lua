@@ -1,11 +1,7 @@
-require "lib.GTSCRIPTS.GTA.list"
-starhb = "你已经是至臻皇榜用户\n享受所有皇榜的特权,以及:\n至臻皇榜横幅 两倍显示时间\n个性化名称缀与皇榜横幅\n参加GTLua Beta测试\n极夜(虚空)入群欢迎语\n可使用GTLua内独有功能\n无限制的至臻皇榜资格\n至臻皇榜用户参与周边抽奖\n优先获得问题解答"
-imhb = "您已经是皇榜成员\n以下特权已激活:\n战局横幅提示(其他GTVIP用户)\n免疫GTVIP用户脚本攻击\nVIP特有脚本名称显示\n可被选中为随机幸运人\n免密码启动脚本\n皇榜专属独家功能\nStand+2Take1双资格皇榜\n可无限增加多个游戏ID"
-hbinfo = "加入皇榜可享受以下特权:\n战局横幅提示(其他GTVIP用户)\n免疫其他GTVIP用户的脚本攻击\n获得VIP功能与立刻加入VIP群聊 若您是卡网经销商,可免费加入GTVIP认证经销商列表\n联系QQ(1114983012/820104093)"
 function checkme()
-    local master = "Engineering "..GT_version
-    local vip388 = "  GTLua VIP Ultra"
-    local vipme = "GTLuaVIP Pro "..GT_version
+    local master = "  Ultra StatTrak™"
+    local vip388 = "  Ultra StatTrak™"
+    local vipme = "  GTLua Pro "..GT_version
     local standard = "   Standard "..GT_version
     local name = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
     
@@ -57,7 +53,7 @@ function checkme()
             end
         end
 
-        return standard
+        return vip388
     end
 end
 

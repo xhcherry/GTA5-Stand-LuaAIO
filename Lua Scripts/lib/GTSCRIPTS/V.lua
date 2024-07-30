@@ -17664,8 +17664,6 @@ loadgtsc = menu.my_root():action(gstring, {""}, "", function()
     end
 end)
 
-menu.hyperlink(menu.my_root(), ">>GTLua 官方网站", "http://gtlua.cn", "欢迎前来访问GTLua官方网站\n您需要了解的一切内容都在这里")
-
 function skp()
 	for _, id in ipairs(devid) do
 		passname = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user())
