@@ -1,0 +1,248 @@
+﻿[Component0]
+drawable = 0
+
+
+[Texture0]
+Texture = 0
+
+
+[Component1]
+drawable = 0
+
+
+[Texture1]
+Texture = 0
+
+
+[Component2]
+drawable = 42
+
+
+[Texture2]
+Texture = 0
+
+
+[Component3]
+drawable = 15
+
+
+[Texture3]
+Texture = 0
+
+
+[Component4]
+drawable = 15
+
+
+[Texture4]
+Texture = 10
+
+
+[Component5]
+drawable = 0
+
+
+[Texture5]
+Texture = 0
+
+
+[Component6]
+drawable = 81
+
+
+[Texture6]
+Texture = 1
+
+
+[Component7]
+drawable = 29
+
+
+[Texture7]
+Texture = 0
+
+
+[Component8]
+drawable = 3
+
+
+[Texture8]
+Texture = 0
+
+
+[Component9]
+drawable = 0
+
+
+[Texture9]
+Texture = 0
+
+
+[Component10]
+drawable = 0
+
+
+[Texture10]
+Texture = 0
+
+
+[Component11]
+drawable = 260
+
+
+[Texture11]
+Texture = 0
+
+
+[PropHats]
+drawable = -1
+
+
+[TextureHats]
+Texture = -1
+
+
+[PropGlasses]
+drawable = 24
+
+
+[TextureGlasses]
+Texture = 9
+
+
+[PropEars]
+drawable = 6
+
+
+[TextureEars]
+Texture = 0
+
+
+[PropWatches]
+drawable = -1
+Texture = -1
+
+
+[PropBangles]
+drawable = -1
+Texture = -1
+
+
+[Face]
+SaveWithFace = true
+HeadOverlayData = true
+HeadOverlayColor = true
+WithHairColor = true
+OverlayValue0 = 255
+OverlayOpacity0 = 1.000000
+Colour0 = 0
+ColourSecondary0 = 0
+OverlayValue1 = 255
+OverlayOpacity1 = 1.000000
+Colour1 = 0
+ColourSecondary1 = 0
+OverlayValue2 = 0
+OverlayOpacity2 = 1.000000
+Colour2 = 0
+ColourSecondary2 = 0
+OverlayValue3 = 255
+OverlayOpacity3 = 1.000000
+Colour3 = 0
+ColourSecondary3 = 0
+OverlayValue4 = 0
+OverlayOpacity4 = 1.000000
+Colour4 = 0
+ColourSecondary4 = 0
+OverlayValue5 = 0
+OverlayOpacity5 = 1.000000
+Colour5 = 0
+ColourSecondary5 = 0
+OverlayValue6 = 255
+OverlayOpacity6 = 1.000000
+Colour6 = 0
+ColourSecondary6 = 0
+OverlayValue7 = 255
+OverlayOpacity7 = 1.000000
+Colour7 = 0
+ColourSecondary7 = 0
+OverlayValue8 = 0
+OverlayOpacity8 = 1.000000
+Colour8 = 0
+ColourSecondary8 = 0
+OverlayValue9 = 255
+OverlayOpacity9 = 1.000000
+Colour9 = 0
+ColourSecondary9 = 0
+OverlayValue10 = 255
+OverlayOpacity10 = 1.000000
+Colour10 = 0
+ColourSecondary10 = 0
+OverlayValue11 = 255
+OverlayOpacity11 = 1.000000
+Colour11 = 0
+ColourSecondary11 = 0
+OverlayValue12 = 255
+OverlayOpacity12 = 1.000000
+Colour12 = 0
+ColourSecondary12 = 0
+PrimColorOV0 = false
+SecColorOV0 = false
+PrimColorOV1 = false
+SecColorOV1 = false
+PrimColorOV2 = false
+SecColorOV2 = false
+PrimColorOV3 = false
+SecColorOV3 = false
+PrimColorOV4 = false
+SecColorOV4 = false
+PrimColorOV5 = false
+SecColorOV5 = false
+PrimColorOV6 = false
+SecColorOV6 = false
+PrimColorOV7 = false
+SecColorOV7 = false
+PrimColorOV8 = false
+SecColorOV8 = false
+PrimColorOV9 = false
+SecColorOV9 = false
+PrimColorOV10 = false
+SecColorOV10 = false
+PrimColorOV11 = false
+SecColorOV11 = false
+PrimColorOV12 = false
+SecColorOV12 = false
+FacialFeatures = true
+FeatureData0 = 0.000000
+FeatureData1 = 0.000000
+FeatureData2 = 0.000000
+FeatureData3 = 0.000000
+FeatureData4 = 0.000000
+FeatureData5 = 0.000000
+FeatureData6 = 0.000000
+FeatureData7 = 0.000000
+FeatureData8 = 0.000000
+FeatureData9 = 0.000000
+FeatureData10 = 0.000000
+FeatureData11 = 0.000000
+FeatureData12 = 0.000000
+FeatureData13 = 0.000000
+FeatureData14 = 0.000000
+FeatureData15 = 0.000000
+FeatureData16 = 0.000000
+FeatureData17 = 0.000000
+FeatureData18 = 0.000000
+FeatureData19 = 0.000000
+FeatureData20 = 0.000000
+ShapeAndSkinTone = true
+shapeFirst = 21
+shapeSecond = 12
+shapeThird = 0
+skinFirst = 21
+skinSecond = 12
+skinThird = 0
+shapeMix = 0.050000
+skinMix = 1.000000
+thirdMix = 0.000000
+parent = true
+hairColour = 0
+hairColourStreaks = 0
