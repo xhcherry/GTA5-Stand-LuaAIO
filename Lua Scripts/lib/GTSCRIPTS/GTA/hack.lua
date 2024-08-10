@@ -1,4 +1,3 @@
---GT团队原创功能，CV我直接操你母
 vehmanager = off
 GTTG(entitymanagerlist, "激活载具管理", {"vehmanager"}, "", function(on)
 	vehmanager = on

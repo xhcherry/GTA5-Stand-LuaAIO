@@ -1,58 +1,7 @@
 function checkme()
-    local master = "  Ultra StatTrak™"
     local vip388 = "  Ultra StatTrak™"
-    local vipme = "  GTLua Pro "..GT_version
-    local standard = "   Standard "..GT_version
     local name = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
-    
-    if name == "RhymeBear" then
-        return master
-    elseif name == "RcktaR" then
-        return "    qianzongGol"
-    elseif name == "zqxhnb" then
-        return "  Huntsman VIP"
-    elseif name == "Cheng1073" then 
-        return "   Stupid Cheng"
-    elseif name == "rudan891018" then 
-        return "   rudan 891018"
-    elseif name == "An_owQ" then
-        return"   An_owQ Baby"
-    elseif name == "Shimumu999" then
-        return "Karry Handsome"
-    elseif name == "KIHPUNG" then
-        return " WuHuQiFei VIP"
-    elseif name == "GTlxiao" then
-        return "  Hu Handsome"
-    elseif name == "Nimalegebi-00" then
-        return "    OLDDOG VIP"
-    elseif name == "tNaovo" then 
-        return "Esclusive tNaovo"
-    elseif name == "SmallGodGirlo3o" then
-        return "SmallGodGirlo3o"
-    elseif name == "Twelve___12" then 
-        return " Twelve 12 Baby"
-    elseif name == "Brook-Hill" then 
-        return "Strawberry Sister"
-    elseif name == "05L5" then
-        return "  7SkyK1ng 05L5"
-    elseif name == "XiaoYuXin_qwq" then
-        return "Happy Every Day"
-    elseif name == "Mag7777V" or name == "Magicswordstar" then
-        return " Magicswordstar"
-    else
-
-        for _,id in ipairs(sxid) do
-            if name == id.playeridx then
-                return vip388
-            end
-        end
-
-        for _, id in ipairs(spid) do
-            if name == id.playerid then
-                return vipme
-            end
-        end
-
+    if name then
         return vip388
     end
 end
@@ -141,12 +90,3 @@ for _, id in ipairs(spid) do
         end
     end
 end
-
-chusheng = {{
-    cs = "bbnomoney0721"
-}, {
-    cs = "Rhyme2Bear"
-}, {
-    cs = "zhanjingxuan"
-}
-}

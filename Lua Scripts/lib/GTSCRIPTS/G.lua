@@ -1,15 +1,6 @@
---[[
- ██████╗ ██████╗  █████╗ ███╗   ██╗██████╗ ████████╗ ██████╗ ██╗   ██╗██████╗ ██╗███╗   ██╗ ██████╗ ██╗   ██╗██╗██████╗ 
-██╔════╝ ██╔══██╗██╔══██╗████╗  ██║██╔══██╗╚══██╔══╝██╔═══██╗██║   ██║██╔══██╗██║████╗  ██║██╔════╝ ██║   ██║██║██╔══██╗
-██║  ███╗██████╔╝███████║██╔██╗ ██║██║  ██║   ██║   ██║   ██║██║   ██║██████╔╝██║██╔██╗ ██║██║  ███╗██║   ██║██║██████╔╝
-██║   ██║██╔══██╗██╔══██║██║╚██╗██║██║  ██║   ██║   ██║   ██║██║   ██║██╔══██╗██║██║╚██╗██║██║   ██║╚██╗ ██╔╝██║██╔═══╝ 
-╚██████╔╝██║  ██║██║  ██║██║ ╚████║██████╔╝   ██║   ╚██████╔╝╚██████╔╝██║  ██║██║██║ ╚████║╚██████╔╝ ╚████╔╝ ██║██║     
- ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝    ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝      
-GRANDTOURINGVIP™ Copyright© 2024 All rights reserved.]] 
 _G.native_v = native_invoker.unified_void
 _G.native_b = native_invoker.unified_bool
-function loadgt() 
---if async_http.have_access() then
+function loadgt()
 memory.alloc_int()
     require "lib.GTSCRIPTS.GTC.logo.GLogo"  
     require "lib.GTSCRIPTS.W"  
@@ -31,14 +22,13 @@ memory.alloc_int()
 
 require "lib.GTSCRIPTS.GTW.hbcheck"
 
-bannotiy()
 
 function gtoast(str)
-    return util.toast("GRANDTOURINGVIP\n"..str)
+    return util.toast(str)
 end
 
 function log(str)
-    return util.log("[GTLua VIP] "..str)
+    return util.log(str)
 end
 --
 deleteframe = false
@@ -55,43 +45,6 @@ util.create_tick_handler(function()
     
 end)
 
-util.create_thread(function()
-    
-end)
-
---[[
-function success_func(responseCode)
-    gtoast("成功")
-    if responseCode == 200 then
-        deleteframe = true
-        gtoast("成功(2)")
-    end
-end
-
-function fail_func()
-    gtoast("无法检测连接请求")
-end
-
-function make_http_request()
-    async_http.init("baidu.com", "/s", success_func, fail_func)
-    async_http.dispatch()
-end
-make_http_request()]]
-
---[[ 调用函数以触发HTTP请求
-util.create_thread(function ()
-    local success, err = pcall(function ()
-        local body, header_fields, status_code = 
-        async_http.init("www.7777v.cn", "/#shop")
-        async_http.dispatch()
-        if status_code == 200 then
-            deleteframe = true
-        else
-            gtoast("无法检测连接请求")
-        end
-    end)
-end)]]
---
 
 festive_div = GTD(G, "GRANDTOURINGVIP") 
 util.create_tick_handler(function() 
@@ -213,10 +166,6 @@ if filesystem.exists(configFile) then
     end
     log("欢迎 " .. PLAYER.GET_PLAYER_NAME(players.user()))
 end
-newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;", "~h~~b~欢迎使用GRANDTOURINGVIP", "CHAR_CHOP", 140)
-util.on_stop(function()
-    newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;", "~h~~b~脚本已关闭", "CHAR_CHOP", 140)
-end)
 
 focusref = {}
 isfocused = false
@@ -22405,18 +22354,8 @@ restartgt = GTAC(G, ">>重新启动", {}, "", function ()
     restartscript()
 end)
 
-require "lib.GTSCRIPTS.GTA.hbl"
-sponsor = GT(other_options, 'GTLua VIP 顶级用户', {}, '功德无量，爱心支持')
-GTD(sponsor, ">>所有 GTLua VIP 顶级用户<<")
-for _, v in ipairs(hb_id) do
-    GTD(sponsor, "GTLua VIP: " .. v.name, function()end)
-end
-GTD(sponsor, "...还有大约400个未显示...", function()end)
-GTD(sponsor, "...未完待续...", function()end)
-
-
 zhujixianshi = GT(other_options, "UI显示选项", {}, "在这里修改各种显示在屏幕中的元素")
-zanzhuzx = GT(other_options, "GTLua 团队")
+
 
 baocunanjain = GTTG(zhujixianshi, "[按F8保存设置]", {""}, "", function(f)
     gt = f
@@ -24149,52 +24088,6 @@ end
 end
 end)
 
---[[gtauthor = GTLP(zanzhuzx, "作者", {"gtdev"}, "", function()
-    draw_string(string.format("~italic~~bold~~f~GRANDTOURINGVIP"), 0.38,0.560, 1,2)
-    draw_string(string.format("~italic~~bold~~z~GT"), 0.30,0.150, 7,5)
-    draw_string(string.format("~italic~~bold~~w~制作"), 0.40,0.320, 1.2,5)
-    draw_string(string.format("~italic~~bold~~q~S"), 0.517,0.283, 1.1,5)
-    draw_string(string.format("~italic~~bold~~q~T"), 0.507,0.335, 1.1,5)
-    draw_string(string.format("~italic~~bold~~q~A"), 0.497,0.386, 1.1,5)
-    draw_string(string.format("~italic~~bold~~q~N"), 0.462,0.438, 1.1,5)
-    draw_string(string.format("~italic~~bold~~q~D"), 0.454,0.491, 1.1,5)
-    draw_string(string.format("~italic~~bold~~w~GT"), 0.37,0.435, 1.2,5)
-    draw_string(string.format("~h~~m~SCRIPT"), 0.435,0.195, 1.1,5)
-    draw_string(string.format("~italic~~bold~&#8721;"), 0.35,0.545, 1.1,5)
-    draw_string(string.format("~italic~~bold~&#8721;"), 0.548,0.545, 1.1,5)
-    draw_string(string.format("~italic~~bold~~w~关闭请到其他选项(感谢使用)"), 0.28,0.600, 1,5)
-end)
-
-gtdev = GTLP(zanzhuzx, "开发", {"respect"}, "", function()
-    draw_string(string.format("~italic~~bold~~p~~h~瑞思拜"), 0.40,0.270, 1.5,2)
-    draw_name(string.format("~italic~~bold~~y~Developer Updates For"), 0.25,0.370, 2,2)
-    draw_name(string.format("~italic~~bold~&#8721;"), 0.27,0.50, 1.1,5)
-    draw_name(string.format("~italic~~bold~~b~GRANDTOURINGVIP YYDS"), 0.30,0.480, 2,2)
-    draw_name(string.format("~italic~~bold~~q~Made With Love For Everyone / Create Everything"), 0.26,0.600, 1,1)
-end)
-
-GTLP(zanzhuzx, "致谢名单", {""}, "GRANDTOURING董事会", function()
-    draw_string(string.format("~italic~~bold~~q~ ~y~[12] ~r~[Super飞]~g~[柒月]\n~f~[小马哥] ~q~[安安安] ~d~[西木]"), 0.280,0.300,1.5,5)
-    draw_string(string.format("~italic~~bold~~q~ ~q~[丢丢] ~w~[02] ~y~[xion] ~r~[rudan]"), 0.250,0.520,1.5,5)
-end)]]
-
-GTD(zanzhuzx, "GTLua Team", {}, "", function () end)
-GTS(zanzhuzx, "GT[Creator]", {}, "", {"2022年加入", "GTLua 创始人"}, function()end)
-GTS(zanzhuzx, "Respect[Developer]", {}, "", {"2022年加入", "GTLua 开发者"}, function()end)
-GTS(zanzhuzx, "Mag[Website]", {}, "", {"2024年加入",  "GTLua 运营者", "GTLua 网页设计","极夜科技 创始人"},function()end)
-GTS(zanzhuzx, "速响[Polar Night]",{},"",{"2024年加入", "GTLua VIP验证技术", "GTLua 安装器渠道", "极夜科技 创始人"},function()end)
-GTS(zanzhuzx, "12[Arting]",{},"",{"2022年加入", "GTLua 美工设计"},function()end)
-GTS(zanzhuzx, "西木[Function]",{},"",{"2022年加入", "GTLua 功能支持"},function()end)
-GTS(zanzhuzx, "丢丢[Plan]",{},"",{"2022年加入", "GTLua 功能策划"},function()end)
-GTS(zanzhuzx, "船船[Admin]",{},"",{"2023年加入", "GTLua 管理员"},function()end)
-GTS(zanzhuzx, "湾湾[WER]",{},"",{"2023年加入", "GTLua 管理员"}, function()end)
-GTS(zanzhuzx, "Hardon[Function]",{},"",{"2023年加入", "GTLua 功能支持"},function()end)
-GTS(zanzhuzx, "草莓酱[Admin]",{},"",{"2023年加入", "GTLua 代表人"},function()end)
-GTS(zanzhuzx, "7SkyK1ng[Shit Base]",{},"",{"2023年加入", "Shit Base"},function()end)
-GTS(zanzhuzx, "Rebound[Menu]",{},"",{"回弹菜单官方", "为GTLua提供帮助"},function()end)
-GTAC(zanzhuzx, "...更多", {}, "", function ()
-    gtoast("联系我们加入GTLua团队\n了解GTLua如何与GTA相得益彰\n了解我们的名字,和我们的故事\n了解如何与我们一同创造奇迹")
-end)
 
 GTTG(zaxiang, "禁用圈钱鲨鱼卡显示", {}, "", function(on)
 	nostore = on
@@ -24246,52 +24139,7 @@ end)
 
 credit_text_positions = {}
 ready_for_text = false
-show_credits = GTTG(other_options, "鸣谢人员", {}, "", function(on)
-    if on then
-        for i = 1, #credits_lines do
-            table.insert(credit_text_positions, 1)
-        end
 
-        AUDIO.SET_RADIO_FRONTEND_FADE_TIME(3)
-        AUDIO.SET_AUDIO_FLAG("MobileRadioInGame", true)
-        AUDIO.SET_FRONTEND_RADIO_ACTIVE(true)
-        AUDIO.SET_RADIO_STATION_MUSIC_ONLY("RADIO_18_90S_ROCK", true)
-        AUDIO.SET_RADIO_TO_STATION_NAME("RADIO_03_HIPHOP_NEW")
-        AUDIO.FORCE_MUSIC_TRACK_LIST("RADIO_03_HIPHOP_NEW", "radio_03_hiphop_new_core_music", 3 * 61000 - 15000) --timed the best--
-        local delay_time = util.current_time_millis() + 100
-        while show_credits.value do
-            directx.draw_rect(0, 0, 1, 1, {r = 0, g = 0, b = 0, a = 1})
-            --directx.draw_texture(logo, 0.14, 0.14, 0.5, 0.5, 0.12, 0.5, 0, {r = 1, g = 1, b = 1, a = 1})
-
-            if not ready_for_text and delay_time < util.current_time_millis() then
-                ready_for_text = true
-                --gtoast(tostring(ready_for_text))
-            end
-
-            if ready_for_text then
-                for i = 1, #credits_lines do
-                    local new_position = credit_text_positions[i] - (-i/40)
-                    if new_position <= 0.95 then
-                        if new_position > 0.05 then
-                            directx.draw_text(0.5, new_position, credits_lines[i].text, ALIGN_CENTRE, credits_lines[i].size, { r = 1, g = 1, b = 1, a = 1 }, true)
-                        else
-                            if i == 66 then
-                                show_credits.value = false
-                            end
-                        end 
-                    end
-                    credit_text_positions[i] = credit_text_positions[i] - 0.0010
-                end
-            end
-            wait()
-        end
-    else
-        ready_for_text = false
-        credit_text_positions = {}
-        AUDIO.SET_AUDIO_FLAG("MobileRadioInGame", false)
-        AUDIO.SET_FRONTEND_RADIO_ACTIVE(false)
-    end
-end)
 
 GTAC(other_options,"关闭脚本",{"closegt"},"",function ()
     util.stop_script()

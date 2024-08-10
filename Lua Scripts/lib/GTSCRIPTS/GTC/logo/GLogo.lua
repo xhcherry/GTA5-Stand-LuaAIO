@@ -50,16 +50,6 @@ util.create_thread(function ()
 end)
 --
 
-function bannotiy()
-    local cs = players.get_name(players.user()) 
-    for _,id in ipairs(chusheng) do 
-        if cs == id.cs then
-            wait(1000)
-            util.toast("GRANDTOURINGVIP\n你已被永久禁止使用GTLua 除此之外如果你拥有特殊权利也已被一并撤销")
-            util.stop_script()
-        end
-    end
-end
 
 pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
 if filesystem.exists(pathld) then
@@ -977,31 +967,6 @@ end
 --Logo 在脚本开启时弹出
 if SCRIPT_MANUAL_START then
 --MISC.FORCE_LIGHTNING_FLASH()
-end
-if SCRIPT_MANUAL_START then
-    util.create_thread(function()
-        local photo = directx.create_texture(filesystem.scripts_dir() .. "GTLuaScript/GT.png")
-        local l = -100
-        while l <= 90 do
-            for j = 1, 195, 5 do
-                directx.draw_texture(photo, 0.06, 0.06, 0.5, -1.1, l/1500, 0.50, 0, {r = 1, g = 1, b = 1, a = j/255})
-                wait(0)
-                l = l + 5
-            end
-        end
-        for i = 1, 320 do
-                directx.draw_texture(photo, 0.06, 0.06, 0.5, -1.1, 0.06, 0.50, 0, {r = 1, g = 1, b = 1, a = 1.0})
-            wait(0)
-        end
-        local k = 90
-        while k >= -10 do
-            for j = 195, 1, -5 do
-                directx.draw_texture(photo, 0.06, 0.06, 0.5, -1.1, k/1500, 0.50, 0, {r = 1, g = 1, b = 1, a = j/255})
-                wait(0)
-                k = k - 5
-            end
-        end
-    end)
 end
 
 function Ini.save(fileName, obj)
