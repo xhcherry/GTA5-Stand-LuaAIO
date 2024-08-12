@@ -17618,7 +17618,7 @@ GENERIC_AUDIO = {
         return native_invoker.get_return_value_bool()
     end
 }
--- 
+--
 
 function inputC(windowName, maxInput, defaultText)
     MISC.DISPLAY_ONSCREEN_KEYBOARD(0, windowName, "", defaultText, "", "", "", maxInput);

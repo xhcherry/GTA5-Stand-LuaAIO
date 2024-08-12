@@ -1,27 +1,20 @@
 _G.native_v = native_invoker.unified_void
 _G.native_b = native_invoker.unified_bool
+
 function loadgt()
+
 memory.alloc_int()
-    require "lib.GTSCRIPTS.GTC.logo.GLogo"  
-    require "lib.GTSCRIPTS.W"  
-    require ('lib/GTSCRIPTS/T') 
-    require "lib.GTSCRIPTS.GTW.fixnative"
-    K = require 'lib.GTSCRIPTS.K' 
-    local scaleForm = require'lib.GTSCRIPTS.Z' 
-    local SFasd = scaleForm('instructional_buttons') 
-    local UFO = require "lib.GTSCRIPTS.U" 
-    local HomingMissiles = require "lib.GTSCRIPTS.H" 
-    local GuidedMissile = require "lib.GTSCRIPTS.M" 
-    local logo = directx.create_texture(filesystem.scripts_dir() .. '/GTLuaScript/' .. 'GT2.png') 
-    local pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua' 
-    if filesystem.exists(pathld) then 
-        require "lib.GTSCRIPTS.GTW.display" 
-    else 
-        gtoast("未检测到文件") 
-    end
 
-require "lib.GTSCRIPTS.GTW.hbcheck"
-
+require "lib.GTSCRIPTS.GTC.logo.GLogo"
+require "lib.GTSCRIPTS.W"
+require ('lib/GTSCRIPTS/T')
+require "lib.GTSCRIPTS.GTW.fixnative"
+K = require 'lib.GTSCRIPTS.K'
+local scaleForm = require'lib.GTSCRIPTS.Z'
+local SFasd = scaleForm('instructional_buttons')
+local UFO = require "lib.GTSCRIPTS.U"
+local HomingMissiles = require "lib.GTSCRIPTS.H"
+local GuidedMissile = require "lib.GTSCRIPTS.M"
 
 function gtoast(str)
     return util.toast(str)
@@ -45,15 +38,6 @@ util.create_tick_handler(function()
     
 end)
 
-
-festive_div = GTD(G, "GRANDTOURINGVIP") 
-util.create_tick_handler(function() 
-    for _, frame in pairs(loading_frames) do 
-        GTluaScript.set_menu_name(festive_div, frame .. '') 
-        wait(100) 
-    end 
-end)
-
 function restartscript() 
     --package.loaded["lib.GTSCRIPTS.Q"] = nil
     package.loaded["lib.GTSCRIPTS.GTC.logo.GLogo"] = nil 
@@ -66,14 +50,8 @@ end
 GTAC(menu.my_root(), ">>点击进入GTLua", {}, "",function () menu.trigger_command(G) end) 
 GTAC(menu.my_root(), ">>重新启动GTLua", {}, "", function () restartscript() end) 
 
-
-for _, idx in ipairs(sxid) do
-    local mvip = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user())
-    if mvip then
-        mastervip = GT(G, ">>Ultra级会员功能")
-        func388()
-    end
-end
+mastervip = GT(G, ">>Ultra级会员功能")
+func388()
 
 enable_options = GTTG(G, ">>快捷入口", {}, "", function (on) 
     Quick_Enable(on) 
@@ -120,13 +98,6 @@ if SCRIPT_MANUAL_START then
     menu.trigger_commands("gtluascript")
 end
 
-
-
-if players.get_name(players.user()) == "SmallGodGirlo3o" then
-    gtoast("欢迎回来，美丽的丢丢~")
-    notification("欢迎回来，美丽的丢丢~")
-end
-
 local function newnotify(title, subtitle, msg, iconname, intcolor)
     HUD.BEGIN_TEXT_COMMAND_THEFEED_POST("STRING")
     HUD.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(msg)
@@ -144,7 +115,7 @@ function notification(message, color)
         wait()
     end
     util.BEGIN_TEXT_COMMAND_THEFEED_POST(message)
-    title = "~g~&#8721;GRANDTOURINGVIP&#8721;"
+    title = "~g~&#8721;GRANDT&#8721;"
     if color == colors.white or color == colors.white then
         subtitle = "~g~&#8721;‹GT‹&#8721;"
     elseif color == colors.white then
@@ -292,53 +263,6 @@ loadkdr = GTAC(kdr, "读取KD数据", {}, "", function ()
     menu.delete(loadkdr)
 end)
 
---开发
-require "lib.GTSCRIPTS.GTA.list"
-notified_devs = {}
-dev = GTTG(players_root, "DEV", {"devcheck"}, "", function(f)
-    devgt = f
-    while devgt do
-        wait()
-
-        if players.get_name(players.user()) ~= SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME(players.user()) then
-            notified_devs[players.get_name(players.user())] = true
-        end
-
-        for pid = 0, 32 do
-            playerrid = players.get_name(pid)
-            for _, id in ipairs(devid) do
-                if playerrid == id.playerrid and not notified_devs[id.playerrid] then
-                    if pid then
-                        util.show_corner_help("~h~~q~GRANDTOURINGVIP 温馨提示 ~r~开发人员 ".. playerrid .."\n目前正在此战局中")
-                        gtoast("GTVIP开发人员目前正在你的战局中")
-                        devhengfu(f, playerrid)
-                        wait(1000)
-                        notified_devs[id.playerrid] = true
-                    end
-                end
-            end
-        end
-        wait(1000)
-    end
-end)
-dev.value = true
-dev.visible = false
-
-resetdev = GTTG(players_root, "RESETDEV", {}, "", function (f)
-    if f then
-        players.on_join(function(pid)
-            playerrid = players.get_name(pid)
-            
-            for _,id in ipairs(devid) do
-                if playerrid == id.playerrid then 
-                    notified_devs[id.playerrid] = false
-                end
-            end
-        end)
-    end
-end)
-resetdev.value = true
-resetdev.visible = false 
 --
 function lerp(start, destination, speed)
     return start + ((destination - start) * speed)
@@ -372,33 +296,6 @@ spo = GTTG(players_root, "SPO", {""}, "", function(f)
                             notified_sp[id.playerid] = true
                         end
                     end
-                end
-            end
-
-            for _, id in ipairs(spid) do
-                if playerid and not notified_sp[id.playerid] then
-
-                    if pid then
-                        if off_hb ~= true then
-                            util.show_corner_help("~h~~q~GRANDTOURINGVIP\n~p~皇榜人员\n" .. playerid ..
-                                                      "\n~p~当前正在该战局")
-                            gtoast("GTVIP皇榜人员 " .. playerid .. " 当前正在该战局")
-                            hengfugt(f, playerid)
-                            wait(1000)
-                            notified_sp[id.playerid] = true
-                        elseif off_hb == true then
-                            if pid ~= players.user() then
-                                util.show_corner_help("~h~~q~GRANDTOURINGVIP\n~p~皇榜人员\n" .. playerid ..
-                                                          "\n~p~当前正在该战局")
-                                gtoast("GTVIP皇榜人员 " .. playerid .. " 当前正在该战局")
-                                hengfugt(f, playerid)
-                                wait(1000)
-                                notified_sp[id.playerid] = true
-                            end
-                        end
-
-                    end
-
                 end
             end
 
@@ -448,29 +345,6 @@ end)
 resetsx.value = true 
 resetsx.visible = false
 
---[[星探
-notified_mid = {}
-mio = GTTG(players_root, "MIO", {"miocheck"}, "", function(f)
-    spgt = f
-    while spgt do
-        for pid = 0, 32 do
-            mid = players.get_name(pid)
-            for _,id in ipairs(masterid) do
-                if mid == id.mid and not notified_mid[id.mid] then
-                    if pid then
-                        gtoast("GTLua VIP 星探级会员 "..mid.." 正在该战局")
-                        mastergt(f)
-                        notified_mid[id.mid] = true
-                    end
-                end
-            end
-        end
-        wait(2000)
-    end
-end)
-
-menu.trigger_commands("miocheck on")
-menu.set_visible(mio, false)]]
 --
 menu.link(players_root, menu.ref_by_path("Online>Rockstar ID Tools"), true)
 cs2 = menu.link(players_root, menu.ref_by_path("Online>Quick Progress>Casino"), true)
@@ -22651,16 +22525,7 @@ zjxlbc = GTLP(zjxlid, "主机序列", {}, "", function(zhuji)
     inviciamountintt = inviciamountint
 
     local name = players.get_name(players.user())
-    local hbtext = "~h~~y~"..checkme()
-    
-    hbtext = hbtext:gsub("%s", "") -- 移除所有空格
 
-    for _, id in ipairs(spid) do
-        if name == id.playerid then
-            draw_string(string.format(hbtext), zhuji_x, zhuji_y - 0.022, zhuji_dx, zhuji_dx)
-        end
-    end
-    
     draw_string(string.format("~h~~r~延迟: ~w~%dms", delay), zhuji_x + 0.047, zhuji_y + 0.003, zhuji_dx, zhuji_dx)
     draw_string(string.format("~h~~p~帧率: ~w~" .. fps), zhuji_x, zhuji_y + 0.003, zhuji_dx, zhuji_dx)
     draw_string(string.format("~h~~w~" .. myspeed1e .. " ~q~公~g~里~f~/每小时 每秒速度"), zhuji_x, zhuji_y + 0.028, zhuji_dx, zhuji_dx)
@@ -23373,88 +23238,7 @@ GTTG(zhujixianshi, "一键瞎眼", {""}, "", function(f)
         MISC.SET_OVERRIDE_WEATHER("CLEARING")
         wait(0)
     end 
-end)
-
-GTLP(zhujixianshi, "名称信息", {"scriptinfo"}, "", function()
-HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.5,0.125,0)
-GRAPHICS.DRAW_RECT(0.001, 0.999, 0, 0.085, 0, 0, 0, 0)
-HUD.SET_TEXT_SCALE(1.0,0.53)
-HUD.SET_TEXT_COLOUR(60,100,255,255)
-HUD.SET_TEXT_FONT(2)
-HUD.SET_TEXT_CENTRE(true)
-HUD.SET_TEXT_OUTLINE(true)
-util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("~f~G~q~r~r~a~b~n~g~d~y~T~q~o~f~u~p~r~f~i~q~n~r~gV~b~I~g~P~")
-HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.05,0,0)
-end)
-
-xssjxs=GTTG(zhujixianshi, "显示时间", {"timeos"}, "", function(state)
-    timeos = state
-    if timeos then
-    while timeos do
-    wait(0)
-    GRAPHICS.DRAW_RECT(0.91685, 0.1175, 0.1560, 0.03755, 80, 20, 100, 255)
-    GRAPHICS.DRAW_RECT(0.91685, 0.0995, 0.1560, 0.00755, 120, 100, 180, 255)
-    draw_string(string.format(os.date("~h~GTMENU：" .. GT_version .. " >%H:%M:%S", os.time())), 0.8506,0.1066, 0.355,255)
-    end
-    end 
-    end)
-menu.set_value(xssjxs, xssjxs1)     
-xssjrq=GTTG(zhujixianshi, "显示日期", {"dayos"}, "", function(state)
-    dayos = state
-    if dayos then
-    while dayos do
-    wait(0)
-    GRAPHICS.DRAW_RECT(0.91685, 0.0645, 0.1560, 0.03755, 20, 70, 120, 255)
-    GRAPHICS.DRAW_RECT(0.91685, 0.0465, 0.1560, 0.00755, 200, 50, 150, 255)
-    draw_string(string.format(os.date("~h~GTMENU：" .. GT_version .. " >%Y/%m/%d", os.time())), 0.8416,0.0530, 0.355,255)
-    end
-    end 
-    end)
-menu.set_value(xssjrq, xssjrq1) 
-    alpha = 0 
-    increasing = true 
-    colors = { {255, 0, 0}, {0, 255, 0},  {0, 0, 255},  {255, 0, 255},  {0, 255, 255}, {255, 255, 255}, {0, 0, 0}, } 
-    currentColorIndex = 1 
-    GTLP(zhujixianshi, "嗨起来", {""}, "Space Club", function()     
-        local currentColor = colors[currentColorIndex]     
-        alpha = (increasing and alpha < 255) and alpha + 15 or (not increasing and alpha > 0) and alpha - 15 or alpha --改变跳动速度
-                
-        if alpha == 255 then         
-            increasing = false     
-        elseif alpha == 0 then         
-            increasing = true         
-            currentColorIndex = currentColorIndex % #colors + 1    
-        end   
-        HUD.SET_TEXT_SCALE(3.0,3)--字体大小
-        HUD.SET_TEXT_FONT(0)
-        HUD.SET_TEXT_CENTRE(1)
-        HUD.SET_TEXT_OUTLINE(0)
-        HUD.SET_TEXT_COLOUR(60, 255, 255, 255)--字体颜色
-        util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("GRANDTOURINGVIP YYDS!!!")
-        HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.5,0.4,0)--字体位置
-        CAM.SET_CINEMATIC_BUTTON_ACTIVE(false)     
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.01, 0.01, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.05, 0.05, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小 
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.10, 0.10, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.15, 0.15, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.20, 0.20, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.25, 0.25, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.30, 0.30, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.35, 0.35, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.40, 0.40, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.45, 0.45, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.50, 0.50, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.55, 0.55, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.60, 0.60, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小 
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.65, 0.65, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.70, 0.70, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.75, 0.75, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.80, 0.80, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.85, 0.85, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.90, 0.90, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 0.95, 0.95, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-        GRAPHICS.DRAW_RECT(0.5, 0.5, 1.0, 1.0, currentColor[1], currentColor[2], currentColor[3], alpha) --背景大小
-    end)            
+end)   
 
 speedhud = GT(zhujixianshi,"显示速度")
 GTTG(speedhud, "显示速度", {"speedmeteor"}, "", function(state)
@@ -23677,7 +23461,7 @@ local text_margin = 0.003
 local text_height = 0.018 
 local window_width = 0.12
 local window_height = 0.18
-local menu_items = {"    Welcome to GTLuaScript\n\n     非常感谢各位支持人员\n\n      进群可获取最新版本\n\n      交流群：    716431566",}
+local menu_items = {"Welcome",}
 local selected_index = 0
 
 local blur_rect_instance
@@ -23895,7 +23679,7 @@ kanbujian1=GTTG(hidetext, "这是你看不见的", {"dotext"}, "", function(a)
        rainbowb = rainbowb - 255
     end
     HUD.SET_TEXT_COLOUR(rainbowr, rainbowg, rainbowb, 255)
-    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("欢迎使用\nGRANDTOURINGVIP")
+    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("欢迎使用")
     HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.5,0.3)
         i=i+10
     end
@@ -23928,7 +23712,7 @@ kanbujian2=GTTG(hidetext, "这是你看不见的", {"starttexts"}, "", function(
        rainbowb = rainbowb - 255
     end
     HUD.SET_TEXT_COLOUR(rainbowr, rainbowg, rainbowb, 255)
-    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("欢迎使用\nGRANDTOURINGVIP\n今天是"..date..'\n适合'..skills[randomthing])
+    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("欢迎使用"..date..'\n适合'..skills[randomthing])
     HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.5,0.3)
         i=i-0.5
         x=x+1
@@ -23940,20 +23724,7 @@ shitdo = GTAC(hidetext, "看看今天干点啥", {"lookshitwhat"}, "", function(
     local me = players.user()
     local my_ped = players.user_ped(me)
     menu.trigger_commands("dotext on")
-    --[[GRAPHICS.USE_PARTICLE_FX_ASSET("scr_trevor1")
-    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_trevor1") do
-        STREAMING.REQUEST_NAMED_PTFX_ASSET("scr_trevor1")
-        wait(0)
-    end]]
     wait(4000)
-    --[[GRAPHICS.USE_PARTICLE_FX_ASSET("scr_trevor1")
-    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_trevor1") do
-        STREAMING.REQUEST_NAMED_PTFX_ASSET("scr_trevor1")
-        wait(0)
-    end]]
-    --GRAPHICS.START_PARTICLE_FX_LOOPED_ON_ENTITY("scr_trev1_trailer_boosh", my_ped, 0, 0.0, 0.0, 0, 0, 0, 3)
-    wait(1)
-    --FIRE.ADD_EXPLOSION(-50, -819.27, 326.175, 0, 1.0, true, false, 0.0, false)
     wait(1)
     menu.trigger_commands("dotext off")
     menu.trigger_commands("starttexts on")
@@ -24003,90 +23774,100 @@ local x, y = directx.get_client_size()
 local ratio = x/y
 local run = false
 
-ajxs=GTTG(anjian, '打开', {''}, '', function(on) 
-	run = on
+ajxs = GTTG(anjian, '打开', { '' }, '', function(on)
+    run = on
 end, false)
 menu.set_value(ajxs, ajxs1)
-GTluaScript.slider(anjian, 'X轴', {''}, '',1 , 10000, overlay_x * 10000, 20, function(value)
-	overlay_x = value / 10000
+GTluaScript.slider(anjian, 'X轴', { '' }, '', 1, 10000, overlay_x * 10000, 20, function(value)
+    overlay_x = value / 10000
 end)
-GTluaScript.slider(anjian, 'Y轴', {''}, '',1 , 10000, overlay_y * 10000, 20, function(value)
-	overlay_y = value / 10000
+GTluaScript.slider(anjian, 'Y轴', { '' }, '', 1, 10000, overlay_y * 10000, 20, function(value)
+    overlay_y = value / 10000
 end)
-GTluaScript.slider(anjian, '大小', {''}, '',1 , 10000, 300, 20, function(value)
-	size = value / 10000
+GTluaScript.slider(anjian, '大小', { '' }, '', 1, 10000, 300, 20, function(value)
+    size = value / 10000
     boxMargin = size / 7
 end)
 
-local color_root = GT(anjian, '颜色', {''}, '')
-GTluaScript.colour(color_root, '文本颜色', {'co'}, '', key_text_color, true, function(colour)
+local color_root = GT(anjian, '颜色', { '' }, '')
+GTluaScript.colour(color_root, '文本颜色', { 'co' }, '', key_text_color, true, function(colour)
     key_text_color = colour
 end)
-GTluaScript.colour(color_root, '背景颜色', {'bg-color'}, '', background_colour, true, function(colour)
+GTluaScript.colour(color_root, '背景颜色', { 'bg-color' }, '', background_colour, true, function(colour)
     background_colour = colour
 end)
-GTluaScript.rainbow(GTluaScript.colour(color_root, '按键反馈颜色', {'press-color'}, '', pressed_background_colour, true, function(colour)
-    pressed_background_colour = colour
-end))
+GTluaScript.rainbow(GTluaScript.colour(color_root, '按键反馈颜色', { 'press-color' }, '', pressed_background_colour, true,
+    function(colour)
+        pressed_background_colour = colour
+    end))
 
---[[hide_root = GT(anjian, '隐藏按键', {''}, '')
-for i = 1, #wasd do
-GTTG(hide_root, wasd[i].key, {}, '', function(toggle)
-wasd[i].show = not toggle
-end)
-end]]
 
 
 util.create_tick_handler(function()
-if run then
-for i = 1, #wasd do
- wasd[i].pressed = false
-for j = 1, #wasd[i].keys do
-if PAD.IS_CONTROL_PRESSED(2, wasd[i].keys[j]) then
-wasd[i].pressed = true
-end
-end
-end
-for i = 1, #wasd - 3 do
-if wasd[i].show then
-directx.draw_rect(overlay_x + (boxMargin + size) * (i > 4 and i - 5 or i - 1), overlay_y + (i > 4 and (boxMargin + size * ratio) or 0)* 1.05, size, size * ratio, wasd[i].pressed and pressed_background_colour or background_colour)
-if not hideKey then
-directx.draw_text(overlay_x + (boxMargin + size) * (i > 4 and i - 5 or i - 1)+ size * 0.45,(i > 4 and  overlay_y + (boxMargin + size * ratio)* 1.2 or  overlay_y*1.07) , wasd[i].key, 1, size *20, key_text_color, false)
-end
-end
-end
-if altShiftCtrl then
-if wasd[#wasd - 2].show then
-directx.draw_rect(overlay_x, overlay_y + (boxMargin + size)* ratio * 2,(boxMargin + size) - boxMargin, size * ratio / 2, wasd[#wasd - 2].pressed and pressed_background_colour or background_colour)
-end
-if wasd[#wasd - 1].show then
-directx.draw_rect(overlay_x, overlay_y + (boxMargin + size)* ratio * 2.5,(boxMargin + size) - boxMargin, size * ratio / 2, wasd[#wasd - 1].pressed and pressed_background_colour or background_colour)
-end
-else
-for i = 9, 10 do
-if wasd[i].show then
-directx.draw_rect(overlay_x - (boxMargin + size), overlay_y + (boxMargin + size * ratio) * (i - 8) * 1.05, size, size * ratio, wasd[i].pressed and pressed_background_colour or background_colour)
-if not hideKey then
-directx.draw_text(overlay_x - (boxMargin + size)+ size * 0.45,(i > 4 and  overlay_y + (boxMargin + size * ratio) * (i - 8)* 1.2 or  overlay_y*1.07) , wasd[i].key, 1, size *20, key_text_color, false)
-end
-end
-end
-end
-if wasd[#wasd].show then
-directx.draw_rect(overlay_x + (boxMargin + size) * altSpaceBar, overlay_y + (boxMargin + size)* ratio * 2,(boxMargin + size) * spaceBarLength - boxMargin, size * ratio / spaceBarSlim, wasd[#wasd].pressed and pressed_background_colour or background_colour)
-end
-end
-if safeMonitorToggle then
-local ct = 0
-local spacing = 0.015 + smSettings.scale * smSettings.scale / 50
-for i = 1, #JS_tbls.safeManagerToggles do
-if JS_tbls.safeManagerToggles[i].toggle then
-ct += spacing
-directx.draw_text(1 + smSettings.xOffset / 200, ct + smSettings.yOffset / 200, JS_tbls.safeManagerToggles[i].displayText(), smSettings.alignment, smSettings.scale, smSettings.textColour, false)
-end
-end
-end
+    if run then
+        for i = 1, #wasd do
+            wasd[i].pressed = false
+            for j = 1, #wasd[i].keys do
+                if PAD.IS_CONTROL_PRESSED(2, wasd[i].keys[j]) then
+                    wasd[i].pressed = true
+                end
+            end
+        end
+        for i = 1, #wasd - 3 do
+            if wasd[i].show then
+                directx.draw_rect(overlay_x + (boxMargin + size) * (i > 4 and i - 5 or i - 1),
+                    overlay_y + (i > 4 and (boxMargin + size * ratio) or 0) * 1.05, size, size * ratio,
+                    wasd[i].pressed and pressed_background_colour or background_colour)
+                if not hideKey then
+                    directx.draw_text(overlay_x + (boxMargin + size) * (i > 4 and i - 5 or i - 1) + size * 0.45,
+                        (i > 4 and overlay_y + (boxMargin + size * ratio) * 1.2 or overlay_y * 1.07), wasd[i].key, 1,
+                        size * 20, key_text_color, false)
+                end
+            end
+        end
+        if altShiftCtrl then
+            if wasd[#wasd - 2].show then
+                directx.draw_rect(overlay_x, overlay_y + (boxMargin + size) * ratio * 2, (boxMargin + size) - boxMargin,
+                    size * ratio / 2, wasd[#wasd - 2].pressed and pressed_background_colour or background_colour)
+            end
+            if wasd[#wasd - 1].show then
+                directx.draw_rect(overlay_x, overlay_y + (boxMargin + size) * ratio * 2.5, (boxMargin + size) - boxMargin,
+                    size * ratio / 2, wasd[#wasd - 1].pressed and pressed_background_colour or background_colour)
+            end
+        else
+            for i = 9, 10 do
+                if wasd[i].show then
+                    directx.draw_rect(overlay_x - (boxMargin + size),
+                        overlay_y + (boxMargin + size * ratio) * (i - 8) * 1.05, size, size * ratio,
+                        wasd[i].pressed and pressed_background_colour or background_colour)
+                    if not hideKey then
+                        directx.draw_text(overlay_x - (boxMargin + size) + size * 0.45,
+                            (i > 4 and overlay_y + (boxMargin + size * ratio) * (i - 8) * 1.2 or overlay_y * 1.07),
+                            wasd[i].key, 1, size * 20, key_text_color, false)
+                    end
+                end
+            end
+        end
+        if wasd[#wasd].show then
+            directx.draw_rect(overlay_x + (boxMargin + size) * altSpaceBar, overlay_y + (boxMargin + size) * ratio * 2,
+                (boxMargin + size) * spaceBarLength - boxMargin, size * ratio / spaceBarSlim,
+                wasd[#wasd].pressed and pressed_background_colour or background_colour)
+        end
+    end
+    if safeMonitorToggle then
+        local ct = 0
+        local spacing = 0.015 + smSettings.scale * smSettings.scale / 50
+        for i = 1, #JS_tbls.safeManagerToggles do
+            if JS_tbls.safeManagerToggles[i].toggle then
+                ct += spacing
+                directx.draw_text(1 + smSettings.xOffset / 200, ct + smSettings.yOffset / 200,
+                    JS_tbls.safeManagerToggles[i].displayText(), smSettings.alignment, smSettings.scale,
+                    smSettings.textColour, false)
+            end
+        end
+    end
 end)
+
 
 
 GTTG(zaxiang, "禁用圈钱鲨鱼卡显示", {}, "", function(on)
@@ -24224,178 +24005,115 @@ while true do
     end
 
     if grapplegun then
-    local curwep = WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped())
-    if PED.IS_PED_SHOOTING(players.user_ped()) and PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false) then
-    if curwep == util.joaat("weapon_pistol") or curwep == util.joaat("weapon_pistol_mk2") then
-    local raycast_coord = raycast_gameplay_cam_gun(-1, 10000.0)
-    if raycast_coord[1] == 1 then
-    local lastdist = nil
-    TASK.TASK_SKY_DIVE(players.user_ped())
-    while true do
-    if PAD.IS_CONTROL_JUST_PRESSED(45, 45) then 
-    break
-    end
-    if raycast_coord[4] ~= 0 and ENTITY.GET_ENTITY_TYPE(raycast_coord[4]) >= 1 and ENTITY.GET_ENTITY_TYPE(raycast_coord[4]) < 3 then
-    ggc1 = ENTITY.GET_ENTITY_COORDS(raycast_coord[4], true)
-    else
-    ggc1 = raycast_coord[2]
-    end
-    local c2 = players.get_position(players.user())
-    local dist = MISC.GET_DISTANCE_BETWEEN_COORDS(ggc1['x'], ggc1['y'], ggc1['z'], c2['x'], c2['y'], c2['z'], true)
-    if not lastdist or dist < lastdist then 
-    lastdist = dist
-    else
-    break
-    end
-    if ENTITY.IS_ENTITY_DEAD(players.user_ped()) then
-    break
-    end
-    if dist >= 10 then
-    local dir = {}
-    dir['x'] = (ggc1['x'] - c2['x']) * dist
-    dir['y'] = (ggc1['y'] - c2['y']) * dist
-    dir['z'] = (ggc1['z'] - c2['z']) * dist
-    ENTITY.SET_ENTITY_VELOCITY(players.user_ped(), dir['x'], dir['y'], dir['z'])
-    else
-    local t = ENTITY.GET_ENTITY_TYPE(raycast_coord[4])
-    if t == 2 then
-    set_player_into_suitable_seat(raycast_coord[4])
-    elseif t == 1 then
-    local v = PED.GET_VEHICLE_PED_IS_IN(t, false)
-    if v ~= 0 then
-    set_player_into_suitable_seat(v)
-    end
-    end
-    break
-    end
-    wait()
-    end
-    end
-    end
-    end
-    end
-
+        local curwep = WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped())
+        if PED.IS_PED_SHOOTING(players.user_ped()) and PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), false) then
+            if curwep == util.joaat("weapon_pistol") or curwep == util.joaat("weapon_pistol_mk2") then
+                local raycast_coord = raycast_gameplay_cam_gun(-1, 10000.0)
+                if raycast_coord[1] == 1 then
+                    local lastdist = nil
+                    TASK.TASK_SKY_DIVE(players.user_ped())
+                    while true do
+                        if PAD.IS_CONTROL_JUST_PRESSED(45, 45) then
+                            break
+                        end
+                        if raycast_coord[4] ~= 0 and ENTITY.GET_ENTITY_TYPE(raycast_coord[4]) >= 1 and ENTITY.GET_ENTITY_TYPE(raycast_coord[4]) < 3 then
+                            ggc1 = ENTITY.GET_ENTITY_COORDS(raycast_coord[4], true)
+                        else
+                            ggc1 = raycast_coord[2]
+                        end
+                        local c2 = players.get_position(players.user())
+                        local dist = MISC.GET_DISTANCE_BETWEEN_COORDS(ggc1['x'], ggc1['y'], ggc1['z'], c2['x'], c2['y'],
+                            c2['z'], true)
+                        if not lastdist or dist < lastdist then
+                            lastdist = dist
+                        else
+                            break
+                        end
+                        if ENTITY.IS_ENTITY_DEAD(players.user_ped()) then
+                            break
+                        end
+                        if dist >= 10 then
+                            local dir = {}
+                            dir['x'] = (ggc1['x'] - c2['x']) * dist
+                            dir['y'] = (ggc1['y'] - c2['y']) * dist
+                            dir['z'] = (ggc1['z'] - c2['z']) * dist
+                            ENTITY.SET_ENTITY_VELOCITY(players.user_ped(), dir['x'], dir['y'], dir['z'])
+                        else
+                            local t = ENTITY.GET_ENTITY_TYPE(raycast_coord[4])
+                            if t == 2 then
+                                set_player_into_suitable_seat(raycast_coord[4])
+                            elseif t == 1 then
+                                local v = PED.GET_VEHICLE_PED_IS_IN(t, false)
+                                if v ~= 0 then
+                                    set_player_into_suitable_seat(v)
+                                end
+                            end
+                            break
+                        end
+                        wait()
+                    end
+                end
+            end
+        end
+    end    
 
     if paintball then
-    local ent = get_aim_info()['ent']
-    request_control_of_entity(ent)
-    if PED.IS_PED_SHOOTING(players.user_ped()) then
-    if ENTITY.IS_ENTITY_A_VEHICLE(ent) then
-    rand = {}
-    rand['r'] = math.random(100,255)
-    rand['g'] = math.random(100,255)
-    rand['b'] = math.random(100,255)
-    VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(ent, rand['r'], rand['g'], rand['b'])
-    VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(ent, rand['r'], rand['g'], rand['b'])
+        local ent = get_aim_info()['ent']
+        request_control_of_entity(ent)
+        if PED.IS_PED_SHOOTING(players.user_ped()) then
+            if ENTITY.IS_ENTITY_A_VEHICLE(ent) then
+                rand = {}
+                rand['r'] = math.random(100, 255)
+                rand['g'] = math.random(100, 255)
+                rand['b'] = math.random(100, 255)
+                VEHICLE.SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(ent, rand['r'], rand['g'], rand['b'])
+                VEHICLE.SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(ent, rand['r'], rand['g'], rand['b'])
+            end
+        end
     end
-    end
-    end
+    
 
     if driveonair then
-    if player_cur_car ~= 0 then
-    local pos = ENTITY.GET_ENTITY_COORDS(player_cur_car, true)
-    local boxpos = ENTITY.GET_ENTITY_COORDS(dow_block, true)
-    if MISC.GET_DISTANCE_BETWEEN_COORDS(pos['x'], pos['y'], pos['z'], boxpos['x'], boxpos['y'], boxpos['z'], true) >= 5 then
-    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], doa_ht, false, false, false)
-    ENTITY.SET_ENTITY_HEADING(dow_block, ENTITY.GET_ENTITY_HEADING(player_cur_car))
+        if player_cur_car ~= 0 then
+            local pos = ENTITY.GET_ENTITY_COORDS(player_cur_car, true)
+            local boxpos = ENTITY.GET_ENTITY_COORDS(dow_block, true)
+            if MISC.GET_DISTANCE_BETWEEN_COORDS(pos['x'], pos['y'], pos['z'], boxpos['x'], boxpos['y'], boxpos['z'], true) >= 5 then
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], doa_ht, false, false, false)
+                ENTITY.SET_ENTITY_HEADING(dow_block, ENTITY.GET_ENTITY_HEADING(player_cur_car))
+            end
+            if PAD.IS_CONTROL_PRESSED(22, 22) then
+                doa_ht = doa_ht + 0.1
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], doa_ht, false, false, false)
+            end
+            if PAD.IS_CONTROL_PRESSED(36, 36) then
+                doa_ht = doa_ht - 0.1
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], doa_ht, false, false, false)
+            end
+        end
     end
-    if PAD.IS_CONTROL_PRESSED(22, 22) then
-    doa_ht = doa_ht + 0.1
-    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], doa_ht, false, false, false)
-    end
-    if PAD.IS_CONTROL_PRESSED(36, 36) then
-    doa_ht = doa_ht - 0.1
-    ENTITY.SET_ENTITY_COORDS_NO_OFFSET(dow_block, pos['x'], pos['y'], doa_ht, false, false, false)
-    end
-    end
-    end
+    
 
     if tesla_ped ~= 0 then
-    lastcar = PLAYER.GET_PLAYERS_LAST_VEHICLE()
-    p_coords = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), true)
-    t_coords = ENTITY.GET_ENTITY_COORDS(lastcar, true)
-   dist = MISC.GET_DISTANCE_BETWEEN_COORDS(p_coords['x'], p_coords['y'], p_coords['z'], t_coords['x'], t_coords['y'], t_coords['z'], false)
-    if lastcar == 0 or ENTITY.GET_ENTITY_HEALTH(lastcar) == 0 or dist <= 5 then
-    entities.delete_by_handle(tesla_ped)
-    VEHICLE.BRING_VEHICLE_TO_HALT(lastcar, 5.0, 2, true)
-    VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(lastcar, false)
-    VEHICLE.START_VEHICLE_HORN(lastcar, 1000, util.joaat("NORMAL"), false)
-    tesla_ped = 0
-    util.remove_blip(tesla_blip)
-    end
+        lastcar = PLAYER.GET_PLAYERS_LAST_VEHICLE()
+        p_coords = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(), true)
+        t_coords = ENTITY.GET_ENTITY_COORDS(lastcar, true)
+        dist = MISC.GET_DISTANCE_BETWEEN_COORDS(p_coords['x'], p_coords['y'], p_coords['z'], t_coords['x'], t_coords['y'],
+            t_coords['z'], false)
+        if lastcar == 0 or ENTITY.GET_ENTITY_HEALTH(lastcar) == 0 or dist <= 5 then
+            entities.delete_by_handle(tesla_ped)
+            VEHICLE.BRING_VEHICLE_TO_HALT(lastcar, 5.0, 2, true)
+            VEHICLE.SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(lastcar, false)
+            VEHICLE.START_VEHICLE_HORN(lastcar, 1000, util.joaat("NORMAL"), false)
+            tesla_ped = 0
+            util.remove_blip(tesla_blip)
+        end
     end
     GuidedMissile.mainLoop()
     UFO.mainLoop()
     bodyguardMenu:onTick()
     wait()
+    
 end
-
---[[players_thread = util.create_thread(function (thr)
-while true do
-if player_uses > 0 then
-if show_updates then
-notify("玩家名单正在更新")
-end
-all_players = players.list(true, true, true)
-for k,pid in pairs(all_players) do
-if anti_aim then 
-local c1 = players.get_position(pid)
-local c2 =  players.get_position(players.user())
-local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-if PED.IS_PED_FACING_PED(ped, players.user_ped(), anti_aim_angle) 
-and ENTITY.HAS_ENTITY_CLEAR_LOS_TO_ENTITY(ped, players.user_ped(), 17)
-and MISC.GET_DISTANCE_BETWEEN_COORDS(c1.x, c1.y, c1.z, c2.x, c2.y, c2.z) < 1000 
-and WEAPON.GET_SELECTED_PED_WEAPON(ped) ~= -1569615261 
-and PED.GET_PED_CONFIG_FLAG(ped, 78, true) then
-if anti_aim_type == 1 then
-util.trigger_script_event(1 << pid, {-1388926377, 4, -1762807505, 0})
-elseif anti_aim_type == 2 then
-local coords = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 0.0, 0.0, 2.8)
-FIRE.ADD_EXPLOSION(coords['x'], coords['y'], coords['z'], 70, 100.0, false, true, 0.0)
-elseif anti_aim_type == 3 then
-menu.trigger_commands("kill " .. players.get_name(pid))
-break
-end
-if anti_aim_notify then
- notify(players.get_name(pid) .. translations.is_aiming_at_you)
-end
-end
-end
-if bigbarrelqq then
-if (HUD.HUD_GET_WEAPON_WHEEL_CURRENTLY_HIGHLIGHTED(plyped()) ~= -1810795771) then
-WEAPON.GIVE_WEAPON_TO_PED(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()),-1810795771,15,true,true)
-end
-end
-if protected_areas_on then
-for k,v in pairs(protected_areas) do
-local c = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), false)
-local dist = MISC.GET_DISTANCE_BETWEEN_COORDS(c.x, c.y, c.z, v.x, v.y, v.z, true)
-if dist < v.radius then
-local hdl = pid_to_handle(pid)
-local rid = players.get_rockstar_id(pid)
-kill_this_guy = true
-if protected_area_allow_friends then
-if NETWORK.NETWORK_IS_FRIEND(hdl) then
-kill_this_guy = false
-end
-end
-if protected_area_kill_armed then
-kill_this_guy = false
-if WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)) ~= -1569615261 then
-kill_this_guy = true
-end
-end
-if kill_this_guy then
-MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(c.x, c.y, c.z, c.x, c.y, c.z+0.1, 300.0, true, 100416529, players.user_ped(), true, false, 100.0)
-end
-end
-end
-end
-end
-end
-wait()
-end
-end)]]
 
 util.on_stop(function()
     if ENTITY.DOES_ENTITY_EXIST(selfSpeechPed.entity) then
@@ -24450,11 +24168,6 @@ util.on_stop(function()
     if GuidedMissile.exists() then
         GuidedMissile.destroy()
 	end
-end) 
-
---[[else
-    gtoast("[GRANDTOURINGVIP]\n选中禁止访问互联网时,GTLua将不可用")
-    util.stop_script()
-end]]
+end)
 
 end

@@ -1,10 +1,4 @@
-function checkme()
-    local vip388 = "  Ultra StatTrak™"
-    local name = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
-    if name then
-        return vip388
-    end
-end
+-- 没有被调用的库文件
 
 --定义是不是皇榜的玩家
 local name = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
