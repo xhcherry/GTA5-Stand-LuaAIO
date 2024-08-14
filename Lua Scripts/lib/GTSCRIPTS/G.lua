@@ -4,12 +4,13 @@ _G.native_b = native_invoker.unified_bool
 function loadgt()
 
 memory.alloc_int()
+
 require "lib.GTSCRIPTS.GTC.logo.GLogo"
 require "lib.GTSCRIPTS.W"
-require('lib/GTSCRIPTS/T')
+require ('lib/GTSCRIPTS/T')
 require "lib.GTSCRIPTS.GTW.fixnative"
 K = require 'lib.GTSCRIPTS.K'
-local scaleForm = require 'lib.GTSCRIPTS.Z'
+local scaleForm = require'lib.GTSCRIPTS.Z'
 local SFasd = scaleForm('instructional_buttons')
 local UFO = require "lib.GTSCRIPTS.U"
 local HomingMissiles = require "lib.GTSCRIPTS.H"
@@ -22,7 +23,7 @@ end
 function log(str)
     return util.log(str)
 end
-
+--
 deleteframe = false
 running = true
 
@@ -46,49 +47,49 @@ function restartscript()
 end
 
 --主菜单与UI
-GTAC(menu.my_root(), ">>点击进入GTLua", {}, "",function () menu.trigger_command(G) end) 
-GTAC(menu.my_root(), ">>重新启动GTLua", {}, "", function () restartscript() end) 
+GTAC(menu.my_root(), ">>click to enter gt lua", {}, "",function () menu.trigger_command(G) end) 
+GTAC(menu.my_root(), ">>restart gt lua", {}, "", function () restartscript() end) 
 
-mastervip = GT(G, ">>Ultra级会员功能")
+mastervip = GT(G, ">>ultra membership features")
 func388()
 
-enable_options = GTTG(G, ">>快捷入口", {}, "", function (on) 
+enable_options = GTTG(G, ">>quick entry", {}, "", function (on) 
     Quick_Enable(on) 
 end)
 menu.set_value(enable_options, eo_value)
 
-players_root = GT(G, ">>玩家选项", {}, "")
-frendlist = GT(G, ">>好友选项", {""}, "", function(); end)
-selflist = GT(G, ">>自我选项", {}, "", function(); end)
-weapon_options = GT(G, ">>武器选项", {}, "")
-carfly = GT(G, ">>载具选项", {}, "", function(); end)
-custselc = GT(G, ">>战局选项", {}, "", function(); end)
-onlinemode = GT(G, '>>线上选项', {''}, '')
-entity_options = GT(G, ">>管理选项", {}, "")
-protex = GT(G, ">>保护选项", {}, "", function(); end)
-funfeatures = GT(G, ">>娱乐选项", {}, "", function(); end)
-FY = GT(G, ">>聊天选项", {}, "", function(); end)
-lobbyFeats = GT(G, ">>世界选项", {}, "")
-Heist_Control = GT(G, ">>任务选项", {}, "")
-Musiness_Banager = GT(G, ">>自动资产")
-Constructor_Lua = GT(G, ">>模组选项")
-other_options = GT(G, ">>设置选项")
+players_root = GT(G, ">>player options", {}, "")
+frendlist = GT(G, ">>friend options", {""}, "", function(); end)
+selflist = GT(G, ">>self options", {}, "", function(); end)
+weapon_options = GT(G, ">>weapon options", {}, "")
+carfly = GT(G, ">>vehicle options", {}, "", function(); end)
+custselc = GT(G, ">>battle match options", {}, "", function(); end)
+onlinemode = GT(G, '>>online options', {''}, '')
+entity_options = GT(G, ">>management options", {}, "")
+protex = GT(G, ">>protection options", {}, "", function(); end)
+funfeatures = GT(G, ">>entertainment options", {}, "", function(); end)
+FY = GT(G, ">>chat options", {}, "", function(); end)
+lobbyFeats = GT(G, ">>world options", {}, "")
+Heist_Control = GT(G, ">>task options", {}, "")
+Musiness_Banager = GT(G, ">>automatic assets")
+Constructor_Lua = GT(G, ">>mod options")
+other_options = GT(G, ">>Set Options")
 
 --显示UI
-GTD(players_root, "[玩家选项]")
-GTD(selflist, "[自我选项]")
-GTD(weapon_options, "[武器选项]")
-GTD(carfly, "[载具选项]")
-GTD(custselc, "[战局选项]")
-GTD(onlinemode, "[线上选项]")
-GTD(entity_options, "[管理选项]")
-GTD(protex, "[保护选项]")
-GTD(funfeatures, "[娱乐选项]")
-GTD(FY, "[聊天选项]")
-GTD(lobbyFeats, "[世界选项]")
-GTD(Musiness_Banager, "[自动资产] 版本:3bdbf03")
-GTD(Constructor_Lua, "[模组选项]")
-GTD(other_options, "[设置选项]")
+GTD(players_root, "[player options]")
+GTD(selflist, "[self options]")
+GTD(weapon_options, "[weapon options]")
+GTD(carfly, "[vehicle options]")
+GTD(custselc, "[battle match options]")
+GTD(onlinemode, "[online options]")
+GTD(entity_options, "[management options]")
+GTD(protex, "[protection options]")
+GTD(funfeatures, "[entertainment options]")
+GTD(FY, "[chat options]")
+GTD(lobbyFeats, "[world options]")
+GTD(Musiness_Banager, "[automatic assets] version:3bdbf03")
+GTD(Constructor_Lua, "[mod options]")
+GTD(other_options, "[set options]")
 
 local configFile <const> = filesystem.scripts_dir() .. '\\GTLuaScript\\'.. "config.ini"
 dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\Q.lua")
@@ -134,7 +135,7 @@ if filesystem.exists(configFile) then
             end
         end
     end
-    log("欢迎 " .. PLAYER.GET_PLAYER_NAME(players.user()))
+    log("welcome " .. PLAYER.GET_PLAYER_NAME(players.user()))
 end
 
 focusref = {}
@@ -158,7 +159,7 @@ GTLuaScript = menu
 util.keep_running()
 
 off_hb = false
-hb_off = GTTG(other_options, "关闭自我皇榜横幅", {}, "可点击F8保存,开启后下一次启动脚本时候将不会展示自身横幅\n不会影响其他人显示出你的皇榜横幅", function (on)
+hb_off = GTTG(other_options, "close the self emperor banner", {}, "you can click f8 to save,after it is enabled the next time you start the script it will not display its banner", function (on)
     if on then
         off_hb = true
     else
@@ -179,12 +180,12 @@ menu.set_visible(hb_off, show_hb_off)
 
 change_session = menu.link(players_root, menu.ref_by_path("Online>New Session"), true)
 
-friends_in_session_list = GTLuaScript.list_action(players_root, "战局好友", {"friendsinsession"}, "",
+friends_in_session_list = GTLuaScript.list_action(players_root, "battle friends", {"friendsinsession"}, "",
     friends_in_this_session, function(pid, name)
         menu.trigger_commands("p" .. players.get_name(pid))
     end)
     
-modders_in_session_list = GTLuaScript.list_action(players_root, "作弊玩家", {"moddersinsession"}, "",
+modders_in_session_list = GTLuaScript.list_action(players_root, "cheating players", {"moddersinsession"}, "",
     modders_in_this_session, function(pid, name)
         menu.trigger_commands("p" .. players.get_name(pid))
     end)
@@ -211,7 +212,7 @@ end)
 GTAC = GTluaScript.action
 
 zhanju_in_this_session = {}
-zhanju_in_session_list = GTLuaScript.list_action(players_root, "战局玩家", {"listofsession"}, "",
+zhanju_in_session_list = GTLuaScript.list_action(players_root, "battle players", {"listofsession"}, "",
     zhanju_in_this_session, function(pid, name)
         menu.trigger_commands("p" .. players.get_name(pid))
     end)
@@ -225,7 +226,7 @@ util.create_tick_handler(function()
     end
 end)
 
-GTD(frendlist, "[好友列表]")
+GTD(frendlist, "[friends list]")
 for i = 0, get_friend_count() do
     local name = get_frined_name(i)
     if name == "*****" then
@@ -235,28 +236,28 @@ for i = 0, get_friend_count() do
     ::yes::
 end
 
-player_info = GT(players_root, '玩家信息栏', {''}, '开启后请在玩家列表中查看玩家信息')
-InfoLoads = GTAC(player_info, "启动玩家信息栏显示", {""}, "", function()
+player_info = GT(players_root, 'player info bar', {''}, 'when turned on check the player information in the player list')
+InfoLoads = GTAC(player_info, "enable the player information bar display", {""}, "", function()
     wait(100)
     dofile(filesystem.scripts_dir() .. "\\lib\\GTSCRIPTS\\I.lua")
     GTLuaScript.delete(InfoLoads)
 end)
 require "lib.GTSCRIPTS.P"
 
-click_bot = GT(players_root, "自动点击", {''}, '自动帮助您进行点击')
+click_bot = GT(players_root, "auto click", {''}, 'automatically help you click')
 simulate_left_click_delay = 30
-GTLP(click_bot, "自动鼠标左键点击", {"left_click"}, "用于拿取目标财物时", function()
+GTLP(click_bot, "automatic left mouse click", {"left_click"}, "when used to pick up the target s property", function()
     if TASK.GET_IS_TASK_ACTIVE(players.user_ped(), 135) then
         PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 237, 1)
         wait(simulate_left_click_delay)
     end
 end)
-GTLuaScript.slider(click_bot, "自动点击延迟", {"delay_left_click"}, "单位: ms", 0, 5000, 30, 10, function(value)
+GTLuaScript.slider(click_bot, "automatic click delay", {"delay_left_click"}, "unit: ms", 0, 5000, 30, 10, function(value)
     simulate_left_click_delay = value
 end)
 
-kdr = GT(players_root, "设置KD值", {}, "请注意，这不是虚假KD")
-loadkdr = GTAC(kdr, "读取KD数据", {}, "", function ()
+kdr = GT(players_root, "set the kd value", {}, "please note that this is not a fake kd")
+loadkdr = GTAC(kdr, "read kd data", {}, "", function ()
     require "lib.GTSCRIPTS.GTA.kd"
     wait()
     menu.delete(loadkdr)
@@ -348,9 +349,9 @@ resetsx.visible = false
 menu.link(players_root, menu.ref_by_path("Online>Rockstar ID Tools"), true)
 cs2 = menu.link(players_root, menu.ref_by_path("Online>Quick Progress>Casino"), true)
 
-lightbones = GT(players_root, "光柱选项")
+lightbones = GT(players_root, "light bar options")
 
-GTLP(lightbones, "玩家光柱", {}, "", function()
+GTLP(lightbones, "player light pillar", {}, "", function()
     for pid = 0, 31 do
         if pid ~= players.user() and players.exists(pid) then
             local ped_pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
@@ -360,7 +361,7 @@ GTLP(lightbones, "玩家光柱", {}, "", function()
     end
 end)
 
-GTLP(lightbones, "NPC光柱", {}, "", function()
+GTLP(lightbones, "npc light bar", {}, "", function()
     local pedtable = entities.get_all_peds_as_handles()
     for _, peds in pairs(pedtable) do
         local ped_pos = ENTITY.GET_ENTITY_COORDS(peds)
@@ -369,7 +370,7 @@ GTLP(lightbones, "NPC光柱", {}, "", function()
     end
 end)
 
-GTLP(lightbones, "载具光柱", {}, "", function()
+GTLP(lightbones, "vehicle light pillar", {}, "", function()
     local pedtable = entities.get_all_vehicles_as_handles()
     for _, peds in pairs(pedtable) do
         local ped_pos = ENTITY.GET_ENTITY_COORDS(peds)
@@ -378,9 +379,9 @@ GTLP(lightbones, "载具光柱", {}, "", function()
     end
 end)
 
-toushi=GT(players_root, "玩家透视选项", {}, "")
+toushi=GT(players_root, "player perspective options", {}, "")
 
-GTLP(toushi, "字体信息", {}, "", function(toggle)
+GTLP(toushi, "font information", {}, "", function(toggle)
     local playerPed = players.user_ped()
     local playerCoords = ENTITY.GET_ENTITY_COORDS(playerPed)
     for _, pid in players.list(false, true, true) do 
@@ -394,10 +395,10 @@ GTLP(toushi, "字体信息", {}, "", function(toggle)
             if success then
             local succes, My_Pos = project_3d_coord(playerCoords)
             if succes then
-            local nameText = "名字 : " .. tostring(players.get_name(pid))
+            local nameText = "name : " .. tostring(players.get_name(pid))
             local distances = playerCoords:magnitude(pedCoords)
-            local distanceText = "距离 : " .. Round(distance, 2) .. " 米"
-            local rankText = "等级 : " .. tostring(players.get_rank(pid))
+            local distanceText = "distance : " .. Round(distance, 2) .. " m"
+            local rankText = "grade : " .. tostring(players.get_rank(pid))
             local tagsText =  players.get_tags_string(pid)
             directx.draw_text(pos.x, pos.y,"["..tagsText.."]".."\n"..nameText.."\n"..distanceText.."\n"..rankText, 0, 0.45 ,toushi_clr, true)
             end
@@ -407,11 +408,11 @@ GTLP(toushi, "字体信息", {}, "", function(toggle)
 end)
 
 toushi_clr = {["r"] = 0,["g"] = 1,["b"] = 1,["a"] = 1}
-GTluaScript.colour(toushi, '字体颜色', {}, '', toushi_clr, true, function(colour)
+GTluaScript.colour(toushi, 'font color', {}, '', toushi_clr, true, function(colour)
     toushi_clr = colour
 end)
 
-GTLP(toushi, "透视线", {}, "", function(toggle)
+GTLP(toushi, "perspective line of sight", {}, "", function(toggle)
     local playerPed = players.user_ped()
     local playerCoords = ENTITY.GET_ENTITY_COORDS(playerPed)
     for _, pid in players.list(false, true, true) do 
@@ -429,11 +430,11 @@ GTLP(toushi, "透视线", {}, "", function(toggle)
 end)
 
 xian_clr = {["r"] = 0,["g"] = 1,["b"] = 0,["a"] = 1}
-GTluaScript.colour(toushi, '线条颜色', {}, '.', xian_clr, true, function(x_clr)
+GTluaScript.colour(toushi, 'line color', {}, '.', xian_clr, true, function(x_clr)
      xian_clr = x_clr
 end)
 
-GTLP(toushi, "头标", {}, "", function(toggle)
+GTLP(toushi, "headmark", {}, "", function(toggle)
     local playerPed = players.user_ped()
     local playerCoords = ENTITY.GET_ENTITY_COORDS(playerPed)
     for _, pid in players.list(false, true, true) do 
@@ -455,32 +456,32 @@ GTLP(toushi, "头标", {}, "", function(toggle)
 end)
 
 toub_clr = {["r"] = 1,["g"] = 0,["b"] = 0,["a"] = 1}
-GTluaScript.colour(toushi, '线条颜色', {}, '.', toub_clr, true, function(tb_clr)
+GTluaScript.colour(toushi, 'line color', {}, '.', toub_clr, true, function(tb_clr)
      toub_clr = tb_clr
 end)
 --
 local languages = {
-    [0] = "~y~英国",
-    [1] = "~y~法国",
-    [2] = "~y~德国",
-    [3] = "~y~意大利",
-    [4] = "~y~西班牙",
-    [5] = "~y~葡萄牙(巴西)",
-    [6] = "~y~波兰",
-    [7] = "~y~俄罗斯",
-    [8] = "~y~韩国",
-    [9] = "~y~台湾/香港",
-    [10] = "~y~日本",
-    [11] = "~y~西班牙(墨西哥)",
-    [12] = "~y~中国"
+    [0] = "~y~united kingdom",
+    [1] = "~y~france",
+    [2] = "~y~germany",
+    [3] = "~y~italy",
+    [4] = "~y~spain",
+    [5] = "~y~portugal brazil",
+    [6] = "~y~poland",
+    [7] = "~y~russia",
+    [8] = "~y~korea",
+    [9] = "~y~taiwan hong kong",
+    [10] = "~y~japan",
+    [11] = "~y~spain mexico",
+    [12] = "~y~china"
     }
 
     cur = 0
     wanjialisty = 0.03
     wanjialistsy = 0.33
     wanjialistx = 0.505
-    wanjiaroot = GT(players_root, "玩家信息窗口")
-    wanjialist = GTLP(wanjiaroot, "开启", {}, "开启/关闭玩家信息窗口", function(feat)
+    wanjiaroot = GT(players_root, "player info window")
+    wanjialist = GTLP(wanjiaroot, "open", {}, "open/close the player info window", function(feat)
         local focused = players.get_focused()
         if #focused > 0 and menu.is_open() and (players.get_spectate_target(players.user()) ~= focused[1]) then
             local pid = focused[1]
@@ -501,36 +502,36 @@ local languages = {
             local kph = speed * 3.6
             mspeed = kph
             GRAPHICS.DRAW_RECT(wanjialistx+0.095, wanjialisty+0.30, 0.2, 0.62, 0, 0, 0, 80)
-            draw_string(string.format("~h~~f~检查打字 : ~g~"..check_host(players.is_typing(pid))), wanjialistx, wanjialisty, 0.3,0.3)
-            draw_string(string.format("~h~~f~名称 : ~g~"..players.get_name(pid)), wanjialistx, wanjialisty+0.02, 0.3,0.3)
+            draw_string(string.format("~h~~f~check typing : ~g~"..check_host(players.is_typing(pid))), wanjialistx, wanjialisty, 0.3,0.3)
+            draw_string(string.format("~h~~f~name : ~g~"..players.get_name(pid)), wanjialistx, wanjialisty+0.02, 0.3,0.3)
             draw_string(string.format("~h~~f~RID : ~y~"..players.get_rockstar_id(pid)), wanjialistx, wanjialisty+0.04, 0.3,0.3)
-            draw_string(string.format("~h~~f~IP地址 : ~g~"..intToIp(players.get_connect_ip(pid))), wanjialistx, wanjialisty+0.06, 0.3,0.3)
-            draw_string(string.format("~h~~f~等级 : ~g~"..players.get_rank(pid)), wanjialistx, wanjialisty+0.08, 0.3,0.3)
-            draw_string(string.format("~h~~f~玩家K/D : ~g~"..round(players.get_kd(pid), 2)), wanjialistx, wanjialisty+0.10, 0.3,0.3)
-            draw_string(string.format("~h~~f~国家 : ~g~"..languages[players.get_language(pid)]), wanjialistx, wanjialisty+0.12, 0.3,0.3)
-            draw_string(string.format("~h~~f~手柄状态 : "..check(players.is_using_controller(pid))), wanjialistx, wanjialisty+0.14, 0.3,0.3)
-            draw_string(string.format("~h~~f~战局主机 : "..check_host(cur_focused_player==players.get_host())), wanjialistx, wanjialisty+0.16, 0.3,0.3)
-            draw_string(string.format("~h~~f~脚本主机 : "..check_script_host(cur_focused_player==players.get_script_host())), wanjialistx, wanjialisty+0.18, 0.3,0.3)
-            draw_string(string.format("~h~~f~主机令牌 : ~g~"..players.get_host_queue_position(pid)), wanjialistx, wanjialisty+0.200, 0.3,0.3)
-            draw_string(string.format("~h~~f~组织 : ~g~"..check_org(players.get_org_type(pid))), wanjialistx, wanjialisty+0.220, 0.3,0.3)
-            draw_string(string.format("~h~~f~距离 : ~g~"..check_distance(mypos, playerpos)), wanjialistx, wanjialisty+0.240, 0.3,0.3)
-            draw_string(string.format("~h~~f~速度 : ~g~"..math.ceil(mspeed).."~h~~f~ km/h"), wanjialistx, wanjialisty+0.260, 0.3,0.3)
-            draw_string(string.format("~h~~f~无敌 : "..check_host(players.is_godmode(pid))), wanjialistx, wanjialisty+0.280, 0.3,0.3)
-            draw_string(string.format("~h~~f~攻击过我 : "..check_host(players.is_marked_as_attacker(pid))), wanjialistx, wanjialisty+0.300, 0.3,0.3)
-            draw_string(string.format("~h~~f~雷达隐藏 : "..check_host(players.is_otr(pid))), wanjialistx, wanjialisty+0.320, 0.3,0.3)
-            draw_string(string.format("~h~~f~载具 : ~g~"..check_cat(util.get_label_text(players.get_vehicle_model(pid)))), wanjialistx, wanjialisty+0.340, 0.3,0.3)
-            draw_string(string.format("~h~~f~作弊者 : "..check_host(players.is_marked_as_modder(pid))), wanjialistx, wanjialisty+0.360, 0.3,0.3)
-            draw_string(string.format("~h~~f~通缉等级 : ~g~"..PLAYER.GET_PLAYER_WANTED_LEVEL(pid)), wanjialistx, wanjialisty+0.380, 0.3,0.3)
-            draw_string(string.format("~h~~f~武器 : ~g~"..weapon), wanjialistx, wanjialisty+0.400, 0.3,0.3)
-            draw_string(string.format("~h~~f~作弊者/管理员 : "..check_host(players.is_marked_as_modder_or_admin(pid))), wanjialistx, wanjialisty+0.420, 0.3,0.3)
-            draw_string(string.format("~h~~f~现金 : ~g~"..formatMoney(players.get_wallet(pid))), wanjialistx, wanjialisty+0.440, 0.3,0.3)
-            draw_string(string.format("~h~~f~银行 : ~g~"..formatMoney(players.get_bank(pid))), wanjialistx, wanjialisty+0.460, 0.3,0.3)
-            draw_string(string.format("~h~~f~坐标 : ~g~"..string.format("%.5f, %.5f, %.5f", playerpos.x, playerpos.y, playerpos.z)), wanjialistx, wanjialisty+0.480, 0.3,0.3)
-            draw_string(string.format("~h~~f~血量 : ~g~"..health.."/"..maxhealth), wanjialistx, wanjialisty+0.500, 0.3,0.3)
-            draw_string(string.format("~h~~f~护甲 : ~g~"..armor.."/"..maxarmor), wanjialistx, wanjialisty+0.520, 0.3,0.3)
-            draw_string(string.format("~h~~f~加速器 : "..check_host(players.is_using_vpn(pid))), wanjialistx, wanjialisty+0.540, 0.3,0.3)
-            draw_string(string.format("~h~~f~室内检查 : ~g~"..t_b()), wanjialistx, wanjialisty+0.560, 0.3,0.3)
-            draw_string(string.format("~h~~f~网络延迟 : ~g~"..string.format("%.0f ", NETWORK.NETWORK_GET_AVERAGE_PING(pid)).."ms"), wanjialistx, wanjialisty+0.580, 0.3,0.3)
+            draw_string(string.format("~h~~f~ip address : ~g~"..intToIp(players.get_connect_ip(pid))), wanjialistx, wanjialisty+0.06, 0.3,0.3)
+            draw_string(string.format("~h~~f~grade : ~g~"..players.get_rank(pid)), wanjialistx, wanjialisty+0.08, 0.3,0.3)
+            draw_string(string.format("~h~~f~gamerK/D : ~g~"..round(players.get_kd(pid), 2)), wanjialistx, wanjialisty+0.10, 0.3,0.3)
+            draw_string(string.format("~h~~f~country : ~g~"..languages[players.get_language(pid)]), wanjialistx, wanjialisty+0.12, 0.3,0.3)
+            draw_string(string.format("~h~~f~handle status : "..check(players.is_using_controller(pid))), wanjialistx, wanjialisty+0.14, 0.3,0.3)
+            draw_string(string.format("~h~~f~battle console : "..check_host(cur_focused_player==players.get_host())), wanjialistx, wanjialisty+0.16, 0.3,0.3)
+            draw_string(string.format("~h~~f~script host : "..check_script_host(cur_focused_player==players.get_script_host())), wanjialistx, wanjialisty+0.18, 0.3,0.3)
+            draw_string(string.format("~h~~f~host tokens : ~g~"..players.get_host_queue_position(pid)), wanjialistx, wanjialisty+0.200, 0.3,0.3)
+            draw_string(string.format("~h~~f~organization : ~g~"..check_org(players.get_org_type(pid))), wanjialistx, wanjialisty+0.220, 0.3,0.3)
+            draw_string(string.format("~h~~f~distance : ~g~"..check_distance(mypos, playerpos)), wanjialistx, wanjialisty+0.240, 0.3,0.3)
+            draw_string(string.format("~h~~f~velocity : ~g~"..math.ceil(mspeed).."~h~~f~ km/h"), wanjialistx, wanjialisty+0.260, 0.3,0.3)
+            draw_string(string.format("~h~~f~invincibility : "..check_host(players.is_godmode(pid))), wanjialistx, wanjialisty+0.280, 0.3,0.3)
+            draw_string(string.format("~h~~f~attacked me : "..check_host(players.is_marked_as_attacker(pid))), wanjialistx, wanjialisty+0.300, 0.3,0.3)
+            draw_string(string.format("~h~~f~radar hidden : "..check_host(players.is_otr(pid))), wanjialistx, wanjialisty+0.320, 0.3,0.3)
+            draw_string(string.format("~h~~f~vehicles : ~g~"..check_cat(util.get_label_text(players.get_vehicle_model(pid)))), wanjialistx, wanjialisty+0.340, 0.3,0.3)
+            draw_string(string.format("~h~~f~cheaters : "..check_host(players.is_marked_as_modder(pid))), wanjialistx, wanjialisty+0.360, 0.3,0.3)
+            draw_string(string.format("~h~~f~wanted rating : ~g~"..PLAYER.GET_PLAYER_WANTED_LEVEL(pid)), wanjialistx, wanjialisty+0.380, 0.3,0.3)
+            draw_string(string.format("~h~~f~weapons : ~g~"..weapon), wanjialistx, wanjialisty+0.400, 0.3,0.3)
+            draw_string(string.format("~h~~f~Cheaters/Administrator : "..check_host(players.is_marked_as_modder_or_admin(pid))), wanjialistx, wanjialisty+0.420, 0.3,0.3)
+            draw_string(string.format("~h~~f~Cash : ~g~"..formatMoney(players.get_wallet(pid))), wanjialistx, wanjialisty+0.440, 0.3,0.3)
+            draw_string(string.format("~h~~f~Bank : ~g~"..formatMoney(players.get_bank(pid))), wanjialistx, wanjialisty+0.460, 0.3,0.3)
+            draw_string(string.format("~h~~f~Coordinate : ~g~"..string.format("%.5f, %.5f, %.5f", playerpos.x, playerpos.y, playerpos.z)), wanjialistx, wanjialisty+0.480, 0.3,0.3)
+            draw_string(string.format("~h~~f~Blood Volume : ~g~"..health.."/"..maxhealth), wanjialistx, wanjialisty+0.500, 0.3,0.3)
+            draw_string(string.format("~h~~f~Armor : ~g~"..armor.."/"..maxarmor), wanjialistx, wanjialisty+0.520, 0.3,0.3)
+            draw_string(string.format("~h~~f~Accelerator : "..check_host(players.is_using_vpn(pid))), wanjialistx, wanjialisty+0.540, 0.3,0.3)
+            draw_string(string.format("~h~~f~In House Inspections : ~g~"..t_b()), wanjialistx, wanjialisty+0.560, 0.3,0.3)
+            draw_string(string.format("~h~~f~Network Latency : ~g~"..string.format("%.0f ", NETWORK.NETWORK_GET_AVERAGE_PING(pid)).."ms"), wanjialistx, wanjialisty+0.580, 0.3,0.3)
             draw_string(string.format("".."~h~~f~[GRANDTOURINGVIP]"), wanjialistx+0.090, wanjialisty+0.580, 0.3,0.3)
         else
             if cur_player ~= nil then
@@ -540,11 +541,11 @@ local languages = {
     end)
     menu.set_value(wanjialist, wanjialist1)
 
-GTluaScript.slider(wanjiaroot, '信息窗口 X轴', {'wanjiax'}, '',0, 500, 440, 5, function(jb_x)
+GTluaScript.slider(wanjiaroot, 'information window X axis', {'wanjiax'}, '',0, 500, 440, 5, function(jb_x)
     wanjialistx = jb_x / 900
 end)  
     
-GTluaScript.slider(wanjiaroot, '信息窗口 Y轴', {'wanjiay'}, '',0, 500, 70, 5, function(jb_y)
+GTluaScript.slider(wanjiaroot, 'information window Y Axis', {'wanjiay'}, '',0, 500, 70, 5, function(jb_y)
     wanjialistsy = jb_y / 900
     wanjialisty = jb_y / 900
 end)
@@ -562,7 +563,7 @@ local function gameplay_camera(distance)
     return destination
 end
 
-GTTG(players_root, '虚假无敌', {}, '', function(wudi)
+GTTG(players_root, 'false invincibility', {}, '', function(wudi)
     wd = wudi
     while wd do
         util.yield()
@@ -587,7 +588,7 @@ end)
 
 local cur_rot = 0
 local cur_clone = 0
-liulanwj=GTLP(players_root, "玩家预览", {}, "预览对方玩家人物模型", function()
+liulanwj=GTLP(players_root, "player preview", {}, "preview the opposing player character model", function()
     local focused = players.get_focused()
     if #focused > 0 and menu.is_open() and (players.get_spectate_target(players.user()) ~= focused[1]) then
         local pid = focused[1]
@@ -618,7 +619,7 @@ liulanwj=GTLP(players_root, "玩家预览", {}, "预览对方玩家人物模型"
 end)
 menu.set_value(liulanwj, liulanwj1)
 
-xuetiao=GTTG(players_root, "血条显示", {""}, "", function(xl)
+xuetiao=GTTG(players_root, "health bar display", {""}, "", function(xl)
     local x = 0.45
     local y = 0.95
     local width = 0.12
@@ -634,7 +635,7 @@ xuetiao=GTTG(players_root, "血条显示", {""}, "", function(xl)
     HUD.SET_TEXT_CENTRE(1)
     HUD.SET_TEXT_OUTLINE(0)
     HUD.SET_TEXT_COLOUR(0, 255, 0, 255)
-    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("血量")
+    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("blood volume")
     HUD.END_TEXT_COMMAND_DISPLAY_TEXT(x-0.01, y-0.008)
     end
     function tuxinga()
@@ -665,7 +666,7 @@ xuetiao=GTTG(players_root, "血条显示", {""}, "", function(xl)
     a = false
 end)
 
-hujia=GTTG(players_root, "护甲显示", {""}, "", function(hj)
+hujia=GTTG(players_root, "armor display", {""}, "", function(hj)
     local x = 0.45
     local y = 0.92
     local width = 0.12
@@ -681,7 +682,7 @@ hujia=GTTG(players_root, "护甲显示", {""}, "", function(hj)
     HUD.SET_TEXT_CENTRE(1)
     HUD.SET_TEXT_OUTLINE(0)
     HUD.SET_TEXT_COLOUR(100, 165, 255, 255)
-    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("护甲")
+    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("armor")
     HUD.END_TEXT_COMMAND_DISPLAY_TEXT(x-0.01, y-0.008)
     end
     function tuxingb()
@@ -715,7 +716,7 @@ end)
 menu.set_visible(xuetiao, false)
 menu.set_visible(hujia, false)
 
-kuangjia = GTTG(players_root, "框架", {""}, "", function(gg)
+kuangjia = GTTG(players_root, "frame", {""}, "", function(gg)
     function textxlcolour(r, g, b, a)
         return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
     end
@@ -781,7 +782,7 @@ kuangjia = GTTG(players_root, "框架", {""}, "", function(gg)
 end)
 menu.set_visible(kuangjia, false)
 
-jiankang=GTTG(players_root, "综合信息[GT]", {""}, "", function(jk)
+jiankang=GTTG(players_root, "comprehensive information[GT]", {""}, "", function(jk)
     c = jk
         delay = 0
         fps = 0
@@ -796,28 +797,28 @@ jiankang=GTTG(players_root, "综合信息[GT]", {""}, "", function(jk)
                mspeed = math.ceil(kph)
                draw_string(string.format("~h~~f~GRANDTOURINGVIP"), 0.437,0.01, 0.35,0.35)
                draw_string(string.format("~h~~y~".. CLOCK.GET_CLOCK_HOURS() .. ":" .. CLOCK.GET_CLOCK_MINUTES()), 0.475,0.042, 0.45,0.45)
-               draw_string(string.format("~h~~f~名称 : ~g~"..players.get_name(players.user())), 0.045,0.12, 0.25,0.25)
-               draw_string(string.format("~h~~f~正在打字 : ~w~"..check_host(players.is_typing(players.user()))),0.045,0.14, 0.25,0.25)
+               draw_string(string.format("~h~~f~name : ~g~"..players.get_name(players.user())), 0.045,0.12, 0.25,0.25)
+               draw_string(string.format("~h~~f~typing : ~w~"..check_host(players.is_typing(players.user()))),0.045,0.14, 0.25,0.25)
                draw_string(string.format("~h~~f~RID : ~y~"..players.get_rockstar_id(players.user())), 0.045,0.16, 0.25,0.25)
-               draw_string(string.format("~h~~f~IP地址 : ~g~"..intToIp(players.get_connect_ip(players.user()))), 0.045,0.18, 0.25,0.25)
-               draw_string(string.format("~h~~f~等级 : ~g~"..players.get_rank(players.user())), 0.045, 0.20, 0.25,0.25)
+               draw_string(string.format("~h~~f~ip address : ~g~"..intToIp(players.get_connect_ip(players.user()))), 0.045,0.18, 0.25,0.25)
+               draw_string(string.format("~h~~f~grade : ~g~"..players.get_rank(players.user())), 0.045, 0.20, 0.25,0.25)
                draw_string(string.format("~h~~f~K/D : ~g~"..round(players.get_kd(players.user()), 2)), 0.045, 0.22, 0.25,0.25)
-               draw_string(string.format("~h~~f~死亡次数 : ~g~"..players.get_deaths(players.user())), 0.045, 0.24, 0.25,0.25)
-               draw_string(string.format("~h~~f~语言 : ~w~"..languages[players.get_language(players.user())]), 0.045, 0.26, 0.25,0.25)
-               draw_string(string.format("~h~~f~手柄状态 : "..check(players.is_using_controller(players.user()))), 0.045, 0.28, 0.25,0.25)
-               draw_string(string.format("~h~~f~战局主机 : "..check_host(players.get_host(players.user()))), 0.045, 0.30, 0.25,0.25)
-               draw_string(string.format("~h~~f~脚本主机 : "..check_script_host(players.get_script_host(players.user()))), 0.045, 0.32, 0.25,0.25)
-               draw_string(string.format("~h~~f~主机令牌 : ~g~"..players.get_host_queue_position(players.user())), 0.045, 0.34, 0.25,0.25)
-               draw_string(string.format("~h~~f~组织 : ~w~"..check_org(players.get_org_type(players.user()))), 0.045, 0.36, 0.25,0.25)
-               draw_string(string.format("~h~~f~载具 : ~w~"..check_cat(util.get_label_text(players.get_vehicle_model(players.user())))), 0.045, 0.38, 0.25,0.25)
-               draw_string(string.format("~h~~f~通缉等级 : ~w~"..PLAYER.GET_PLAYER_WANTED_LEVEL(players.user())), 0.045, 0.40, 0.25,0.25)
-               draw_string(string.format("~h~~f~武器 : ~w~"..weapon), 0.045, 0.42, 0.25,0.25)
-               draw_string(string.format("~h~~f~现金 : ~g~"..formatMoney(players.get_wallet(players.user()))), 0.045, 0.44, 0.25,0.25)
-               draw_string(string.format("~h~~f~银行 : ~y~"..formatMoney(players.get_bank(players.user()))), 0.045, 0.46, 0.25,0.25)
-               draw_string(string.format("~h~~f~坐标 : ~w~"..string.format("\nx:%.5f\ny:%.5f\nz:%.5f", playerpos.x, playerpos.y, playerpos.z)), 0.045, 0.48, 0.25,0.25)
-               draw_string(string.format("~h~~f~加速器 : "..check_host(players.is_using_vpn(players.user()))), 0.045, 0.55, 0.25,0.25)
-               draw_string(string.format("~h~~f~遥控载具 : "..check_host(players.is_using_rc_vehicle(players.user()))), 0.045, 0.57, 0.25,0.25)
-               draw_string(string.format("~h~~f~武器伤害修改 : "..check_host(players.get_melee_weapon_damage_modifier(players.user()))), 0.045, 0.59, 0.25,0.25)
+               draw_string(string.format("~h~~f~number of deaths : ~g~"..players.get_deaths(players.user())), 0.045, 0.24, 0.25,0.25)
+               draw_string(string.format("~h~~f~Language : ~w~"..languages[players.get_language(players.user())]), 0.045, 0.26, 0.25,0.25)
+               draw_string(string.format("~h~~f~Handle Status : "..check(players.is_using_controller(players.user()))), 0.045, 0.28, 0.25,0.25)
+               draw_string(string.format("~h~~f~Battle Console : "..check_host(players.get_host(players.user()))), 0.045, 0.30, 0.25,0.25)
+               draw_string(string.format("~h~~f~script host : "..check_script_host(players.get_script_host(players.user()))), 0.045, 0.32, 0.25,0.25)
+               draw_string(string.format("~h~~f~host tokens : ~g~"..players.get_host_queue_position(players.user())), 0.045, 0.34, 0.25,0.25)
+               draw_string(string.format("~h~~f~organization : ~w~"..check_org(players.get_org_type(players.user()))), 0.045, 0.36, 0.25,0.25)
+               draw_string(string.format("~h~~f~vehicles : ~w~"..check_cat(util.get_label_text(players.get_vehicle_model(players.user())))), 0.045, 0.38, 0.25,0.25)
+               draw_string(string.format("~h~~f~wanted rating : ~w~"..PLAYER.GET_PLAYER_WANTED_LEVEL(players.user())), 0.045, 0.40, 0.25,0.25)
+               draw_string(string.format("~h~~f~weapons : ~w~"..weapon), 0.045, 0.42, 0.25,0.25)
+               draw_string(string.format("~h~~f~cash : ~g~"..formatMoney(players.get_wallet(players.user()))), 0.045, 0.44, 0.25,0.25)
+               draw_string(string.format("~h~~f~bank : ~y~"..formatMoney(players.get_bank(players.user()))), 0.045, 0.46, 0.25,0.25)
+               draw_string(string.format("~h~~f~coordinate : ~w~"..string.format("\nx:%.5f\ny:%.5f\nz:%.5f", playerpos.x, playerpos.y, playerpos.z)), 0.045, 0.48, 0.25,0.25)
+               draw_string(string.format("~h~~f~accelerator : "..check_host(players.is_using_vpn(players.user()))), 0.045, 0.55, 0.25,0.25)
+               draw_string(string.format("~h~~f~remotely controlled vehicles : "..check_host(players.is_using_rc_vehicle(players.user()))), 0.045, 0.57, 0.25,0.25)
+               draw_string(string.format("~h~~f~weapon damage modifications : "..check_host(players.get_melee_weapon_damage_modifier(players.user()))), 0.045, 0.59, 0.25,0.25)
                draw_string(string.format("~h~~f~SPEED   ~p~~italic~"..mspeed.."~f~/~y~KM"), 0.83, 0.86, 0.45,0.45)
                draw_string(string.format("~h~~y~TIME ~p~- ~f~~italic~"..os.date("%X")), 0.80, 0.025, 0.40,0.40)
                draw_string(string.format("~h~~y~DPS  ~p~- ~f~~italic~"..fps.."~r~   "..delay.."ms"), 0.80, 0.055, 0.40,0.40)
@@ -833,14 +834,14 @@ jiankang=GTTG(players_root, "综合信息[GT]", {""}, "", function(jk)
     end)
     menu.set_value(jiankang, jiankang1)
 
-GTTG(players_root, "玩家加入/离开通知", {}, "", function(g)
+GTTG(players_root, "players join/leave notifications", {}, "", function(g)
     gt = g
       pljoin = players.on_join(function(pid)
       if gt then
         local Joinrid = players.get_rockstar_id(pid)
         local Joinname = players.get_name(pid)
         local Joinip = intToIp(players.get_connect_ip(pid))
-        newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;", "~p~有傻逼进来啦\n玩家名字: " .. Joinname .. " 玩家RID: " .. Joinrid .. " 玩家IP: " .. Joinip, "CHAR_CHOP", 140)
+        newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;", "~p~there s a fool coming in\n player name: " .. Joinname .. " player rid: " .. Joinrid .. " player ip: " .. Joinip, "CHAR_CHOP", 140)
         end
         pljoin = 0
       end)
@@ -849,13 +850,13 @@ GTTG(players_root, "玩家加入/离开通知", {}, "", function(g)
           local leaverid = players.get_rockstar_id(pid)
           local leavename = PLAYER.GET_PLAYER_NAME(pid)
           local leaveip = intToIp(players.get_connect_ip(pid))
-          newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;","~r~傻逼跑了\n玩家名字: " .. leavename .. [[玩家RID: ]] .. leaverid .. [[玩家IP: ]] .. leaveip .. "", "CHAR_CHOP", 140)
+          newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;","~r~the fool ran away\n player name: " .. leavename .. [[player rid: ]] .. leaverid .. [[player ip: ]] .. leaveip .. "", "CHAR_CHOP", 140)
         end
         plleave = 0
       end)
   end)
 
-  GTTG(players_root, '陀螺发射', {''}, '', function(cb)
+  GTTG(players_root, 'gyro launch', {''}, '', function(cb)
     chiabng = cb
         while chiabng do
             wait()
@@ -872,7 +873,7 @@ GTTG(players_root, "玩家加入/离开通知", {}, "", function(g)
         end
     end)
 
-GTTG(players_root, "自身血条", {""}, "", function(on)
+GTTG(players_root, "self health bar", {""}, "", function(on)
     local x = 0.085
     local y = 0.1
     local width = 0.17
@@ -891,25 +892,25 @@ GTTG(players_root, "自身血条", {""}, "", function(on)
     HUD.SET_TEXT_CENTRE(1)
     HUD.SET_TEXT_OUTLINE(0)
     HUD.SET_TEXT_COLOUR(0, 255, 255, 255)
-    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("生命值: ".. math.floor(my_health).."/328")
+    util.BEGIN_TEXT_COMMAND_DISPLAY_TEXT("health: ".. math.floor(my_health).."/328")
     HUD.END_TEXT_COMMAND_DISPLAY_TEXT(0.08, 0.092)
     end
     gt = false
 end)
 
-GTTG(players_root, "游戏暂停", {}, "", function(zt)
+GTTG(players_root, "the game is paused", {}, "", function(zt)
     gtb = zt
     if gtb then
-        gtoast("世界停止")
+        gtoast("the world stopped")
         MISC.SET_GAME_PAUSED(true)
     else
-        gtoast("世界恢复")
+        gtoast("the world recovers")
         MISC.SET_GAME_PAUSED(false)
     end
 end)
 
 
-GTTG(players_root, "复活归位", {}, "", function(AA)
+GTTG(players_root, "resurrection and return", {}, "", function(AA)
     ab2 = AA
     while ab2 do
         wait(0)
@@ -930,9 +931,9 @@ GTTG(players_root, "复活归位", {}, "", function(AA)
     end
 end)
 
-GTAC(players_root, "出其不意的传送", {""}, "", function()
+GTAC(players_root, "unexpected teleportation", {""}, "", function()
     if not HUD.IS_WAYPOINT_ACTIVE(true) then
-        gtoast("你需要设置一个标记点")
+        gtoast("you need to set a marker point")
         return
     end
     local waypoint = HUD.GET_BLIP_INFO_ID_COORD(HUD.GET_FIRST_BLIP_INFO_ID(HUD.GET_WAYPOINT_BLIP_ENUM_ID()))
@@ -974,17 +975,17 @@ GTAC(players_root, "出其不意的传送", {""}, "", function()
     HUD.BUSYSPINNER_OFF()
 end)
 
-GTAC(players_root,"Freemode自救", {}, "如果卡freemode提示就点这个\n把你送到云上几秒在下来,如果你是主机,请放心你下来以后还是主机", function ()
+GTAC(players_root,"Freemode save oneself", {}, "if the card freemode prompts click this\nsend you to the cloud in a few seconds to come down if you are the host please rest assured that you will still be the host after you come down", function ()
     menu.trigger_commands("restartfm")
 end)
 
-GTAC(players_root, "卡云自救", {}, "当您加载卡云时无法卡单\n又不想强制退到故事模式\n可以试试点击它...", function()
+GTAC(players_root, "kayun saves himself", {}, "when you load a card cloud you can t get a card order\n and don t want to force a regression to story mode\n can try to click on it...", function()
 if NETWORK.NETWORK_CAN_BAIL() then
 NETWORK.NETWORK_BAIL(0, 0, 0)
 end
 end)
 
-GTAC(players_root, "成为脚本主机",{"getscriptshost"},"适用于Stand基础版用户",function()
+GTAC(players_root, "become a script host",{"getscriptshost"},"applicable to stand basic edition users",function()
     local InSession = function() return util.is_session_started() and not util.is_session_transition_active() end
     if InSession() then
         menu.trigger_commands("givesh"..players.get_name(players.user()))
@@ -992,7 +993,7 @@ GTAC(players_root, "成为脚本主机",{"getscriptshost"},"适用于Stand基础
 end)
 
 --
-specialability = GTLP(players_root, "无限特殊能力", {}, "", function()
+specialability = GTLP(players_root, "unlimited special abilities", {}, "", function()
 	SPECIAL_ABILITY_FILL_METER(PLAYER.PLAYER_ID(), true)
 end)
 util.create_tick_handler(function()
@@ -1018,7 +1019,7 @@ function requestControlLoop(entity)
 	end
 end
 easyenter = off
-GTTG(players_root, "自动拦截NPC载具", {}, "当您在马路上按F拦截一辆正在行驶的车辆时,此选项会帮助您自动将正在行驶的车辆强制停止", function(on)
+GTTG(players_root, "automatically intercepts npc vehicles", {}, "when you press f on the road to intercept a moving vehicle this option will help you force the moving vehicle to stop automatically", function(on)
 	easyenter = on
 	while easyenter do
 		if not (PED.GET_VEHICLE_PED_IS_TRYING_TO_ENTER(plyped()) == 0) then
@@ -1030,7 +1031,7 @@ GTTG(players_root, "自动拦截NPC载具", {}, "当您在马路上按F拦截一
 end)
 --牛皋
 local GetOn = function(on) if on then return "on" else return "off" end end
-auto_bst = GTLP(players_root,"智能开启牛鲨睾酮",{},("当您关闭无敌模式跟战局玩家打架时\n此选项会帮助您自动开启牛睾丸模式"),function()
+auto_bst = GTLP(players_root,"intelligently turn on bull shark testosterone",{},("when you turn off invincibility mode and fight with a player\n this option will help you to turn on the bovine testicle mode automatically"),function()
     local on = GetOn(WEAPON.IS_PED_ARMED(players.user_ped(),7))
     menu.trigger_commands("bst "..on)
     wait(100)
@@ -1038,13 +1039,13 @@ end,function()
     menu.trigger_commands("bst off")
 end)
 --
-GTAC(players_root, "进入距离最近的车辆", {}, "", function()
+GTAC(players_root, "get into the nearest vehicle", {}, "", function()
 	if not PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
 		local player_pos = players.get_position(players.user())
 		local veh = ent_func.getClosestVehicle(player_pos)
 		local ped = VEHICLE.GET_PED_IN_VEHICLE_SEAT(veh, -1, true)
 		if PED.IS_PED_A_PLAYER(ped) then
-			gtoast("一个玩家正在一个最近的车辆中")
+			gtoast("a player is in one of the nearest vehicles")
 		else
 		    entities.delete_by_handle(ped)
 			PED.SET_PED_INTO_VEHICLE(players.user_ped(), veh, -1)
@@ -1052,7 +1053,7 @@ GTAC(players_root, "进入距离最近的车辆", {}, "", function()
 	end
 end)
 
-GTAC(players_root,("传送到距离最近的玩家"), {}, "", function()
+GTAC(players_root,("teleport to the nearest player"), {}, "", function()
 	local user_pos = players.get_position(players.user())
 	local player = ent_func.getClosestPlayer(user_pos)
     if player ~= nil then
@@ -1070,14 +1071,14 @@ GTAC(players_root,("传送到距离最近的玩家"), {}, "", function()
 end)
 
 --杀戮光环
-aura_list = GT(players_root,("杀戮光环"), {}, "在设定范围内产生效果")
+aura_list = GT(players_root,("Killing Aura"), {}, "produce effects within a set range")
 
 aura_radius = 20
-GTluaScript.slider(aura_list,("光环范围"), {"killaura"}, "", 5, 100, 20, 1, function(count)
+GTluaScript.slider(aura_list,("aura range"), {"killaura"}, "", 5, 100, 20, 1, function(count)
     aura_radius = count
 end)
 
-GTLP(aura_list,("爆炸光环"), {}, "", function()
+GTLP(aura_list,("explosive aura"), {}, "", function()
     local vehicles = entities.get_all_vehicles_as_handles()
     local user_vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), true)
     for _, vehicle in pairs(vehicles) do
@@ -1103,7 +1104,7 @@ GTLP(aura_list,("爆炸光环"), {}, "", function()
 	end
 end)
 
-GTLP(aura_list,("排斥光环"), {}, "", function()
+GTLP(aura_list,("repel the aura"), {}, "", function()
     local vehicles = entities.get_all_vehicles_as_handles()
     local user_vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), true)
     for _, vehicle in pairs(vehicles) do
@@ -1136,7 +1137,7 @@ GTLP(aura_list,("排斥光环"), {}, "", function()
 	end
 end)
 
-GTLP(aura_list,("吸附光环"), {}, "", function()
+GTLP(aura_list,("snap aura"), {}, "", function()
     local vehicles = entities.get_all_vehicles_as_handles()
     local user_vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), true)
     for _, vehicle in pairs(vehicles) do
@@ -1169,7 +1170,7 @@ GTLP(aura_list,("吸附光环"), {}, "", function()
 	end
 end)
 
-GTLP(aura_list,("冻结光环"), {}, "", function()
+GTLP(aura_list,("freeze aura"), {}, "", function()
     local vehicles = entities.get_all_vehicles_as_handles()
     local user_vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), true)
     for _, vehicle in pairs(vehicles) do
@@ -1198,7 +1199,7 @@ GTLP(aura_list,("冻结光环"), {}, "", function()
 	end
 end)
 
-GTLP(aura_list,("弹射光环"), {}, "", function()
+GTLP(aura_list,("catapult aura"), {}, "", function()
     local vehicles = entities.get_all_vehicles_as_handles()
     local user_vehicle = PED.GET_VEHICLE_PED_IS_IN(players.user_ped(), true)
     for _, vehicle in pairs(vehicles) do
@@ -1232,7 +1233,7 @@ GTLP(aura_list,("弹射光环"), {}, "", function()
 	end
 end)
 
-GTTG(weapon_options, "武器平滑拉扯动作", {}, "", function (onf)
+GTTG(weapon_options, "smooth pulling of weapons", {}, "", function (onf)
     currentwep = current_ped_weapon()
     while onf do os.sleep(0) my_pid()
     local ent = ENTITY.IS_ENTITY_DEAD(my_pid())
@@ -1254,7 +1255,7 @@ GTTG(weapon_options, "武器平滑拉扯动作", {}, "", function (onf)
     end
 end)
 
-menu.list_action(weapon_options, "武器特殊子弹", {}, "修改一些特殊枪械的子弹类型", specialTypeList,
+menu.list_action(weapon_options, "weapons special bullets", {}, "modified the bullet types of some special firearms", specialTypeList,
     function(value)
         if not WEAPON.IS_PED_ARMED(players.user_ped(), 4) then
             return
@@ -1272,13 +1273,13 @@ menu.list_action(weapon_options, "武器特殊子弹", {}, "修改一些特殊�
 
                 local weaponHash = get_ped_weapon(players.user_ped())
                 local weaponName = get_weapon_name_by_hash(weaponHash)
-                util.toast("武器: " .. weaponName .. "\n弹药类型已修改")
+                util.toast("weapons: " .. weaponName .. "\n ammunition type has been modified")
             end
         end
     end)
 
 
-pvphelp = GT(weapon_options, "自瞄选项", {""}, "")
+pvphelp = GT(weapon_options, "self aiming option", {""}, "")
 
 HitEffect = {colorCanChange = false}
 HitEffect.__index = HitEffect
@@ -1303,31 +1304,31 @@ hitEffects = {
 	HitEffect.new("scr_rcbarry2", "muz_clown"),
 }
 options = {
-	{"猛女子弹"},
-	{"小丑出现"},
-	{"开拓者"},
-	{"星爆"},
-	{"喷泉"},
-	{"外星解体"},
-	{"小丑花"},
-	{"地面冲击波"},
-	{"小丑木兹"},
-    {"毒气"},
-    {"旋风子弹"},
-    {"战火子弹"},
-    {"烟雾子弹"},
-    {"星星子弹"},
-    {"电光子弹"}
+	{"macho woman bullet"},
+	{"the clown appears"},
+	{"trailblazer"},
+	{"starburst"},
+	{"fountain"},
+	{"alien disintegration"},
+	{"clown flowers"},
+	{"ground shock wave"},
+	{"muz the clown"},
+    {"gas"},
+    {"whirlwind bullets"},
+    {"war bullets"},
+    {"smoke bullets"},
+    {"star bullet"},
+    {"electro optical bullets"}
 }
 
 effectColour = {r = 0.5, g = 0.0, b = 0.5, a = 1.0}
 selectedOpt = 1
-name =  "彩虹模式"
-helpText = "仅适用于部分特效"
+name =  "rainbow mode"
+helpText = "only available for some effects"
 SetEffectColour = function(colour) effectColour = colour end
 
-WPTFX = weapon_options:list("武器特效", {}, "")
-GTLP(WPTFX, "特效武器开启",{}, '',function()
+WPTFX = weapon_options:list("weapon effects", {}, "")
+GTLP(WPTFX, "special effect weapons are activated",{}, '',function()
 	local effect = hitEffects[selectedOpt]
 	if not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(effect.asset) then
 		return STREAMING.REQUEST_NAMED_PTFX_ASSET(effect.asset)
@@ -1353,7 +1354,7 @@ GTLP(WPTFX, "特效武器开启",{}, '',function()
 	end
 end)
 
-WPTFX:list_select("设置特效", {}, "", options, 1, function (opt)
+WPTFX:list_select("set up special effects", {}, "", options, 1, function (opt)
 	selectedOpt = opt
 end)
 
@@ -1361,13 +1362,13 @@ menuColour =
 menu.colour(WPTFX, name, {"effectcolour"}, helpText, effectColour, false, SetEffectColour)
 menu.rainbow(menuColour)
 --
-newweapon = GT(weapon_options, "新枪械玩法")
+newweapon = GT(weapon_options, "new gun gameplay")
 
-GTLP(newweapon,"绳索载具枪[新]", {}, "", function()
+GTLP(newweapon,"rope vehicle gun[new]", {}, "", function()
     ropeTogether()
 end)
 
-GTTG(newweapon,'武器准度',{},'子弹射击不会抖动,而达到百分百精准射击点位.',function(on)
+GTTG(newweapon,'weapon accuracy',{},'bullets shoot without shaking,and to achieve 100 accurate shooting points.',function(on)
     if on then
         PED.SET_PED_ACCURACY(players.user_ped(),100)
     else
@@ -1379,7 +1380,7 @@ last_health = 0
 damage_timer = nil
 damage_timer_countdown = 0
 
-GTTG(newweapon, '伤害显示',{},'',function(he)
+GTTG(newweapon, 'damage display',{},'',function(he)
     hh = he
     local r, g, b = 1, 0, 0 
     while hh do wait()
@@ -1422,7 +1423,7 @@ GTTG(newweapon, '伤害显示',{},'',function(he)
     end
 end)
 
-GTTG(newweapon,'恕瑞玛飞升枪', {}, '射击的对象会以直升机形式飞升.', function(cr)
+GTTG(newweapon,'shurima ascension spear', {}, 'the object of the shot will fly up in the form of a helicopter.', function(cr)
     qg = cr
     while qg do
         wait()
@@ -1441,7 +1442,7 @@ GTTG(newweapon,'恕瑞玛飞升枪', {}, '射击的对象会以直升机形式�
 end)
 
 
-GTTG(newweapon, "乱射空袭", {""}, "手持武器射击使用\n乱炸打击点", function(lsq)
+GTTG(newweapon, "indiscriminate air strikes", {""}, "hand held weapon shooting use\n indiscriminate bombing of strike points", function(lsq)
     local luanshe = lsq
     while luanshe do
         wait()
@@ -1465,7 +1466,7 @@ GTTG(newweapon, "乱射空袭", {""}, "手持武器射击使用\n乱炸打击点
     luanshe = false
 end)
 
-GTTG(newweapon, '翻转枪', {}, '霰弹枪效果最佳,作弊者不起作用', function(fz)
+GTTG(newweapon, 'flip the gun', {}, 'shotguns work best,cheating doesn t work', function(fz)
     fanzhuan = fz
     while fanzhuan do
         wait()
@@ -1483,14 +1484,14 @@ GTTG(newweapon, '翻转枪', {}, '霰弹枪效果最佳,作弊者不起作用', 
     fanzhuan = false
 end)
 
-GTTG(newweapon,'拆车枪', {}, '射击后的载具将被拆卸', function(cx)
+GTTG(newweapon,'demolition gun', {}, 'the vehicle will be disassembled after the shot', function(cx)
 chaixie = cx
     while chaixie do
         wait()
            if PED.IS_PED_SHOOTING(players.user_ped(players.user())) then
            local aiment = ent_func.get_entity_player_is_aiming_at(players.user())
            if not (NETWORK.NETWORK_HAS_CONTROL_OF_ENTITY(aiment)) then
-               notification("无法控制这个扑街的车辆\n或者这他妈的不是一辆车")
+               notification("there is no way to control this vehicle that is hitting the street or this isn t a fucking car")
            else
                requestControlLoop(aiment)
                local doors = VEHICLE.GET_NUMBER_OF_VEHICLE_DOORS(aiment)
@@ -1508,7 +1509,7 @@ chaixie = cx
     chaixie = false
 end)
 
-GTTG(newweapon, '弹跳枪', {}, '', function(ttq)
+GTTG(newweapon, 'bouncing guns', {}, '', function(ttq)
     tantiao = ttq
     while tantiao do
         wait()
@@ -1532,7 +1533,7 @@ GTTG(newweapon, '弹跳枪', {}, '', function(ttq)
     tantiao = false
 end)
 
-GTTG(newweapon, '吸附枪', {}, '(可吸附所有物体及车辆)', function(xf)
+GTTG(newweapon, 'adsorption gun', {}, '(attaches to all objects and vehicles)', function(xf)
     xfq = xf
     while xfq do
         wait()
@@ -1562,15 +1563,15 @@ GTTG(newweapon, '吸附枪', {}, '(可吸附所有物体及车辆)', function(xf
     end
 end)
 
-zhunxin = GT(weapon_options, "准星", {}, "", function(); end)
+zhunxin = GT(weapon_options, "foresight", {}, "", function(); end)
 
-weaponfun = GT(weapon_options, "滑稽枪械")
+weaponfun = GT(weapon_options, "funny firearms")
 --
-wea_func = GT(weapon_options, '实用选项', {}, '大部分武器选项都在这里~')
+wea_func = GT(weapon_options, 'useful options', {}, 'most of the weapon options are here~')
 --枪械玩乐
-bullet_reactions_list = GT(weapon_options,("枪械玩乐"))
+bullet_reactions_list = GT(weapon_options,("gun play"))
 
-GTLP(bullet_reactions_list,("射击车辆时加速"), {}, "", function()
+GTLP(bullet_reactions_list,("accelerate when shooting vehicles"), {}, "", function()
     if PED.IS_PED_SHOOTING(players.user_ped()) then
         local entity = ent_func.get_entity_player_is_aiming_at(players.user())
         if entity ~= 0 then
@@ -1581,7 +1582,7 @@ GTLP(bullet_reactions_list,("射击车辆时加速"), {}, "", function()
     end
 end)
 
-GTLP(bullet_reactions_list,("射击时爆炸实体"), {}, "", function()
+GTLP(bullet_reactions_list,("explodes entities when fired"), {}, "", function()
     if PED.IS_PED_SHOOTING(players.user_ped()) then
         local entity = ent_func.get_entity_player_is_aiming_at(players.user())
         if entity ~= 0 then
@@ -1595,7 +1596,7 @@ GTLP(bullet_reactions_list,("射击时爆炸实体"), {}, "", function()
     end
 end)
 
-GTLP(bullet_reactions_list,("射击时冻结实体"), {}, "", function()
+GTLP(bullet_reactions_list,("freezes entities when firing"), {}, "", function()
     if PED.IS_PED_SHOOTING(players.user_ped()) then
         local entity = ent_func.get_entity_player_is_aiming_at(players.user())
         if entity ~= 0 then
@@ -1604,7 +1605,7 @@ GTLP(bullet_reactions_list,("射击时冻结实体"), {}, "", function()
     end
 end)
 
-GTLP(bullet_reactions_list,("射击车辆时移除重力"), {}, "", function()
+GTLP(bullet_reactions_list,("remove gravity when shooting vehicles"), {}, "", function()
     if PED.IS_PED_SHOOTING(players.user_ped()) then
         local entity = ent_func.get_entity_player_is_aiming_at(players.user())
         if entity ~= 0 then
@@ -1618,7 +1619,7 @@ GTLP(bullet_reactions_list,("射击车辆时移除重力"), {}, "", function()
 end)
 
 driveit = off
-GTTG(bullet_reactions_list, "车辆进入枪", {}, "瞄准车辆后按F进入", function(on)
+GTTG(bullet_reactions_list, "the vehicle got into the gun", {}, "press f to enter after aiming at the vehicle", function(on)
 	driveit = on
 	while driveit do
 		driveitgun()
@@ -1626,7 +1627,7 @@ GTTG(bullet_reactions_list, "车辆进入枪", {}, "瞄准车辆后按F进入", 
 	end
 end)
 --
-GTLP(players_root, "屏蔽错误警告", {"accepterrorstr"}, "", function()
+GTLP(players_root, "mask error warnings", {"accepterrorstr"}, "", function()
     mess_hash = HUD.GET_WARNING_SCREEN_MESSAGE_HASH()
     if mess_hash == -896436592 then
         gtoast("This player left the session.")
@@ -1656,9 +1657,9 @@ function boost_player_vehicle_forward()
     end
 end
 
-Entity_Control_Options = GT(selflist, "通用实体控制", {}, "")
+Entity_Control_Options = GT(selflist, "generic entity control", {}, "")
 
-loadtyst = GTAC(Entity_Control_Options, "加载通用实体控制", {}, "", function ()
+loadtyst = GTAC(Entity_Control_Options, "load generic entity controls", {}, "", function ()
     dofile(filesystem.scripts_dir().."lib\\GTSCRIPTS\\GTA\\entityctrl.lua")
     wait()
     menu.delete(loadtyst)
@@ -1668,8 +1669,8 @@ local Mount_hashes = {util.joaat("a_c_deer"), util.joaat("a_c_boar"), util.joaat
                       util.joaat("A_C_Hen"), util.joaat("A_C_MtLion"), util.joaat("A_C_Retriever"),
                       util.joaat("A_C_Seagull")}
 
-selflist:list_action("骑乘动物2.0", {}, "回车键上动物,F下动物,空格跳跃,W移动鼠标控制方向",
-    {"鹿", "公猪", "牛", "狼", "小鸡", "豹子", "猎犬", "海鸥"}, function(index)
+selflist:list_action("riding an animal 2.0", {}, "enter key on the animal,'f' under the animal,space jump,w moves,mouse controls orientation",
+    {"deer", "boar", "cattle", "wolf", "chick", "leopard", "hound", "seagull"}, function(index)
     local Mou = Mount_hashes[index]
     request_model_load(Mou)
     local location = ENTITY.GET_ENTITY_COORDS(players.user_ped())
@@ -1755,9 +1756,9 @@ if util.is_key_down(0x0D) then -- 回车键
     end
 end)
 
-penshewt = GT(selflist,"喷射战士", {}, "Stand会自动清理,不可发射过多")
+penshewt = GT(selflist,"splatoon", {}, "stand cleans up automatically,do not fire too much")
 
-GTLP(penshewt, "喷射水桶", {}, "Stand会自动清理,不可发射过多", function()
+GTLP(penshewt, "jet buckets", {}, "stand cleans up automatically,do not fire too much", function()
     HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
     local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 1, 0.2)
     local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
@@ -1771,7 +1772,7 @@ GTLP(penshewt, "喷射水桶", {}, "Stand会自动清理,不可发射过多", fu
     end
 end)
 
-GTLP(penshewt, "喷射铁饼", {}, "Stand会自动清理,不可发射过多", function()
+GTLP(penshewt, "jetting discus", {}, "stand cleans up automatically,do not fire too much", function()
     HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
     local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 1, 0.2)
     local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
@@ -1785,7 +1786,7 @@ GTLP(penshewt, "喷射铁饼", {}, "Stand会自动清理,不可发射过多", fu
     end
 end)
 
-GTLP(penshewt, "喷射杠铃", {}, "Stand会自动清理,不可发射过多", function()
+GTLP(penshewt, "jet barbell", {}, "stand cleans up automatically,do not fire too much", function()
     HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
     local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 1, 0.2)
     local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
@@ -1799,7 +1800,7 @@ GTLP(penshewt, "喷射杠铃", {}, "Stand会自动清理,不可发射过多", fu
     end
 end)
 
-GTLP(penshewt, "喷射轮胎", {}, "Stand会自动清理,不可发射过多", function()
+GTLP(penshewt, "jet tires", {}, "stand cleans up automatically,do not fire too much", function()
     HUD.DISPLAY_SNIPER_SCOPE_THIS_FRAME()
     local pos = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(players.user_ped(), 0, 1, 0.2)
     local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
@@ -1813,9 +1814,9 @@ GTLP(penshewt, "喷射轮胎", {}, "Stand会自动清理,不可发射过多", fu
     end
 end)
 
-hydraexp = GT(selflist, "核弹飞机")
+hydraexp = GT(selflist, "nuclear bomb planes")
 
-feijisc=GTTG(hydraexp, "飞机", {""}, "", function(on_toggle)
+feijisc=GTTG(hydraexp, "plane", {""}, "", function(on_toggle)
     if on_toggle then
     local vehicleHash = util.joaat("hydra")
     request_model(vehicleHash)
@@ -1855,7 +1856,7 @@ else
 end
 end)
 
-hedandl=GTLP(hydraexp, "核弹", {}, "", function()
+hedandl=GTLP(hydraexp, "nuclear bomb", {}, "", function()
 if PAD.IS_DISABLED_CONTROL_JUST_PRESSED(0, 323) then
     local hash = util.joaat("prop_military_pickup_01")
     ent_func.request_model(hash)
@@ -1877,7 +1878,7 @@ end)
 menu.set_visible(feijisc, false)
 menu.set_visible(hedandl, false)
 
-jiankang=GTTG(hydraexp, "核弹飞机[按X]", {""}, "", function(dj)
+jiankang=GTTG(hydraexp, "nuclear bomb planes[press x]", {""}, "", function(dj)
 hdfj = dj
 local shinei = players.is_in_interior(players.user())
 while hdfj do
@@ -1890,26 +1891,26 @@ while hdfj do
 hdfj = false
 end)
 
-fb = GT(selflist,"恶搞玩乐", {}, "非常有趣喔~")
+fb = GT(selflist,"spoof fun", {}, "it s a lot of fun~")
 
-loadfb = GTAC(fb, "加载恶搞玩乐", {}, "", function ()
+loadfb = GTAC(fb, "loaded with spoof fun", {}, "", function ()
     require "lib.GTSCRIPTS.GTA.blackhold"
     wait()
     menu.delete(loadfb)
 end)
 
-watch_dog = GT(selflist, "看门狗[New]", {}, "", function(); end)
-loaddog =  GTAC(watch_dog, "加载看门狗", {}, "", function ()
+watch_dog = GT(selflist, "watch dogs[New]", {}, "", function(); end)
+loaddog =  GTAC(watch_dog, "load the watchdog", {}, "", function ()
     dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\D.lua")
     wait()
     menu.delete(loaddog)
 end)
 
-local healthandprotex = GT(selflist, "生命选项", {}, "", function(); end)
-local helperingame = GT(selflist, "增强选项", {}, "", function(); end)
-local funfeatures_self = GT(selflist, '自我娱乐', {}, '')
-local escort_root = GT(selflist, "NPC护送", {""}, "")
-local aimkarma = GT(selflist, "瞄准反击", {}, "", function(); end)
+local healthandprotex = GT(selflist, "life options", {}, "", function(); end)
+local helperingame = GT(selflist, "enhancement options", {}, "", function(); end)
+local funfeatures_self = GT(selflist, 'entertain yourself', {}, '')
+local escort_root = GT(selflist, "npc escort", {""}, "")
+local aimkarma = GT(selflist, "aim to counterattack", {}, "", function(); end)
 
 all_female_sex_voicenames = {
     "S_F_Y_HOOKER_01_WHITE_FULL_01",
@@ -1930,29 +1931,29 @@ female_speeches = {
 }
 
 local mousetype = 1
-GTLP(helperingame, '显示鼠标', {}, '', function()
+GTLP(helperingame, 'display the mouse', {}, '', function()
     native_v(0xAAE7CE1D63167423, "")
     native_v(mousetype, 0x8DB8CFFD58B62552, "i")
     native_v(true, 0x98215325A695E78A, "b")
 end)
 
-menu.slider(helperingame,'鼠标样式 :', {} , '',1, 12, 1, 1, function(mtype)
+menu.slider(helperingame,'mouse style :', {} , '',1, 12, 1, 1, function(mtype)
     mousetype = mtype
 end)
 
-interior_noclip = GT(helperingame, "室内悬浮速度")
+interior_noclip = GT(helperingame, "indoor suspension speed")
 noclip_speed = 0.10
-menu.slider_float(interior_noclip, "设置速度", {"setinterspeed"}, "", 10, 10000, 10, 10, function(value)
+menu.slider_float(interior_noclip, "set the speed", {"setinterspeed"}, "", 10, 10000, 10, 10, function(value)
     noclip_speed = value / 100
 end)
 
 levitate_multiplier = 1
-menu.slider_float(interior_noclip, "设置倍数", {"setintercount"}, "", 10, 10000, 100, 10, function(value)
+menu.slider_float(interior_noclip, "set the multiplier", {"setintercount"}, "", 10, 10000, 100, 10, function(value)
     levitate_multiplier = value / 100
 end)
 
 local noclip_thing
-noclip_thing = GTLP(interior_noclip, "启用", {"enableinterlea"}, "", function()
+noclip_thing = GTLP(interior_noclip, "enable", {"enableinterlea"}, "", function()
     local speed_val = menu.ref_by_path("Self>Movement>Levitation>Movement Speed")
     local sprint_val = menu.ref_by_path("Self>Movement>Levitation>Sprint Multiplier")
     if GET_INTERIOR_FROM_PLAYER(players.user()) ~= 0 then
@@ -1971,9 +1972,9 @@ end, function()
     menu.trigger_commands("levitatesprintmultiplier " .. sprint / 100)
 end)
 
-phone = GT(helperingame, "手机选项", {}, "")
-zhanju_qiehuan = {"第一", "第二", "第三", "第四", "第五"}
-GTLuaScript.textslider(phone, "手机类型", {}, "", zhanju_qiehuan, function(a, b, c)
+phone = GT(helperingame, "mobile phone options", {}, "")
+zhanju_qiehuan = {"first", "Second", "third", "fourth", "fifth"}
+GTLuaScript.textslider(phone, "the type of phone", {}, "", zhanju_qiehuan, function(a, b, c)
     if a == 1 then
 
         MOBILE.CREATE_MOBILE_PHONE(0)
@@ -1990,33 +1991,33 @@ GTLuaScript.textslider(phone, "手机类型", {}, "", zhanju_qiehuan, function(a
 end)
 
 
-GTluaScript.slider(phone, '手机部位x', {}, '',-100,100, 0, 1, function(velx)
+GTluaScript.slider(phone, 'the part of the phone x', {}, '',-100,100, 0, 1, function(velx)
 MOBILE.SET_MOBILE_PHONE_ROTATION(velx,0,0)
 end)
-GTluaScript.slider(phone, '手机部位y', {}, '',-100,100, 0, 1, function(vely)
+GTluaScript.slider(phone, 'the part of the phone y', {}, '',-100,100, 0, 1, function(vely)
 MOBILE.SET_MOBILE_PHONE_ROTATION(0,vely,0)
 end)
-GTluaScript.slider(phone, '手机部位z', {}, '',-100,100, 0, 1, function(velz)
+GTluaScript.slider(phone, 'the part of the phone z', {}, '',-100,100, 0, 1, function(velz)
 MOBILE.SET_MOBILE_PHONE_ROTATION(0,0,velz)
 end)
 
-GTLP(escort_root, "女性呻吟", {"fsexmoan"}, "", function(on_click)
+GTLP(escort_root, "female moaning", {"fsexmoan"}, "", function(on_click)
     moan(players.get_position(players.user()), 'f')
     wait(1500)
 end)
 
-GTLP(escort_root, "女性呻吟", {"msexmoan"}, "", function(on_click)
+GTLP(escort_root, "female moaning", {"msexmoan"}, "", function(on_click)
     moan(players.get_position(players.user()), 'm')
     wait(1500)
 end)
 
  custom_hooker_model = 'ig_lestercrest'
-GTLuaScript.text_input(escort_root, "自定义模型", {"customescortmdl"}, "更改模型样式,随后请求护送", function(on_input)
+GTLuaScript.text_input(escort_root, "custom models", {"customescortmdl"}, "change the model style,an escort was then requested", function(on_input)
     custom_hooker_model = on_input
 end, 'ig_lestercrest')
 
-custom_hooker_options = {"人物1", "人物2", "人物3", "人物4", "我的克隆", "女性化的男性", "自定义"}
-GTLuaScript.list_action(escort_root, "请求护送", {"requestescort"}, "", custom_hooker_options, function(index)
+custom_hooker_options = {"figure 1", "figure 2", "figure 3", "figure 4", "my clone", "feminized males", "customize"}
+GTLuaScript.list_action(escort_root, "request an escort", {"requestescort"}, "", custom_hooker_options, function(index)
     local hooker
     local c
     if index == 1 then
@@ -2086,9 +2087,9 @@ end
 ----------------------
 -- 玩家受到伤害时
 ----------------------
-local Player_Damage = GT(healthandprotex, "玩家受到伤害时", {}, "")
+local Player_Damage = GT(healthandprotex, "when the player takes damage", {}, "")
 
-menu.toggle_loop(Player_Damage, "开启", {}, "仅在线上模式才有效\n需要关闭无敌", function()
+menu.toggle_loop(Player_Damage, "open", {}, "only works in online mode\n needs to turn off invincibility", function()
     if IS_IN_SESSION() then
         for eventIndex = 0, SCRIPT.GET_NUMBER_OF_EVENTS(1) - 1 do
             local eventType = SCRIPT.GET_EVENT_AT_INDEX(1, eventIndex)
@@ -2128,82 +2129,82 @@ menu.toggle_loop(Player_Damage, "开启", {}, "仅在线上模式才有效\n需�
     end
 end)
 
-menu.divider(Player_Damage, "选项")
+menu.divider(Player_Damage, "options")
 
 
 ----- 伤害数值显示  -----
-menu.toggle(Player_Damage, "伤害数值显示", {}, "", function(toggle)
+menu.toggle(Player_Damage, "damage values are displayed", {}, "", function(toggle)
     player_damage.number.enable = toggle
 end)
 
-local Player_Damage_Number = menu.list(Player_Damage, "伤害数值显示设置", {}, "")
+local Player_Damage_Number = menu.list(Player_Damage, "damage value display settings", {}, "")
 
-menu.slider(Player_Damage_Number, "显示时长(毫秒)", { "player_damage_number_duration" }, "",
+menu.slider(Player_Damage_Number, "display duration ms", { "player_damage_number_duration" }, "",
     500, 10000, 3000, 500, function(value)
         player_damage.number.duration = value
     end)
-menu.slider_float(Player_Damage_Number, "文字大小", { "player_damage_number_text_scale" }, "",
+menu.slider_float(Player_Damage_Number, "text size", { "player_damage_number_text_scale" }, "",
     1, 1000, 70, 5, function(value)
         player_damage.number.text_scale = value * 0.01
     end)
-menu.colour(Player_Damage_Number, "文字颜色", { "player_damage_number_text_colour" }, "",
+menu.colour(Player_Damage_Number, "text color", { "player_damage_number_text_colour" }, "",
     Colors.red, true, function(value)
         player_damage.number.text_colour = value
     end)
 
-menu.list_select(Player_Damage_Number, "位置", {}, "", {
-    { "固定位置" }, { "受到伤害的位置", {}, "玩家位置" }
+menu.list_select(Player_Damage_Number, "location", {}, "", {
+    { "fixed position" }, { "the location of the damage", {}, "player position" }
 }, 1, function(value)
     player_damage.number.pos_select = value
 end)
-menu.slider_float(Player_Damage_Number, "固定位置 X", { "player_damage_number_text_x" }, "",
+menu.slider_float(Player_Damage_Number, "fixed position X", { "player_damage_number_text_x" }, "",
     0, 100, 50, 1, function(value)
         player_damage.number.text_x = value * 0.01
     end)
-menu.slider_float(Player_Damage_Number, "固定位置 Y", { "player_damage_number_text_y" }, "",
+menu.slider_float(Player_Damage_Number, "fixed position Y", { "player_damage_number_text_y" }, "",
     0, 100, 50, 1, function(value)
         player_damage.number.text_y = value * 0.01
     end)
 
-menu.action(Player_Damage_Number, "测试效果", {}, "", function()
+menu.action(Player_Damage_Number, "test the results", {}, "", function()
     player_damage.draw_damage_number(math.random(0, 100))
 end)
 
 
 ----- 攻击者反应 -----
-menu.toggle(Player_Damage, "攻击者反应", {}, "", function(toggle)
+menu.toggle(Player_Damage, "attacker reaction", {}, "", function(toggle)
     player_damage.attacker.enable = toggle
 end)
 
-local Player_Damage_Attacker = menu.list(Player_Damage, "攻击者反应设置", {}, "")
+local Player_Damage_Attacker = menu.list(Player_Damage, "attacker response settings", {}, "")
 
-menu.toggle(Player_Damage_Attacker, "排除玩家", {}, "", function(toggle)
+menu.toggle(Player_Damage_Attacker, "exclude players", {}, "", function(toggle)
     player_damage.attacker.toggle.exclude_player = toggle
 end, true)
-menu.toggle(Player_Damage_Attacker, "死亡", {}, "", function(toggle)
+menu.toggle(Player_Damage_Attacker, "death", {}, "", function(toggle)
     player_damage.attacker.toggle.dead = toggle
 end)
-menu.toggle(Player_Damage_Attacker, "匿名爆炸", {}, "", function(toggle)
+menu.toggle(Player_Damage_Attacker, "anonymous explosion", {}, "", function(toggle)
     player_damage.attacker.toggle.explosion = toggle
 end)
-menu.toggle(Player_Damage_Attacker, "署名爆炸", {}, "", function(toggle)
+menu.toggle(Player_Damage_Attacker, "signature explosion", {}, "", function(toggle)
     player_damage.attacker.toggle.owned_explosion = toggle
 end)
-menu.toggle(Player_Damage_Attacker, "爆头击杀", {}, "", function(toggle)
+menu.toggle(Player_Damage_Attacker, "headshot kills", {}, "", function(toggle)
     player_damage.attacker.toggle.shoot_head = toggle
 end)
-menu.toggle(Player_Damage_Attacker, "燃烧", {}, "", function(toggle)
+menu.toggle(Player_Damage_Attacker, "burn", {}, "", function(toggle)
     player_damage.attacker.toggle.fire = toggle
 end)
-menu.toggle(Player_Damage_Attacker, "移除武器", {}, "", function(toggle)
+menu.toggle(Player_Damage_Attacker, "remove the weapon", {}, "", function(toggle)
     player_damage.attacker.toggle.remove_weapon = toggle
 end)
 
-    local self_options_CUSTOM = GT(healthandprotex, "自定义血量护甲", {}, "")
+    local self_options_CUSTOM = GT(healthandprotex, "custom hp armor", {}, "")
 
     GTD(self_options_CUSTOM, "Health")
 
-    GTTG(self_options_CUSTOM, "自定义最大生命值", {}, "改变你的最大生命值。一些菜单会将你标记为作弊者。当它被禁用时，它会返回到默认的最大生命值。", function(toggle)
+    GTTG(self_options_CUSTOM, "customize the maximum health", {}, "change your max health some menus will mark you as a cheater when it is disabled it returns to its default maximum health", function(toggle)
         custom_health(toggle)
     util.create_tick_handler(function()
         if PED.GET_PED_MAX_HEALTH(PLAYER.PLAYER_PED_ID()) ~= moddedHealth then
@@ -2214,13 +2215,13 @@ end)
     end)
 end)
 
-    moddedHealthSlider = GTLuaScript.slider(self_options_CUSTOM, "最大生命值", { "rsetmaxhealth" }, "生命值将被修改为指定的数值", 50, 30000, defaultHealth, 50, function(value)
+    moddedHealthSlider = GTLuaScript.slider(self_options_CUSTOM, "max health", { "rsetmaxhealth" }, "health will be modified to the specified value", 50, 30000, defaultHealth, 50, function(value)
         setcustomhealth(value)
     end)
     
 GTD(self_options_CUSTOM, "Armour")
 
-    GTTG(self_options_CUSTOM, "自定义最大护甲值", {}, "改变你的最大护甲值。一些菜单会将你标记为作弊者。当它被禁用时，它会返回到默认的最大护甲值。", function(toggle)
+    GTTG(self_options_CUSTOM, "customize the maximum armor value", {}, "change your maximum armor value some menus will mark you as a cheater when it is disabled it returns to the default maximum armor value", function(toggle)
         custom_armor(toggle)
     util.create_tick_handler(function()
         if PLAYER.GET_PLAYER_MAX_ARMOUR(PLAYER.PLAYER_ID()) ~= moddedArmour then
@@ -2230,47 +2231,47 @@ GTD(self_options_CUSTOM, "Armour")
     end)
 end)
     
-    moddedArmourSlider = GTLuaScript.slider(self_options_CUSTOM, "最大护甲值", { "rsetmaxarmour" }, "护甲将被修改为指定的数值", 50, 30000, defaultArmour, 50, function(value)
+    moddedArmourSlider = GTLuaScript.slider(self_options_CUSTOM, "maximum armor value", { "rsetmaxarmour" }, "armor will be modified to the specified value", 50, 30000, defaultArmour, 50, function(value)
         setcustomarmor(value)
     end)
 
-    local self_options_CUSTOM_refill = GT(healthandprotex, "自定义生命恢复", {}, "")
+    local self_options_CUSTOM_refill = GT(healthandprotex, "custom health regeneration", {}, "")
     
-    GTD(self_options_CUSTOM_refill, "站立不动状态")
+    GTD(self_options_CUSTOM_refill, "standing still")
 
-    GTTG(self_options_CUSTOM_refill, "功能开启", {}, "", function(toggle)
+    GTTG(self_options_CUSTOM_refill, "the function is on", {}, "", function(toggle)
     standhealthon(toggle)
     end)
     
-    GTLuaScript.slider(self_options_CUSTOM_refill, "恢复程度", { "normal_refill_limit" }, "恢复到血量的多少，单位%\n默认：25%", 1, 100, 25, 10, function(value)
+    GTLuaScript.slider(self_options_CUSTOM_refill, "degree of recovery", { "normal_refill_limit" }, "restore to the amount of blood units%\n default:25%", 1, 100, 25, 10, function(value)
         standhpmode(value)
     end)
     
-    GTLuaScript.slider(self_options_CUSTOM_refill, "恢复速度", { "normal_refill_mult" }, "恢复速度\n默认：1.0", 1.0, 100.0, 1.0, 1.0, function(value)
+    GTLuaScript.slider(self_options_CUSTOM_refill, "recovery speed", { "normal_refill_mult" }, "recovery speed\n default 1.0", 1.0, 100.0, 1.0, 1.0, function(value)
         standhpmodetime(value)
     end)
     
-    GTD(self_options_CUSTOM_refill, "掩体状态")
+    GTD(self_options_CUSTOM_refill, "bunker status")
     
     
-    GTTG(self_options_CUSTOM_refill, "功能开启", {}, "", function(toggle)
+    GTTG(self_options_CUSTOM_refill, "the function is on", {}, "", function(toggle)
         hidehealthon(toggle)
     end)
     
-    GTLuaScript.slider(self_options_CUSTOM_refill, "恢复程度", { "cover_refill_limit" }, "恢复到血量的多少，单位%\n默认：25%", 1, 100, 25, 10, function(value)
+    GTLuaScript.slider(self_options_CUSTOM_refill, "degree of recovery", { "cover_refill_limit" }, "how much blood is restored,unit%\n default 25%", 1, 100, 25, 10, function(value)
         hidehpmode(value)
     end)
     
-    GTLuaScript.slider(self_options_CUSTOM_refill, "恢复速度", { "cover_refill_mult" }, "恢复速度\n默认：1.0", 1.0, 100.0, 1.0, 1.0, function(value)
+    GTLuaScript.slider(self_options_CUSTOM_refill, "recovery speed", { "cover_refill_mult" }, "recovery speed\n default 1.0", 1.0, 100.0, 1.0, 1.0, function(value)
         hidehpmodetime(value)
     end)
     
 
-GTAC(healthandprotex, "补充血量", {"maxhealth"}, "", function()
+GTAC(healthandprotex, "replenish your blood volume", {"maxhealth"}, "", function()
 	ENTITY.SET_ENTITY_HEALTH(players.user_ped(), PED.GET_PED_MAX_HEALTH(players.user_ped()), 0)
 end)
 
-GTAC(healthandprotex, "补充护甲", {"maxarmour"}, "", function()
+GTAC(healthandprotex, "replenish armor", {"maxarmour"}, "", function()
     if util.is_session_started() then
 		PED.SET_PED_ARMOUR(players.user_ped(), 50)
 	else
@@ -2278,11 +2279,11 @@ GTAC(healthandprotex, "补充护甲", {"maxarmour"}, "", function()
 	end
 end)
 
-GTLP(healthandprotex, '自动加血', {'JSfullRegen'}, '一直加血直到您的血被加满.', function()
+GTLP(healthandprotex, 'automatic blood refill', {'JSfullRegen'}, 'keep adding blood until your blood is full.', function()
     autocover()
 end)
 
-GTLP(healthandprotex, "在掩体后时补充生命值", {"healincover"}, "", function()
+GTLP(healthandprotex, "replenishes health while behind cover", {"healincover"}, "", function()
     healthincover()
 end, function ()
 	PLAYER._SET_PLAYER_HEALTH_RECHARGE_LIMIT(players.user(), 0.25)
@@ -2290,7 +2291,7 @@ end, function ()
 end)
 
 local toLockHealth = defaultHealth * 0.5
-GTTG(healthandprotex, "当血量过低时锁定", {}, "当你的血量低于你设置的值后，锁定你的血量，以免死亡", function(toggle)
+GTTG(healthandprotex, "locks when hp is too low", {}, "when your hp is lower than the value you set lock your hp to avoid dying", function(toggle)
     islockHealth = toggle
     local localPed = PLAYER.PLAYER_PED_ID()
     local currentHealth
@@ -2304,24 +2305,24 @@ GTTG(healthandprotex, "当血量过低时锁定", {}, "当你的血量低于你�
     end)
 end)
 
-lockHealthSlider = GTLuaScript.slider(healthandprotex, "低于多少%血量", { "rlockhealth" }, "锁定前到达的最低血量，单位%", 10, 100, 50, 10, function(value)
+lockHealthSlider = GTLuaScript.slider(healthandprotex, "below how much%blood volume", { "rlockhealth" }, "the minimum amount of hp reached before locking in units%", 10, 100, 50, 10, function(value)
     local maxHealth = ENTITY.GET_ENTITY_MAX_HEALTH(PLAYER.PLAYER_PED_ID())
     toLockHealth = maxHealth * value / 100
 end)
 
-GTD(healthandprotex, "通知")
+GTD(healthandprotex, "notice")
 
-GTAC(healthandprotex, "通知当前血量和最大血量", {}, "", function()
+GTAC(healthandprotex, "notifies the current and maximum hp", {}, "", function()
     notifyhealth()
 end)
 
-GTAC(healthandprotex, "通知当前护甲和最大护甲", {}, "", function()
+GTAC(healthandprotex, "notifies current armor and maximum armor", {}, "", function()
     notifyarmor()
 end)
 
-GTD(healthandprotex, "生命娱乐")
+GTD(healthandprotex, "life entertainment")
 
-GTTG(healthandprotex, '心跳声', {''}, '', function(f)
+GTTG(healthandprotex, 'the sound of a heartbeat', {''}, '', function(f)
     xintiao = f
     while xintiao do
         pped = players.user_ped(players.user())
@@ -2332,7 +2333,7 @@ GTTG(healthandprotex, '心跳声', {''}, '', function(f)
     end
 end)
 
-GTTG(healthandprotex, '站着拉屎', {''}, '', function(f)     
+GTTG(healthandprotex, 'standing and', {''}, '', function(f)     
     lashi = f     
     STREAMING.REQUEST_MODEL(util.joaat("prop_big_shit_02"))     
     if STREAMING.HAS_MODEL_LOADED(util.joaat("prop_big_shit_02")) then         
@@ -2352,10 +2353,10 @@ GTTG(healthandprotex, '站着拉屎', {''}, '', function(f)
     lashi = false 
 end)
 
-local proofsList = GT(selflist, "伤害避免", {}, "自定义无敌")
+local proofsList = GT(selflist, "injury avoidance", {}, "custom invincibility")
 local immortalityCmd = GTLuaScript.ref_by_path("Self>Immortality")
 for _,data in pairs(proofs) do
-    GTTG(proofsList, data.name, {data.name:lower().."proof"}, "让您对"..data.name:lower().."伤害避免", function(toggle)
+    GTTG(proofsList, data.name, {data.name:lower().."proof"}, "makes you to"..data.name:lower().."injury avoidance", function(toggle)
         data.on = toggle
     end)
 end
@@ -2366,7 +2367,7 @@ util.create_tick_handler(function()
     end
 end)
 
-aimkrma = GT(selflist, "子弹反弹", {}, "你可以对瞄准您的人做点什么")
+aimkrma = GT(selflist, "bullet rebound", {}, "you can do something about the people who are aiming at you")
 karma = {}
 
 playerIsTargetingEntity = function(playerPed)
@@ -2412,7 +2413,7 @@ explodePlayer = function(ped, loop)
     wait(10)
 end
 
-GTLP(aimkrma, "射击", {}, "", function()
+GTLP(aimkrma, "shoot", {}, "", function()
     if playerIsTargetingEntity(PLAYER.PLAYER_PED_ID()) and karma[PLAYER.PLAYER_PED_ID()] then
         local pos = ENTITY.GET_ENTITY_COORDS(karma[PLAYER.PLAYER_PED_ID()].ped)
         MISC.SHOOT_SINGLE_BULLET_BETWEEN_COORDS(pos.x, pos.y, pos.z, pos.x, pos.y, pos.z +0.1, 100, true, 100416529, PLAYER.PLAYER_PED_ID(), true, false, 100.0)
@@ -2420,29 +2421,29 @@ GTLP(aimkrma, "射击", {}, "", function()
     end
 end)
 
-GTLP(aimkrma, "爆炸", {}, "", function()
+GTLP(aimkrma, "explode", {}, "", function()
     if playerIsTargetingEntity(PLAYER.PLAYER_PED_ID()) and karma[PLAYER.PLAYER_PED_ID()] then
         explodePlayer(karma[PLAYER.PLAYER_PED_ID()].ped, true)
     end
 end)
 
-newfunc = GT(funfeatures_self, "新型娱乐")
-lightning = GT(funfeatures_self, "电网")
-Xbone = GT(funfeatures_self, "坤弹")
-rppms=GT(funfeatures_self, "软趴趴疾跑", {}, "")
-sessionfun = GT(funfeatures_self, "战局玩乐", {}, "我们将大部分娱乐功能分类此列表中,如果您想寻找更多玩乐,请点击进入~", function(); end)
-super_xrays = GT(funfeatures_self, "超人模式", {}, "", function(); end)
-renwuxuanxiang = GT(funfeatures_self, "人物选项")
-dongwuxuanxiang = GT(funfeatures_self, "动物选项")
-texiao = GT(funfeatures_self, "特效选项", {}, "#建议您成为脚本主机后使用\n部分特效关闭后战局玩家仍可见,所以请您关闭特效后自杀一次即可", function(); end)  
-wushidao = GT(funfeatures_self, "娱乐武器", {}, "", function(); end)
-quantoutexiao = GT(funfeatures_self, "拳头特效", {}, "", function(); end)
-jigaungyan = GT(funfeatures_self, "激光眼", {}, "", function(); end)
-dachuizi = GT(funfeatures_self, "大锤", {}, "", function(); end)
-toubushuzi = GT(funfeatures_self, "头部显示", {}, "", function(); end)
-chonglangban = GT(funfeatures_self, "冲浪板", {}, "背在身上", function(); end)
-huorentexiao = GT(funfeatures_self, "火人", {}, "自燃", function(); end)
-local _LR = GT(funfeatures_self, '翅膀选项', {}, '')
+newfunc = GT(funfeatures_self, "a new type of entertainment")
+lightning = GT(funfeatures_self, "power grid")
+Xbone = GT(funfeatures_self, "kun bomb")
+rppms=GT(funfeatures_self, "soft tummy sprint", {}, "")
+sessionfun = GT(funfeatures_self, "fight for fun", {}, "we ve categorized most of the entertainment features into this list so if you re looking for more things to do click in~", function(); end)
+super_xrays = GT(funfeatures_self, "superman mode", {}, "", function(); end)
+renwuxuanxiang = GT(funfeatures_self, "character options")
+dongwuxuanxiang = GT(funfeatures_self, "animal options")
+texiao = GT(funfeatures_self, "effect options", {}, "#it is recommended that you use it after becoming a script host\n some effects are still visible to players after they are turned off,so please turn off the effect and commit suicide once", function(); end)  
+wushidao = GT(funfeatures_self, "recreational weapons", {}, "", function(); end)
+quantoutexiao = GT(funfeatures_self, "fist effects", {}, "", function(); end)
+jigaungyan = GT(funfeatures_self, "laser eye", {}, "", function(); end)
+dachuizi = GT(funfeatures_self, "sledgehammer", {}, "", function(); end)
+toubushuzi = GT(funfeatures_self, "header display", {}, "", function(); end)
+chonglangban = GT(funfeatures_self, "surfboard", {}, "carry it on your back", function(); end)
+huorentexiao = GT(funfeatures_self, "burning man", {}, "spontaneous combustion", function(); end)
+local _LR = GT(funfeatures_self, 'wing options', {}, '')
 
 function paoku1()
     PLAYER.GIVE_PLAYER_RAGDOLL_CONTROL(players.user_ped(), true);
@@ -2461,7 +2462,7 @@ GridIntensity = 100
 Gridr = 255
 Gridg = 255
 Gridb = 255
-GTTG(lightning, '电网',{},'',function(YY31)
+GTTG(lightning, 'power grid',{},'',function(YY31)
 y31 = YY31
     while y31 do
         GRAPHICS.TERRAINGRID_ACTIVATE(true)
@@ -2474,33 +2475,33 @@ y31 = YY31
     end
 end)
 
-lightning:slider('电网粗细', {}, 'lightningline', 1, 1000, 1, 1, function(change)
+lightning:slider('grid thickness', {}, 'lightningline', 1, 1000, 1, 1, function(change)
     GridNumber = change
 end)
 
-lightning:slider('电网大小', {}, 'lightningsize', 0, 30000, 100, 1, function(changes)
+lightning:slider('the size of the power grid', {}, 'lightningsize', 0, 30000, 100, 1, function(changes)
     GridSize = changes
 end)
 
-lightning:slider('电网强度', {}, 'lightningpower', 0, 1000, 100, 1, function(changess)
+lightning:slider('grid strength', {}, 'lightningpower', 0, 1000, 100, 1, function(changess)
     GridIntensity = changess
 end)
 
-lightning:slider('红色数值', {}, '',0, 255, 255, 10, function(gvalr)
+lightning:slider('red values', {}, '',0, 255, 255, 10, function(gvalr)
     Gridr = valr
 end)
 
-lightning:slider('绿色数值', {}, '',0, 255, 255, 10, function(gvalg)
+lightning:slider('green values', {}, '',0, 255, 255, 10, function(gvalg)
     Gridg = gvalg
 end)
 
-lightning:slider('蓝色数值', {}, '',0, 255, 255, 10, function(gvalb)
+lightning:slider('blue values', {}, '',0, 255, 255, 10, function(gvalb)
     Gridb = gvalb
 end)
 
 -- 新型娱乐
 
-GTTG(newfunc, "邪魔冲刺", {}, "WASD移动,空格升高\nCtrl下降,按E冲刺\n鼠标右键激光眼",
+GTTG(newfunc, "demon rush", {}, "WASD move,the space is raised\n ctrl drops,Press E To Sprint\n right click the laser eye",
 
     function(toggle_click)
 
@@ -2726,7 +2727,7 @@ GTTG(newfunc, "邪魔冲刺", {}, "WASD移动,空格升高\nCtrl下降,按E冲�
 
     end)
 
-GTTG(newfunc,"钓鱼佬", {""}, "", function(oo)
+GTTG(newfunc,"angler", {""}, "", function(oo)
 
     if oo then 
 
@@ -2806,7 +2807,7 @@ GTTG(newfunc,"钓鱼佬", {""}, "", function(oo)
 
 end)
 
-GTTG(newfunc,"御剑围绕", {}, "", function(yg)
+GTTG(newfunc,"edgeworth surrounds", {}, "", function(yg)
 
 yjgz = yg
 
@@ -2948,7 +2949,7 @@ local fireEntity = 0
 
 local rotationSpeed = 0.5 
 
-GTTG(newfunc, "实体火焰", {}, "", function(enabled)
+GTTG(newfunc, "entity flame", {}, "", function(enabled)
 
     if enabled then
 
@@ -3012,7 +3013,7 @@ GTTG(newfunc, "实体火焰", {}, "", function(enabled)
 
 end)
 
-GTTG(newfunc,"暗影神斧", {}, "按右键握住或者环绕,握住的时候可以丢出去,按E丢出后再按右键可回来.", function(开关)
+GTTG(newfunc,"shadow axe", {}, "press the right button to hold or wrap around you can throw it out when you hold it and press the right button to throw it out after pressing e to come back.", function(开关)
 
     load_dark_axe(开关)
 
@@ -3102,13 +3103,13 @@ util.create_tick_handler(function()
 
 end)
 
-GTLP(newfunc,"自由穿梭", {}, "WASD-前后左右\n空格/Ctrl-上下", function()
+GTLP(newfunc,"freedom of movement", {}, "WASD-front and back left and right\n space/Ctrl-up and down", function()
 
     Free_travel()
 
 end, Cleanup_Free_travel)
 
-GTTG(newfunc,"神宠", {}, "空格可以起飞.", function(on)
+GTTG(newfunc,"god s pet", {}, "Space Can Take Off.", function(on)
 
     rabbit = on
 
@@ -3168,13 +3169,13 @@ GTTG(newfunc,"神宠", {}, "空格可以起飞.", function(on)
 
 end)
 
-GTLP(newfunc,"鲸鱼枪", {""}, "", function()
+GTLP(newfunc,"whale gun", {""}, "", function()
 
     Whale_gun()
 
 end)
 
-feiying = GTTG(newfunc,"飞鹰", {}, "", function(fy)
+feiying = GTTG(newfunc,"flying eagle", {}, "", function(fy)
 
     laoying(fy)  
 
@@ -3190,7 +3191,7 @@ GTLP(newfunc,"visible_func", {"action_bo"}, "", activate_laser_eyes, deactivate_
 
 local applylaoying = false
 
-GTTG(newfunc, "邪魔之眼(是否带老鹰)", {}, "开启后会在背部携带一只老鹰", function (f)
+GTTG(newfunc, "demon eye(whether to bring an eagle or not)", {}, "when turned on it carries an eagle on its back", function (f)
 
     if f then
 
@@ -3206,7 +3207,7 @@ end)
 
 
 
-GTTG(newfunc,"邪魔之眼", {}, "按右键开启激光眼,如果开启激光眼攻击影响动作失效重启功能即可", function(on)
+GTTG(newfunc,"demon eye", {}, "press the right button to turn on the laser eye if the laser eye attack affects the action failure to restart the function", function(on)
 
     if on then
 
@@ -3278,7 +3279,7 @@ end)
 
 touzhi = false
 
-GTTG(newfunc, "听话的锤子", {}, "按右键丢出,E键收回", function(cz)
+GTTG(newfunc, "obedient hammer", {}, "press the right button to throw it out and the e key to retract", function(cz)
 
     new_cz = cz
 
@@ -3392,7 +3393,7 @@ GTTG(newfunc, "听话的锤子", {}, "按右键丢出,E键收回", function(cz)
 
 
 
-GTTG(newfunc,"珠光护手", {}, "鼠标右键开启暴力伤害.", function(gt)
+GTTG(newfunc,"pearlescent handguards", {}, "right click to turn on brute force damage.", function(gt)
 
     gtlv = gt
 
@@ -3488,11 +3489,11 @@ GTTG(newfunc,"珠光护手", {}, "鼠标右键开启暴力伤害.", function(gt)
 
 end)
 
-GTLP(newfunc,"操控能力",{},"按E控制,按X释放.",function()
+GTLP(newfunc,"manipulation",{},"Press E To Control,Press X To Release.",function()
     ForceModtick()
 end)
 
-GTTG(newfunc, "蹲伏潜进", {}, "按Ctrl蹲伏", function (Crou)
+GTTG(newfunc, "Creep And Sneak In", {}, "Press Ctrl To Crouch", function (Crou)
     local crouch_active = false
     while Crou do
         PAD.DISABLE_CONTROL_ACTION(0, 36, true)
@@ -3522,7 +3523,7 @@ GTTG(newfunc, "蹲伏潜进", {}, "按Ctrl蹲伏", function (Crou)
     end
 end)
 
-GTTG(newfunc, "耍酷滑板车", {""}, "W向前,shift加速,空格跳板,ctrl转板", function(onhb)
+GTTG(newfunc, "cool scooters", {""}, "W Forward,shift acceleration,spacebar springboard,ctrl to the board", function(onhb)
     hb = onhb
     while hb do
         wait()
@@ -3535,7 +3536,7 @@ GTTG(newfunc, "耍酷滑板车", {""}, "W向前,shift加速,空格跳板,ctrl转
     hb = false
 end)
 
-GTTG(newfunc, "手持金箍棒", {}, "", function (f)
+GTTG(newfunc, "holding a golden hoop stick", {}, "", function (f)
     if f then
         spawned_gunzi()
     else
@@ -3543,7 +3544,7 @@ GTTG(newfunc, "手持金箍棒", {}, "", function (f)
     end
 end)
 
-GTTG(newfunc, '移动的棺材',{},'WSAD移动,空格加速,shift升高,ctrl下降,E键发射炮弹',function(YY5)
+GTTG(newfunc, 'moving coffins',{},'WSAD Move,space acceleration,shift is raised,ctrl down,E Key To Fire Cannonballs',function(YY5)
     YYF = YY5
         while YYF do wait()
         moving_tube()
@@ -3556,7 +3557,7 @@ if not YYF then
     end
 end)
 
-GTTG(newfunc, "蓄意轰拳",{}, "按住右键蓄力，按左键释放", function(AA)
+GTTG(newfunc, "deliberate punching",{}, "press and hold the right button to charge and press the left button to release", function(AA)
     ab1 = AA
     while ab1 do
         local max_time = 20
@@ -3607,7 +3608,7 @@ GTTG(newfunc, "蓄意轰拳",{}, "按住右键蓄力，按左键释放", functio
 end)
 
 isWater= false
-GTLP(newfunc, '水遁之术',{}, '按E开启或者关闭,靠近海水生效', function(sd)
+GTLP(newfunc, 'the art of water escape',{}, 'press e to turn on or off,proximity to sea water takes effect', function(sd)
     if native_b(38, 38, 0x50F940259D3841E6, "ii") then
         isWater = not isWater
         if isWater then
@@ -3632,7 +3633,7 @@ end,function()
     native_v(1, 0xB96B00E976BE977F, "f")
 end)
 
-GTTG(newfunc, '帅批', {''}, '', function(Neck)
+GTTG(newfunc, 'handsome batch', {''}, '', function(Neck)
     local nk<const> = Neck
     local usd = players.user_ped()
     if nk then 
@@ -3650,7 +3651,7 @@ GTTG(newfunc, '帅批', {''}, '', function(Neck)
 end)
 
 local entity_held_ped = 0
-GTLP(newfunc, '虐杀原形', {}, '按E抓取和扔出', function()
+GTLP(newfunc, 'torture and kill the original form', {}, 'Press E To Grab And Throw', function()
     if PAD.IS_CONTROL_JUST_RELEASED(38, 38) then
         if entity_held_ped == 0 then
             local ped = pick_up_ped()
@@ -3664,7 +3665,7 @@ GTLP(newfunc, '虐杀原形', {}, '按E抓取和扔出', function()
     end
 end)
 
-GTLP(newfunc, '我的跟班', {}, '靠近你指定的NPC,按E成为你选择的跟班,按X删除跟班.', function()
+GTLP(newfunc, 'my henchman', {}, 'get close to your designated npc,Press E To Become Your Chosen Follower,Press X To Delete A Follower.', function()
     local closest = get_closest_ped_index(ENTITY.GET_ENTITY_COORDS(players.user_ped()))
     local ped = closest[1]
     local dist = closest[2]
@@ -3690,19 +3691,19 @@ GTLP(newfunc, '我的跟班', {}, '靠近你指定的NPC,按E成为你选择的�
     end
 end)
 
-GTLP(newfunc, '手搓冲击波',{""},'按E使用',function()
+GTLP(newfunc, 'hand rubbing shockwaves',{""},'Press E To Use',function()
     shockwavetick2()
 end)
 
-GTLP(newfunc, '汽车瞬杀门',{""},'按G激活功能\n数字键盘左键开启左门\n数字键盘右键开启右门',function()
+GTLP(newfunc, 'car instant kill door',{""},'press g to activate the function\n left button on the numeric keypad to open the left door\n right click the numeric keypad to open the right door',function()
     InstantKillDoortick()
 end)
 
-GTTG(newfunc, "跑酷", {""}, "奔跑时(Shift+W)按住空格(0.5秒-1秒)起跳\n跳跃的高度取决于按住空格的时长", function(f)
+GTTG(newfunc, "parkour", {""}, "while running(Shift+W)press and hold the spacebar(0.5s-1s)jump\n the height of the jump depends on how long you hold down the space", function(f)
     local state = false
     on = f
     if on then
-        gtoast("不会摔倒 现在关闭")
+        gtoast("won t fall close now")
         menu.trigger_commands("grace off")
         while on do
             wait()
@@ -3718,7 +3719,7 @@ GTTG(newfunc, "跑酷", {""}, "奔跑时(Shift+W)按住空格(0.5秒-1秒)起跳
             and not (util.is_key_down(0xA0))
             and state == false and jumping == true then
                 TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped(), true)
-                gtoast("安全着陆")
+                gtoast("safe landing")
                 wait(0)
                 state = true
                 if jumping == true then
@@ -3728,7 +3729,7 @@ GTTG(newfunc, "跑酷", {""}, "奔跑时(Shift+W)按住空格(0.5秒-1秒)起跳
         end
     end
     menu.trigger_commands("grace on")
-    gtoast("不会摔倒 现在开启")
+    gtoast("won t fall now on")
 end)
 
 printState = GTAC(newfunc, "Print Ragdoll", {}, "", function ()
@@ -3737,7 +3738,7 @@ printState = GTAC(newfunc, "Print Ragdoll", {}, "", function ()
 end)
 menu.set_visible(printState, false)
 
-GTTG(newfunc, "原地升天", {}, "按J", function (on)
+GTTG(newfunc, "ascension to heaven on the spot", {}, "Press J", function (on)
     if on then
         menu.trigger_commands("grace off")
         util.create_tick_handler(function ()
@@ -3748,7 +3749,7 @@ GTTG(newfunc, "原地升天", {}, "按J", function (on)
     end
 end)
 
-GTTG(newfunc, "推牌九", {""}, "你喜欢推牌九吗?虽然很无聊-.-!!走起来生效.", function(tp)
+GTTG(newfunc, "push pai gow", {""}, "do you like to push pai gow it s boring though walk up to take effect.", function(tp)
     gp = tp
     while gp do
     wait()
@@ -3759,7 +3760,7 @@ GTTG(newfunc, "推牌九", {""}, "你喜欢推牌九吗?虽然很无聊-.-!!走�
     gp = false
 end)
 
-GTTG(newfunc,"空走行走", {""}, "WADS移动,Shift升空,ctrl下降", function(clip)
+GTTG(newfunc,"walk empty", {""}, "WADS move,shift lifts off,ctrl down", function(clip)
     cp = clip
         while cp do
         wait()
@@ -3791,7 +3792,7 @@ GTTG(newfunc,"空走行走", {""}, "WADS移动,Shift升空,ctrl下降", function
     end
 end)
 
-GTTG(newfunc, "丢弃武器", {""}, "按E丢弃", function(dw)
+GTTG(newfunc, "discard weapons", {""}, "Press E To Discard", function(dw)
     d = dw
     while d do
         wait()
@@ -3799,7 +3800,7 @@ GTTG(newfunc, "丢弃武器", {""}, "按E丢弃", function(dw)
     end
 end)
 
-GTTG(newfunc, "坤标", {}, "", function(feats)
+GTTG(newfunc, "kun biao", {}, "", function(feats)
     fts = feats
     if fts then
         ipos = players.get_position(players.user())
@@ -3881,7 +3882,7 @@ GTTG(newfunc, "坤标", {}, "", function(feats)
     end
 end)
 
-GTTG(newfunc, "坤枪", {}, "", function(feat)
+GTTG(newfunc, "kun gun", {}, "", function(feat)
     ft = feat
     if ft then
         WEAPON.GIVE_WEAPON_TO_PED(players.user_ped(), 2024373456, 1, true, true)
@@ -3922,7 +3923,7 @@ GTTG(newfunc, "坤枪", {}, "", function(feat)
     end
 end)
 
-qigongbo=GTTG(newfunc, "这是看不见的",{""}, "",function(qg)
+qigongbo=GTTG(newfunc, "it s invisible",{""}, "",function(qg)
     qgb = qg
     while qgb do
         wait()
@@ -3935,7 +3936,7 @@ end)
 menu.set_visible(qigongbo, false)
 
 local are_djb_up = false
-GTAC(newfunc, "元气弹",{""}, "按E丢出元气弹",function(yq)
+GTAC(newfunc, "vitality bomb",{""}, "Press E To Throw A Vitality Bomb",function(yq)
     yqd = yq
     while yqd do
         wait()
@@ -3974,7 +3975,7 @@ GTAC(newfunc, "元气弹",{""}, "按E丢出元气弹",function(yq)
         TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
     end)
 
-GTTG(newfunc, "百米轰炸拳", {""}, "按E使用", function(ft)
+GTTG(newfunc, "100 meters bombing punch", {""}, "Press E To Use", function(ft)
     b_bones = {0xfa11}
     looped_ptfxs = {}
     feat = ft
@@ -4001,7 +4002,7 @@ GTTG(newfunc, "百米轰炸拳", {""}, "按E使用", function(ft)
     feat = false
 end)
 
-GTTG(newfunc, "百米雷电拳", {""}, "按E使用", function(ft)
+GTTG(newfunc, "100 meter thunderbolt punch", {""}, "Press E To Use", function(ft)
     b_bones = {0xfa11}
     looped_ptfxs = {}
     feat = ft
@@ -4028,7 +4029,7 @@ GTTG(newfunc, "百米雷电拳", {""}, "按E使用", function(ft)
     feat = false
 end)
 
-GTTG(newfunc, "机械翅膀", {""}, "", function(on)
+GTTG(newfunc, "mechanical wings", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local wuzi = OBJECT.CREATE_OBJECT(util.joaat("w_sb_microsmg_luxe"), pos.x, pos.y, pos.z, true, true, false)
     local wuzi2 = OBJECT.CREATE_OBJECT(util.joaat("w_sb_microsmg_luxe"), pos.x, pos.y, pos.z, true, true, false)
@@ -4110,7 +4111,7 @@ GTTG(newfunc, "机械翅膀", {""}, "", function(on)
     end
 end)
 
-GTTG(newfunc, "玄重尺后背",{""}, "",function(on)
+GTTG(newfunc, "weight ruler back",{""}, "",function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local buqiang = OBJECT.CREATE_OBJECT(util.joaat("w_ar_railgun"), pos.x, pos.y, pos.z, true, true, false)
     local buqiang2 = OBJECT.CREATE_OBJECT(util.joaat("w_ar_railgun"), pos.x, pos.y, pos.z, true, true, false)
@@ -4155,7 +4156,7 @@ GTTG(newfunc, "玄重尺后背",{""}, "",function(on)
     end
 end)
 
-GTTG(newfunc, "玄重尺",{""}, "右键使用剑气",function(cx)
+GTTG(newfunc, "xuan weight ruler",{""}, "right click to use sword aura",function(cx)
 xzc = cx
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local qiang = OBJECT.CREATE_OBJECT(util.joaat("w_sb_microsmg_luxe"), pos.x, pos.y, pos.z, true, true, false)
@@ -4226,7 +4227,7 @@ xzc = cx
     end
 end)
 
-yujianfly = GT(newfunc, "御剑飞行")
+yujianfly = GT(newfunc, "edgeworth flies")
 
 support_ent = 0
 superman = false
@@ -4234,7 +4235,7 @@ cur_pitch = 0
 cur_yaw = 0
 camera = 0
 
-gongnengaj=GTLP(yujianfly,'功能按键提示', {}, '', function(on)
+gongnengaj=GTLP(yujianfly,'function button prompts', {}, '', function(on)
     local function colour(r, g, b, a)
       return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
     end
@@ -4264,7 +4265,7 @@ gongnengaj=GTLP(yujianfly,'功能按键提示', {}, '', function(on)
 end)
 menu.set_visible(gongnengaj, false)
 
-Flypos = GTLP(newfunc,'位置调整', {"Flycs"}, '', function(on)
+Flypos = GTLP(newfunc,'position adjustment', {"Flycs"}, '', function(on)
     local ped = players.user_ped()
     local rotate_lr = -PAD.GET_CONTROL_NORMAL(1, 1)
     local rotate_ud =  -PAD.GET_CONTROL_NORMAL(2, 2)
@@ -4322,11 +4323,11 @@ Flypos = GTLP(newfunc,'位置调整', {"Flycs"}, '', function(on)
 end)
 menu.set_visible(Flypos, false)
 Flypos_speed = 200
-GTluaScript.slider(yujianfly, '御剑速度', {}, '',1,1000, 100, 50, function(vel)
+GTluaScript.slider(yujianfly, 'edgeworth speed', {}, '',1,1000, 100, 50, function(vel)
 Flypos_speed = vel 
 end)
 
-GTTG(yujianfly,'御剑飞行', {}, '右键使用特效', function(yj)
+GTTG(yujianfly,'edgeworth flies', {}, 'right click to use the effect', function(yj)
 yujian = yj
     local ped = players.user_ped()
     local cr = players.get_position(players.user())
@@ -4352,7 +4353,7 @@ yujian = yj
         end
         ENTITY.FREEZE_ENTITY_POSITION(ped, false)
     else 
-        gtoast("请稍等")
+        gtoast("please wait")
         STREAMING.REQUEST_NAMED_PTFX_ASSET("scr_rcbarry2")
         while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED("scr_rcbarry2") do
         wait()
@@ -4419,7 +4420,7 @@ TVVAR = {"ABS_AG_SPON_PL_0", "ABS_CC_PL_0", "ABS_DM_PL_0", "ABS_NM_PL", "ABS_SPO
 "PL_STD_WZL", "PL_TBM_GEO_FUNHOUSE", "PL_TOU_GEO_FUNHOUSE", "PL_WEB_FOS", "PL_WEB_HOWITZER", "PL_WEB_KFLF", "PL_WEB_LR1", "PL_WEB_PRB2", "PL_WEB_RANGERS"}
 
 CCTV = GT(funfeatures,"CCTV")
-GTD(CCTV, "点击可观看GTA电视画面")
+GTD(CCTV, "click to watch gta tv screen")
 for _, t in ipairs(TVVAR) do
     GTTG(CCTV,t,{''},'',function(TV)
         TVB = TV
@@ -4436,13 +4437,13 @@ for _, t in ipairs(TVVAR) do
     end)
 end
 
-visuals = GT(funfeatures, "视觉选项", {}, "")
+visuals = GT(funfeatures, "visual options", {}, "")
 -- 
-GTTG(funfeatures, "尖端炮台", {""}, "获得一个好帮手,帮你扫荡一切不友好的对象\n来自皮尔特沃夫的尖端科技", function(pt)
+GTTG(funfeatures, "tip battery", {""}, "get a good helper,help you sweep away all unfriendly objects\n cutting edge technology from piltover", function(pt)
     paotai(pt)
 end)
 
-GTTG(funfeatures, "指南针", {""}, "就是一个指南针", function(zn)
+GTTG(funfeatures, "compass", {""}, "it s just a compass", function(zn)
     znz = zn
         while znz do
         wait()
@@ -4450,7 +4451,7 @@ GTTG(funfeatures, "指南针", {""}, "就是一个指南针", function(zn)
 	end
 end)
 
-GTTG(funfeatures, "搭火箭", {}, "", function(t)
+GTTG(funfeatures, "take a rocket", {}, "", function(t)
     local bones<const> = {0x3779, 0xCC4D}
     gt = t
     if gt then
@@ -4480,7 +4481,7 @@ GTTG(funfeatures, "搭火箭", {}, "", function(t)
     gt = false
 end)
 
-GTTG(funfeatures_self, '骑在NPC头上', {""}, '', function(on)
+GTTG(funfeatures_self, 'ride on the head of an npc', {""}, '', function(on)
     if on then
         local ped = players.user_ped()
         local nearbyPed = nil
@@ -4511,7 +4512,7 @@ GTTG(funfeatures_self, '骑在NPC头上', {""}, '', function(on)
     end
 end)
 
-GTTG(funfeatures_self, '强奸NPC', {""}, '', function (on)
+GTTG(funfeatures_self, 'rape npc', {""}, '', function (on)
     if on then
         local ped = players.user_ped()
         local nearbyPed = nil
@@ -4541,7 +4542,7 @@ end
     end
 end)
 
-GTTG(rppms, '开启软趴趴模式', {}, '', function(on)
+GTTG(rppms, 'turn on the soft tummy mode', {}, '', function(on)
     if on then
         GTluaScript.trigger_commands("grace off")
         GTluaScript.trigger_commands("floppy on")
@@ -4550,22 +4551,22 @@ GTTG(rppms, '开启软趴趴模式', {}, '', function(on)
         GTluaScript.trigger_commands("grace on")
     end
 end)
-GTluaScript.slider(rppms, '移动速度', {}, '', 1, 10000, 1, 1, function(g)
+GTluaScript.slider(rppms, 'movement speed', {}, '', 1, 10000, 1, 1, function(g)
     sudu = g / 1
     GTluaScript.trigger_commands("floppyspeed " .. sudu)
 end)
-GTluaScript.slider(rppms, '加速倍速', {}, '', 1, 5, 1, 1, function(g)
+GTluaScript.slider(rppms, 'acceleration speed', {}, '', 1, 5, 1, 1, function(g)
     sudu = g / 1
     GTluaScript.trigger_commands("floppysprint " .. sudu)
 end)
-GTTG(rppms, '显示按钮说明', {}, '', function(on)
+GTTG(rppms, 'displays a button description', {}, '', function(on)
     if on then
         GTluaScript.trigger_commands("floppyinstructions on")
     else
         GTluaScript.trigger_commands("floppyinstructions off")
     end
 end)
-GTTG(rppms, '优先同步', {}, '', function(on)
+GTTG(rppms, 'priority syncing', {}, '', function(on)
     if on then
         GTluaScript.trigger_commands("floppysynch on")
     else
@@ -4573,12 +4574,12 @@ GTTG(rppms, '优先同步', {}, '', function(on)
     end
 end)
 
-GTluaScript.slider(rppms, '武器伤害值', {}, '', 0, 10000, 1, 1, function(g)
+GTluaScript.slider(rppms, 'weapon damage', {}, '', 0, 10000, 1, 1, function(g)
     sudu = g / 1
     GTluaScript.trigger_commands("damagemultiplier " .. sudu)
 end)
 
-GTLP(Xbone, "小坤弹[按X]", {}, "", function()
+GTLP(Xbone, "xiao kun bullet[Press X]", {}, "", function()
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(players.user_ped()), true)
     local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
     objhash = util.joaat("prop_bskball_01")
@@ -4594,7 +4595,7 @@ GTLP(Xbone, "小坤弹[按X]", {}, "", function()
 end)
 
  
- GTLP(Xbone, "大坤弹[按X]", {}, "", function()
+ GTLP(Xbone, "da kun bomb[press x]", {}, "", function()
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID(players.user_ped()), true)
     local camrot = CAM.GET_GAMEPLAY_CAM_ROT(0)
     objhash = util.joaat("v_ilev_exball_blue")
@@ -4609,7 +4610,7 @@ end)
     end
 end)
 
-GTLP(funfeatures_self, '黑洞控制', {}, '吸附附近载具与实体到我面前', function(g)
+GTLP(funfeatures_self, 'black hole control', {}, 'snap nearby vehicles and entities in front of me', function(g)
     local function colour(r, g, b, a)
         return {
             r = r / 255,
@@ -4631,7 +4632,7 @@ GTLP(funfeatures_self, '黑洞控制', {}, '吸附附近载具与实体到我面
     local border_colorss_b = colour(150, 70, 150, 255)
     directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height + 0.0220, border_colorss_a,
         border_colorss_b)
-    directx.draw_text(windowss_xx + 0.01, windowss_yy + 0.013, "按X键", ALIGN_TOP_LEFT, 0.5, colour(50, 100, 250, 255))
+    directx.draw_text(windowss_xx + 0.01, windowss_yy + 0.013, "Press The X Key", ALIGN_TOP_LEFT, 0.5, colour(50, 100, 250, 255))
     local me = players.user()
     for i = 1, 2 do
         if util.is_key_down(0x58) then
@@ -4659,7 +4660,7 @@ GTLP(funfeatures_self, '黑洞控制', {}, '吸附附近载具与实体到我面
     end
 end)
 
-GTTG(funfeatures_self, '两仪静止', {}, '', function(on)
+GTTG(funfeatures_self, 'the two instruments are still', {}, '', function(on)
     if on then
         MISC.SET_TIME_SCALE(0)
     else
@@ -4667,12 +4668,12 @@ GTTG(funfeatures_self, '两仪静止', {}, '', function(on)
     end
 end)
 
-GTluaScript.slider(funfeatures_self, '神奇的水坑', {}, '', 0, 10, 0, 1, function(g)
+GTluaScript.slider(funfeatures_self, 'magical puddles', {}, '', 0, 10, 0, 1, function(g)
     shuik = g * 1
     MISC.SET_RAIN(shuik)
 end)
 
-GTTG(funfeatures_self, '彩虹头发', {}, '', function(f)
+GTTG(funfeatures_self, 'rainbow hair', {}, '', function(f)
     gt = f
     while gt do
         local playerped = players.user_ped(players.user())
@@ -4684,7 +4685,7 @@ GTTG(funfeatures_self, '彩虹头发', {}, '', function(f)
     gt = false
 end)
 
-GTLP(funfeatures_self, "空中飞人", {}, "E键发射激光眼\n空格向上,Ctrl向下,Shift加速", function()
+GTLP(funfeatures_self, "trapeze", {}, "The E Key Emits The Laser Eye\n space up,ctrl down,shift acceleration", function()
     laser_eyes()
     kongzhongyouyong()
 end, function()
@@ -4692,7 +4693,7 @@ end, function()
     state = 0
 end)
 
-GTTG(funfeatures_self, "缩小自己", {}, "本地可见", function(g)
+GTTG(funfeatures_self, "shrink yourself", {}, "locally visible", function(g)
     gt = g
     while gt do
         wait()
@@ -23900,7 +23901,7 @@ GTLP(lobbyFeats, '禁用所有地图通知', {'JSnoMapNotifications'}, '自动�
 end)
 
 Heist_Control_Load = GTAC(Heist_Control, "加载任务选项", {""}, "", function()
-    newnotify( "~h~~b~请稍等...", "CHAR_CHOP", 140)
+    newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;", "~h~~b~请稍等...", "CHAR_CHOP", 140)
     wait(2000)
     dofile(filesystem.scripts_dir() .. "\\lib\\GTSCRIPTS\\GTW\\C10.lua")
     GTLuaScript.delete(Heist_Control_Load)
@@ -24090,13 +24091,13 @@ GTluaScript.slider(stpsettings, "凸轮过渡的高度（米）", {"stpheight"},
     STP_COORD_HEIGHT = height
 end)
 
-GTLP(toolFeats, "绘制位置", {"drawpos"},  "", function ()
+GTLP(toolFeats, "draw the location", {"drawpos"},  "", function ()
     local pos = ENTITY.GET_ENTITY_COORDS(GetLocalPed())
     local cc = {r = 1.0, g = 1.0, b = 1.0, a = 1.0}
     directx.draw_text(0.0, 0.0, "x: " .. pos.x .. " // y: " .. pos.y .. " // z: " .. pos.z, ALIGN_TOP_LEFT, DR_TXT_SCALE, cc, false)
 end)
 
-GTLP(toolFeats, "绘制旋转", {"drawrot"}, "", function ()
+GTLP(toolFeats, "draw the rotation", {"drawrot"}, "", function ()
     local rot = ENTITY.GET_ENTITY_ROTATION(GetLocalPed(), 2)
     local cc = {r = 1.0, g = 1.0, b = 1.0, a = 1.0}
     directx.draw_text(0.5, 0.03, "pitch: " .. rot.x .. " // roll: " .. rot.y .. " // yaw: " .. rot.z, ALIGN_CENTRE, DR_TXT_SCALE, cc, false)
@@ -24108,46 +24109,46 @@ GTLP(toolFeats, "绘制旋转", {"drawrot"}, "", function ()
     directx.draw_text(0.5, 0.07, "Facing towards " .. facingtowards, ALIGN_CENTRE, DR_TXT_SCALE, cc, false)
 end)
 
-GTLP(toolFeats, "绘制实体池", {"drawentpool"}, "", function ()
+GTLP(toolFeats, "draw a pool of entities", {"drawentpool"}, "", function ()
     local cc = {r = 1.0, g = 1.0, b = 20.0, a = 0.5}
     if EP_drawveh then
         local vehpool = entities.get_all_vehicles_as_pointers()
-        directx.draw_text(EPS_vehx, EPS_vehy, "载具：" .. #vehpool, ALIGN_TOP_LEFT, DR_TXT_SCALE, cc, false)
+        directx.draw_text(EPS_vehx, EPS_vehy, "vehicles:" .. #vehpool, ALIGN_TOP_LEFT, DR_TXT_SCALE, cc, false)
     end
     if EP_drawped then
         local pedpool = entities.get_all_peds_as_pointers()
-        directx.draw_text(EPS_pedx, EPS_pedy, "PED：" .. #pedpool, ALIGN_TOP_LEFT, DR_TXT_SCALE, cc, false)
+        directx.draw_text(EPS_pedx, EPS_pedy, "PED:" .. #pedpool, ALIGN_TOP_LEFT, DR_TXT_SCALE, cc, false)
     end
     if EP_drawobj then
         local objpool = entities.get_all_objects_as_pointers()
-        directx.draw_text(EPS_objx, EPS_objy, "实体：" .. #objpool, ALIGN_TOP_LEFT, DR_TXT_SCALE, cc, false)
+        directx.draw_text(EPS_objx, EPS_objy, "entity：" .. #objpool, ALIGN_TOP_LEFT, DR_TXT_SCALE, cc, false)
     end
     if EP_drawpick then
         local pickpool = entities.get_all_pickups_as_pointers()
-        directx.draw_text(EPS_pickx, EPS_picky, "拾取物：" .. #pickpool, ALIGN_TOP_LEFT, DR_TXT_SCALE, cc, false)
+        directx.draw_text(EPS_pickx, EPS_picky, "pickups：" .. #pickpool, ALIGN_TOP_LEFT, DR_TXT_SCALE, cc, false)
     end
 end)
 
-local ePS = GT(toolFeats,"实体池设置", {}, "")
-GTTG(ePS, "绘制车辆", {}, "", function (toggle)
+local ePS = GT(toolFeats,"entity pool settings", {}, "")
+GTTG(ePS, "draw the vehicle", {}, "", function (toggle)
     EP_drawveh = toggle
 end, true)
-GTluaScript.slider(ePS, "车辆文字摆放X", {"epvehposx"}, "/100", 0, 100, 0, 1, function (value)
+GTluaScript.slider(ePS, "vehicle text placement x", {"epvehposx"}, "/100", 0, 100, 0, 1, function (value)
     EPS_vehx = value / 100
 end) 
-GTluaScript.slider(ePS, "车辆文字摆放Y", {"epvehposy"}, "/100", 0, 100, 3, 1, function (value)
+GTluaScript.slider(ePS, "vehicle text placement y", {"epvehposy"}, "/100", 0, 100, 3, 1, function (value)
     EPS_vehy = value / 100
 end)
-GTTG(ePS, "绘制行人", {}, "", function (toggle)
+GTTG(ePS, "draw pedestrians", {}, "", function (toggle)
     EP_drawped = toggle
 end, true)
-GTluaScript.slider(ePS, "Ped 文本放置 X", {"eppedposx"}, "/100", 0, 100, 0, 1, function (value)
+GTluaScript.slider(ePS, "Ped text placement X", {"eppedposx"}, "/100", 0, 100, 0, 1, function (value)
     EPS_pedx = value / 100
 end)
-GTluaScript.slider(ePS, "Ped 文本放置 Y", {"eppedposy"}, "/100", 0, 100, 5, 1, function (value)
+GTluaScript.slider(ePS, "Ped text placement Y", {"eppedposy"}, "/100", 0, 100, 5, 1, function (value)
     EPS_pedy = value / 100
 end)
-GTTG(ePS, "绘制物体", {}, "", function (toggle)
+GTTG(ePS, "draw objects", {}, "", function (toggle)
     EP_drawobj = toggle
 end, true)
 GTluaScript.slider(ePS, "物体文字放置X", {"epobjposx"}, "/100", 0, 100, 0, 1, function (value)
@@ -24289,10 +24290,10 @@ end)
 GTAC(tpyoink, "传送所有载具", {}, "WARNING: DANGEROUS SHIT!", function()
     TpAllVehs(players.user())
 end)
-GTAC(tpyoink, "传送所有物体", {}, "WARNING: BIG CHANCE YOU MIGHT CRASH!", function ()
+GTAC(tpyoink, "teleport all objects", {}, "WARNING: BIG CHANCE YOU MIGHT CRASH!", function ()
     TpAllObjects(players.user())
 end)
-GTAC(tpyoink, "传送所有收集品", {}, "", function ()
+GTAC(tpyoink, "Deliver All Collectibles", {}, "", function ()
     TpAllPickups(players.user())
 end)
 
@@ -24363,12 +24364,12 @@ end)
 
 
 
-restartgt = GTAC(G, ">>重新启动", {}, "", function ()
+restartgt = GTAC(G, ">>reboot", {}, "", function ()
     restartscript()
 end)
 
 
-GTTG(other_options,"设置游戏高优先度", {}, "可有效减少游戏卡顿与掉帧", function(off_onf)
+GTTG(other_options,"set the game to a high priority", {}, "it can effectively reduce game stuttering and frame drops", function(off_onf)
 
     while off_onf do
 
@@ -24386,23 +24387,23 @@ GTTG(other_options,"设置游戏高优先度", {}, "可有效减少游戏卡顿�
 
 end)
 
-zhujixianshi = GT(other_options, "UI显示选项", {}, "在这里修改各种显示在屏幕中的元素")
+zhujixianshi = GT(other_options, "Ui Display Options", {}, "here you can modify the various elements that appear on the screen")
 
 
-baocunanjain = GTTG(zhujixianshi, "[按F8保存设置]", {""}, "", function(f)
+baocunanjain = GTTG(zhujixianshi, "[Press F8 To Save The Settings]", {""}, "", function(f)
     gt = f
     while gt do
         wait()
         if util.is_key_down(0x77) then
             baocun()
-            newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;", "~h~~b~配置已保存", "CHAR_CHOP", 140)
+            newnotify("~h~~b~the configuration is saved", "CHAR_CHOP", 140)
         end
     end
     gt = false
 end)
 menu.set_value(baocunanjain, true)
 
-GTLP(zhujixianshi, "显示详细时间", {""}, "可显示日期以及时间", function()
+GTLP(zhujixianshi, "displays the detailed time", {""}, "the date and time can be displayed", function()
     menu.trigger_commands("infotime off")
     if os.date("%a") == "Mon" then
         util.draw_debug_text("星期一 "..os.date("%m" .. "月" .. "%d" .. "日 " .. "%X"))
@@ -24421,7 +24422,7 @@ GTLP(zhujixianshi, "显示详细时间", {""}, "可显示日期以及时间", fu
     end
 end)
 
-stcxs = GTTG(zhujixianshi, "实体池显示", {}, "", function(ft)
+stcxs = GTTG(zhujixianshi, "entity pool display", {}, "", function(ft)
     local shiti_x = 0.80
     local shiti_y = 0.018
     local settings = {
@@ -24478,11 +24479,11 @@ stcxs = GTTG(zhujixianshi, "实体池显示", {}, "", function(ft)
 end)
 menu.set_value(stcxs, stcxs1)
 
-minimap = GT(zhujixianshi, "小地图")
-misclightmenu = GT(zhujixianshi, "追光灯")
-playerdis = GT(zhujixianshi, "显示玩家栏")
-WaterMark = GT(zhujixianshi, "信息栏", {""}, "非常好看且实用的信息显示~")
-rainbowinfo = GTAC(WaterMark, "开启信息显示", {""}, "开启该功能选项在最下方", function()
+minimap = GT(zhujixianshi, "minimap")
+misclightmenu = GT(zhujixianshi, "spotlight")
+playerdis = GT(zhujixianshi, "display the player bar")
+WaterMark = GT(zhujixianshi, "info bar", {""}, "very nice and useful information display~")
+rainbowinfo = GTAC(WaterMark, "turn on the information display", {""}, "the option to turn on this feature is at the bottom", function()
     dofile(filesystem.scripts_dir() .. "\\lib\\GTSCRIPTS\\GTW\\WM.lua")
     GTLuaScript.delete(rainbowinfo)
 end)
@@ -24492,7 +24493,7 @@ bool_strar = 0
 strarS_x_type = 0.01
 strarS_y_type = 0.01
 network = memory.alloc(13 * 4)
-wjlxs = GTTG(playerdis, "玩家栏展示", {}, "", function(g)
+wjlxs = GTTG(playerdis, "player bar display", {}, "", function(g)
     feat = g
     while feat do
         wait()
@@ -24581,7 +24582,7 @@ wjlxs = GTTG(playerdis, "玩家栏展示", {}, "", function(g)
 end)
 
 
-GTTG(playerdis, '切换为横版', {}, '', function (on)
+GTTG(playerdis, 'switch to landscape version', {}, '', function (on)
 	if on then
 		bool_strar = 1
 	else
@@ -24596,11 +24597,11 @@ GTluaScript.slider(playerdis, '玩家栏Y轴', {}, '',1, 75, 1, 1, function(stra
 strarS_y_type = (strarS_y / 100)
 end)
 menu.set_value(wjlxs, wjlxs1)
-anjian = GT(zhujixianshi, '按键显示', {''}, '')
+anjian = GT(zhujixianshi, 'button display', {''}, '')
 
-local fakemessages_root = GT(onlinemode, "虚假警告", {}, "虚假信息屏幕")
+local fakemessages_root = GT(onlinemode, "false warnings", {}, "disinformation screens")
 
-GTluaScript.slider(fakemessages_root, "延迟虚假消息", {}, "在显示虚假消息之前等待多长时间（以秒为单位）", 0, 300, 0, 1, function(s)
+GTluaScript.slider(fakemessages_root, "delay false news", {}, "在显示虚假消息之前等待多长时间（以秒为单位）", 0, 300, 0, 1, function(s)
     fake_alert_delay = s*1000
 end)
 
@@ -24684,10 +24685,10 @@ zjxlbc = GTLP(zjxlid, "主机序列", {}, "", function(zhuji)
 
     local name = players.get_name(players.user())
 
-    draw_string(string.format("~h~~r~延迟: ~w~%dms", delay), zhuji_x + 0.047, zhuji_y + 0.003, zhuji_dx, zhuji_dx)
-    draw_string(string.format("~h~~p~帧率: ~w~" .. fps), zhuji_x, zhuji_y + 0.003, zhuji_dx, zhuji_dx)
-    draw_string(string.format("~h~~w~" .. myspeed1e .. " ~q~公~g~里~f~/每小时 每秒速度"), zhuji_x, zhuji_y + 0.028, zhuji_dx, zhuji_dx)
-    draw_string(string.format('~h~~f~' .. "~h~~p~现实:~h~~w~" .. os.date("%X") .. "  ~h~~y~游戏:~h~~w~" ..
+    draw_string(string.format("~h~~r~delay: ~w~%dms", delay), zhuji_x + 0.047, zhuji_y + 0.003, zhuji_dx, zhuji_dx)
+    draw_string(string.format("~h~~p~frame rate: ~w~" .. fps), zhuji_x, zhuji_y + 0.003, zhuji_dx, zhuji_dx)
+    draw_string(string.format("~h~~w~" .. myspeed1e .. " ~q~kilometer~f~/per hour speed per second"), zhuji_x, zhuji_y + 0.028, zhuji_dx, zhuji_dx)
+    draw_string(string.format('~h~~f~' .. "~h~~p~reality:~h~~w~" .. os.date("%X") .. "  ~h~~y~game:~h~~w~" ..
                                   CLOCK.GET_CLOCK_HOURS() .. ":" .. CLOCK.GET_CLOCK_MINUTES()), zhuji_x,
         zhuji_y + 0.057, zhuji_dx, zhuji_dx)
     gongji = 0
@@ -24715,51 +24716,51 @@ zjxlbc = GTLP(zjxlid, "主机序列", {}, "", function(zhuji)
     end
 
     if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-        draw_string(string.format("~h~~r~攻击玩家: ~h~~w~" .. gongji .. "   ~h~~q~室内玩家: ~h~~w~" .. shinei),
+        draw_string(string.format("~h~~r~attack the player: ~h~~w~" .. gongji .. "   ~h~~q~indoor players: ~h~~w~" .. shinei),
             zhuji_x, zhuji_y + 0.112, zhuji_dx, zhuji_dx)
     else
-        draw_string(string.format("~h~~r~攻击玩家: ~h~~w~" .. gongji .. "   ~h~~q~室内玩家: ~h~~w~" .. shinei),
+        draw_string(string.format("~h~~r~attack the player: ~h~~w~" .. gongji .. "   ~h~~q~indoor players: ~h~~w~" .. shinei),
             zhuji_x, zhuji_y + 0.112, zhuji_dx, zhuji_dx)
     end
 
     if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-        draw_string(string.format("~h~~y~战局玩家: ~h~~w~" .. #players.list()), zhuji_x, zhuji_y + 0.085, zhuji_dx,
+        draw_string(string.format("~h~~y~battle players: ~h~~w~" .. #players.list()), zhuji_x, zhuji_y + 0.085, zhuji_dx,
             zhuji_dx)
     else
-        draw_string(string.format("~h~~y~战局玩家: ~h~~w~" .. #players.list()), zhuji_x, zhuji_y + 0.085, zhuji_dx,
+        draw_string(string.format("~h~~y~battle players: ~h~~w~" .. #players.list()), zhuji_x, zhuji_y + 0.085, zhuji_dx,
             zhuji_dx)
     end
 
     if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-        draw_string(string.format(" ~h~~p~作弊玩家: ~h~~w~" .. inviciamountintt), zhuji_x + 0.053, zhuji_y + 0.085,
+        draw_string(string.format(" ~h~~p~cheating players: ~h~~w~" .. inviciamountintt), zhuji_x + 0.053, zhuji_y + 0.085,
             zhuji_dx, zhuji_dx)
     else
-        draw_string(string.format(" ~h~~p~作弊玩家: ~h~~w~" .. inviciamountintt), zhuji_x + 0.053, zhuji_y + 0.085,
+        draw_string(string.format(" ~h~~p~cheating players: ~h~~w~" .. inviciamountintt), zhuji_x + 0.053, zhuji_y + 0.085,
             zhuji_dx, zhuji_dx)
     end
 
     if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-        draw_string(string.format("~h~~f~战局主机: ~h~~w~故事模式"), zhuji_x, zhuji_y + 0.14, zhuji_dx, zhuji_dx)
+        draw_string(string.format("~h~~f~battle console: ~h~~w~story mode"), zhuji_x, zhuji_y + 0.14, zhuji_dx, zhuji_dx)
     else
-        draw_string(string.format("~h~~f~战局主机: ~h~~w~" .. players.get_name(players.get_host())), zhuji_x,
+        draw_string(string.format("~h~~f~battle console: ~h~~w~" .. players.get_name(players.get_host())), zhuji_x,
             zhuji_y + 0.14, zhuji_dx, zhuji_dx)
     end
 
     if PLAYER.GET_PLAYER_NAME(players.get_script_host()) == "**Invalid**" then
-        draw_string(string.format("~h~~p~脚本主机: ~h~~w~故事模式"), zhuji_x, zhuji_y + 0.17, zhuji_dx, zhuji_dx)
+        draw_string(string.format("~h~~p~script host: ~h~~w~story mode"), zhuji_x, zhuji_y + 0.17, zhuji_dx, zhuji_dx)
     else
-        draw_string(string.format("~h~~p~脚本主机: ~h~~w~" .. players.get_name(players.get_script_host())), zhuji_x,
+        draw_string(string.format("~h~~p~script host: ~h~~w~" .. players.get_name(players.get_script_host())), zhuji_x,
             zhuji_y + 0.17, zhuji_dx, zhuji_dx)
     end
 
     local hostxvlie = players.get_host_queue_position(players.user())
     if PLAYER.GET_PLAYER_NAME(players.get_host()) == "**Invalid**" then
-        draw_string(string.format("~h~~q~目前处于故事模式"), zhuji_x-0.0006, zhuji_y + 0.20, zhuji_dx, zhuji_dx)
+        draw_string(string.format("~h~~q~currently in story mode"), zhuji_x-0.0006, zhuji_y + 0.20, zhuji_dx, zhuji_dx)
     elseif hostxvlie == 0 then
-        draw_string(string.format("~h~~q~你自己现在是~f~战局主机"), zhuji_x-0.0001, zhuji_y + 0.20, zhuji_dx,
+        draw_string(string.format("~h~~q~you yourself are now~f~battle console"), zhuji_x-0.0001, zhuji_y + 0.20, zhuji_dx,
             zhuji_dx)
     elseif hostxvlie ~= 0 then
-        draw_string(string.format("~h~~q~你的战局~h~~p~主机~f~优先度:~h~~w~ " .. hostxvlie), zhuji_x-0.0001,
+        draw_string(string.format("~h~~q~your battle situation~h~~p~host~f~priority:~h~~w~ " .. hostxvlie), zhuji_x-0.0001,
             zhuji_y + 0.20, zhuji_dx, zhuji_dx)
     end
 end)
@@ -24866,7 +24867,7 @@ GTLP(lines, "NPC连接线", {}, "", function(toggle)
     end
 end)
 
-GTLP(lines, "载具连接线", {}, "", function(toggle)
+GTLP(lines, "vehicle cables", {}, "", function(toggle)
     local playerPed = players.user_ped()
     local playerCoords = ENTITY.GET_ENTITY_COORDS(playerPed)
     
@@ -24883,7 +24884,7 @@ GTLP(lines, "载具连接线", {}, "", function(toggle)
     end
 end)
 
-GTLP(lines, "物体连接线", {}, "", function(toggle)
+GTLP(lines, "object connection wires", {}, "", function(toggle)
     local playerPed = players.user_ped()
     local playerCoords = ENTITY.GET_ENTITY_COORDS(playerPed)
     
@@ -24912,34 +24913,34 @@ Round = function(num, dp)
     return ((num * mult + 0.5) // 1) / mult 
 end
 
-espinfo = GT(zhujixianshi, "定位透视信息")
+espinfo = GT(zhujixianshi, "locate pivot information")
 
-mz = GT(espinfo,"帽子", {}, "")
+mz = GT(espinfo,"hat", {}, "")
 hat_enable = false
-GTTG(mz,"显示自己", {}, "",function(bp)
+GTTG(mz,"show yourself", {}, "",function(bp)
 	hat_enable = bp
 end)
 hat_friend = false
-GTTG(mz,"显示好友", {}, "",function(bp)
+GTTG(mz,"Show Friends", {}, "",function(bp)
 	hat_friend = bp
 end)
 hat_everyone = false
-GTTG(mz,"显示全局", {}, "",function(bp)
+GTTG(mz,"Show The Big Picture", {}, "",function(bp)
 	hat_everyone = bp
 end)
 
 hat_clr = {["r"] = 1,["g"] = 1,["b"] = 1,["a"] = 0.15}
-menu.rainbow(menu.colour(mz, "颜色", {}, "", {["r"] = 250/255,["g"] = 170/255,["b"] = 230/255,["a"] = 0.15}, true, function(cogg)
+menu.rainbow(menu.colour(mz, "color", {}, "", {["r"] = 250/255,["g"] = 170/255,["b"] = 230/255,["a"] = 0.15}, true, function(cogg)
 	hat_clr = cogg
 end))
 
 hat_gradient = false
-GTTG(mz,"渐变色", {}, "",function(bp)
+GTTG(mz,"gradient color", {}, "",function(bp)
 	hat_gradient = bp
 end)
 
 hat_speed = 5
-menu.slider(mz,"渐变速度", {}, "",0,10,5,1,function(value,prev_value)
+menu.slider(mz,"gradient speed", {}, "",0,10,5,1,function(value,prev_value)
 	hat_speed = value
 end)
 
