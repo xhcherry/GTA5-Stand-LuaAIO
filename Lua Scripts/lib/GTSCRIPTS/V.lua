@@ -17626,3 +17626,4 @@ function inputC(windowName, maxInput, defaultText)
     if MISC.UPDATE_ONSCREEN_KEYBOARD() == 1 then return MISC.GET_ONSCREEN_KEYBOARD_RESULT() end
     return ""
 end
+
