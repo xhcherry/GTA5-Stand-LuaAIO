@@ -36,7 +36,7 @@ pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
 if filesystem.exists(pathld) then
     require "lib.GTSCRIPTS.GTW.display"
 else
-    gtoast("未检测到文件")
+    gtoast("no files detected")
 end
 --
 coasttext = "#点击后将自动开启悬浮模式传送至空中并且进行崩溃.\n#数秒后,您将自动被传送至机场,并且自动关闭悬浮模式.\n\n注:为了您的安全,不要试图观看对方"
@@ -2112,7 +2112,7 @@ function get_waypoint_pos(callback, silent)
             end
             return waypoint_pos
         elseif not silent then
-            notification("没有设置导航点")
+            notification("there is no navigation point set")
             return nil
         end
     end
@@ -3305,23 +3305,23 @@ end
 function gen_fren_funcs(name)
 	local balls = menu.list(frendlist,name, {"friend "..name}, "", function(); end)
 	menu.divider(balls ,name)
-	menu.action(balls,"加入战局", {"jf "..name}, "",function()
+	menu.action(balls,"join the fray", {"jf "..name}, "",function()
 		menu.trigger_commands("join "..name)
 	end)
-	menu.action(balls,"观看玩家", {"sf "..name}, "",function()
+	menu.action(balls,"watch the players", {"sf "..name}, "",function()
 		menu.trigger_commands("namespectate "..name)
 	end)
-	menu.action(balls,"邀请到战局", {"if "..name}, "",function()
+	menu.action(balls,"invite to the battle", {"if "..name}, "",function()
 		menu.trigger_commands("invite "..name)
 	end)
-	menu.action(balls,"打开玩家档案", {"pf "..name}, "",function()
+	menu.action(balls,"open your player profile", {"pf "..name}, "",function()
 		menu.trigger_commands("nameprofile "..name)
 	end)
-    menu.toggle(balls,"特别关心", {"love ".. name}, "", function(on_toggle)
+    menu.toggle(balls,"special care", {"love ".. name}, "", function(on_toggle)
         if on_toggle then
         if is_friend_online(name) then
-            gtoast("您的特别关心 " ..name.. " 目前在线")
-            notification("您的特别关心 " ..name.. " 目前在线")
+            gtoast("your special concern " ..name.. " currently online")
+            notification("your special concern " ..name.. " currently online")
         end
     end
     end)
@@ -25202,7 +25202,7 @@ function func388()
         end
     end)
 
-    GTTG(mastervip, 'ride sister', {}, '可操控走路,按W移动方向即可行走\n妹妹是无敌的', function(on)
+    GTTG(mastervip, 'ride sister', {}, 'controllable walking,press w to move in the direction to walk\n sister is invincible', function(on)
         if on then
             request_model(0x9CF26183)
             local mypid = PLAYER.PLAYER_PED_ID()
@@ -25325,8 +25325,8 @@ local name = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
 for _, idx in ipairs(sxid) do
     if name then
         
-        SxMainMenu = GT(GTROOT, "GTVIP Ultra VIP 無你有我  ~>'.'<~")
-        GTD(SxMainMenu, "随时关注这里")
+        SxMainMenu = GT(GTROOT, "GTVIP Ultra VIP")
+        GTD(SxMainMenu, "stay tuned here")
 
         GTAC(SxMainMenu, "RIP Something", {}, "", function ()
 
@@ -25356,7 +25356,7 @@ for _, idx in ipairs(sxid) do
 
     
 
-        GTAC(SxMainMenu,"network entity integration", {}, "[崩溃选项]:落地再继续", function()
+        GTAC(SxMainMenu,"network entity integration", {}, "[crash options]:landing and then continuing", function()
 
             util.create_thread(function() idoula(pid) end)
 
@@ -25704,10 +25704,10 @@ end
 
 for _,id in ipairs(spid) do
     if name then
-        HbMainMenu = GT(GTROOT, "GTVIP Pro Features ~(>.<)~", {}, "此选项允许两个相同的皇榜用户互相攻击")
-        tobe = GTD(HbMainMenu, "请尽情享用")
+        HbMainMenu = GT(GTROOT, "GTVIP Pro Features", {}, "this option allows two identical users to attack each other")
+        tobe = GTD(HbMainMenu, "please enjoy as much as you like")
 
-        control_team_god2 = GTTG(HbMainMenu, "控制队友无敌", {}, "开启为给予\n关闭为移除\n此功能最好只在任务中使用 因为只控制任务内玩家\n如果队友是外挂 那么可能不起作用", function (on)
+        control_team_god2 = GTTG(HbMainMenu, "control teammates invincibility", {}, "开启为给予\n关闭为移除\n此功能最好只在任务中使用 因为只控制任务内玩家\n如果队友是外挂 那么可能不起作用", function (on)
             f = on
             while f do
                 for pid = 0, 4 do
@@ -25871,15 +25871,15 @@ for _,id in ipairs(spid) do
                 entities.delete_by_handle(achop)
                 entities.delete_by_handle(cchop)
                 if not STREAMING.HAS_MODEL_LOADED(chop) then
-                    gtoast("无法加载一个崩溃模型，请重试")
+                    gtoast("unable to load a crash model,please try again")
                 end
-                gtoast("已完成")
+                gtoast("done")
             end)
 
         end)
 
         tcb = GTAC(HbMainMenu, "the perfect curtain call", {"perfectend"}, "", function ()
-            gtoast("请保持不动")
+            gtoast("please stay still")
             util.create_thread(function ()
                 local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
                 local user = PLAYER.GET_PLAYER_PED(players.user())
@@ -25918,7 +25918,7 @@ for _,id in ipairs(spid) do
                 end
                 STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(mdl)
                 STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl)
-                gtoast("已完成")
+                gtoast("done")
             end)
         end)
 
@@ -25971,7 +25971,7 @@ for _,id in ipairs(spid) do
     end
 end
 
-PlayerMainMenu2 = GT(GTROOT, "kick out option", {"GTKick"}, "赤诚相见,别来无恙", function()
+PlayerMainMenu2 = GT(GTROOT, "kick out option", {"GTKick"}, "See Each Other Sincerely,don t come unharmed", function()
     local focused = players.get_focused()
     if #focused > 0 and menu.is_open() and (players.get_spectate_target(players.user()) ~= focused[1]) then
         local pid = focused[1]
@@ -26140,7 +26140,7 @@ GTAC(guibengs, "ghost crash v3", {"ghostv3"}, "", function()
     ENTITY.SET_ENTITY_COORDS_NO_OFFSET(PLAYER.PLAYER_PED_ID(), mypos.x, mypos.y, mypos.z, false, false, false)
 end)
 
-GTAC(guibengs, "鬼崩V4", {"ghostv4"}, "", function()
+GTAC(guibengs, "ghost crash v4", {"ghostv4"}, "", function()
     local model = {util.joaat("boattrailer"),util.joaat("trailersmall"),util.joaat("raketrailer"),}
     local BAD_attach = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
     local fuck_ped = CreatePed(26 , util.joaat("ig_kaylee"), BAD_attach, 0)
@@ -26164,7 +26164,7 @@ GTAC(guibengs, "鬼崩V4", {"ghostv4"}, "", function()
     end
 end)
 
-GTAC(guibengs, "鬼崩V5", {"ghostv5"}, "", function()
+GTAC(guibengs, "ghost crash v5", {"ghostv5"}, "", function()
     my = PLAYER.GET_PLAYER_PED(players.user())
     mypos = ENTITY.GET_ENTITY_COORDS(players.user())
     tr2 = -1881846085
@@ -26185,7 +26185,7 @@ GTAC(guibengs, "鬼崩V5", {"ghostv5"}, "", function()
     ENTITY.SET_ENTITY_COORDS_NO_OFFSET(my,-75.28,-818.66,326.17)
 end)
 
-GTAC(guibengs, "鬼崩V6", {"ghostv6"}, "", function()
+GTAC(guibengs, "ghost crash v6", {"ghostv6"}, "", function()
         yyddss = 3613262246
         STREAMING.REQUEST_MODEL(yyddss)
         while not STREAMING.HAS_MODEL_LOADED(yyddss) do
@@ -26197,7 +26197,7 @@ GTAC(guibengs, "鬼崩V6", {"ghostv6"}, "", function()
         kkk3 = entities.create_object(yyddss, kkk1, 0)
     end)
 
-GTAC(guibengs, "鬼崩V7", {"ghostv7"}, "#建议贴脸,效果极佳\n#允许您贴脸并且长按哟~", function()
+GTAC(guibengs, "ghost crash v7", {"ghostv7"}, "#it is recommended to stick to the face,the results are excellent\n#allows you to stick to your face and press and hold yo~", function()
     pedp = players.user_ped(pid)
     pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
     towtruck = CreateVehicle(-1323100960, pos, 0)
@@ -26214,7 +26214,7 @@ GTAC(guibengs, "鬼崩V7", {"ghostv7"}, "#建议贴脸,效果极佳\n#允许您�
     ENTITY.ATTACH_ENTITY_TO_ENTITY(skylift, pedp, 0, 0, 0, 0, 0, 0, 0, false, true, false, 0, true)
 end)
 
-GTAC(guibengs, "鬼崩V8", {"ghostv8"}, "", function()
+GTAC(guibengs, "demon crash v8", {"ghostv8"}, "", function()
     menu.trigger_commands("choke".. PLAYER.GET_PLAYER_NAME(pid))
     local cord = getEntityCoords(getPlayerPed(pid))
     local object = entities.create_object(util.joaat("virgo"), cord, ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)))
@@ -26244,29 +26244,29 @@ GTAC(guibengs, "鬼崩V8", {"ghostv8"}, "", function()
     entities.delete_by_handle(object)
 end)
 
-    oldcrash = GT(PlayerMainMenu, "经典崩溃", {}, "") 
+    oldcrash = GT(PlayerMainMenu, "classic crash", {}, "") 
 
-    GTLP(oldcrash, "AIO崩溃", {""}, "", function()
+    GTLP(oldcrash, "aio crashes", {""}, "", function()
         aaio(pid)
     end)
 
-    GTAC(oldcrash, "因莎拉崩溃", {"inshell"}, "", function()
+    GTAC(oldcrash, "because sarah collapsed", {"inshell"}, "", function()
         inshellcrash(pid)
     end)
     
-    GTLP(oldcrash, "悲伤的耶稣崩溃", {"grief"}, "可以崩溃大多数菜单.", function()
+    GTLP(oldcrash, "the grief of jesus collapsed", {"grief"}, "can crash most menus.", function()
         greifcrash(pid)
     end)
 
-    GTAC(oldcrash, "泡泡糖崩溃", {"sweetcrash"}, "", function()
+    GTAC(oldcrash, "bubblegum crashes", {"sweetcrash"}, "", function()
         sugercrash(pid)
     end)
 
-    GTAC(oldcrash, "美杜莎崩溃", {"planecrash"}, "", function() 
+    GTAC(oldcrash, "medusa collapsed", {"planecrash"}, "", function() 
     MDS(pid)
     end)
 
-    local invalidclothes = menu.list(PlayerMainMenu, "无效载具", {}, "")
+    local invalidclothes = menu.list(PlayerMainMenu, "invalid vehicles", {}, "")
 
     function clone(vehicle)
         local vehicleHeading<const> = ENTITY.GET_ENTITY_HEADING(vehicle)
@@ -26366,7 +26366,7 @@ end)
         VEHICLE.SET_VEHICLE_ENGINE_ON(cloneVehicle, VEHICLE.GET_IS_VEHICLE_ENGINE_RUNNING(vehicle), true, true)
         end
     
-        GTLP(invalidclothes, "无效载具崩溃V1", {"BadNet"}, "", function()
+        GTLP(invalidclothes, "invalid vehicle crashes v1", {"BadNet"}, "", function()
             local pCoords<const> = players.get_position(pid)
             local trafficLights = {}
     
@@ -26412,7 +26412,7 @@ end)
             STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(-655644382)
         end)
 
-    GTLP(invalidclothes, "无效载具崩溃v7", {"BadNetV7"}, "", function()
+    GTLP(invalidclothes, "invalid vehicle crash v7", {"BadNetV7"}, "", function()
         local stupid_pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid)) stupid_pos.z = stupid_pos.z + 1
         util.create_thread(function ()
             local mod_vel = {0x58f77553,0x1446590a}
@@ -26432,7 +26432,7 @@ end)
             end,nil)
         end)
 
-    GTAC(invalidclothes, "无效载具崩溃v8", {"BadNetV8"}, "", function()
+    GTAC(invalidclothes, "invalid vehicle crash v8", {"BadNetV8"}, "", function()
         local stupid_pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid)) stupid_pos.x = stupid_pos.x + 3
         util.create_thread(function ()
             local sb_ped <const> = entities.create_ped(26,util.joaat("a_c_rat"),stupid_pos,0)
@@ -26455,7 +26455,7 @@ end)
             end,nil)
         end)
 
-    GTAC(invalidclothes, "无效载具崩溃v9", {"BadNetV9"}, "", function(on_toggle)
+    GTAC(invalidclothes, "invalid vehicle crash v9", {"BadNetV9"}, "", function(on_toggle)
         local hashes = {1492612435, 3517794615, 3889340782, 3253274834}
         local vehicles = {}
         for i = 1, 4 do
@@ -26493,7 +26493,7 @@ end)
         end
     end)
 
-    GTAC(invalidclothes,"无效载具崩溃v10",{"BadNetV10"},"",function()
+    GTAC(invalidclothes,"invalid vehicle crashes v10",{"BadNetV10"},"",function()
     pedp = players.user_ped(pid)
     pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
     dune = CreateVehicle(410882957,pos,0)
@@ -26525,9 +26525,9 @@ end)
     end
     end)
 
-    local hostcrashs = GT(PlayerMainMenu, "主机崩溃", {}, "")
+    local hostcrashs = GT(PlayerMainMenu, "the host crashes", {}, "")
 
-    GTAC(hostcrashs, "主机崩溃V1", {""}, "",function(pid)
+    GTAC(hostcrashs, "host crash v1", {""}, "",function(pid)
     local deathpos = v3(-16257.853, 10793.688, 893.610)
     local pedp  = players.user_ped(players.user(pid))
     local mypos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
@@ -26536,11 +26536,11 @@ end)
     wait(1000)
     ENTITY.FREEZE_ENTITY_POSITION(pedp,false)
     ENTITY.GET_ENTITY_COORDS(pedp,mypos)
-    gtoast("主机崩溃完成",5,61000)	
+    gtoast("the host crash is complete",5,61000)	
     end)
 
     local coords_crash = true
-    GTAC(hostcrashs, "主机崩溃V2", {""}, "", function(on)
+    GTAC(hostcrashs, "host crash v2", {""}, "", function(on)
     local Coords = {v3(-16257.853, 10793.688, 893.610)}
         coords_crash = on
         if not NETWORK.NETWORK_IS_HOST() then
@@ -26557,12 +26557,12 @@ end)
             menu.trigger_commands("spectate" ..  players.get_name(pid).. " off")
     end)
 
-    GTAC(hostcrashs, "主机崩溃V3", {}, "", function(pid)
+    GTAC(hostcrashs, "host crash v3", {}, "", function(pid)
         hostcrash(pid)
     end)
 
     local coords_crash = true
-    GTTG(hostcrashs, "主机崩溃V4", {""}, "", function(on)
+    GTTG(hostcrashs, "host crashes v4", {""}, "", function(on)
     local Coords = {
         v3(-16257, 10793, 893),
         v3(-6170,10837,40),
@@ -26584,8 +26584,8 @@ end)
         menu.trigger_commands("spectate" ..  players.get_name(pid).. " off")
     end)
 
-    GTAC(hostcrashs, "主机崩溃V5", {""}, "", function()
-        notification("开始崩溃", colors.pink)
+    GTAC(hostcrashs, "host crashes v5", {""}, "", function()
+        notification("started to crash", colors.pink)
         local self_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
         ENTITY.SET_ENTITY_COORDS(self_ped, -6170, 10837, 40, true, false, false)
         wait(1000)
@@ -26604,11 +26604,11 @@ end)
         ENTITY.SET_ENTITY_COORDS(self_ped, -101, 100, 374, true, false, false)
         wait(1000)
         menu.trigger_commands("tpmtchiliad")
-        notification("结束崩溃 ", colors.pink)
+        notification("end the crash ", colors.pink)
     end)
 
-GTAC(hostcrashs,"主机崩溃V6",{},"",function()
-    gtoast("主机崩溃"..PLAYER.GET_PLAYER_NAME(pid),1)
+GTAC(hostcrashs,"host crashes v6",{},"",function()
+    gtoast("the host crashes"..PLAYER.GET_PLAYER_NAME(pid),1)
     playerx = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(players.user()))
     ENTITY.SET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(players.user()),-6170,10837,39)
     wait(700)
@@ -26723,9 +26723,9 @@ function copyVehicleData(vehicle, cloneVehicle)
     VEHICLE.SET_VEHICLE_ENGINE_ON(cloneVehicle, VEHICLE.GET_IS_VEHICLE_ENGINE_RUNNING(vehicle), true, true)
     end
 
-other_crash = GT(PlayerMainMenu, "其他崩溃")
+other_crash = GT(PlayerMainMenu, "other crashes")
 
-    GTLuaScript.click_slider(other_crash,"导弹车崩溃", {"Chernobog Crash"}, "1 = V1, 2 = V2", 1, 2, 1, 1, function(on_change)
+    GTLuaScript.click_slider(other_crash,"the missile car collapsed", {"Chernobog Crash"}, "1 = V1, 2 = V2", 1, 2, 1, 1, function(on_change)
         if on_change == 1 then	
             daodanchev1(pid) 
         end
@@ -26767,9 +26767,9 @@ function check_player_vehicle_and_spec_if_necessary(pid, callback)
     spec_if_necessary[pid] = false
 end
 
-splayer3 = GTTG(updates, '观看玩家', {}, '', function (sp)
+splayer3 = GTTG(updates, 'watch the players', {}, '', function (sp)
     if players.user() == pid then
-        gtoast("不能对自己使用")
+        gtoast("you can t use it on yourself")
         menu.set_value(splayer3, false)
     end
     spe = sp
@@ -26780,7 +26780,7 @@ splayer3 = GTTG(updates, '观看玩家', {}, '', function (sp)
     end
 end)
 
-GTAC(updates, "多重无效标记", {}, "", function()
+GTAC(updates, "multiple invalid flags", {}, "", function()
 
     local c_table = {}
 
@@ -26860,14 +26860,14 @@ end)
 
 
 
-GTAC(updates, "子是父的威", {}, "", function()
+GTAC(updates, "the son is the authority of the father", {}, "", function()
 
     crashstand(pid)
 
 end)
 
 local plypos = nil
-GTAC(updates,'ID1',{''},'完成后将传送回原地',function()
+GTAC(updates,'ID1',{''},'when completed it will teleport back to its original location',function()
 
     plypos = ENTITY.GET_ENTITY_COORDS(players.user_ped())
 
@@ -26897,14 +26897,14 @@ GTAC(updates,'ID1',{''},'完成后将传送回原地',function()
     if plypos ~= nil then
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), 
         plypos.x, plypos.y, plypos.z, false, false ,false)
-        gtoast("传送回原地")
+        gtoast("teleport back to where you came")
 
         plypos = nil
     end
 end)
 
 local plypos2 = nil
-GTAC(updates, 'ID2',{},'完成后将传送回原地',function(on) 
+GTAC(updates, 'ID2',{},'when completed it will teleport back to its original location',function(on) 
 
     plypos2 = ENTITY.GET_ENTITY_COORDS(players.user_ped())
 
@@ -26945,7 +26945,7 @@ GTAC(updates, 'ID2',{},'完成后将传送回原地',function(on)
     if plypos2 ~= nil then
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(players.user_ped(), 
         plypos2.x, plypos2.y, plypos2.z ,false, false, false)
-        gtoast("传送回原地")
+        gtoast("teleport back to where you came")
 
         plypos2 = nil
     end
@@ -26963,7 +26963,7 @@ GTAC(updates,"ID3", {""}, "", function(selectedOption)
     spawned_crash_peds = {}
 end)
 
-t3g = GTAC(updates, "T3G Magic", {"t3g"}, "请不要在双开时使用", function ()
+t3g = GTAC(updates, "T3G Magic", {"t3g"}, "please do not use it when it is double opened", function ()
     util.create_thread(function()
         local obj = util.joaat("prop_tall_grass_ba")
         request_model(obj)
@@ -27010,11 +27010,11 @@ t3g = GTAC(updates, "T3G Magic", {"t3g"}, "请不要在双开时使用", functio
         end
         STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(mdl)
         STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(veh_mdl)
-        gtoast("已完成")
+        gtoast("done")
     end)
 end)
 
-xmi=GTAC(updates, "小米崩溃", {"xmicrash"}, "", function()
+xmi=GTAC(updates, "xiaomi crashes", {"xmicrash"}, "", function()
     local Pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
     local weapon_ped <const> = Cped(26,util.joaat("A_C_Rat"), Pos, 0)
     WEAPON.GIVE_WEAPON_TO_PED(weapon_ped, util.joaat("WEAPON_GRENADE"), 1, true, true)
@@ -27024,7 +27024,7 @@ xmi=GTAC(updates, "小米崩溃", {"xmicrash"}, "", function()
     entities.delete_by_handle(weapon_ped)
 end)
 
-zmi=GTAC(updates, "中米崩溃", {"zmicrash"}, "", function()
+zmi=GTAC(updates, "medium rice crashes", {"zmicrash"}, "", function()
     local pos <const> = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 0.0, 3.0, 0.0)
     pos.x = pos.x
     pos.y = pos.y
@@ -27042,7 +27042,7 @@ zmi=GTAC(updates, "中米崩溃", {"zmicrash"}, "", function()
     entities.delete_by_handle(veh_crash)
 end)
 
-dmi=GTAC(updates, "大米崩溃", {"dmicrash"}, "", function()
+dmi=GTAC(updates, "rice collapses", {"dmicrash"}, "", function()
     busy(pid)
     check_player_vehicle_and_spec_if_necessary(pid, function()
     if PED.IS_PED_IN_ANY_VEHICLE(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), true) then
@@ -27064,13 +27064,13 @@ dmi=GTAC(updates, "大米崩溃", {"dmicrash"}, "", function()
     end)
 end)
 
-klmi=GTAC(updates, "卡拉米崩溃", {"klmi"}, "", function()
+klmi=GTAC(updates, "karami collapses", {"klmi"}, "", function()
     menu.trigger_commands("xmicrash" .. PLAYER.GET_PLAYER_NAME(pid))
     menu.trigger_commands("zmicrash" .. PLAYER.GET_PLAYER_NAME(pid)) 
     menu.trigger_commands("dmicrash" .. PLAYER.GET_PLAYER_NAME(pid)) 
 end)
 
-GTTG(updates, "Rock崩溃", {"rockcrash"}, "", function(loop)
+GTTG(updates, "rock crashes", {"rockcrash"}, "", function(loop)
     huoche = loop
     while huoche do
     wait(100)
@@ -27095,7 +27095,7 @@ GTTG(updates, "Rock崩溃", {"rockcrash"}, "", function(loop)
     end
 end)
 --
-updates:textslider("船船船", {"extasy"}, "提供三种模式，普通模式，远离模式，翻船模式\n第二种模式需要远离目标", {"普通模式","远离模式","翻船模式",}, function(mode)
+updates:textslider("boats boats boats", {"extasy"}, "提供三种模式，普通模式，远离模式，翻船模式\n第二种模式需要远离目标", {"普通模式","远离模式","翻船模式",}, function(mode)
     wait(100)
     local pos <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(0,pid)) 
     pos.z = pos.z+1 
@@ -27139,7 +27139,7 @@ updates:textslider("船船船", {"extasy"}, "提供三种模式，普通模式�
     end 
 end)
 --
-GTAC(updates, "玻璃渣子", {}, "", function()
+GTAC(updates, "glass slag", {}, "", function()
     local obj = util.joaat("prop_tall_grass_ba")
     request_model(obj)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
@@ -27149,7 +27149,7 @@ GTAC(updates, "玻璃渣子", {}, "", function()
 end)
 
 --
-fireworklove = GTAC(updates, "寂寞烟火", {"coastline"}, coasttext, function()
+fireworklove = GTAC(updates, "lonely fireworks", {"coastline"}, coasttext, function()
     menu.trigger_commands("levitate on")
     menu.trigger_commands("tphigh")
     wait(1000)
@@ -27165,14 +27165,14 @@ fireworklove = GTAC(updates, "寂寞烟火", {"coastline"}, coasttext, function(
 
     gtoast("请等待10秒...")
     wait(10000)
-    gtoast("崩溃已结束,允许再次点击")
+    gtoast("the crash is over,allow to click again")
     menu.trigger_commands("levitate off")
     menu.trigger_commands("tplsia")
     wait(100)
     menu.trigger_commands("superc")
 end)
 
-GTAC(updates,"十二十二", {"12crash"}, "建议长按使用喔~", function()
+GTAC(updates,"十二十二", {"12crash"}, "it is recommended to press and hold to use it~", function()
     menu.trigger_commands("steamroll" .. PLAYER.GET_PLAYER_NAME(pid))
     if pid ~= players.user() then
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
@@ -27249,12 +27249,12 @@ arg3 = math.random(-19, 19)
 util.trigger_script_event(1 << player_id, {v, player_id, arg1, arg3, arg2, arg2, arg1, arg1, arg3, arg3, arg1, arg3, arg2, arg3, arg1, arg1, arg2, arg3, arg1, arg2, arg2, arg3, arg3})
 wait()
 end
-gtoast("崩溃已经发送给这个傻逼 " .. PLAYER.GET_PLAYER_NAME(player_id))
+gtoast("the crash has been sent to this idiot " .. PLAYER.GET_PLAYER_NAME(player_id))
 end
 }
 GT = GTluaScript.list
-lovecrash = GT(updates, "恋爱循环", {}, "")
-GTLP(lovecrash, "恋爱循环", {"lovecrash"}, "孤独且温柔", function(on_toggle)
+lovecrash = GT(updates, "love cycles", {}, "")
+GTLP(lovecrash, "Love Cycles", {"lovecrash"}, "lonely and gentle", function(on_toggle)
     if on_toggle then
         wait(100)
         menu.trigger_commands("loveclick".. PLAYER.GET_PLAYER_NAME(pid))
@@ -27268,7 +27268,7 @@ GTLP(lovecrash, "恋爱循环", {"lovecrash"}, "孤独且温柔", function(on_to
     end
 end)
 
-GTAC(lovecrash, "一见钟情", {'loveclick'}, "一次次的孤独", function()
+GTAC(lovecrash, "love at first sight", {'loveclick'}, "loneliness again and again", function()
     local player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local mdl = util.joaat("cs_taostranslator2")
     while not STREAMING.HAS_MODEL_LOADED(mdl) do
@@ -27292,7 +27292,7 @@ GTAC(lovecrash, "一见钟情", {'loveclick'}, "一次次的孤独", function()
     end
 end)
 
-    GTTG(PlayerMainMenu, '怒不可遏5.0', {"unableanger5th"},
+    GTTG(PlayerMainMenu, 'furious5.0', {"unableanger5th"},
     '让您的对手怒不可遏!!!\nGRANDTOURINGVIP经典崩溃', function(on)
         if on then
             gtoast("你正在让他们怒不可遏 (请稍后...)")
@@ -27316,7 +27316,7 @@ end)
         end
     end)
 
-GTAC(other_crash, "改进的懂哥", {}, "", function()
+GTAC(other_crash, "improved understanding brother", {}, "", function()
     PLAYER.SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(PLAYER.PLAYER_ID(), 0xE5022D03)
     TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()))
     wait(20)
@@ -27332,7 +27332,7 @@ GTAC(other_crash, "改进的懂哥", {}, "", function()
     TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(players.user()))
 end)
 
-GTAC(other_crash, "碎片崩溃", {"fragment"}, "", function()
+GTAC(other_crash, "fragments collapse", {"fragment"}, "", function()
     local object = entities.create_object(util.joaat("prop_fragtest_cnst_04"),
         ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)))
     OBJECT.BREAK_OBJECT_FRAGMENT_CHILD(object, 1, false)
@@ -27386,7 +27386,7 @@ function entity_vehicle(hash, coords, dir)
     return vehicle
 end
 
-GTAC(other_crash, "马哥崩溃", {"gtgvs"}, "", function()
+GTAC(other_crash, "marco collapsed", {"gtgvs"}, "", function()
     menu.trigger_commands("planecrash " .. players.get_name(pid))
     menu.trigger_commands("ChernobogCrash " .. players.get_name(pid) .. " 1")
     menu.trigger_commands("dh " .. players.get_name(pid))
@@ -27421,20 +27421,20 @@ local function BlockSyncs(pid, callback)
     end
 end
 --
-GTAC(updates, "宵宵古今", {"reol"}, "流星&堕落", function()
+GTAC(updates, "supper ancient and modern", {"reol"}, "流星&堕落", function()
     reolcrash(pid)
     menu.trigger_commands("12crash" .. PLAYER.GET_PLAYER_NAME(pid))
 end)
 --
 
-diudiuflower = GT(updates, "猛女散花", {"diudiucrash"}, "")
-GTAC(diudiuflower, "猛女散花", {"diudiuevil"}, "针对个人玩家\n不建议一直按住", function()
+diudiuflower = GT(updates, "fierce women scatter flowers", {"diudiucrash"}, "")
+GTAC(diudiuflower, "fierce women scatter flowers", {"diudiuevil"}, "for individual players\n it is not recommended to hold it all the time", function()
     menu.trigger_commands("givesh" .. PLAYER.GET_PLAYER_NAME(pid))
     menu.trigger_commands("ghostv6" .. PLAYER.GET_PLAYER_NAME(pid))
     menu.trigger_commands("ghostv8" .. PLAYER.GET_PLAYER_NAME(pid))
 end)
 
-GTAC(diudiuflower, "猛女散花(全局版本)", {"diudiuevilall"}, "全局崩溃版本\n不建议一直按住",
+GTAC(diudiuflower, "fierce women scatter flowers(global version)", {"diudiuevilall"}, "global crash version\n it is not recommended to hold it all the time",
     function()
         menu.trigger_commands("givesh" .. PLAYER.GET_PLAYER_NAME(pid)) -- Let Player Become Scripts Host to Manager Event
         menu.trigger_commands("ghostv8" .. PLAYER.GET_PLAYER_NAME(pid)) -- Crash Event(XQ) & MP Freemode 01 Ped Spawner
@@ -27443,7 +27443,7 @@ GTAC(diudiuflower, "猛女散花(全局版本)", {"diudiuevilall"}, "全局崩�
         menu.trigger_commands("sixfeel") -- Invalid Object Crash (Prevent Youself)
     end)
 
-GTAC(updates, "雨落纷纷", {"rainfell"},
+GTAC(updates, "the rain was falling", {"rainfell"},
     "如今的瓢泼大雨比以往更加强烈\n你仍然可以站在GTVIP的雨伞之下", function()
         local edition = menu.get_edition()
         if edition == 3 then
@@ -27462,7 +27462,7 @@ GTAC(updates, "雨落纷纷", {"rainfell"},
     end)
 --
 
-GTAC(updates, 'NSA崩溃', {"nsacrash"}, '', function()
+GTAC(updates, 'the nsa collapsed', {"nsacrash"}, '', function()
     ped_task = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
     ENTITY.FREEZE_ENTITY_POSITION(PLAYER.GET_PLAYER_PED(pid), true)
     entities.create_object(0x9cf21e0f, ped_task, true, false)
@@ -27507,7 +27507,7 @@ GTAC(updates, 'NSA崩溃', {"nsacrash"}, '', function()
     entities.delete_by_handle(ped_task2)
 end)
 
-GTAC(updates, '彩色泡泡', {"rainbowpapaw"}, '', function(f)
+GTAC(updates, 'colorful bubbles', {"rainbowpapaw"}, '', function(f)
     player = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     veh = entities.get_all_vehicles_as_handles()
     for i = 1, #veh do
@@ -27519,7 +27519,7 @@ GTAC(updates, '彩色泡泡', {"rainbowpapaw"}, '', function(f)
     end
 end)
 
-GTAC(updates, '花神之舞', {"flowerdance"}, '', function(f)
+GTAC(updates, 'dance of the flower gods', {"flowerdance"}, '', function(f)
     plauuepos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
     plauuepos.x = plauuepos.x + 1.2
     plauuepos.z = plauuepos.z - 0.5
@@ -27544,7 +27544,7 @@ GTAC(updates, '花神之舞', {"flowerdance"}, '', function(f)
     plauuepos = nil
 end)
 
-GTAC(updates, "支离破碎", {"lettingbreak"}, "GRANDTOURINGVIP\n2Take1版本同款崩溃",
+GTAC(updates, "fragmented", {"lettingbreak"}, "GRANDTOURINGVIP\n2Take1版本同款崩溃",
     function(f) -- 增加部分模型
         local vehs = {}
         local c = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
@@ -27597,7 +27597,7 @@ GTAC(updates, "支离破碎", {"lettingbreak"}, "GRANDTOURINGVIP\n2Take1版本�
         end
     end)
 
-GTAC(updates, '销声割迹', {}, '', function(f)
+GTAC(updates, 'pin sound cuts', {}, '', function(f)
     local model_array<const> = {0x58f77553, 0x1446590a}
     local pos<const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
     pos.x = pos.x + 3
