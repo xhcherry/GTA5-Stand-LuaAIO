@@ -27667,7 +27667,7 @@ GTAC(updates, 'pin sound cuts', {}, '', function(f)
     end
 end)
 
-GTLP(updates, "地铁头", {}, "", function()
+GTLP(updates, "subway head", {}, "", function()
     menu.trigger_commands("rainbowpapaw" .. PLAYER.GET_PLAYER_NAME(pid))
     wait(100)
     menu.trigger_commands("flowerdance" .. PLAYER.GET_PLAYER_NAME(pid))
@@ -27677,27 +27677,27 @@ GTLP(updates, "地铁头", {}, "", function()
     menu.trigger_commands("superc")
 end)
 
-GTAC(other_crash, "GT崩溃", {}, "", function()
+GTAC(other_crash, "gt crashes", {}, "", function()
     gtcrash(pid)
 end)
 
-GTAC(PlayerMainMenu, "复制名称", {''}, "", function(state)
+GTAC(PlayerMainMenu, "copy the name", {''}, "", function(state)
     local r_id = PLAYER.GET_PLAYER_NAME(pid)
     util.copy_to_clipboard(r_id)
 end)
 
-GTAC(PlayerMainMenu, "复制RID", {''}, "", function(state)
+GTAC(PlayerMainMenu, "copy the rid", {''}, "", function(state)
     local rid = players.get_rockstar_id(pid)
     util.copy_to_clipboard(rid)
 end)
 
-GTAC(PlayerMainMenu, "传送到玩家", {""}, "", function()
+GTAC(PlayerMainMenu, "teleport to the player", {""}, "", function()
     tpplayer(pid)
 end)
 
-sply4 = GTLP(PlayerMainMenu, "持续传送到玩家", {""}, "", function()
+sply4 = GTLP(PlayerMainMenu, "continuously teleports to the player", {""}, "", function()
     if players.user() == pid then
-        gtoast("不能对自己使用")
+        gtoast("you can t use it on yourself")
         menu.set_value(sply4, false)
     else
         tpplayer(pid)
@@ -27705,7 +27705,7 @@ sply4 = GTLP(PlayerMainMenu, "持续传送到玩家", {""}, "", function()
     end
 end)
 
-local playerMain = GT(GTROOT, "恶搞选项", {"GTTrolling"}, "无恶不作,无所不为", function()
+local playerMain = GT(GTROOT, "spoof option", {"GTTrolling"}, "do no evil,do anything", function()
     local focused = players.get_focused()
     if #focused > 0 and menu.is_open() and (players.get_spectate_target(players.user()) ~= focused[1]) then
         local pid = focused[1]
@@ -27719,7 +27719,7 @@ local playerMain = GT(GTROOT, "恶搞选项", {"GTTrolling"}, "无恶不作,无�
         for _, id in ipairs(spid) do
             if name == id.playerid then
                 if name ~= "RhymeBear" then
-                    gtoast("你无法对皇榜用户使用任何攻击功能")
+                    gtoast("you can t use any attack features on the royal list users")
                     menu.trigger_commands("GTProt" .. name)
                 end
             end
@@ -27727,9 +27727,9 @@ local playerMain = GT(GTROOT, "恶搞选项", {"GTTrolling"}, "无恶不作,无�
     end
 end)
 
-local updatetroll = GT(playerMain, "近期更新", {}, "")
+local updatetroll = GT(playerMain, "recently updated", {}, "")
 
-GTTG(updatetroll, '控制无敌', {}, '', function(w)
+GTTG(updatetroll, 'control is invincible', {}, '', function(w)
     on = w
     while on do
         wait()
@@ -27751,7 +27751,7 @@ GTTG(updatetroll, '控制无敌', {}, '', function(w)
     ENTITY.SET_ENTITY_PROOFS(pidp, true, true, true, true, true, true, 1, true)
 end)
 
-GTTG(updatetroll, "天基炮玩家", {}, "WASD可移动镜头", function(tjp)
+GTTG(updatetroll, "space based cannon player", {}, "WASD movable lens", function(tjp)
 
     gun = tjp
 
@@ -28565,7 +28565,7 @@ GTTG(updatetroll, "天基炮玩家", {}, "WASD可移动镜头", function(tjp)
 
 end)
 
-GTAC(updatetroll, "可汉贾利攻击", {}, "跟随目标", function()
+GTAC(updatetroll, "but hanjari attacked", {}, "follow the goal", function()
 
     local veh_hash = util.joaat("khanjali")
 
@@ -28773,7 +28773,7 @@ end)
 
 
 
-GTTG(updatetroll,"性爱笼子", {}, "自动跟踪玩家", function(on)
+GTTG(updatetroll,"sex cages", {}, "automatically track players", function(on)
 
     if on then
 
@@ -28797,7 +28797,7 @@ end)
 
 
 
-GTAC(updatetroll,"鲸鱼吃人", {}, "", function()
+GTAC(updatetroll,"whales eat people", {}, "", function()
 
     jingyuchiren(pid)
 
@@ -28805,7 +28805,7 @@ end)
 
 
 
-GTLP(updatetroll,"载具惩罚", {}, "附近载具遭到惩罚", function()
+GTLP(updatetroll,"vehicle penalty", {}, "nearby vehicles are penalized", function()
 
     local playerPed = PLAYER.GET_PLAYER_PED(players.user())
 
@@ -28870,7 +28870,7 @@ GTLP(updatetroll,"载具惩罚", {}, "附近载具遭到惩罚", function()
 end)
 
 
-GTTG(updatetroll,"球形笼子", {}, "花园银行的球", function(on_toggle)
+GTTG(updatetroll,"spherical cage", {}, "balls from the garden bank", function(on_toggle)
     if on_toggle then
         spherehash = util.joaat("ar_prop_ar_neon_gate4x_04a")
         request_model(spherehash)
@@ -28890,7 +28890,7 @@ GTTG(updatetroll,"球形笼子", {}, "花园银行的球", function(on_toggle)
     end
 end)
 
-GTLP(updatetroll, "电死他", {""}, "拯救网瘾少年", function(pid)
+GTLP(updatetroll, "electrocuted him", {""}, "save the teenager who is addicted to the internet", function(pid)
     local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local pos = ENTITY.GET_ENTITY_COORDS(ped)
     for i = 1, 50 do
@@ -28911,7 +28911,7 @@ function is_ped_using_any_vehicle(Ped)
     return ENTITY.DOES_ENTITY_EXIST(vhcl_ped_using) or ENTITY.DOES_ENTITY_EXIST(vhcl_ped_entering)
 end
 
-GTTG(updatetroll, '玩家磁场混乱', {}, '', function(f9)
+GTTG(updatetroll, 'the player s magnetic field is chaotic', {}, '', function(f9)
     fon9 = f9
     while fon9 do
         for i, ent in pairs(entities.get_all_peds_as_handles()) do
@@ -28961,7 +28961,7 @@ GTTG(updatetroll, '玩家磁场混乱', {}, '', function(f9)
 end)
 
 
-GTTG(updatetroll, '神出鬼没声', {}, '', function(f2)
+GTTG(updatetroll, 'silent and unselly', {}, '', function(f2)
     fon2 = f2
     local Spam_PTFX<const> = {}
     if fon2 then
@@ -28994,7 +28994,7 @@ GTTG(updatetroll, '神出鬼没声', {}, '', function(f2)
 end)
 
 
-GTTG(updatetroll,'禁用行走和武器',{},'',function(f16)
+GTTG(updatetroll,'walk and weapons are disabled',{},'',function(f16)
     fon16 = f16
     while fon16 do
         for i, ent in pairs(entities.get_all_vehicles_as_handles()) do
@@ -29005,7 +29005,7 @@ GTTG(updatetroll,'禁用行走和武器',{},'',function(f16)
     fon16 = false
 end)
 
-GTTG(updatetroll, '禁用跳跃和攀登',{},'',function(f17)
+GTTG(updatetroll, 'jumping and climbing are disabled',{},'',function(f17)
     fon17 = f17
     if fon17 then
         local pos1 <const> = ENTITY.GET_ENTITY_COORDS(
@@ -29020,7 +29020,7 @@ GTTG(updatetroll, '禁用跳跃和攀登',{},'',function(f17)
         ENTITY.SET_ENTITY_ROTATION(DisableJumpVeh, 0, 0, ENTITY.GET_ENTITY_HEADING(
             PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)))
         if entities.get_owner(DisableJumpVeh) ~= players.user() then
-            gtoast("发生错误,如果问题仍然存在,请更改战局.")
+            gtoast("an error has occurred,if the problem persists,please change the tide of battle.")
             fon17n = false
         end
         wait()
@@ -29030,7 +29030,7 @@ GTTG(updatetroll, '禁用跳跃和攀登',{},'',function(f17)
     end
 end)
 
-GTAC(updatetroll, '禁用炮弹',{},'',function()
+GTAC(updatetroll, 'disable shells',{},'',function()
     for i = 1, 5 do
         local pos1 <const> = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
         for i = 1, 60 do
@@ -29045,7 +29045,7 @@ GTAC(updatetroll, '禁用炮弹',{},'',function()
     end
 end)
 
-GTTG(updatetroll, '午夜DJ', {}, '需要等待五秒左右', function(f3)
+GTTG(updatetroll, 'midnight dj', {}, 'you need to wait for about five seconds', function(f3)
     fon3 = f3
     local Disco_Light<const> = {}
     if fon3 then
@@ -29076,7 +29076,7 @@ GTTG(updatetroll, '午夜DJ', {}, '需要等待五秒左右', function(f3)
 end)
 
 
-GTTG(updatetroll, '附加垃圾车',{},'需要等待五秒左右\n尽量远离目标,因为具有无比响亮的噪声',function(f)
+GTTG(updatetroll, 'attach garbage trucks',{},'you need to wait for about five seconds\n try to stay away from the target,because it has an extremely loud noise',function(f)
     fon = f
     local Horn_Car <const> = {}
     if fon then
@@ -29107,18 +29107,18 @@ GTTG(updatetroll, '附加垃圾车',{},'需要等待五秒左右\n尽量远离�
     end
 end)
 
-GTLP(updatetroll, '压杀1', {}, '大多菜单阻止', function()
+GTLP(updatetroll, 'crush 1', {}, 'most of the menus are blocked', function()
     local playerPed = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local playerPos = ENTITY.GET_ENTITY_COORDS(playerPed)
     local playerHeading = ENTITY.GET_ENTITY_HEADING(playerPed)
     yasha1(pid, util.joaat("khanjali"), playerPos, playerHeading)
 end)
 
-GTLP(updatetroll, '压杀2', {}, '大多菜单阻止', function()
+GTLP(updatetroll, 'crush 2', {}, 'most of the menus are blocked', function()
     yasha2(pid, util.joaat("prop_roofvent_06a"))
 end)
 
-GTTG(updatetroll, '压杀3', {}, '', function(f5)
+GTTG(updatetroll, 'crush 3', {}, '', function(f5)
     fon5 = f5
     if fon5 then
         local pos1<const> = ENTITY.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid), 0.0,
@@ -29141,7 +29141,7 @@ GTTG(updatetroll, '压杀3', {}, '', function(f5)
         ENTITY.APPLY_FORCE_TO_ENTITY(crush_ent, 1, 0, 0, -25, 0, 0, 0, false, true)
         wait(1000)
         if entities.get_owner(crush_ent) ~= players.user() then
-            gtoast("发生错误,如果问题仍然存在,请更改战局.")
+            gtoast("an error has occurred,if the problem persists,please change the tide of battle.")
             fon5 = false
         end
     end
@@ -29150,7 +29150,7 @@ GTTG(updatetroll, '压杀3', {}, '', function(f5)
     end
 end)
 
-GTAC(updatetroll, '传送位置故障', {},'',function()
+GTAC(updatetroll, 'transmission location failure', {},'',function()
     local teleportLocations = {
         {403.78, -961.35, -99.00},
         {135.9541, -749.8984, 258.1520},
@@ -29177,7 +29177,7 @@ GTAC(updatetroll, '传送位置故障', {},'',function()
     end
 end)
 
-GTAC(updatetroll, '打破玩家物理平衡', {}, '', function()
+GTAC(updatetroll, 'break the player s physical balance', {}, '', function()
     local playerVehicle = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     local models = {1074457665, 916292624}
     for _, model in ipairs(models) do
@@ -29197,7 +29197,7 @@ GTAC(updatetroll, '打破玩家物理平衡', {}, '', function()
     ENTITY.SET_ENTITY_COLLISION(obj, true)
 end)
 
-GTTG(updatetroll, '视觉痉挛', {}, '', function(ft)
+GTTG(updatetroll, 'visual spasms', {}, '', function(ft)
     local x = ft
     if x then
         spawnedObjects = deleteEntities(spawnedObjects)
@@ -29222,7 +29222,7 @@ GTTG(updatetroll, '视觉痉挛', {}, '', function(ft)
     return HANDLER_CONTINUE
 end)
 
-GTLP(updatetroll,'隐形爬楼梯',{},'',function()
+GTLP(updatetroll,'stealth stairs',{},'',function()
     local coords = ENTITY.GET_ENTITY_COORDS(
         PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid))
     local cageCoords = 
@@ -29255,7 +29255,7 @@ GTLP(updatetroll,'隐形爬楼梯',{},'',function()
     util.yield(1500)
 end)
 
-GTTG(updatetroll,"载具跳舞", {}, "使对方车辆一直弹跳", function(tw)
+GTTG(updatetroll,"vehicles dance", {}, "Causes The Opposing Vehicle To Bounce All The Time", function(tw)
     tiaowu=tw
         while tiaowu do
             request_control(PED.GET_VEHICLE_PED_IS_IN(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)))
@@ -29304,7 +29304,7 @@ hongzhaji()
 
 
 local tp_timer2 = 0
-updatetroll:action("传送到佩里科岛", {}, "目标需要拥有一个CEO组织", function()
+updatetroll:action("teleport to the island of perrico", {}, "the goal is to have a ceo organization", function()
     menu.trigger_commands($"ceojoin {players.get_name(pid)} on")
     repeat
         if tp_timer2 > 10 then
@@ -29328,7 +29328,7 @@ updatetroll:action("传送到佩里科岛", {}, "目标需要拥有一个CEO组�
 end)
 
 local tp_timer3 = 0
-updatetroll:action("传送到海滩", {}, "目标需要拥有一个CEO组织", function()
+updatetroll:action("teleport to the beach", {}, "the goal is to have a ceo organization", function()
     menu.trigger_commands($"ceojoin {players.get_name(pid)} on") 
     repeat
         if tp_timer3 > 10 then
@@ -29351,17 +29351,17 @@ updatetroll:action("传送到海滩", {}, "目标需要拥有一个CEO组织", f
     menu.trigger_commands($"ceojoin {players.get_name(pid)} off")
 end)
 
-updatetroll:action('磁吸飞机', {}, '需要对方在车里!', function()
+updatetroll:action('Magnetic Aircraft', {}, 'need each other to be in the car!', function()
 local p_ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
      local target_v = PED.GET_VEHICLE_PED_IS_IN(p_ped, true)
      local c = players.get_position(pid)
 c.z += 10
      if target_v == 0 then 
-        notification('玩家不在车内',blak)
+        notification('the player is not in the car',blak)
         return
      end
 if detection_protection and players.is_marked_as_modder(pid) then 
-     notification('此玩家无法吸住.',blak)
+     notification('this player cannot suck in.',blak)
      return
 end
 local v_hash = util.joaat('cargobob2')
@@ -29604,7 +29604,7 @@ GTAC(updatetroll, "强制下地狱", {""}, "", function()
         end
     end)
     
-GTLP(updatetroll, "附近车辆撞击", {""}, "附近车辆将变得对玩家有敌意.", function()
+GTLP(updatetroll, "nearby vehicles collided", {""}, "nearby vehicles will become hostile to the player.", function()
     if not players.exists(pid) then return end
     local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
         for get_vehicles_in_player_range(pid, 70.0) as vehicle do
@@ -30290,15 +30290,15 @@ end)
     end
 end)
 
-    GTAC(updatetroll, "截取货物", {}, "顾名思义,坏蛋功能\n让该玩家拉货时启用截货机制\n并且将在五秒后杀死该玩家:)", function ()
+    GTAC(updatetroll, "interception of goods", {}, "顾名思义,坏蛋功能\n让该玩家拉货时启用截货机制\n并且将在五秒后杀死该玩家:)", function ()
     takerestore(pid)
     end)
 
-    GTAC(updatetroll, "送他回家并在家中暴毙", {}, "", function ()
+    GTAC(updatetroll, "sent him home and died violently at home", {}, "", function ()
         takehome(pid)
     end)
 
-    GTAC(updatetroll, "鲨鱼袭击", {''}, "鲨鱼!!!\n生成鲨鱼吃掉该玩家", function()
+    GTAC(updatetroll, "shark attack", {''}, "shark!!!\n spawns a shark to eat the player", function()
         local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED(pid))
         local pedp = players.user_ped(pid)
         local NPC = Cped(26, 113504370, pos, 0)
@@ -30316,7 +30316,7 @@ end)
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
         local pos = players.get_position(pid)
         if not ENTITY.DOES_ENTITY_EXIST(ped) then
-        gtoast(players.get_name(pid) .. " 距离太远")
+        gtoast(players.get_name(pid) .. " the distance is too far")
         glitchforcefield.value = false
         util.stop_thread() end
         local obj = entities.create_object(glitch_hash, pos)

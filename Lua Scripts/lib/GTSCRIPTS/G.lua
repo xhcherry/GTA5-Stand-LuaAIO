@@ -9752,7 +9752,7 @@ GTTG(chonglangban, "surfboard 4",{""}, "",function(on)
     end
 end)
 
-GTTG(chonglangban, "冲浪板5",{""}, "",function(on)
+GTTG(chonglangban, "surfboard 5",{""}, "",function(on)
     local surf_board = "prop_kt1_10_mpdoor_l"
     if on then     
         attach_to_player(surf_board, 0, 0.5, -0.3, 0.5, 1, -30,0)
@@ -9761,7 +9761,7 @@ GTTG(chonglangban, "冲浪板5",{""}, "",function(on)
     end
 end)
 
-GTTG(sessionfun, "电脑",{""}, "",function(on)
+GTTG(sessionfun, "computer",{""}, "",function(on)
     local surf_board = "prop_laptop_01a"
     if on then     
         attach_to_player(surf_board, 2, 0, 0.5, -0.03, 1, 0,0)
@@ -9770,7 +9770,7 @@ GTTG(sessionfun, "电脑",{""}, "",function(on)
     end
 end)
 
-GTTG(sessionfun, "泳圈",{""}, "",function(on)
+GTTG(sessionfun, "swimming rings",{""}, "",function(on)
     local swimming_circle = "prop_beach_ring_01"
     if on then     
         attach_to_player(swimming_circle, 0, 0, 0, 0, 0, 0,0)
@@ -9779,7 +9779,7 @@ GTTG(sessionfun, "泳圈",{""}, "",function(on)
     end
 end)
 
-GTLP(sessionfun, "镜子", {"mirror"}, "镜像人物视角", function()
+GTLP(sessionfun, "mirror", {"mirror"}, "mirror the person s point of view", function()
     if GRAPHICS.UI3DSCENE_IS_AVAILABLE() then
         if GRAPHICS.UI3DSCENE_PUSH_PRESET("CELEBRATION_WINNER") then
             GRAPHICS.UI3DSCENE_ASSIGN_PED_TO_SLOT("CELEBRATION_WINNER", players.user_ped(), 0, 0.0, 0.0, 0.0);
@@ -9787,13 +9787,13 @@ GTLP(sessionfun, "镜子", {"mirror"}, "镜像人物视角", function()
     end
 end)
 
-GTLP(sessionfun, "NPC摇头", {"pedheadbang"}, "", function(on)
+GTLP(sessionfun, "the npc shakes its head", {"pedheadbang"}, "", function(on)
     yaoptou()
 end)
 
 local entity_held = 0
 local are_hands_up = false
-GTLP(sessionfun,"举起投掷车辆", {"throwcars"}, "在车辆附近按E,举起时按E进行投掷", function(on)
+GTLP(sessionfun,"lift the throwing vehicle", {"throwcars"}, "press e near the vehicle,press e to throw while lifting", function(on)
     if PAD.IS_CONTROL_JUST_RELEASED(38, 38) then
         if entity_held == 0 then
             if not are_hands_up then 
@@ -9835,7 +9835,7 @@ GTLP(sessionfun,"举起投掷车辆", {"throwcars"}, "在车辆附近按E,举起
 end)
 
 local ped_held = 0
-GTLP(sessionfun,"举起投掷NPC", {"throwpeds"}, "在NPC附近按E,举起时按E进行投掷", function(on)
+GTLP(sessionfun,"raise and throw npc", {"throwpeds"}, "press e near npc,press e to throw while lifting", function(on)
     if PAD.IS_CONTROL_JUST_RELEASED(38, 38) then
         if entity_held == 0 then
             if not are_hands_up then 
@@ -9885,7 +9885,7 @@ end
 
 array = {"1","1","2"}
 
-GTAC(sessionfun,"生成恶灵摩托" ,{""}, "每次生成不一样的颜色", function(on)
+GTAC(sessionfun,"Spawn The Evil Motorcycle" ,{""}, "generate a different color each time", function(on)
   car = CreateVehicle(1491277511, ENTITY.GET_ENTITY_COORDS(players.user_ped(),false),0,true)
   local titlle = "scr_martin1"
   GRAPHICS.USE_PARTICLE_FX_ASSET(titlle)
@@ -9895,7 +9895,7 @@ GTAC(sessionfun,"生成恶灵摩托" ,{""}, "每次生成不一样的颜色", fu
   end
 end)
 
-    GTTG(sessionfun,"恶灵骑士" ,{""}, "还原动漫", function(on)
+    GTTG(sessionfun,"ghost rider" ,{""}, "restore anime", function(on)
         if on then 
             elqes()
             menu.trigger_commands("cjfireman on")
@@ -9909,7 +9909,7 @@ end)
 end)
 
 weaponback = off
-GTTG(sessionfun, "背藏武器", {}, "长按Tab选择武器后切回拳头", function(on)
+GTTG(sessionfun, "carrying a weapon", {}, "press and hold tab to select a weapon and switch back to the fist", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
 	weaponback = on
 	if weaponback then
@@ -9947,17 +9947,17 @@ GTTG(sessionfun, "背藏武器", {}, "长按Tab选择武器后切回拳头", fun
 	entities.delete_by_handle(spawnweapon)
 end)
 
-GTLP(sessionfun, "上帝之指", {"godfinger"}, "按B瞄准对象后使用滑鼠移动\n瞄准对象可以是玩家/Ped/载具/实体,对大部分菜单无效", function()
+GTLP(sessionfun, "god s finger", {"godfinger"}, "按B瞄准对象后使用滑鼠移动\n瞄准对象可以是玩家/Ped/载具/实体,对大部分菜单无效", function()
     godfinger()
 end)
 
-other_self = GT(selflist, '其他自我选项')
+other_self = GT(selflist, 'other self options')
 
-GTLuaScript.slider(other_self, '透明人物', {'JSghost'}, '修改您人物的不透明度', 0, 100, 100, 25, function(value)
+GTLuaScript.slider(other_self, 'transparent figures', {'JSghost'}, 'modify the opacity of your character', 0, 100, 100, 25, function(value)
     ENTITY.SET_ENTITY_ALPHA(players.user_ped(), JS_tbls.alphaPoints[value / 25 + 1], false)
 end)
 
-GTLP(other_self, "幽灵攻击", {}, "在幽灵模式下允许攻击玩家", function()
+GTLP(other_self, "ghost attack", {}, "allowing attacking players in ghost mode", function()
     for _, pid in ipairs(players.list(false, true, true)) do
         if PLAYER.IS_PLAYER_FREE_AIMING(pid) then
             NETWORK.SET_REMOTE_PLAYER_AS_GHOST(pid, true)
@@ -9967,7 +9967,7 @@ GTLP(other_self, "幽灵攻击", {}, "在幽灵模式下允许攻击玩家", fun
     end
 end)
 
-GTTG(other_self, "消除热成像", {}, "让玩家无法用正常的热成像看到您", function(toggle)
+GTTG(other_self, "eliminate thermal imaging", {}, "make it impossible for players to see you with normal thermal imaging", function(toggle)
     if toggle then
         PED.SET_PED_HEATSCALE_OVERRIDE(players.user_ped(), 0)
     else
@@ -9979,7 +9979,7 @@ end)
     PED.SET_PED_HEATSCALE_OVERRIDE(players.user_ped(), (toggle and 0 or 1))
 end)]]
 
-GTLP(aimkarma, '发送脚本事件崩溃', {''}, '崩溃瞄准您的玩家', function()
+GTLP(aimkarma, 'the send script event crashes', {''}, 'crashes target your players', function()
     sendscriptcrash()
 end)
 
@@ -9987,39 +9987,39 @@ end)
     sendallplayercrash()
 end)]]
 
-GTLP(aimkarma, '射击', {''}, '射击瞄准您的玩家', function()
+GTLP(aimkarma, 'shoot', {''}, 'shoot the player aiming at you', function()
     bulletaimkarma()
 end)
 
-GTLP(aimkarma, '爆炸', {''}, '爆炸瞄准您的玩家', function()
+GTLP(aimkarma, 'explode', {''}, 'the explosion is aimed at your player', function()
     expaimkarma()
 end)
 
-GTLP(aimkarma, '禁用无敌', {''}, '如果有人瞄准您将强制他们的游戏画面来禁用他们的无敌模式(对大部分菜单无效)', function()
+GTLP(aimkarma, 'disable invincibility', {''}, 'if someone is targeting you will force their game screen to disable their invincibility mode(doesn t work for most menus)', function()
     godaimkarma()
 end)
 
-GTAC(aimkarma, 'Stand玩家瞄准惩罚', {}, '连接到Stand的玩家瞄准惩罚', function()
+GTAC(aimkarma, 'stand the player aiming for the penalty', {}, 'players connected to the stand aim for the penalty', function()
     menu.focus(menu.ref_by_path('World>Inhabitants>Player Aim Punishments>Anonymous Explosion', 37))
 end)
 
-GTTG(other_self, '无声脚步', {'JSquietSteps'}, '禁用您的脚步声', function(toggle)
+GTTG(other_self, 'silent footsteps', {'JSquietSteps'}, 'disable your footsteps', function(toggle)
     AUDIO._SET_PED_AUDIO_FOOTSTEP_LOUD(players.user_ped(), not toggle)
 end)
 
-GTTG(sessionfun, "雪人",{""}, "伪装成雪人",function(on)
+GTTG(sessionfun, "snowman",{""}, "disguised as a snowman",function(on)
     snowpeople(on)
 end)
 
-GTTG(sessionfun, "死坤",{""}, "伪装成死神",function(on)
+GTTG(sessionfun, "dead kun",{""}, "disguised as the grim reaper",function(on)
     ikunjix3(on)
 end)
 
-GTTG(sessionfun, "炸弹人",{""}, "伪装成炸弹",function(on)
+GTTG(sessionfun, "bomberman",{""}, "disguised as a bomb",function(on)
     huoqujia(on)
 end)
 
-GTTG(huorentexiao, "火人", {"fireman"}, "", function(on)
+GTTG(huorentexiao, "burning man", {"fireman"}, "", function(on)
     firepersonl(on)
 end)
 
@@ -10766,7 +10766,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(texiao, "荧光飞轮", {""}, "", function()
+GTLP(texiao, "fluorescent flywheel", {""}, "", function()
     local colour = {
         r = 1.0,
         g = 1.0,
@@ -11516,7 +11516,7 @@ GTTG(texiao, "Xfire", {""}, "", function(toggle)
     end
 end)
 
-GTTG(texiao, "硝烟", {""}, "", function(toggle)
+GTTG(texiao, "smoke", {""}, "", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -13421,7 +13421,7 @@ GTLP(wea_func, '3D方框瞄准', {'_3d_crosshair'}, '', function()
     GRAPHICS.DRAW_MARKER(3, rc.x, rc.y, rc.z, 0.0, 0.0, 0.0, 0.0, 90.0, 0.0, size.y, 1.0, size.x, 200, 255, 255, 100, false, true, 2, false, 'visualflow', 'crosshair')
 end)
 
-GTLP(wea_func, "自动开枪", {"triggerbotall"}, "", function()
+GTLP(wea_func, "automatic shooting", {"triggerbotall"}, "", function()
     local wpn = WEAPON.GET_SELECTED_PED_WEAPON(players.user_ped())
     local dmg = SYSTEM.ROUND(WEAPON.GET_WEAPON_DAMAGE(wpn, 0))
     local delay = WEAPON.GET_WEAPON_TIME_BETWEEN_SHOTS(wpn)
@@ -14633,7 +14633,7 @@ GTAC(pvphelp, "轨道打击标点", {"orbway", "orbwp"}, "请标记点位再进�
     end
 end)
 
-GTTG(pvphelp, "偷偷摸摸的爆炸", {}, "匿名击杀", function (on)
+GTTG(pvphelp, "sneaky explosions", {}, "匿名击杀", function (on)
     ORB_Sneaky = on
 end)
 
