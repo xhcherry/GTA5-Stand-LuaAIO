@@ -10061,13 +10061,13 @@ end)
 
 affects = {}
 
-newptfx = GT(texiao, "近期更新", {}, "部分特效需成为[战局脚本主机]\n成为后战局玩家即可看见您的特效\n\n<如何成为战局脚本主机?>\n本体菜单 >> 线上 >> 战局选项 >> 成为战局脚本主机")
+newptfx = GT(texiao, "recently updated", {}, "some of the effects need to be[battlegame script host]\n become a post battle player to see your special effects\n\n<how to become a wargame script host?>\n main menu >> online >> battle match options >> become a battlegame script host")
 
-GTLP(newptfx, '巴啦啦小魔仙', {}, "", function()
+GTLP(newptfx, 'balala little demon fairy', {}, "", function()
     effect_around()
 end)
 
-GTLP(newptfx, '闪电侠', {}, '', function (g)
+GTLP(newptfx, 'the flash', {}, '', function (g)
     local function colour(r, g, b, a)
       return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
     end
@@ -10082,7 +10082,7 @@ GTLP(newptfx, '闪电侠', {}, '', function (g)
     local border_colorss_a= colour(100, 50, 50, 255)
     local border_colorss_b= colour(150, 70, 150, 255)
     directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
-    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按SHIFT键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "press the shift key", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
         ENTITY.SET_ENTITY_MAX_SPEED(players.user_ped(players.user()), 100)
         local dir = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped(players.user()))
         dir = v3(dir.x * 100, dir.y * 100, dir.z * 100)
@@ -10108,7 +10108,7 @@ GTLP(newptfx, '闪电侠', {}, '', function (g)
      end
 end)
 
-GTLP(newptfx, '星光尾拖', {}, '', function (g)
+GTLP(newptfx, 'starlight trail', {}, '', function (g)
     local function colour(r, g, b, a)
       return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
     end
@@ -10123,7 +10123,7 @@ GTLP(newptfx, '星光尾拖', {}, '', function (g)
     local border_colorss_a= colour(100, 50, 50, 255)
     local border_colorss_b= colour(150, 70, 150, 255)
     directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
-    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按SHIFT键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "press the shift key", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
         ENTITY.SET_ENTITY_MAX_SPEED(players.user_ped(players.user()), 100)
         local dir = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped(players.user()))
         dir = v3(dir.x * 100, dir.y * 100, dir.z * 100)
@@ -10149,7 +10149,7 @@ GTLP(newptfx, '星光尾拖', {}, '', function (g)
      end
 end)
 
-GTLP(newptfx, '尾拖蓝', {}, '', function (g)
+GTLP(newptfx, 'tail blue', {}, '', function (g)
     local function colour(r, g, b, a)
       return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
     end
@@ -10164,7 +10164,7 @@ GTLP(newptfx, '尾拖蓝', {}, '', function (g)
     local border_colorss_a= colour(100, 50, 50, 255)
     local border_colorss_b= colour(150, 70, 150, 255)
     directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
-    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按SHIFT键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "Press The Shift Key", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
         ENTITY.SET_ENTITY_MAX_SPEED(players.user_ped(players.user()), 100)
         local dir = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped(players.user()))
         dir = v3(dir.x * 100, dir.y * 100, dir.z * 100)
@@ -10190,7 +10190,7 @@ GTLP(newptfx, '尾拖蓝', {}, '', function (g)
      end
 end)
 
-GTLP(newptfx, '尾拖绿', {}, '', function (g)
+GTLP(newptfx, 'tail trail green', {}, '', function (g)
     local function colour(r, g, b, a)
       return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
     end
@@ -10205,7 +10205,7 @@ GTLP(newptfx, '尾拖绿', {}, '', function (g)
     local border_colorss_a= colour(100, 50, 50, 255)
     local border_colorss_b= colour(150, 70, 150, 255)
     directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
-    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按SHIFT键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "press the shift key", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
         ENTITY.SET_ENTITY_MAX_SPEED(players.user_ped(players.user()), 100)
         local dir = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped(players.user()))
         dir = v3(dir.x * 100, dir.y * 100, dir.z * 100)
@@ -10231,7 +10231,7 @@ GTLP(newptfx, '尾拖绿', {}, '', function (g)
      end
 end)
 
-GTLP(newptfx, '尾拖黄', {}, '', function (g)
+GTLP(newptfx, 'tail trail yellow', {}, '', function (g)
     local function colour(r, g, b, a)
       return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
     end
@@ -10246,7 +10246,7 @@ GTLP(newptfx, '尾拖黄', {}, '', function (g)
     local border_colorss_a= colour(100, 50, 50, 255)
     local border_colorss_b= colour(150, 70, 150, 255)
     directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
-    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按SHIFT键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "press the shift key", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
         ENTITY.SET_ENTITY_MAX_SPEED(players.user_ped(players.user()), 100)
         local dir = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped(players.user()))
         dir = v3(dir.x * 100, dir.y * 100, dir.z * 100)
@@ -10272,7 +10272,7 @@ GTLP(newptfx, '尾拖黄', {}, '', function (g)
      end
 end)
 
-GTLP(newptfx, '尾拖白', {}, '', function (g)
+GTLP(newptfx, 'obi haku', {}, '', function (g)
     local function colour(r, g, b, a)
       return { r = r / 255, g = g / 255, b = b / 255, a = a / 255 }
     end
@@ -10287,7 +10287,7 @@ GTLP(newptfx, '尾拖白', {}, '', function (g)
     local border_colorss_a= colour(100, 50, 50, 255)
     local border_colorss_b= colour(150, 70, 150, 255)
     directx.draw_rect(rectss_x, rectss_y, rectss_x + rectss_width, rectss_y + rectss_height+0.0220,border_colorss_a, border_colorss_b)
-    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "按SHIFT键", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
+    directx.draw_text(windowss_xx+0.01, windowss_yy+0.013, "press the shift key", ALIGN_TOP_LEFT, 0.5,colour(50, 100, 250, 255))
         ENTITY.SET_ENTITY_MAX_SPEED(players.user_ped(players.user()), 100)
         local dir = ENTITY.GET_ENTITY_FORWARD_VECTOR(players.user_ped(players.user()))
         dir = v3(dir.x * 100, dir.y * 100, dir.z * 100)
@@ -10335,7 +10335,7 @@ request_ptfx_asset(man_ptfx_asset)
 l_bones = {0xffa, 0xfa11, 0x83c, 0x512d, 0x796e, 0xb3fe, 0x3fcf, 0x58b7, 0xbb0}
 load_ptfxs = {}
 was_burning_man_on = false
-newptfx:toggle('终极过载', {}, "", function(on)
+newptfx:toggle('ultimate overdrive', {}, "", function(on)
     utgz(on)
 end)
 
@@ -10345,7 +10345,7 @@ request_ptfx_asset(man_ptfx_asset)
 l_bones = {0xffa, 0xfa11, 0x83c, 0x512d, 0x796e, 0xb3fe, 0x3fcf, 0x58b7, 0xbb0}
 load_ptfxs = {}
 was_burning_man_on = false
-newptfx:toggle('过载能量', {}, "", function(on)
+newptfx:toggle('excess energy', {}, "", function(on)
     if not on then
         for _, p in pairs(load_ptfxs) do
             GRAPHICS.REMOVE_PARTICLE_FX(p, false)
@@ -10364,11 +10364,11 @@ newptfx:toggle('过载能量', {}, "", function(on)
     end
 end)
 
-GTTG(newptfx, "奥义秘术", {}, "", function(ayms)
+GTTG(newptfx, "esoteric techniques", {}, "", function(ayms)
     aoyimishu(ayms)
 end)
 
-GTLP(texiao, "斗气护甲", {""}, "", function()
+GTLP(texiao, "fighting armor", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -10412,8 +10412,8 @@ end, function()
     affects = {}
 end)
 
-starlight = GT(texiao, "星光闪耀", {})
-GTLP(starlight, "星光闪耀v1", {""}, "", function()
+starlight = GT(texiao, "the stars shine", {})
+GTLP(starlight, "starlight shine v1", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -10457,7 +10457,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(starlight, "星光闪耀v2", {""}, "", function()
+GTLP(starlight, "starlight v2", {""}, "", function()
     local colour = {
         r = 1.0,
         g = 1.0,
@@ -10501,7 +10501,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(starlight, "星光闪耀v3", {""}, "", function()
+GTLP(starlight, "starlight shine v3", {""}, "", function()
     local colour = {
         r = 1.0,
         g = 0.0,
@@ -10545,7 +10545,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(texiao, "列光波", {""}, "", function()
+GTLP(texiao, "column light waves", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -10589,7 +10589,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(texiao, "蒸汽朋克", {""}, "", function()
+GTLP(texiao, "steampunk", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -10633,7 +10633,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(texiao, "火冒三丈", {""}, "", function()
+GTLP(texiao, "fly into a rage", {""}, "", function()
     local colour = {
         r = 1.0,
         g = 0.0,
@@ -10677,8 +10677,8 @@ end, function()
     affects = {}
 end)
 
-feisheng = GT(texiao, "飞升", {})
-GTLP(feisheng, "飞升v1", {""}, "", function()
+feisheng = GT(texiao, "soaring", {})
+GTLP(feisheng, "ascension v1", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -10722,7 +10722,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(feisheng, "飞升v2", {""}, "", function()
+GTLP(feisheng, "ascension v2", {""}, "", function()
     local colour = {
         r = 1.0,
         g = 1.0,
@@ -10981,8 +10981,8 @@ fireWingsSettingse = {
     }
 }
 fireWingsSettingse.colour = colour
-huoshen = GT(texiao, "火神", {})
-GTTG(huoshen, "火神", {""}, "", function(toggle)
+huoshen = GT(texiao, "vulcan", {})
+GTTG(huoshen, "vulcan", {""}, "", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11030,7 +11030,7 @@ GTTG(huoshen, "火神", {""}, "", function(toggle)
     end
 end)
 
-GTTG(huoshen, "火神II", {""}, "", function(toggle)
+GTTG(huoshen, "vulcan ii", {""}, "", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11078,7 +11078,7 @@ GTTG(huoshen, "火神II", {""}, "", function(toggle)
     end
 end)
 
-GTTG(huoshen, "火神III", {""}, "", function(toggle)
+GTTG(huoshen, "vulcan iii", {""}, "", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11127,7 +11127,7 @@ GTTG(huoshen, "火神III", {""}, "", function(toggle)
     end
 end)
 
-GTTG(huoshen, "火神IIII", {""}, "", function(toggle)
+GTTG(huoshen, "vulcan iiii", {""}, "", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11176,7 +11176,7 @@ GTTG(huoshen, "火神IIII", {""}, "", function(toggle)
     end
 end)
 
-GTTG(texiao, "星火燎原", {""}, "", function(toggle)
+GTTG(texiao, "Sparks Burn The Prairie Fire", {""}, "", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11224,7 +11224,7 @@ GTTG(texiao, "星火燎原", {""}, "", function(toggle)
     end
 end)
 
-GTTG(texiao, "雷惊电绕", {""}, "", function(toggle)
+GTTG(texiao, "Thunder And Lightning Surrounded", {""}, "", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11272,7 +11272,7 @@ GTTG(texiao, "雷惊电绕", {""}, "", function(toggle)
     end
 end)
 
-GTTG(texiao, "斗气化翼", {""}, "行走触发", function(toggle)
+GTTG(texiao, "fighting wings", {""}, "walking trigger", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11320,7 +11320,7 @@ GTTG(texiao, "斗气化翼", {""}, "行走触发", function(toggle)
     end
 end)
 
-GTTG(texiao, "尿频", {""}, "", function(toggle)
+GTTG(texiao, "frequent urination", {""}, "", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11368,8 +11368,8 @@ GTTG(texiao, "尿频", {""}, "", function(toggle)
     end
 end)
 
-huohai = GT(texiao, "火海", {}, "")
-GTTG(huohai, "火海", {""}, "", function(toggle)
+huohai = GT(texiao, "fire", {}, "")
+GTTG(huohai, "fire", {""}, "", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11418,7 +11418,7 @@ GTTG(huohai, "火海", {""}, "", function(toggle)
     end
 end)
 
-GTTG(huohai, "火海II", {""}, "", function(toggle)
+GTTG(huohai, "sea of fire ii", {""}, "", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11564,7 +11564,7 @@ GTTG(texiao, "smoke", {""}, "", function(toggle)
     end
 end)
 
-GTTG(texiao, "满面金光", {""}, "", function(toggle)
+GTTG(texiao, "faces full of golden light", {""}, "", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11612,7 +11612,7 @@ GTTG(texiao, "满面金光", {""}, "", function(toggle)
     end
 end)
 
-GTTG(newptfx, '雷电法王', {''}, '', function(k)
+GTTG(newptfx, 'king of thunder and lightning', {''}, '', function(k)
     leidian = k
     while leidian do
         pedmyfirst = players.user_ped(players.user())
@@ -11631,7 +11631,7 @@ GTTG(newptfx, '雷电法王', {''}, '', function(k)
     GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(pedmyfirst)
 end)
 
-GTTG(newptfx, '尘土飞扬', {''}, '', function(k)
+GTTG(newptfx, 'dusty', {''}, '', function(k)
     leidian = k
     while leidian do
         pedmyfirst = players.user_ped(players.user())
@@ -11649,7 +11649,7 @@ GTTG(newptfx, '尘土飞扬', {''}, '', function(k)
     GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(pedmyfirst)
 end)
 
-GTTG(newptfx, 'JB喷火', {''}, '', function(k)
+GTTG(newptfx, 'jb spitfire', {''}, '', function(k)
     leidian = k
     while leidian do
         pedmyfirst = players.user_ped(players.user())
@@ -11667,7 +11667,7 @@ GTTG(newptfx, 'JB喷火', {''}, '', function(k)
     GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(pedmyfirst)
 end)
 
-GTTG(newptfx, "风起云涌", {""}, "非常壮观喔~", function(toggle)
+GTTG(newptfx, "surge forward", {""}, "it's spectacular~", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11715,7 +11715,7 @@ GTTG(newptfx, "风起云涌", {""}, "非常壮观喔~", function(toggle)
     end
 end)
 
-GTTG(texiao, "闪亮登场", {""}, "", function(toggle)
+GTTG(texiao, "debuting", {""}, "", function(toggle)
     fireWingsSettingse.on = toggle
     if fireWingsSettingse.on then
         ENTITY.SET_ENTITY_PROOFS(players.user_ped(), false, true, false, false, false, false, 1, false)
@@ -11765,8 +11765,8 @@ GTTG(texiao, "闪亮登场", {""}, "", function(toggle)
 end)
 
 
-guangxian = GT(texiao,"光线",{},"")
-GTLP(guangxian, "光线", {""}, "", function()
+guangxian = GT(texiao,"ray",{},"")
+GTLP(guangxian, "ray", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("cut_family1")
     GRAPHICS.USE_PARTICLE_FX_ASSET("cut_family1")
@@ -11774,7 +11774,7 @@ GTLP(guangxian, "光线", {""}, "", function()
 "cs_mich1_lighter_sparks", player_pos.x, player_pos.y, player_pos.z -1.5, 0, 0, 0, 20, false, false, false)
 end)
 
-GTLP(guangxian, "光线V2", {""}, "", function()
+GTLP(guangxian, "ray v2", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("cut_trevor1")
     GRAPHICS.USE_PARTICLE_FX_ASSET("cut_trevor1")
@@ -11782,7 +11782,7 @@ GTLP(guangxian, "光线V2", {""}, "", function()
 "cs_trev1_lighter_sparks", player_pos.x, player_pos.y, player_pos.z -1.5, 0, 0, 0, 15, false, false, false)
 end)
 
-GTLP(texiao, "光布", {""}, "", function()
+GTLP(texiao, "light cloth", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("cut_family5")
     GRAPHICS.USE_PARTICLE_FX_ASSET("cut_family5")
@@ -11790,7 +11790,7 @@ GTLP(texiao, "光布", {""}, "", function()
 "cs_alien_light_bed", player_pos.x, player_pos.y, player_pos.z +1.5, 5, 10, 200, 1, false, false, false)
 end)
 
-GTLP(texiao, "冷风嗖嗖", {""}, "", function()
+GTLP(texiao, "the cold wind swished", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("des_prologue_door")
     GRAPHICS.USE_PARTICLE_FX_ASSET("des_prologue_door")
@@ -11798,7 +11798,7 @@ GTLP(texiao, "冷风嗖嗖", {""}, "", function()
 "ent_ray_pro_door_light_glass", player_pos.x, player_pos.y, player_pos.z +0, 0, 0, 0, 10, false, false, false)
 end)
 
-GTLP(texiao, "容光焕发", {""}, "", function()
+GTLP(texiao, "look like a million dollars", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("des_farmhouse")
     GRAPHICS.USE_PARTICLE_FX_ASSET("des_farmhouse")
@@ -11806,7 +11806,7 @@ GTLP(texiao, "容光焕发", {""}, "", function()
 "ent_ray_ch2_farm_fire_light", player_pos.x, player_pos.y, player_pos.z +0, 0, 0, 0, 5, false, false, false)
 end)
 
-GTLP(texiao, "疾屁而行", {""}, "", function()
+GTLP(texiao, "walk with a fart", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("cut_family1")
     GRAPHICS.USE_PARTICLE_FX_ASSET("cut_family1")
@@ -11814,7 +11814,7 @@ GTLP(texiao, "疾屁而行", {""}, "", function()
 "cs_cig_exhale_mouth", player_pos.x, player_pos.y, player_pos.z +0, 0, 0, 0, 10, false, false, false)
 end)
 
-GTLP(texiao, "气势磅礴", {""}, "", function()
+GTLP(texiao, "magnificent", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("core")
     GRAPHICS.USE_PARTICLE_FX_ASSET("core")
@@ -11822,7 +11822,7 @@ GTLP(texiao, "气势磅礴", {""}, "", function()
 "veh_light_red", player_pos.x, player_pos.y, player_pos.z -1, 0, 0, 0, 7, false, false, false)
 end)
 
-GTLP(texiao, "污水喷涌", {""}, "", function()
+GTLP(texiao, "sewage gushing", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("core")
     GRAPHICS.USE_PARTICLE_FX_ASSET("core")
@@ -11830,8 +11830,8 @@ GTLP(texiao, "污水喷涌", {""}, "", function()
 "liquid_splash_gloopy", player_pos.x, player_pos.y, player_pos.z +0, 0, 0, 0, 10, false, false, false)
 end)
 
-ysrg = GT(texiao,"一闪而过",{},"")
-GTAC(ysrg, "一闪而过V1",{""}, "",function(state)
+ysrg = GT(texiao,"in a flash",{},"")
+GTAC(ysrg, "a flash of v1",{""}, "",function(state)
 if state then
 for _, boneId in ipairs(bones) do
 request_ptfx_asset("scr_rcbarry1")
@@ -11843,7 +11843,7 @@ GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(players.user_ped())
 end
 end)
 
-GTAC(ysrg, "一闪而过V2",{""}, "",function(state)
+GTAC(ysrg, "a flash of v2",{""}, "",function(state)
 if state then
 for _, boneId in ipairs(bones) do
 request_ptfx_asset("scr_rcbarry1")
@@ -11855,7 +11855,7 @@ GRAPHICS.REMOVE_PARTICLE_FX_FROM_ENTITY(players.user_ped())
 end
 end)
 
-GTAC(ysrg, "一闪而过V3", {""}, "", function ()
+GTAC(ysrg, "a flash of v3", {""}, "", function ()
     local ptfx_asset = "scr_indep_fireworks"
     local effect_name = "scr_indep_firework_trailburst_spawn"
     diaoshepao(ptfx_asset)
@@ -11867,7 +11867,7 @@ GTAC(ysrg, "一闪而过V3", {""}, "", function ()
     end
 end)
 
-GTAC(ysrg, "一闪而过V4",{""}, "",function(state)
+GTAC(ysrg, "a flash of v4",{""}, "",function(state)
 if state then
    for _, boneId in ipairs(bones) do
    request_ptfx_asset("core")
@@ -11879,7 +11879,7 @@ if state then
    end
 end)
 
-GTAC(texiao, "小丑特效",{""}, "",function(state)
+GTAC(texiao, "joker effects",{""}, "",function(state)
     if state then
     for _, boneId in ipairs(bones) do
     request_ptfx_asset("scr_rcbarry2")
@@ -11891,7 +11891,7 @@ GTAC(texiao, "小丑特效",{""}, "",function(state)
     end
 end)
            
-GTAC(texiao, "黑暗力量",{""}, "",function(state)
+GTAC(texiao, "dark forces",{""}, "",function(state)
     if state then
     for _, boneId in ipairs(bones) do
     request_ptfx_asset("scr_sum2_hal")
@@ -11903,8 +11903,8 @@ GTAC(texiao, "黑暗力量",{""}, "",function(state)
     end
 end)
 
-bianshen = GT(texiao,"变身",{},"美少女战士(超级炫酷)")
-GTLP(bianshen, "变身V1", {""}, "蓝", function()
+bianshen = GT(texiao,"transfiguration",{},"sailor moon(super cool)")
+GTLP(bianshen, "transform into v1", {""}, "blue", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("scr_sum2_hal")
     GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
@@ -11912,7 +11912,7 @@ GTLP(bianshen, "变身V1", {""}, "蓝", function()
 "scr_sum2_hal_rider_weak_blue", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
 end)
 
-GTLP(bianshen, "变身V2", {""}, "绿", function()
+GTLP(bianshen, "transform into v2", {""}, "green", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("scr_sum2_hal")
     GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
@@ -11920,7 +11920,7 @@ GTLP(bianshen, "变身V2", {""}, "绿", function()
 "scr_sum2_hal_rider_weak_green", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
 end)
 
-GTLP(bianshen, "变身V3", {""}, "黄", function()
+GTLP(bianshen, "transform into v3", {""}, "yellow", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("scr_sum2_hal")
     GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
@@ -11928,7 +11928,7 @@ GTLP(bianshen, "变身V3", {""}, "黄", function()
 "scr_sum2_hal_rider_weak_orange", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
 end)
 
-GTLP(bianshen, "变身V4", {""}, "白", function()
+GTLP(bianshen, "transform into v4", {""}, "white", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("scr_sum2_hal")
     GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
@@ -11936,7 +11936,7 @@ GTLP(bianshen, "变身V4", {""}, "白", function()
 "scr_sum2_hal_rider_weak_greyblack", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
 end)
 
-GTLP(bianshen, "变身V5", {""}, "七彩", function()
+GTLP(bianshen, "transform into a v5", {""}, "colorful", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("scr_sum2_hal")
     GRAPHICS.USE_PARTICLE_FX_ASSET("scr_sum2_hal")
@@ -11944,7 +11944,7 @@ GTLP(bianshen, "变身V5", {""}, "七彩", function()
     suijijianqi(jianqi), player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)         
 end)
 
-GTLP(texiao, "大便失禁", {""}, "", function()
+GTLP(texiao, "fecal incontinence", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("core")
     GRAPHICS.USE_PARTICLE_FX_ASSET("core")
@@ -11952,7 +11952,7 @@ GTLP(texiao, "大便失禁", {""}, "", function()
 "ent_anim_snot_blow", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
 end)
 
-GTLP(texiao, "狂放臭屁", {""}, "", function()
+GTLP(texiao, "wild stinky fart", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("core")
     GRAPHICS.USE_PARTICLE_FX_ASSET("core")
@@ -11960,7 +11960,7 @@ GTLP(texiao, "狂放臭屁", {""}, "", function()
 "ent_anim_cig_exhale_mth_car", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
 end)
 
-GTLP(texiao, "电焊四溅", {""}, "", function()
+GTLP(texiao, "welding splashes", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("core")
     GRAPHICS.USE_PARTICLE_FX_ASSET("core")
@@ -11968,20 +11968,20 @@ GTLP(texiao, "电焊四溅", {""}, "", function()
 "ent_brk_sparking_wires", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
 end)
 
-faguang = GT(texiao,"闪闪发光",{},"各种炫酷的发光特效")
-GTLP(faguang, "发光", {"bodylight"}, "", function()
+faguang = GT(texiao,"sparkling",{},"all kinds of cool glowing effects")
+GTLP(faguang, "luminous", {"bodylight"}, "", function()
     personllight()
 end) 
 
-GTLP(faguang, "发光V2", {""}, "", function()
+GTLP(faguang, "glowing v2", {""}, "", function()
     personllightb()
 end)
 
-GTLP(faguang, "发光V3", {""}, "", function()
+GTLP(faguang, "glowing v3", {""}, "", function()
     personllightc()
 end)
 
-GTLP(faguang, "发光V4", {""}, "", function()
+GTLP(faguang, "glowing v4", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("core")
     GRAPHICS.USE_PARTICLE_FX_ASSET("core")
@@ -11989,11 +11989,11 @@ GTLP(faguang, "发光V4", {""}, "", function()
 "exp_air_molotov_lod", player_pos.x, player_pos.y, player_pos.z, 0, 0, 0, 2.5, false, false, false)
 end)
 
-GTLP(texiao, "脑袋冒烟", {""}, "", function()
+GTLP(texiao, "smoke in the head", {""}, "", function()
     personllighta()
 end)
 
-GTTG(texiao, "气场拉满",{""}, "",function(state)
+GTTG(texiao, "the aura is full",{""}, "",function(state)
     if state then
         for _, boneId in ipairs(bones) do
         request_ptfx_asset("scr_reconstructionaccident")
@@ -12005,7 +12005,7 @@ GTTG(texiao, "气场拉满",{""}, "",function(state)
     end
 end)
 
-GTTG(texiao, "血光之灾",{""}, "",function(state)
+GTTG(texiao, "bloodlight calamity",{""}, "",function(state)
     if state then
         for _, boneId in ipairs(bones) do
         request_ptfx_asset("scr_solomon3")
@@ -12017,8 +12017,8 @@ GTTG(texiao, "血光之灾",{""}, "",function(state)
     end
 end)
 
-shuihua = GT(texiao,"水花特效",{},"")
-GTTG(shuihua, "水花",{""}, "",function(state)
+shuihua = GT(texiao,"splash effects",{},"")
+GTTG(shuihua, "spray",{""}, "",function(state)
     if state then
         for _, boneId in ipairs(bones) do
         request_ptfx_asset("core")
@@ -12030,7 +12030,7 @@ GTTG(shuihua, "水花",{""}, "",function(state)
     end
 end)
 
-GTTG(shuihua, "水花2",{""}, "",function(state)
+GTTG(shuihua, "splash 2",{""}, "",function(state)
     if state then
         for _, boneId in ipairs(bones) do
         request_ptfx_asset("core")
@@ -12042,7 +12042,7 @@ GTTG(shuihua, "水花2",{""}, "",function(state)
     end
 end)
 
-GTTG(texiao, "排毒清心",{""}, "",function(state)
+GTTG(texiao, "detoxify and cleanse the mind",{""}, "",function(state)
     if state then
         for _, boneId in ipairs(bones) do
         request_ptfx_asset("core")
@@ -12054,7 +12054,7 @@ GTTG(texiao, "排毒清心",{""}, "",function(state)
     end
 end)
 
-GTTG(texiao, "龙卷风",{""}, "",function(state)
+GTTG(texiao, "tornado",{""}, "",function(state)
     if state then
         for _, boneId in ipairs(bones) do
         request_ptfx_asset("core")
@@ -12066,7 +12066,7 @@ GTTG(texiao, "龙卷风",{""}, "",function(state)
     end
 end)
 
-GTTG(texiao, "飘飘落叶",{""}, "",function(state)
+GTTG(texiao, "falling leaves",{""}, "",function(state)
     if state then
         for _, boneId in ipairs(bones) do
         request_ptfx_asset("core")
@@ -12078,7 +12078,7 @@ GTTG(texiao, "飘飘落叶",{""}, "",function(state)
     end
 end)
 
-GTTG(texiao, "夜光灯",{""}, "",function(state)
+GTTG(texiao, "luminous light",{""}, "",function(state)
     if state then
         for _, boneId in ipairs(bones) do
         request_ptfx_asset("core")
@@ -12091,7 +12091,7 @@ GTTG(texiao, "夜光灯",{""}, "",function(state)
 end)
 
 
-GTTG(texiao, "魂环缠绕", {""}, "", function(on)
+GTTG(texiao, "soul ring entanglement", {""}, "", function(on)
     local six = "prop_mp_halo_lrg"
     local sixs = "prop_mp_halo_med"
     local sixss = "prop_mp_halo_point"
@@ -12121,7 +12121,7 @@ GTTG(texiao, "魂环缠绕", {""}, "", function(on)
     end
 end)
 
-GTTG(texiao, "怒发冲冠", {"cjfireman"}, "", function(state)
+GTTG(texiao, "Boil Over", {"cjfireman"}, "", function(state)
     if state then
         for _, boneId in ipairs(bones) do
             request_ptfx_asset("core")
@@ -12135,7 +12135,7 @@ GTTG(texiao, "怒发冲冠", {"cjfireman"}, "", function(state)
     end
 end)
 
-GTLP(texiao, "元气弹", {""}, "", function()
+GTLP(texiao, "vitality bomb", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("core")
     GRAPHICS.USE_PARTICLE_FX_ASSET("core")
@@ -12143,7 +12143,7 @@ GTLP(texiao, "元气弹", {""}, "", function()
         player_pos.z + 2.5, 0, 0, 0, 20, false, false, false)
 end)
 
-GTTG(texiao, "雷神之锤", {""}, "", function(on)
+GTTG(texiao, "mjolnir", {""}, "", function(on)
     local pos = ENTITY.GET_ENTITY_COORDS(PLAYER.PLAYER_PED_ID())
     local taidao = OBJECT.CREATE_OBJECT(util.joaat("xm3_prop_xm3_hammer_01"), pos.x, pos.y, pos.z, true, true, false)
     if on then
@@ -12164,8 +12164,8 @@ GTTG(texiao, "雷神之锤", {""}, "", function(on)
     end
 end)
 
-leishen = GT(texiao, "雷神", {}, "")
-GTTG(leishen, "雷神", {""}, "", function(state)
+leishen = GT(texiao, "thor", {}, "")
+GTTG(leishen, "thor", {""}, "", function(state)
     if state then
         for _, boneId in ipairs(bones) do
             request_ptfx_asset("core")
@@ -12179,7 +12179,7 @@ GTTG(leishen, "雷神", {""}, "", function(state)
     end
 end)
 
-GTLP(leishen, "雷神v2", {""}, "", function()
+GTLP(leishen, "thunder god v2", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("core")
     GRAPHICS.USE_PARTICLE_FX_ASSET("core")
@@ -12187,7 +12187,7 @@ GTLP(leishen, "雷神v2", {""}, "", function()
         player_pos.z, 0, 0, 0, 2.5, false, false, false)
 end)
 
-GTLP(newptfx, "枯枝败叶", {""}, "", function()
+GTLP(newptfx, "dead branches and leaves", {""}, "", function()
     local player_pos = players.get_position(players.user())
     request_ptfx_asset("core")
     GRAPHICS.USE_PARTICLE_FX_ASSET("core")
@@ -12195,7 +12195,7 @@ GTLP(newptfx, "枯枝败叶", {""}, "", function()
         player_pos.z, 0, 0, 0, 2.5, false, false, false)
 end)
 
-GTLP(newptfx, "尼斯湖水怪", {""}, "", function()
+GTLP(newptfx, "loch ness monster", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -12239,7 +12239,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(newptfx, "雷霆火花", {""}, "", function()
+GTLP(newptfx, "thunder sparks", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -12283,7 +12283,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(newptfx, "雷霆万钧", {""}, "", function()
+GTLP(newptfx, "thunderball", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -12327,7 +12327,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(newptfx, "火花四溅", {""}, "", function()
+GTLP(newptfx, "sparks fly", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -12371,7 +12371,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(newptfx, "超级赛亚人", {""}, "", function()
+GTLP(newptfx, "super saiyan", {""}, "", function()
     local player_pos = players.get_position(players.user())
     -- request_ptfx_asset("core")
     GRAPHICS.USE_PARTICLE_FX_ASSET("core")
@@ -12379,7 +12379,7 @@ GTLP(newptfx, "超级赛亚人", {""}, "", function()
         player_pos.z, 0, 0, 0, 2.5, false, false, false)
 end)
 
-GTLP(newptfx, "神奇糖果", {""}, "", function()
+GTLP(newptfx, "magic candy", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -12423,7 +12423,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(newptfx, "煽风点火", {""}, "", function()
+GTLP(newptfx, "stir up trouble", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -12467,7 +12467,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(newptfx, "轰轰烈烈", {""}, "", function()
+GTLP(newptfx, "vigorous", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -12511,7 +12511,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(newptfx, "金光闪耀", {""}, "", function()
+GTLP(newptfx, "brilliant gold", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -12555,23 +12555,23 @@ end, function()
     affects = {}
 end)
 
-GTLP(sessionfun, "设置力场", {"forcefield"}, "", function()
+GTLP(sessionfun, "set up the force field", {"forcefield"}, "", function()
     forcefielddd()
 end, function()
     set_explosion_proof(players.user_ped(), false)
 end)
 
-GTLuaScript.textslider(sessionfun, "力场", {}, "", options_force, function(index)
+GTLuaScript.textslider(sessionfun, "field", {}, "", options_force, function(index)
     forcefield_set(index)
 end)
 
-GTLP(sessionfun, "原力", {"jedimode"}, "开启后在载具附近长按滑鼠左键", function()
+GTLP(sessionfun, "the force", {"jedimode"}, "once activated press and hold the left mouse button near the vehicle", function()
     jedmode()
 end, function()
     state = 0
 end)
 
-GTLP(sessionfun, "修仙", {"carpetride"}, "", function()
+GTLP(sessionfun, "cultivating immortals", {"carpetride"}, "", function()
     carpetridexx()
 end, function()
     TASK.CLEAR_PED_TASKS_IMMEDIATELY(players.user_ped())
@@ -12583,14 +12583,14 @@ end)
 
 local ls_driveonair
 walkonwater = false
-GTTG(sessionfun, "水上行走", {"walkonwater"}, "开启后即可在水域上漫步", function(on)
+GTTG(sessionfun, "walking on water", {"walkonwater"}, "once opened you can walk on the water", function(on)
     walkonwater = on
     if on then
         GTLuaScript.set_value(ls_driveonair, false)
     end
 end)
 
-GTLP(quantoutexiao, "火焰拳", {""}, "", function()
+GTLP(quantoutexiao, "flaming fist", {""}, "", function()
     local colour = {
         r = 1.0,
         g = 0.0,
@@ -12635,7 +12635,7 @@ end, function()
 end)
 
 
-GTLP(quantoutexiao, "冰封拳", {""}, "", function()
+GTLP(quantoutexiao, "frozen fist", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -12679,7 +12679,7 @@ end, function()
     affects = {}
 end)
 
-GTLP(quantoutexiao, "迷踪拳", {""}, "", function()
+GTLP(quantoutexiao, "lost fist", {""}, "", function()
     local colour = {
         r = 1.0,
         g = 1.0,
@@ -12723,7 +12723,7 @@ end, function()
     affects = {}
 end)
 
-GTTG(quantoutexiao, "火拳艾斯", {""}, "", function(state)
+GTTG(quantoutexiao, "fire fist ace", {""}, "", function(state)
     if state then
         for _, boneId in ipairs(bones) do
             request_ptfx_asset("core")
@@ -12737,7 +12737,7 @@ GTTG(quantoutexiao, "火拳艾斯", {""}, "", function(state)
     end
 end)
 
-GTTG(quantoutexiao, "雷电拳", {""}, "", function(state)
+GTTG(quantoutexiao, "thunderbolt punch", {""}, "", function(state)
     if state then
         for _, boneId in ipairs(bones) do
             request_ptfx_asset("scr_reconstructionaccident")
@@ -12751,7 +12751,7 @@ GTTG(quantoutexiao, "雷电拳", {""}, "", function(state)
 end)
 
 
-GTLP(quantoutexiao, "雷电拳v2", {""}, "", function()
+GTLP(quantoutexiao, "thunderbolt fist v2", {""}, "", function()
     local colour = {
         r = 0.0,
         g = 1.0,
@@ -12795,7 +12795,7 @@ end, function()
     affects = {}
 end)
 
-GTTG(quantoutexiao, "血拳V1", {""}, "", function(state)
+GTTG(quantoutexiao, "blood fist v1", {""}, "", function(state)
     if state then
         for _, boneId in ipairs(bones) do
             request_ptfx_asset("core")
@@ -12808,7 +12808,7 @@ GTTG(quantoutexiao, "血拳V1", {""}, "", function(state)
     end
 end)
 
-GTTG(quantoutexiao, "血拳V2", {""}, "", function(state)
+GTTG(quantoutexiao, "blood fist v2", {""}, "", function(state)
     if state then
         for _, boneId in ipairs(bones) do
             request_ptfx_asset("core")
@@ -12822,7 +12822,7 @@ GTTG(quantoutexiao, "血拳V2", {""}, "", function(state)
 end)
 
 
-GTTG(sessionfun, "灵魂出窍", {""}, "", function(toggle)
+GTTG(sessionfun, "out of body", {""}, "", function(toggle)
     ghost = toggle 
     if ghost then
         all_peds = entities.get_all_peds_as_handles()
@@ -12850,15 +12850,15 @@ GTTG(sessionfun, "灵魂出窍", {""}, "", function(toggle)
     end
 end)
 
-GTLP(sessionfun, "一拳超人", {""}, "", function()
+GTLP(sessionfun, "one punch man", {""}, "", function()
     supermanpersonl()
 end)
 
-GTTG(other_self, "假装平民", {}, "让您无法拾取武器", function(toggle)
+GTTG(other_self, "pretend to be a civilian", {}, "makes it impossible for you to pick up weapons", function(toggle)
     PED.SET_ENABLE_HANDCUFFS(players.user_ped(), toggle)
 end)
 
-GTLP(sessionfun, "转圈圈", {""}, "不要动滑鼠,否则失效", function()
+GTLP(sessionfun, "circle in circles", {""}, "don t move the mouse,otherwise it will be invalid", function()
     bigpussy()
 end, function()
     TASK.CLEAR_PED_TASKS_IMMEDIATELY(PLAYER.PLAYER_PED_ID())
@@ -12868,7 +12868,7 @@ end, function()
     state = 0
 end)
 
-GTTG(other_self, "空中游泳", {}, "", function(on)
+GTTG(other_self, "swim in the air", {}, "", function(on)
     if on then
         menu.trigger_commands("swiminair on")
     else
@@ -12876,45 +12876,45 @@ GTTG(other_self, "空中游泳", {}, "", function(on)
     end
 end)
 
-GTLP(other_self, "警察无视", {}, "警察不会对您产生敌意", function(toggle)
+GTLP(other_self, "the police ignored it", {}, "the police will not be hostile to you", function(toggle)
     PLAYER.SET_POLICE_IGNORE_PLAYER(PLAYER.PLAYER_ID(), toggle)
 end)
 
-GTLP(other_self, "所有人无视", {}, "所有NPC不会对您产生敌意", function(toggle)
+GTLP(other_self, "ignored by all", {}, "all npc will not be hostile to you", function(toggle)
     PLAYER.SET_EVERYONE_IGNORE_PLAYER(PLAYER.PLAYER_ID(), toggle)
 end)
 
-GTLP(other_self, "行动无声", {}, "", function()
+GTLP(other_self, "the action is silent", {}, "", function()
     PLAYER.SET_PLAYER_NOISE_MULTIPLIER(PLAYER.PLAYER_ID(), 0.0)
 end)
 
-GTLP(sessionfun, "显示轴向", {}, "", function(toggle)
+GTLP(sessionfun, "displays the axis", {}, "", function(toggle)
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     GRAPHICS.DRAW_LINE(c.x, c.y, c.z, c.x + 2, c.y, c.z, 255, 0, 0, 255) -- x
     GRAPHICS.DRAW_LINE(c.x, c.y, c.z, c.x, c.y + 2, c.z, 0, 255, 0, 255) -- y
     GRAPHICS.DRAW_LINE(c.x, c.y, c.z, c.x, c.y, c.z + 2, 0, 0, 255, 255) -- z
 end)
 
-GTLP(sessionfun, "线", {}, "连接玩家的线", function(toggle)
+GTLP(sessionfun, "line", {}, "the line that connects the player", function(toggle)
     c = ENTITY.GET_ENTITY_COORDS(players.user_ped())
     p = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
     j = ENTITY.GET_ENTITY_COORDS(p)
     GRAPHICS.DRAW_LINE(c.x, c.y, c.z, j.x, j.y, j.z, 255, 255, 255, 255)
 end)
 
-GTAC(sessionfun, "拉粑粑", {}, "拉臭臭", function()
+GTAC(sessionfun, "pull poop", {}, "pull stinky smelly", function()
     personlshit()
 end)
 
-GTAC(sessionfun, "打飞机", {}, "我还需要解释这个吗", function()
+GTAC(sessionfun, "jerk off", {}, "do i still need to explain this", function()
     personlhitplane()
 end)
 
-nuke = GT(weapon_options, '核弹枪', {}, '超级壮观喔~')
+nuke = GT(weapon_options, 'nuclear shotguns', {}, 'it s spectacular~')
 
 require "lib.GTSCRIPTS.GTW.nuke"
-GTLP(nuke, "核弹枪", {},
-    "如果想要开飞机扔核弹，你只需要打开此选项并且使用手枪向地面射击", function()
+GTLP(nuke, "nuclear shotguns", {},
+    "if you want to fly a plane and drop a nuke all you have to do is turn on this option and shoot at the ground with a pistol", function()
         if PED.IS_PED_SHOOTING(players.user_ped()) then
             local hash = util.joaat("prop_military_pickup_01")
             ent_func.request_model(hash)
@@ -12941,7 +12941,7 @@ GTLP(nuke, "核弹枪", {},
         end
     end)
 
-GTLP(nuke, ("轨道枪"), {}, "", function()
+GTLP(nuke, ("railgun"), {}, "", function()
     local last_hit_coords = v3.new()
     if WEAPON.GET_PED_LAST_WEAPON_IMPACT_COORD(players.user_ped(), last_hit_coords) then
         ent_func.use_fx_asset("scr_xm_orbital")
@@ -12956,44 +12956,44 @@ GTLP(nuke, ("轨道枪"), {}, "", function()
 end)
 
 
-local vehicleGun <const> = GT(weapon_options,"车辆枪", {}, "")
-finger_thing = GT(weapon_options, "手指枪", {}, "")
+local vehicleGun <const> = GT(weapon_options,"vehicle guns", {}, "")
+finger_thing = GT(weapon_options, "finger guns", {}, "")
 fingergun()
-entityManipulation = GT(weapon_options, "实体操纵枪", {"emanipulation"}, "对玩家无效")
-Gun_Effect_Shooting_Hit = GT(weapon_options, "子弹特效", {}, "")
-damage_numbers_list = GT(weapon_options, "伤害数字")
-minecraftgun = GT(weapon_options, '我的世界枪', {}, '')
-custom_weapon_save = GT(weapon_options, '武器保存', {}, '')
-weaponsetting = GT(weapon_options, '武器设置', {}, '')
-proxysticks = GT(weapon_options, '粘弹自动爆炸', {}, '')
+entityManipulation = GT(weapon_options, "entity operated guns", {"emanipulation"}, "does not work against players")
+Gun_Effect_Shooting_Hit = GT(weapon_options, "bullet effects", {}, "")
+damage_numbers_list = GT(weapon_options, "damage figures")
+minecraftgun = GT(weapon_options, 'minecraft gun', {}, '')
+custom_weapon_save = GT(weapon_options, 'weapons preservation', {}, '')
+weaponsetting = GT(weapon_options, 'weapon settings', {}, '')
+proxysticks = GT(weapon_options, 'sticky bombs explode automatically', {}, '')
     
-save_loadout = custom_weapon_save:action("保存武器", {}, "保存所有当前装备的武器及其附件，以便将来装载", function()
+save_loadout = custom_weapon_save:action("preservation weapons", {}, "save all currently equipped weapons and their attachments for future loading", function()
     Save_Weapon_Profile()
 end)
 
-load_loadout = custom_weapon_save:action("加载上次保存武器", {"loadloadout"}, "装备上次保存的每一件武器", function()
+load_loadout = custom_weapon_save:action("load the last saved weapon", {"loadloadout"}, "equip every weapon you saved last time", function()
     Load_Out_Weapon()
 end)
 
-auto_load = custom_weapon_save:toggle("自动加载", {}, "加入新战局时，自动装备上次保存的每件武器", function(on)
+auto_load = custom_weapon_save:toggle("autoloading", {}, "when you join a new battle automatically equip every weapon you saved last time", function(on)
     Auto_Load_Out_Weapon(on)
 end)
 
-from_scratch = custom_weapon_save:action("从头开始", {}, "删除你当前的武器，这样你就可以按照你想要的方式构建你的装备",function()
+from_scratch = custom_weapon_save:action("from the ground up", {}, "remove your current weapon so you can build your loadout the way you want",function()
     Dele_All_Weapon()
 end)
 
-custom_weapon_save:divider("编辑武器")
+custom_weapon_save:divider("edit weapons")
 
 Weapon_Check_Save()
 
-GTLP(weaponsetting, '无后坐力', {'JSnoRecoil'}, '使用武器射击时不会抖动游戏画面.', function()
+GTLP(weaponsetting, 'no recoil', {'JSnoRecoil'}, 'shooting with a weapon does not shake the game screen.', function()
     gunpro()
 end, function()
     resetWeapons(modifiedRecoil)
 end)
 
-GTLP(weaponsetting, '无限范围', {'JSinfiniteRange'}, '', function()
+GTLP(weaponsetting, 'unlimited range', {'JSinfiniteRange'}, '', function()
     maxrange()
 end, function()
     for hash, _ in pairs(modifiedRange) do
@@ -13005,13 +13005,13 @@ end, function()
 end)
 
 
-GTLP(weaponsetting, '无扩散', {'JSnoSpread'}, '', function()
+GTLP(weaponsetting, 'no diffusion', {'JSnoSpread'}, '', function()
     nospread()
 end, function()
     resetWeapons(modifiedSpread)
 end)
 
-GTLP(weaponsetting, '移除前摇', {'JSnoSpinUp'}, '移除加特林和寡妇制造者的前摇.', function()
+GTLP(weaponsetting, 'remove the front swing', {'JSnoSpinUp'}, 'removed gatling and widowmaker foreswing.', function()
     nospinup()
 end, function()
     for i = 1, #modifiedSpinup do
@@ -13021,7 +13021,7 @@ end, function()
     end
 end)
 
-GTLP(weaponsetting, '子弹伤害修改', {'JSbulletForceMultiplier'}, '从正面射击载具时效果最佳.\n显示的值以百分比为单位.', function()
+GTLP(weaponsetting, 'bullet damage modified', {'JSbulletForceMultiplier'}, 'it works best when firing vehicles from the front.\n the values shown are in percentages.', function()
     damagemoded()
 end, function()
     resetWeapons(modifiedCarForce)
@@ -13029,83 +13029,83 @@ end, function()
     resetWeapons(modifiedPedForce)
 end)
 
-GTD(weaponsetting, '瞄准视野')
+GTD(weaponsetting, 'aim at the field of view')
 
-GTLP(weaponsetting, '启用瞄准视野缩放', {'JSenableAimFov'}, '让您在瞄准时修改视野大小.', function()
+GTLP(weaponsetting, 'enables aiming field zoom', {'JSenableAimFov'}, 'lets you modify the field of view size while aiming.', function()
     gunzoom()
 end, function()
     resetWeapons(modifiedAimFov)
 end)
 
-GTD(weaponsetting, '放大瞄准视野')
+GTD(weaponsetting, 'zoom in on the aiming field')
 
-GTLP(weaponsetting, '启用放大瞄准视野缩放', {'JSenableZoomFov'}, '让您在瞄准放大时修改视野大小.', function()
+GTLP(weaponsetting, 'enables zoomed in aiming field zoom', {'JSenableZoomFov'}, 'lets you modify the field of view size when aiming to zoom in.', function()
     enablezoomfov()
 end, function()
     resetWeapons(modifiedZoomFov)
 end)
 
-GTLuaScript.slider_float(weaponsetting, '放大瞄准视野', {'JSzoomAimFov'}, '', 100, 9999999999, 100, 1, function(value)
+GTLuaScript.slider_float(weaponsetting, 'zoom in on the aiming field', {'JSzoomAimFov'}, '', 100, 9999999999, 100, 1, function(value)
     zoomaimfov(value)
 end)
 
-GTLP(proxysticks, '粘弹自动爆炸', {'JSproxyStickys'}, '使您的粘弹在玩家或NPC附近时自动引爆.', function()
+GTLP(proxysticks, 'sticky bombs explode automatically', {'JSproxyStickys'}, 'causes your stickybomb to automatically detonate when near a player or npc.', function()
     proxyStickys()
 end)
 
-GTTG(proxysticks, '引爆附近的玩家', {'JSProxyStickyPlayers'}, '如果您的粘性炸弹在玩家附近时自动引爆.', function(toggle)
+GTTG(proxysticks, 'detonate nearby players', {'JSProxyStickyPlayers'}, 'if your sticky bomb is near a player it will automatically detonate.', function(toggle)
     proxyStickys_players(toggle)
 end, proxyStickySettings.players)
 
-GTTG(proxysticks, '引爆附近的NPC', {'JSProxyStickyNpcs'}, '如果您的粘性炸弹在NPC附近时自动引爆.', function(toggle)
+GTTG(proxysticks, 'detonate nearby npc', {'JSProxyStickyNpcs'}, 'if your stickybomb is near an npc it will automatically detonate.', function(toggle)
     proxystickys_npc(toggle)
 end, proxyStickySettings.npcs)
 
-GTluaScript.slider(proxysticks, '爆炸半径', {'JSstickyRadius'}, '粘性炸弹必须离目标多近才会引爆.', 1, 10, proxyStickySettings.radius, 1, function(value)
+GTluaScript.slider(proxysticks, 'blast radius', {'JSstickyRadius'}, 'sticky bombs must be so close to the target that they will detonate.', 1, 10, proxyStickySettings.radius, 1, function(value)
     proxysticks_radius(value)
 end)
 
-GTAC(proxysticks, '移除所有粘性炸弹', {'JSremoveStickys'}, '移除所有存在的粘性炸弹(不仅仅是你的).', function()
+GTAC(proxysticks, 'remove all sticky bombs', {'JSremoveStickys'}, 'removed all existing stickybombs(it s not just yours).', function()
     WEAPON.REMOVE_ALL_PROJECTILES_OF_TYPE(util.joaat('weapon_stickybomb'), false)
 end)
 
-entity_control = GT(weapon_options, "实体控制枪", {}, "控制你所瞄准的实体")
+entity_control = GT(weapon_options, "entity control gun", {}, "control the entity you re targeting")
 
-GTLP(entity_control, "开启", {}, "", function()
+GTLP(entity_control, "open", {}, "", function()
     entitycontrol()
 end)
 
-GTAC(entity_control, "清除记录的实体", {}, "", function()
+GTAC(entity_control, "the entity that clears the record", {}, "", function()
     clearcontrollog()
 end)
 
-GTD(entity_control, "实体控制")
+GTD(entity_control, "entity control")
 
-Weapon_Cam_Gun = GT(weapon_options, "视野范围枪")
+Weapon_Cam_Gun = GT(weapon_options, "vision range gun")
 
-loadsyq = GTAC(Weapon_Cam_Gun, "加载视野范围枪", {}, "", function ()
+loadsyq = GTAC(Weapon_Cam_Gun, "loads the vision area gun", {}, "", function ()
     require "lib.GTSCRIPTS.GTA.eg"
     wait()
     menu.delete(loadsyq)
 end)
 
-GTAC(nuke, '核弹标记点', {'JSnukeWP'}, '掉落一颗核弹在您标记的位置.', function ()
+GTAC(nuke, 'nuclear bomb marker point', {'JSnukeWP'}, 'drop a nuclear bomb at the location you marked.', function ()
     nukepoint()
 end)
 
-GTluaScript.slider(nuke, '核弹高度', {'JSnukeHeight'}, '投下核弹的高度.', 10, 100, nuke_height, 10, function(value)
+GTluaScript.slider(nuke, 'nuclear bomb height', {'JSnukeHeight'}, 'the height at which the nuclear bomb was dropped.', 10, 100, nuke_height, 10, function(value)
     nukeheight(value)
 end)
 
-GTLP(minecraftgun, '我的世界枪', {'JSminecraftGun'}, '当您射击时生成阻挡物.', function()
+GTLP(minecraftgun, 'minecraft gun', {'JSminecraftGun'}, 'spawns blockers when you shoot.', function()
     xxxminecraftgun()
 end)
 
-GTAC(minecraftgun, '删除最后一个阻挡物', {'JSdeleteLastBlock'}, '', function()
+GTAC(minecraftgun, 'remove the last blocker', {'JSdeleteLastBlock'}, '', function()
     deleminecraftlastblock()
 end)
 
-GTAC(minecraftgun, '删除所有阻挡物', {'JSdeleteBlocks'}, '', function()
+GTAC(minecraftgun, 'remove all obstructions', {'JSdeleteBlocks'}, '', function()
     deleallblock()
 end)
 
@@ -13187,7 +13187,7 @@ function get_veh_distance()
 	return currentDistance
 end
 
-local Cargun = "车枪"
+local Cargun = "car guns"
 GTLP(vehicleGun,Cargun, {}, "", function ()
 	request_model(modelHash)
 	local camRot = CAM.GET_GAMEPLAY_CAM_ROT(0)
@@ -13235,16 +13235,16 @@ function Instructional.add_control_group (index, name)
     Instructional:add_data_slot(index, name, button)
 end
 
-local options_all <const> =  {{"灵蛇"}, {"天煞"}, {"叛乱分子"}, {"尖锥魅影"}, {"斜塔魔宝"}, {"导弹车"}, {"自行车"}, {"坦克"}, {"MK2"}, {"巴士"}, {"出租车"}}
-local setshoot_other = "设置车枪"
+local options_all <const> =  {{"spirit snake"}, {"god s evil"}, {"rebels"}, {"phantom of the cone"}, {"the leaning tower"}, {"missile car"}, {"bicycle"}, {"tank"}, {"MK2"}, {"bus"}, {"taxicab"}}
+local setshoot_other = "set up the car gun"
 GTLuaScript.list_select(vehicleGun,setshoot_other, {}, "", options_all, 1, function (opt)
 	local vehicle = vehicles[opt]
 	modelHash = util.joaat(vehicle)
 end)
 
 local Csound = "HintCamSounds"
-local errmsg = "您输入的车辆英文名不正确 !"
-local other_car = "其他车辆"
+local errmsg = "the english name of the vehicle you entered is incorrect !"
+local other_car = "other vehicles"
 GTluaScript.text_input(vehicleGun,other_car, {"customvehgun"}, "", function(vehicle, click)
 	if (click & CLICK_FLAG_AUTO) ~= 0 then
 		return
@@ -13253,12 +13253,12 @@ GTluaScript.text_input(vehicleGun,other_car, {"customvehgun"}, "", function(vehi
 		modelHash = util.joaat(vehicle)
 	else notification:help(errmsg, HudColour.red) end
 end)
-local Entercar = "进入车辆"
+local Entercar = "get into the vehicle"
 GTTG(vehicleGun,Entercar, {}, "", function(toggle)
 	setIntoVehicle = toggle
 end)
 
-local ent_types = {"没有", "行人", "载具", "实体"}
+local ent_types = {"no", "pedestrian", "vehicles", "entity"}
 local function get_aim_info()
     local outptr = memory.alloc(4)
     local success = PLAYER.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(players.user(), outptr)
@@ -13289,33 +13289,33 @@ local function get_aim_info()
     return info
 end
 
-GTLP(damage_numbers_list, "伤害数字", {"damagenumbers"}, "", function()
+GTLP(damage_numbers_list, "damage figures", {"damagenumbers"}, "", function()
     damage_numbers()
 end)
-GTTG(damage_numbers_list, "包括车辆", {"damagenumbersvehicles"}, "", function (value)
+GTTG(damage_numbers_list, "vehicles included", {"damagenumbersvehicles"}, "", function (value)
     damage_numbers_target_vehicles = value
 end)
-GTluaScript.slider(damage_numbers_list, "数字尺寸", {"damagenumberstextsize"}, "", 1, 100, 7, 1, function (value)
+GTluaScript.slider(damage_numbers_list, "numeric dimensions", {"damagenumberstextsize"}, "", 1, 100, 7, 1, function (value)
     damage_numbers_text_size = value * 0.1
 end)
-damage_numbers_colours_list = GT(damage_numbers_list, "颜色设置")
-GTluaScript.rainbow(menu.colour(damage_numbers_colours_list, "默认颜色", {"damagenumcolour"}, "默认命中的颜色", damage_numbers_health_colour, true, function (value)
+damage_numbers_colours_list = GT(damage_numbers_list, "color settings")
+GTluaScript.rainbow(menu.colour(damage_numbers_colours_list, "default color", {"damagenumcolour"}, "the color of the default hit", damage_numbers_health_colour, true, function (value)
     damage_numbers_health_colour = value
 end))
-GTluaScript.rainbow(menu.colour(damage_numbers_colours_list, "暴击颜色", {"damagenumcritcolour"}, "暴击颜色", damage_numbers_crit_colour, true, function (value)
+GTluaScript.rainbow(menu.colour(damage_numbers_colours_list, "critical color", {"damagenumcritcolour"}, "Critical Color", damage_numbers_crit_colour, true, function (value)
     damage_numbers_crit_colour = value
 end))
-GTluaScript.rainbow(menu.colour(damage_numbers_colours_list, "盔甲颜色", {"damagenumarmourcolour"}, "盔甲颜色", damage_numbers_armour_colour, true, function (value)
+GTluaScript.rainbow(menu.colour(damage_numbers_colours_list, "armor color", {"damagenumarmourcolour"}, "Armor Color", damage_numbers_armour_colour, true, function (value)
     damage_numbers_armour_colour = value
 end))
-GTluaScript.rainbow(menu.colour(damage_numbers_colours_list, "载具颜色", {"damagenumvehiclecolour"}, "载具颜色", damage_numbers_vehicle_colour, true, function (value)
+GTluaScript.rainbow(menu.colour(damage_numbers_colours_list, "vehicle color", {"damagenumvehiclecolour"}, "Vehicle Color", damage_numbers_vehicle_colour, true, function (value)
     damage_numbers_vehicle_colour = value
 end))
 
 EntityManipulationHandleList = {}
-GTD(entityManipulation, "实体操作")
+GTD(entityManipulation, "entity operations")
 
-GTLP(entityManipulation, "启用 (添加实体)", {}, "", function()
+GTLP(entityManipulation, "enable (add entities)", {}, "", function()
     if (PED.IS_PED_SHOOTING(GetLocalPed()) and PLAYER.IS_PLAYER_FREE_AIMING(players.user())) then
         local entityPointer = memory.alloc()
 
@@ -13323,7 +13323,7 @@ GTLP(entityManipulation, "启用 (添加实体)", {}, "", function()
             local entityHandle = memory.read_int(entityPointer)
             memory.free(entityPointer)
 
-            if (DoesTableContainValue(EntityManipulationHandleList, entityHandle)) then gtoast("实体已在列表中!") return end
+            if (DoesTableContainValue(EntityManipulationHandleList, entityHandle)) then gtoast("the entity is already in the list!") return end
             EntityManipulationHandleList[#EntityManipulationHandleList+1] = entityHandle
 
             if (ENTITY.IS_ENTITY_A_PED(entityHandle) and PED.IS_PED_IN_ANY_VEHICLE(entityHandle, false)) then
@@ -13336,26 +13336,26 @@ GTLP(entityManipulation, "启用 (添加实体)", {}, "", function()
             funcsForEntity(EntityManipulationHandleList, mListBuffer, entityHandle)
 
             util.create_tick_handler(function() return doesEntityExist(EntityManipulationHandleList, mListBuffer, entityHandle) end)
-            if (SE_Notifications) then gtoast("添加实体!") end
+            if (SE_Notifications) then gtoast("add entities!") end
         end
     end
 end)
 
-GTAC(wea_func, '获得所有武器', {""}, '', function (on)
+GTAC(wea_func, 'get all weapons', {""}, '', function (on)
 GTluaScript.trigger_commands("allguns")
 end)
 
-GTAC(wea_func, '移除所有武器', {""}, '', function (on)
-gtoast("移除所有武器 ...")
+GTAC(wea_func, 'remove all weapons', {""}, '', function (on)
+gtoast("remove all weapons ...")
 local curr_equipped_weapon = WEAPON.GET_SELECTED_PED_WEAPON(PLAYER.GET_PLAYER_PED(players.user()))
 for key, value in pairs(attachments_table) do
 WEAPON.REMOVE_WEAPON_COMPONENT_FROM_PED(PLAYER.GET_PLAYER_PED(players.user()), curr_equipped_weapon, key)
 end
-gtoast("搞定 :D")
+gtoast("get :D")
 end)
 
 
-GTTG(wea_func, '导弹快速锁定', {""}, '', function (on)
+GTTG(wea_func, 'missile quick lock', {""}, '', function (on)
 if on then
 GTluaScript.trigger_commands("instantlockon on")
 else
@@ -13363,7 +13363,7 @@ GTluaScript.trigger_commands("instantlockon off")
 end
 end)
 
-GTTG(wea_func, '热成像', {"thermalvision"}, '', function (on)
+GTTG(wea_func, 'thermal imaging', {"thermalvision"}, '', function (on)
 if on then
 GTluaScript.trigger_commands("thermalvision on")
 else
@@ -13371,7 +13371,7 @@ GTluaScript.trigger_commands("thermalvision off")
 end
 end)
 
-GTTG(wea_func, '瞄准线', {"lasersights"}, '', function (on)
+GTTG(wea_func, 'line of sight', {"lasersights"}, '', function (on)
 if on then
 GTluaScript.trigger_commands("lasersights on")
 else
@@ -13379,7 +13379,7 @@ GTluaScript.trigger_commands("lasersights off")
 end
 end)
 
-GTTG(wea_func, "电磁瞄准镜头", {}, "", function(g)
+GTTG(wea_func, "electromagnetic aiming shots", {}, "", function(g)
     gt = g
     local startViewMode = nil
     while gt do
@@ -13404,11 +13404,11 @@ GTTG(wea_func, "电磁瞄准镜头", {}, "", function(g)
     gt = false
 end)
 
-GTLP(wea_func, "瞄准方框", {}, "只对人物有效", function(toggle)
+GTLP(wea_func, "aim the box", {}, "only works on characters", function(toggle)
     rrren(true)
 end)
 
-GTLP(wea_func, '3D方框瞄准', {'_3d_crosshair'}, '', function()
+GTLP(wea_func, '3 d box aiming', {'_3d_crosshair'}, '', function()
     request_texture_dict_load('visualflow')
     local rc = raycast_gameplay_cam(-1, 8000.0)[2]
     local c = players.get_position(players.user())
@@ -13440,19 +13440,19 @@ GTLP(wea_func, "automatic shooting", {"triggerbotall"}, "", function()
     end
 end)
 
-GTLP(Gun_Effect_Shooting_Hit, "开启", {"shootingfx"}, "", function ()
+GTLP(Gun_Effect_Shooting_Hit, "open", {"shootingfx"}, "", function ()
     shootingeffect()
 end)
 
-GTluaScript.textslider(Gun_Effect_Shooting_Hit, "切换射击特效", {}, "", {"小丑木兹","小丑花"}, function (index)
+GTluaScript.textslider(Gun_Effect_Shooting_Hit, "toggle the shooting effect", {}, "", {"muz the clown","clown flowers"}, function (index)
 	setshootingeffect(index)
 end)
 
-GTLP(wea_func, '喷火器', {'JSflamethrower'}, '将加特林变成火焰喷射器.', function()
+GTLP(wea_func, 'Flamethrower', {'JSflamethrower'}, 'turn gatling into a flamethrower.', function()
     flamegun()
 end)
 
-GTLP(wea_func, "锁定玩家", {}, "允许您使用武装载具上的制导导弹发射器锁定玩家.", function()
+GTLP(wea_func, "lock the player", {}, "allows you to lock the player using the guided missile launcher on an armed vehicle.", function()
     for _, pid in ipairs(players.list(true, true, true)) do
         local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
         PLAYER.ADD_PLAYER_TARGETABLE_ENTITY(players.user(), ped)
@@ -13466,7 +13466,7 @@ end, function()
 end)
 
 if menu.get_edition() > 1 then
-    GTLP(wea_func, "瞄准时的透视", {"aimesp"}, "", function()
+    GTLP(wea_func, "perspective when aiming", {"aimesp"}, "", function()
         if PLAYER.IS_PLAYER_FREE_AIMING(players.user()) then
             menu.trigger_command(menu.ref_by_path("World>Inhabitants>Player ESP>Bone ESP>Low Latency Rendering"))
         else
@@ -13500,14 +13500,14 @@ for id, data in pairs(visual_stuff) do
     end)
 end 
 
-GTLP(wea_func, "踢出枪", {"kickgun"}, "", function()
+GTLP(wea_func, "kick out the gun", {"kickgun"}, "", function()
     local ent = get_aim_info()['ent']
     if PED.IS_PED_SHOOTING(players.user_ped()) then
         if ENTITY.IS_ENTITY_A_PED(ent) then
             if PED.IS_PED_A_PLAYER(ent) then
                 local pid = NETWORK.NETWORK_GET_PLAYER_INDEX_FROM_PED(ent)
                 if players.get_host() == pid then 
-                    newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;","~r~您正试图踢出的玩家是主机", "CHAR_CHOP", 140)
+                    newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;","~r~the player you re trying to kick out is the host", "CHAR_CHOP", 140)
                     return
                 end
                 menu.trigger_commands("kick" .. players.get_name(pid))
@@ -13516,7 +13516,7 @@ GTLP(wea_func, "踢出枪", {"kickgun"}, "", function()
     end
 end)
 
-GTLP(wea_func, "崩溃枪", {"crashgun"}, "", function()
+GTLP(wea_func, "crash gun", {"crashgun"}, "", function()
     local ent = get_aim_info()['ent']
     if PED.IS_PED_SHOOTING(players.user_ped()) then
         if ENTITY.IS_ENTITY_A_PED(ent) then
@@ -13528,7 +13528,7 @@ GTLP(wea_func, "崩溃枪", {"crashgun"}, "", function()
     end
 end)
 
-GTLP(wea_func, translate("Weapon", "传送枪"), {"tpgun"}, "", function()
+GTLP(wea_func, translate("Weapon", "portal guns"), {"tpgun"}, "", function()
 	local raycastResult = get_raycast_result(1000.0)
 	if  raycastResult.didHit and PED.IS_PED_SHOOTING(players.user_ped()) then
 		local coords = raycastResult.endCoords
