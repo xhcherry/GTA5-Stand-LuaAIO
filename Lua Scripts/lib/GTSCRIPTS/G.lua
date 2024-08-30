@@ -13545,7 +13545,7 @@ GTLP(wea_func, translate("Weapon", "portal guns"), {"tpgun"}, "", function()
 	end
 end)
 
-        GTLP(wea_func, "转换枪", {""}, "互换身份", function()
+        GTLP(wea_func, "conversion gun", {""}, "swap identities", function()
             local ent = get_aim_info()['ent']
             if PED.IS_PED_SHOOTING(players.user_ped()) then
                 if ENTITY.IS_ENTITY_A_PED(ent) then
@@ -13592,15 +13592,15 @@ end)
             end
     end)
 
-GTLP(weapon_options, "磁铁枪", {"magnetgun"}, "很有趣喔~", function ()
+GTLP(weapon_options, "magnet gun", {"magnetgun"}, "it s interesting~", function ()
     magnetgun()
 end)
 
-GTluaScript.textslider(weapon_options, "设置磁铁枪", {}, "", {"平滑的", "混沌模式"}, function(index)
+GTluaScript.textslider(weapon_options, "set up the magnet gun", {}, "", {"smooth", "chaos mode"}, function(index)
 	setmagnetgun(index)
 end)
 
-GTLP(weapon_options, "磁铁实体", {"magnetents"}, "射击两个实体以让它们互相吸引", function()
+GTLP(weapon_options, "Magnet Entities", {"magnetents"}, "shoot two entities to make them attract each other", function()
 	ctst()
 end, function ()
 	counter = 0
@@ -13614,7 +13614,7 @@ KA_Onlyplayers = false
 KA_Delvehs = false
 KA_Delpeds = false
 
-GTLP(wea_func, "子弹分散", {"bulletchanger"}, "", function ()
+GTLP(wea_func, "bullets dispersed", {"bulletchanger"}, "", function ()
     local localPed = players.user_ped()
 	if not WEAPON.IS_PED_ARMED(localPed, 4) then
 		return
@@ -13639,7 +13639,7 @@ GTLP(wea_func, "子弹分散", {"bulletchanger"}, "", function ()
      end
 end)
 
-GTLP(wea_func, "子弹追踪", {"killaura"}, "在范围内杀死所有人.", function ()
+GTLP(wea_func, "bullet tracking", {"killaura"}, "kill everyone within range.", function ()
     local tKCount = 1
     local toKill = {}
     local ourcoords = getEntityCoords(GetLocalPed())
@@ -13702,12 +13702,12 @@ GTLP(wea_func, "子弹追踪", {"killaura"}, "在范围内杀死所有人.", fun
     wait(100)
 end)
 
-GTluaScript.slider(wea_func, "子弹范围", {"karadius"}, "子弹范围.", 1, 100, 20, 1, function (value)
+GTluaScript.slider(wea_func, "bullet range", {"karadius"}, "bullet range.", 1, 100, 20, 1, function (value)
     KA_Radius = value
 end)
 
 grapplegun = false
-GTTG(wea_func, "绳索枪", {}, "蜘蛛侠" , function(on)
+GTTG(wea_func, "rope guns", {}, "spider man" , function(on)
     grapplegun = on
     if on then
         WEAPON.GIVE_WEAPON_TO_PED(players.user_ped(), util.joaat('weapon_pistol'), 9999, false, false)
