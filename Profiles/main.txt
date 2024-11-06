@@ -1,0 +1,37 @@
+Tree Compatibility Version: 55
+Self
+	Immortality: On
+Vehicle
+	Spawner
+		Make Spawned Vehicles Indestructible: On
+		Tune Spawned Vehicles: Fully
+Players
+	Settings
+		Tags
+			Self: 
+			Friend: 
+			Crew Member: 
+			Organisation Member: 
+			In Timeout: 
+			Modder: 
+			Admin: 
+			Likely Modder: 
+			Attacked You: 
+			Host: 
+			Next Host: 
+			Script Host: 
+			Invulnerable: 
+			Indestructible Vehicle: 
+			In Vehicle: 
+			RC Vehicle: 
+			Off The Radar: 
+			In An Interior: 
+			Spectating: 
+			Typing: 
+			Dead: 
+			Invisible: 
+			VPN: 
+World
+	Places
+		Teleport To...
+			Auto Teleport To Waypoints: On
