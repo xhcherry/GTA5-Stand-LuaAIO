@@ -54,91 +54,91 @@ end
 
 -- 爆炸类型
 ExplosionType_ListItem = {
-    { "嘟嘟嘟" }, -- -1
-    { "手榴弹" }, -- 0
-    { "榴弹发射器" }, -- 1
-    { "黏弹" }, -- 2
-    { "燃烧瓶" }, -- 3
-    { "火箭炮" }, -- 4
-    { "坦克炮弹" }, -- 5
-    { "Hi Octane" }, -- 6
-    { "车辆爆炸" }, -- 7
-    { "飞机爆炸" }, -- 8
-    { "油站爆炸" }, -- 9
-    { "摩托爆炸" }, -- 10
-    { "水柱" }, -- 11
-    { "火柱" }, -- 12
-    { "消防栓" }, -- 13
-    { "气体燃烧" }, -- 14
-    { "游艇爆炸" }, -- 15
-    { "拖船爆炸" }, -- 16
-    { "卡车爆炸" }, -- 17
-    { "爆炸子弹" }, -- 18
-    { "烟雾发射器" }, -- 19
-    { "烟雾弹" }, -- 20
-    { "催泪瓦斯" }, -- 21
-    { "信号弹" }, -- 22
-    { "油罐爆炸" }, -- 23
-    { "灭火器" }, -- 24
-    { "Programmable AR" }, -- 25
-    { "火车" }, -- 26
-    { "飞艇(蓝)" }, -- 27
-    { "丙烷" }, -- 28
-    { "软皮艇" }, -- 29
-    { "火焰爆炸" }, -- 30
-    { "油罐车" }, -- 31
-    { "飞机爆炸" }, -- 32
-    { "Vehicle Bullet" }, -- 33
-    { "火灾坦克" }, -- 34
-    { "Bird Crap" }, -- 35
-    { "电磁枪弹" }, -- 36
-    { "飞艇(红/青)" }, -- 37
-    { "烟花" }, -- 38
-    { "雪球" }, -- 39
-    { "感应地雷" }, -- 40
-    { "女武神机炮" }, -- 41
-    { "飞机解体" }, -- 42
-    { "管状炸弹" }, -- 43
-    { "Vehicle Mine" }, -- 44
-    { "Explosive Ammo" }, -- 45
-    { "APC Shell" }, -- 46
-    { "Cluster Bomb" }, -- 47
-    { "Gas Bomb" }, -- 48
-    { "Incendiary Bomb" }, -- 49
-    { "Standard Bomb" }, -- 50
-    { "Torpedo" }, -- 51
-    { "Torpedo (Underwater)" }, -- 52
-    { "Bombushka Cannon" }, -- 53
-    { "Cluster Bomb 2" }, -- 54
-    { "Hunter Barrage" }, -- 55
-    { "Hunter Cannon" }, -- 56
-    { "Rogue Cannon" }, -- 57
-    { "Underwater Mine" }, -- 58
-    { "Orbital Cannon" }, -- 59
-    { "Standard Bomb (Wide)" }, -- 60
+    { "嘟嘟嘟" },                -- -1
+    { "手榴弹" },                  -- 0
+    { "榴弹发射器" },         -- 1
+    { "黏弹" },              -- 2
+    { "燃烧瓶" },                  -- 3
+    { "火箭炮" },                   -- 4
+    { "坦克炮弹" },               -- 5
+    { "Hi Octane" },                -- 6
+    { "车辆爆炸" },                      -- 7
+    { "飞机爆炸" },                    -- 8
+    { "油站爆炸" },              -- 9
+    { "摩托爆炸" },                     -- 10
+    { "水柱" },                    -- 11
+    { "火柱" },                    -- 12
+    { "消防栓" },            -- 13
+    { "气体燃烧" },       -- 14
+    { "游艇爆炸" },                     -- 15
+    { "拖船爆炸" },                     -- 16
+    { "卡车爆炸" },                    -- 17
+    { "爆炸子弹" },                   -- 18
+    { "烟雾发射器" },   -- 19
+    { "烟雾弹" },            -- 20
+    { "催泪瓦斯" },                   -- 21
+    { "信号弹" },                    -- 22
+    { "油罐爆炸" },             -- 23
+    { "灭火器" },             -- 24
+    { "Programmable AR" },          -- 25
+    { "火车" },                    -- 26
+    { "飞艇(蓝)" },            -- 27
+    { "丙烷" },                  -- 28
+    { "软皮艇" },                    -- 29
+    { "火焰爆炸" },            -- 30
+    { "油罐车" },                   -- 31
+    { "飞机爆炸" },             -- 32
+    { "Vehicle Bullet" },           -- 33
+    { "火灾坦克" },                 -- 34
+    { "Bird Crap" },                -- 35
+    { "电磁枪弹" },                  -- 36
+    { "飞艇(红/青)" },       -- 37
+    { "烟花" },                 -- 38
+    { "雪球" },                 -- 39
+    { "感应地雷" },           -- 40
+    { "女武神机炮" },          -- 41
+    { "飞机解体" },              -- 42
+    { "管状炸弹" },                -- 43
+    { "Vehicle Mine" },             -- 44
+    { "Explosive Ammo" },           -- 45
+    { "APC Shell" },                -- 46
+    { "Cluster Bomb" },             -- 47
+    { "Gas Bomb" },                 -- 48
+    { "Incendiary Bomb" },          -- 49
+    { "Standard Bomb" },            -- 50
+    { "Torpedo" },                  -- 51
+    { "Torpedo (Underwater)" },     -- 52
+    { "Bombushka Cannon" },         -- 53
+    { "Cluster Bomb 2" },           -- 54
+    { "Hunter Barrage" },           -- 55
+    { "Hunter Cannon" },            -- 56
+    { "Rogue Cannon" },             -- 57
+    { "Underwater Mine" },          -- 58
+    { "Orbital Cannon" },           -- 59
+    { "Standard Bomb (Wide)" },     -- 60
     { "Explosive Ammo (Shotgun)" }, -- 61
-    { "Oppressor Mk2 Cannon" }, -- 62
-    { "Kinetic Mortar" }, -- 63
-    { "Kinetic Vehicle Mine" }, -- 64
-    { "Emp Vehicle Mine" }, -- 65
-    { "Spike Vehicle Mine" }, -- 66
-    { "Slick Vehicle Mine" }, -- 67
-    { "Tar Vehicle Mine" }, -- 68
-    { "Script Drone" }, -- 69
-    { "Raygun" }, -- 70
-    { "Buried Mine" }, -- 71
-    { "Script Missile" }, -- 72
-    { "RC激光炮" }, -- 73
-    { "Water Bomb" }, -- 74
-    { "Water Bomb 2" }, -- 75
-    { "Cnc Spike Mine" }, -- 76
-    { "BZ Gas Mk2" }, -- 77
-    { "Flash Grenade" }, -- 78
-    { "Stun Grenade" }, -- 79
-    { "Cnc Kinetic Ram" }, -- 80
-    { "Large Missile" }, -- 81
-    { "Big Submarine" }, -- 82
-    { "原子能" } -- 83
+    { "Oppressor Mk2 Cannon" },     -- 62
+    { "Kinetic Mortar" },           -- 63
+    { "Kinetic Vehicle Mine" },     -- 64
+    { "Emp Vehicle Mine" },         -- 65
+    { "Spike Vehicle Mine" },       -- 66
+    { "Slick Vehicle Mine" },       -- 67
+    { "Tar Vehicle Mine" },         -- 68
+    { "Script Drone" },             -- 69
+    { "Raygun" },                   -- 70
+    { "Buried Mine" },              -- 71
+    { "Script Missile" },           -- 72
+    { "RC激光炮" },           -- 73
+    { "Water Bomb" },               -- 74
+    { "Water Bomb 2" },             -- 75
+    { "Cnc Spike Mine" },           -- 76
+    { "BZ Gas Mk2" },               -- 77
+    { "Flash Grenade" },            -- 78
+    { "Stun Grenade" },             -- 79
+    { "Cnc Kinetic Ram" },          -- 80
+    { "Large Missile" },            -- 81
+    { "Big Submarine" },            -- 82
+    { "原子能" }              -- 83
 }
 
 Cam_Gun = {
@@ -281,7 +281,7 @@ end, function()
 end)
 
 menu.list_select(Weapon_Cam_Gun, "选择操作", { "selectguntype" }, "", {
-    { "射击", { "shoot" }, "需要手持武器" },
+    { "射击", { "shoot" },     "需要手持武器" },
     { "爆炸", { "explosion" }, "不需要手持武器" },
 }, 1, function(value)
     Cam_Gun.select = value
@@ -405,7 +405,7 @@ menu.toggle(Cam_Gun_explosion, "不可见", {}, "", function(toggle)
     Cam_Gun.explosion_setting.is_invisible = toggle
 end)
 menu.slider_float(Cam_Gun_explosion, "镜头晃动", { "gunexpshake" }, "", 0, 1000, 0, 10,
-    function(value)
-        value = value * 0.01
-        Cam_Gun.explosion_setting.camera_shake = value
-    end)
+function(value)
+    value = value * 0.01
+    Cam_Gun.explosion_setting.camera_shake = value
+end)

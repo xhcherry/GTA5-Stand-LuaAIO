@@ -1829,9 +1829,14 @@ end)
 
 hooker_esp = false
 menu.toggle(peds_root, "妓女透视", {"hookeresp"}, "...", function(on)
-hooker_esp = on
-mod_uses("ped", if on then 1 else -1)
+    hooker_esp = on
+    if on then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
+
 
 
 
@@ -1866,45 +1871,74 @@ end
 
 ped_no_ragdoll = false
 menu.toggle(ped_attributes_root, "无布娃娃", {"nopedragdoll"}, "", function(on)
-ped_no_ragdoll = on 
-mod_uses("ped", if on then 1 else -1)
+    ped_no_ragdoll = on 
+    if ped_no_ragdoll then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 ped_godmode = false
 menu.toggle(ped_attributes_root, "无敌", {"pedgodmode"}, "", function(on)
-ped_godmode = on 
-mod_uses("ped", if on then 1 else -1)
+    ped_godmode = on 
+    if ped_godmode then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 ped_no_crits = false
 menu.toggle(ped_attributes_root, "没有暴击", {"nopedcrits"}, "", function(on)
-ped_no_crits = on 
-mod_uses("ped", if on then 1 else -1)
+    ped_no_crits = on 
+    if ped_no_crits then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 ped_highperception = false
 menu.toggle(ped_attributes_root, "高感知", {"pedhighperception"}, "行人会比平时看到和听到更多。", function(on)
-ped_highperception = on 
-mod_uses("ped", if on then 1 else -1)
+    ped_highperception = on 
+    if ped_highperception then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 ped_allcops = false
 menu.toggle(ped_attributes_root, "让所有行人成为警察", {"pedallcops"}, "", function(on)
-ped_allcops = on 
-mod_uses("ped", if on then 1 else -1)
+    ped_allcops = on 
+    if ped_allcops then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 ped_theflash = false
 menu.toggle(ped_attributes_root, "兔八哥", {"looney_tunes"}, "行人移动速度超快.", function(on)
-ped_theflash = on 
-mod_uses("ped", if on then 1 else -1)
+    ped_theflash = on 
+    if ped_theflash then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 ped_hardened = false
 menu.toggle(ped_attributes_root, "久经沙场的", {"pedhardened"}, "行人不再是懦夫,他们将战斗而不是逃跑。它们也更加精确和有战斗力。", function(on)
-ped_hardened = on 
-mod_uses("ped", if on then 1 else -1)
+    ped_hardened = on 
+    if ped_hardened then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
+
 
 
 
@@ -1917,19 +1951,31 @@ end)
 peds_ignore = false
 menu.toggle(ped_b_root, "健忘的行人", {"obliviouspeds"}, "行人不会在乎你做什么。已经对你做出反应的行人不会忘记你做了什么。", function(on)
 peds_ignore = on
-mod_uses("ped", if on then 1 else -1)
+    if peds_ignore then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 wantthesmoke = false
 menu.toggle(ped_b_root, "行人攻击我", {"iwantthesmoke"}, "告诉附近所有的行人你想要来点烟火。可能会弄坏一些东西。", function(on)
 wantthesmoke = on
-mod_uses("ped", if on then 1 else -1)
+    if wantthesmoke then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 make_peds_cops = false
 menu.toggle(ped_b_root, "使附近的行人变为警察", {"makecops"}, "他们实际上不是真正的警察,但会举报犯罪。近似", function(on)
 make_peds_cops = on
-mod_uses("ped", if on then 1 else -1)
+    if make_peds_cops then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 menu.toggle(ped_b_root, "底特律", {"detroit"}, "附近的所有NPC都开始互相决斗,并获得了武器。最近的事态发展表明,这个笑话被认为是不敏感的,这很有趣,因为在推特上大喊大叫比试图解决底特律的犯罪问题花费了更多的精力。", function(on)
@@ -1939,25 +1985,41 @@ end)
 apose_peds = false
 menu.toggle(ped_b_root, "A-姿势", {"aposepeds"}, "哦！狗屎！", function(on)
 apose_peds = on
-mod_uses("ped", if on then 1 else -1)
+    if apose_peds then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 roast_voicelines = false
 menu.toggle(ped_voice, "严厉的声线", {"npcroasts"}, "非常不道德。", function(on)
 roast_voicelines = on
-mod_uses("ped", if on then 1 else -1)
+    if roast_voicelines then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 sex_voicelines = false
 menu.toggle(ped_voice, "性感的声线", {"sexlines"}, "oH FuCK YeAh", function(on)
 sex_voicelines = on
-mod_uses("ped", if on then 1 else -1)
+    if sex_voicelines then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 screamall = false
 menu.toggle(ped_voice, "尖叫", {"screamall"}, "让附近所有的行人惨叫。令人惊叹的", function(on)
 screamall = on
-mod_uses("ped", if on then 1 else -1)
+    if screamall then
+        mod_uses("ped", 1)
+    else
+        mod_uses("ped", -1)
+    end
 end)
 
 vehicles_root = menu.list(entity_options, "控制载具", {"controlvehicle"}, "")
@@ -2010,7 +2072,11 @@ end)
 vehicle_chaos = false
 menu.toggle(vc_root, "载具混乱", {"chaos"}, "", function(on)
     vehicle_chaos = on
-    mod_uses("vehicle", if on then 1 else -1)
+    if vehicle_chaos then
+        mod_uses("vehicle", 1)
+    else
+        mod_uses("vehicle", -1)
+    end
 end)
 
 vc_gravity = true
@@ -2020,14 +2086,18 @@ end, true)
 
 vc_speed = 100
 menu.slider(vc_root, "载具混沌速度", {"chaosspeed"}, "迫使载具行驶的速度。越高=越混乱。", 30, 300, 100, 10, function(s)
-  vc_speed = s
+    vc_speed = s
 end)
 
 vhp_bars = false
 menu.toggle(vehicles_root, "载具血量条", {"vehhpbars"}, "在载具上面绘制血量条。", function(on)
     vhp_bars = on
-    mod_uses("vehicle", if on then 1 else -1)
-    if php_bars and on then
+    if vhp_bars then
+        mod_uses("vehicle", 1)
+    else
+        mod_uses("vehicle", -1)
+    end
+    if php_bars and vhp_bars then
         notification("警告:您同时打开了NPC血量条!由于引擎限制,某些条形图可能不会出现。", colors.blue)
     end
 end)
@@ -2035,26 +2105,42 @@ end)
 ascend_vehicles = false
 menu.toggle(v_phys_root, "升高附近所有载具", {"ascendvehicles"}, "它应该能使它们整齐地漂浮起来,但它只是让它们在半空中旋转。真他妈的好笑。", function(on)
     ascend_vehicles = on
-    mod_uses("vehicle", if on then 1 else -1)
+    if ascend_vehicles then
+        mod_uses("vehicle", 1)
+    else
+        mod_uses("vehicle", -1)
+    end
 end)
 
 rain_vehicles = false
 menu.toggle(v_phys_root, "载具雨", {"rainvehicles"}, "", function(on)
     rain_vehicles = on
-    mod_uses("vehicle", if on then 1 else -1)
+    if rain_vehicles then
+        mod_uses("vehicle", 1)
+    else
+        mod_uses("vehicle", -1)
+    end
 end)
 
 inferno = false
 menu.toggle(v_phys_root, "地狱火", {"inferno"}, "过度破坏性的“炸毁所有车辆”选项。将继续炸毁所有车辆,即使它们已经被摧毁,为了让你有经典的挂壁体验。", function(on)
     inferno = on
-    mod_uses("vehicle", if on then 1 else -1)
+    if inferno then
+        mod_uses("vehicle", 1)
+    else
+        mod_uses("vehicle", -1)
+    end
 end, false)
 
 blackhole = false
 menu.toggle(v_phys_root, "载具黑洞", {"blackhole"}, "一个超级迟缓但有趣的黑洞。", function(on)
     blackhole = on
-    mod_uses("vehicle", if on then 1 else -1)
-    if on then
+    if blackhole then
+        mod_uses("vehicle", 1)
+    else
+        mod_uses("vehicle", -1)
+    end
+    if blackhole then
         holecoords = players.get_position(players.user())
         notification("黑洞位置被设置为比你的位置高50个单位。打开和关闭此选项以更改位置。", colors.blue)
     end
@@ -2063,43 +2149,58 @@ end)
 hole_zoff = 50
 menu.slider(v_phys_root, "黑洞Z轴偏移", {"blackholeoffset"}, "在你上方多远的地方放置黑洞。建议将其保持在相当高的水平。", 0, 100, 50, 10, function(s)
     hole_zoff = s
-  end)
-
+end)
 
 beep_cars = false
 menu.toggle(vehicles_root, "附近所有载具无限鸣笛", {"beepvehicles"}, "使附近所有载具发出无限哔哔。可能无法在线工作。", function(on)
     beep_cars = on
-    mod_uses("vehicle", if on then 1 else -1)
+    if beep_cars then
+        mod_uses("vehicle", 1)
+    else
+        mod_uses("vehicle", -1)
+    end
 end)
 
 yeetsubmarines = false
-menu.toggle(vehicles_root, "弹飞潜艇", {"yeetsubs"},  "", function(on)
+menu.toggle(vehicles_root, "弹飞潜艇", {"yeetsubs"}, "", function(on)
     yeetsubmarines = on
-    mod_uses("vehicle", if on then 1 else -1)
+    if yeetsubmarines then
+        mod_uses("vehicle", 1)
+    else
+        mod_uses("vehicle", -1)
+    end
 end)
 
 menu.action(vehicles_root, "传送所有载具到我", {"tpallvehshere"}, "", function(click_type)
     local c = ENTITY.GET_ENTITY_COORDS(players.user_ped(), false)
     all_vehs = entities.get_all_vehicles_as_handles()
-    for k,veh in pairs(all_vehs) do
+    for k, veh in pairs(all_vehs) do
         if not PED.IS_PED_A_PLAYER(VEHICLE.GET_PED_IN_VEHICLE_SEAT(veh, -1, false)) then
             ENTITY.SET_ENTITY_COORDS(veh, c.x, c.y, c.z)
         end
     end
 end)
 
-
 halt_traffic = false
 menu.toggle(v_traffic_root, "停止交通", {"halttraffic"}, "阻止附近所有载具移动分毫。", function(on)
     halt_traffic = on
-    mod_uses("vehicle", if on then 1 else -1)
+    if halt_traffic then
+        mod_uses("vehicle", 1)
+    else
+        mod_uses("vehicle", -1)
+    end
 end)
 
 reverse_traffic = false
 menu.toggle(v_traffic_root, "反向交通", {"reversetraffic"}, "", function(on)
     reverse_traffic = on
-    mod_uses("vehicle", if on then 1 else -1)
+    if reverse_traffic then
+        mod_uses("vehicle", 1)
+    else
+        mod_uses("vehicle", -1)
+    end
 end)
+
 
 vehicles_thread = util.create_thread(function (thr)
     while true do
