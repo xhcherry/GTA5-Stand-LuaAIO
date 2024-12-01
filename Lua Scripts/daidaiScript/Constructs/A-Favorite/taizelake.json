@@ -1,0 +1,842 @@
+{
+    "craftlab": [
+        {
+            "entity": {
+                "alpha_level": 252,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 0.0,
+                    "roll": 0.0,
+                    "x": 0.0,
+                    "y": -1.2290019989013672,
+                    "yaw": 0.0,
+                    "z": 0.3989996314048767
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 4057291883,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 620.130615234375,
+                    "pos_y": -377.46563720703125,
+                    "pos_z": 24.39964485168457,
+                    "rot_pitch": 0.285325288772583,
+                    "rot_roll": -0.03564360737800598,
+                    "rot_yaw": 40.27127456665039
+                },
+                "string_name": "xs_prop_arena_landmine_01c_sf",
+                "type": 5,
+                "unique_number": 362643300,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 252,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 0.0,
+                    "roll": 0.0,
+                    "x": 0.0,
+                    "y": -1.4029998779296875,
+                    "yaw": 180.0,
+                    "z": 0.39299988746643066
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 4057291883,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 620.2430419921875,
+                    "pos_y": -377.5983581542969,
+                    "pos_z": 24.392780303955078,
+                    "rot_pitch": -0.285325288772583,
+                    "rot_roll": 0.03564363718032837,
+                    "rot_yaw": -139.7287139892578
+                },
+                "string_name": "xs_prop_arena_landmine_01c_sf",
+                "type": 5,
+                "unique_number": 859402179,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 252,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 0.0,
+                    "roll": 0.0,
+                    "x": 0.0,
+                    "y": 0.08399999886751175,
+                    "yaw": 0.0,
+                    "z": 0.6670004725456238
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 775647110,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 619.2825927734375,
+                    "pos_y": -376.4649658203125,
+                    "pos_z": 24.67418098449707,
+                    "rot_pitch": 0.285325288772583,
+                    "rot_roll": -0.03564360737800598,
+                    "rot_yaw": 40.27127456665039
+                },
+                "string_name": "xs_prop_arena_landmine_01a_sf",
+                "type": 5,
+                "unique_number": 1188022543,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 255,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 0.0,
+                    "roll": 0.0,
+                    "x": 0.0,
+                    "y": -0.2680002450942993,
+                    "yaw": -0.48003387451171875,
+                    "z": 0.6689998507499695
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 775647110,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 619.5101318359375,
+                    "pos_y": -376.7335205078125,
+                    "pos_z": 24.674427032470703,
+                    "rot_pitch": 0.28561386466026306,
+                    "rot_roll": -0.03325185179710388,
+                    "rot_yaw": 39.791236877441406
+                },
+                "string_name": "xs_prop_arena_landmine_01a_sf",
+                "type": 5,
+                "unique_number": 415029550,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 255,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 0.0,
+                    "roll": 0.0,
+                    "x": -0.5319985151290894,
+                    "y": -1.5019956827163696,
+                    "yaw": 179.7599639892578,
+                    "z": 0.5039998888969421
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 775647110,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 619.9014282226563,
+                    "pos_y": -378.01824951171875,
+                    "pos_z": 24.502954483032227,
+                    "rot_pitch": -0.2854720950126648,
+                    "rot_roll": 0.03444794937968254,
+                    "rot_yaw": -139.96875
+                },
+                "string_name": "xs_prop_arena_landmine_01a_sf",
+                "type": 5,
+                "unique_number": 684553531,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 255,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 0.0,
+                    "roll": 0.0,
+                    "x": 0.5369991660118103,
+                    "y": -1.505998969078064,
+                    "yaw": -179.7599639892578,
+                    "z": 0.5060005784034729
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 775647110,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 620.7196655273438,
+                    "pos_y": -377.3302917480469,
+                    "pos_z": 24.505599975585938,
+                    "rot_pitch": -0.2851734459400177,
+                    "rot_roll": 0.036838628351688385,
+                    "rot_yaw": -139.48866271972656
+                },
+                "string_name": "xs_prop_arena_landmine_01a_sf",
+                "type": 5,
+                "unique_number": 1054807411,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 252,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 0.0,
+                    "roll": 0.0,
+                    "x": 0.4299991726875305,
+                    "y": 0.0,
+                    "yaw": 0.0,
+                    "z": -0.012999960221350193
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 775647110,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 619.6631469726563,
+                    "pos_y": -376.24822998046875,
+                    "pos_z": 23.99403953552246,
+                    "rot_pitch": 0.285325288772583,
+                    "rot_roll": -0.03564360737800598,
+                    "rot_yaw": 40.27127456665039
+                },
+                "string_name": "xs_prop_arena_landmine_01a_sf",
+                "type": 5,
+                "unique_number": 2133624635,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 255,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 0.0,
+                    "roll": 0.0,
+                    "x": -0.43400031328201294,
+                    "y": 0.0,
+                    "yaw": 0.0,
+                    "z": -0.03300032019615173
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 775647110,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 619.0038452148438,
+                    "pos_y": -376.806640625,
+                    "pos_z": 23.973501205444336,
+                    "rot_pitch": 0.285325288772583,
+                    "rot_roll": -0.03564360737800598,
+                    "rot_yaw": 40.27127456665039
+                },
+                "string_name": "xs_prop_arena_landmine_01a_sf",
+                "type": 5,
+                "unique_number": 1696658166,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 255,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 74.89999389648438,
+                    "roll": 0.0,
+                    "x": 0.43600010871887207,
+                    "y": -0.0820000022649765,
+                    "yaw": -179.7599639892578,
+                    "z": 0.24800044298171997
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 775647110,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 619.721435546875,
+                    "pos_y": -376.3080139160156,
+                    "pos_z": 24.25463104248047,
+                    "rot_pitch": 74.61480712890625,
+                    "rot_roll": 0.13885590434074402,
+                    "rot_yaw": -139.6227264404297
+                },
+                "string_name": "xs_prop_arena_landmine_01a_sf",
+                "type": 5,
+                "unique_number": 1226893971,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 255,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 75.0,
+                    "roll": 0.0,
+                    "x": -0.4460000991821289,
+                    "y": -0.10199999809265137,
+                    "yaw": 180.0,
+                    "z": 0.24400000274181366
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 775647110,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 619.0614013671875,
+                    "pos_y": -376.8934020996094,
+                    "pos_z": 24.249982833862305,
+                    "rot_pitch": 74.71464538574219,
+                    "rot_roll": 0.13520067930221558,
+                    "rot_yaw": -139.8592987060547
+                },
+                "string_name": "xs_prop_arena_landmine_01a_sf",
+                "type": 5,
+                "unique_number": 24868229,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 252,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 74.89999389648438,
+                    "roll": 0.0,
+                    "x": 0.0,
+                    "y": -0.08400000631809235,
+                    "yaw": 180.0,
+                    "z": 0.2519989013671875
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 775647110,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 619.3900756835938,
+                    "pos_y": -376.5914001464844,
+                    "pos_z": 24.25834846496582,
+                    "rot_pitch": 74.6146469116211,
+                    "rot_roll": 0.1343460977077484,
+                    "rot_yaw": -139.85841369628906
+                },
+                "string_name": "xs_prop_arena_landmine_01a_sf",
+                "type": 5,
+                "unique_number": 34101468,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 252,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 0.0,
+                    "roll": 0.0,
+                    "x": 0.0,
+                    "y": -1.4910012483596802,
+                    "yaw": 0.0,
+                    "z": 0.37800103425979614
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 4057291883,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 620.2999267578125,
+                    "pos_y": -377.6654357910156,
+                    "pos_z": 24.377342224121094,
+                    "rot_pitch": 0.285325288772583,
+                    "rot_roll": -0.03564360737800598,
+                    "rot_yaw": 40.27127456665039
+                },
+                "string_name": "xs_prop_arena_landmine_01c_sf",
+                "type": 5,
+                "unique_number": 1610322041,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 255,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": 0.0,
+                    "roll": 0.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "yaw": 0.0,
+                    "z": 0.0
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 775647110,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 619.3350830078125,
+                    "pos_y": -376.5262451171875,
+                    "pos_z": 24.006771087646484,
+                    "rot_pitch": 0.285325288772583,
+                    "rot_roll": -0.03564360737800598,
+                    "rot_yaw": 40.27127456665039
+                },
+                "string_name": "xs_prop_arena_landmine_01a_sf",
+                "type": 5,
+                "unique_number": 362723229,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 255,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": -16.81199073791504,
+                    "roll": 0.0,
+                    "x": 0.0,
+                    "y": 1.3550002574920654,
+                    "yaw": 0.0,
+                    "z": 0.15799996256828308
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 4057291883,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 618.4596557617188,
+                    "pos_y": -375.4930725097656,
+                    "pos_z": 24.17151641845703,
+                    "rot_pitch": -16.526657104492188,
+                    "rot_roll": -0.037178415805101395,
+                    "rot_yaw": 40.260520935058594
+                },
+                "string_name": "xs_prop_arena_landmine_01c_sf",
+                "type": 5,
+                "unique_number": 565804577,
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "additional_data": {
+                    "health": 1000
+                },
+                "alpha_level": 255,
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": false,
+                "model": 1031562256,
+                "placement": {
+                    "pos_x": 619.3350830078125,
+                    "pos_y": -376.5262145996094,
+                    "pos_z": 24.00676727294922,
+                    "rot_pitch": 0.285325288772583,
+                    "rot_roll": -0.03564360737800598,
+                    "rot_yaw": 40.27127456665039
+                },
+                "string_name": "泰泽拉克",
+                "type": 3,
+                "unique_number": 241157896,
+                "vehicle_data": {
+                    "brake_lights": false,
+                    "dashboard_color": 0,
+                    "dirt_level": 2.3784008026123047,
+                    "doors": {
+                        "is_broken_0": false,
+                        "is_broken_1": false,
+                        "is_broken_2": false,
+                        "is_broken_3": false,
+                        "is_broken_4": false,
+                        "is_broken_5": false,
+                        "is_broken_6": false
+                    },
+                    "drift_tyres": true,
+                    "enveff_scale": 0.0,
+                    "extras": {
+                        "exist_0": false,
+                        "exist_1": false,
+                        "exist_10": false,
+                        "exist_11": false,
+                        "exist_12": false,
+                        "exist_13": false,
+                        "exist_14": false,
+                        "exist_15": false,
+                        "exist_16": false,
+                        "exist_17": false,
+                        "exist_18": false,
+                        "exist_19": false,
+                        "exist_2": false,
+                        "exist_20": false,
+                        "exist_21": false,
+                        "exist_22": false,
+                        "exist_23": false,
+                        "exist_24": false,
+                        "exist_25": false,
+                        "exist_26": false,
+                        "exist_27": false,
+                        "exist_28": false,
+                        "exist_29": false,
+                        "exist_3": false,
+                        "exist_30": false,
+                        "exist_31": false,
+                        "exist_32": false,
+                        "exist_33": false,
+                        "exist_34": false,
+                        "exist_35": false,
+                        "exist_36": false,
+                        "exist_37": false,
+                        "exist_38": false,
+                        "exist_39": false,
+                        "exist_4": false,
+                        "exist_40": false,
+                        "exist_41": false,
+                        "exist_42": false,
+                        "exist_43": false,
+                        "exist_44": false,
+                        "exist_45": false,
+                        "exist_46": false,
+                        "exist_47": false,
+                        "exist_48": false,
+                        "exist_49": false,
+                        "exist_5": false,
+                        "exist_50": false,
+                        "exist_51": false,
+                        "exist_52": false,
+                        "exist_53": false,
+                        "exist_54": false,
+                        "exist_55": false,
+                        "exist_56": false,
+                        "exist_57": false,
+                        "exist_58": false,
+                        "exist_59": false,
+                        "exist_6": false,
+                        "exist_60": false,
+                        "exist_7": false,
+                        "exist_8": false,
+                        "exist_9": false
+                    },
+                    "headlight_color": 2,
+                    "headlight_multiplier": 1.0,
+                    "heli": {
+                        "is_heli": false
+                    },
+                    "indicator_lights": 0,
+                    "interior_color": 0,
+                    "interior_light": false,
+                    "is_convertible": false,
+                    "is_custom_primary_color": false,
+                    "is_custom_secondary_color": true,
+                    "is_engine_running": true,
+                    "is_locked": false,
+                    "is_windscreen_detached": false,
+                    "light_state": 0,
+                    "livery": -277,
+                    "mod_slot": {
+                        "mod_index_0": 0,
+                        "mod_index_1": 7,
+                        "mod_index_10": -1,
+                        "mod_index_11": 3,
+                        "mod_index_12": 2,
+                        "mod_index_13": -1,
+                        "mod_index_14": 48,
+                        "mod_index_15": -1,
+                        "mod_index_16": 4,
+                        "mod_index_2": 3,
+                        "mod_index_23": -1,
+                        "mod_index_24": -1,
+                        "mod_index_25": -1,
+                        "mod_index_26": -1,
+                        "mod_index_27": -1,
+                        "mod_index_28": -1,
+                        "mod_index_29": -1,
+                        "mod_index_3": -1,
+                        "mod_index_30": -1,
+                        "mod_index_31": -1,
+                        "mod_index_32": -1,
+                        "mod_index_33": -1,
+                        "mod_index_34": -1,
+                        "mod_index_35": -1,
+                        "mod_index_36": -1,
+                        "mod_index_37": -1,
+                        "mod_index_38": -1,
+                        "mod_index_39": -1,
+                        "mod_index_4": -1,
+                        "mod_index_40": -1,
+                        "mod_index_41": -1,
+                        "mod_index_42": -1,
+                        "mod_index_43": -1,
+                        "mod_index_44": -1,
+                        "mod_index_45": -1,
+                        "mod_index_46": -1,
+                        "mod_index_47": -1,
+                        "mod_index_48": -1,
+                        "mod_index_5": 3,
+                        "mod_index_6": -1,
+                        "mod_index_7": -1,
+                        "mod_index_8": -1,
+                        "mod_index_9": -1,
+                        "mod_toggle_17": false,
+                        "mod_toggle_18": true,
+                        "mod_toggle_19": false,
+                        "mod_toggle_20": true,
+                        "mod_toggle_21": false,
+                        "mod_toggle_22": true,
+                        "mod_variation_0": 0,
+                        "mod_variation_1": 0,
+                        "mod_variation_10": 0,
+                        "mod_variation_11": 0,
+                        "mod_variation_12": 0,
+                        "mod_variation_13": 0,
+                        "mod_variation_14": 0,
+                        "mod_variation_15": 0,
+                        "mod_variation_16": 0,
+                        "mod_variation_2": 0,
+                        "mod_variation_23": 0,
+                        "mod_variation_24": 0,
+                        "mod_variation_25": 0,
+                        "mod_variation_26": 0,
+                        "mod_variation_27": 0,
+                        "mod_variation_28": 0,
+                        "mod_variation_29": 0,
+                        "mod_variation_3": 0,
+                        "mod_variation_30": 0,
+                        "mod_variation_31": 0,
+                        "mod_variation_32": 0,
+                        "mod_variation_33": 0,
+                        "mod_variation_34": 0,
+                        "mod_variation_35": 0,
+                        "mod_variation_36": 0,
+                        "mod_variation_37": 0,
+                        "mod_variation_38": 0,
+                        "mod_variation_39": 0,
+                        "mod_variation_4": 0,
+                        "mod_variation_40": 0,
+                        "mod_variation_41": 0,
+                        "mod_variation_42": 0,
+                        "mod_variation_43": 0,
+                        "mod_variation_44": 0,
+                        "mod_variation_45": 0,
+                        "mod_variation_46": 0,
+                        "mod_variation_47": 0,
+                        "mod_variation_48": 0,
+                        "mod_variation_5": 0,
+                        "mod_variation_6": 0,
+                        "mod_variation_7": 0,
+                        "mod_variation_8": 0,
+                        "mod_variation_9": 0
+                    },
+                    "neon": {
+                        "is_enabled_0": false,
+                        "is_enabled_1": false,
+                        "is_enabled_2": false,
+                        "is_enabled_3": false
+                    },
+                    "number_plate_text": " 0 KMH  ",
+                    "number_plate_text_index": 0,
+                    "pearl_color": 3,
+                    "primary_colour": 21,
+                    "rgb_colors": {
+                        "custom_primary_colour_b": 18,
+                        "custom_primary_colour_g": 16,
+                        "custom_primary_colour_r": 15,
+                        "custom_secondary_colour_b": 255,
+                        "custom_secondary_colour_g": 244,
+                        "custom_secondary_colour_r": 0,
+                        "neon_lights_colour_b": 255,
+                        "neon_lights_colour_g": 0,
+                        "neon_lights_colour_r": 255,
+                        "tyre_smoke_colour_b": 255,
+                        "tyre_smoke_colour_g": 255,
+                        "tyre_smoke_colour_r": 255
+                    },
+                    "roof_state": 0,
+                    "scorched_render": false,
+                    "secondary_colour": 38,
+                    "siren_light": false,
+                    "tyres": {
+                        "is_burst_left_front": false,
+                        "is_burst_left_mid": false,
+                        "is_burst_left_mid6": false,
+                        "is_burst_left_rear": false,
+                        "is_burst_right_front": false,
+                        "is_burst_right_mid": false,
+                        "is_burst_right_mid6": false,
+                        "is_burst_right_rear": false
+                    },
+                    "tyres_can_burst": false,
+                    "wheel_color": 0,
+                    "wheel_type": 7,
+                    "window_tint": 0,
+                    "windows": {
+                        "is_deleted_left_front": false,
+                        "is_deleted_left_rear": false,
+                        "is_deleted_right_front": false,
+                        "is_deleted_right_rear": false
+                    }
+                },
+                "visible": true
+            }
+        },
+        {
+            "entity": {
+                "alpha_level": 252,
+                "attach_data": {
+                    "attached_to_bone": 0,
+                    "attached_to_number": 241157896,
+                    "attached_to_type": "vehicle",
+                    "pitch": -19.17900848388672,
+                    "roll": 0.0,
+                    "x": 0.0,
+                    "y": 1.53600013256073,
+                    "yaw": -0.24003219604492188,
+                    "z": 0.10300074517726898
+                },
+                "collision": true,
+                "dynamic": true,
+                "freeze": false,
+                "gravity": true,
+                "invincible": true,
+                "is_attached": true,
+                "model": 4057291883,
+                "object_data": {
+                    "Lights": true
+                },
+                "placement": {
+                    "pos_x": 618.3424682617188,
+                    "pos_y": -375.354736328125,
+                    "pos_z": 24.117420196533203,
+                    "rot_pitch": -18.89352798461914,
+                    "rot_roll": -0.03640973940491676,
+                    "rot_yaw": 40.019283294677734
+                },
+                "string_name": "xs_prop_arena_landmine_01c_sf",
+                "type": 5,
+                "unique_number": 606093431,
+                "visible": true
+            }
+        }
+    ],
+    "other_data": null,
+    "self_ped_data": {
+        "is_active": false
+    }
+}
