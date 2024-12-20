@@ -1,12 +1,12 @@
 local required <const> = {
-    "lib/GTSCRIPTS/O.lua",
+    "lib/luavip/O.lua",
 	"lib/GTP/json.lua",
 	"lib/GTP/json/constant.lua",
 	"lib/GTP/json/parser.lua",
 	"lib/GTP/json/serializer.lua",
 }
-local Functions = require "lib.GTSCRIPTS.O"
---local PedList <const> = require "lib.GTSCRIPTS.ped_list"
+local Functions = require "lib.luavip.O"
+--local PedList <const> = require "lib.luavip.ped_list"
 
 ---------------------
 -- SPOOFING PROFILE

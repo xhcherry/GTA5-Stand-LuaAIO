@@ -7,7 +7,7 @@ THIS FILE IS PART OF WIRISCRIPT
 
 ---@diagnostic disable: exp-in-action, unknown-symbol, break-outside, undefined-global
 
-require "lib.GTSCRIPTS.O"
+require "lib.luavip.O"
 
 --------------------------
 -- BITFIELD

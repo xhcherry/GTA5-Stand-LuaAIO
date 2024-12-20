@@ -43,17 +43,17 @@ local state = {}
 ---
 --- Dependencies
 ---
-local inspect = require "lib.GTSCRIPTS.GTC.lib.inspect"
+local inspect = require "lib.luavip.GTC.lib.inspect"
 
-local constants = require "lib.GTSCRIPTS.GTC.lib.constants"
+local constants = require "lib.luavip.GTC.lib.constants"
 
-local constructor_lib = require "lib.GTSCRIPTS.GTC.lib.constructor_lib"
+local constructor_lib = require "lib.luavip.GTC.lib.constructor_lib"
 
-local convertors = require "lib.GTSCRIPTS.GTC.lib.convertors"
+local convertors = require "lib.luavip.GTC.lib.convertors"
 
-local curated_attachments = require "lib.GTSCRIPTS.GTC.lib.curated_attachments"
+local curated_attachments = require "lib.luavip.GTC.lib.curated_attachments"
 
-local translations = require "lib.GTSCRIPTS.GTC.lib.translations"
+local translations = require "lib.luavip.GTC.lib.translations"
 
 ---
 --- Debug Log

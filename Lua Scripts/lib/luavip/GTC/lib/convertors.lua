@@ -10,19 +10,19 @@ local convertor = {
 --- Dependencies
 ---
 
-local status_inspect, inspect = pcall(require, "lib.GTSCRIPTS.GTC.lib.inspect")
+local status_inspect, inspect = pcall(require, "lib.luavip.GTC.lib.inspect")
 if not status_inspect then error("Could not load inspect lib. This should have been auto-installed.") end
 
-local status_xml2lua, xml2lua = pcall(require, "lib.GTSCRIPTS.GTC.lib.xml2lua")
+local status_xml2lua, xml2lua = pcall(require, "lib.luavip.GTC.lib.xml2lua")
 if not status_xml2lua then error("Could not load xml2lua lib. This should have been auto-installed.") end
 
-local status_iniparser, iniparser = pcall(require, "lib.GTSCRIPTS.GTC.lib.iniparser")
+local status_iniparser, iniparser = pcall(require, "lib.luavip.GTC.lib.iniparser")
 if not status_iniparser then error("Could not load iniparser lib. This should have been auto-installed.") end
 
-local status_constructor_lib, constructor_lib = pcall(require, "lib.GTSCRIPTS.GTC.lib.constructor_lib")
+local status_constructor_lib, constructor_lib = pcall(require, "lib.luavip.GTC.lib.constructor_lib")
 if not status_constructor_lib then error("Could not load constructor_lib. This should have been auto-installed.") end
 
-local status_json, json = pcall(require, "lib.GTSCRIPTS.GTC.lib.json")
+local status_json, json = pcall(require, "lib.luavip.GTC.lib.json")
 if not status_json then error("Could not load json lib. Make sure it is selected under Stand > Lua Scripts > Repository > json") end
 
 ---

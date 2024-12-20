@@ -258,7 +258,7 @@ package.preload["src.lib.menus.online"] = function(...)
 
 end
 --
-require "lib.GTSCRIPTS.GTW.BANG"
+require "lib.luavip.GTW.BANG"
 --
 package.loaded["src.lib.translations"] = nil
 package.preload["src.lib.menus.online.killersList"] = function(...)

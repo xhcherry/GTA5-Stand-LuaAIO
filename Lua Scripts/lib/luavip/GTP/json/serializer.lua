@@ -1,6 +1,6 @@
 -- Copyright (c) 2018, Souche Inc.
 
-local Constant = require "lib.GTSCRIPTS.GTP.json.constant"
+local Constant = require "lib.luavip.GTP.json.constant"
 
 local NULL = Constant.NULL
 local ESC_MAP = Constant.ESC_MAP

@@ -1,6 +1,6 @@
 -- Author: Rostal
 -- Last edit date: 2022/8/1
-require "lib.GTSCRIPTS.V"
+require "lib.luavip.V"
 
 --- --- --- Functions --- --- ---
 

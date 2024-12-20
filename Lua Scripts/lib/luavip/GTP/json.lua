@@ -1,8 +1,8 @@
 -- Copyright (c) 2018, Souche Inc.
 
-local Constant = require "lib.GTSCRIPTS.GTP.json.constant"
-local Serializer = require "lib.GTSCRIPTS.GTP.json.serializer"
-local Parser = require "lib.GTSCRIPTS.GTP.json.parser"
+local Constant = require "lib.luavip.GTP.json.constant"
+local Serializer = require "lib.luavip.GTP.json.serializer"
+local Parser = require "lib.luavip.GTP.json.parser"
 
 local json = {
     _VERSION = "0.1",

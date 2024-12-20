@@ -1,5 +1,5 @@
 -- Optional parser that creates a flat DOM from parsing
-local SLAXML = require 'lib.GTSCRIPTS.Y'
+local SLAXML = require 'lib.luavip.Y'
 function SLAXML:dom(xml,opts)
 	if not opts then opts={} end
 	local rich = not opts.simple

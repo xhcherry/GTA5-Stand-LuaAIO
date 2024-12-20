@@ -5,7 +5,7 @@ THIS FILE IS PART OF WIRISCRIPT
 --------------------------------
 ]]
 
-json = require "lib.GTSCRIPTS.GTP.json"
+json = require "lib.luavip.GTP.json"
 local self = {}
 self.version = 29
 

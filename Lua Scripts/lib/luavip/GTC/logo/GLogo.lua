@@ -7,11 +7,11 @@
  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝    ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝      
 GRANDTOURINGVIP™ Copyright© 2024 All rights reserved.]] 
 GT_version = '12.01'
-require "lib.GTSCRIPTS.W"
-require "lib.GTSCRIPTS.O"
-require "lib.GTSCRIPTS.T"
-require "lib.GTSCRIPTS.GTA.table"
-scaleform = require('lib.GTSCRIPTS.Z')
+require "lib.luavip.W"
+require "lib.luavip.O"
+require "lib.luavip.T"
+require "lib.luavip.GTA.table"
+scaleform = require('lib.luavip.Z')
 translations = {} Lang = {} Lang.Version = "" Template = false
 translations.lang = {} translations.current_translations = {} translations.missing_translations = {}
 friends_in_this_session = {} modders_in_this_session = {} wait = util.yield joaat = util.joaat
@@ -40,9 +40,9 @@ notifyMonth = 7
 notifyDay = 30
 _G.daysSince = _G.daysSince or 0
 --
-pathld = filesystem.scripts_dir() .. 'lib/GTSCRIPTS/GTW/display.lua'
+pathld = filesystem.scripts_dir() .. 'lib/luavip/GTW/display.lua'
 if filesystem.exists(pathld) then
-    require "lib.GTSCRIPTS.GTW.display"
+    require "lib.luavip.GTW.display"
 else
     gtoast("未检测到文件")
 end
@@ -980,7 +980,7 @@ function give_car_addon(pid, hash, center, ang)
     end
 end
 local function SF_ff9()
-    local scaleform = require('GTSCRIPTS.Z')
+    local scaleform = require('luavip.Z')
     local sf = scaleform('instructional_buttons')
     HUD.HIDE_HUD_COMPONENT_THIS_FRAME(6)
     HUD.HIDE_HUD_COMPONENT_THIS_FRAME(7)
@@ -16674,13 +16674,13 @@ function zoomaimfov(value)
     extraZoom = (value - 100) / 100
     modifiedZoomWeapon = nil
 end
-local STOREDIR = filesystem.scripts_dir() .. "/lib/" .. '/GTSCRIPTS/' .. '/GTW/'
-local LIBDIR = filesystem.scripts_dir() .. "lib\\GTSCRIPTS\\"
+local STOREDIR = filesystem.scripts_dir() .. "/lib/" .. '/luavip/' .. '/GTW/'
+local LIBDIR = filesystem.scripts_dir() .. "lib\\luavip\\"
 do_autoload = false
 local wpcmpTable = {}
 local weapons_table = {}
 if filesystem.exists(LIBDIR .. "R.lua") then
-    wpcmpTable = require("lib.GTSCRIPTS.R")
+    wpcmpTable = require("lib.luavip.R")
     weapons_table = util.get_weapons()
 else
     gtoast("您没有正确安装资源。\n确保组件资源lua在 " .. LIBDIR .. " directory")
@@ -16749,7 +16749,7 @@ function Load_Out_Weapon()
         player = players.user_ped()
         WEAPON.REMOVE_ALL_PED_WEAPONS(player, false)
         WEAPON.SET_CAN_PED_SELECT_ALL_WEAPONS(player, true)
-        local loadout = require("/lib/" .. '/GTSCRIPTS/' .. '/GTW/' .. "loadout")
+        local loadout = require("/lib/" .. '/luavip/' .. '/GTW/' .. "loadout")
         for w_hash, attach_dict in loadout do
             WEAPON.GIVE_WEAPON_TO_PED(player, w_hash, 10, false, true)
             if attach_dict.attachments ~= nil then
@@ -19479,7 +19479,7 @@ function clownattck(pid)
     end
 end
 local function SF_ff9()
-    local scaleform = require('lib.GTSCRIPTS.Z')
+    local scaleform = require('lib.luavip.Z')
     local sf = scaleform('instructional_buttons')
     HUD.HIDE_HUD_COMPONENT_THIS_FRAME(6)
     HUD.HIDE_HUD_COMPONENT_THIS_FRAME(7)
@@ -19595,7 +19595,7 @@ if PED.IS_PED_GETTING_INTO_A_VEHICLE(players.user_ped()) ==false and PED.IS_PED_
             end
         end
 function SFlsd()
-    local scaleform = require('GTSCRIPTS.Z')
+    local scaleform = require('luavip.Z')
     local sf = scaleform('instructional_buttons')
     HUD.HIDE_HUD_COMPONENT_THIS_FRAME(6)
     HUD.HIDE_HUD_COMPONENT_THIS_FRAME(7)
@@ -20447,10 +20447,10 @@ function FileList:reload()
 	self:load()
 end
 ---生成选项
-slaxdom = require("lib.GTSCRIPTS.X")
-slaxml = require("lib.GTSCRIPTS.Y")
-lunajson = require("lib.GTSCRIPTS.L")
-local iniparser = require("lib.GTSCRIPTS.S")
+slaxdom = require("lib.luavip.X")
+slaxml = require("lib.luavip.Y")
+lunajson = require("lib.luavip.L")
+local iniparser = require("lib.luavip.S")
 fail_text = "这文件不可以加载，可能是你妈的格式错了.滚去 Discord 上提交一份错误报告，并附上你刚刚尝试加载的载具文件."
 instruction_text = "\n按住shift和ctrl，然后点击一个载具，从你的目录中删除这个载具.按住空格，点击一个载具，添加到你的收藏夹."
 function request_anim_dict(dict)
@@ -29723,7 +29723,7 @@ end)
         ENTITY.ATTACH_ENTITY_TO_ENTITY(attach_object3, playerped3, 0, 0, 0, 0, 0.5, 0.0, 0, 0.0, true, true, false, 0, false)
     end)
     local attack = GT(playerMain, "闪电突击", {}, "召唤军队袭击该玩家")
-    require "lib.GTSCRIPTS.GTA.attacker"
+    require "lib.luavip.GTA.attacker"
     lazer_visible = true
     local gunner_weapons = "weapon_combatmg"
     GTAC(attack, "突击该玩家!!!", {"flashout"}, "默认无敌模式", function()

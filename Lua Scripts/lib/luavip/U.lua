@@ -5,7 +5,7 @@ THIS FILE IS PART OF WIRISCRIPT
 --------------------------------
 ]]
 
-require "lib.GTSCRIPTS.O"
+require "lib.luavip.O"
 
 local self = {}
 local version = 29

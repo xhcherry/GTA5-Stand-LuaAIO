@@ -126,7 +126,7 @@ end
 -- END TEMPLATE --
 
 
-require "lib.GTSCRIPTS.V"
+require "lib.luavip.V"
 
 if metaList then
     menu.divider(metaList, "-- Credits --")
@@ -152,9 +152,9 @@ function pairsByKeys(t, f)
     end
     return iter
  end
-local status = pcall(require, 'lib.GTSCRIPTS.W')
+local status = pcall(require, 'lib.luavip.W')
 if not status then
-    util.toast("加载资源文件失败: lib.GTSCRIPTS.W")
+    util.toast("加载资源文件失败: lib.luavip.W")
     util.stop_script()
 end
 

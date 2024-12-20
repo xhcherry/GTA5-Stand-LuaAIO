@@ -1,25 +1,25 @@
 _G.native_v = native_invoker.unified_void
 _G.native_b = native_invoker.unified_bool
 function restartscript() 
-    --package.loaded["lib.GTSCRIPTS.Q"] = nil
-    package.loaded["lib.GTSCRIPTS.GTC.logo.GLogo"] = nil 
-    package.loaded["lib.GTSCRIPTS.V"] = nil
+    --package.loaded["lib.luavip.Q"] = nil
+    package.loaded["lib.luavip.GTC.logo.GLogo"] = nil 
+    package.loaded["lib.luavip.V"] = nil
     util.yield()
     util.restart_script() 
 end
 function loadgt()
 memory.alloc_int()
-    require "lib.GTSCRIPTS.GTC.logo.GLogo"
-    require "lib.GTSCRIPTS.W"
-    require('lib/GTSCRIPTS/T')
-    require "lib.GTSCRIPTS.GTW.fixnative"
-    K = require 'lib.GTSCRIPTS.K' 
-    local scaleForm = require'lib.GTSCRIPTS.Z' 
+    require "lib.luavip.GTC.logo.GLogo"
+    require "lib.luavip.W"
+    require('lib/luavip/T')
+    require "lib.luavip.GTW.fixnative"
+    K = require 'lib.luavip.K' 
+    local scaleForm = require'lib.luavip.Z' 
     local SFasd = scaleForm('instructional_buttons') 
-    local UFO = require "lib.GTSCRIPTS.U" 
-    local HomingMissiles = require "lib.GTSCRIPTS.H" 
-    local GuidedMissile = require "lib.GTSCRIPTS.M" 
-require "lib.GTSCRIPTS.GTW.hbcheck"
+    local UFO = require "lib.luavip.U" 
+    local HomingMissiles = require "lib.luavip.H" 
+    local GuidedMissile = require "lib.luavip.M" 
+require "lib.luavip.GTW.hbcheck"
 function gtoast(str)
     return util.toast(str)
 end
@@ -180,7 +180,7 @@ GTD(Musiness_Banager, "[自动资产] 版本:3bdbf03")
 GTD(Constructor_Lua, "[模组选项]")
 GTD(other_options, "[设置选项]")
 local configFile <const> = filesystem.scripts_dir() .. '\\GTLuaScript\\'.. "config.ini"
-dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\Q.lua")
+dofile(filesystem.scripts_dir().."\\lib\\luavip\\Q.lua")
 if SCRIPT_MANUAL_START then
     menu.trigger_commands("gtluascript")
 end
@@ -489,10 +489,10 @@ end)
 player_info = GT(players_root, '玩家信息栏', {''}, '开启后请在玩家列表中查看玩家信息')
 InfoLoads = GTAC(player_info, "启动玩家信息栏显示", {""}, "", function()
     wait(100)
-    dofile(filesystem.scripts_dir() .. "\\lib\\GTSCRIPTS\\I.lua")
+    dofile(filesystem.scripts_dir() .. "\\lib\\luavip\\I.lua")
     GTLuaScript.delete(InfoLoads)
 end)
-require "lib.GTSCRIPTS.P"
+require "lib.luavip.P"
 click_bot = GT(players_root, "自动点击", {''}, '自动帮助您进行点击')
 simulate_left_click_delay = 30
 GTLP(click_bot, "自动鼠标左键点击", {"left_click"}, "用于拿取目标财物时", function()
@@ -506,12 +506,12 @@ GTLuaScript.slider(click_bot, "自动点击延迟", {"delay_left_click"}, "单�
 end)
 kdr = GT(players_root, "设置KD值", {}, "请注意，这不是虚假KD")
 loadkdr = GTAC(kdr, "读取KD数据", {}, "", function ()
-    require "lib.GTSCRIPTS.GTA.kd"
+    require "lib.luavip.GTA.kd"
     wait()
     menu.delete(loadkdr)
 end)
 --开发
---require "lib.GTSCRIPTS.GTA.list"
+--require "lib.luavip.GTA.list"
 notified_devs = {}
 dev = GTTG(players_root, "DEV", {"devcheck"}, "", function(f)
     devgt = f
@@ -2122,7 +2122,7 @@ end
 funfeatures_self = GT(selflist, '自我娱乐', {}, '')
 Entity_Control_Options = GT(selflist, "通用实体控制", {}, "")
 loadtyst = GTAC(Entity_Control_Options, "加载通用实体控制", {}, "", function ()
-    dofile(filesystem.scripts_dir().."lib\\GTSCRIPTS\\GTA\\entityctrl.lua")
+    dofile(filesystem.scripts_dir().."lib\\luavip\\GTA\\entityctrl.lua")
     wait()
     menu.delete(loadtyst)
 end)
@@ -2341,13 +2341,13 @@ hdfj = false
 end)
 fb = GT(selflist,"恶搞玩乐", {}, "非常有趣喔~")
 loadfb = GTAC(fb, "加载恶搞玩乐", {}, "", function ()
-    require "lib.GTSCRIPTS.GTA.blackhold"
+    require "lib.luavip.GTA.blackhold"
     wait()
     menu.delete(loadfb)
 end)
 watch_dog = GT(selflist, "看门狗[New]", {}, "", function(); end)
 loaddog =  GTAC(watch_dog, "加载看门狗", {}, "", function ()
-    dofile(filesystem.scripts_dir().."\\lib\\GTSCRIPTS\\D.lua")
+    dofile(filesystem.scripts_dir().."\\lib\\luavip\\D.lua")
     wait()
     menu.delete(loaddog)
 end)
@@ -6984,12 +6984,12 @@ Camera_value = (jlx * 1)
 end)
 entitymanagerlist = GT(lobbyFeats, "天眼黑客面板", {}, "管理玩家附近的NPC/载具/物体")
 loadtanyan = GTAC(entitymanagerlist, "加载天眼黑客面板", {}, "", function ()
-    dofile(filesystem.scripts_dir().."lib\\GTSCRIPTS\\GTA\\hack.lua")
+    dofile(filesystem.scripts_dir().."lib\\luavip\\GTA\\hack.lua")
     wait()
     menu.delete(loadtanyan)
 end)
 adminworld = GT(lobbyFeats, "控制任务实体", {}, "")
-require "lib.GTSCRIPTS.GTA.admin"
+require "lib.luavip.GTA.admin"
 --
 NPC_Weak_Options = GT(lobbyFeats, "弱化NPC选项", {}, "")
 menu.list_select(NPC_Weak_Options, "NPC类型", {}, "", NPCItem.PedType, 1, function(value)
@@ -12692,7 +12692,7 @@ GTAC(sessionfun, "打飞机", {}, "我还需要解释这个吗", function()
     personlhitplane()
 end)
 nuke = GT(weapon_options, '核弹枪', {}, '超级壮观喔~')
-require "lib.GTSCRIPTS.GTW.nuke"
+require "lib.luavip.GTW.nuke"
 GTLP(nuke, "核弹枪", {},
     "如果想要开飞机扔核弹，你只需要打开此选项并且使用手枪向地面射击", function()
         if PED.IS_PED_SHOOTING(players.user_ped()) then
@@ -12831,7 +12831,7 @@ end)
 GTD(entity_control, "实体控制")
 Weapon_Cam_Gun = GT(weapon_options, "视野范围枪")
 loadsyq = GTAC(Weapon_Cam_Gun, "加载视野范围枪", {}, "", function ()
-    require "lib.GTSCRIPTS.GTA.eg"
+    require "lib.luavip.GTA.eg"
     wait()
     menu.delete(loadsyq)
 end)
@@ -14655,7 +14655,7 @@ end)
 nfs_cs = GT(carfly, '车速表', {''}, '')
 Vehicle_Collision_Reaction = GT(carfly, "载具碰撞反应")
 loadvehpz = GTAC(Vehicle_Collision_Reaction, "加载载具碰撞反应", {}, "", function ()
-    require "lib.GTSCRIPTS.GTA.vehpop"
+    require "lib.luavip.GTA.vehpop"
     wait()
     menu.delete(loadvehpz)
 end)
@@ -15466,7 +15466,7 @@ local rotation_speed = 50
 GTLuaScript.slider(funfeatures_veh,("空中漂移速度"), {"flydriftspeed"} , "", 50, 1000, 50, 50, function(value)
     rotation_speed = value
 end)
-local vehflyt = require "lib.GTSCRIPTS.GTA.vehflyt"
+local vehflyt = require "lib.luavip.GTA.vehflyt"
 local vehicle_rotation = nil
 set_vehicle_to_cam_rot = GTLP(funfeatures_veh,("载具空中漂移"), {}, "鼠标控制方向", function()
     if PED.IS_PED_IN_ANY_VEHICLE(players.user_ped(), false) then
@@ -15635,7 +15635,7 @@ end)]]
 aircrafthud = GT(funfeatures_veh, "飞机信息显示", {}, "", function();end)
 feijihud = GTAC(aircrafthud,"加载飞机信息显示",{"loadF"},"",function()
     wait(1500)
-    require("lib/GTSCRIPTS/F")
+    require("lib/luavip/F")
     menu.delete(feijihud)
 end)
 dow_block = 0
@@ -16961,7 +16961,7 @@ fuckjp = GT(custselc, "自动崩溃小日本", {}, "", function ()
 end)
 getsd = GTAC(fuckjp, "获取数据", {}, "", function ()
     menu.set_visible(getsd,false)
-    dofile(filesystem.scripts_dir() .."lib/GTSCRIPTS/GTA/fuckjp.lua")
+    dofile(filesystem.scripts_dir() .."lib/luavip/GTA/fuckjp.lua")
 end)
 vehtroll = GT(custselc,("战局载具恶搞"))
 GTAC(vehtroll,("随机入侵玩家载具"), {}, "", function()
@@ -19870,7 +19870,7 @@ end)
     detection = GT(protex, "检测选项", {}, "", function(); end)
     throttler = GT(protex, "自动节流器", {}, "")
     loadthrottler = GTAC(throttler, "加载自动节流器", {}, "", function ()
-        require "lib.GTSCRIPTS.E"
+        require "lib.luavip.E"
         wait()
         menu.delete(loadthrottler)
     end)
@@ -19878,7 +19878,7 @@ end)
     local block_event_anthing = GT(protex, "阻止选项", {}, "", function() end)
     local block_effect = GT(protex, "拦截选项", {}, "", function() end)
     --管理选项
-	require("lib.GTSCRIPTS.N")
+	require("lib.luavip.N")
     --
     adbotblock = GT(protex, "广告拦截", {"blockidiotbot"}, "自动踢出聊天频道里发送广告的混蛋", function(on)
     end)
@@ -20382,10 +20382,10 @@ GTTG(protex,"取消战局同步",{},"", function(tb)
         chickenmode(on_toggle)
 	end)
     action_lua = GT(funfeatures, "动作选项", {}, "", function(); end)
-    require "lib.GTSCRIPTS.A"
+    require "lib.luavip.A"
     jingche = GT(funfeatures, "警车选项")
     loadjingche = GTAC(jingche, "加载警车选项", {}, "", function()
-        require "lib.GTSCRIPTS.J"
+        require "lib.luavip.J"
         wait()
         menu.delete(loadjingche)
     end)
@@ -20475,7 +20475,7 @@ GTTG(protex,"取消战局同步",{},"", function(tb)
     Load_Blackhole = GTAC(Blackhole, "加载黑洞选项", {""}, "", function()
     gtoast("请稍后...")
     wait(2000)
-    require "lib.GTSCRIPTS.B"
+    require "lib.luavip.B"
     GTluaScript.delete(Load_Blackhole)
     end)
     GTTG(funfeatures, "特斯拉自动驾驶", {}, "", function(toggled)
@@ -20992,8 +20992,8 @@ function dependency(path)
         return required_dep
     end
 end
-util.execute_in_os_thread(dependency("lib.GTSCRIPTS.Z"))
-local sfchat = require("lib.GTSCRIPTS.Z")("multiplayer_chat")
+util.execute_in_os_thread(dependency("lib.luavip.Z"))
+local sfchat = require("lib.luavip.Z")("multiplayer_chat")
 sfchat:draw_fullscreen()
 focusref = {}
 isfocused = false
@@ -22137,12 +22137,12 @@ end)
 Heist_Control_Load = GTAC(Heist_Control, "加载任务选项", {""}, "", function()
     newnotify("~h~GRANDTOURINGVIP", "~r~&#8721;‹GT‹&#8721;", "~h~~b~请稍等...", "CHAR_CHOP", 140)
     wait(2000)
-    dofile(filesystem.scripts_dir() .. "\\lib\\GTSCRIPTS\\GTW\\C10.lua")
+    dofile(filesystem.scripts_dir() .. "\\lib\\luavip\\GTW\\C10.lua")
     GTLuaScript.delete(Heist_Control_Load)
 end)
 function loadmodues()
     Constructor_Lua_Load = GT(Constructor_Lua, "生成构造体")
-    dofile(filesystem.scripts_dir() .. "\\lib\\GTSCRIPTS\\GTC\\Constructor.lua")
+    dofile(filesystem.scripts_dir() .. "\\lib\\luavip\\GTC\\Constructor.lua")
     sc = GT(Constructor_Lua, "载具与地图")
     GTD(sc, "载具")
     GTAC(sc, "搜索载具模组", {"lssearchv"}, "", function(click_type)
@@ -22557,7 +22557,7 @@ GTTG(other_options,"设置游戏高优先度", {}, "可有效减少游戏卡顿�
         MISC.SET_SCRIPT_HIGH_PRIO(false)
     end
 end)
-require "lib.GTSCRIPTS.GTA.hbl"
+require "lib.luavip.GTA.hbl"
 sponsor = GT(other_options, 'GTLua VIP 顶级用户', {}, '功德无量，爱心支持')
 GTD(sponsor, ">>所有 GTLua VIP 顶级用户<<")
 GTD(sponsor, "GTLua VIP: Flowers Ocean [Minecraft Server]")
@@ -22710,7 +22710,7 @@ misclightmenu = GT(zhujixianshi, "追光灯")
 playerdis = GT(zhujixianshi, "显示玩家栏")
 WaterMark = GT(zhujixianshi, "信息栏", {""}, "非常好看且实用的信息显示~")
 rainbowinfo = GTAC(WaterMark, "开启信息显示", {""}, "开启该功能选项在最下方", function()
-    dofile(filesystem.scripts_dir() .. "\\lib\\GTSCRIPTS\\GTW\\WM.lua")
+    dofile(filesystem.scripts_dir() .. "\\lib\\luavip\\GTW\\WM.lua")
     GTLuaScript.delete(rainbowinfo)
 end)
 map_name_type = v2()
@@ -23682,7 +23682,7 @@ end
 end)
 zaxiang = GT(other_options, "其他杂项功能")
 --[[ZT = GT(zaxiang, "动态主题", {"sszt"}, "")
-require "lib.GTSCRIPTS.GTW.ZT"]]
+require "lib.luavip.GTW.ZT"]]
 times_button_pressed = 0
 GTAC(zaxiang,"试试点击", {}, "一个友好的功能哟~\n连点有彩蛋喔~", function(f)
     anwo = f
@@ -23955,7 +23955,7 @@ GTTG(zhujixianshi, "显示Stand版本", {"standedition"}, "", function(toggle)
     set_menu_open(toggle)
 end)
 GTAC(other_options, "幸运人员", {}, "", function ()
-    --require "lib.GTSCRIPTS.GTA.list"
+    --require "lib.luavip.GTA.list"
     local name = SOCIALCLUB.SC_ACCOUNT_INFO_GET_NICKNAME()
     local hasPermission = false 
     for _, id in ipairs(spid) do
@@ -24277,7 +24277,7 @@ GTAC(zaxiang, "赌一赌", {}, "我也不知道会发生什么", function()
         ENTITY.APPLY_FORCE_TO_ENTITY(0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false)
     end
 end)
-require "lib.GTSCRIPTS.GTW.real"
+require "lib.luavip.GTW.real"
 GTLP(zaxiang, "真诚的人不会太差", {}, "", function ()
     realheart()
 end)

@@ -1,5 +1,5 @@
-HomingMissiles = require "lib.GTSCRIPTS.H"
-GuidedMissile = require "lib.GTSCRIPTS.M"
+HomingMissiles = require "lib.luavip.H"
+GuidedMissile = require "lib.luavip.M"
 
 local toggle = menu.toggle_loop(list_homingMissiles, "先进追踪导弹", {"homingmissiles"}, "鼠标右键射击出的才是追踪导弹哦!", function ()
 	if not UFO.exists() and not GuidedMissile.exists() then

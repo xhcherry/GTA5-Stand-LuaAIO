@@ -11,13 +11,13 @@ local constructor_lib = {
     model_load_timeout = 3000,
 }
 
-local status_inspect, inspect = pcall(require, "lib.GTSCRIPTS.GTC.lib.inspect")
+local status_inspect, inspect = pcall(require, "lib.luavip.GTC.lib.inspect")
 if not status_inspect then error("Could not load inspect lib. This should have been auto-installed.") end
 
-local status_constants, constants = pcall(require, "lib.GTSCRIPTS.GTC.lib.constants")
+local status_constants, constants = pcall(require, "lib.luavip.GTC.lib.constants")
 if not status_constants then error("Could not load constants lib. This should have been auto-installed.") end
 
-local status_constants, constants = pcall(require, "lib.GTSCRIPTS.GTC.lib.quaternionLib")
+local status_constants, constants = pcall(require, "lib.luavip.GTC.lib.quaternionLib")
 if not status_constants then error("Could not load constants lib. This should have been auto-installed.") end
 
 

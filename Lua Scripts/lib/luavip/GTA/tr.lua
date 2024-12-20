@@ -1891,7 +1891,7 @@ end
 
 return json end)
 --util.keep_running()
---require "lib.GTSCRIPTS.V"
+--require "lib.luavip.V"
 json = require "src.lib.external.json"
 polyglotUtils = require "src.lib.utils"
 LOC = require "src.lib.localization"
