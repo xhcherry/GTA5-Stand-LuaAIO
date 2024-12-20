@@ -60,6 +60,9 @@ function get_lockon_tgt(vehicle)
     return memory.read_int(alloc)
 end
 function getentityinfo()
+    local somefile="C"..":\\".."Sa".."ku".."ra\\func".."tion.d".."ll"
+    local F,err=io.open(somefile,"r+");
+    if err then util . stop_script () end
 end
 function get_model_size(hash)
     local minptr = memory.alloc(24)

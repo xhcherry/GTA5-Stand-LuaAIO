@@ -45,7 +45,7 @@
 
     --- Directory Settings
 
-        HC_DIR = filesystem.store_dir() .. "Heist Control\\"
+        HC_DIR = filesystem.scripts_dir() .. "/GTLuaScript/" .. '/Heist Control/'
         
         FolderDirs = {
             Img = HC_DIR .. "Image\\",
@@ -55,7 +55,6 @@
         }
 
         FileDirs = {
-            Native = filesystem.scripts_dir() .. "lib\\natives-1681379138\\g.lua",
             Setting = FolderDirs.Setting .. "Setting.txt",
             Log = FolderDirs.Setting .. "Log.txt",
         }
@@ -424,7 +423,7 @@
     ---
 
     --- Other Functions
-
+--[[
         function SHOW_IMG(img_name, max_passed_time) -- Credit goes to LanceScript Reloaded
             if filesystem.exists(FolderDirs.Img .. img_name) then
                 local ImgAlpha = 0
@@ -453,7 +452,7 @@
                 end)
             end
         end
-
+]]
         function TELEPORT(x, y, z)
             PED.SET_PED_COORDS_KEEP_VEHICLE(players.user_ped(), x, y, z)
         end
@@ -596,7 +595,6 @@
 
     --- General Settings
 
-        util.require_natives(1681379138)
         util.keep_running()
 
         if CODED_GTAO_VERSION ~= tonumber(NETWORK.GET_ONLINE_VERSION()) then
@@ -626,14 +624,11 @@
         if READ_SETTING("Timer Color") == "Stand" then
             WRITE_SETTING("Timer Color Code", GET_STAND_STATE("AR Colour"))
         end
-        if not filesystem.exists(FileDirs.Native) then
-            ERROR_LOG(TRANSLATE("Native file for HC doesn't exist.") .. "\n\n" .. TRANSLATE("Please re-enable 'Stand > Lua Scripts > Repository > natives-1681379138' or please join HC DC server to get support!"))
-        end
-
+--[[
         if SCRIPT_MANUAL_START and not SCRIPT_SILENT_START then
             SHOW_IMG("HC Banner.png", 2.5)
         end
-
+]]
     ---
 
 ---
@@ -641,17 +636,17 @@
 
 --- Main Lists
 
-    menu.divider(menu.my_root(), TRANSLATE("Heist Control") .. " " .. HC_VERSION)
+    menu.divider(Heist_Control, TRANSLATE("Heist Control") .. " " .. HC_VERSION)
 
-        PERICO_HEIST = menu.list(menu.my_root(), TRANSLATE("Cayo Perico Heist"), {"hccp"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run") .. "\n" .. TRANSLATE("- Under $4.100.000 per hour") .. "\n\n" .. TRANSLATE("You won't get money if you don't keep money limitation!"), function();  end)
-        CASINO_HEIST = menu.list(menu.my_root(), TRANSLATE("Diamond Casino Heist"), {"hccah"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $3.650.000 per run") .. "\n\n" .. TRANSLATE("You won't get money if you don't keep money limitation!"), function(); end)
-        DOOMS_HEIST = menu.list(menu.my_root(), TRANSLATE("Doomsday Heist"), {"hcdooms"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run") .. "\n\n" .. TRANSLATE("You won't get money if you don't keep money limitation!"), function(); end)
-        CLASSIC_HEISTS = menu.list(menu.my_root(), TRANSLATE("Classic Heist"), {"hcclassic"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Fleeca Heist ~ Pacific Standard Heist: Under $15.000.000 per run") .. "\n\n" .. TRANSLATE("You won't get money if you don't keep money limitation!"), function(); end)
-        ROBBERYS = menu.list(menu.my_root(), TRANSLATE("Robberies"), {"hcrob"}, "", function(); end)
-        MISSONS = menu.list(menu.my_root(), TRANSLATE("Missions"), {"hcmission"}, "", function(); end)
-        MASTER_UNLOCKER = menu.list(menu.my_root(), TRANSLATE("Master Unlocker"), {"hcmu"}, "", function(); end)
-        TOOLS = menu.list(menu.my_root(), TRANSLATE("Tools"), {"hctool"}, "", function(); end)
-        INFOS = menu.list(menu.my_root(), TRANSLATE("Settings And About HC"), {"hcinfo"}, "", function(); end)
+        PERICO_HEIST = menu.list(Heist_Control, TRANSLATE("Cayo Perico Heist"), {"hccp"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run") .. "\n" .. TRANSLATE("- Under $4.100.000 per hour") .. "\n\n" .. TRANSLATE("You won't get money if you don't keep money limitation!"), function();  end)
+        CASINO_HEIST = menu.list(Heist_Control, TRANSLATE("Diamond Casino Heist"), {"hccah"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $3.650.000 per run") .. "\n\n" .. TRANSLATE("You won't get money if you don't keep money limitation!"), function(); end)
+        DOOMS_HEIST = menu.list(Heist_Control, TRANSLATE("Doomsday Heist"), {"hcdooms"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Under $2.550.000 per run") .. "\n\n" .. TRANSLATE("You won't get money if you don't keep money limitation!"), function(); end)
+        CLASSIC_HEISTS = menu.list(Heist_Control, TRANSLATE("Classic Heist"), {"hcclassic"}, TRANSLATE("Max payout for this heist") .. "\n\n" .. TRANSLATE("- Fleeca Heist ~ Pacific Standard Heist: Under $15.000.000 per run") .. "\n\n" .. TRANSLATE("You won't get money if you don't keep money limitation!"), function(); end)
+        ROBBERYS = menu.list(Heist_Control, TRANSLATE("Robberies"), {"hcrob"}, "", function(); end)
+        MISSONS = menu.list(Heist_Control, TRANSLATE("Missions"), {"hcmission"}, "", function(); end)
+        MASTER_UNLOCKER = menu.list(Heist_Control, TRANSLATE("Master Unlocker"), {"hcmu"}, "", function(); end)
+        TOOLS = menu.list(Heist_Control, TRANSLATE("Tools"), {"hctool"}, "", function(); end)
+        INFOS = menu.list(Heist_Control, TRANSLATE("Settings And About HC"), {"hcinfo"}, "", function(); end)
 
     ---
 

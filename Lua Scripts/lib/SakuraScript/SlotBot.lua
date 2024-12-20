@@ -296,7 +296,7 @@ local SPIN_LOG_FILE = CONFIG_DIR .. "spin_log_".. players.get_rockstar_id(player
 local function save_spin_log(spin_log)
     local file = io.open(SPIN_LOG_FILE, "wb")
     if file == nil then util.toast("日志文件写入时出错: "..SPIN_LOG_FILE, TOAST_ALL) return end
-    file:write(soup.json.encode(spin_log))
+    file:write(json.encode(spin_log))
     file:close()
 end
 
@@ -309,7 +309,7 @@ local function load_spin_log()
     if file then
         local version = file:read()
         file:close()
-        local spin_log_status, spin_log = pcall(soup.json.decode, version)
+        local spin_log_status, spin_log = pcall(json.decode, version)
         if not spin_log_status then
             util.toast("无法解码日志文件", TOAST_ALL)
             return {}
