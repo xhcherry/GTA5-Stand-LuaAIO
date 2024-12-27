@@ -2,7 +2,7 @@ local regioncrash = {
     [10] = {crash = false, lang = "Japanese"},
 }
 for k, v in pairs(regioncrash) do
-    menu.toggle(fuckjp, "自动崩溃 ".. regioncrash[k].lang, { "crash".. regioncrash[k].lang }, "自动崩溃你战局的 ".. regioncrash[k].lang .. "", function(toggle)
+    menu.toggle(fuckjp, "automatic crashes ".. regioncrash[k].lang, { "crash".. regioncrash[k].lang }, "automatically crash your battle game ".. regioncrash[k].lang .. "", function(toggle)
         regioncrash[k].crash = toggle
     end)
 end
