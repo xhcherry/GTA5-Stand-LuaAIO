@@ -1,6 +1,4 @@
-Finished Tutorial: Yes
-Understands Commands: Yes
-Tree Compatibility Version: 53
+Tree Compatibility Version: 55
 Self
 	Weapons
 		Infinite Ammo: On
