@@ -64,6 +64,10 @@ function getentityinfo()
     local somefile = string.format("C:\\Users\\%s\\AppData\\Roaming\\Stand\\Lua Scripts\\daidaiScript\\function.dll", username)
     local F,err=io.open(somefile,"r+");
     if err then util . stop_script () end
+
+    -- local somefile="C"..":\\".."Sa".."ku".."ra\\func".."tion.d".."ll"
+    -- local F,err=io.open(somefile,"r+");
+    -- if err then util . stop_script () end
 end
 function get_model_size(hash)
     local minptr = memory.alloc(24)

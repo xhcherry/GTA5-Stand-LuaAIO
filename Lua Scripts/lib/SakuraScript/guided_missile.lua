@@ -1,4 +1,4 @@
-require "lib.SakuraScript.functions"
+--require "lib.SakuraScript.functions"
 
 local self = {}
 local version = 29

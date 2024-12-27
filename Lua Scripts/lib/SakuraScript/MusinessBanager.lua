@@ -1,73 +1,82 @@
+local ContrabandSpecialItem = {
+    { 0,  get_label_text("SRC_CRG_SP_0") }, -- Ornamental Egg
+    { 1,  get_label_text("SRC_CRG_SP_1") }, -- Golden Minigun
+    { 2,  get_label_text("SRC_CRG_SP_2") }, -- Extra Large Diamond
+    { 3,  get_label_text("SRC_CRG_SP_3") }, -- Sasquatch Hide
+    { 4,  get_label_text("SRC_CRG_SP_4") }, -- Film Reel
+    { 5,  get_label_text("SRC_CRG_SP_5") }, -- Rare Pocket Watch
+}
+
 local MCBusinessPropertyInfo = {
-    [1]  = {name = "Paleto Bay Meth Lab",                      coords = {x = 52.903,     y =  6338.585,  z = 31.35  }, type = 3},  -- "MP_BWH_METH_1",
-    [2]  = {name = "Mount Chiliad Weed Farm",                  coords = {x = 416.7524,   y =  6520.753,  z = 27.7121}, type = 1},  -- "MP_BWH_WEED_1",
-    [3]  = {name = "Paleto Bay Cocaine Lockup",                coords = {x = 51.7653,    y =  6486.163,  z = 31.428 }, type = 4},  -- "MP_BWH_CRACK_1",
-    [4]  = {name = "Paleto Bay Counterfeit Cash Factory",      coords = {x = -413.6606,  y =  6171.938,  z = 31.4782}, type = 2},  -- "MP_BWH_CASH_1",
-    [5]  = {name = "Paleto Bay Forgery Office",                coords = {x = -163.6828,  y =  6334.845,  z = 31.5808}, type = 0},  -- "MP_BWH_FAKEID_1",
-    [6]  = {name = "El Burro Heights Meth Lab",                coords = {x = 1454.671,   y =  -1651.986, z = 67     }, type = 3},  -- "MP_BWH_METH_2",
-    [7]  = {name = "Downtown Vinewood Weed Farm",              coords = {x = 102.14,     y =  175.26,    z = 104.56 }, type = 1},  -- "MP_BWH_WEED_2",
-    [8]  = {name = "Morningwood Cocaine Lockup",               coords = {x = -1462.622,  y =  -381.826,  z = 38.802 }, type = 4},  -- "MP_BWH_CRACK_2",
-    [9]  = {name = "Vespucci Canals Counterfeit Cash Factory", coords = {x = -1171.005,  y =  -1380.922, z = 4.937  }, type = 2},  -- "MP_BWH_CASH_2",
-    [10] = {name = "Textile City Forgery Office",              coords = {x = 299.071,    y =  -759.072,  z = 29.333 }, type = 0},  -- "MP_BWH_FAKEID_2",
-    [11] = {name = "Senora Desert Meth Lab",                   coords = {x = 201.8909,   y =  2461.782,  z = 55.6885}, type = 3},  -- "MP_BWH_METH_3",
-    [12] = {name = "San Chianski Weed Farm",                   coords = {x = 2848.369,   y =  4450.147,  z = 48.5139}, type = 1},  -- "MP_BWH_WEED_3",
-    [13] = {name = "Zancudo River Cocaine Lockup",             coords = {x = 387.5332,   y =  3585.042,  z = 33.2922}, type = 4},  -- "MP_BWH_CRACK_3",
-    [14] = {name = "Senora Desert Counterfeit Cash Factory",   coords = {x = 636.6344,   y =  2785.126,  z = 42.0111}, type = 2},  -- "MP_BWH_CASH_3",
-    [15] = {name = "Grapeseed Forgery Office",                 coords = {x = 1657.066,   y =  4851.732,  z = 41.9882}, type = 0},  -- "MP_BWH_FAKEID_3",
-    [16] = {name = "Terminal Meth Lab",                        coords = {x = 1181.44,    y =  -3113.82,  z = 6.03   }, type = 3},  -- "MP_BWH_METH_4",
-    [17] = {name = "Elysian Island Weed Farm",                 coords = {x = 136.973,    y =  -2472.795, z = 5.98   }, type = 1},  -- "MP_BWH_WEED_4",
-    [18] = {name = "Elysian Island Cocaine Lockup",            coords = {x = -253.31,    y =  -2591.15,  z = 5.97   }, type = 4},  -- "MP_BWH_CRACK_4",
-    [19] = {name = "Cypress Flats Counterfeit Cash Factory",   coords = {x = 671.451,    y =  -2667.502, z = 6.0812 }, type = 2},  -- "MP_BWH_CASH_4",
-    [20] = {name = "Elysian Island Forgery Office",            coords = {x = -331.52,    y =  -2778.97,  z = 5.12   }, type = 0},  -- "MP_BWH_FAKEID_4",
-    [21] = {name = "Grand Senora Oilfields Bunker",            coords = {x = 492.8395,   y = 3014.057,   z = 39.9793}, type = 5},  -- "MP_BUNKER_1",
-    [22] = {name = "Grand Senora Desert Bunker",               coords = {x = 849.603,    y = 3021.697,   z = 40.3076}, type = 5},  -- "MP_BUNKER_2",
-    [23] = {name = "Route 68 Bunker",                          coords = {x = 39.5967,    y = 2930.506,   z = 54.8034}, type = 5},  -- "MP_BUNKER_3",
-    [24] = {name = "Farmhouse Bunker",                         coords = {x = 1572.078,   y = 2226.001,   z = 77.2829}, type = 5},  -- "MP_BUNKER_4",
-    [25] = {name = "Smoke Tree Road Bunker",                   coords = {x = 2110.019,   y = 3326.12,    z = 44.3526}, type = 5},  -- "MP_BUNKER_5",
-    [26] = {name = "Thomson Scrapyard Bunker",                 coords = {x = 2489.36,    y = 3162.12,    z = 48.0015}, type = 5},  -- "MP_BUNKER_6",
-    [27] = {name = "Grapeseed Bunker",                         coords = {x = 1801.273,   y = 4705.483,   z = 38.8253}, type = 5},  -- "MP_BUNKER_7",
-    [28] = {name = "Paleto Forest Bunker",                     coords = {x = -755.5687,  y = 5943.835,   z = 18.9008}, type = 5},  -- "MP_BUNKER_9",
-    [29] = {name = "Raton Canyon Bunker",                      coords = {x = -388.8392,  y = 4340.109,   z = 55.1741}, type = 5},  -- "MP_BUNKER_10",
-    [30] = {name = "Lago Zancudo Bunker",                      coords = {x = -3031.356,  y = 3334.059,   z = 9.1805 }, type = 5},  -- "MP_BUNKER_11",
-    [31] = {name = "Chumash Bunker",                           coords = {x = -3157.599,  y = 1376.695,   z = 15.866 }, type = 5},  -- "MP_BUNKER_12",
+    [1]  = {name = "佩立托湾 冰毒实验室",                      coords = {x = 52.903,     y =  6338.585,  z = 31.35  }, type = 3},  -- "MP_BWH_METH_1",
+    [2]  = {name = "乞力耶德山 大麻种植场",                  coords = {x = 416.7524,   y =  6520.753,  z = 27.7121}, type = 1},  -- "MP_BWH_WEED_1",
+    [3]  = {name = "佩立托湾 可卡因作坊",                coords = {x = 51.7653,    y =  6486.163,  z = 31.428 }, type = 4},  -- "MP_BWH_CRACK_1",
+    [4]  = {name = "佩立托湾 假钞工厂",      coords = {x = -413.6606,  y =  6171.938,  z = 31.4782}, type = 2},  -- "MP_BWH_CASH_1",
+    [5]  = {name = "佩立托湾 证件伪造办公室",                coords = {x = -163.6828,  y =  6334.845,  z = 31.5808}, type = 0},  -- "MP_BWH_FAKEID_1",
+    [6]  = {name = "布罗高地 冰毒实验室",                coords = {x = 1454.671,   y =  -1651.986, z = 67     }, type = 3},  -- "MP_BWH_METH_2",
+    [7]  = {name = "好麦坞市区 大麻种植场",              coords = {x = 102.14,     y =  175.26,    z = 104.56 }, type = 1},  -- "MP_BWH_WEED_2",
+    [8]  = {name = "摩宁坞 可卡因作坊",               coords = {x = -1462.622,  y =  -381.826,  z = 38.802 }, type = 4},  -- "MP_BWH_CRACK_2",
+    [9]  = {name = "威斯普奇运河 假钞工厂", coords = {x = -1171.005,  y =  -1380.922, z = 4.937  }, type = 2},  -- "MP_BWH_CASH_2",
+    [10] = {name = "纺织城 证件伪造办公室",              coords = {x = 299.071,    y =  -759.072,  z = 29.333 }, type = 0},  -- "MP_BWH_FAKEID_2",
+    [11] = {name = "塞诺拉大沙漠 冰毒实验室",                   coords = {x = 201.8909,   y =  2461.782,  z = 55.6885}, type = 3},  -- "MP_BWH_METH_3",
+    [12] = {name = "圣强斯基山脉 大麻种植场",                   coords = {x = 2848.369,   y =  4450.147,  z = 48.5139}, type = 1},  -- "MP_BWH_WEED_3",
+    [13] = {name = "阿拉莫海 可卡因作坊",             coords = {x = 387.5332,   y =  3585.042,  z = 33.2922}, type = 4},  -- "MP_BWH_CRACK_3",
+    [14] = {name = "塞诺拉大沙漠 假钞工厂",   coords = {x = 636.6344,   y =  2785.126,  z = 42.0111}, type = 2},  -- "MP_BWH_CASH_3",
+    [15] = {name = "葡萄籽证件 伪造办公室",                 coords = {x = 1657.066,   y =  4851.732,  z = 41.9882}, type = 0},  -- "MP_BWH_FAKEID_3",
+    [16] = {name = "港口区 冰毒实验室",                        coords = {x = 1181.44,    y =  -3113.82,  z = 6.03   }, type = 3},  -- "MP_BWH_METH_4",
+    [17] = {name = "天堂岛 大麻种植场",                 coords = {x = 136.973,    y =  -2472.795, z = 5.98   }, type = 1},  -- "MP_BWH_WEED_4",
+    [18] = {name = "天堂岛 可卡因作坊",            coords = {x = -253.31,    y =  -2591.15,  z = 5.97   }, type = 4},  -- "MP_BWH_CRACK_4",
+    [19] = {name = "柏树公寓 假钞工厂",   coords = {x = 671.451,    y =  -2667.502, z = 6.0812 }, type = 2},  -- "MP_BWH_CASH_4",
+    [20] = {name = "天堂岛 证件伪造办公室",            coords = {x = -331.52,    y =  -2778.97,  z = 5.12   }, type = 0},  -- "MP_BWH_FAKEID_4",
+    [21] = {name = "塞诺拉大油田 地堡",            coords = {x = 492.8395,   y = 3014.057,   z = 39.9793}, type = 5},  -- "MP_BUNKER_1",
+    [22] = {name = "塞诺拉大沙漠 地堡",               coords = {x = 849.603,    y = 3021.697,   z = 40.3076}, type = 5},  -- "MP_BUNKER_2",
+    [23] = {name = "68号公路 地堡",                          coords = {x = 39.5967,    y = 2930.506,   z = 54.8034}, type = 5},  -- "MP_BUNKER_3",
+    [24] = {name = "农舍 地堡",                         coords = {x = 1572.078,   y = 2226.001,   z = 77.2829}, type = 5},  -- "MP_BUNKER_4",
+    [25] = {name = "黄栌路 地堡",                   coords = {x = 2110.019,   y = 3326.12,    z = 44.3526}, type = 5},  -- "MP_BUNKER_5",
+    [26] = {name = "汤姆森废车场 地堡",                 coords = {x = 2489.36,    y = 3162.12,    z = 48.0015}, type = 5},  -- "MP_BUNKER_6",
+    [27] = {name = "葡萄籽 地堡",                         coords = {x = 1801.273,   y = 4705.483,   z = 38.8253}, type = 5},  -- "MP_BUNKER_7",
+    [28] = {name = "佩立托森林 地堡",                     coords = {x = -755.5687,  y = 5943.835,   z = 18.9008}, type = 5},  -- "MP_BUNKER_9",
+    [29] = {name = "雷通峡谷 地堡",                      coords = {x = -388.8392,  y = 4340.109,   z = 55.1741}, type = 5},  -- "MP_BUNKER_10",
+    [30] = {name = "桑库多 地堡",                      coords = {x = -3031.356,  y = 3334.059,   z = 9.1805 }, type = 5},  -- "MP_BUNKER_11",
+    [31] = {name = "丘马什 地堡",                           coords = {x = -3157.599,  y = 1376.695,   z = 15.866 }, type = 5},  -- "MP_BUNKER_12",
 }
 
 local WarehousePropertyInfo = {
-    [1]  = {name = "Pacific Bait Storage",      capacity = 16,      coords = {x = 54.191,    y = -2569.248,  z = 6.0046 }}, -- "MP_WHOUSE_0",
-    [2]  = {name = "White Widow Garage",        capacity = 16,      coords = {x = -1083.054, y = -1261.893,  z = 5.534  }}, -- "MP_WHOUSE_1",
-    [3]  = {name = "Celltowa Unit",             capacity = 16,      coords = {x = 896.3665,  y = -1035.749,  z = 35.1096}}, -- "MP_WHOUSE_2",
-    [4]  = {name = "Convenience Store Lockup",  capacity = 16,      coords = {x = 247.473,   y = -1956.943,  z = 23.1908}}, -- "MP_WHOUSE_3",
-    [5]  = {name = "Foreclosed Garage",         capacity = 16,      coords = {x = -424.828,  y = 185.825,    z = 80.775 }}, -- "MP_WHOUSE_4",
-    [6]  = {name = "Xero Gas Factory",          capacity = 111,     coords = {x = -1042.482, y = -2023.516,  z = 13.1616}}, -- "MP_WHOUSE_5",
-    [7]  = {name = "Derriere Lingerie Backlot", capacity = 42,      coords = {x = -1268.119, y = -812.2741,  z = 17.1075}}, -- "MP_WHOUSE_6",
-    [8]  = {name = "Bilgeco Warehouse",         capacity = 111,     coords = {x = -873.65,   y = -2735.948,  z = 13.9438}}, -- "MP_WHOUSE_7",
-    [9]  = {name = "Pier 400 Utility Building", capacity = 16,      coords = {x = 274.5224,  y = -3015.413,  z = 5.6993 }}, -- "MP_WHOUSE_8",
-    [10] = {name = "GEE Warehouse",             capacity = 42,      coords = {x = 1569.69,   y = -2129.792,  z = 78.3351}}, -- "MP_WHOUSE_9",
-    [11] = {name = "LS Marine Building 3",      capacity = 42,      coords = {x = -315.551,  y = -2698.654,  z = 7.5495 }}, -- "MP_WHOUSE_10",
-    [12] = {name = "Railyard Warehouse",        capacity = 42,      coords = {x = 499.81,    y = -651.982,   z = 24.909 }}, -- "MP_WHOUSE_11",
-    [13] = {name = "Fridgit Annexe",            capacity = 42,      coords = {x = -528.5296, y = -1784.573,  z = 21.5853}}, -- "MP_WHOUSE_12",
-    [14] = {name = "Disused Factory Outlet",    capacity = 42,      coords = {x = -295.8596, y = -1353.238,  z = 31.3138}}, -- "MP_WHOUSE_13",
-    [15] = {name = "Discount Retail Unit",      capacity = 42,      coords = {x = 349.839,   y = 328.889,    z = 104.272}}, -- "MP_WHOUSE_14",
-    [16] = {name = "Logistics Depot",           capacity = 111,     coords = {x = 926.2818,  y = -1560.311,  z = 30.7404}}, -- "MP_WHOUSE_15",
-    [17] = {name = "Darnell Bros Warehouse",    capacity = 111,     coords = {x = 759.566,   y = -909.466,   z = 25.244 }}, -- "MP_WHOUSE_16",
-    [18] = {name = "Wholesale Furniture",       capacity = 111,     coords = {x = 1037.813,  y = -2173.062,  z = 31.5334}}, -- "MP_WHOUSE_17",
-    [19] = {name = "Cypress Warehouses",        capacity = 111,     coords = {x = 1019.116,  y = -2511.69,   z = 28.302 }}, -- "MP_WHOUSE_18",
-    [20] = {name = "West Vinewood Backlot",     capacity = 111,     coords = {x = -245.3405, y = 203.3286,   z = 83.818 }}, -- "MP_WHOUSE_19",
-    [21] = {name = "Old Power Station",         capacity = 42,      coords = {x = 539.346,   y = -1945.682,  z = 24.984 }}, -- "MP_WHOUSE_20",
-    [22] = {name = "Walker & Sons Warehouse",   capacity = 111,     coords = {x = 96.1538,   y = -2216.4,    z = 6.1712 }}, -- "MP_WHOUSE_21",
+    [1]  = {name = "太平洋鱼饵仓储",        capacity = 16,      coords = {x = 54.191,    y = -2569.248,  z = 6.0046 }}, -- "MP_WHOUSE_0",
+    [2]  = {name = "白寡妇车库",            capacity = 16,      coords = {x = -1083.054, y = -1261.893,  z = 5.534  }}, -- "MP_WHOUSE_1",
+    [3]  = {name = "赛尔托瓦单元",          capacity = 16,      coords = {x = 896.3665,  y = -1035.749,  z = 35.1096}}, -- "MP_WHOUSE_2",
+    [4]  = {name = "便利店车库",            capacity = 16,      coords = {x = 247.473,   y = -1956.943,  z = 23.1908}}, -- "MP_WHOUSE_3",
+    [5]  = {name = "法拍车库",              capacity = 16,      coords = {x = -424.828,  y = 185.825,    z = 80.775 }}, -- "MP_WHOUSE_4",
+    [6]  = {name = "希罗汽油工厂",          capacity = 111,     coords = {x = -1042.482, y = -2023.516,  z = 13.1616}}, -- "MP_WHOUSE_5",
+    [7]  = {name = "翘臀内衣外景场地",      capacity = 42,      coords = {x = -1268.119, y = -812.2741,  z = 17.1075}}, -- "MP_WHOUSE_6",
+    [8]  = {name = "贝尔吉科仓库",          capacity = 111,     coords = {x = -873.65,   y = -2735.948,  z = 13.9438}}, -- "MP_WHOUSE_7",
+    [9]  = {name = "码头400号工作仓库",     capacity = 16,      coords = {x = 274.5224,  y = -3015.413,  z = 5.6993 }}, -- "MP_WHOUSE_8",
+    [10] = {name = "GEE仓库",              capacity = 42,      coords = {x = 1569.69,   y = -2129.792,  z = 78.3351}}, -- "MP_WHOUSE_9",
+    [11] = {name = "洛圣都海事大厦3号楼",   capacity = 42,      coords = {x = -315.551,  y = -2698.654,  z = 7.5495 }}, -- "MP_WHOUSE_10",
+    [12] = {name = "火车站仓库",            capacity = 42,      coords = {x = 499.81,    y = -651.982,   z = 24.909 }}, -- "MP_WHOUSE_11",
+    [13] = {name = "透心凉辅楼仓库",        capacity = 42,      coords = {x = -528.5296, y = -1784.573,  z = 21.5853}}, -- "MP_WHOUSE_12",
+    [14] = {name = "废弃的工厂直销店",      capacity = 42,      coords = {x = -295.8596, y = -1353.238,  z = 31.3138}}, -- "MP_WHOUSE_13",
+    [15] = {name = "折扣零售商店",          capacity = 42,      coords = {x = 349.839,   y = 328.889,    z = 104.272}}, -- "MP_WHOUSE_14",
+    [16] = {name = "物流仓库",              capacity = 111,     coords = {x = 926.2818,  y = -1560.311,  z = 30.7404}}, -- "MP_WHOUSE_15",
+    [17] = {name = "达内尔兄弟仓库",        capacity = 111,     coords = {x = 759.566,   y = -909.466,   z = 25.244 }}, -- "MP_WHOUSE_16",
+    [18] = {name = "家具批发市场",          capacity = 111,     coords = {x = 1037.813,  y = -2173.062,  z = 31.5334}}, -- "MP_WHOUSE_17",
+    [19] = {name = "柏树仓库",              capacity = 111,     coords = {x = 1019.116,  y = -2511.69,   z = 28.302 }}, -- "MP_WHOUSE_18",
+    [20] = {name = "西好麦坞外景场地",      capacity = 111,     coords = {x = -245.3405, y = 203.3286,   z = 83.818 }}, -- "MP_WHOUSE_19",
+    [21] = {name = "旧发电站",              capacity = 42,      coords = {x = 539.346,   y = -1945.682,  z = 24.984 }}, -- "MP_WHOUSE_20",
+    [22] = {name = "沃克父子仓库",          capacity = 111,     coords = {x = 96.1538,   y = -2216.4,    z = 6.1712 }}, -- "MP_WHOUSE_21",
 }
 
 local NightclubPropertyInfo = {
-    [1]  = {name = "La Mesa Nightclub",           coords = {x = 757.009,   y =  -1332.32,  z = 27.1802 }},
-    [2]  = {name = "Mission Row Nightclub",       coords = {x = 345.7519,  y =  -978.8848, z = 29.2681 }},
-    [3]  = {name = "Strawberry Nightclub",        coords = {x = -120.906,  y =  -1260.49,  z = 29.2088 }},
-    [4]  = {name = "West Vinewood Nightclub",     coords = {x = 5.53709,   y =  221.35,    z = 107.6566}},
-    [5]  = {name = "Cypress Flats Nightclub",     coords = {x = 871.47,    y =  -2099.57,  z = 30.3768 }},
-    [6]  = {name = "LSIA Nightclub",              coords = {x = -676.625,  y =  -2458.15,  z = 13.8444 }},
-    [7]  = {name = "Elysian Island Nightclub",    coords = {x = 195.534,   y =  -3168.88,  z = 5.7903  }},
-    [8]  = {name = "Downtown Vinewood Nightclub", coords = {x = 373.05,    y =  252.13,    z = 102.9097}},
-    [9]  = {name = "Del Perro Nightclub",         coords = {x = -1283.38,  y =  -649.916,  z = 26.5198 }},
-    [10] = {name = "Vespucci Canals Nightclub",   coords = {x = -1174.85,  y =  -1152.3,   z = 5.56128 }},
+    [1]  = {name = "梅萨 夜总会",           coords = {x = 757.009,   y =  -1332.32,  z = 27.1802 }},
+    [2]  = {name = "密申罗 夜总会",       coords = {x = 345.7519,  y =  -978.8848, z = 29.2681 }},
+    [3]  = {name = "斯卓贝利 夜总会",        coords = {x = -120.906,  y =  -1260.49,  z = 29.2088 }},
+    [4]  = {name = "西好麦坞 夜总会",     coords = {x = 5.53709,   y =  221.35,    z = 107.6566}},
+    [5]  = {name = "柏树公寓 夜总会",     coords = {x = 871.47,    y =  -2099.57,  z = 30.3768 }},
+    [6]  = {name = "洛圣都国际机场 夜总会",              coords = {x = -676.625,  y =  -2458.15,  z = 13.8444 }},
+    [7]  = {name = "天堂岛 夜总会",    coords = {x = 195.534,   y =  -3168.88,  z = 5.7903  }},
+    [8]  = {name = "好麦坞市区 夜总会", coords = {x = 373.05,    y =  252.13,    z = 102.9097}},
+    [9]  = {name = "佩罗 夜总会",         coords = {x = -1283.38,  y =  -649.916,  z = 26.5198 }},
+    [10] = {name = "威斯普奇运河 夜总会",   coords = {x = -1174.85,  y =  -1152.3,   z = 5.56128 }},
 }
 
 local HubTypesOrderedWithLabels = {
@@ -126,7 +135,7 @@ local MenuCurrentWarehouses = {
 local Selected_Warehouse = 0
 local NCSafePos = {x = -1615.6832, y = -3015.7546, z = -75.204994}
 
-local tunables_global = 262145
+local tunables_global = 262145  --1.70
 local globals = {
     Hub = {
         MaxSellPrice = 4000000 - 2100000,
@@ -245,7 +254,7 @@ local globals = {
     SafeStatus1       = 1663308, -- freemode, bitset below "CLUB_PAY"
     SafeStatus2       = 2707517, -- freemode
 
-    MCSupplyTime    = 1663174+1, -- freemode, above "BPLJT_LOWW", if (!func_XXXXX(bVar1)), +1 because array
+    MCSupplyTime    = 1667995+1, -- freemode, Global_1667995[iParam0] != 0; above "BPLJT_LOWW", if (!func_XXXXX(bVar1)), +1 because array
 
     SpecialCargoMaxSellPriceValue   = 6000000,
 
@@ -612,9 +621,9 @@ end
 --#region Global Functions
 
 -- [[update]]
-local function GetOrgOffset()
-    -- GPBD_FM_3
-    return (1887305 + 1 + (players.user() * 610) + 10)
+local function GetOrgOffset()  --1.70
+    -- GPBD_FM_3 freemode.c
+    return (1887549 + 1 + (players.user() * 611) + 10)
 end
 
 local function IsInOrg()
@@ -628,26 +637,26 @@ local function RegisterAsCEO()
     end
 end
 
--- Business / Other Online Work Stuff [[update]]
+-- Business / Other Online Work Stuff [[update]]  1.70
 local function GetOnlineWorkOffset()
     -- GLOBAL_PLAYER_STAT
-    return (1845281 + 1 + (players.user() * 883) + 268)
+    return (1845221 + 1 + (players.user() * 889) + 268)
 end
 
 local function GetNightClubHubOffset()
-    return (GetOnlineWorkOffset() + 314)
+    return (GetOnlineWorkOffset() + 316)  --1.70
 end
 
 local function GetNightClubOffset()
-    return (GetOnlineWorkOffset() + 358) -- CLUB_OWNER_X
+    return (GetOnlineWorkOffset() + 360) -- CLUB_OWNER_X  --1.70
 end
 
 local function GetWarehouseOffset()
-    return (GetOnlineWorkOffset() + 120) + 1
+    return (GetOnlineWorkOffset() + 122) + 1  --1.70
 end
 
 local function GetMCBusinessOffset()
-    return (GetOnlineWorkOffset() + 197) + 1
+    return (GetOnlineWorkOffset() + 199) + 1 --1.70
 end
 
 -- Nightclub
@@ -746,9 +755,9 @@ local function CheckIfAlone()
 end
 
 -- [[update]]
-local function GetPlayerPropertyOffset()
+local function GetPlayerPropertyOffset()  --1.70
     -- GlobalplayerBD
-    return (2657971 + 1 + (players.user() * 465) + 322 + 8)
+    return (2657991 + 1 + (players.user() * 467) + 324 + 8) --Global_2657971[player /*465*/].f_322.f_8  Hash - 0x3424FFB1
 end
 
 local function GetPlayerPropertyID()
@@ -982,7 +991,7 @@ end
 --#region Special Cargo Shit
 local SCMan = menu.list(Musiness_Banager, "特种货物", {}, "注意: 出售价格的上限是 $600万")
 
-    local WarehouseSelector = menu.list_select(SCMan, "仓库", {}, "选择要显示和修改的仓库,因为您最多可以拥有5个仓库.", MenuCurrentWarehouses, 0, function(value)
+    local WarehouseSelector = menu.list_select(SCMan, "选择仓库", {}, "选择要显示和修改的仓库,因为您最多可以拥有5个仓库.", MenuCurrentWarehouses, 0, function(value)
         Selected_Warehouse = value
     end)
 
@@ -1002,6 +1011,21 @@ local SCMan = menu.list(Musiness_Banager, "特种货物", {}, "注意: 出售价
             util.draw_debug_text(GetLabelTextLiteral("特种货物仓库 {1}: {2}/{3}", Selected_Warehouse+1, crate_amount, capacity))
         end
     end)
+
+    local Special_Cargo_Staff_Source = menu.list(SCMan, "员工进货", {}, "")  --1.70
+        local SpecialCargoVarsNum, SpecialCargoVarsType = 1, 0
+        menu.action(Special_Cargo_Staff_Source, "员工立即进货", {}, "需要在仓库外面", function()
+            GLOBAL_SET_BOOL(1882747 + 4 + 1 + Selected_Warehouse, true)  --货物仓库
+            SET_INT_GLOBAL(1882747 + 12, SpecialCargoVarsNum)  --货物数量
+            SET_INT_GLOBAL(1882747 + 13, SpecialCargoVarsType)  --货物物品
+            SET_INT_GLOBAL(1882747 + 14, 1)
+        end)
+        menu.slider(Special_Cargo_Staff_Source, "货物数量", { "SpecialCargoStaffNum" }, "", 1, 111, 1, 1, function(value)
+            SpecialCargoVarsNum = value
+        end)
+        menu.list_select(Special_Cargo_Staff_Source, "货物物品", {},"同时获得一箱特殊物品", ContrabandSpecialItem, 0, function(value)
+            SpecialCargoVarsType = value
+        end)
 
     menu.toggle_loop(SCMan, "最大销售价格", {}, "将您的特种货物板条箱的出售价格更改为$600万.\n保持启用以确保对未来出售的正确计算", function()
         if IsInSession() then

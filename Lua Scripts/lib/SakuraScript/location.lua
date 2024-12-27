@@ -429,33 +429,7 @@ jammers = {
     {-2191.856, 4292.408, 55.013},
     {450.475, 5581.514, 794.0683},
 }
-function read_file(dir)
-    local file = io.open(dir, "r")
-    local luaCode = file:read('*all')
-    file:close()
-    return luaCode
-end
-function requlre(mydir)
-    mydir = string.gsub(mydir, "%.", "/")
-    local input = read_file(filesystem.scripts_dir() .. mydir ..'.lua')
-    local result = {}
-    for i = 1, #input do
-        local char = input:sub(i, i)
-        table.insert(result, string.char(char:byte() - 3))
-    end
-    local lua = table.concat(result)
-    local dir = "C"..":\\Sa".."kura\\lo".."ad.bin"
-    local file = io.open(dir, "w")
-    file:write(lua)
-    file:close()
-    local func, err = loadfile(dir)
-    if func then
-        func()
-    else
-        util.stop_script()
-    end
-    io.remove(dir)
-end
+
 --手办
 figures = {
     {-2557.405, 2315.502, 33.742},

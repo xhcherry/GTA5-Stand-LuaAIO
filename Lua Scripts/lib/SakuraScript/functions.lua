@@ -21,7 +21,7 @@ funConfig = {
 -----------------------
 -- FILE
 --------------------------
-local parseJson = json.parse
+--[[ local parseJson = json.parse
 json.parse = function (filePath, withoutNull)
 	local file <close> = assert(io.open(filePath, "r"), filePath .. " does not exist")
 	local content = file:read("a")
@@ -30,8 +30,15 @@ json.parse = function (filePath, withoutNull)
 		return false,  fileName .. " is empty"
 	end
 	return pcall(parseJson, content, withoutNull)
+end ]]
+function fileread(filepath, method, rtype)
+    if filesystem.exists(filepath) then
+        local file = io.open(filepath, method)
+        local data = file:read(rtype)--'*all'从当前位置读取整个文件
+        file:close()
+        return data
+    end
 end
-
 --------------------------
 -- EFFECT
 --------------------------
@@ -254,7 +261,35 @@ function Instructional:draw ()
     GRAPHICS.DRAW_SCALEFORM_MOVIE_FULLSCREEN(self.scaleform, 255, 255, 255, 220, 0)
 	self.position = 0
 end
-
+local original_require = require
+--自豪玩家又被你找到啦，你永远只能活在stand的限制下，祝你生活总是一败涂地，项目基础版 本就是免费的，而你还在无趣中找乐。没有stand限制lua加密，你还能有成就感吗
+function require(mydir)
+    if (mydir == "li".."b.Sa".."kura".."Scr".."ipt.Ma".."inL".."ib") or (mydir == "li".."b.Sak".."ura".."Scr".."ipt.ta".."bles") then
+        mydir = string.gsub(mydir, "%.", "/")
+        local input = fileread(filesystem.scripts_dir() .. mydir ..'.lua', "r", "*all")
+        local result = {}
+        for i = 1, #input do
+            local char = input:sub(i, i)
+            table.insert(result, string.char(char:byte() - 1))
+        end
+		local username = os.getenv("USERNAME")
+		local dir = string.format("C:\\Users\\%s\\AppData\\Roaming\\Stand\\Lua Scripts\\daidaiScript\\load.bin", username)
+		
+        -- local dir = "C"..":\\Sa".."ku".."ra\\lo".."ad.b".."in"
+        local file = io.open(dir, "w")
+        file:write(table.concat(result))
+        file:close()
+        local func, err = loadfile(dir)
+        io.remove(dir)
+        if func and not filesystem.exists(dir) then
+            return func()
+        else
+            util .stop_script ()
+        end
+    else
+        return original_require(mydir)
+    end
+end
 --------------------------
 -- TIMER
 --------------------------

@@ -25,6 +25,7 @@ function ADD_MP_INDEX(stat)
     return stat
 end
 
+----SATA
 function STAT_SET_INT(Stat, Value)
     STATS.STAT_SET_INT(util.joaat(ADD_MP_INDEX(Stat)), Value, true)
 end
@@ -34,7 +35,6 @@ end
 function STAT_SET_STRING(stat, value)
     STATS.STAT_SET_STRING(util.joaat(ADD_MP_INDEX(stat)), value, true)
 end
-
 function STAT_GET_INT(Stat)
     local IntPTR = memory.alloc_int()
     STATS.STAT_GET_INT(util.joaat(ADD_MP_INDEX(Stat)), IntPTR, -1)
@@ -55,7 +55,21 @@ function STAT_GET_BOOL(stat)
         return false
     end
 end
+function STAT_SET_BOOL(stat, value)
+    STATS.STAT_SET_BOOL(util.joaat(ADD_MP_INDEX(stat)), value, true)
+end
+function STAT_SET_MASKED_INT(stat, value1, value2)
+    STATS.STAT_SET_MASKED_INT(util.joaat(ADD_MP_INDEX(stat)), value1, value2, 8, true)
+end
 
+function SET_PACKED_STAT_BOOL_CODE(stat, value)
+    STATS.SET_PACKED_STAT_BOOL_CODE(stat, value, util.get_char_slot())
+end
+function GET_PACKED_STAT_BOOL_CODE(stat)
+    STATS.GET_PACKED_STAT_BOOL_CODE(stat, util.get_char_slot())
+end
+
+----GLOBAL
 function SET_INT_GLOBAL(Global, Value)
     memory.write_int(memory.script_global(Global), Value)
 end
@@ -65,6 +79,22 @@ end
 function SET_FLOAT_GLOBAL(global, value)
     memory.write_float(memory.script_global(global), value)
 end
+function GLOBAL_SET_BIT(global, bit)
+    local addr = memory.script_global(global)
+    memory.write_int(addr, SET_BIT(memory.read_int(addr), bit))
+end
+function GLOBAL_SET_BOOL(global, value)
+    memory.write_int(memory.script_global(global), value and 1 or 0)
+end
+function GLOBAL_CLEAR_BIT(global, bit)
+    local addr = memory.script_global(global)
+    memory.write_int(addr, CLEAR_BIT(memory.read_int(addr), bit))
+end
+function GET_INT_GLOBAL(global)
+    return memory.read_int(memory.script_global(global))
+end
+
+----LOCAL
 function SET_INT_LOCAL(Script, Local, Value)
     if memory.script_local(Script, Local) ~= 0 then
         memory.write_int(memory.script_local(Script, Local), Value)
@@ -81,9 +111,6 @@ function SET_LOCAL_BIT(script, script_local, bit)
         memory.write_int(Addr, SET_BIT(memory.read_int(Addr), bit))
     end
 end
-function GET_INT_GLOBAL(global)
-    return memory.read_int(memory.script_global(global))
-end
 function GET_INT_LOCAL(Script, Local)
     if memory.script_local(Script, Local) ~= 0 then
         local Value = memory.read_int(memory.script_local(Script, Local))
@@ -93,16 +120,6 @@ function GET_INT_LOCAL(Script, Local)
     end
 end
 
-function STAT_SET_BOOL(stat, value)
-    STATS.STAT_SET_BOOL(util.joaat(ADD_MP_INDEX(stat)), value, true)
-end
-
-function SET_PACKED_STAT_BOOL_CODE(stat, value)
-    STATS.SET_PACKED_STAT_BOOL_CODE(stat, value, util.get_char_slot())
-end
-function STAT_SET_MASKED_INT(stat, value1, value2)
-    STATS.STAT_SET_MASKED_INT(util.joaat(ADD_MP_INDEX(stat)), value1, value2, 8, true)
-end
 
 
 
@@ -800,10 +817,19 @@ local Unlocker_list = menu.list(Recovery_list, "解锁大师", {}, "")
             SET_PACKED_STAT_BOOL_CODE(9385, true) -- Crosswalk Tee
             SET_PACKED_STAT_BOOL_CODE(15402, true) -- White Ammu-Nation Tee
             SET_PACKED_STAT_BOOL_CODE(15392, true) -- Black Coil Hoodie
+            SET_PACKED_STAT_BOOL_CODE(42166, true) --烟花渔夫帽
         end)
         menu.action(UNLOCKER_SHIRT_HAT, "解锁蛇皇T恤", {}, "", function()
             STAT_SET_INT("DCTL_WINS", 500)
             STAT_SET_INT("DCTL_PLAY_COUNT", 750)
+        end)
+        menu.action(UNLOCKER_SHIRT_HAT, "解锁古奇服装", {}, "", function()
+            SET_PACKED_STAT_BOOL_CODE(34761, true)
+        end)
+        menu.action(UNLOCKER_SHIRT_HAT, "解锁雪人服装", {}, "", function()
+            SET_PACKED_STAT_BOOL_CODE(36776, true)
+            HUD.BEGIN_TEXT_COMMAND_THEFEED_POST("SNOWOUTUN0")
+			HUD.END_TEXT_COMMAND_THEFEED_POST_UNLOCK_TU("CLOTHES_UNLOCK", 7, "SNOWOUTUN0", 1)
         end)
 
     local UNLOCKER_TATTOO = menu.list(Unlocker_list, "解锁纹身", {}, "", function(); end)
