@@ -1,0 +1,15 @@
+{
+  "name": "英国童谣",
+  "description": "英文童谣\n编码者 Hexarobi",
+  "target_version": 1.2,
+  "bpm": 60,
+  "notes": [
+    {"pitch": "E", "length": 0.5}, {"pitch": "D", "length": 0.5},
+    {"pitch": "C", "length": 0.5}, {"pitch": "rest", "length": 0.5},
+    {"pitch": "E", "length": 0.5}, {"pitch": "D", "length": 0.5},
+    {"pitch": "C", "length": 0.5}, {"pitch": "rest", "length": 0.5},
+    "C", "C", "C", "C", "D", "D", "D", "D",
+    {"pitch": "E", "length": 0.5}, {"pitch": "D", "length": 0.5},
+    {"pitch": "C", "length": 0.5}, {"pitch": "rest", "length": 0.5}
+  ]
+}

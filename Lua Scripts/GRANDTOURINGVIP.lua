@@ -1,4 +1,4 @@
-require "lib.GTSCRIPTS.V"
-require "lib.GTSCRIPTS.G"
-require "lib.GTSCRIPTS.GTA.list"
+require "lib.GTlib.G"
+require "lib.GTlib.GTA.list"
+require "lib.GTlib.V"
 loadgt()

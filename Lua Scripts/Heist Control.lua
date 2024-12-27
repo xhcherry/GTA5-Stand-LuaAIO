@@ -38,8 +38,8 @@
 
     --- Important
 
-        HC_VERSION = "V 3.4.4"
-        CODED_GTAO_VERSION = 1.69
+        HC_VERSION = "V 3.4.5"
+        CODED_GTAO_VERSION = 1.70 -- b3407
 
     ---
 
@@ -659,6 +659,7 @@
 
 
 --- Cayo Perico Heist
+util.yield()
     
     CAYO_PRESETS = menu.list(PERICO_HEIST, TRANSLATE("Automated Presets"), {}, TRANSLATE("You should enable the preset until the end of the heist!") .. "\n\n" .. TRANSLATE("Enabling one of these presets will complete all of setups, and set as max payout, $2.55 Millions. It will be affected to all of heist players."), function(); end)
 
@@ -1601,9 +1602,9 @@
             PERICO_NON_HOST_CUT = menu.list(PERICO_CUTS, TRANSLATE("Your Cut (Non-Host)"), {}, TRANSLATE("Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist."), function(); end)
 
                 CP_NON_HOST_CUT_LOOP = menu.toggle_loop(PERICO_NON_HOST_CUT, TRANSLATE("Enable"), {"hccpnonhostloop"}, "", function()
-                    SET_INT_GLOBAL(2685444 + 6639, menu.get_value(CP_NON_HOST_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(2685658 + 6651, menu.get_value(CP_NON_HOST_CUT))-- [[update]] (freemode.c)
                 end, function()
-                    SET_INT_GLOBAL(2685444 + 6639, menu.get_default_state(CP_NON_HOST_CUT))
+                    SET_INT_GLOBAL(2685658 + 6651, menu.get_default_state(CP_NON_HOST_CUT)) -- [[update]] (freemode.c)
                 end)
 
                 CP_NON_HOST_CUT = menu.slider(PERICO_NON_HOST_CUT, TRANSLATE("Custom Percentage"), {"hccpnonhost"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -1613,9 +1614,9 @@
             PERICO_HOST_CUT = menu.list(PERICO_CUTS, TRANSLATE("Your Cut"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_HOST_CUT_LOOP = menu.toggle_loop(PERICO_HOST_CUT, TRANSLATE("Enable"), {"hccphostcutloop"}, "", function()
-                    SET_INT_GLOBAL(1971648 + 831 + 56 + 1, menu.get_value(CP_HOST_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1972414 + 831 + 56 + 1, menu.get_value(CP_HOST_CUT)) -- [[update]] (heist_island_planning.c)
                 end, function()
-                    SET_INT_GLOBAL(1971648 + 831 + 56 + 1, menu.get_default_state(CP_HOST_CUT))
+                    SET_INT_GLOBAL(1972414 + 831 + 56 + 1, menu.get_default_state(CP_HOST_CUT)) -- [[update]]
                 end)
 
                 CP_HOST_CUT = menu.slider(PERICO_HOST_CUT, TRANSLATE("Custom Percentage"), {"hccphostcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -1625,9 +1626,9 @@
             PERICO_P2_CUT = menu.list(PERICO_CUTS, TRANSLATE("Player 2"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_2P_CUT_LOOP = menu.toggle_loop(PERICO_P2_CUT, TRANSLATE("Enable"), {"hccp2pcutloop"}, "", function()
-                    SET_INT_GLOBAL(1971648 + 831 + 56 + 2, menu.get_value(CP_2P_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1972414 + 831 + 56 + 2, menu.get_value(CP_2P_CUT)) -- heist_island_planning.c [[update]]
                 end, function()
-                    SET_INT_GLOBAL(1971648 + 831 + 56 + 2, menu.get_default_state(CP_2P_CUT))
+                    SET_INT_GLOBAL(1972414 + 831 + 56 + 2, menu.get_default_state(CP_2P_CUT)) -- [[update]]
                 end)
 
                 CP_2P_CUT = menu.slider(PERICO_P2_CUT, TRANSLATE("Custom Percentage"), {"hccp2pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -1637,9 +1638,9 @@
             PERICO_P3_CUT = menu.list(PERICO_CUTS, TRANSLATE("Player 3"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_3P_CUT_LOOP = menu.toggle_loop(PERICO_P3_CUT, TRANSLATE("Enable"), {"hccp3pcutloop"}, "", function()
-                    SET_INT_GLOBAL(1971648 + 831 + 56 + 3, menu.get_value(CP_3P_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1972414 + 831 + 56 + 3, menu.get_value(CP_3P_CUT)) -- heist_island_planning.c [[update]]
                 end, function()
-                    SET_INT_GLOBAL(1971648 + 831 + 56 + 3, menu.get_default_state(CP_3P_CUT))
+                    SET_INT_GLOBAL(1972414 + 831 + 56 + 3, menu.get_default_state(CP_3P_CUT)) -- [[update]]
                 end)
 
                 CP_3P_CUT = menu.slider(PERICO_P3_CUT, TRANSLATE("Custom Percentage"), {"hccp3pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -1649,9 +1650,9 @@
             PERICO_P4_CUT = menu.list(PERICO_CUTS, TRANSLATE("Player 4"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CP_4P_CUT_LOOP = menu.toggle_loop(PERICO_P4_CUT, TRANSLATE("Enable"), {"hccp4pcutloop"}, "", function()
-                    SET_INT_GLOBAL(1971648 + 831 + 56 + 4, menu.get_value(CP_4P_CUT)) -- heist_island_planning.c
+                    SET_INT_GLOBAL(1972414 + 831 + 56 + 4, menu.get_value(CP_4P_CUT)) -- heist_island_planning.c [[update]]
                 end, function()
-                    SET_INT_GLOBAL(1971648 + 831 + 56 + 4, menu.get_default_state(CP_4P_CUT))
+                    SET_INT_GLOBAL(1972414 + 831 + 56 + 4, menu.get_default_state(CP_4P_CUT)) -- [[update]]
                 end)
 
                 CP_4P_CUT = menu.slider(PERICO_P4_CUT, TRANSLATE("Custom Percentage"), {"hccp4pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -1675,32 +1676,32 @@
         end)
 
         menu.toggle_loop(PERICO_ADV, TRANSLATE("Skip The Hacking Process"), {}, "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Compound") .. " > " .. TRANSLATE("El Rubio's Office") .. ")", function() 
-            if GET_INT_LOCAL("fm_mission_controller_2020", 24880) == 4 then -- https://www.unknowncheats.me/forum/3418914-post13398.html
-                SET_INT_LOCAL("fm_mission_controller_2020", 24880, 5)
+            if GET_INT_LOCAL("fm_mission_controller_2020", 24986) == 4 then -- https://www.unknowncheats.me/forum/3418914-post13398.html
+                SET_INT_LOCAL("fm_mission_controller_2020", 24986, 5) -- [[update]]
             end
         end)
 
         menu.toggle_loop(PERICO_ADV, TRANSLATE("Skip Cutting The Sewer Grill"), {}, "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Island") .. " > " .. TRANSLATE("Drainage Pipe") .. ")", function() 
-            if GET_INT_LOCAL("fm_mission_controller_2020", 29700) == 4 then -- https://www.unknowncheats.me/forum/3389282-post1.html  
-                SET_INT_LOCAL("fm_mission_controller_2020", 29700, 6)
+            if GET_INT_LOCAL("fm_mission_controller_2020", 29810) == 4 then -- https://www.unknowncheats.me/forum/3389282-post1.html  
+                SET_INT_LOCAL("fm_mission_controller_2020", 29810, 6) -- [[update]]
             end
         end)
 
         menu.toggle_loop(PERICO_ADV, TRANSLATE("Skip Cutting The Glass"), {}, "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Compound") .. " > " .. TRANSLATE("Primary Target") .. ")", function()
-            SET_FLOAT_LOCAL("fm_mission_controller_2020", 30939 + 3, 100)
+            SET_FLOAT_LOCAL("fm_mission_controller_2020", 31049 + 3, 100)
         end, function()
-            SET_FLOAT_LOCAL("fm_mission_controller_2020", 30939 + 3, 0)
+            SET_FLOAT_LOCAL("fm_mission_controller_2020", 31049 + 3, 0) -- [[update]]
         end)
 
         menu.toggle_loop(PERICO_ADV, TRANSLATE("Infinite Plasma Cutter Heat"), {}, "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Compound") .. " > " .. TRANSLATE("Primary Target") .. ")", function()
-            SET_FLOAT_LOCAL("fm_mission_controller_2020", 30939 + 4, 0)
+            SET_FLOAT_LOCAL("fm_mission_controller_2020", 31049 + 4, 0) -- [[update]]
         end)
 
         menu.toggle_loop(PERICO_ADV, TRANSLATE("Infinite Voltage Timer"), {}, "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Island") .. " > " .. TRANSLATE("Radio Tower") .. ")", function()
-            local Value = GET_INT_LOCAL("fm_mission_controller_2020", 1724)
-            SET_INT_LOCAL("fm_mission_controller_2020", 1723, Value)
+            local Value = GET_INT_LOCAL("fm_mission_controller_2020", 1745) -- [[update]]
+            SET_INT_LOCAL("fm_mission_controller_2020", 1744, Value) -- [[update]]
         end, function()
-            SET_INT_LOCAL("fm_mission_controller_2020", 1723, 0)
+            SET_INT_LOCAL("fm_mission_controller_2020", 1744, 0) -- [[update]]
         end)
 
         CPRemFeeTunables = {
@@ -1716,19 +1717,20 @@
         end)
 
         menu.action(PERICO_ADV, TRANSLATE("Force Ready"), {"hccpforceready"}, TRANSLATE("Forces the players on board to ready."), function() 
-            SET_INT_GLOBAL(1972760 + 1 + (1 * 27) + 8 + 1, 1) -- Thanks to @vithiam on Discord
-            SET_INT_GLOBAL(1972760 + 1 + (2 * 27) + 8 + 2, 1) 
-            SET_INT_GLOBAL(1972760 + 1 + (3 * 27) + 8 + 3, 1) 
+            -- [[update]]
+            SET_INT_GLOBAL(1973526 + 1 + (1 * 27) + 8 + 1, 1) -- Thanks to @vithiam on Discord
+            SET_INT_GLOBAL(1973526 + 1 + (2 * 27) + 8 + 2, 1) 
+            SET_INT_GLOBAL(1973526 + 1 + (3 * 27) + 8 + 3, 1) 
         end)
 
         menu.action(PERICO_ADV, TRANSLATE("Obtain The Primary Target"), {"hccpfintar"}, "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Compound") .. " > " .. TRANSLATE("Primary Target") .. ")", function() -- https://www.unknowncheats.me/forum/3418914-post13398.html
-            SET_INT_LOCAL("fm_mission_controller_2020", 30938, 5) -- CutterStage
-            SET_INT_LOCAL("fm_mission_controller_2020", 30939, 3) -- BitCheck
+            SET_INT_LOCAL("fm_mission_controller_2020", 31048, 5) -- CutterStage [[update]]
+            SET_INT_LOCAL("fm_mission_controller_2020", 31049, 3) -- BitCheck
         end)
 
         menu.action(PERICO_ADV, TRANSLATE("Increase Team Lives"), {"hccpincteamlives"}, TRANSLATE("Increases the amount of team lives. Make sure to have script host if it doesn't seem to work."), function()
             menu.trigger_commands("scripthost")
-            SET_INT_LOCAL("fm_mission_controller_2020", 56798 + 868 + 1, 10000000) -- Thanks to @vithiam on Discord
+            SET_INT_LOCAL("fm_mission_controller_2020", 58874 + 1109 + 1, 10000000) -- Thanks to @vithiam on Discord [[update]]
         end)
 
         menu.action(PERICO_ADV, TRANSLATE("Remove The Drainage Pipe"), {"hccprempipe"}, "(" .. TRANSLATE("Cayo Perico Heist") .. " > " .. TRANSLATE("Teleport Places") .. " > " .. TRANSLATE("Island") .. " > " .. TRANSLATE("Drainage Pipe") .. ")", function()
@@ -1737,7 +1739,7 @@
         end)
 
         menu.action(PERICO_ADV, TRANSLATE("Refresh Kosatka Planning Table"), {"hccprefreshboard"}, TRANSLATE("You can update changed cayo perico heist stats in the Kosatka by refreshing it."), function()
-            SET_INT_LOCAL("heist_island_planning", 1546, 2) -- https://github.com/atomikfr/CayoPericoHeistAssistant
+            SET_INT_LOCAL("heist_island_planning", 1564, 2) -- https://github.com/atomikfr/CayoPericoHeistAssistant [[update]]
         end)
     
     ---
@@ -2168,6 +2170,7 @@
 
 
 --- Diamond Casino Heist
+util.yield()
 
     CasinoPresetTunables = {
         memory.tunable_offset(1277889925),
@@ -2515,9 +2518,9 @@
             CAH_NON_HOST = menu.list(CAH_PLAYER_CUT, TRANSLATE("Your Cut (Non-Host)"), {}, TRANSLATE("Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist."), function(); end)
 
                 CAH_NON_HOST_CUT_LOOP = menu.toggle_loop(CAH_NON_HOST, TRANSLATE("Enable"), {"hccahnonhostloop"}, "", function()
-                    SET_INT_GLOBAL(2685444 + 6639, menu.get_value(CAH_NON_HOST_CUT)) -- gb_casino_heist_planning.c
+                    SET_INT_GLOBAL(2685658 + 6651, menu.get_value(CAH_NON_HOST_CUT)) -- gb_casino_heist_planning.c [[update]]
                 end, function()
-                    SET_INT_GLOBAL(2685444 + 6639, menu.get_default_state(CAH_NON_HOST_CUT))
+                    SET_INT_GLOBAL(2685658 + 6651, menu.get_default_state(CAH_NON_HOST_CUT)) -- [[update]]
                 end)
 
                 CAH_NON_HOST_CUT = menu.slider(CAH_NON_HOST, TRANSLATE("Custom Percentage"), {"hccahnonhost"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -2527,9 +2530,9 @@
             CAH_HOST = menu.list(CAH_PLAYER_CUT, TRANSLATE("Your Cut"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CAH_HOST_CUT_LOOP = menu.toggle_loop(CAH_HOST, TRANSLATE("Enable"), {"hccah1pcutloop"}, "", function()
-                    SET_INT_GLOBAL(1964849 + 1497 + 736 + 92 + 1, menu.get_value(CAH_HOST_CUT)) -- gb_casino_heist_planning.c
+                    SET_INT_GLOBAL(1965614 + 1497 + 736 + 92 + 1, menu.get_value(CAH_HOST_CUT)) -- gb_casino_heist_planning.c [[update]]
                 end, function()
-                    SET_INT_GLOBAL(1964849 + 1497 + 736 + 92 + 1, menu.get_default_state(CAH_HOST_CUT))
+                    SET_INT_GLOBAL(1965614 + 1497 + 736 + 92 + 1, menu.get_default_state(CAH_HOST_CUT)) -- [[update]]
                 end)
 
                 CAH_HOST_CUT = menu.slider(CAH_HOST, TRANSLATE("Custom Percentage"), {"hccah1pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -2539,9 +2542,9 @@
             CAH_2P = menu.list(CAH_PLAYER_CUT, TRANSLATE("Player 2"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CAH_2P_CUT_LOOP = menu.toggle_loop(CAH_2P, TRANSLATE("Enable"), {"hccah2pcutloop"}, "", function()
-                    SET_INT_GLOBAL(1964849 + 1497 + 736 + 92 + 2, menu.get_value(CAH_2P_CUT)) -- gb_casino_heist_planning.c
+                    SET_INT_GLOBAL(1965614 + 1497 + 736 + 92 + 2, menu.get_value(CAH_2P_CUT)) -- gb_casino_heist_planning.c [[update]]
                 end, function()
-                    SET_INT_GLOBAL(1964849 + 1497 + 736 + 92 + 2, menu.get_default_state(CAH_2P_CUT))
+                    SET_INT_GLOBAL(1965614 + 1497 + 736 + 92 + 2, menu.get_default_state(CAH_2P_CUT)) -- [[update]]
                 end)
 
                 CAH_2P_CUT = menu.slider(CAH_2P, TRANSLATE("Custom Percentage"), {"hccah2pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -2551,9 +2554,9 @@
             CAH_3P = menu.list(CAH_PLAYER_CUT, TRANSLATE("Player 3"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
                 CAH_3P_CUT_LOOP = menu.toggle_loop(CAH_3P, TRANSLATE("Enable"), {"hccah3pcutloop"}, "", function()
-                    SET_INT_GLOBAL(1964849 + 1497 + 736 + 92 + 3, menu.get_value(CAH_3P_CUT)) -- gb_casino_heist_planning.c
+                    SET_INT_GLOBAL(1965614 + 1497 + 736 + 92 + 3, menu.get_value(CAH_3P_CUT)) -- gb_casino_heist_planning.c [[update]]
                 end, function()
-                    SET_INT_GLOBAL(1964849 + 1497 + 736 + 92 + 3, menu.get_default_state(CAH_3P_CUT))
+                    SET_INT_GLOBAL(1965614 + 1497 + 736 + 92 + 3, menu.get_default_state(CAH_3P_CUT)) --[[update]]
                 end)
 
                 CAH_3P_CUT = menu.slider(CAH_3P, TRANSLATE("Custom Percentage"), {"hccah3pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -2563,9 +2566,9 @@
             CAH_4P = menu.list(CAH_PLAYER_CUT, TRANSLATE("Player 4"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
                 
                 CAH_4P_CUT_LOOP = menu.toggle_loop(CAH_4P, TRANSLATE("Enable"), {"hccah4pcutloop"}, "", function()
-                    SET_INT_GLOBAL(1964849 + 1497 + 736 + 92 + 4, menu.get_value(CAH_4P_CUT)) -- gb_casino_heist_planning.c
+                    SET_INT_GLOBAL(1965614 + 1497 + 736 + 92 + 4, menu.get_value(CAH_4P_CUT)) -- gb_casino_heist_planning.c [[update]]
                 end, function()
-                    SET_INT_GLOBAL(1964849 + 1497 + 736 + 92 + 4, menu.get_default_state(CAH_4P_CUT))
+                    SET_INT_GLOBAL(1965614 + 1497 + 736 + 92 + 4, menu.get_default_state(CAH_4P_CUT)) -- [[update]]
                 end)
 
                 CAH_4P_CUT = menu.slider(CAH_4P, TRANSLATE("Custom Percentage"), {"hccah4pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -2575,43 +2578,45 @@
         ---
 
         menu.toggle_loop(CAH_ADVCED, TRANSLATE("Skip The Hacking Process"), {}, TRANSLATE("Works On Both: Fingerprint and Keypad"), function()
-            if GET_INT_LOCAL("fm_mission_controller", 53019) ~= 1 then -- For Fingerprint, https://www.unknowncheats.me/forum/3418914-post13398.html
-                SET_INT_LOCAL("fm_mission_controller", 53019, 5)
+            if GET_INT_LOCAL("fm_mission_controller", 53087) ~= 1 then -- For Fingerprint, https://www.unknowncheats.me/forum/3418914-post13398.html
+                SET_INT_LOCAL("fm_mission_controller", 53087, 5) -- [[update]]
             end
-            if GET_INT_LOCAL("fm_mission_controller", 54085) ~= 1 then -- For Keypad, https://www.unknowncheats.me/forum/3455828-post8.html
-                SET_INT_LOCAL("fm_mission_controller", 54085, 5)
+            if GET_INT_LOCAL("fm_mission_controller", 54153) ~= 1 then -- For Keypad, https://www.unknowncheats.me/forum/3455828-post8.html
+                SET_INT_LOCAL("fm_mission_controller", 54153, 5) -- [[update]]
             end
         end)
 
         menu.action(CAH_ADVCED, TRANSLATE("Allow You Play Alone"), {}, TRANSLATE("Allow you play alone this heist without another player.") .. "\n\n" .. TRANSLATE("Press this feature once before launching the heist."), function()
-            if GET_INT_LOCAL("fmmc_launcher", 19709 + 34) ~= nil then -- https://www.unknowncheats.me/forum/grand-theft-auto-v/463868-modest-menu-lua-scripting-megathread-239.html#google_vignette
-                if GET_INT_LOCAL("fmmc_launcher", 19709 + 34) ~= 0 then
-                    if GET_INT_LOCAL("fmmc_launcher", 19709 + 15) > 1 then
-                        SET_INT_LOCAL("fmmc_launcher", 19709 + 15, 1)
-                        SET_INT_GLOBAL(794744 + 4 + 1 + (GET_INT_LOCAL("fmmc_launcher", 19709 + 34) * 89) + 69, 1)
+            -- [[update]]
+            if GET_INT_LOCAL("fmmc_launcher", 19875 + 34) ~= nil then -- https://www.unknowncheats.me/forum/grand-theft-auto-v/463868-modest-menu-lua-scripting-megathread-239.html#google_vignette
+                if GET_INT_LOCAL("fmmc_launcher", 19875 + 34) ~= 0 then
+                    if GET_INT_LOCAL("fmmc_launcher", 19875 + 15) > 1 then
+                        SET_INT_LOCAL("fmmc_launcher", 19875 + 15, 1)
+                        SET_INT_GLOBAL(794744 + 4 + 1 + (GET_INT_LOCAL("fmmc_launcher", 19875 + 34) * 89) + 69, 1)
                     end
                     
                     SET_INT_GLOBAL(4718592 + 3526, 1)
                     SET_INT_GLOBAL(4718592 + 3527, 1)
                     SET_INT_GLOBAL(4718592 + 3529 + 1, 1)
-                    SET_INT_GLOBAL(4718592 + 178821 + 1, 0)
+                    SET_INT_GLOBAL(4718592 + 180865 + 1, 0)
                 end
             end
         end)
 
         menu.action(CAH_ADVCED, TRANSLATE("Force Ready"), {"hccahforceready"}, TRANSLATE("Forces the players on board to ready."), function() 
-            SET_INT_GLOBAL(1969212 + 1 + (1 * 68) + 8 + 1, 1) -- Thanks to @vithiam on Discord
-            SET_INT_GLOBAL(1969212 + 1 + (2 * 68) + 8 + 2, 1) 
-            SET_INT_GLOBAL(1969212 + 1 + (3 * 68) + 8 + 3, 1)
+            -- [[update]]
+            SET_INT_GLOBAL(1969977 + 1 + (1 * 68) + 8 + 1, 1) -- Thanks to @vithiam on Discord
+            SET_INT_GLOBAL(1969977 + 1 + (2 * 68) + 8 + 2, 1) 
+            SET_INT_GLOBAL(1969977 + 1 + (3 * 68) + 8 + 3, 1)
         end)
 
         menu.action(CAH_ADVCED, TRANSLATE("Skip Drilling The Vault Door"), {"hccahinsvault"}, "", function() -- https://www.unknowncheats.me/forum/3418914-post13398.html
-            SET_INT_LOCAL("fm_mission_controller", 10109 + 7, GET_INT_LOCAL("fm_mission_controller", 10109 + 37))
+            SET_INT_LOCAL("fm_mission_controller", 10143 + 7, GET_INT_LOCAL("fm_mission_controller", 10143 + 37)) -- [[update]]
         end)
 
         menu.action(CAH_ADVCED, TRANSLATE("Increase Team Lives"), {"hccahincteamlives"}, TRANSLATE("Increases the amount of team lives. Make sure to have script host if it doesn't seem to work."), function()
             menu.trigger_commands("scripthost")
-            SET_INT_LOCAL("fm_mission_controller", 19746 + 1765 + 1, 10000000) -- Thanks to @vithiam on Discord
+            SET_INT_LOCAL("fm_mission_controller", 19781 + 1765 + 1, 10000000) -- Thanks to @vithiam on Discord [[update]]
         end)
 
         menu.action(CAH_ADVCED, TRANSLATE("Refresh Arcade Boards"), {"hccahrefreshboards"}, TRANSLATE("You can update casino heist stats while even you in the arcade."), function()
@@ -2937,7 +2942,7 @@
         }, function(index)
             util.create_tick_handler(function()
                 if not util.is_session_started() then return end
-                SET_INT_GLOBAL(1964849 + 1497 + 1017, index - 1) -- https://www.unknowncheats.me/forum/3666316-post96.html
+                SET_INT_GLOBAL(1965614 + 1497 + 1017, index - 1) -- https://www.unknowncheats.me/forum/3666316-post96.html [[update]]
             end)
             menu.trigger_commands("hccahrefreshboards")
         end)
@@ -2957,7 +2962,7 @@
         }, function(index)
             util.create_tick_handler(function()
                 if not util.is_session_started() then return end
-                SET_INT_GLOBAL(1964849 + 1497 + 1018, index - 1) -- https://www.unknowncheats.me/forum/3666316-post96.html
+                SET_INT_GLOBAL(1965614 + 1497 + 1018, index - 1) -- https://www.unknowncheats.me/forum/3666316-post96.html [[update]]
             end)
             menu.trigger_commands("hccahrefreshboards")
         end)
@@ -2969,7 +2974,7 @@
         }, function(index)
             util.create_tick_handler(function()
                 if not util.is_session_started() then return end
-                SET_INT_GLOBAL(1964849 + 1497 + 1019, (index * 3) - 3) -- https://www.unknowncheats.me/forum/3666316-post96.html
+                SET_INT_GLOBAL(1965614 + 1497 + 1019, (index * 3) - 3) -- https://www.unknowncheats.me/forum/3666316-post96.html [[update]]
             end)
             menu.trigger_commands("hccahrefreshboards")
         end)
@@ -2982,7 +2987,7 @@
         }, function(index)
             util.create_tick_handler(function()
                 if not util.is_session_started() then return end
-                SET_INT_GLOBAL(1964849 + 1497 + 1020, index)
+                SET_INT_GLOBAL(1965614 + 1497 + 1020, index) -- [[update]]
             end)
             menu.trigger_commands("hccahrefreshboards")
         end)
@@ -2994,7 +2999,7 @@
         }, function(index)
             util.create_tick_handler(function()
                 if not util.is_session_started() then return end
-                SET_INT_GLOBAL(1964849 + 1497 + 1021, index + 5)
+                SET_INT_GLOBAL(1965614 + 1497 + 1021, index + 5) -- [[update]]
             end)
             menu.trigger_commands("hccahrefreshboards")
         end)
@@ -3077,6 +3082,7 @@
 
 
 --- Doomsday Heist
+util.yield()
 
     DOOMS_PRESETS = menu.list(DOOMS_HEIST, TRANSLATE("Automated Presets"), {"hcdoomspreset"}, TRANSLATE("You should enable the preset until the end of the heist!") .. "\n\n" .. TRANSLATE("Enabling one of these presets will complete all of setups, and set as max payout, $2.55 Millions. It will be affected to all of heist players."), function(); end)
 
@@ -3255,9 +3261,9 @@
         DOOMS_NON_HOST = menu.list(DOOMS_PLAYER_CUT, TRANSLATE("Your Cut (Non-Host)"), {}, TRANSLATE("Note that modifying this won't applied to the heist board. You can check the applied cut after end of the heist."), function(); end)
 
             DOOMS_NON_HOST_CUT_LOOP = menu.toggle_loop(DOOMS_NON_HOST, TRANSLATE("Enable"), {"hcdoomsnonhostloop"}, "", function()
-                SET_INT_GLOBAL(2685444 + 6639, menu.get_value(DOOMS_NON_HOST_CUT)) -- gb_gang_ops_planning.c
+                SET_INT_GLOBAL(2685658 + 6651, menu.get_value(DOOMS_NON_HOST_CUT)) -- gb_gang_ops_planning.c [[update]]
             end, function()
-                SET_INT_GLOBAL(2685444 + 6639, menu.get_default_state(DOOMS_NON_HOST_CUT))
+                SET_INT_GLOBAL(2685658 + 6651, menu.get_default_state(DOOMS_NON_HOST_CUT)) -- [[update]]
             end)
 
             DOOMS_NON_HOST_CUT = menu.slider(DOOMS_NON_HOST, TRANSLATE("Custom Percentage"), {"hcdoomsnonhost"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -3267,9 +3273,9 @@
         DOOMS_HOST = menu.list(DOOMS_PLAYER_CUT, TRANSLATE("Your Cut"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
             DOOMS_HOST_CUT_LOOP = menu.toggle_loop(DOOMS_HOST, TRANSLATE("Enable"), {"hcdooms1ploop"}, "", function()
-                SET_INT_GLOBAL(1960755 + 812 + 50 + 1, menu.get_value(DOOMS_HOST_CUT)) -- gb_gang_ops_planning.c
+                SET_INT_GLOBAL(1961513 + 812 + 50 + 1, menu.get_value(DOOMS_HOST_CUT)) -- gb_gang_ops_planning.c [[update]]
             end, function()
-                SET_INT_GLOBAL(1960755 + 812 + 50 + 1, menu.get_default_state(DOOMS_HOST_CUT))
+                SET_INT_GLOBAL(1961513 + 812 + 50 + 1, menu.get_default_state(DOOMS_HOST_CUT)) -- [[update]]
             end)
 
             DOOMS_HOST_CUT = menu.slider(DOOMS_HOST, TRANSLATE("Custom Percentage"), {"hcdooms1pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -3279,9 +3285,9 @@
         DOOMS_2P = menu.list(DOOMS_PLAYER_CUT, TRANSLATE("Player 2"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
             
             DOOMS_2P_CUT_LOOP = menu.toggle_loop(DOOMS_2P, TRANSLATE("Enable"), {"hcdooms2pcutloop"}, "", function()
-                SET_INT_GLOBAL(1960755 + 812 + 50 + 2, menu.get_value(DOOMS_2P_CUT)) -- gb_gang_ops_planning.c
+                SET_INT_GLOBAL(1961513 + 812 + 50 + 2, menu.get_value(DOOMS_2P_CUT)) -- gb_gang_ops_planning.c [[update]]
             end, function()
-                SET_INT_GLOBAL(1960755 + 812 + 50 + 2, menu.get_default_state(DOOMS_2P_CUT))
+                SET_INT_GLOBAL(1961513 + 812 + 50 + 2, menu.get_default_state(DOOMS_2P_CUT)) -- [[update]]
             end)
 
             DOOMS_2P_CUT = menu.slider(DOOMS_2P, TRANSLATE("Custom Percentage"), {"hcdooms2pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -3291,9 +3297,9 @@
         DOOMS_3P = menu.list(DOOMS_PLAYER_CUT, TRANSLATE("Player 3"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
             DOOMS_3P_CUT_LOOP = menu.toggle_loop(DOOMS_3P, TRANSLATE("Enable"), {"hcdooms3pcutloop"}, "", function()
-                SET_INT_GLOBAL(1960755 + 812 + 50 + 3, menu.get_value(DOOMS_3P_CUT)) -- gb_gang_ops_planning.c
+                SET_INT_GLOBAL(1961513 + 812 + 50 + 3, menu.get_value(DOOMS_3P_CUT)) -- gb_gang_ops_planning.c [[update]]
             end, function()
-                SET_INT_GLOBAL(1960755 + 812 + 50 + 3, menu.get_default_state(DOOMS_3P_CUT))
+                SET_INT_GLOBAL(1961513 + 812 + 50 + 3, menu.get_default_state(DOOMS_3P_CUT)) -- [[update]]
             end)
 
             DOOMS_3P_CUT = menu.slider(DOOMS_3P, TRANSLATE("Custom Percentage"), {"hcdooms3pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -3303,9 +3309,9 @@
         DOOMS_4P = menu.list(DOOMS_PLAYER_CUT, TRANSLATE("Player 4"), {}, TRANSLATE("Only works if you are host of the heist."), function(); end)
 
             DOOMS_4P_CUT_LOOP = menu.toggle_loop(DOOMS_4P, TRANSLATE("Enable"), {"hcdooms4pcutloop"}, "", function()
-                SET_INT_GLOBAL(1960755 + 812 + 50 + 4, menu.get_value(DOOMS_4P_CUT)) -- gb_gang_ops_planning.c
+                SET_INT_GLOBAL(1961513 + 812 + 50 + 4, menu.get_value(DOOMS_4P_CUT)) -- gb_gang_ops_planning.c [[update]]
             end, function()
-                SET_INT_GLOBAL(1960755 + 812 + 50 + 4, menu.get_default_state(DOOMS_4P_CUT))
+                SET_INT_GLOBAL(1961513 + 812 + 50 + 4, menu.get_default_state(DOOMS_4P_CUT)) -- [[update]]
             end)
 
             DOOMS_4P_CUT = menu.slider(DOOMS_4P, TRANSLATE("Custom Percentage"), {"hcdooms4pcut"}, "(%)", 0, 1000, 100, 5, function(); end)
@@ -3327,40 +3333,42 @@
     ---
 
     menu.toggle_loop(DOOMS_HEIST, TRANSLATE("Skip The Hacking Process"), {}, "(" .. TRANSLATE("The Data Breaches ACT I") .. " - " .. TRANSLATE("Setup: Server Farm (Lester)") .. " & " .. TRANSLATE("The Doomsday Scenario ACT III") .. ")", function()
-        SET_INT_LOCAL("fm_mission_controller", 1514, 3) -- For ACT I, Setup: Server Farm (Lester), https://www.unknowncheats.me/forum/3687245-post112.html
-        SET_INT_LOCAL("fm_mission_controller", 1545, 2)
-        SET_INT_LOCAL("fm_mission_controller", 1271 + 135, 3) -- For ACT III, https://www.unknowncheats.me/forum/3455828-post8.html
+        SET_INT_LOCAL("fm_mission_controller", 1536, 3) -- For ACT I, Setup: Server Farm (Lester), https://www.unknowncheats.me/forum/3687245-post112.html [[update]]
+        SET_INT_LOCAL("fm_mission_controller", 1567, 2) -- [[update]]
+        SET_INT_LOCAL("fm_mission_controller", 1292 + 135, 3) -- For ACT III, https://www.unknowncheats.me/forum/3455828-post8.html [[update]]
     end)
 
     menu.action(DOOMS_HEIST, TRANSLATE("Allow You Play Alone"), {}, TRANSLATE("Allow you play alone this heist without another player.") .. "\n\n" .. TRANSLATE("Press this feature once before launching the heist."), function()
-        if GET_INT_LOCAL("fmmc_launcher", 19709 + 34) ~= nil then -- https://www.unknowncheats.me/forum/grand-theft-auto-v/463868-modest-menu-lua-scripting-megathread-239.html#google_vignette
-            if GET_INT_LOCAL("fmmc_launcher", 19709 + 34) ~= 0 then
-                if GET_INT_LOCAL("fmmc_launcher", 19709 + 15) > 1 then
-                    SET_INT_LOCAL("fmmc_launcher", 19709 + 15, 1)
-                    SET_INT_GLOBAL(794744 + 4 + 1 + (GET_INT_LOCAL("fmmc_launcher", 19709 + 34) * 89) + 69, 1)
+        -- [[update]]
+        if GET_INT_LOCAL("fmmc_launcher", 19875 + 34) ~= nil then -- https://www.unknowncheats.me/forum/grand-theft-auto-v/463868-modest-menu-lua-scripting-megathread-239.html#google_vignette
+            if GET_INT_LOCAL("fmmc_launcher", 19875 + 34) ~= 0 then
+                if GET_INT_LOCAL("fmmc_launcher", 19875 + 15) > 1 then
+                    SET_INT_LOCAL("fmmc_launcher", 19875 + 15, 1)
+                    SET_INT_GLOBAL(794744 + 4 + 1 + (GET_INT_LOCAL("fmmc_launcher", 19875 + 34) * 89) + 69, 1)
                 end
                 
                 SET_INT_GLOBAL(4718592 + 3526, 1)
                 SET_INT_GLOBAL(4718592 + 3527, 1)
                 SET_INT_GLOBAL(4718592 + 3529 + 1, 1)
-                SET_INT_GLOBAL(4718592 + 178821 + 1, 0)
+                SET_INT_GLOBAL(4718592 + 180865 + 1, 0)
             end
         end
     end)
 
     menu.action(DOOMS_HEIST, TRANSLATE("Force Ready"), {"hcdoomsforceready"}, TRANSLATE("Forces the players on board to ready."), function() 
-        SET_INT_GLOBAL(1882632 + 1 + (1 * 146) + 43 + 1 + 4 + 8, 1) -- Thanks to @vithiam on Discord
-        SET_INT_GLOBAL(1882632 + 1 + (2 * 146) + 43 + 2 + 4 + 8, 1)
-        SET_INT_GLOBAL(1882632 + 1 + (3 * 146) + 43 + 3 + 4 + 8, 1)
+        -- [[update]]
+        SET_INT_GLOBAL(1882780 + 1 + (1 * 149) + 43 + 1 + 4 + 8, 1) -- Thanks to @vithiam on Discord
+        SET_INT_GLOBAL(1882780 + 1 + (2 * 149) + 43 + 2 + 4 + 8, 1)
+        SET_INT_GLOBAL(1882780 + 1 + (3 * 149) + 43 + 3 + 4 + 8, 1)
     end)
 
     menu.action(DOOMS_HEIST, TRANSLATE("Increase Team Lives"), {"hcdoomsincteamlives"}, TRANSLATE("Increases the amount of team lives. Make sure to have script host if it doesn't seem to work."), function()
         menu.trigger_commands("scripthost")
-        SET_INT_LOCAL("fm_mission_controller", 19746 + 1765 + 1, 10000000) -- Thanks to @vithiam on Discord
+        SET_INT_LOCAL("fm_mission_controller", 19781 + 1765 + 1, 10000000) -- Thanks to @vithiam on Discord [[update]]
     end)
 
     menu.action(DOOMS_HEIST, TRANSLATE("Refresh Heist Screen On Facility"), {"hcdoomsrefreshscreen"}, TRANSLATE("You can update changed doomsday heist stats in the Facility by refreshing it."), function()
-        SET_INT_LOCAL("gb_gang_ops_planning", 184, 6) -- https://www.unknowncheats.me/forum/3682032-post104.html
+        SET_INT_LOCAL("gb_gang_ops_planning", 205, 6) -- https://www.unknowncheats.me/forum/3682032-post104.html [[update]]
     end)
 
     menu.action(DOOMS_HEIST, TRANSLATE("Remove EMP Mines"), {}, TRANSLATE("(ACT III, Setup - Air Defense)"), function()
@@ -3390,6 +3398,7 @@
 
 
 --- Classic Heist
+util.yield()
 
     CLASSIC_PRESETS = menu.list(CLASSIC_HEISTS, TRANSLATE("Automated Presets"), {}, TRANSLATE("Compatible with any classic heist and any difficulty level.") .. "\n\n" .. TRANSLATE("Note that you should use this feature when you're on the planning board after watching or skipping the cutscene. It only works if you are host of the heist."), function(); end)
 
@@ -3402,7 +3411,7 @@
             menu.ref_by_path("Stand>Settings>Input>Mouse Support>Mouse Support").value = false
             util.yield(250)
 
-            local Difficulty = GET_INT_GLOBAL(4718592 + 3525)
+            local Difficulty = GET_INT_GLOBAL(4718592 + 3525) -- [[update]]
             local HeistID = STAT_GET_STRING("HEIST_MISSION_RCONT_ID_1")
             local HeistData = {
                 ["hK5OgJk1BkinXGGXghhTMg"] = {{-29712, 14906}, {-14806, 7453}, {-11824, 5962}}, -- Fleeca Job
@@ -3417,7 +3426,7 @@
                 local PlayerCut = SetCuts[Difficulty + 1]
                 if PlayerCut then
                     for i = 1, 4 do
-                        SET_INT_GLOBAL(1928958 + 1 + i, PlayerCut[i] or 0)
+                        SET_INT_GLOBAL(1929317 + 1 + i, PlayerCut[i] or 0) -- [[update]]
                     end
                 end
             end
@@ -3428,9 +3437,9 @@
             util.yield(500)
 
             if index == 1 then
-                SET_INT_GLOBAL(1930926 + 3008 + 1, GET_INT_GLOBAL(1928958 + 1 + 2))
+                SET_INT_GLOBAL(1931285 + 3008 + 1, GET_INT_GLOBAL(1929317 + 1 + 2)) -- [[update]]
             elseif index == 2 then
-                SET_INT_GLOBAL(1930926 + 3008 + 1, 0)
+                SET_INT_GLOBAL(1931285 + 3008 + 1, 0) -- [[update]]
             end
             PAD.SET_CURSOR_POSITION(0.5, 0.5)
 
@@ -3443,16 +3452,16 @@
     ---
 
     menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Remove The Cooldown"), {}, TRANSLATE("This doesn't bypass server-sided cooldown time, 20 mins. This just bypasses unable to launch heist in heist board."), function()
-        SET_INT_GLOBAL(1877285 + 1 + (PLAYER.PLAYER_ID() * 77) + 76, -1) -- Thanks to @vithiam on Discord
+        SET_INT_GLOBAL(1877417 + 1 + (PLAYER.PLAYER_ID() * 77) + 76, -1) -- Thanks to @vithiam on Discord [[update]]
     end)
 
     menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Skip The Hacking Process"), {}, "(" .. TRANSLATE("Fleeca Heist") .. " & " .. TRANSLATE("Pacific Standard Heist") .. ")", function()
-        SET_INT_LOCAL("fm_mission_controller", 11778 + 24, 7) -- Fleeca Heist, https://www.unknowncheats.me/forum/3455828-post8.html
-        SET_LOCAL_BIT("fm_mission_controller", 9775, 9) -- Pacific Standard Heist, https://www.unknowncheats.me/forum/3694259-post117.html
+        SET_INT_LOCAL("fm_mission_controller", 11812 + 24, 7) -- Fleeca Heist, https://www.unknowncheats.me/forum/3455828-post8.html [[update]]
+        SET_LOCAL_BIT("fm_mission_controller", 9809, 9) -- Pacific Standard Heist, https://www.unknowncheats.me/forum/3694259-post117.html [[update]]
     end)
 
     menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Skip Drilling"), {}, "(" .. TRANSLATE("Fleeca Heist") .. ")", function()
-        SET_FLOAT_LOCAL("fm_mission_controller", 10069 + 11, 100) -- https://www.unknowncheats.me/forum/3485435-post19.html
+        SET_FLOAT_LOCAL("fm_mission_controller", 10103 + 11, 100) -- https://www.unknowncheats.me/forum/3485435-post19.html [[update]]
     end)
 
     menu.toggle_loop(CLASSIC_HEISTS, TRANSLATE("Force Challenges Bonus"), {}, TRANSLATE("Allows you to gain an additional 12 millions for completing the Pacific Standard Job finale on hard difficulty. Note that it will only affect you, even if you are not the host. Enable before starting the heist and keep it enabled until it ends."), function() -- Big thanks to @negotium.rpm on Discord
@@ -3499,7 +3508,7 @@
         TRANSLATE("Series A Funding"), 
         TRANSLATE("Pacific Standard Job"),
     }, function(index)
-        local ApartmentID = GET_INT_GLOBAL(1845281 + 1 + (players.user() * 883) + 268 + 35) -- Information > Status > Apartment ID
+        local ApartmentID = GET_INT_GLOBAL(1845221 + 1 + (players.user() * 889) + 268 + 36) -- Information > Status > Apartment ID [[update]]
         if ApartmentID == -1 or ApartmentID >= 24 and ApartmentID <= 33 or ApartmentID >= 44 and ApartmentID <= 60 then
             NOTIFY(TRANSLATE("It seems that you are currently not in any apartment."))
         elseif ApartmentID >= 8 and ApartmentID <= 23 or ApartmentID >= 66 and ApartmentID <= 72 then
@@ -3541,30 +3550,31 @@
     end)
 
     menu.action(CLASSIC_HEISTS, TRANSLATE("Allow You Play Alone"), {}, TRANSLATE("Allow you play alone this heist without another player.") .. "\n\n" .. TRANSLATE("Press this feature once before launching the heist."), function()
-        if GET_INT_LOCAL("fmmc_launcher", 19709 + 34) ~= nil then -- https://www.unknowncheats.me/forum/grand-theft-auto-v/463868-modest-menu-lua-scripting-megathread-239.html#google_vignette
-            if GET_INT_LOCAL("fmmc_launcher", 19709 + 34) ~= 0 then
-                if GET_INT_LOCAL("fmmc_launcher", 19709 + 15) > 1 then
-                    SET_INT_LOCAL("fmmc_launcher", 19709 + 15, 1)
-                    SET_INT_GLOBAL(794744 + 4 + 1 + (GET_INT_LOCAL("fmmc_launcher", 19709 + 34) * 89) + 69, 1)
+        if GET_INT_LOCAL("fmmc_launcher", 19875 + 34) ~= nil then -- https://www.unknowncheats.me/forum/grand-theft-auto-v/463868-modest-menu-lua-scripting-megathread-239.html#google_vignette
+            if GET_INT_LOCAL("fmmc_launcher", 19875 + 34) ~= 0 then
+                if GET_INT_LOCAL("fmmc_launcher", 19875 + 15) > 1 then
+                    SET_INT_LOCAL("fmmc_launcher", 19875 + 15, 1)
+                    SET_INT_GLOBAL(794744 + 4 + 1 + (GET_INT_LOCAL("fmmc_launcher", 19875 + 34) * 89) + 69, 1)
                 end
                 
                 SET_INT_GLOBAL(4718592 + 3526, 1)
                 SET_INT_GLOBAL(4718592 + 3527, 1)
                 SET_INT_GLOBAL(4718592 + 3529 + 1, 1)
-                SET_INT_GLOBAL(4718592 + 178821 + 1, 0)
+                SET_INT_GLOBAL(4718592 + 180865 + 1, 0)
             end
         end
     end)
 
     menu.action(CLASSIC_HEISTS, TRANSLATE("Force Ready"), {"hcclassicforceready"}, TRANSLATE("Make all of players forced ready in planning board."), function()
-        SET_INT_GLOBAL(2657971 + 1 + (1 * 465) + 267, 6) -- Thanks to @vithiam on Discord
-        SET_INT_GLOBAL(2657971 + 1 + (2 * 465) + 267, 6)
-        SET_INT_GLOBAL(2657971 + 1 + (3 * 465) + 267, 6)
+        -- [[update]]
+        SET_INT_GLOBAL(2657991 + 1 + (1 * 467) + 269, 6) -- Thanks to @vithiam on Discord
+        SET_INT_GLOBAL(2657991 + 1 + (2 * 467) + 269, 6)
+        SET_INT_GLOBAL(2657991 + 1 + (3 * 467) + 269, 6)
     end)
 
     menu.action(CLASSIC_HEISTS, TRANSLATE("Increase Team Lives"), {"hcclassicincteamlives"}, TRANSLATE("Increases the amount of team lives. Make sure to have script host if it doesn't seem to work."), function()
         menu.trigger_commands("scripthost")
-        SET_INT_LOCAL("fm_mission_controller", 19746 + 1765 + 1, 10000000) -- Thanks to @vithiam on Discord
+        SET_INT_LOCAL("fm_mission_controller", 19781 + 1765 + 1, 10000000) -- Thanks to @vithiam on Discord [[update]]
     end)
 
     menu.action(CLASSIC_HEISTS, TRANSLATE("Unlock All Classic Heists"), {"hcclassicunlockall"}, TRANSLATE("Unlocks all heists on the planning board. Also marks all tutorials as completed and allows you to skip cutscenes. After using, you will automatically be returned to Story Mode to apply the changes."), function() -- Big thanks to @negotium.rpm on Discord
@@ -3613,6 +3623,7 @@
 
 
 --- Robberies
+util.yield()
 
     LS_ROBBERY = menu.list(ROBBERYS, TRANSLATE("The Los Santos Tuners Robbery"), {}, "", function(); end)
 
@@ -3830,6 +3841,7 @@
 
 
 --- Missions
+util.yield()
 
     menu.list_action(MISSONS, TRANSLATE("Lowrider"), {"hclowrider"}, "", {
         { 1, TRANSLATE("Community Outreach"), {"communityoutreach"}, "" },
@@ -3885,7 +3897,7 @@
         end)
 
         menu.toggle_loop(OPT_MISSIONS, TRANSLATE("Skip The Hacking Process"), {}, "(" .. TRANSLATE("Operation Paper Trail") .. " - " .. TRANSLATE("Counterintelligence") .. ")", function() -- Thanks for coding this, @pedro9558 on Discord
-            SET_INT_LOCAL("fm_mission_controller_2020", 980 + 135, 3)
+            SET_INT_LOCAL("fm_mission_controller_2020", 1001 + 135, 3) -- [[update]]
         end)
 
         menu.action(OPT_MISSIONS, TRANSLATE("Teleport To IAA Headquarters"), {}, "", function()
@@ -4001,6 +4013,7 @@
 
 
 --- Master Unlocker
+util.yield()
 
     DLC_UNLOCKER = menu.list(MASTER_UNLOCKER, TRANSLATE("DLCs"), {}, "", function(); end)
 
@@ -4960,7 +4973,7 @@
         end)
 
         menu.action(SPECIAL_WEAPON, TRANSLATE("Up-N-Atomizer"), {}, "", function()
-            SET_INT_GLOBAL(104496, 90) -- freemode.c
+            SET_INT_GLOBAL(104662, 90) -- freemode.c [[update]]
         end)
 
     ---
@@ -4973,14 +4986,15 @@
     end)
 
     menu.action(MASTER_UNLOCKER, TRANSLATE("Returning Player Bonus"), {}, "", function()
-        SET_INT_GLOBAL(104497, 1) -- freemode.c
-        SET_INT_GLOBAL(152848, 2) -- freemode.c
+        SET_INT_GLOBAL(104663, 1) -- freemode.c [[update]]
+        SET_INT_GLOBAL(153015, 2) -- freemode.c [[update]]
     end)
 
 ---
 
 
 --- Tools
+util.yield()
 
     TUNABLES = menu.list(TOOLS, TRANSLATE("Tunables"), {}, "", function(); end) -- Almost not credited global variables from: https://www.unknowncheats.me/forum/3337151-post1560.html
 
@@ -5303,7 +5317,7 @@
 
                 menu.trigger_commands("nopimenugrey on")
                 if util.is_interaction_menu_open() then PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 244, 1) end
-                SET_INT_GLOBAL(2710428, 85) -- Renders Ballistic Equipment Services screen of the Interaction Menu
+                SET_INT_GLOBAL(2711018, 85) -- Renders Ballistic Equipment Services screen of the Interaction Menu [[update]]
                 PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 244, 1) -- Presses M
                 PAD.SET_CONTROL_VALUE_NEXT_FRAME(0, 176, 1) -- Presses Enter
                 NOTIFY(TRANSLATE("Because this feature works via requesting the Ballistic Armor, it'll be dropped nearby soon."))
@@ -5322,27 +5336,29 @@
             menu.action(INSTANT_FINISH, TRANSLATE("Cayo / Tuners / ULP / Agency"), {"hcinsfincp"}, TRANSLATE("Note that may works for some of other preps. Only 'Quick Preset' is compatible with Cayo Perico Heist."), function() -- https://www.unknowncheats.me/forum/3524081-post3.html
                 menu.trigger_commands("scripthost")
 
-                SET_INT_LOCAL("fm_mission_controller_2020", 50150, 9) -- 'fm_mission_controller_2020' instant finish variable?
-                SET_INT_LOCAL("fm_mission_controller_2020", 50150 + 1770 + 1, 50) -- 'fm_mission_controller_2020' instant finish variable?
+                SET_INT_LOCAL("fm_mission_controller_2020", 52171, 9) -- 'fm_mission_controller_2020' instant finish variable? [[update]]
+                SET_INT_LOCAL("fm_mission_controller_2020", 52171 + 1776 + 1, 50) -- 'fm_mission_controller_2020' instant finish variable? [[update]]
             end)
 
             menu.action(INSTANT_FINISH, TRANSLATE("Casino Aggressive / Classic"), {"hcinsfincah"}, TRANSLATE("Note that if you don't use Heist Control's automated Casino Heist presets, won't get money.") .. "\n\n" .. TRANSLATE("Instant finishing Pacific Standard heist won't work."), function()
                 menu.trigger_commands("scripthost")
                 
-                SET_INT_LOCAL("fm_mission_controller", 19746 + 1741, 80) -- Casino Aggressive Kills & Act 3
-                SET_INT_LOCAL("fm_mission_controller", 19746 + 2686, 10000000) -- How much did you take in the casino and pacific standard heist
-                SET_INT_LOCAL("fm_mission_controller", 27489 + 859 + 18, 99999) -- 'fm_mission_controller' instant finish variable?
-                SET_INT_LOCAL("fm_mission_controller", 31621 + 69, 99999) -- 'fm_mission_controller' instant finish variable?
+                -- [[update]]
+                SET_INT_LOCAL("fm_mission_controller", 19781 + 1741, 80) -- Casino Aggressive Kills & Act 3
+                SET_INT_LOCAL("fm_mission_controller", 19781 + 2686, 10000000) -- How much did you take in the casino and pacific standard heist
+                SET_INT_LOCAL("fm_mission_controller", 27489 + 859 + 18, 99999) -- 'fm_mission_controller' instant finish variable? (possibly outdated)
+                SET_INT_LOCAL("fm_mission_controller", 31656 + 69, 99999) -- 'fm_mission_controller' instant finish variable? (this is writing nonsense + possibly outdated)
             end)
 
             menu.action(INSTANT_FINISH, TRANSLATE("Doomsday"), {"hcinsfindooms"}, TRANSLATE("Note that you may press multiple times to instant finish the heist."), function()
                 menu.trigger_commands("scripthost")
 
-                SET_INT_LOCAL("fm_mission_controller", 19746, 12) -- ???, 'fm_mission_controller' instant finish variable?
-                SET_INT_LOCAL("fm_mission_controller", 19746 + 1741, 150) -- Casino Aggressive Kills & Act 3
-                SET_INT_LOCAL("fm_mission_controller", 27489 + 859 + 18, 99999) -- 'fm_mission_controller' instant finish variable?
-                SET_INT_LOCAL("fm_mission_controller", 31621 + 69, 99999) -- 'fm_mission_controller' instant finish variable?
-                SET_INT_LOCAL("fm_mission_controller", 31621 + 97, 80) -- Act 1 Kills? Seem not to work
+                -- [[update]]
+                SET_INT_LOCAL("fm_mission_controller", 19781, 12) -- ???, 'fm_mission_controller' instant finish variable?
+                SET_INT_LOCAL("fm_mission_controller", 19781 + 1741, 150) -- Casino Aggressive Kills & Act 3 1741 possibly outdated
+                SET_INT_LOCAL("fm_mission_controller", 27489 + 859 + 18, 99999) -- 'fm_mission_controller' instant finish variable? (possibly outdated)
+                SET_INT_LOCAL("fm_mission_controller", 31656 + 69, 99999) -- 'fm_mission_controller' instant finish variable? (this is writing nonsense + possibly outdated)
+                SET_INT_LOCAL("fm_mission_controller", 31656 + 97, 80) -- Act 1 Kills? Seem not to work (this is writing nonsense + possibly outdated)
             end)
             
         ---
@@ -5350,17 +5366,18 @@
         menu.divider(INSTANT_FINISH, TRANSLATE("Others"))
 
             menu.action(INSTANT_FINISH, TRANSLATE("Bunker"), {"hcinsfinbk"}, TRANSLATE("(Selling Only)"), function() -- https://www.unknowncheats.me/forum/3521137-post39.html
-                SET_INT_LOCAL("gb_gunrunning", 1211 + 774, 0)
+                SET_INT_LOCAL("gb_gunrunning", 1262 + 774, 0) -- [[update]]
             end)
 
             menu.action(INSTANT_FINISH, TRANSLATE("Air Cargo"), {"hcinsfinac"}, TRANSLATE("(Selling Only)"), function() -- https://www.unknowncheats.me/forum/3513482-post37.html
-                SET_INT_LOCAL("gb_smuggler", 1934 + 1035, GET_INT_LOCAL("gb_smuggler", 1934 + 1078))
+                SET_INT_LOCAL("gb_smuggler", 1985 + 1035, GET_INT_LOCAL("gb_smuggler", 1934 + 1078)) -- [[update]]
             end)
 
             menu.action(INSTANT_FINISH, TRANSLATE("Acid Lab"), {"hcinsfinacid"}, TRANSLATE("(Selling Only)"), function() -- https://www.unknowncheats.me/forum/3641612-post76.html
-                SET_INT_LOCAL("fm_content_acid_lab_sell", 5483 + 1358 + 2, 9)
-                SET_INT_LOCAL("fm_content_acid_lab_sell", 5483 + 1358 + 3, 10)
-                SET_INT_LOCAL("fm_content_acid_lab_sell", 5483 + 1293, 2)
+                -- [[update]]
+                SET_INT_LOCAL("fm_content_acid_lab_sell", 5653 + 1374 + 2, 9)
+                SET_INT_LOCAL("fm_content_acid_lab_sell", 5653 + 1374 + 3, 10)
+                SET_INT_LOCAL("fm_content_acid_lab_sell", 5653 + 1308, 2)
             end)
 
             menu.action(INSTANT_FINISH, TRANSLATE("Headhunter"), {"hcinsfinhh"}, "", function() -- Thanks to @stand.gg on Discord helping me code this
@@ -5377,7 +5394,7 @@
             end)
 
             menu.action(INSTANT_FINISH, TRANSLATE("Sightseer"), {"hcinsfinss"}, "", function() -- https://www.unknowncheats.me/forum/3488056-post24.html
-                SET_INT_LOCAL("gb_sightseer", 254 + 1 + NETWORK.PARTICIPANT_ID_TO_INT() * 6 + 5, 3)
+                SET_INT_LOCAL("gb_sightseer", 256 + 1 + NETWORK.PARTICIPANT_ID_TO_INT() * 6 + 5, 3) -- [[update]]
             end)
             
         ---
@@ -5846,38 +5863,6 @@
 
     ---
 
-    menu.list_action(TOOLS, TRANSLATE("Request Services"), {"hcreq"}, "", {
-        { 1, TRANSLATE("MOC"), {"moc"}, "" },
-        { 2, TRANSLATE("Avenger"), {"avenger"}, "" },
-        { 3, TRANSLATE("Terrorbyte"), {"terrorbyte"}, "" },
-        { 4, TRANSLATE("Kosatka"), {"kosatka"}, "" },
-        { 5, TRANSLATE("Acid Lab"), {"acidlab"}, "" },
-        { 6, TRANSLATE("Dingy"), {"dingy"}, "" },
-        { 7, TRANSLATE("Motorbike"), {"motorbike"}, "" },
-        { 8, TRANSLATE("Ballistic Armor"), {"ballisticarmor"}, "" },
-        { 9, TRANSLATE("RC Tank"), {"rctank"}, "" },
-    }, function(index)
-        if index == 1 then
-            SET_INT_GLOBAL(2738934 + 945, 1)
-        elseif index == 2 then
-            SET_INT_GLOBAL(2738934 + 953, 1)
-        elseif index == 3 then
-            SET_INT_GLOBAL(2738934 + 958, 1)
-        elseif index == 4 then
-            SET_INT_GLOBAL(2738934 + 975, 1)
-        elseif index == 5 then
-            SET_INT_GLOBAL(2738934 + 959, 1)
-        elseif index == 6 then
-            SET_INT_GLOBAL(2738934 + 977, 1)
-        elseif index == 7 then
-            SET_INT_GLOBAL(2738934 + 1009, 1)
-        elseif index == 8 then
-            SET_INT_GLOBAL(2738934 + 916, 1)
-        elseif index == 9 then
-            SET_INT_GLOBAL(2738934 + 6932, 1)
-        end
-    end)
-
     PRESET_STAT_EDITOR = menu.list(TOOLS, TRANSLATE("Preset Stat Editor"), {}, "", function(); end)
 
         PLAYTIME_EDITOR = menu.list(PRESET_STAT_EDITOR, TRANSLATE("Playtime"), {}, "", function(); end)
@@ -6193,10 +6178,11 @@
 
         INFO_SPOOFING_WALLET_MONEY = menu.list(INFO_SPOOFING, TRANSLATE("Wallet Money"), {}, "", function(); end) -- freemode.c
 
+            -- [[update]]
             menu.toggle_loop(INFO_SPOOFING_WALLET_MONEY, TRANSLATE("Enable"), {}, "", function()
-                SET_INT_GLOBAL((1845281 + 1 + players.user() * 883) + 206 + 3, menu.get_value(WALLET_MONEY_SPOOFING))
+                SET_INT_GLOBAL((1845221 + 1 + players.user() * 889) + 206 + 3, menu.get_value(WALLET_MONEY_SPOOFING))
             end, function()
-                SET_INT_GLOBAL((1845281 + 1 + players.user() * 883) + 206 + 3, players.get_wallet(players.user()))
+                SET_INT_GLOBAL((1845221 + 1 + players.user() * 889) + 206 + 3, players.get_wallet(players.user()))
             end)
 
             WALLET_MONEY_SPOOFING = menu.slider(INFO_SPOOFING_WALLET_MONEY, TRANSLATE("Value"), {"hcwalletmoneyspoofing"}, "", INT_MIN, INT_MAX, players.get_wallet(players.user()), 10000, function(); end)
@@ -6205,10 +6191,11 @@
 
         INFO_SPOOFING_MONEY = menu.list(INFO_SPOOFING, TRANSLATE("Total Money"), {}, "", function(); end) -- freemode.c
 
+            -- [[update]]
             menu.toggle_loop(INFO_SPOOFING_MONEY, TRANSLATE("Enable"), {}, "", function()
-                SET_INT_GLOBAL((1845281 + 1 + players.user() * 883) + 206 + 56, menu.get_value(TOTAL_MONEY_SPOOFING))
+                SET_INT_GLOBAL((1845221 + 1 + players.user() * 889) + 206 + 56, menu.get_value(TOTAL_MONEY_SPOOFING))
             end, function()
-                SET_INT_GLOBAL((1845281 + 1 + players.user() * 883) + 206 + 56, players.get_money(players.user()))
+                SET_INT_GLOBAL((1845221 + 1 + players.user() * 889) + 206 + 56, players.get_money(players.user()))
             end)
 
             TOTAL_MONEY_SPOOFING = menu.slider(INFO_SPOOFING_MONEY, TRANSLATE("Value"), {"hctotalmoneyspoofing"}, "", INT_MIN, INT_MAX, players.get_bank(players.user()), 10000, function(); end)
@@ -6217,10 +6204,11 @@
 
         INFO_SPOOFING_KILL = menu.list(INFO_SPOOFING, TRANSLATE("Kills"), {}, "", function(); end) -- freemode.c
 
+            -- [[update]]
             menu.toggle_loop(INFO_SPOOFING_KILL, TRANSLATE("Enable"), {}, "", function()
-                SET_INT_GLOBAL((1845281 + 1 + players.user() * 883) + 206 + 28, menu.get_value(KILL_SPOOFING))
+                SET_INT_GLOBAL((1845221 + 1 + players.user() * 889) + 206 + 28, menu.get_value(KILL_SPOOFING))
             end, function()
-                SET_INT_GLOBAL((1845281 + 1 + players.user() * 883) + 206 + 28, players.get_kills(players.user()))
+                SET_INT_GLOBAL((1845221 + 1 + players.user() * 889) + 206 + 28, players.get_kills(players.user()))
             end)
 
             KILL_SPOOFING = menu.slider(INFO_SPOOFING_KILL, TRANSLATE("Value"), {"hckillspoofing"}, "", INT_MIN, INT_MAX, players.get_kills(players.user()), 1, function(); end)
@@ -6229,10 +6217,11 @@
 
         INFO_SPOOFING_DEATH = menu.list(INFO_SPOOFING, TRANSLATE("Deaths"), {}, "", function(); end)
 
+            -- [[update]]
             menu.toggle_loop(INFO_SPOOFING_DEATH, TRANSLATE("Enable"), {}, "", function() -- freemode.c
-                SET_INT_GLOBAL((1845281 + 1 + players.user() * 883) + 206 + 29, menu.get_value(DEATH_SPOOFING))
+                SET_INT_GLOBAL((1845221 + 1 + players.user() * 889) + 206 + 29, menu.get_value(DEATH_SPOOFING))
             end, function()
-                SET_INT_GLOBAL((1845281 + 1 + players.user() * 883) + 206 + 29, players.get_deaths(players.user()))
+                SET_INT_GLOBAL((1845221 + 1 + players.user() * 889) + 206 + 29, players.get_deaths(players.user()))
             end)
 
             DEATH_SPOOFING = menu.slider(INFO_SPOOFING_DEATH, TRANSLATE("Value"), {"hcdeathspoofing"}, "", INT_MIN, INT_MAX, players.get_deaths(players.user()), 1, function(); end)
@@ -6246,8 +6235,8 @@
         menu.toggle_loop(TOOLS_OTH, TRANSLATE("Disable Transaction Errors"), {"hcnotransactionerr"}, "", function()
             if not util.is_session_started() then return end
 
-            if GET_INT_GLOBAL(4537461) == 4 or 20 then
-                SET_INT_GLOBAL(4537455, 0) -- https://github.com/jonaaa20/RecoverySuite
+            if GET_INT_GLOBAL(4538095) == 4 or GET_INT_GLOBAL(4538095) == 20 then -- [[update]]
+                SET_INT_GLOBAL(4538089, 0) -- https://github.com/jonaaa20/RecoverySuite [[update]]
             end
         end)
 
@@ -6341,6 +6330,7 @@
 
 
 --- Setting & About HC
+util.yield()
 
     menu.divider(INFOS, TRANSLATE("Language"))
 
@@ -6760,7 +6750,7 @@
     menu.divider(INFOS, TRANSLATE("About HC"))
 
         menu.hyperlink(INFOS, TRANSLATE("Join Discord Server!"), "https://discord.gg/KTFAYQn5Xz", TRANSLATE("If you have any questions regarding Heist Control? Joining it will help you so much!") .. "\n\n" .. TRANSLATE("- Download sharable customized translations and GTAHaXUI stat files.") .. "\n" .. TRANSLATE("- Post a suggestion or an issue to improve Heist Control."))
-        menu.hyperlink(INFOS, TRANSLATE("Changelog"), "https://github.com/IceDoomfist/Stand-Heist-Control/releases", TRANSLATE("If you want to know what was changed in the latest version, click me!"))
+        menu.hyperlink(INFOS, TRANSLATE("Changelog"), "https://github.com/calamity-inc/Stand-Heist-Control", TRANSLATE("If you want to know what was changed in the latest version, click me!"))
 
     ---
 
