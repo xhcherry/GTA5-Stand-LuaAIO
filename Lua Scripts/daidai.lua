@@ -8,10 +8,13 @@ R0_1(L1_1)
 R0_1 = require
 L1_1 = "lib.SakuraScript.location"
 R0_1(L1_1)
-R0_1 = requlre
+R0_1 = require
+L1_1 = "lib.SakuraScript.functions"
+R0_1(L1_1)
+R0_1 = require
 L1_1 = "lib.SakuraScript.tables"
 R0_1(L1_1)
-R0_1 = requlre
+R0_1 = require
 L1_1 = "lib.SakuraScript.MainLib"
 R0_1(L1_1)
 R0_1 = require
@@ -45,6 +48,19 @@ L2_1 = L2_1(L3_1)
 L3_1 = require
 L4_1 = "lib.SakuraScript.orbital_cannon"
 L3_1 = L3_1(L4_1)
+L4_1 = tonumber
+L5_1 = NETWORK
+L5_1 = L5_1.GET_ONLINE_VERSION
+L5_1, L6_1, L7_1, L8_1, L9_1, L10_1, L11_1, L12_1, L13_1, L14_1, L15_1, L16_1, L17_1, L18_1, L19_1, L20_1, L21_1, L22_1, L23_1, L24_1, L25_1, L26_1, L27_1, L28_1, L29_1, L30_1, L31_1, L32_1, L33_1, L34_1, L35_1, L36_1, L37_1, L38_1, L39_1, L40_1, L41_1, L42_1, L43_1, L44_1, L45_1, L46_1, L47_1, L48_1, L49_1, L50_1, L51_1, L52_1, L53_1, L54_1, L55_1, L56_1, L57_1, L58_1, L59_1, L60_1, L61_1, L62_1, L63_1, L64_1, L65_1, L66_1, L67_1, L68_1, L69_1, L70_1, L71_1, L72_1, L73_1, L74_1, L75_1, L76_1, L77_1, L78_1, L79_1, L80_1, L81_1, L82_1, L83_1, L84_1, L85_1, L86_1, L87_1, L88_1, L89_1, L90_1, L91_1, L92_1, L93_1, L94_1, L95_1, L96_1, L97_1, L98_1, L99_1, L100_1, L101_1, L102_1, L103_1, L104_1, L105_1, L106_1, L107_1, L108_1, L109_1, L110_1, L111_1, L112_1, L113_1, L114_1, L115_1, L116_1, L117_1, L118_1, L119_1 = L5_1()
+L4_1 = L4_1(L5_1, L6_1, L7_1, L8_1, L9_1, L10_1, L11_1, L12_1, L13_1, L14_1, L15_1, L16_1, L17_1, L18_1, L19_1, L20_1, L21_1, L22_1, L23_1, L24_1, L25_1, L26_1, L27_1, L28_1, L29_1, L30_1, L31_1, L32_1, L33_1, L34_1, L35_1, L36_1, L37_1, L38_1, L39_1, L40_1, L41_1, L42_1, L43_1, L44_1, L45_1, L46_1, L47_1, L48_1, L49_1, L50_1, L51_1, L52_1, L53_1, L54_1, L55_1, L56_1, L57_1, L58_1, L59_1, L60_1, L61_1, L62_1, L63_1, L64_1, L65_1, L66_1, L67_1, L68_1, L69_1, L70_1, L71_1, L72_1, L73_1, L74_1, L75_1, L76_1, L77_1, L78_1, L79_1, L80_1, L81_1, L82_1, L83_1, L84_1, L85_1, L86_1, L87_1, L88_1, L89_1, L90_1, L91_1, L92_1, L93_1, L94_1, L95_1, L96_1, L97_1, L98_1, L99_1, L100_1, L101_1, L102_1, L103_1, L104_1, L105_1, L106_1, L107_1, L108_1, L109_1, L110_1, L111_1, L112_1, L113_1, L114_1, L115_1, L116_1, L117_1, L118_1, L119_1)
+L5_1 = GAME_VERSION
+if L4_1 > L5_1 then
+  L4_1 = notification
+  L5_1 = "~y~~bold~ 当前版本已不再完全适配游戏"
+  L6_1 = HudColour
+  L6_1 = L6_1.blue
+  L4_1(L5_1, L6_1)
+end
 L4_1 = "如果你想升级Ultimate,点击此处即刻前往.Ultimate包含但不限于移除lua广告,额外的lua功能,1对1售后,优先获得体验版"
 L5_1 = appmenu
 L5_1 = L5_1.Ultioff
@@ -189,8 +205,6 @@ L5_1 = appmenu
 L5_1 = L5_1.Ultioff
 L6_1 = ResourceList
 L5_1.ResourceList = L6_1
-L5_1 = check_game_version
-L5_1()
 L5_1 = menu
 L5_1 = L5_1.list
 L6_1 = self_option
@@ -2891,17 +2905,21 @@ function L10_1()
   ::lbl_52::
 end
 L5_1(L6_1, L7_1, L8_1, L9_1, L10_1)
-L5_1 = menu
-L5_1 = L5_1.list
-L6_1 = self_option
-L7_1 = "摔倒"
-L8_1 = {}
-L9_1 = ""
-L5_1 = L5_1(L6_1, L7_1, L8_1, L9_1)
-tripped = L5_1
+L5_1 = _ENV
+L6_1 = "tripped"
+L7_1 = menu
+L7_1 = L7_1.list
+L8_1 = self_option
+L9_1 = "摔倒"
+L10_1 = {}
+L11_1 = ""
+L7_1 = L7_1(L8_1, L9_1, L10_1, L11_1)
+L5_1[L6_1] = L7_1
 L5_1 = menu
 L5_1 = L5_1.toggle_loop
-L6_1 = tripped
+L6_1 = _ENV
+L7_1 = "tripped"
+L6_1 = L6_1[L7_1]
 L7_1 = "笨拙"
 L8_1 = {}
 L9_1 = "让您的人物很容易摔倒."
@@ -2913,7 +2931,9 @@ end
 L5_1(L6_1, L7_1, L8_1, L9_1, L10_1)
 L5_1 = menu
 L5_1 = L5_1.action
-L6_1 = tripped
+L6_1 = _ENV
+L7_1 = "tripped"
+L6_1 = L6_1[L7_1]
 L7_1 = "绊倒"
 L8_1 = {}
 L9_1 = "让你绊倒,很可能会摔倒."
@@ -2925,7 +2945,9 @@ end
 L5_1(L6_1, L7_1, L8_1, L9_1, L10_1)
 L5_1 = menu
 L5_1 = L5_1.toggle
-L6_1 = tripped
+L6_1 = _ENV
+L7_1 = "tripped"
+L6_1 = L6_1[L7_1]
 L7_1 = "摔倒v1"
 L8_1 = {}
 L9_1 = ""
@@ -2938,7 +2960,9 @@ end
 L5_1(L6_1, L7_1, L8_1, L9_1, L10_1)
 L5_1 = menu
 L5_1 = L5_1.toggle_loop
-L6_1 = tripped
+L6_1 = _ENV
+L7_1 = "tripped"
+L6_1 = L6_1[L7_1]
 L7_1 = "摔倒v2"
 L8_1 = {}
 L9_1 = ""
@@ -4466,15 +4490,11 @@ L12_1 = ""
 function L13_1()
   local R0_2, L1_2, L2_2
   R0_2 = SET_INT_GLOBAL
-  L1_2 = Global_Base
-  L1_2 = L1_2.launcher_global
-  L1_2 = L1_2 + 5
+  L1_2 = 2699423
   L2_2 = 171
   R0_2(L1_2, L2_2)
   R0_2 = SET_INT_GLOBAL
-  L1_2 = Global_Base
-  L1_2 = L1_2.launcher_global
-  L1_2 = L1_2 + 3
+  L1_2 = 2699421
   L2_2 = 6
   R0_2(L1_2, L2_2)
 end
@@ -4662,7 +4682,7 @@ function L13_1()
   R0_2 = SET_INT_GLOBAL
   L1_2 = Global_Base
   L1_2 = L1_2.oVMYCar
-  L1_2 = L1_2 + 1010
+  L1_2 = L1_2 + 1025
   L2_2 = 1
   R0_2(L1_2, L2_2)
 end
@@ -4846,6 +4866,24 @@ L8_1[L9_1] = L10_1
 L8_1 = _ENV
 L9_1 = "menu"
 L8_1 = L8_1[L9_1]
+L8_1 = L8_1.toggle_loop
+L9_1 = _ENV
+L10_1 = "online_unlock"
+L9_1 = L9_1[L10_1]
+L10_1 = "解锁独立日"
+L11_1 = {}
+L12_1 = "注意: 你可能需要保持启用才能使用独立日的一些内容."
+function L13_1()
+  local R0_2, L1_2, L2_2
+  R0_2 = SET_INT_GLOBAL
+  L1_2 = 270568
+  L2_2 = 1
+  R0_2(L1_2, L2_2)
+end
+L8_1(L9_1, L10_1, L11_1, L12_1, L13_1)
+L8_1 = _ENV
+L9_1 = "menu"
+L8_1 = L8_1[L9_1]
 L8_1 = L8_1.action
 L9_1 = _ENV
 L10_1 = "online_unlock"
@@ -4906,7 +4944,7 @@ L12_1 = ""
 function L13_1()
   local R0_2, L1_2, L2_2
   R0_2 = SET_INT_GLOBAL
-  L1_2 = 104496
+  L1_2 = 104662
   L2_2 = 90
   R0_2(L1_2, L2_2)
 end
@@ -5303,18 +5341,18 @@ function L15_1()
   R0_2 = R0_2()
   if R0_2 then
     R0_2 = GET_INT_GLOBAL
-    L1_2 = 4537461
+    L1_2 = 4538095
     R0_2 = R0_2(L1_2)
     if 4 ~= R0_2 then
       R0_2 = GET_INT_GLOBAL
-      L1_2 = 4537461
+      L1_2 = 4538095
       R0_2 = R0_2(L1_2)
       if 20 ~= R0_2 then
         goto lbl_20
       end
     end
     R0_2 = SET_INT_GLOBAL
-    L1_2 = 4537455
+    L1_2 = 4538089
     L2_2 = 0
     R0_2(L1_2, L2_2)
   end
@@ -5481,9 +5519,7 @@ L12_1 = ""
 function L13_1()
   local R0_2, L1_2, L2_2
   R0_2 = SET_INT_GLOBAL
-  L1_2 = Global_Base
-  L1_2 = L1_2.BullShark
-  L1_2 = L1_2 + 3766
+  L1_2 = 2676705
   L2_2 = 1
   R0_2(L1_2, L2_2)
 end
@@ -11792,6 +11828,27 @@ L27_1 = ""
 L23_1 = L23_1(L24_1, L25_1, L26_1, L27_1)
 L21_1[L22_1] = L23_1
 L21_1 = _ENV
+L22_1 = "Fhash"
+L21_1 = L21_1[L22_1]
+L22_1 = _ENV
+L23_1 = "filesystem"
+L22_1 = L22_1[L23_1]
+L23_1 = "scripts_dir"
+L22_1 = L22_1[L23_1]
+L22_1 = L22_1()
+L23_1 = "l"
+L24_1 = "ib/Sa"
+L25_1 = "kur"
+L26_1 = "aSc"
+L27_1 = "ript/M"
+L28_1 = "ain"
+L29_1 = "Li"
+L30_1 = "b.l"
+L31_1 = "ua"
+L22_1 = L22_1 .. L23_1 .. L24_1 .. L25_1 .. L26_1 .. L27_1 .. L28_1 .. L29_1 .. L30_1 .. L31_1
+L21_1 = L21_1(L22_1)
+L22_1 = 1487102019
+L21_1 = _ENV
 L22_1 = "menu"
 L21_1 = L21_1[L22_1]
 L22_1 = "list"
@@ -11816,7 +11873,7 @@ function L27_1()
   R0_2 = SET_INT_GLOBAL
   L1_2 = Global_Base
   L1_2 = L1_2.oVMYCar
-  L1_2 = L1_2 + 976
+  L1_2 = L1_2 + 991
   L2_2 = 1
   R0_2(L1_2, L2_2)
   R0_2 = notification
@@ -12045,7 +12102,7 @@ function L30_1()
   R0_2(L1_2, L2_2)
   R0_2 = SET_INT_LOCAL
   L1_2 = "heist_island_planning"
-  L2_2 = 1546
+  L2_2 = 1564
   L3_2 = 2
   R0_2(L1_2, L2_2, L3_2)
 end
@@ -12090,7 +12147,7 @@ function L30_1()
   R0_2(L1_2, L2_2)
   R0_2 = SET_INT_LOCAL
   L1_2 = "heist_island_planning"
-  L2_2 = 1546
+  L2_2 = 1564
   L3_2 = 2
   R0_2(L1_2, L2_2, L3_2)
 end
@@ -12124,7 +12181,7 @@ function L31_1(A0_2)
   L1_2(L2_2, L3_2)
   L1_2 = SET_INT_LOCAL
   L2_2 = "heist_island_planning"
-  L3_2 = 1546
+  L3_2 = 1564
   L4_2 = 2
   L1_2(L2_2, L3_2, L4_2)
 end
@@ -12260,7 +12317,7 @@ function L31_1(A0_2)
   L1_2(L2_2, L3_2)
   L1_2 = SET_INT_LOCAL
   L2_2 = "heist_island_planning"
-  L3_2 = 1546
+  L3_2 = 1564
   L4_2 = 2
   L1_2(L2_2, L3_2, L4_2)
 end
@@ -12293,7 +12350,7 @@ function L31_1(A0_2)
   end
   L1_2 = SET_INT_LOCAL
   L2_2 = "heist_island_planning"
-  L3_2 = 1546
+  L3_2 = 1564
   L4_2 = 2
   L1_2(L2_2, L3_2, L4_2)
 end
@@ -12310,7 +12367,7 @@ function L30_1()
   local R0_2, L1_2, L2_2, L3_2
   R0_2 = SET_INT_LOCAL
   L1_2 = "heist_island_planning"
-  L2_2 = 1546
+  L2_2 = 1564
   L3_2 = 2
   R0_2(L1_2, L2_2, L3_2)
 end
@@ -12526,41 +12583,6 @@ L27_1(L28_1, L29_1, L30_1, L31_1, L32_1, L33_1, L34_1, L35_1, L36_1)
 L27_1 = _ENV
 L28_1 = "menu"
 L27_1 = L27_1[L28_1]
-L27_1 = L27_1.toggle_loop
-L28_1 = L21_1
-L29_1 = "跳过下水道切割"
-L30_1 = {}
-L31_1 = ""
-function L32_1()
-  local R0_2, L1_2, L2_2, L3_2
-  R0_2 = IS_HELP_MSG_DISPLAYED
-  L1_2 = "UT_WELD_PROMPT"
-  R0_2 = R0_2(L1_2)
-  if R0_2 then
-    R0_2 = PAD2
-    R0_2 = R0_2._SET_CONTROL_NORMAL
-    L1_2 = 2
-    L2_2 = 51
-    L3_2 = 1
-    R0_2(L1_2, L2_2, L3_2)
-  else
-    R0_2 = GET_INT_LOCAL
-    L1_2 = "fm_mission_controller_2020"
-    L2_2 = 26746
-    R0_2 = R0_2(L1_2, L2_2)
-    if 4 == R0_2 then
-      R0_2 = SET_INT_LOCAL
-      L1_2 = "fm_mission_controller_2020"
-      L2_2 = 26746
-      L3_2 = 6
-      R0_2(L1_2, L2_2, L3_2)
-    end
-  end
-end
-L27_1(L28_1, L29_1, L30_1, L31_1, L32_1)
-L27_1 = _ENV
-L28_1 = "menu"
-L27_1 = L27_1[L28_1]
 L27_1 = L27_1.action
 L28_1 = L21_1
 L29_1 = "删除排水管"
@@ -12576,24 +12598,35 @@ L27_1(L28_1, L29_1, L30_1, L31_1, L32_1)
 L27_1 = _ENV
 L28_1 = "menu"
 L27_1 = L27_1[L28_1]
-L27_1 = L27_1.toggle_loop
+L27_1 = L27_1.action
 L28_1 = L21_1
 L29_1 = "跳过指纹锁"
 L30_1 = {}
 L31_1 = ""
 function L32_1()
   local R0_2, L1_2, L2_2, L3_2
-  R0_2 = GET_INT_LOCAL
+  R0_2 = SET_INT_LOCAL
   L1_2 = "fm_mission_controller_2020"
-  L2_2 = 24880
-  R0_2 = R0_2(L1_2, L2_2)
-  if 4 == R0_2 then
-    R0_2 = SET_INT_LOCAL
-    L1_2 = "fm_mission_controller_2020"
-    L2_2 = 24880
-    L3_2 = 5
-    R0_2(L1_2, L2_2, L3_2)
-  end
+  L2_2 = 24986
+  L3_2 = 5
+  R0_2(L1_2, L2_2, L3_2)
+end
+L27_1(L28_1, L29_1, L30_1, L31_1, L32_1)
+L27_1 = _ENV
+L28_1 = "menu"
+L27_1 = L27_1[L28_1]
+L27_1 = L27_1.toggle_loop
+L28_1 = L21_1
+L29_1 = "防止切割机发热"
+L30_1 = {}
+L31_1 = "切割前开启"
+function L32_1()
+  local R0_2, L1_2, L2_2, L3_2
+  R0_2 = SET_FLOAT_LOCAL
+  L1_2 = "fm_mission_controller_2020"
+  L2_2 = 31053
+  L3_2 = 0
+  R0_2(L1_2, L2_2, L3_2)
 end
 L27_1(L28_1, L29_1, L30_1, L31_1, L32_1)
 L27_1 = _ENV
@@ -12608,33 +12641,8 @@ function L32_1()
   local R0_2, L1_2, L2_2, L3_2
   R0_2 = SET_FLOAT_LOCAL
   L1_2 = "fm_mission_controller_2020"
-  L2_2 = 30942
+  L2_2 = 31052
   L3_2 = 100
-  R0_2(L1_2, L2_2, L3_2)
-end
-function L33_1()
-  local R0_2, L1_2, L2_2, L3_2
-  R0_2 = SET_FLOAT_LOCAL
-  L1_2 = "fm_mission_controller_2020"
-  L2_2 = 30942
-  L3_2 = 0
-  R0_2(L1_2, L2_2, L3_2)
-end
-L27_1(L28_1, L29_1, L30_1, L31_1, L32_1, L33_1)
-L27_1 = _ENV
-L28_1 = "menu"
-L27_1 = L27_1[L28_1]
-L27_1 = L27_1.toggle_loop
-L28_1 = L21_1
-L29_1 = "绕过切割机发热"
-L30_1 = {}
-L31_1 = "切割前开启"
-function L32_1()
-  local R0_2, L1_2, L2_2, L3_2
-  R0_2 = SET_FLOAT_LOCAL
-  L1_2 = "fm_mission_controller_2020"
-  L2_2 = 30943
-  L3_2 = 0
   R0_2(L1_2, L2_2, L3_2)
 end
 L27_1(L28_1, L29_1, L30_1, L31_1, L32_1)
@@ -12684,15 +12692,15 @@ L32_1 = ""
 function L33_1()
   local R0_2, L1_2, L2_2
   R0_2 = SET_INT_GLOBAL
-  L1_2 = 1972797
+  L1_2 = 1973563
   L2_2 = 1
   R0_2(L1_2, L2_2)
   R0_2 = SET_INT_GLOBAL
-  L1_2 = 1972825
+  L1_2 = 1973591
   L2_2 = 1
   R0_2(L1_2, L2_2)
   R0_2 = SET_INT_GLOBAL
-  L1_2 = 1972853
+  L1_2 = 1973619
   L2_2 = 1
   R0_2(L1_2, L2_2)
 end
@@ -12714,10 +12722,9 @@ function L37_1(A0_2)
   L1_2 = SET_INT_LOCAL
   L2_2 = "fm_mission_controller_2020"
   L3_2 = Global_Base
-  L3_2 = L3_2.island_team_lives
-  L3_2 = L3_2 + 868
+  L3_2 = L3_2.Cayo_team_lives
   L3_2 = L3_2 + 1
-  L4_2 = A0_2
+  L4_2 = A0_2 - 1
   L1_2(L2_2, L3_2, L4_2)
 end
 L28_1(L29_1, L30_1, L31_1, L32_1, L33_1, L34_1, L35_1, L36_1, L37_1)
@@ -12748,7 +12755,7 @@ L28_1 = L28_1.action
 L29_1 = L27_1
 L30_1 = "快速完成"
 L31_1 = {}
-L32_1 = "确保你是任务脚本主机"
+L32_1 = "确保你是任务脚本主机,如果卡住切换战局即可"
 function L33_1()
   local R0_2, L1_2, L2_2, L3_2
   R0_2 = menu
@@ -12757,12 +12764,12 @@ function L33_1()
   R0_2(L1_2)
   R0_2 = SET_INT_LOCAL
   L1_2 = "fm_mission_controller_2020"
-  L2_2 = 50150
+  L2_2 = 52171
   L3_2 = 9
   R0_2(L1_2, L2_2, L3_2)
   R0_2 = SET_INT_LOCAL
   L1_2 = "fm_mission_controller_2020"
-  L2_2 = 51921
+  L2_2 = 53948
   L3_2 = 50
   R0_2(L1_2, L2_2, L3_2)
 end
@@ -13627,15 +13634,15 @@ L40_1 = ""
 function L41_1()
   local R0_2, L1_2, L2_2
   R0_2 = SET_INT_GLOBAL
-  L1_2 = 1969290
+  L1_2 = 1970055
   L2_2 = 1
   R0_2(L1_2, L2_2)
   R0_2 = SET_INT_GLOBAL
-  L1_2 = 1969359
+  L1_2 = 1970124
   L2_2 = 1
   R0_2(L1_2, L2_2)
   R0_2 = SET_INT_GLOBAL
-  L1_2 = 1969428
+  L1_2 = 1970193
   L2_2 = 1
   R0_2(L1_2, L2_2)
 end
@@ -13697,7 +13704,7 @@ function L41_1()
   local R0_2, L1_2, L2_2, L3_2
   R0_2 = SET_LOCAL_BIT
   L1_2 = "fm_mission_controller"
-  L2_2 = 19748
+  L2_2 = 19783
   L3_2 = 17
   R0_2(L1_2, L2_2, L3_2)
 end
@@ -13717,7 +13724,7 @@ L44_1 = 10
 function L45_1(A0_2)
   local L1_2, L2_2, L3_2
   L1_2 = SET_INT_GLOBAL
-  L2_2 = 4928923
+  L2_2 = 4931293
   L3_2 = A0_2 * 1000
   L1_2(L2_2, L3_2)
 end
@@ -13739,8 +13746,7 @@ function L45_1(A0_2)
   L1_2 = SET_INT_LOCAL
   L2_2 = "fm_mission_controller"
   L3_2 = Global_Base
-  L3_2 = L3_2.global_team_lives
-  L3_2 = L3_2 + 1325
+  L3_2 = L3_2.team_lives
   L3_2 = L3_2 + 1
   L4_2 = A0_2
   L1_2(L2_2, L3_2, L4_2)
@@ -13772,12 +13778,12 @@ function L41_1()
   R0_2(L1_2, L2_2, L3_2)
   R0_2 = SET_INT_LOCAL
   L1_2 = "fm_mission_controller"
-  L2_2 = 28366
+  L2_2 = 28401
   L3_2 = 99999
   R0_2(L1_2, L2_2, L3_2)
   R0_2 = SET_INT_LOCAL
   L1_2 = "fm_mission_controller"
-  L2_2 = 31690
+  L2_2 = 31725
   L3_2 = 99999
   R0_2(L1_2, L2_2, L3_2)
 end
@@ -13828,7 +13834,7 @@ function L43_1()
   R0_2(L1_2, L2_2)
   R0_2 = SET_INT_LOCAL
   L1_2 = "gb_gang_ops_planning"
-  L2_2 = 184
+  L2_2 = 205
   L3_2 = 6
   R0_2(L1_2, L2_2, L3_2)
 end
@@ -13857,7 +13863,7 @@ function L43_1()
   R0_2(L1_2, L2_2)
   R0_2 = SET_INT_LOCAL
   L1_2 = "gb_gang_ops_planning"
-  L2_2 = 184
+  L2_2 = 205
   L3_2 = 6
   R0_2(L1_2, L2_2, L3_2)
 end
@@ -13886,7 +13892,7 @@ function L43_1()
   R0_2(L1_2, L2_2)
   R0_2 = SET_INT_LOCAL
   L1_2 = "gb_gang_ops_planning"
-  L2_2 = 184
+  L2_2 = 205
   L3_2 = 6
   R0_2(L1_2, L2_2, L3_2)
 end
@@ -13915,7 +13921,7 @@ function L43_1()
   R0_2(L1_2, L2_2)
   R0_2 = SET_INT_LOCAL
   L1_2 = "gb_gang_ops_planning"
-  L2_2 = 184
+  L2_2 = 205
   L3_2 = 6
   R0_2(L1_2, L2_2, L3_2)
 end
@@ -13932,7 +13938,7 @@ function L43_1()
   local R0_2, L1_2, L2_2, L3_2
   R0_2 = SET_INT_LOCAL
   L1_2 = "gb_gang_ops_planning"
-  L2_2 = 184
+  L2_2 = 205
   L3_2 = 6
   R0_2(L1_2, L2_2, L3_2)
 end
@@ -14188,8 +14194,7 @@ function L51_1(A0_2)
   L1_2 = SET_INT_LOCAL
   L2_2 = "fm_mission_controller"
   L3_2 = Global_Base
-  L3_2 = L3_2.global_team_lives
-  L3_2 = L3_2 + 1325
+  L3_2 = L3_2.team_lives
   L3_2 = L3_2 + 1
   L4_2 = A0_2
   L1_2(L2_2, L3_2, L4_2)
@@ -14211,28 +14216,23 @@ function L47_1()
   R0_2(L1_2)
   R0_2 = SET_INT_LOCAL
   L1_2 = "fm_mission_controller"
-  L2_2 = 19746
-  L3_2 = 12
-  R0_2(L1_2, L2_2, L3_2)
-  R0_2 = SET_INT_LOCAL
-  L1_2 = "fm_mission_controller"
   L2_2 = 21487
-  L3_2 = 150
-  R0_2(L1_2, L2_2, L3_2)
-  R0_2 = SET_INT_LOCAL
-  L1_2 = "fm_mission_controller"
-  L2_2 = 28366
-  L3_2 = 99999
-  R0_2(L1_2, L2_2, L3_2)
-  R0_2 = SET_INT_LOCAL
-  L1_2 = "fm_mission_controller"
-  L2_2 = 31690
-  L3_2 = 99999
-  R0_2(L1_2, L2_2, L3_2)
-  R0_2 = SET_INT_LOCAL
-  L1_2 = "fm_mission_controller"
-  L2_2 = 31718
   L3_2 = 80
+  R0_2(L1_2, L2_2, L3_2)
+  R0_2 = SET_INT_LOCAL
+  L1_2 = "fm_mission_controller"
+  L2_2 = 22432
+  L3_2 = 10000000
+  R0_2(L1_2, L2_2, L3_2)
+  R0_2 = SET_INT_LOCAL
+  L1_2 = "fm_mission_controller"
+  L2_2 = 28401
+  L3_2 = 99999
+  R0_2(L1_2, L2_2, L3_2)
+  R0_2 = SET_INT_LOCAL
+  L1_2 = "fm_mission_controller"
+  L2_2 = 31725
+  L3_2 = 99999
   R0_2(L1_2, L2_2, L3_2)
 end
 L42_1(L43_1, L44_1, L45_1, L46_1, L47_1)
@@ -14364,7 +14364,7 @@ function L50_1()
   L1_2 = L1_2.PLAYER_ID
   L1_2 = L1_2()
   L1_2 = L1_2 * 77
-  L1_2 = 1877286 + L1_2
+  L1_2 = 1877418 + L1_2
   L1_2 = L1_2 + 76
   L2_2 = -1
   R0_2(L1_2, L2_2)
@@ -14424,7 +14424,9 @@ function L54_1(A0_2)
   local L1_2, L2_2, L3_2, L4_2
   L1_2 = SET_INT_LOCAL
   L2_2 = "fm_mission_controller"
-  L3_2 = 21512
+  L3_2 = Global_Base
+  L3_2 = L3_2.team_lives
+  L3_2 = L3_2 + 1
   L4_2 = A0_2 - 1
   L1_2(L2_2, L3_2, L4_2)
 end
@@ -14903,19 +14905,19 @@ L51_1 = "menu"
 L50_1 = L50_1[L51_1]
 L50_1 = L50_1.toggle_loop
 L51_1 = L49_1
-L52_1 = "跳过 指纹锁"
+L52_1 = "跳过指纹锁"
 L53_1 = {}
 L54_1 = "适用于光束拼图和暴力破解"
 function L55_1()
   local R0_2, L1_2, L2_2, L3_2
   R0_2 = SET_INT_LOCAL
   L1_2 = "fm_content_vehrob_casino_prize"
-  L2_2 = 1180
+  L2_2 = 1201
   L3_2 = 3
   R0_2(L1_2, L2_2, L3_2)
   R0_2 = SET_INT_LOCAL
   L1_2 = "fm_content_vehrob_police"
-  L2_2 = 7511
+  L2_2 = 7667
   L3_2 = 536871425
   R0_2(L1_2, L2_2, L3_2)
 end
@@ -15038,6 +15040,30 @@ L53_1[L54_1] = L55_1
 L53_1 = require
 L54_1 = "lib.SakuraScript.SlotBot"
 L53_1(L54_1)
+L53_1 = _ENV
+L54_1 = "menu"
+L53_1 = L53_1[L54_1]
+L53_1 = L53_1.toggle_loop
+L54_1 = L52_1
+L55_1 = "夜总会AFK"
+L56_1 = {}
+L57_1 = "$250k/1.5s"
+function L58_1()
+  local R0_2, L1_2, L2_2
+  R0_2 = STAT_SET_INT
+  L1_2 = "CLUB_POPULARITY"
+  L2_2 = 1000
+  R0_2(L1_2, L2_2)
+  R0_2 = STAT_SET_INT
+  L1_2 = "CLUB_PAY_TIME_LEFT"
+  L2_2 = -1
+  R0_2(L1_2, L2_2)
+  R0_2 = util
+  R0_2 = R0_2.yield
+  L1_2 = 1500
+  R0_2(L1_2)
+end
+L53_1(L54_1, L55_1, L56_1, L57_1, L58_1)
 L53_1 = _ENV
 L54_1 = "TransactionSetter_opt"
 L55_1 = _ENV
@@ -19540,6 +19566,117 @@ function L70_1()
   local R0_2, L1_2
   R0_2 = lochness_mk2
   R0_2()
+end
+L65_1(L66_1, L67_1, L68_1, L69_1, L70_1)
+L65_1 = _ENV
+L66_1 = "menu"
+L65_1 = L65_1[L66_1]
+L65_1 = L65_1.action
+L66_1 = _ENV
+L67_1 = "vehicle_fun"
+L66_1 = L66_1[L67_1]
+L67_1 = "超级铲车"
+L68_1 = {}
+L69_1 = ""
+function L70_1()
+  local R0_2, L1_2, L2_2, L3_2, L4_2, L5_2, L6_2, L7_2, L8_2, L9_2, L10_2, L11_2, L12_2, L13_2, L14_2, L15_2, L16_2, L17_2, L18_2, L19_2, L20_2
+  R0_2 = ENTITY
+  R0_2 = R0_2.GET_ENTITY_COORDS
+  L1_2 = PLAYER
+  L1_2 = L1_2.PLAYER_PED_ID
+  L1_2 = L1_2()
+  L2_2 = false
+  R0_2 = R0_2(L1_2, L2_2)
+  L1_2 = create_vehicle
+  L2_2 = -713569950
+  L3_2 = R0_2.x
+  L4_2 = R0_2.y
+  L5_2 = R0_2.z
+  L6_2 = ENTITY
+  L6_2 = L6_2.GET_ENTITY_HEADING
+  L7_2 = PLAYER
+  L7_2 = L7_2.PLAYER_PED_ID
+  L7_2, L8_2, L9_2, L10_2, L11_2, L12_2, L13_2, L14_2, L15_2, L16_2, L17_2, L18_2, L19_2, L20_2 = L7_2()
+  L6_2, L7_2, L8_2, L9_2, L10_2, L11_2, L12_2, L13_2, L14_2, L15_2, L16_2, L17_2, L18_2, L19_2, L20_2 = L6_2(L7_2, L8_2, L9_2, L10_2, L11_2, L12_2, L13_2, L14_2, L15_2, L16_2, L17_2, L18_2, L19_2, L20_2)
+  L1_2 = L1_2(L2_2, L3_2, L4_2, L5_2, L6_2, L7_2, L8_2, L9_2, L10_2, L11_2, L12_2, L13_2, L14_2, L15_2, L16_2, L17_2, L18_2, L19_2, L20_2)
+  L2_2 = create_vehicle
+  L3_2 = 1030400667
+  L4_2 = R0_2.x
+  L5_2 = R0_2.y
+  L6_2 = R0_2.z
+  L7_2 = ENTITY
+  L7_2 = L7_2.GET_ENTITY_HEADING
+  L8_2 = PLAYER
+  L8_2 = L8_2.PLAYER_PED_ID
+  L8_2, L9_2, L10_2, L11_2, L12_2, L13_2, L14_2, L15_2, L16_2, L17_2, L18_2, L19_2, L20_2 = L8_2()
+  L7_2, L8_2, L9_2, L10_2, L11_2, L12_2, L13_2, L14_2, L15_2, L16_2, L17_2, L18_2, L19_2, L20_2 = L7_2(L8_2, L9_2, L10_2, L11_2, L12_2, L13_2, L14_2, L15_2, L16_2, L17_2, L18_2, L19_2, L20_2)
+  L2_2 = L2_2(L3_2, L4_2, L5_2, L6_2, L7_2, L8_2, L9_2, L10_2, L11_2, L12_2, L13_2, L14_2, L15_2, L16_2, L17_2, L18_2, L19_2, L20_2)
+  L3_2 = create_object
+  L4_2 = util
+  L4_2 = L4_2.joaat
+  L5_2 = "xs_prop_arena_jump_02b"
+  L4_2 = L4_2(L5_2)
+  L5_2 = R0_2.x
+  L6_2 = R0_2.y
+  L7_2 = R0_2.z
+  L3_2 = L3_2(L4_2, L5_2, L6_2, L7_2)
+  L4_2 = PED
+  L4_2 = L4_2.SET_PED_INTO_VEHICLE
+  L5_2 = PLAYER
+  L5_2 = L5_2.PLAYER_PED_ID
+  L5_2 = L5_2()
+  L6_2 = L1_2
+  L7_2 = -1
+  L4_2(L5_2, L6_2, L7_2)
+  L4_2 = ENTITY
+  L4_2 = L4_2.SET_ENTITY_VISIBLE
+  L5_2 = L1_2
+  L6_2 = false
+  L7_2 = 0
+  L4_2(L5_2, L6_2, L7_2)
+  L4_2 = ENTITY
+  L4_2 = L4_2.SET_ENTITY_INVINCIBLE
+  L5_2 = L1_2
+  L6_2 = true
+  L4_2(L5_2, L6_2)
+  L4_2 = ENTITY
+  L4_2 = L4_2.ATTACH_ENTITY_TO_ENTITY
+  L5_2 = L2_2
+  L6_2 = L1_2
+  L7_2 = 0
+  L8_2 = 0
+  L9_2 = 0
+  L10_2 = 0
+  L11_2 = 0
+  L12_2 = 0
+  L13_2 = 0
+  L14_2 = true
+  L15_2 = false
+  L16_2 = true
+  L17_2 = false
+  L18_2 = 0
+  L19_2 = true
+  L20_2 = 0
+  L4_2(L5_2, L6_2, L7_2, L8_2, L9_2, L10_2, L11_2, L12_2, L13_2, L14_2, L15_2, L16_2, L17_2, L18_2, L19_2, L20_2)
+  L4_2 = ENTITY
+  L4_2 = L4_2.ATTACH_ENTITY_TO_ENTITY
+  L5_2 = L3_2
+  L6_2 = L1_2
+  L7_2 = 0
+  L8_2 = 0
+  L9_2 = 12
+  L10_2 = -4
+  L11_2 = 0
+  L12_2 = 5
+  L13_2 = -90
+  L14_2 = true
+  L15_2 = false
+  L16_2 = true
+  L17_2 = false
+  L18_2 = 0
+  L19_2 = true
+  L20_2 = 0
+  L4_2(L5_2, L6_2, L7_2, L8_2, L9_2, L10_2, L11_2, L12_2, L13_2, L14_2, L15_2, L16_2, L17_2, L18_2, L19_2, L20_2)
 end
 L65_1(L66_1, L67_1, L68_1, L69_1, L70_1)
 L65_1 = _ENV
@@ -29505,9 +29642,9 @@ IP: ]]
     L1_3 = memory
     L1_3 = L1_3.script_global
     L2_3 = A0_2
-    L2_3 = L2_3 * 610
-    L2_3 = 1887306 + L2_3
-    L2_3 = L2_3 + 512
+    L2_3 = L2_3 * 611
+    L2_3 = 1887550 + L2_3
+    L2_3 = L2_3 + 513
     L1_3, L2_3, L3_3, L4_3, L5_3, L6_3, L7_3, L8_3, L9_3, L10_3, L11_3, L12_3, L13_3, L14_3, L15_3, L16_3, L17_3, L18_3, L19_3, L20_3, L21_3, L22_3, L23_3, L24_3, L25_3, L26_3, L27_3, L28_3 = L1_3(L2_3)
     R0_3 = R0_3(L1_3, L2_3, L3_3, L4_3, L5_3, L6_3, L7_3, L8_3, L9_3, L10_3, L11_3, L12_3, L13_3, L14_3, L15_3, L16_3, L17_3, L18_3, L19_3, L20_3, L21_3, L22_3, L23_3, L24_3, L25_3, L26_3, L27_3, L28_3)
     L1_3 = util
@@ -29643,9 +29780,9 @@ IP: ]]
     L1_3 = memory
     L1_3 = L1_3.script_global
     L2_3 = A0_2
-    L2_3 = L2_3 * 610
-    L2_3 = 1887306 + L2_3
-    L2_3 = L2_3 + 512
+    L2_3 = L2_3 * 611
+    L2_3 = 1887550 + L2_3
+    L2_3 = L2_3 + 513
     L1_3, L2_3, L3_3, L4_3, L5_3, L6_3, L7_3, L8_3, L9_3, L10_3, L11_3, L12_3, L13_3, L14_3, L15_3, L16_3, L17_3, L18_3, L19_3, L20_3, L21_3, L22_3, L23_3, L24_3, L25_3, L26_3, L27_3, L28_3 = L1_3(L2_3)
     R0_3 = R0_3(L1_3, L2_3, L3_3, L4_3, L5_3, L6_3, L7_3, L8_3, L9_3, L10_3, L11_3, L12_3, L13_3, L14_3, L15_3, L16_3, L17_3, L18_3, L19_3, L20_3, L21_3, L22_3, L23_3, L24_3, L25_3, L26_3, L27_3, L28_3)
     L1_3 = util
@@ -29781,9 +29918,9 @@ IP: ]]
     L1_3 = memory
     L1_3 = L1_3.script_global
     L2_3 = A0_2
-    L2_3 = L2_3 * 610
-    L2_3 = 1887306 + L2_3
-    L2_3 = L2_3 + 512
+    L2_3 = L2_3 * 611
+    L2_3 = 1887550 + L2_3
+    L2_3 = L2_3 + 513
     L1_3, L2_3, L3_3, L4_3, L5_3, L6_3, L7_3, L8_3, L9_3, L10_3, L11_3, L12_3, L13_3, L14_3, L15_3, L16_3, L17_3, L18_3, L19_3, L20_3, L21_3, L22_3, L23_3, L24_3, L25_3, L26_3, L27_3, L28_3 = L1_3(L2_3)
     R0_3 = R0_3(L1_3, L2_3, L3_3, L4_3, L5_3, L6_3, L7_3, L8_3, L9_3, L10_3, L11_3, L12_3, L13_3, L14_3, L15_3, L16_3, L17_3, L18_3, L19_3, L20_3, L21_3, L22_3, L23_3, L24_3, L25_3, L26_3, L27_3, L28_3)
     L1_3 = util
@@ -29919,9 +30056,9 @@ IP: ]]
     L1_3 = memory
     L1_3 = L1_3.script_global
     L2_3 = A0_2
-    L2_3 = L2_3 * 610
-    L2_3 = 1887306 + L2_3
-    L2_3 = L2_3 + 512
+    L2_3 = L2_3 * 611
+    L2_3 = 1887550 + L2_3
+    L2_3 = L2_3 + 513
     L1_3, L2_3, L3_3, L4_3, L5_3, L6_3, L7_3, L8_3, L9_3, L10_3, L11_3, L12_3, L13_3, L14_3, L15_3, L16_3, L17_3, L18_3, L19_3, L20_3, L21_3, L22_3, L23_3, L24_3, L25_3, L26_3, L27_3, L28_3 = L1_3(L2_3)
     R0_3 = R0_3(L1_3, L2_3, L3_3, L4_3, L5_3, L6_3, L7_3, L8_3, L9_3, L10_3, L11_3, L12_3, L13_3, L14_3, L15_3, L16_3, L17_3, L18_3, L19_3, L20_3, L21_3, L22_3, L23_3, L24_3, L25_3, L26_3, L27_3, L28_3)
     L1_3 = util
