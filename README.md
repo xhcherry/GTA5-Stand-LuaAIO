@@ -33,7 +33,7 @@
 
 **建议没有固定电脑玩游戏的玩家使用**,这需要频繁重新下载200多MB的压缩包并完全解压,很耗时间
 
-[点击此处自动开始下载lua合集](https://github.com/xhcherry/GTA5-Stand-LuaAIO/archive/refs/heads/main.zip)\
+[点击此处自动开始下载lua合集](https://github.com/xhcherry/GTA5-Stand-LuaAIO/archive/refs/heads/main.zip)
 
 等待下载完成后将下载的压缩包完全解压出来(**是解压出来,不是直接打开压缩包**),将文件夹中的所有文件拖到Stand目录即可
 
@@ -42,7 +42,7 @@
 **建议在固定电脑玩的玩家使用**
 
 此教程会教你配置完整lua仓库环境,在日后的更新按两下就行了\
-[一次性完成standlua合集仓库的配置教程](https://github.com/xhcherry/GTA5-Stand-LuaAIO/wiki/lua安装教程)\
+[一次性完成standlua合集仓库的配置教程](https://github.com/xhcherry/GTA5-Stand-LuaAIO/wiki/lua安装教程)
 
 
 ## 文件目录结构
