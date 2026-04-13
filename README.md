@@ -1,8 +1,7 @@
 # GTA5-Stand-LuaAIO
 
-![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.png?url=https%3A%2F%2Fgithub.com%2Fxhcherry%2FGTA5-Stand-LuaAIO)
-
 <p align="center">
+  <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fxhcherry%2FGTA5-Stand-LuaAIO&label=page+views&icon=github&color=%23198754&message=&style=flat&tz=UTC">
   <a href="https://discord.gg/wDcY8FFnt5"><img src="https://img.shields.io/discord/1167118210735276062?color=blue&label=discord&logo=discord&logoColor=white" /></a>
   <!-- <a href="http://qm.qq.com"><img src="https://img.shields.io/badge/QQ%E7%BE%A4-24242-blue" /></a> -->
   <img src="https://img.shields.io/github/license/xhcherry/GTA5-Stand-LuaAIO" />
