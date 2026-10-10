@@ -222,7 +222,7 @@ function ini.parse(path, cwd)
 
         for key, value in pairs(res) do
             if not skip[key] and type(value) ~= "table" and type(value) ~= "function" then
-                key = tostring(key)
+                local key = tostring(key)
                 value = tostring(value)
 
                 if value:sub(1, 1) == " " then
@@ -237,7 +237,7 @@ function ini.parse(path, cwd)
             resl[#resl + 1] = "[" .. tab .. "]"
 
             for key, value in pairs(res[tab]) do
-                key = tostring(key)
+                local key = tostring(key)
                 value = tostring(value)
 
                 if value:sub(1, 1) == " " then

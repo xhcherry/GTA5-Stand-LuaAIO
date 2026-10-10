@@ -96,7 +96,7 @@ if Template then --credits to Jerry123
    local script = filesystem.scripts_dir() ..'AcjokerScript.pluto'
    local script_file = ReadAll(script)
     for text in string.gmatch(script_file, 'util.toast%(.-%)') do
-        text = string.gsub(text, 'util.toast%(.', '')
+        local text = string.gsub(text, 'util.toast%(.', '')
         text = string.gsub(text, '\'%)', '')
         text = string.gsub(text, '"%)', '')
         text = string.gsub(text, '\\\'', '\'')
@@ -108,7 +108,7 @@ if Template then --credits to Jerry123
         end
     end
     for text in string.gmatch(script_file, 'Str_trans%(.-%)') do
-        text = string.gsub(text, 'Str_trans%(.', '')
+        local text = string.gsub(text, 'Str_trans%(.', '')
         text = string.gsub(text, '\'%)', '')
         text = string.gsub(text, '"%)', '')
         text = string.gsub(text, '\\\'', '\'')
